@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c488eee4_b6b41e43",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2332,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2014-12-08T22:24:30Z",
+      "side": 1,
+      "message": "please do this before create is called, in the manner of the other \".set*\" calls.",
+      "range": {
+        "startLine": 2332,
+        "startChar": 15,
+        "endLine": 2332,
+        "endChar": 40
+      },
+      "revId": "7392fe1c5ecdbd85276f6e6eb83ea3fef5deec4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
