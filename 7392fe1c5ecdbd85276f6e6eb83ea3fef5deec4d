@@ -22,6 +22,24 @@
       "revId": "7392fe1c5ecdbd85276f6e6eb83ea3fef5deec4d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84927610_827afc5a",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2332,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2014-12-09T01:09:59Z",
+      "side": 1,
+      "message": "Thanks Robert for your review. However, we cannot call setCanceledOnTouchOutside() before create() is called because this is not a method of AlertDialog.Builder but a method of Dialog.",
+      "parentUuid": "c488eee4_b6b41e43",
+      "revId": "7392fe1c5ecdbd85276f6e6eb83ea3fef5deec4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
