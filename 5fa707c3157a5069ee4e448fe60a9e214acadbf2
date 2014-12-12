@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24b54af8_a2c9da39",
+        "filename": "service/jni/com_android_server_wifi_WifiNative.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2014-12-12T08:59:07Z",
+      "side": 1,
+      "message": "Is zero actually a valid value here?  If this value comes from if_nametoindex() or something like it then even 0 is not valid.  Or maybe that should be left to be caught by the next check a few lines later?",
+      "revId": "5fa707c3157a5069ee4e448fe60a9e214acadbf2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
