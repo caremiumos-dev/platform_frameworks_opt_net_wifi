@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48d97a6e_0e144be4",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6212,
+      "author": {
+        "id": 1022138
+      },
+      "writtenOn": "2015-02-20T20:09:04Z",
+      "side": 1,
+      "message": "Do you need to blacklist this BSSID? I am not certain it is filed in correctly at this point.",
+      "revId": "132835cb32a89b8641e090af8ed96483fa9240b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
