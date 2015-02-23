@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e81cee53_83323eec",
+        "filename": "service/tools/halutil/halutil.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-02-23T21:18:30Z",
+      "side": 1,
+      "message": "there\u0027s some weirdness on L90, but this is definitely a step forwar.",
+      "revId": "d31a40e4c13481c0e70b0b6392bccf6a0f75c4e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
