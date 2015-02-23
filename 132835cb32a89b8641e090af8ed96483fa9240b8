@@ -16,6 +16,24 @@
       "revId": "132835cb32a89b8641e090af8ed96483fa9240b8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6869de73_47efae86",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6212,
+      "author": {
+        "id": 1054433
+      },
+      "writtenOn": "2015-02-23T09:33:07Z",
+      "side": 1,
+      "message": "You\u0027re right, it\u0027s too aggressive to blacklist the BSSID at this point just because we are not able to get identity from SIM.\n\nSo I will just blacklist the network.\n\nHowever, it look like adding the BSSID here as no effect here ( \"no identity\" error case I mean) because BSSID string is only used in case of \"DHCP FAILURE\" in handleSSIDStateChange.\nAm I right ?",
+      "parentUuid": "48d97a6e_0e144be4",
+      "revId": "132835cb32a89b8641e090af8ed96483fa9240b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
