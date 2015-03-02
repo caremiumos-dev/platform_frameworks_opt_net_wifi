@@ -34,6 +34,24 @@
       "revId": "132835cb32a89b8641e090af8ed96483fa9240b8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92672631_d538dc53",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6212,
+      "author": {
+        "id": 1022138
+      },
+      "writtenOn": "2015-03-02T20:00:06Z",
+      "side": 1,
+      "message": "Well .. that may change. I am also not sure we have the correct BSSID at this point - so it makes two unknowns. Lets not change the semantics where there may be unknowns.",
+      "parentUuid": "6869de73_47efae86",
+      "revId": "132835cb32a89b8641e090af8ed96483fa9240b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
