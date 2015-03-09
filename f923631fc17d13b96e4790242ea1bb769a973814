@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9759d8ea_457eca31",
+        "filename": "service/java/com/android/server/wifi/WifiController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:29:06Z",
+      "side": 1,
+      "message": "Should not exceed 100 columns",
+      "range": {
+        "startLine": 373,
+        "startChar": 20,
+        "endLine": 373,
+        "endChar": 23
+      },
+      "revId": "f923631fc17d13b96e4790242ea1bb769a973814",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7758e4e5_c4695e7b",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:29:06Z",
+      "side": 1,
+      "message": "trailing white spaces",
+      "range": {
+        "startLine": 629,
+        "startChar": 0,
+        "endLine": 629,
+        "endChar": 4
+      },
+      "revId": "f923631fc17d13b96e4790242ea1bb769a973814",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37ae6cfa_12302ceb",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4789,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:29:06Z",
+      "side": 1,
+      "message": "trailing white spaces",
+      "range": {
+        "startLine": 4789,
+        "startChar": 64,
+        "endLine": 4789,
+        "endChar": 65
+      },
+      "revId": "f923631fc17d13b96e4790242ea1bb769a973814",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37ae6cfa_d21d0462",
+        "filename": "service/java/com/android/server/wifi/mesh/WifiMeshService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:29:06Z",
+      "side": 1,
+      "message": "should be 2015",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "f923631fc17d13b96e4790242ea1bb769a973814",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9759d8ea_8573626b",
+        "filename": "service/java/com/android/server/wifi/mesh/WifiMeshServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:29:06Z",
+      "side": 1,
+      "message": "Cannot put Sony\u0027s copyright",
+      "range": {
+        "startLine": 2,
+        "startChar": 27,
+        "endLine": 2,
+        "endChar": 38
+      },
+      "revId": "f923631fc17d13b96e4790242ea1bb769a973814",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7758e4e5_0433f6a8",
+        "filename": "service/java/com/android/server/wifi/mesh/WifiMeshServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:29:06Z",
+      "side": 1,
+      "message": "should be 2015",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 21
+      },
+      "revId": "f923631fc17d13b96e4790242ea1bb769a973814",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7758e4e5_64366a9a",
+        "filename": "service/java/com/android/server/wifi/mesh/WifiMeshServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2015-03-09T21:29:06Z",
+      "side": 1,
+      "message": "trailing white spaces",
+      "range": {
+        "startLine": 641,
+        "startChar": 14,
+        "endLine": 641,
+        "endChar": 15
+      },
+      "revId": "f923631fc17d13b96e4790242ea1bb769a973814",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
