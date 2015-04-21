@@ -6490,6 +6490,17 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                  * or put the state machine out of connect mode
                  */
                 case CMD_SET_OPERATIONAL_MODE:
+                    if (message.arg1 == SCAN_ONLY_WITH_WIFI_OFF_MODE) {
+                        // To avoid getting stuck for a long time when disabling Wi-Fi while
+                        // scanAlwaysEnabled is set and WPS operation is ongoing, we cancel all
+                        // WPS operations before setting operational mode to
+                        // SCAN_ONLY_WITH_WIFI_OFF_MODE
+                        mWifiNative.cancelWps();
+                        replyToMessage(mSourceMessage, WifiManager.WPS_FAILED, WifiManager.ERROR);
+                        transitionTo(mDisconnectedState);
+                    }
+                    deferMessage(message);
+                    break;
                 case WifiManager.CONNECT_NETWORK:
                 case CMD_ENABLE_NETWORK:
                 case CMD_RECONNECT:
