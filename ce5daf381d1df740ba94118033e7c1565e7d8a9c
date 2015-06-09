@@ -46,6 +46,30 @@
       "revId": "ce5daf381d1df740ba94118033e7c1565e7d8a9c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "193e044a_6096521e",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4236,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2015-06-09T22:16:10Z",
+      "side": 1,
+      "message": "I actually thought about that, but this is subtly different - it will pass through if getSSID() returns null, which it shouldn\u0027t do.",
+      "parentUuid": "99fcb4c6_e4f35a9b",
+      "range": {
+        "startLine": 4236,
+        "startChar": 51,
+        "endLine": 4236,
+        "endChar": 93
+      },
+      "revId": "ce5daf381d1df740ba94118033e7c1565e7d8a9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
