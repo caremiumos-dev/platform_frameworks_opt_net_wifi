@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9d41838_b54a12d6",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4236,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2015-06-09T16:59:16Z",
+      "side": 1,
+      "message": "To be extra, extra safe, I would leave in the null check and make this:\n\nmWifiInfo.getSSID() !\u003d null \u0026\u0026 !mWifiInfo.getSSID().equals(WifiSsid.NONE)\n\nwhich will prevent a crash here if getSSID() ever were to return null for some reason.",
+      "range": {
+        "startLine": 4236,
+        "startChar": 51,
+        "endLine": 4236,
+        "endChar": 93
+      },
+      "revId": "ce5daf381d1df740ba94118033e7c1565e7d8a9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
