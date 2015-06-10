@@ -94,6 +94,30 @@
       "revId": "ce5daf381d1df740ba94118033e7c1565e7d8a9c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b971781d_594433ec",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4236,
+      "author": {
+        "id": 1074423
+      },
+      "writtenOn": "2015-06-10T02:34:20Z",
+      "side": 1,
+      "message": "Hi Jeff,\n\nAlthough WifiInfo#getSSID will never return null with current implementation like below, I agree with you that we can leave the null check just in case this function changes in future for some reason. I have updated the patch according to your comment.\n\n    public String getSSID() {\n        if (mWifiSsid !\u003d null) {\n            String unicode \u003d mWifiSsid.toString();\n            if (!TextUtils.isEmpty(unicode)) {\n                return \"\\\"\" + unicode + \"\\\"\";\n            } else {\n                return mWifiSsid.getHexString();\n            }\n        }\n        return WifiSsid.NONE;\n    }",
+      "parentUuid": "b9d41838_b54a12d6",
+      "range": {
+        "startLine": 4236,
+        "startChar": 51,
+        "endLine": 4236,
+        "endChar": 93
+      },
+      "revId": "ce5daf381d1df740ba94118033e7c1565e7d8a9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
