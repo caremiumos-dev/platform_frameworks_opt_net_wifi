@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b367d930_180c4977",
+        "filename": "service/java/com/android/server/wifi/WifiConfigStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3531,
+      "author": {
+        "id": 1059423
+      },
+      "writtenOn": "2015-06-30T06:45:53Z",
+      "side": 1,
+      "message": "Add what the servers are and wrap in if (VDBG).",
+      "revId": "1406c3307599376eb6a1802ea562e8b16285930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3ae0d65_094ced45",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1059423
+      },
+      "writtenOn": "2015-06-30T06:45:53Z",
+      "side": 1,
+      "message": "Change back to false.",
+      "revId": "1406c3307599376eb6a1802ea562e8b16285930e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
