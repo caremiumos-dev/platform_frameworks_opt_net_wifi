@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "931655ff_77506a54",
+        "filename": "service/jni/com_android_server_wifi_WifiNative.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-07-03T12:04:48Z",
+      "side": 1,
+      "message": "FYI: You\u0027re changing the semantics of this method. we will now throw an NPE if macAddrString \u003d\u003d null. That\u0027s probably a good thing, but do callers expect us to return false if that\u0027s the case ?",
+      "revId": "f922dd21871b53fd003b6a5604102601dfddb8a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
