@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b317d9fa_dbf40b81",
+        "filename": "service/jni/com_android_server_wifi_WifiNative.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1004424
+      },
+      "writtenOn": "2015-07-06T05:46:27Z",
+      "side": 1,
+      "message": "This NULL check should take care of your concerns :)",
+      "range": {
+        "startLine": 537,
+        "startChar": 8,
+        "endLine": 537,
+        "endChar": 29
+      },
+      "revId": "f922dd21871b53fd003b6a5604102601dfddb8a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "931655ff_77506a54",
         "filename": "service/jni/com_android_server_wifi_WifiNative.cpp",
         "patchSetId": 2
