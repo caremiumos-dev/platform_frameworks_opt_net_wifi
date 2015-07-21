@@ -22,6 +22,30 @@
       "revId": "9d70bc50e0786328fe161773b539763a23bb5370",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d849ecc_c2f4824b",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8062,
+      "author": {
+        "id": 1052234
+      },
+      "writtenOn": "2015-07-21T08:06:57Z",
+      "side": 1,
+      "message": "When the message CMD_NO_NETWORKS_PERIODIC_SCAN is processed in DisconnectedState, if p2p is connected, it will not do the scan as the supplicant scan interval 15s. So if p2p is not connected, it doesn\u0027t need to do the scan as the disconnected scan interval 10s when the message CMD_START_SCAN is processed in DisconnectedState. We should not permit the both scan periods exist at the same time.",
+      "parentUuid": "0d432251_cfc35d7c",
+      "range": {
+        "startLine": 8062,
+        "startChar": 58,
+        "endLine": 8062,
+        "endChar": 79
+      },
+      "revId": "9d70bc50e0786328fe161773b539763a23bb5370",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
