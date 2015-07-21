@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d432251_cfc35d7c",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8062,
+      "author": {
+        "id": 1067908
+      },
+      "writtenOn": "2015-07-21T07:56:27Z",
+      "side": 1,
+      "message": "BTW, Why did you check if P2P connected ?",
+      "range": {
+        "startLine": 8062,
+        "startChar": 58,
+        "endLine": 8062,
+        "endChar": 79
+      },
+      "revId": "9d70bc50e0786328fe161773b539763a23bb5370",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
