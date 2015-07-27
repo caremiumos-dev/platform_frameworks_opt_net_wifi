@@ -46,6 +46,30 @@
       "revId": "9d70bc50e0786328fe161773b539763a23bb5370",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cdd4aa39_2d94ad14",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8062,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2015-07-27T08:18:44Z",
+      "side": 1,
+      "message": "This seems like a likely source of future confusion.\n\nIf we want to know whether a scan is already in progress or not, perhaps we need to track it directly somehow (perhaps track the last scan interval value, setting to -1 when there is no scan?).",
+      "parentUuid": "6d849ecc_c2f4824b",
+      "range": {
+        "startLine": 8062,
+        "startChar": 58,
+        "endLine": 8062,
+        "endChar": 79
+      },
+      "revId": "9d70bc50e0786328fe161773b539763a23bb5370",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
