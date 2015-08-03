@@ -70,6 +70,30 @@
       "revId": "9d70bc50e0786328fe161773b539763a23bb5370",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a56a845_d7245c3a",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8062,
+      "author": {
+        "id": 1052234
+      },
+      "writtenOn": "2015-08-03T07:47:46Z",
+      "side": 1,
+      "message": "Erik, in my opinion, if setting the scan interval to -1 when there is no scan, we have to reset the interval to the original value before starting scan. It will make the code complicated. Another thinking is setting a flag to mark it is doing period scan. But we have to clear this flag accurately when the period scan is stopped. It will make the code logic more complicated.",
+      "parentUuid": "cdd4aa39_2d94ad14",
+      "range": {
+        "startLine": 8062,
+        "startChar": 58,
+        "endLine": 8062,
+        "endChar": 79
+      },
+      "revId": "9d70bc50e0786328fe161773b539763a23bb5370",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
