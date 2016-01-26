@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f49a3677_66fdd6d0",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1538,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-01-26T22:25:33Z",
+      "side": 1,
+      "message": "Shall we do \"if (enabled \u0026\u0026 mBackgroundScanSupported \u003d\u003d false)\" so RTC alarm is fired only when PNO is not supported?",
+      "revId": "2be691d77da84afe8165a2fec2e644ec434ec2ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14beeac6_edf0c9f5",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1541,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-01-26T22:25:33Z",
+      "side": 1,
+      "message": "Can you elaborate why we change from mAlarmManager.set() to mAlarmManager.setRepeating()? What\u0027s the issue with existing implementation?",
+      "revId": "2be691d77da84afe8165a2fec2e644ec434ec2ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

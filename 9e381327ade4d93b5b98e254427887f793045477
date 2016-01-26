@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4afde8e_5226b460",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1537,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-01-26T22:25:33Z",
+      "side": 0,
+      "message": "I had the same question on this piece of logic. The change of this block makes sense to me.",
+      "revId": "9e381327ade4d93b5b98e254427887f793045477",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f49a3677_e63e2661",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1537,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-01-26T22:25:33Z",
+      "side": 0,
+      "message": "I had the same concern on this logic when reading the code this morning. The change in this block makes sense to me.",
+      "revId": "9e381327ade4d93b5b98e254427887f793045477",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
