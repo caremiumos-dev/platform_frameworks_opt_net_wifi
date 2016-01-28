@@ -87,6 +87,24 @@
       "revId": "2be691d77da84afe8165a2fec2e644ec434ec2ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14beeac6_6bcadca1",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1541,
+      "author": {
+        "id": 1056283
+      },
+      "writtenOn": "2016-01-28T01:16:23Z",
+      "side": 1,
+      "message": "It is not right.\nmScanIntent--\u003eACTION_START_SCAN which will call startScan\nStartscan will send message CMD_START_SCAN, which should be handled in L2ConnectedState and here checkAndRestartDelayedScan is called to trigger another scan.\nAs rangdy mentioned, both disconnected and connected state will be covered.\n\nWith your change, both scan mechanism will run. This will cause too many scans then.",
+      "parentUuid": "34fdaec1_a409e20c",
+      "revId": "2be691d77da84afe8165a2fec2e644ec434ec2ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
