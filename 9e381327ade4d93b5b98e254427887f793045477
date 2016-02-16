@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "bd6b4469_6a7397b8",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1541,
+      "author": {
+        "id": 1090168
+      },
+      "writtenOn": "2016-02-16T09:25:15Z",
+      "side": 0,
+      "message": "If mBackgroundScanSupported \u003d\u003d false, then enable always is true, when call setScanAlarm(false), enable will become true,\nso, you can not successfully call setScanAlarm(fase).",
+      "range": {
+        "startLine": 1541,
+        "startChar": 12,
+        "endLine": 1541,
+        "endChar": 19
+      },
+      "revId": "9e381327ade4d93b5b98e254427887f793045477",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14f8aad1_630e42c3",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 5
