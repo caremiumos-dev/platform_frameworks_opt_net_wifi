@@ -80,6 +80,53 @@
       "revId": "9e381327ade4d93b5b98e254427887f793045477",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d775410_af7239b1",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1544,
+      "author": {
+        "id": 1090168
+      },
+      "writtenOn": "2016-02-16T06:18:14Z",
+      "side": 0,
+      "message": "If PNO support, scan alarm will not be enabled.",
+      "parentUuid": "3d53d428_06903a37",
+      "range": {
+        "startLine": 1544,
+        "startChar": 8,
+        "endLine": 1544,
+        "endChar": 45
+      },
+      "revId": "9e381327ade4d93b5b98e254427887f793045477",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d170cd9_d82f0d86",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 9424,
+      "author": {
+        "id": 1090168
+      },
+      "writtenOn": "2016-02-16T06:18:14Z",
+      "side": 0,
+      "message": "Hi, Xin, \"if it is SCAN_ALARM_SOURCE, turn mAlarmEnabled  to false.\"\nHere is the mAlaramEnabled set to false?",
+      "range": {
+        "startLine": 9424,
+        "startChar": 24,
+        "endLine": 9424,
+        "endChar": 25
+      },
+      "revId": "9e381327ade4d93b5b98e254427887f793045477",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
