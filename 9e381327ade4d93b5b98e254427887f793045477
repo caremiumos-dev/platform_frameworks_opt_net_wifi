@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "9d86802c_fe95c5f5",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1544,
+      "author": {
+        "id": 1090168
+      },
+      "writtenOn": "2016-02-16T08:36:23Z",
+      "side": 0,
+      "message": "OK, \"if PNO support, should use PNO\" is correct. So,setScanAlarm is only used when mBackgroundScanSupported \u003d\u003d false. \nAnd if setScanAlarm(false), then enabled is also true.",
+      "parentUuid": "dd255844_73f06083",
+      "range": {
+        "startLine": 1544,
+        "startChar": 8,
+        "endLine": 1544,
+        "endChar": 45
+      },
+      "revId": "9e381327ade4d93b5b98e254427887f793045477",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d170cd9_d82f0d86",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 5
