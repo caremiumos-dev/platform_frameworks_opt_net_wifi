@@ -16,6 +16,24 @@
       "revId": "00caeb541fab6080f46ffaf2106f2552c7861ebe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2b881d5_93bbf4a0",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1723,
+      "author": {
+        "id": 1097698
+      },
+      "writtenOn": "2016-03-03T09:05:11Z",
+      "side": 1,
+      "message": "This was removing by mistake in the porting process !\nI will fix that.",
+      "parentUuid": "02feade5_14d59abc",
+      "revId": "00caeb541fab6080f46ffaf2106f2552c7861ebe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
