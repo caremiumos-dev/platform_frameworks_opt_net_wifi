@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02feade5_14d59abc",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1723,
+      "author": {
+        "id": 1022138
+      },
+      "writtenOn": "2016-03-03T02:55:15Z",
+      "side": 1,
+      "message": "I can understand going to provisionDiscoveryState - but why remove the INFOMRMATION_IS_CURRENTLY_UNAVAILABLE processing?",
+      "revId": "00caeb541fab6080f46ffaf2106f2552c7861ebe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
