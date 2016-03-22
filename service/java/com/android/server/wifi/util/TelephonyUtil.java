@@ -181,6 +181,21 @@ public class TelephonyUtil {
         return result;
     }
 
+    private static byte[] parseHex(String hex, boolean needLength) {
+        byte[] result = null;
+        if (needLength) {
+            result = parseHex(hex);
+        } else {
+            byte[] tmpRes = parseHex(hex);
+            result = new byte[(hex.length()) / 2];
+            for (int i = 0; i < hex.length() / 2; i++) {
+                result[i] = tmpRes[i + 1];
+            }
+        }
+
+        return result;
+    }
+
     private static String makeHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {
@@ -243,14 +258,8 @@ public class TelephonyUtil {
 
             String base64Challenge = Base64.encodeToString(rand, Base64.NO_WRAP);
 
-            // Try USIM first for authentication.
             String tmResponse = tm.getIccAuthentication(TelephonyManager.APPTYPE_USIM,
                     TelephonyManager.AUTHTYPE_EAP_SIM, base64Challenge);
-            if (tmResponse == null) {
-                // Then, in case of failure, issue may be due to sim type, retry as a simple sim
-                tmResponse = tm.getIccAuthentication(TelephonyManager.APPTYPE_SIM,
-                        TelephonyManager.AUTHTYPE_EAP_SIM, base64Challenge);
-            }
             Log.v(TAG, "Raw Response - " + tmResponse);
 
             if (tmResponse == null || tmResponse.length() <= 4) {
@@ -277,6 +286,109 @@ public class TelephonyUtil {
                 return null;
             }
             String kc = makeHex(result, 1 + kcOffset, kcLen);
+            sb.append(":" + kc + ":" + sres);
+            Log.v(TAG, "kc:" + kc + " sres:" + sres);
+        }
+
+        return sb.toString();
+    }
+
+    public static String get2gSimpleSimAuthResponse(String[] requestData, TelephonyManager tm) {
+        if (tm == null) {
+            Log.e(TAG, "No valid TelephonyManager");
+            return null;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (String challenge : requestData) {
+            if (challenge == null || challenge.isEmpty()) {
+                continue;
+            }
+            Log.d(TAG, "RAND = " + challenge);
+
+            byte[] rand = null;
+            try {
+                rand = parseHex(challenge);
+            } catch (NumberFormatException e) {
+                Log.e(TAG, "malformed challenge");
+                continue;
+            }
+
+            String base64Challenge = Base64.encodeToString(rand, Base64.NO_WRAP);
+
+            String tmResponse = tm.getIccAuthentication(TelephonyManager.APPTYPE_SIM,
+                    TelephonyManager.AUTHTYPE_EAP_SIM, base64Challenge);
+            Log.v(TAG, "Raw Response - " + tmResponse);
+
+            if (tmResponse == null || tmResponse.length() <= 4) {
+                Log.e(TAG, "bad response - " + tmResponse);
+                return null;
+            }
+
+            byte[] result = Base64.decode(tmResponse, Base64.DEFAULT);
+            Log.v(TAG, "Hex Response -" + makeHex(result));
+            int sresLen = result[0];
+            if (sresLen >= result.length) {
+                Log.e(TAG, "malfomed response - " + tmResponse);
+                return null;
+            }
+            String sres = makeHex(result, 1, sresLen);
+            int kcOffset = 1 + sresLen;
+            if (kcOffset >= result.length) {
+                Log.e(TAG, "malfomed response - " + tmResponse);
+                return null;
+            }
+            int kcLen = result[kcOffset];
+            if (kcOffset + kcLen > result.length) {
+                Log.e(TAG, "malfomed response - " + tmResponse);
+                return null;
+            }
+            String kc = makeHex(result, 1 + kcOffset, kcLen);
+            sb.append(":" + kc + ":" + sres);
+            Log.v(TAG, "kc:" + kc + " sres:" + sres);
+        }
+
+        return sb.toString();
+    }
+
+    public static String get2gUsimAuthResponse(String[] requestData, TelephonyManager tm) {
+        if (tm == null) {
+            Log.e(TAG, "No valid TelephonyManager");
+            return null;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (String challenge : requestData) {
+            if (challenge == null || challenge.isEmpty()) {
+                continue;
+            }
+            Log.d(TAG, "RAND = " + challenge);
+
+            byte[] rand = null;
+            try {
+                rand = parseHex(challenge, false);
+            } catch (NumberFormatException e) {
+                Log.e(TAG, "malformed challenge");
+                continue;
+            }
+
+            String base64Challenge = Base64.encodeToString(rand, Base64.NO_WRAP);
+
+            String tmResponse = tm.getIccAuthentication(TelephonyManager.APPTYPE_SIM,
+                    TelephonyManager.AUTHTYPE_EAP_SIM, base64Challenge);
+            Log.v(TAG, "Raw Response - " + tmResponse);
+
+            if (tmResponse == null || tmResponse.length() <= 4) {
+                Log.e(TAG, "bad response - " + tmResponse);
+                return null;
+            }
+
+            byte[] result = Base64.decode(tmResponse, Base64.DEFAULT);
+            if (12 != result.length) {
+                Log.e(TAG, "malfomed response - " + tmResponse);
+                return null;
+            }
+            Log.v(TAG, "Hex Response -" + makeHex(result));
+            String sres = makeHex(result, 0, 4);
+            String kc = makeHex(result, 4, 8);
             sb.append(":" + kc + ":" + sres);
             Log.v(TAG, "kc:" + kc + " sres:" + sres);
         }

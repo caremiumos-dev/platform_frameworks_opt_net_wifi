@@ -6696,8 +6696,32 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             return;
         }
 
+        /*
+         * add a new app type to handle 2G autehtnication @ 3GPP TS 11.11:
+         * Standard       Cellular_auth     Type Command
+         *
+         * 3GPP TS 31.102 3G_authentication [Length][RAND][Length][AUTN]
+         *                         [Length][RES][Length][CK][Length][IK] and more
+         *                2G_authentication [Length][RAND]
+         *                         [Length][SRES][Length][Cipher Key Kc]
+         * 3GPP TS 11.11  2G_authentication [RAND]
+         *                         [SRES][Cipher Key Kc]
+         */
+        // Try APPTYPE_USIM first for authentication.(3GPP TS 31.102)
         String response =
                 TelephonyUtil.getGsmSimAuthResponse(requestData.data, getTelephonyManager());
+        if (response == null) {
+            // Then, in case of failure, issue may be due to APPTYPE_SIM with 2G_authentication,
+            // retry as a simple sim(3GPP TS 31.102)
+            response = TelephonyUtil.get2gSimpleSimAuthResponse(requestData.data,
+                    getTelephonyManager());
+            if (response == null) {
+                // SIM, appType passed in should be APPTYPE_SIM with 2G_authentication
+                // (3GPP TS 11.11)
+                response = TelephonyUtil.get2gUsimAuthResponse(requestData.data,
+                        getTelephonyManager());
+            }
+        }
         if (response == null) {
             mWifiNative.simAuthFailedResponse(requestData.networkId);
         } else {
