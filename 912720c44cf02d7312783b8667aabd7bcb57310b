@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f17a4d32_cbdad509",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10343,
+      "author": {
+        "id": 1100304
+      },
+      "writtenOn": "2016-03-30T07:29:11Z",
+      "side": 1,
+      "message": "incorrect indentation",
+      "range": {
+        "startLine": 10343,
+        "startChar": 17,
+        "endLine": 10343,
+        "endChar": 18
+      },
+      "revId": "912720c44cf02d7312783b8667aabd7bcb57310b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
