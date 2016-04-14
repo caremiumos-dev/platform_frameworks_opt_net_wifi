@@ -26,6 +26,7 @@ import static android.net.wifi.WifiManager.WIFI_STATE_DISABLING;
 import static android.net.wifi.WifiManager.WIFI_STATE_ENABLED;
 import static android.net.wifi.WifiManager.WIFI_STATE_ENABLING;
 import static android.net.wifi.WifiManager.WIFI_STATE_UNKNOWN;
+import static android.provider.Settings.Secure.WIFI_DISCONNECT_DELAY_DURATION;
 
 import android.Manifest;
 import android.app.ActivityManager;
@@ -748,6 +749,38 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     private final boolean mEnableLinkDebouncing;
     private final boolean mEnableChipWakeUpWhenAssociated;
     private final boolean mEnableRssiPollWhenAssociated;
+
+    /**
+     * timeStamp of last full band scan we perfoemed for autojoin while connected with screen lit
+     */
+    private long lastFullBandConnectedTimeMilli;
+
+    /**
+     * time interval to the next full band scan we will perform for
+     * autojoin while connected with screen lit
+     */
+    private long fullBandConnectedTimeIntervalMilli;
+
+    /**
+     * max time interval to the next full band scan we will perform for
+     * autojoin while connected with screen lit
+     * Max time is 5 minutes
+     */
+    private static final long maxFullBandConnectedTimeIntervalMilli = 1000 * 60 * 5;
+
+    /**
+     * Delay configured for delayed disconnect.
+     **/
+    private int mDisconnectDelayDuration;
+
+
+    /**
+     * Minimum time interval between enabling all networks.
+     * A device can end up repeatedly connecting to a bad network on screen on/off toggle
+     * due to enabling every time. We add a threshold to avoid this.
+     */
+    private static final int MIN_INTERVAL_ENABLE_ALL_NETWORKS_MS = 10 * 60 * 1000; /* 10 minutes */
+    private long mLastEnableAllNetworksTime;
 
     int mRunningBeaconCount = 0;
 
@@ -1574,7 +1607,23 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         if (enable) {
             sendMessage(CMD_START_SUPPLICANT);
         } else {
-            sendMessage(CMD_STOP_SUPPLICANT);
+            mDisconnectDelayDuration = -1;
+            try {
+                mDisconnectDelayDuration = Settings.Secure.getInt(mContext.getContentResolver(),
+                        WIFI_DISCONNECT_DELAY_DURATION,0) ;
+            } catch (NumberFormatException ex) {
+                mDisconnectDelayDuration = 0;
+                Log.e(TAG, " get mDisconnectDelayDuration caught exception ");
+            }
+            if ((mDisconnectDelayDuration > 0) && (mNetworkInfo.getState()
+                    == NetworkInfo.State.CONNECTED)) {
+                Intent intent = new Intent(WifiManager.ACTION_WIFI_DISCONNECT_IN_PROGRESS);
+                mContext.sendBroadcastAsUser(intent, UserHandle.ALL);
+                Log.e(TAG, " Disconnection delayed by  " + mDisconnectDelayDuration + " seconds");
+                sendMessageDelayed(CMD_STOP_SUPPLICANT, mDisconnectDelayDuration * 1000);
+            } else {
+                sendMessage(CMD_STOP_SUPPLICANT);
+            }
         }
     }
 
