@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a31df4f8_146c6c1d",
+        "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-06-08T14:26:29Z",
+      "side": 1,
+      "message": "Note that mScanState inherits from mDefaultState",
+      "revId": "8add67a26ff8b29e612f6c63ab3513d2bf6e665c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a31df4f8_745b6877",
+        "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-06-08T14:26:29Z",
+      "side": 1,
+      "message": "Note that DefaultState handles CMD_RESET_SUPPLICANT_STATE.",
+      "revId": "8add67a26ff8b29e612f6c63ab3513d2bf6e665c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a31df4f8_94587c7a",
+        "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-06-08T14:26:29Z",
+      "side": 1,
+      "message": "...therefore handling it here is redundant.",
+      "revId": "8add67a26ff8b29e612f6c63ab3513d2bf6e665c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
