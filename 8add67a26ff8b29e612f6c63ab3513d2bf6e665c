@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "af94f8c1_fbac8fa1",
+        "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1107918
+      },
+      "writtenOn": "2016-06-18T06:58:15Z",
+      "side": 1,
+      "message": "CMD_RESET_SUPPLICANT_STATE here handled nothing but change state to UninitializedState, and UninitializedState does nothing about changing battery state.",
+      "parentUuid": "a31df4f8_745b6877",
+      "revId": "8add67a26ff8b29e612f6c63ab3513d2bf6e665c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a31df4f8_94587c7a",
         "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
         "patchSetId": 3
@@ -47,6 +65,24 @@
       "writtenOn": "2016-06-08T14:26:29Z",
       "side": 1,
       "message": "...therefore handling it here is redundant.",
+      "revId": "8add67a26ff8b29e612f6c63ab3513d2bf6e665c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af94f8c1_bbb207fe",
+        "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1107918
+      },
+      "writtenOn": "2016-06-18T06:58:15Z",
+      "side": 1,
+      "message": "Though DefaultState handles CMD_RESET_SUPPLICANT_STATE, it does nothing but change state to UninitializedState, which have no ability to handle battery state changing actions, this is right for most situations, but will cause problems like https://code.google.com/p/android/issues/detail?id\u003d196120. Adding STATECMD_RESET_SUPPLICANT_STATE handler to ScanState make sure battery state will change to disconnect when WiFi has finished scanning but accessed to no WiFi net work, this is a particular situation, it needs special handle action, so I don\u0027t think it is redundant.",
+      "parentUuid": "a31df4f8_94587c7a",
       "revId": "8add67a26ff8b29e612f6c63ab3513d2bf6e665c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
