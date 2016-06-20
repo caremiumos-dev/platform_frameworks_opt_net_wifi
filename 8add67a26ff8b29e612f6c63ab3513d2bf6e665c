@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "896bb469_6aef17bd",
+        "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-06-20T16:25:38Z",
+      "side": 1,
+      "message": "In this case, we should probably put the StateChangedBroadcast here instead, or perhaps in the onEnter for UninitializedState",
+      "parentUuid": "af94f8c1_fbac8fa1",
+      "revId": "8add67a26ff8b29e612f6c63ab3513d2bf6e665c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a31df4f8_94587c7a",
         "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
         "patchSetId": 3
