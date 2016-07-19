@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a425b4c_91ca0f72",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8790,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-07-19T19:47:31Z",
+      "side": 1,
+      "message": "We probably don\u0027t want to increment mRoamFailCount here as the roaming is cancelled. It didn\u0027t fail. The count is more for roaming watchdog to detect roaming failure.",
+      "revId": "2c354b06e4451c7b6a6031fc15d4cece7e215c6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a425b4c_ccdebe02",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8795,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-07-19T19:47:31Z",
+      "side": 1,
+      "message": "Do we still want to deferMessage() for the message.arg1 \u003d\u003d SCAN_ONLY_WITH_WIFI_OFF_MODE case? If not, consider reorganizing the code to sth like\n\nif (message.arg1 \u003d\u003d SCAN_ONLY_WITH_WIFI_OFF_MODE) {\n   ...\n} else if (message.arg1 !\u003d CONNECT_MODE) {\n  deferMessage()\n}",
+      "revId": "2c354b06e4451c7b6a6031fc15d4cece7e215c6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
