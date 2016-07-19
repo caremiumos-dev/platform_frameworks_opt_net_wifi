@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0a425b4c_473989f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-07-19T20:49:35Z",
+      "side": 1,
+      "message": "Please put the bug id 30149515 here.",
+      "revId": "2c354b06e4451c7b6a6031fc15d4cece7e215c6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a425b4c_91ca0f72",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 1
