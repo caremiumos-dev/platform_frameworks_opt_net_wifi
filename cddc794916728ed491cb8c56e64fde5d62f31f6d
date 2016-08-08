@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b99e1320_04c6e1b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-08-08T23:46:09Z",
+      "side": 1,
+      "message": "Please add a line here like\n\nBug: 30467318",
+      "revId": "cddc794916728ed491cb8c56e64fde5d62f31f6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
