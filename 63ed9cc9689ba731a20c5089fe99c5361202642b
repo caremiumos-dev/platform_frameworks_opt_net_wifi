@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9c96b7a_3fb90b91",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-08-09T20:57:53Z",
+      "side": 1,
+      "message": "Should we also not log the anonymous identity?",
+      "revId": "63ed9cc9689ba731a20c5089fe99c5361202642b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
