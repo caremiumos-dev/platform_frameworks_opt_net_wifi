@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f19fc9ca_ece49ea0",
+        "filename": "project.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1069528
+      },
+      "writtenOn": "2016-09-02T15:13:15Z",
+      "side": 1,
+      "message": "Missing submit?",
+      "range": {
+        "startLine": 8,
+        "startChar": 41,
+        "endLine": 8,
+        "endChar": 45
+      },
+      "revId": "3793338d0117e6e3e82ffbdeb2236175b7d07a70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
