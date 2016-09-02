@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f19fc9ca_1b65de13",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-02T20:37:53Z",
+      "side": 0,
+      "message": "You removed this, but didn\u0027t change the mask below",
+      "revId": "23571215e97f2ead59c36f16d4d5822cbd64709d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
