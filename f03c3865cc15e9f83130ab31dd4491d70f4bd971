@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "363cf7f1_ae534733",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6352,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-06T14:52:20Z",
+      "side": 1,
+      "message": "Can you change this message to CMD_START_ROAM while u\u0027re there?",
+      "range": {
+        "startLine": 6352,
+        "startChar": 30,
+        "endLine": 6352,
+        "endChar": 42
+      },
+      "revId": "f03c3865cc15e9f83130ab31dd4491d70f4bd971",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
