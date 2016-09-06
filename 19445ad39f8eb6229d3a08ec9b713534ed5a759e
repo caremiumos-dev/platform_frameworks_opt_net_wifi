@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "363cf7f1_b95eefe1",
+        "filename": "service/java/com/android/server/wifi/WifiConfigStoreData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-06T16:58:11Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we be fixing the isEnterprise method instead? If the eap method is NONE should we just ignore the enterpriseConfig field and set it to null?",
+      "revId": "19445ad39f8eb6229d3a08ec9b713534ed5a759e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
