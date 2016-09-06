@@ -34,6 +34,24 @@
       "revId": "19445ad39f8eb6229d3a08ec9b713534ed5a759e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "363cf7f1_34c9464d",
+        "filename": "service/java/com/android/server/wifi/WifiConfigStoreData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-06T17:15:42Z",
+      "side": 1,
+      "message": "Added go/aog/269727 to fix isEnterprise() check.",
+      "parentUuid": "363cf7f1_19339bb0",
+      "revId": "19445ad39f8eb6229d3a08ec9b713534ed5a759e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
