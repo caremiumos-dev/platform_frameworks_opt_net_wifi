@@ -16,6 +16,24 @@
       "revId": "19445ad39f8eb6229d3a08ec9b713534ed5a759e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "363cf7f1_19339bb0",
+        "filename": "service/java/com/android/server/wifi/WifiConfigStoreData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-06T17:01:55Z",
+      "side": 1,
+      "message": "Yeah. That\u0027s what I would have thought. But, I don\u0027t fully understand the possible combinations of these key_mgmt vs enterpriseConfig params. I agree that should be clarified/fixed as well. \n\nBut, we\u0027re serializing the enterprise config object here, so regardless of the validity of the configuration provided. The check here should verify if this particular object is valid or not.",
+      "parentUuid": "363cf7f1_b95eefe1",
+      "revId": "19445ad39f8eb6229d3a08ec9b713534ed5a759e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
