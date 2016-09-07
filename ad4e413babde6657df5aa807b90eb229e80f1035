@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6f9dbd6_ad0f8537",
+        "filename": "tests/wifitests/src/com/android/server/wifi/hotspot2/PasspointEventHandlerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-07T21:35:00Z",
+      "side": 1,
+      "message": "Maybe mWifiNative?",
+      "range": {
+        "startLine": 50,
+        "startChar": 21,
+        "endLine": 50,
+        "endChar": 36
+      },
+      "revId": "ad4e413babde6657df5aa807b90eb229e80f1035",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6f9dbd6_cd81a167",
+        "filename": "tests/wifitests/src/com/android/server/wifi/hotspot2/PasspointEventHandlerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-07T21:35:00Z",
+      "side": 1,
+      "message": "Probably don\u0027t need this whitespace?",
+      "revId": "ad4e413babde6657df5aa807b90eb229e80f1035",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

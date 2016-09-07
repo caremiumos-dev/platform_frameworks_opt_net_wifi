@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6f9dbd6_4d193192",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7037,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-07T21:35:00Z",
+      "side": 0,
+      "message": "Thank you!  Was this never called?",
+      "revId": "c09dfcd7c629764aa39528bb06feea846fcaa9b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
