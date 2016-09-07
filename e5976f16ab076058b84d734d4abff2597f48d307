@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d6f9dbd6_e4d8fa75",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-07T19:55:26Z",
+      "side": 1,
+      "message": "I guess at the end all we care about is which network the device is connected to. In that sense, how\u0027s forcing connection to that netId different from having QNS picks it?",
+      "parentUuid": "96c20370_dd64bf4b",
+      "revId": "e5976f16ab076058b84d734d4abff2597f48d307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96c20370_7d26d328",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 3
