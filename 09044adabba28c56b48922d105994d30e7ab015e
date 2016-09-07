@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6f9dbd6_d82cbdba",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointEventHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-07T22:05:12Z",
+      "side": 1,
+      "message": "Are u hooking these to WifiMonitor in a separate CL or waiting for wificond integration?",
+      "range": {
+        "startLine": 177,
+        "startChar": 16,
+        "endLine": 177,
+        "endChar": 30
+      },
+      "revId": "09044adabba28c56b48922d105994d30e7ab015e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
