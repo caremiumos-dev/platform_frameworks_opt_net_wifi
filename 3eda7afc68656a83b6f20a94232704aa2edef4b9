@@ -22,6 +22,30 @@
       "revId": "3eda7afc68656a83b6f20a94232704aa2edef4b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96c20370_bd634b11",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6344,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-07T17:34:21Z",
+      "side": 1,
+      "message": "This may not be the same. setTargetBSSID only sets mTargetBSSID to bssid if the config.BSSID is null.\n\nSo, we\u0027re not making the change for MR1? I made the change here because this part has changed a lot from MR1.",
+      "parentUuid": "96c20370_5d3aef24",
+      "range": {
+        "startLine": 6344,
+        "startChar": 1,
+        "endLine": 6344,
+        "endChar": 44
+      },
+      "revId": "3eda7afc68656a83b6f20a94232704aa2edef4b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
