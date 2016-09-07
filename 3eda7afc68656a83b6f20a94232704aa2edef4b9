@@ -70,6 +70,30 @@
       "revId": "3eda7afc68656a83b6f20a94232704aa2edef4b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16db7369_4e237317",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6344,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-07T17:53:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6c8e799_36ad1688",
+      "range": {
+        "startLine": 6344,
+        "startChar": 1,
+        "endLine": 6344,
+        "endChar": 44
+      },
+      "revId": "3eda7afc68656a83b6f20a94232704aa2edef4b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
