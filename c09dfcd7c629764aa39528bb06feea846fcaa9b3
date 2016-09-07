@@ -16,6 +16,24 @@
       "revId": "c09dfcd7c629764aa39528bb06feea846fcaa9b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6f9dbd6_cd49a116",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7037,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-09-07T21:44:34Z",
+      "side": 0,
+      "message": "The callsite was removed as part of the WifiConfigManager refactor.  The WNM frames will be handled by the new PasspointManager (will be added in the near future).  This intent is used by the Hotspot 2.0 release 2 client (OSU app) for remediation handling.",
+      "parentUuid": "d6f9dbd6_4d193192",
+      "revId": "c09dfcd7c629764aa39528bb06feea846fcaa9b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
