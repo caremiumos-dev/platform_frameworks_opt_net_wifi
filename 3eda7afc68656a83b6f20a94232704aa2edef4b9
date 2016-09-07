@@ -46,6 +46,30 @@
       "revId": "3eda7afc68656a83b6f20a94232704aa2edef4b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6c8e799_36ad1688",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6344,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-07T17:50:33Z",
+      "side": 1,
+      "message": "True, they may not be the same. But mTargetBSSID is what we are actually going to roam to. Logging the \u0027bssid\u0027 here simply causes confusion, especially with the work \u0027to\u0027 in front of it.",
+      "parentUuid": "96c20370_bd634b11",
+      "range": {
+        "startLine": 6344,
+        "startChar": 1,
+        "endLine": 6344,
+        "endChar": 44
+      },
+      "revId": "3eda7afc68656a83b6f20a94232704aa2edef4b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
