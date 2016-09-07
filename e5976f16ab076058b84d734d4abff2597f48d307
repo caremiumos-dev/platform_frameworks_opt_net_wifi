@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "96c20370_dd64bf4b",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-07T17:36:57Z",
+      "side": 1,
+      "message": "Well, if the enabled netId was previously disabled. We want to trigger QNS to ensure that this netId has been reconsidered for connection. We are not forcing connection to this netId. But, if this is actually the best netId now in our saved networks, QNS should decide to connect to it.",
+      "parentUuid": "96c20370_3ddbbb0c",
+      "revId": "e5976f16ab076058b84d734d4abff2597f48d307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96c20370_7d26d328",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2016-09-07T17:26:28Z",
       "side": 1,
       "message": "Can we add some comments. This \u0027setUserConnectChoice\u0027 is for next network selection to favor this user selected network. The following \u0027startConnectToNetwork\u0027 will bypass network selection and connect to the network directly.",
+      "revId": "e5976f16ab076058b84d734d4abff2597f48d307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96c20370_dd903ffe",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-07T17:36:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96c20370_7d26d328",
       "revId": "e5976f16ab076058b84d734d4abff2597f48d307",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
