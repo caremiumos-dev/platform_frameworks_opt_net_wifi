@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96c20370_5d3aef24",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6344,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-07T17:31:39Z",
+      "side": 1,
+      "message": "Let\u0027s remove this line. Now \u0027mTargetRoamBSSID\u0027 is \u0027bssid\u0027.\n\nSince you are making this change, I am going to transfer b/31317756 to you.",
+      "range": {
+        "startLine": 6344,
+        "startChar": 1,
+        "endLine": 6344,
+        "endChar": 44
+      },
+      "revId": "3eda7afc68656a83b6f20a94232704aa2edef4b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
