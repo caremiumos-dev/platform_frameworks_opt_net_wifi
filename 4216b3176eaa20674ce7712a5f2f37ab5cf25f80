@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56832b87_fbee48e8",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2467,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-08T22:00:56Z",
+      "side": 1,
+      "message": "lets add a test to verify the contents of this",
+      "revId": "4216b3176eaa20674ce7712a5f2f37ab5cf25f80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
