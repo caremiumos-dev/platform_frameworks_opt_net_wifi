@@ -16,6 +16,24 @@
       "revId": "92c266d527dc8e6b0cf40c8631211602a1fda9a3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56832b87_db05041c",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-09-08T21:45:13Z",
+      "side": 1,
+      "message": "as discussed offline, made this method synchronized.  When I move WifiScanner from WSM to WifiService, this method will be called in startScan (to avoid a race between services starting up)",
+      "parentUuid": "56832b87_9d21b4ae",
+      "revId": "92c266d527dc8e6b0cf40c8631211602a1fda9a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
