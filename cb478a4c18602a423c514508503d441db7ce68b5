@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56832b87_2c6958ef",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-08T23:54:53Z",
+      "side": 1,
+      "message": "This should be moved to WifiInjector.",
+      "range": {
+        "startLine": 895,
+        "startChar": 7,
+        "endLine": 896,
+        "endChar": 53
+      },
+      "revId": "cb478a4c18602a423c514508503d441db7ce68b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
