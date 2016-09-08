@@ -1,0 +1,271 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56832b87_fbc2c8f9",
+        "filename": "wifi_hal_legacy/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-08T23:24:01Z",
+      "side": 1,
+      "message": "use 4 spaces please, here and below",
+      "revId": "05a91dc68f6ddbc8be542c9490a6eddcb7914136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56832b87_3ba0b0a3",
+        "filename": "wifi_hal_legacy/failure_reason_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-08T23:24:01Z",
+      "side": 1,
+      "message": "I can see why you want to use this.  Unfortunately, style guide says it is verboten",
+      "revId": "05a91dc68f6ddbc8be542c9490a6eddcb7914136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56832b87_7687ad0e",
+        "filename": "wifi_hal_legacy/main.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-08T23:24:01Z",
+      "side": 1,
+      "message": "Avoid using directives:\n\nhttps://google.github.io/styleguide/cppguide.html",
+      "revId": "05a91dc68f6ddbc8be542c9490a6eddcb7914136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56832b87_d69eb957",
+        "filename": "wifi_hal_legacy/main.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-08T23:24:01Z",
+      "side": 1,
+      "message": "This should probably be in an anonymous namespace",
+      "revId": "05a91dc68f6ddbc8be542c9490a6eddcb7914136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56832b87_9694313c",
+        "filename": "wifi_hal_legacy/main.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-08T23:24:01Z",
+      "side": 1,
+      "message": "nit: two spaces between end of statement and the beginning of the command please",
+      "range": {
+        "startLine": 31,
+        "startChar": 11,
+        "endLine": 31,
+        "endChar": 12
+      },
+      "revId": "05a91dc68f6ddbc8be542c9490a6eddcb7914136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56832b87_31636fe2",
+        "filename": "wifi_hal_legacy/wifi_hal_legacy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-08T23:24:01Z",
+      "side": 1,
+      "message": "Why do you bother with this?",
+      "revId": "05a91dc68f6ddbc8be542c9490a6eddcb7914136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56832b87_f1f4a7ed",
+        "filename": "wifi_hal_legacy/wifi_hal_legacy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-08T23:24:01Z",
+      "side": 1,
+      "message": "Not an error?",
+      "revId": "05a91dc68f6ddbc8be542c9490a6eddcb7914136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56832b87_b1ebff02",
+        "filename": "wifi_hal_legacy/wifi_hal_legacy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-08T23:24:01Z",
+      "side": 1,
+      "message": "Could you structure this code like:\n\nif (status !\u003d WIFI_SUCCESS) {\n....\nreturn Status::ok();\n}\n\n// handle the success case here, no nesting needed",
+      "revId": "05a91dc68f6ddbc8be542c9490a6eddcb7914136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56832b87_d1d88376",
+        "filename": "wifi_hal_legacy/wifi_hal_legacy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-08T23:24:01Z",
+      "side": 1,
+      "message": "else if",
+      "revId": "05a91dc68f6ddbc8be542c9490a6eddcb7914136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56832b87_b6bf75a8",
+        "filename": "wifi_hal_legacy/wifi_hal_legacy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-08T23:24:01Z",
+      "side": 1,
+      "message": "Is this necessary?  We\u0027re already inside android::hardware.  It seems like it might be confused with android::binder::Status?\n\nIn general, I\u0027d prefer you move this inside the scope of the class declaration or just type the full type each time.",
+      "revId": "05a91dc68f6ddbc8be542c9490a6eddcb7914136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56832b87_96ad118a",
+        "filename": "wifi_hal_legacy/wifi_hal_legacy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-08T23:24:01Z",
+      "side": 1,
+      "message": "nit: not ok to merge namespaces:\n\nhttps://google.github.io/styleguide/cppguide.html#Namespaces\n\nI think in the past it was allowed in .cpp files, but not here.",
+      "revId": "05a91dc68f6ddbc8be542c9490a6eddcb7914136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56832b87_11e10b91",
+        "filename": "wifi_hal_legacy/wifi_hal_legacy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-08T23:24:01Z",
+      "side": 1,
+      "message": "Can we call this something that implies it is the root object exposed by this process?  Maybe WifiHalService?",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 19
+      },
+      "revId": "05a91dc68f6ddbc8be542c9490a6eddcb7914136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56832b87_31b44f89",
+        "filename": "wifi_hal_legacy/wifi_hal_legacy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-08T23:24:01Z",
+      "side": 1,
+      "message": "This is actually a void* that the vendor implementation can use right?  Maybe comment on that?",
+      "revId": "05a91dc68f6ddbc8be542c9490a6eddcb7914136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56832b87_918a7bc3",
+        "filename": "wifi_hal_legacy/wifi_hal_legacy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-08T23:24:01Z",
+      "side": 1,
+      "message": "Better talk about what this is used for here.  It\u0027s  little mysterious and a command will save your coworkers from reading how we use it.",
+      "revId": "05a91dc68f6ddbc8be542c9490a6eddcb7914136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56832b87_51439343",
+        "filename": "wifi_hal_legacy/wifi_hal_legacy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-08T23:24:01Z",
+      "side": 1,
+      "message": "Interestingly, C++ is the opposite of Java in that members go last, and methods go first in a given section.  Sorry man.",
+      "revId": "05a91dc68f6ddbc8be542c9490a6eddcb7914136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
