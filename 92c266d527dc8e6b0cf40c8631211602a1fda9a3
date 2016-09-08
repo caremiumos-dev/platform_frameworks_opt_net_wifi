@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56832b87_9d21b4ae",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-08T20:12:28Z",
+      "side": 1,
+      "message": "This code assumes that this will never fail, which is could if the service doesn\u0027t yet exist when this is called. Would also need to be handled at callers. I think this will be ok for now though unless you want to change it.",
+      "revId": "92c266d527dc8e6b0cf40c8631211602a1fda9a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
