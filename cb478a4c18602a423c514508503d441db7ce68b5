@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "56832b87_6c028018",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-08T23:59:57Z",
+      "side": 1,
+      "message": "We should put all external dependencies of the class as constructor arguments. This will make it easier to mock them out during unit testing.",
+      "range": {
+        "startLine": 130,
+        "startChar": 4,
+        "endLine": 130,
+        "endChar": 10
+      },
+      "revId": "cb478a4c18602a423c514508503d441db7ce68b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56832b87_2c6958ef",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 1
