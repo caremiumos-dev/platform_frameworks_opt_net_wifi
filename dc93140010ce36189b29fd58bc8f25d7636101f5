@@ -16,6 +16,24 @@
       "revId": "dc93140010ce36189b29fd58bc8f25d7636101f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56832b87_9bee1c13",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-09-08T21:53:23Z",
+      "side": 1,
+      "message": "I moved it to make checkstyle happy",
+      "parentUuid": "56832b87_fb33a802",
+      "revId": "dc93140010ce36189b29fd58bc8f25d7636101f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
