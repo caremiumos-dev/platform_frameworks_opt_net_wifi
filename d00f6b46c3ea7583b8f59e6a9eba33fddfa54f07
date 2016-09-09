@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbe692fe_024b0e7b",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6554,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-09T21:47:04Z",
+      "side": 1,
+      "message": "Nit: fix the tabs.",
+      "range": {
+        "startLine": 6554,
+        "startChar": 0,
+        "endLine": 6554,
+        "endChar": 1
+      },
+      "revId": "d00f6b46c3ea7583b8f59e6a9eba33fddfa54f07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
