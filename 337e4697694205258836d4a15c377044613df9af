@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbe692fe_30ee90b6",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6545,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-09T23:04:02Z",
+      "side": 1,
+      "message": "Hmm. This check is still not enough to catch all ongoing connection requests. There are still come corner cases where we just trigger a connection and supplicant has not yet started going into one of the connecting states.",
+      "range": {
+        "startLine": 6545,
+        "startChar": 24,
+        "endLine": 6545,
+        "endChar": 52
+      },
+      "revId": "337e4697694205258836d4a15c377044613df9af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
