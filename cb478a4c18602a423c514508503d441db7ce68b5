@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "56832b87_4c9f7cb0",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-09T00:06:51Z",
+      "side": 1,
+      "message": "This is not a dependency. Evaluator is registered via the registerNetworkEvaluator() method, which makes it convenient for mocking and unit testing.",
+      "parentUuid": "56832b87_6c028018",
+      "range": {
+        "startLine": 130,
+        "startChar": 4,
+        "endLine": 130,
+        "endChar": 10
+      },
+      "revId": "cb478a4c18602a423c514508503d441db7ce68b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56832b87_2c6958ef",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-09-08T23:54:53Z",
       "side": 1,
       "message": "This should be moved to WifiInjector.",
+      "range": {
+        "startLine": 895,
+        "startChar": 7,
+        "endLine": 896,
+        "endChar": 53
+      },
+      "revId": "cb478a4c18602a423c514508503d441db7ce68b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56832b87_8c9984cc",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-09T00:06:51Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "56832b87_2c6958ef",
       "range": {
         "startLine": 895,
         "startChar": 7,
