@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbe692fe_bff993af",
+        "filename": "libwifi_hal/wifi_hal_common.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2016-09-09T21:14:40Z",
+      "side": 1,
+      "message": "PLOG gives you the strerror for free...",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 7
+      },
+      "revId": "109794c820e16e965a259b305260d6b05bb4a48d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
