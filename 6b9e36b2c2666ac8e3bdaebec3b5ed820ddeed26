@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "cbe692fe_595c241e",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-10T18:31:15Z",
+      "side": 1,
+      "message": "Isn\u0027t this the method of the AIDL (if not then ignore). You\u0027re implementing it by \"extends IWifiP2pManager.Stub\". Hence this method is an @Override of the method in the stub.",
+      "parentUuid": "cbe692fe_b9536831",
+      "range": {
+        "startLine": 467,
+        "startChar": 4,
+        "endLine": 467,
+        "endChar": 10
+      },
+      "revId": "6b9e36b2c2666ac8e3bdaebec3b5ed820ddeed26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbe692fe_03386d27",
         "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
         "patchSetId": 1
@@ -160,6 +184,30 @@
     },
     {
       "key": {
+        "uuid": "cbe692fe_7961e0d8",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-10T18:31:15Z",
+      "side": 1,
+      "message": "I mean:\n\nif (callerPermission) {\n   return mP2pStateMachine.getPeerList();\n} else {\n    return new WifiP2pDeviceList();\n}\n\nBut this is a nit/style issue.",
+      "parentUuid": "cbe692fe_5945046a",
+      "range": {
+        "startLine": 481,
+        "startChar": 6,
+        "endLine": 481,
+        "endChar": 7
+      },
+      "revId": "6b9e36b2c2666ac8e3bdaebec3b5ed820ddeed26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbe692fe_26a737ab",
         "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
         "patchSetId": 1
@@ -195,6 +243,30 @@
       "side": 1,
       "message": "it\u0027s a getter, copies the device list and returns to caller. mPeers is private to the state machine right now. I will add a java doc",
       "parentUuid": "cbe692fe_26a737ab",
+      "range": {
+        "startLine": 3234,
+        "startChar": 0,
+        "endLine": 3236,
+        "endChar": 5
+      },
+      "revId": "6b9e36b2c2666ac8e3bdaebec3b5ed820ddeed26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cbe692fe_9966acf0",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3236,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-10T18:31:15Z",
+      "side": 1,
+      "message": "I asked because this is new code (i.e. old code worked without it), but didn\u0027t see any new code using this.",
+      "parentUuid": "cbe692fe_793ac0f6",
       "range": {
         "startLine": 3234,
         "startChar": 0,
