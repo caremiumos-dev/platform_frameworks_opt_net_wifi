@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cbe692fe_19745cc2",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-09-10T17:30:08Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "cbe692fe_e6854f08",
+      "range": {
+        "startLine": 350,
+        "startChar": 19,
+        "endLine": 350,
+        "endChar": 29
+      },
+      "revId": "6b9e36b2c2666ac8e3bdaebec3b5ed820ddeed26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbe692fe_c6af7384",
         "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-09-10T04:47:35Z",
       "side": 1,
       "message": "@Override",
+      "range": {
+        "startLine": 467,
+        "startChar": 4,
+        "endLine": 467,
+        "endChar": 10
+      },
+      "revId": "6b9e36b2c2666ac8e3bdaebec3b5ed820ddeed26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cbe692fe_b9536831",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-09-10T17:30:08Z",
+      "side": 1,
+      "message": "Can you clarify? I didn\u0027t quiet understand what I\u0027m over-riding.",
+      "parentUuid": "cbe692fe_c6af7384",
       "range": {
         "startLine": 467,
         "startChar": 4,
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "cbe692fe_5945046a",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-09-10T17:30:08Z",
+      "side": 1,
+      "message": "So you suggest that I have an else too?",
+      "parentUuid": "cbe692fe_86d1ebf5",
+      "range": {
+        "startLine": 481,
+        "startChar": 6,
+        "endLine": 481,
+        "endChar": 7
+      },
+      "revId": "6b9e36b2c2666ac8e3bdaebec3b5ed820ddeed26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbe692fe_26a737ab",
         "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
         "patchSetId": 1
@@ -99,6 +171,30 @@
       "writtenOn": "2016-09-10T04:47:35Z",
       "side": 1,
       "message": "what does this do?",
+      "range": {
+        "startLine": 3234,
+        "startChar": 0,
+        "endLine": 3236,
+        "endChar": 5
+      },
+      "revId": "6b9e36b2c2666ac8e3bdaebec3b5ed820ddeed26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cbe692fe_793ac0f6",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3236,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-09-10T17:30:08Z",
+      "side": 1,
+      "message": "it\u0027s a getter, copies the device list and returns to caller. mPeers is private to the state machine right now. I will add a java doc",
+      "parentUuid": "cbe692fe_26a737ab",
       "range": {
         "startLine": 3234,
         "startChar": 0,
