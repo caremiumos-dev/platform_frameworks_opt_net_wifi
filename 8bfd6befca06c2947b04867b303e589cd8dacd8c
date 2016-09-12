@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "cb277249_0e945feb",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4354,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-12T23:17:41Z",
+      "side": 1,
+      "message": "Can we just remove this whole block?",
+      "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb277249_a862030d",
         "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
         "patchSetId": 1
@@ -42,6 +59,47 @@
         "endLine": 809,
         "endChar": 33
       },
+      "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb277249_6eaab327",
+        "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-12T23:17:41Z",
+      "side": 1,
+      "message": "No this is a result for an individual AP",
+      "parentUuid": "cb277249_a862030d",
+      "range": {
+        "startLine": 809,
+        "startChar": 13,
+        "endLine": 809,
+        "endChar": 33
+      },
+      "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb277249_8ea70f5b",
+        "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-12T23:17:41Z",
+      "side": 1,
+      "message": "could be private",
       "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
