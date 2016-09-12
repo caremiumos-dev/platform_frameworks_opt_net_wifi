@@ -120,6 +120,54 @@
     },
     {
       "key": {
+        "uuid": "cbe692fe_f4d08ebf",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-09-12T17:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbe692fe_595c241e",
+      "range": {
+        "startLine": 467,
+        "startChar": 4,
+        "endLine": 467,
+        "endChar": 10
+      },
+      "revId": "6b9e36b2c2666ac8e3bdaebec3b5ed820ddeed26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cbe692fe_d4cc7230",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-09-12T17:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbe692fe_b9536831",
+      "range": {
+        "startLine": 467,
+        "startChar": 4,
+        "endLine": 467,
+        "endChar": 10
+      },
+      "revId": "6b9e36b2c2666ac8e3bdaebec3b5ed820ddeed26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbe692fe_03386d27",
         "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
         "patchSetId": 1
@@ -131,6 +179,24 @@
       "writtenOn": "2016-09-10T02:02:03Z",
       "side": 1,
       "message": "need to add another check for version. Maybe callerPermission can be defaulted to true and in Line 475, it is only updated for the right version. This will make it compatible with older builds.",
+      "revId": "6b9e36b2c2666ac8e3bdaebec3b5ed820ddeed26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cbe692fe_b4c7e609",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-09-12T17:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbe692fe_03386d27",
       "revId": "6b9e36b2c2666ac8e3bdaebec3b5ed820ddeed26",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -208,6 +274,30 @@
     },
     {
       "key": {
+        "uuid": "cbe692fe_74bd5e86",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-09-12T17:04:23Z",
+      "side": 1,
+      "message": "Okay. Will follow style guidelines and updated it.",
+      "parentUuid": "cbe692fe_7961e0d8",
+      "range": {
+        "startLine": 481,
+        "startChar": 6,
+        "endLine": 481,
+        "endChar": 7
+      },
+      "revId": "6b9e36b2c2666ac8e3bdaebec3b5ed820ddeed26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbe692fe_26a737ab",
         "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
         "patchSetId": 1
@@ -267,6 +357,30 @@
       "side": 1,
       "message": "I asked because this is new code (i.e. old code worked without it), but didn\u0027t see any new code using this.",
       "parentUuid": "cbe692fe_793ac0f6",
+      "range": {
+        "startLine": 3234,
+        "startChar": 0,
+        "endLine": 3236,
+        "endChar": 5
+      },
+      "revId": "6b9e36b2c2666ac8e3bdaebec3b5ed820ddeed26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cbe692fe_5435c22d",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3236,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-09-12T17:04:23Z",
+      "side": 1,
+      "message": "There\u0027s a call to this method on line 480.",
+      "parentUuid": "cbe692fe_9966acf0",
       "range": {
         "startLine": 3234,
         "startChar": 0,
