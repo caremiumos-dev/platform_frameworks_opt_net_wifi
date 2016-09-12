@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb277249_8851472b",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3116,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-09-12T22:06:32Z",
+      "side": 1,
+      "message": "leaving these commented out for the first rounds of code review.  Will be removed before merging.",
+      "range": {
+        "startLine": 3110,
+        "startChar": 4,
+        "endLine": 3116,
+        "endChar": 5
+      },
+      "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb277249_a862030d",
+        "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-09-12T22:06:32Z",
+      "side": 1,
+      "message": "Should the broadcast be sent here too?",
+      "range": {
+        "startLine": 809,
+        "startChar": 13,
+        "endLine": 809,
+        "endChar": 33
+      },
+      "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
