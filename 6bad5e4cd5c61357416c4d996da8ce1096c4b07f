@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb277249_5e8a02c8",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-09-13T01:29:22Z",
+      "side": 1,
+      "message": "It is a chicken and egg problem, since PasspointEventHandler needs an instance of PasspointEventHandler.Callbacks which PasspointManager implement.\n\nNow I think again, I don\u0027t think it is necessary to mock PasspointEventHandler, since it will not be used in unit tests.  Will remove it for now and revisit if needed in unit tests.",
+      "parentUuid": "cb277249_bdf7a3ba",
+      "revId": "6bad5e4cd5c61357416c4d996da8ce1096c4b07f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb277249_e92a3da1",
         "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
         "patchSetId": 2
