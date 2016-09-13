@@ -358,6 +358,24 @@
       "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b83ba54_32a750ab",
+        "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-13T06:43:31Z",
+      "side": 1,
+      "message": "Thanks for the explanation. \n\nRegarding expiration, do we know which apps are going to be the user of this cached scan results?",
+      "parentUuid": "cb277249_14c0e941",
+      "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
