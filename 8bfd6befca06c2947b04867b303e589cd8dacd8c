@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "cb277249_5468a189",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3116,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-13T05:18:26Z",
+      "side": 1,
+      "message": "Can I suggest we just remove this block just in case we forget to delete it later? With Git and Gerrit I think it is pretty clear where they are moved to.",
+      "parentUuid": "cb277249_8851472b",
+      "range": {
+        "startLine": 3110,
+        "startChar": 4,
+        "endLine": 3116,
+        "endChar": 5
+      },
+      "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb277249_145229da",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4348,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-13T05:18:26Z",
+      "side": 1,
+      "message": "Can this be moved out of WifiStateMachine as well? It doesn\u0027t have to be in this CL though.",
+      "range": {
+        "startLine": 4347,
+        "startChar": 1,
+        "endLine": 4348,
+        "endChar": 47
+      },
+      "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb277249_0e945feb",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 1
@@ -224,6 +271,24 @@
       "side": 1,
       "message": "Would it be more appropriate to clear it when the interface is down?\n\nAlso, would we want to have them cleared after some amount of time?",
       "parentUuid": "cb277249_498d7134",
+      "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb277249_14eea9ec",
+        "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-13T05:18:26Z",
+      "side": 1,
+      "message": "I only see this \u0027mCachedScanResults\u0027 gets set. Don\u0027t see where it is retrieved. Am I missing something?\n\nHow do we expect apps to make use of this cached scan results? Do we expect apps to check the timestamp and decide whether they can use it or not? Or we will expire them internally? If the latter, how do we determine the expiration threshold? If apps have to look the timestamp, then we don\u0027t need to clear it out.",
+      "parentUuid": "cb277249_9e165a50",
       "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
