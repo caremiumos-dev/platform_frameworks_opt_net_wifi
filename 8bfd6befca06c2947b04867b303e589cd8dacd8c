@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "cb277249_c9a0a1a7",
+        "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-13T00:38:41Z",
+      "side": 1,
+      "message": "I like this style just so you don\u0027t have to worry about doing the check. I doubt this has significant impact and will be gced as soon as we do a scan.",
+      "parentUuid": "cb277249_89a7095b",
+      "range": {
+        "startLine": 98,
+        "startChar": 45,
+        "endLine": 98,
+        "endChar": 64
+      },
+      "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb277249_a862030d",
         "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
         "patchSetId": 1
@@ -123,6 +147,23 @@
       "writtenOn": "2016-09-12T23:17:41Z",
       "side": 1,
       "message": "could be private",
+      "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb277249_498d7134",
+        "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-13T00:38:41Z",
+      "side": 1,
+      "message": "Should this get cleared out when wifi is toggled? It might not be today, but probably makes sense",
       "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
