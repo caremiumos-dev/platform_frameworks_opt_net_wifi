@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cb277249_d4cef17d",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3116,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-09-13T05:40:15Z",
+      "side": 1,
+      "message": "I am removing it (and the other commented out lines) after this first round of reviews.  I wanted to make sure it was very clear what was getting removed :)",
+      "parentUuid": "cb277249_5468a189",
+      "range": {
+        "startLine": 3110,
+        "startChar": 4,
+        "endLine": 3116,
+        "endChar": 5
+      },
+      "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb277249_145229da",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 1
@@ -60,6 +84,30 @@
       "writtenOn": "2016-09-13T05:18:26Z",
       "side": 1,
       "message": "Can this be moved out of WifiStateMachine as well? It doesn\u0027t have to be in this CL though.",
+      "range": {
+        "startLine": 4347,
+        "startChar": 1,
+        "endLine": 4348,
+        "endChar": 47
+      },
+      "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb277249_74e4bdff",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4348,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-09-13T05:40:15Z",
+      "side": 1,
+      "message": "That is planned for the next CL",
+      "parentUuid": "cb277249_145229da",
       "range": {
         "startLine": 4347,
         "startChar": 1,
@@ -289,6 +337,24 @@
       "side": 1,
       "message": "I only see this \u0027mCachedScanResults\u0027 gets set. Don\u0027t see where it is retrieved. Am I missing something?\n\nHow do we expect apps to make use of this cached scan results? Do we expect apps to check the timestamp and decide whether they can use it or not? Or we will expire them internally? If the latter, how do we determine the expiration threshold? If apps have to look the timestamp, then we don\u0027t need to clear it out.",
       "parentUuid": "cb277249_9e165a50",
+      "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb277249_14c0e941",
+        "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-09-13T05:40:15Z",
+      "side": 1,
+      "message": "Getting them will be done in the next CL (created b/31444878).  There is more plumbing to do to get the calls added and it seemed better to break it in to two pieces.  This will also have a follow-on CL to move the scan requests getting cancelled from WifiService to WifiScanningServiceImpl (as noted in a comment in WifiService)\n\nFor expiration - I do not think this should be timestamped and then filtered by the apps.  I was more addressing the issues with toggling wifi vs doze mode, etc.  Doze mode could cause scans to be cancelled for hours - maybe we should invalidate the scan results if they are x-minutes old?   (Just a thought I had tonight)",
+      "parentUuid": "cb277249_14eea9ec",
       "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
