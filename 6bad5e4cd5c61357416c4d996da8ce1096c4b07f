@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb277249_bdf7a3ba",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-13T00:11:03Z",
+      "side": 1,
+      "message": "Can we create the PasspointEventHandler() here itself? We don\u0027t need a makePasspointEventHandler if it has no external dependencies.",
+      "revId": "6bad5e4cd5c61357416c4d996da8ce1096c4b07f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb277249_e92a3da1",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-13T00:11:03Z",
+      "side": 1,
+      "message": "Don\u0027t pass WifiInjector in the constructor. You can create the PasspointEventHandler directly in WifiInjector and pass it to the constructor here. \n\nWifiInjector is passed into the constructor of a few classes today. We will be removing all of them soon. All the external dependencies for each class should be taken in as a constructor argument. WifiInjector should just create these instances.",
+      "range": {
+        "startLine": 47,
+        "startChar": 45,
+        "endLine": 47,
+        "endChar": 70
+      },
+      "revId": "6bad5e4cd5c61357416c4d996da8ce1096c4b07f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb277249_c910a161",
+        "filename": "tests/wifitests/src/com/android/server/wifi/hotspot2/PasspointManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-13T00:11:03Z",
+      "side": 1,
+      "message": "This should be changed to directly pass the mock PasspointEventHandler in the constructor. \n\nThere are other tests which do this pattern as well. We should get rid of them.",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 37
+      },
+      "revId": "6bad5e4cd5c61357416c4d996da8ce1096c4b07f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
