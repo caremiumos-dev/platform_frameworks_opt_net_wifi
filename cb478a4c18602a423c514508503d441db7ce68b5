@@ -2,6 +2,144 @@
   "comments": [
     {
       "key": {
+        "uuid": "cb277249_29c8359e",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-13T00:33:11Z",
+      "side": 1,
+      "message": "We\u0027re now iterating thru the same results twice now (in each of the evaluator). This might be a performance issue because the |getSavedNetworkForScanDetailAndCache| is pretty expensive operation (b/30758712).",
+      "range": {
+        "startLine": 201,
+        "startChar": 39,
+        "endLine": 201,
+        "endChar": 75
+      },
+      "revId": "cb478a4c18602a423c514508503d441db7ce68b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb277249_49bc9123",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-13T00:33:11Z",
+      "side": 1,
+      "message": "This change won\u0027t reflect in the WifiConfigMAnager database. Use this: https://cs.corp.google.com/android/frameworks/opt/net/wifi/service/java/com/android/server/wifi/WifiConfigManager.java?rcl\u003d1eb13bbe2067a536dbf5ab7fd43f9e7a75454963\u0026l\u003d1487",
+      "range": {
+        "startLine": 222,
+        "startChar": 16,
+        "endLine": 222,
+        "endChar": 68
+      },
+      "revId": "cb478a4c18602a423c514508503d441db7ce68b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb277249_693aad85",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-13T00:33:11Z",
+      "side": 1,
+      "message": "Should this be in connectivity manager at all? This is internal to network selector and is probably best kept there.",
+      "range": {
+        "startLine": 122,
+        "startChar": 1,
+        "endLine": 124,
+        "endChar": 67
+      },
+      "revId": "cb478a4c18602a423c514508503d441db7ce68b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb277249_89370999",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-13T00:33:11Z",
+      "side": 1,
+      "message": "Same as above.",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 63
+      },
+      "revId": "cb478a4c18602a423c514508503d441db7ce68b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb277249_09ee99ec",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-13T00:33:11Z",
+      "side": 1,
+      "message": "Same comment. I know the network selector is trying to be agnostic of these evaulators. But, these 2 evaluators are internal ones and can be registered internally in NetworkSelector() constructor.",
+      "range": {
+        "startLine": 508,
+        "startChar": 8,
+        "endLine": 511,
+        "endChar": 55
+      },
+      "revId": "cb478a4c18602a423c514508503d441db7ce68b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb277249_c972e173",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-13T00:33:11Z",
+      "side": 1,
+      "message": "What is this doing? Is this different from the candidate returned?",
+      "range": {
+        "startLine": 127,
+        "startChar": 66,
+        "endLine": 127,
+        "endChar": 85
+      },
+      "revId": "cb478a4c18602a423c514508503d441db7ce68b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56832b87_6c028018",
         "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
         "patchSetId": 1
