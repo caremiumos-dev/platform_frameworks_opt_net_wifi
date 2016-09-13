@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "8b83ba54_4120fca8",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3116,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-09-13T18:11:25Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "cb277249_d4cef17d",
+      "range": {
+        "startLine": 3110,
+        "startChar": 4,
+        "endLine": 3116,
+        "endChar": 5
+      },
+      "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb277249_145229da",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 1
@@ -120,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "8b83ba54_e17d7077",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4348,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-09-13T18:11:25Z",
+      "side": 1,
+      "message": "done - added a comment with the bug number",
+      "parentUuid": "cb277249_74e4bdff",
+      "range": {
+        "startLine": 4347,
+        "startChar": 1,
+        "endLine": 4348,
+        "endChar": 47
+      },
+      "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb277249_0e945feb",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 1
@@ -149,6 +197,24 @@
       "side": 1,
       "message": "yep - will do after I double check.  Might need to be fully removed in the next CL when the cached scan results are retrieved from WifiScanningService",
       "parentUuid": "cb277249_0e945feb",
+      "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b83ba54_21961899",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4354,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-09-13T18:11:25Z",
+      "side": 1,
+      "message": "done - well, removed a little more.  Also removed the mSendScanResultsBroadcast boolean that was set, but never checked.",
+      "parentUuid": "cb277249_6e4b9356",
       "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -373,6 +439,24 @@
       "side": 1,
       "message": "Thanks for the explanation. \n\nRegarding expiration, do we know which apps are going to be the user of this cached scan results?",
       "parentUuid": "cb277249_14c0e941",
+      "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b83ba54_0152f4d9",
+        "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-09-13T18:11:25Z",
+      "side": 1,
+      "message": "We are not going to change behavior with this CL.  The results are now cleared when the SingleScanStateMachine exits the DriverStartedState.  Tests will be added to check clearing in the next CL where I plumb a way to get results.",
+      "parentUuid": "8b83ba54_32a750ab",
       "revId": "8bfd6befca06c2947b04867b303e589cd8dacd8c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
