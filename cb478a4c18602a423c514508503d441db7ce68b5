@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb277249_0f9c565d",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-13T06:35:40Z",
+      "side": 1,
+      "message": "Some thoughts here:\n\n1) Can we improve the performance of WifiConfigManager#getSavedNetworkForScanDetail? Instead of iterating thru all the saved networks, can use something like hash table for lookup?\n\n2) We don\u0027t always iterate through the same results twice. We get here only if no candidate surfaces out from the SavedNetworkEvaluator.",
+      "parentUuid": "cb277249_29c8359e",
+      "range": {
+        "startLine": 201,
+        "startChar": 39,
+        "endLine": 201,
+        "endChar": 75
+      },
+      "revId": "cb478a4c18602a423c514508503d441db7ce68b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb277249_49bc9123",
         "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cb277249_0ff8d665",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-13T06:35:40Z",
+      "side": 1,
+      "message": "Can we chat more about this tomorrow? My understanding is this is because of the recent WifiConfigManager change, right? I am a bit concerned on this kind of behavior changes given setSeeInLastQualifiedNetworkSelection() is a public API.",
+      "parentUuid": "cb277249_49bc9123",
+      "range": {
+        "startLine": 222,
+        "startChar": 16,
+        "endLine": 222,
+        "endChar": 68
+      },
+      "revId": "cb478a4c18602a423c514508503d441db7ce68b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb277249_693aad85",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2016-09-13T00:33:11Z",
       "side": 1,
       "message": "Should this be in connectivity manager at all? This is internal to network selector and is probably best kept there.",
+      "range": {
+        "startLine": 122,
+        "startChar": 1,
+        "endLine": 124,
+        "endChar": 67
+      },
+      "revId": "cb478a4c18602a423c514508503d441db7ce68b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b83ba54_72863815",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-13T06:35:40Z",
+      "side": 1,
+      "message": "Here is my take on this. In addition to move out the saved networks and ephemeral networks evaluations code from the original QNS, we de-couple them further by not registering any network evaluator in the WifiNetworkSelector itself. All WifiNetworkSelector does is to filter the scan results, pass the potentially connectable networks to network evaluators if any registered, and pass the network surfaced out for WifiConnectivityManager to connect or roam to.\n\nWifiNetworkSelector has no interests in knowing which evaluator(s) are registered and how they are implemented, regardless of whether they are internally developed ones or the ones added by third party later. Other than defining the interface of WifiNetworkEvaluator, WifiNetworkSelector, SavedNetworkEvaluator and ExternalScoreNetworkEvaluator are three independent entities.\n\nWCM is the one which makes decision on how a connectivity scan should be performed, whether a candidate recommended by WifiNetworkSelector should be connected or roamed to, and etc. These make it naturally an ideal place to decide which network evaluators should be registered and what priorities these evaluators should be.\n\nThis benefit of this modularized architecture is going to be demoed by the unit tests of WifiNetworkSelector, SavedNetworkSelector and ExternalScoreNetworkSelector. These unit tests will be coming in next CLs.",
+      "parentUuid": "cb277249_693aad85",
       "range": {
         "startLine": 122,
         "startChar": 1,
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "8b83ba54_3290b042",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-13T06:35:40Z",
+      "side": 1,
+      "message": "See my replies above.",
+      "parentUuid": "cb277249_09ee99ec",
+      "range": {
+        "startLine": 508,
+        "startChar": 8,
+        "endLine": 511,
+        "endChar": 55
+      },
+      "revId": "cb478a4c18602a423c514508503d441db7ce68b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb277249_c972e173",
         "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
         "patchSetId": 1
@@ -128,6 +224,30 @@
       "writtenOn": "2016-09-13T00:33:11Z",
       "side": 1,
       "message": "What is this doing? Is this different from the candidate returned?",
+      "range": {
+        "startLine": 127,
+        "startChar": 66,
+        "endLine": 127,
+        "endChar": 85
+      },
+      "revId": "cb478a4c18602a423c514508503d441db7ce68b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b83ba54_9295dc31",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-13T06:35:40Z",
+      "side": 1,
+      "message": "This is a list of networks that can be potentially used for connection. The candidate returned is the best one among them. This list is used by the last resort watchdog.",
+      "parentUuid": "cb277249_c972e173",
       "range": {
         "startLine": 127,
         "startChar": 66,
