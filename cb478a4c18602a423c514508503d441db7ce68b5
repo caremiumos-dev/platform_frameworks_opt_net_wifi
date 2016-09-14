@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8b6c9a82_7b4b6056",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-14T15:33:20Z",
+      "side": 1,
+      "message": "The linking of networks is expensive and we have to iterate thru all the networks there, hashmaps will not work. But, that is anyway planned to be optimized tracked by the bug above.",
+      "parentUuid": "cb277249_0f9c565d",
+      "range": {
+        "startLine": 201,
+        "startChar": 39,
+        "endLine": 201,
+        "endChar": 75
+      },
+      "revId": "cb478a4c18602a423c514508503d441db7ce68b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb277249_49bc9123",
         "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Can we chat more about this tomorrow? My understanding is this is because of the recent WifiConfigManager change, right? I am a bit concerned on this kind of behavior changes given setSeeInLastQualifiedNetworkSelection() is a public API.",
       "parentUuid": "cb277249_49bc9123",
+      "range": {
+        "startLine": 222,
+        "startChar": 16,
+        "endLine": 222,
+        "endChar": 68
+      },
+      "revId": "cb478a4c18602a423c514508503d441db7ce68b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b6c9a82_1b5ca41c",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-14T15:33:20Z",
+      "side": 1,
+      "message": "I\u0027m assuming this is now clarified.",
+      "parentUuid": "cb277249_0ff8d665",
       "range": {
         "startLine": 222,
         "startChar": 16,
