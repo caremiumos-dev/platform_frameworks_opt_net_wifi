@@ -216,6 +216,30 @@
     },
     {
       "key": {
+        "uuid": "8b6c9a82_b2e1f2f0",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-14T22:01:15Z",
+      "side": 1,
+      "message": "As we discussed, this is needed. Going to be via WifiConfigManager though. Filed b/31497121.",
+      "parentUuid": "8b6c9a82_98bbb7bf",
+      "range": {
+        "startLine": 222,
+        "startChar": 16,
+        "endLine": 222,
+        "endChar": 68
+      },
+      "revId": "cb478a4c18602a423c514508503d441db7ce68b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb277249_693aad85",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 1
