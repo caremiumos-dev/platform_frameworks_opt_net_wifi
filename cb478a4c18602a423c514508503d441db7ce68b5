@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "8b6c9a82_5893ff50",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-14T17:11:37Z",
+      "side": 1,
+      "message": "Will hashmap help lookup in WifiConfigManager#getSavedNetworkForScanDetails? Currently we iterate through all the configurations till the matched one found. This can become expensive too if user has lots of saved networks.\n\n        for (WifiConfiguration config : getInternalConfiguredNetworks()) {\n            if (ScanResultUtil.doesScanResultMatchWithNetwork(scanResult, config)) {\n                localLog(\"getSavedNetworkFromScanDetail: Found \" + config.configKey()\n                        + \" for \" + scanResult.SSID + \"[\" + scanResult.capabilities + \"]\");\n                return config;\n            }\n        }",
+      "parentUuid": "8b6c9a82_7b4b6056",
+      "range": {
+        "startLine": 201,
+        "startChar": 39,
+        "endLine": 201,
+        "endChar": 75
+      },
+      "revId": "cb478a4c18602a423c514508503d441db7ce68b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb277249_49bc9123",
         "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
         "patchSetId": 1
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "I\u0027m assuming this is now clarified.",
       "parentUuid": "cb277249_0ff8d665",
+      "range": {
+        "startLine": 222,
+        "startChar": 16,
+        "endLine": 222,
+        "endChar": 68
+      },
+      "revId": "cb478a4c18602a423c514508503d441db7ce68b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b6c9a82_98bbb7bf",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-14T17:11:37Z",
+      "side": 1,
+      "message": "I am going to rebase these CLs and go through how this \"seen\" is used.",
+      "parentUuid": "8b6c9a82_1b5ca41c",
       "range": {
         "startLine": 222,
         "startChar": 16,
