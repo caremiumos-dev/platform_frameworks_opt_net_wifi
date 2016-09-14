@@ -16,6 +16,24 @@
       "revId": "559af0ce5962231a098f0ddf5b41344725d80672",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b6c9a82_fee2db94",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1653,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-14T18:19:19Z",
+      "side": 1,
+      "message": "Commented there. I don\u0027t see any other fields for now in this class. But, this is symmetric to the PnoNetwork class we have in PnoSettings.",
+      "parentUuid": "8b6c9a82_96b2a950",
+      "revId": "559af0ce5962231a098f0ddf5b41344725d80672",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
