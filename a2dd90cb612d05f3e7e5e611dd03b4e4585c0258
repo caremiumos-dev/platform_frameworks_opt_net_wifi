@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b6c9a82_9b1c1483",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5402,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-14T15:15:56Z",
+      "side": 1,
+      "message": "We should probably declare constants for these bundle keys. You can take it up in a separate CL if u want.",
+      "range": {
+        "startLine": 5402,
+        "startChar": 60,
+        "endLine": 5402,
+        "endChar": 65
+      },
+      "revId": "a2dd90cb612d05f3e7e5e611dd03b4e4585c0258",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b6c9a82_3b00880d",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-14T15:15:56Z",
+      "side": 1,
+      "message": "This is left to your preference. \nYou could have a private member variable for handling the callbacks instead of extending this class and passing that member to the PasspointEventHandler constructor. I kind of feel confused when the main class is also implementing a bunch of other interfaces. Then you also don\u0027t need to add the extra comments below to clarify what these methods are doing.\n/** Implementation of PasspointEventHandler.Callbacks. */",
+      "range": {
+        "startLine": 43,
+        "startChar": 40,
+        "endLine": 43,
+        "endChar": 72
+      },
+      "revId": "a2dd90cb612d05f3e7e5e611dd03b4e4585c0258",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
