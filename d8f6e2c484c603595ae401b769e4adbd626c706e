@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b6c9a82_a9f8a043",
+        "filename": "service/java/com/android/server/wifi/PropertyService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1060529
+      },
+      "writtenOn": "2016-09-15T04:30:43Z",
+      "side": 1,
+      "message": "This annotation isn\u0027t necessary(the method returns a boolean which couldn\u0027t be null).",
+      "revId": "d8f6e2c484c603595ae401b769e4adbd626c706e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
