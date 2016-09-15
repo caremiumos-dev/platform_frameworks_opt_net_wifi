@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b6c9a82_e93f7873",
+        "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-15T06:19:40Z",
+      "side": 1,
+      "message": "Your not really setting the correct replyTo. Maybe just say something about the replyTo not actually corresponding the the Messenger that is registered for that client.",
+      "range": {
+        "startLine": 186,
+        "startChar": 24,
+        "endLine": 186,
+        "endChar": 59
+      },
+      "revId": "f1bb451df208834a427e458f353f9aaf3267ee00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
