@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb3b56ab_0759d75e",
+        "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2673,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-16T22:41:04Z",
+      "side": 1,
+      "message": "Maybe add \"(sec)\" here. I wasn\u0027t really sure what the units were when I saw it",
+      "range": {
+        "startLine": 2673,
+        "startChar": 70,
+        "endLine": 2673,
+        "endChar": 73
+      },
+      "revId": "e453b35939b54527770b70128c165cb948b7ccee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb3b56ab_673a9bee",
+        "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2681,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-16T22:41:04Z",
+      "side": 1,
+      "message": "If your going to touch this...\nIt\u0027s suggest just doing floating point math and use the format specifier to specify the size as a single argument. I think this should be possible to replicate the current behavior.",
+      "range": {
+        "startLine": 2676,
+        "startChar": 0,
+        "endLine": 2681,
+        "endChar": 21
+      },
+      "revId": "e453b35939b54527770b70128c165cb948b7ccee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
