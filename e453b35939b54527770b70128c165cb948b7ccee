@@ -45,6 +45,29 @@
       "revId": "e453b35939b54527770b70128c165cb948b7ccee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb3b56ab_c7550fed",
+        "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2683,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-16T22:44:03Z",
+      "side": 1,
+      "message": "Is this even used anymore? This should not be called autojoin if it\u0027s still being used somewhere.",
+      "range": {
+        "startLine": 2683,
+        "startChar": 26,
+        "endLine": 2683,
+        "endChar": 45
+      },
+      "revId": "e453b35939b54527770b70128c165cb948b7ccee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
