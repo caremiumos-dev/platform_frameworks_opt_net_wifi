@@ -16,6 +16,24 @@
       "revId": "2a5715b0c70f07e3000bb572ffd78ff045d19f78",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb3b56ab_bbbca924",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-16T16:10:08Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s really true.  These checks were always superfluous, because they were always in a child state of a state that instantiated WifiConnectivityManager.  Today that state is SupplicantStartedState, but before it was DriverStartedState.",
+      "parentUuid": "cb277249_bd9d6311",
+      "revId": "2a5715b0c70f07e3000bb572ffd78ff045d19f78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
