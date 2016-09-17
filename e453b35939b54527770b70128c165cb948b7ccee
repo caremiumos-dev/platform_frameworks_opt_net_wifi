@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eb3b56ab_baa49a56",
+        "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2673,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-09-17T06:41:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb3b56ab_0759d75e",
+      "range": {
+        "startLine": 2673,
+        "startChar": 70,
+        "endLine": 2673,
+        "endChar": 73
+      },
+      "revId": "e453b35939b54527770b70128c165cb948b7ccee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb3b56ab_673a9bee",
         "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2016-09-16T22:41:04Z",
       "side": 1,
       "message": "If your going to touch this...\nIt\u0027s suggest just doing floating point math and use the format specifier to specify the size as a single argument. I think this should be possible to replicate the current behavior.",
+      "range": {
+        "startLine": 2676,
+        "startChar": 0,
+        "endLine": 2681,
+        "endChar": 21
+      },
+      "revId": "e453b35939b54527770b70128c165cb948b7ccee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb3b56ab_2e35c8fb",
+        "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2681,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-09-17T06:41:39Z",
+      "side": 1,
+      "message": "Got it!  Here is what the output looks like (let me know what you think!  I think this conveys more info):\nr.seen \u003c\u003d 0:\n  ___?___\nnowMs \u003c r.seen:\n    0.000\nr.seen \u003c nowMs - 1000000:\n  \u003e1000.0\nnowMs \u003e\u003d r.seen:\n   11.262",
+      "parentUuid": "eb3b56ab_673a9bee",
       "range": {
         "startLine": 2676,
         "startChar": 0,
@@ -64,6 +112,53 @@
         "startChar": 26,
         "endLine": 2683,
         "endChar": 45
+      },
+      "revId": "e453b35939b54527770b70128c165cb948b7ccee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb3b56ab_2e0f883c",
+        "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2683,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-09-17T06:41:39Z",
+      "side": 1,
+      "message": "I did a quick codesearch.  i see it being copied around, but not used.  I\u0027ll remove it from the dump and file a bug for it to be cleaned out of the code (b/31565767).",
+      "parentUuid": "eb3b56ab_c7550fed",
+      "range": {
+        "startLine": 2683,
+        "startChar": 26,
+        "endLine": 2683,
+        "endChar": 45
+      },
+      "revId": "e453b35939b54527770b70128c165cb948b7ccee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb3b56ab_6e4b5056",
+        "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2690,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-09-17T06:41:39Z",
+      "side": 1,
+      "message": "I also worked on the ssid value in case it is too long",
+      "range": {
+        "startLine": 2690,
+        "startChar": 30,
+        "endLine": 2690,
+        "endChar": 58
       },
       "revId": "e453b35939b54527770b70128c165cb948b7ccee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
