@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "eb3b56ab_b0990dcc",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-19T21:03:24Z",
+      "side": 1,
+      "message": "File b/31596073 to track this.",
+      "parentUuid": "eb3b56ab_ba13b111",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 75
+      },
+      "revId": "30c9f0a7be94523515e610c74dbdf1f48120818d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb3b56ab_fa61b936",
         "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
         "patchSetId": 4
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Nice catch. We don\u0027t need this 2.4GHz network RSSI check because it will always get evaluated to false. Will delete it and update the comment.",
       "parentUuid": "eb3b56ab_fa61b936",
+      "range": {
+        "startLine": 187,
+        "startChar": 13,
+        "endLine": 187,
+        "endChar": 75
+      },
+      "revId": "30c9f0a7be94523515e610c74dbdf1f48120818d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb3b56ab_f09395a5",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-19T21:03:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb3b56ab_9a2ef550",
       "range": {
         "startLine": 187,
         "startChar": 13,
