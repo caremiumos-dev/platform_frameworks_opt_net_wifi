@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "eb3b56ab_00a53451",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-09-19T21:47:45Z",
+      "side": 1,
+      "message": "SGTM.",
+      "parentUuid": "eb3b56ab_ba13b111",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 75
+      },
+      "revId": "30c9f0a7be94523515e610c74dbdf1f48120818d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb3b56ab_fa61b936",
         "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
         "patchSetId": 4
