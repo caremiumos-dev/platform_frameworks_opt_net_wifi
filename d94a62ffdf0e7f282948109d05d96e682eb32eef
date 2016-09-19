@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b3926b8_d1f133f5",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-19T22:12:58Z",
+      "side": 1,
+      "message": "I\u0027m assuming this will never return null.",
+      "range": {
+        "startLine": 1017,
+        "startChar": 16,
+        "endLine": 1017,
+        "endChar": 28
+      },
+      "revId": "d94a62ffdf0e7f282948109d05d96e682eb32eef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
