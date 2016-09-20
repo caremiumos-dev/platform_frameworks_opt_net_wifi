@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70d83709_0804c970",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-20T23:45:09Z",
+      "side": 1,
+      "message": "Nit: missing a \u0027l\u0027?",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 11
+      },
+      "revId": "2d7bfa5e5b78ce3fe63542f4ecbfec8f6f89078e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
