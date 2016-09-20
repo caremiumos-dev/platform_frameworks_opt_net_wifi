@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70d83709_b06c11c7",
+        "filename": "tests/wifitests/src/com/android/server/wifi/SavedNetworkEvaluatorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-09-20T17:37:49Z",
+      "side": 1,
+      "message": "Is this needed? It is not used for any verification, maybe pass a |null| instead to be consistent with ExternalScoreEvaluatorTest.",
+      "range": {
+        "startLine": 190,
+        "startChar": 47,
+        "endLine": 190,
+        "endChar": 66
+      },
+      "revId": "ddefabbc4f2e99a427fc4f290e6ab76c4057705c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
