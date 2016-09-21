@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f074270d_0bc6e141",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-21T18:34:45Z",
+      "side": 1,
+      "message": "Don\u0027t interleave static/non-static imports like this",
+      "revId": "b3ad3160f8d8010e3b4341eb943c7fd71ac04b41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70d83709_0bf03eef",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
         "patchSetId": 6
@@ -59,6 +76,30 @@
       "writtenOn": "2016-09-21T15:01:33Z",
       "side": 1,
       "message": "Ordering of this list is not guaranteed. If u want a one to one mapping, use an ordered list for both or use arrays for both.",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 12
+      },
+      "revId": "b3ad3160f8d8010e3b4341eb943c7fd71ac04b41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f074270d_6bf83563",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTestUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-21T18:34:45Z",
+      "side": 1,
+      "message": "@rpius what do you mean by this? Both a List and array are always ordered.\n\nHowever, I would almost suggest using returning a list of pairs here instead of a pair of lists (assuming that this is supposed to represent a 1 to 1 mapping.",
+      "parentUuid": "70d83709_2bc66293",
       "range": {
         "startLine": 45,
         "startChar": 8,
