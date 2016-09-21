@@ -109,6 +109,30 @@
       "revId": "b3ad3160f8d8010e3b4341eb943c7fd71ac04b41",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f074270d_2bc1ddf7",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTestUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-21T18:37:15Z",
+      "side": 1,
+      "message": "Oh. my bad. Thinking of maps :)",
+      "parentUuid": "f074270d_6bf83563",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 12
+      },
+      "revId": "b3ad3160f8d8010e3b4341eb943c7fd71ac04b41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
