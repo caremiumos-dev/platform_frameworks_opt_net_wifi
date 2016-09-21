@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f074270d_eb034568",
+        "filename": "tests/wifitests/src/com/android/server/wifi/SavedNetworkEvaluatorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-21T18:35:34Z",
+      "side": 1,
+      "message": "Import ordering",
+      "revId": "cfddcce3bac90e10931e9f455df3fe470193ed91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
