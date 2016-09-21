@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f074270d_28f723f0",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-21T18:16:57Z",
+      "side": 1,
+      "message": "But should we check only is sWifiInjector is null? I.e. if we need to create one?",
+      "range": {
+        "startLine": 159,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 38
+      },
+      "revId": "790abd9f9bf5849ca600d1567681e902f544b3c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f074270d_a89953ca",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-21T18:16:57Z",
+      "side": 1,
+      "message": "IllegalArgumentException?",
+      "range": {
+        "startLine": 160,
+        "startChar": 22,
+        "endLine": 160,
+        "endChar": 43
+      },
+      "revId": "790abd9f9bf5849ca600d1567681e902f544b3c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f074270d_c8ef6f11",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiInjectorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-21T18:16:57Z",
+      "side": 1,
+      "message": "if you catch it then how is the test expecting this exception?",
+      "range": {
+        "startLine": 61,
+        "startChar": 10,
+        "endLine": 61,
+        "endChar": 15
+      },
+      "revId": "790abd9f9bf5849ca600d1567681e902f544b3c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f074270d_a8cb139a",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiInjectorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-21T18:16:57Z",
+      "side": 1,
+      "message": "is there another assert which checks for object equality? hash isn\u0027t a guarantee necessarily.\n\nUse assertSame",
+      "range": {
+        "startLine": 63,
+        "startChar": 70,
+        "endLine": 63,
+        "endChar": 78
+      },
+      "revId": "790abd9f9bf5849ca600d1567681e902f544b3c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
