@@ -2,6 +2,200 @@
   "comments": [
     {
       "key": {
+        "uuid": "70d83709_a8e498a2",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-21T06:42:46Z",
+      "side": 1,
+      "message": "why does this name need to be suffixed with \": \". it\u0027s a name not a prefix right?",
+      "range": {
+        "startLine": 43,
+        "startChar": 66,
+        "endLine": 43,
+        "endChar": 68
+      },
+      "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70d83709_c88ebce0",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-21T06:42:46Z",
+      "side": 1,
+      "message": "You shouldn\u0027t really have the tag end in \": \" since it\u0027s somewhat redundant",
+      "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70d83709_c8bc7c8c",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-21T06:42:46Z",
+      "side": 1,
+      "message": "normally just \"null\" not \"NULL\" since this is java",
+      "range": {
+        "startLine": 99,
+        "startChar": 55,
+        "endLine": 99,
+        "endChar": 59
+      },
+      "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70d83709_28d748b6",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-21T06:42:46Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 189,
+        "startChar": 63,
+        "endLine": 189,
+        "endChar": 73
+      },
+      "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70d83709_08da84dc",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-21T06:42:46Z",
+      "side": 1,
+      "message": "Why does this need to be declared at this outer scope. Just declare it in the scope it\u0027s used to make it clearer what the scope of this value is. Even if that means it\u0027s used multiple times in this method.",
+      "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d063a325_74346801",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-21T06:42:46Z",
+      "side": 1,
+      "message": "I\u0027m super confused what this is supposed to be? Some kind of enum like thing? It kind of feels like it\u0027s abusing annotations. Is this common practice to scope enum values in android? I\u0027ve never seen this before.",
+      "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d063a325_54396cf5",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-21T06:42:46Z",
+      "side": 1,
+      "message": "Either way these should probably be indented.",
+      "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d063a325_b41d6080",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-21T06:42:46Z",
+      "side": 1,
+      "message": "and maybe have an empty line after this",
+      "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70d83709_e850605b",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-21T06:42:46Z",
+      "side": 1,
+      "message": "These should all be able to be final if you move the arguments of initialize to the constructor.",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 42
+      },
+      "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70d83709_e8cb8045",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-21T06:42:46Z",
+      "side": 1,
+      "message": "this doesn\u0027t appear to be used anywhere",
+      "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70d83709_e8aaa571",
         "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
         "patchSetId": 6
@@ -48,6 +242,29 @@
     },
     {
       "key": {
+        "uuid": "70d83709_c8ef9caf",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-21T06:42:46Z",
+      "side": 1,
+      "message": "Is this still called QNS?",
+      "range": {
+        "startLine": 91,
+        "startChar": 58,
+        "endLine": 91,
+        "endChar": 61
+      },
+      "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70d83709_08c12921",
         "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
         "patchSetId": 6
@@ -59,6 +276,132 @@
       "writtenOn": "2016-09-20T23:41:48Z",
       "side": 1,
       "message": "Maybe consider splitting into it\u0027s own file. Also might suggest generally putting all this stuff in a sub directory",
+      "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70d83709_c8f9dc6a",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-21T06:42:46Z",
+      "side": 1,
+      "message": "Is there a reason to defer this initialization till later instead of doing it in the constructor. This means that you have to define all dependancies defined by any implementation here, even if they are not used by all implementations.",
+      "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70d83709_08c4c431",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-21T06:42:46Z",
+      "side": 1,
+      "message": "wifiInfo is not used in either of the evaluators implemented in this CL. I\u0027d also suggest that if it is indeed needed in the future that it is passed in at evaluation time and not at initialization since it is a value that is intended to change.",
+      "range": {
+        "startLine": 117,
+        "startChar": 24,
+        "endLine": 117,
+        "endChar": 41
+      },
+      "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70d83709_48e3acc9",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-21T06:42:46Z",
+      "side": 1,
+      "message": "Could this just be the toString method instead?",
+      "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70d83709_08604431",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-21T06:42:46Z",
+      "side": 1,
+      "message": "Is this something that changes over time. Can it be passed as an initial dependency to the constructor? It\u0027s only used by one implementation right now. Generally I would say you should limit parameters to this method to things that would most likely be used by all implementations.",
+      "range": {
+        "startLine": 135,
+        "startChar": 18,
+        "endLine": 135,
+        "endChar": 28
+      },
+      "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70d83709_480dec96",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-21T06:42:46Z",
+      "side": 1,
+      "message": "Why do these need to be passed to the evaluators if there used by the last resort watchdog.\n\nUpon further investigation it looks like this is an output parameter, but it\u0027s not clear from this description. Also maybe describe how this list differs from the return value.",
+      "range": {
+        "startLine": 137,
+        "startChar": 68,
+        "endLine": 137,
+        "endChar": 90
+      },
+      "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70d83709_a8eed8af",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-21T06:42:46Z",
+      "side": 1,
+      "message": "Can this just be a list sorted by priority instead? The size of this array is a little confusing upon first read without some investigation. Also make final.",
+      "range": {
+        "startLine": 149,
+        "startChar": 45,
+        "endLine": 149,
+        "endChar": 90
+      },
       "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
