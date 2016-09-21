@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70d83709_0bf03eef",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-21T15:01:33Z",
+      "side": 1,
+      "message": "Do we need the WifiConfigManager instance passed to the dummy evaluator? As far as network selector tests are concerned, it should only be concerned with the output of the evaluator.",
+      "range": {
+        "startLine": 88,
+        "startChar": 16,
+        "endLine": 88,
+        "endChar": 33
+      },
+      "revId": "b3ad3160f8d8010e3b4341eb943c7fd71ac04b41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70d83709_cbdb166d",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-21T15:01:33Z",
+      "side": 1,
+      "message": "We probably don\u0027t need these details in these tests. This evaluator should only return a network config required. Doesn\u0027t need to call in to WifiConfigManager.",
+      "range": {
+        "startLine": 112,
+        "startChar": 12,
+        "endLine": 115,
+        "endChar": 87
+      },
+      "revId": "b3ad3160f8d8010e3b4341eb943c7fd71ac04b41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70d83709_2bc66293",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTestUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-21T15:01:33Z",
+      "side": 1,
+      "message": "Ordering of this list is not guaranteed. If u want a one to one mapping, use an ordered list for both or use arrays for both.",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 12
+      },
+      "revId": "b3ad3160f8d8010e3b4341eb943c7fd71ac04b41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
