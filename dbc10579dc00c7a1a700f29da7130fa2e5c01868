@@ -1,0 +1,291 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10e1bbe4_1e41ad60",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-21T23:33:54Z",
+      "side": 1,
+      "message": "blank line between paragraphs, please",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 4
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10e1bbe4_9e6bfde7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-21T23:33:54Z",
+      "side": 1,
+      "message": "framework\u0027s",
+      "range": {
+        "startLine": 12,
+        "startChar": 40,
+        "endLine": 12,
+        "endChar": 50
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0d7c739_ad441d9f",
+        "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-21T23:33:54Z",
+      "side": 1,
+      "message": "1. \"Real elapsed time\" is a bit confusing here, as the \"elapsed\" part suggests that this value is relative to the time the scan result was received.\n\nHow about \"Boot-relative timestamp for the last...\", instead?\n\n2. Instead of documenting the granularity in a comment, it\u0027s clearer to document the granularity in the name. E.g. |mScanResultRssiTimestampMillis|. As a bonus, such a name would follow the pattern you set with the name of the timeout constant.\n\n3. Consider eliminating the |mGotCandidateScanResult| field, and using a negative timestamp to indicate that case, instead (e.g. -1, or -TIMEOUT_RSSI_DELTA_MILLIS). My concern here is that, with multiple fields, we risk getting the information out of sync.",
+      "range": {
+        "startLine": 97,
+        "startChar": 7,
+        "endLine": 97,
+        "endChar": 40
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0e00315_2cf39367",
+        "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-21T23:33:54Z",
+      "side": 1,
+      "message": "I don\u0027t understand why this code is in the RouterFingerprint class. The methods that are called, and the fields that are referenced, all seem like they\u0027d be available in the caller\u0027s context. (startConnectionEvent())\n\nOne particular benefit of having this code in startConnectionEvent() is that the updating of mGotCandidateScanResult would be clearer. (Right now, it\u0027s obvious that startConnectionEvent() will clear that boolean. But it\u0027s not obvious how the boolean gets set.)",
+      "range": {
+        "startLine": 155,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 21
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0e00315_6c6cfbff",
+        "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-21T23:33:54Z",
+      "side": 1,
+      "message": "If you follow the suggestion above, about setting |mGotCandidateTime| to -TIMEOUT_RSSI_DELTA_MILLIS, then you\u0027ll no longer need this |if|.",
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0e00315_8c3f27e3",
+        "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-21T23:33:54Z",
+      "side": 1,
+      "message": "You might consider moving all of this code into incrementRssiDeltaRssiCount(), and renaming that method to maybeIncrementRssiDeltaRssiCount().\n\nThe benefit would be in the consolidation of the logic about which samples are valid.",
+      "range": {
+        "startLine": 855,
+        "startChar": 0,
+        "endLine": 859,
+        "endChar": 48
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0e00315_2c4f1388",
+        "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-21T23:33:54Z",
+      "side": 1,
+      "message": "Not sure about this name. The first instance of rssi makes sense. The second, not so much. Consider |incrementRssiDeltaCount()|.",
+      "range": {
+        "startLine": 868,
+        "startChar": 17,
+        "endLine": 868,
+        "endChar": 44
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f018a7be_856f42bb",
+        "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-21T23:33:54Z",
+      "side": 1,
+      "message": "|deltas| is ambiguous. Consider |rssiDeltas|, or something to that affect.",
+      "range": {
+        "startLine": 1156,
+        "startChar": 45,
+        "endLine": 1156,
+        "endChar": 51
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0e00315_6c187b7e",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-21T23:33:54Z",
+      "side": 1,
+      "message": "delta? (there\u0027s only one here)",
+      "range": {
+        "startLine": 649,
+        "startChar": 27,
+        "endLine": 649,
+        "endChar": 33
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0e00315_ec558bf3",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-21T23:33:54Z",
+      "side": 1,
+      "message": "\"timed out rssi deltas\" (there are two here)",
+      "range": {
+        "startLine": 653,
+        "startChar": 18,
+        "endLine": 653,
+        "endChar": 40
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0e00315_6c4abb52",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-21T23:33:54Z",
+      "side": 1,
+      "message": "Reviewing these assertions requires understanding how the 8 generateRssiDelta() call-sites above interact. At least for me, that\u0027s not trivial.\n\nIs there something in particular that your testing about that interaction? If not, I think it would be clearer to have the different cases split into separate tests. E.g. testRssiDeltaMetricsExcludeTimedOutSamples().",
+      "range": {
+        "startLine": 672,
+        "startChar": 0,
+        "endLine": 678,
+        "endChar": 70
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0e00315_0cbb372d",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-21T23:33:54Z",
+      "side": 1,
+      "message": "Do we have any tests that exercise the connection failure cases? That is, do any tests verify that the following sequences do _not_ generate a sample?\n\n    1. startConnectionEvent()\n    2. endConnectionEvent()\n    3. startConnectionEvent()\n    4. incrementRssiPollRssiCount()\n\nand\n\n    1. startConnectionEvent()\n    2. endConnectionEvent()\n    3. incrementRssiPollRssiCount()\n\n(I _believe_ that the implementing code handles this correctly. But it would be even better if tests verified that.)",
+      "range": {
+        "startLine": 698,
+        "startChar": 0,
+        "endLine": 700,
+        "endChar": 59
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0e00315_6ce63b43",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-21T23:33:54Z",
+      "side": 1,
+      "message": "Do we have any tests that exercise clear(), as it pertains to rssi deltas?",
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
