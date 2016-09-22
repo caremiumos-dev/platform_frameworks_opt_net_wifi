@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f08d07b7_1113dc65",
+        "filename": "wifi_hal_legacy/wifi_chip_service.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-22T22:39:14Z",
+      "side": 1,
+      "message": "nit: Put this on the next line, check out\n\nhttps://google.github.io/styleguide/cppguide.html#Constructor_Initializer_Lists",
+      "range": {
+        "startLine": 28,
+        "startChar": 73,
+        "endLine": 28,
+        "endChar": 74
+      },
+      "revId": "2c67bb1318f11e3900ec302ddf838f5dd41cfa60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f08d07b7_5170049a",
+        "filename": "wifi_hal_legacy/wifi_chip_service.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-22T22:39:14Z",
+      "side": 1,
+      "message": "What happens when the process that is hosting callback dies?",
+      "revId": "2c67bb1318f11e3900ec302ddf838f5dd41cfa60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f08d07b7_91252ccc",
+        "filename": "wifi_hal_legacy/wifi_chip_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-22T22:39:14Z",
+      "side": 1,
+      "message": "Could be handy to have a DISALLOW_COPY_...",
+      "revId": "2c67bb1318f11e3900ec302ddf838f5dd41cfa60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f08d07b7_112d9c54",
+        "filename": "wifi_hal_legacy/wifi_hal_service.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-22T22:39:14Z",
+      "side": 1,
+      "message": "Could you move this declaration down by the loop that uses it?  Not inside the loop, just nearby",
+      "revId": "2c67bb1318f11e3900ec302ddf838f5dd41cfa60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f08d07b7_71c980a1",
+        "filename": "wifi_hal_legacy/wifi_hal_service.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-22T22:39:14Z",
+      "side": 1,
+      "message": "nullptr",
+      "range": {
+        "startLine": 119,
+        "startChar": 41,
+        "endLine": 119,
+        "endChar": 45
+      },
+      "revId": "2c67bb1318f11e3900ec302ddf838f5dd41cfa60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f08d07b7_31fc589d",
+        "filename": "wifi_hal_legacy/wifi_hal_service.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-22T22:39:14Z",
+      "side": 1,
+      "message": "Similarly, it would be nice to check for !\u003d SUCCESS and continue in that case rather than nest this deeper",
+      "revId": "2c67bb1318f11e3900ec302ddf838f5dd41cfa60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f08d07b7_d179745a",
+        "filename": "wifi_hal_legacy/wifi_hal_service.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-22T22:39:14Z",
+      "side": 1,
+      "message": "This nesting makes me loopy.  Can you check for !\u003d WIFI_SUCCESS, and return kInterfaceNotFoundHandle in this case?  That will let you reduce the nesting level by one.",
+      "range": {
+        "startLine": 136,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 3
+      },
+      "revId": "2c67bb1318f11e3900ec302ddf838f5dd41cfa60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f08d07b7_f1fbd0d6",
+        "filename": "wifi_hal_legacy/wifi_hal_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-22T22:39:14Z",
+      "side": 1,
+      "message": "Woah there.  Can we avoid this?  This is usually a pretty bad code smell.  At least need some comments on why we need to break our object boundaries.  Also should be down in the private section, because of our deep shame that we had to resort to this.",
+      "revId": "2c67bb1318f11e3900ec302ddf838f5dd41cfa60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
