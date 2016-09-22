@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d0e00315_e04fcab9",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-22T05:50:23Z",
+      "side": 1,
+      "message": "As we chatted, we are going to keep it as is.",
+      "parentUuid": "f074270d_0b4b41b1",
+      "revId": "597f9226df91da1ad6668f708205468539362267",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f074270d_cb5f696b",
         "filename": "tests/wifitests/src/com/android/server/wifi/ExternalScoreEvaluatorTest.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2016-09-21T18:37:13Z",
       "side": 1,
       "message": "import ordering",
+      "revId": "597f9226df91da1ad6668f708205468539362267",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0e00315_c044cea0",
+        "filename": "tests/wifitests/src/com/android/server/wifi/ExternalScoreEvaluatorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-22T05:50:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f074270d_cb5f696b",
       "revId": "597f9226df91da1ad6668f708205468539362267",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
