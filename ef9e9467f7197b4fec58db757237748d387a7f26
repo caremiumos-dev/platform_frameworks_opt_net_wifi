@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f08d07b7_9d4aa3ab",
+        "filename": "wifi_hal_legacy/failure_reason_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-22T20:35:06Z",
+      "side": 1,
+      "message": "nit: these too",
+      "revId": "ef9e9467f7197b4fec58db757237748d387a7f26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
