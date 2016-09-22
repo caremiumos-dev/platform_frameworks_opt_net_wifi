@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f08d07b7_cc5ab721",
+        "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-09-22T22:54:41Z",
+      "side": 0,
+      "message": "Don\u0027t we need to transition back to the mUninitializedState?",
+      "range": {
+        "startLine": 357,
+        "startChar": 33,
+        "endLine": 357,
+        "endChar": 52
+      },
+      "revId": "22f57da33e6b132a0e7e4bd6d986f74b53d19527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
