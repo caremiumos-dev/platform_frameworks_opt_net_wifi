@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b04b8ffc_41ed5617",
+        "filename": "wifi_hal_legacy/wifi_hal_legacy.rc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000866
+      },
+      "writtenOn": "2016-09-22T20:07:55Z",
+      "side": 1,
+      "message": "When support for class hal lands, this will need to move to it.",
+      "range": {
+        "startLine": 2,
+        "startChar": 10,
+        "endLine": 2,
+        "endChar": 14
+      },
+      "revId": "b81c0f93b06993cbf4bb83348f99cf08001a6f37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
