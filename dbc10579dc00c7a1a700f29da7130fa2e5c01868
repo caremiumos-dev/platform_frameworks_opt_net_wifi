@@ -143,6 +143,23 @@
     },
     {
       "key": {
+        "uuid": "b04b8ffc_e112626b",
+        "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-22T20:23:15Z",
+      "side": 1,
+      "message": "It seems like this line was removed between PS3 and PS5. Is that intentional?",
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0e00315_2cf39367",
         "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
         "patchSetId": 3
