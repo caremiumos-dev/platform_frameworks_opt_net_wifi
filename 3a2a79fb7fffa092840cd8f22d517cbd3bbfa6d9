@@ -22,6 +22,30 @@
       "revId": "3a2a79fb7fffa092840cd8f22d517cbd3bbfa6d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f08d07b7_6c97e395",
+        "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-09-22T22:57:53Z",
+      "side": 1,
+      "message": "We\u0027re handling the supplicant state change broadcast here.  The parent state (in this case DefaultState) will handle the state transition, as I\u0027ve outlined in the comment below.",
+      "parentUuid": "f08d07b7_0c2c9f9f",
+      "range": {
+        "startLine": 290,
+        "startChar": 16,
+        "endLine": 290,
+        "endChar": 51
+      },
+      "revId": "3a2a79fb7fffa092840cd8f22d517cbd3bbfa6d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
