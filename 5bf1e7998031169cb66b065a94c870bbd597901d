@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b04b8ffc_0123ce6d",
+        "filename": "service/java/com/android/server/wifi/RttService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2016-09-22T21:49:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b04b8ffc_c15ac6ef",
+      "revId": "5bf1e7998031169cb66b065a94c870bbd597901d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b04b8ffc_815d9ee6",
         "filename": "service/java/com/android/server/wifi/RttService.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-09-22T20:11:27Z",
       "side": 1,
       "message": "How does this class handle threading concerns?  Presumably we\u0027re going to use the wificond handle from a state machine running on a different thread that this (binder) thread.",
+      "revId": "5bf1e7998031169cb66b065a94c870bbd597901d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f08d07b7_06d560df",
+        "filename": "service/java/com/android/server/wifi/RttService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2016-09-22T21:49:53Z",
+      "side": 1,
+      "message": "Done. I moved it to the RttStateMachine which is running on a  different thread. I also added the unregisterCallback() process.",
+      "parentUuid": "b04b8ffc_815d9ee6",
       "revId": "5bf1e7998031169cb66b065a94c870bbd597901d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
