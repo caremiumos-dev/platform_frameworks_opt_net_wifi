@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b04b8ffc_a10c5a4e",
+        "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-22T20:23:15Z",
+      "side": 1,
+      "message": "Consider adding a comment that |mLock| must be held, when calling this method. (I see that you removed the synchronized block between PS3 and PS5.)",
+      "revId": "b1d702718f685238d6ea714a00c8716c250a8393",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b04b8ffc_015bce26",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-22T20:23:15Z",
+      "side": 1,
+      "message": "It might be clearer to just hard-code 2 here. It\u0027s reasonably easy for me to check 2 against the generateRssiDelta() call-sites above. It\u0027s harder for me to tie things together with the constant defined outside of this method.\n\n(I\u0027m not arguing for hard-coding in implementation code, of course. But I think tests are often easier to read with less abstraction.)",
+      "range": {
+        "startLine": 655,
+        "startChar": 21,
+        "endLine": 655,
+        "endChar": 44
+      },
+      "revId": "b1d702718f685238d6ea714a00c8716c250a8393",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b04b8ffc_01a50e0f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-22T20:23:15Z",
+      "side": 1,
+      "message": "As above, this might be clearer as a literal number.",
+      "range": {
+        "startLine": 689,
+        "startChar": 21,
+        "endLine": 689,
+        "endChar": 44
+      },
+      "revId": "b1d702718f685238d6ea714a00c8716c250a8393",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b04b8ffc_018e6e87",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-22T20:23:15Z",
+      "side": 1,
+      "message": "Alternatively, 0L might work.",
+      "range": {
+        "startLine": 715,
+        "startChar": 60,
+        "endLine": 715,
+        "endChar": 68
+      },
+      "revId": "b1d702718f685238d6ea714a00c8716c250a8393",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b04b8ffc_6189725b",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-22T20:23:15Z",
+      "side": 1,
+      "message": "I wonder if it might make sense to do something like what you\u0027ve done for generateRssiDelta(), and move this code out to a helper method. Maybe call it generateConnectionStart().\n\nOf course, the benefit of reducing cut-and-paste needs to be balanced against the cost of introducing an abstraction. But I think that, across the four test cases that use this pattern of code, the only thing that varies is the ScanResult.\n\nHaving a helper with one parameter seems like a net win (versus duplicating the 10 lines of code).",
+      "range": {
+        "startLine": 715,
+        "startChar": 0,
+        "endLine": 724,
+        "endChar": 66
+      },
+      "revId": "b1d702718f685238d6ea714a00c8716c250a8393",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b04b8ffc_c145e6fa",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-22T20:23:15Z",
+      "side": 1,
+      "message": "I\u0027m not sure about this part. If we report the connection as failed, then we\u0027d skip the rssi delta accounting, even if the scan result were non-null, right?\n\nIf that\u0027s correct, then we can\u0027t be sure that this test passed because null scan-result is handled properly.",
+      "range": {
+        "startLine": 773,
+        "startChar": 44,
+        "endLine": 773,
+        "endChar": 74
+      },
+      "revId": "b1d702718f685238d6ea714a00c8716c250a8393",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b04b8ffc_81383e8a",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-22T20:23:15Z",
+      "side": 1,
+      "message": "Similar to the comment at line 773. A null scan-result is, in itself, a reason not to record an rssi delta, no?",
+      "range": {
+        "startLine": 791,
+        "startChar": 61,
+        "endLine": 791,
+        "endChar": 65
+      },
+      "revId": "b1d702718f685238d6ea714a00c8716c250a8393",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b04b8ffc_2135aa90",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-22T20:23:15Z",
+      "side": 1,
+      "message": "Same comment as at line 773.",
+      "range": {
+        "startLine": 796,
+        "startChar": 44,
+        "endLine": 796,
+        "endChar": 74
+      },
+      "revId": "b1d702718f685238d6ea714a00c8716c250a8393",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
