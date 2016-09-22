@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "b04b8ffc_7e210d0f",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-22T18:11:26Z",
+      "side": 1,
+      "message": "But you also use TAG to log to logcat as well. I\u0027d suggest stripping the \": \" suffix from this constant and inserting it in the localLog method instead",
+      "parentUuid": "d0e00315_60b75ad3",
+      "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70d83709_c8bc7c8c",
         "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
         "patchSetId": 6
@@ -429,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "b04b8ffc_7eb7cdd2",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-22T18:11:26Z",
+      "side": 1,
+      "message": "then i\u0027d suggest just making them public. The class is private anyway",
+      "parentUuid": "f074270d_9472f2a1",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 56
+      },
+      "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70d83709_48b731d3",
         "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
         "patchSetId": 6
@@ -587,6 +629,24 @@
       "side": 1,
       "message": "Peter made the same comment. See my reply to this. I\u0027ve filed bug to track this work.",
       "parentUuid": "70d83709_c8f9dc6a",
+      "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b04b8ffc_1ec48931",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-22T18:11:26Z",
+      "side": 1,
+      "message": "sorry, missed that. commented on the bug.",
+      "parentUuid": "d0e00315_75971a48",
       "revId": "393b4a50becb44af6b4afd05b53c4814ce561f0b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
