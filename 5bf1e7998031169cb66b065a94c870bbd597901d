@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b04b8ffc_c15ac6ef",
+        "filename": "service/java/com/android/server/wifi/RttService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-22T20:11:27Z",
+      "side": 1,
+      "message": "I think you need to register this event handler before you retrieve the list right?  It lets you avoid a race where an interface is created after you get the list but before you register the listener.",
+      "revId": "5bf1e7998031169cb66b065a94c870bbd597901d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b04b8ffc_815d9ee6",
+        "filename": "service/java/com/android/server/wifi/RttService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-22T20:11:27Z",
+      "side": 1,
+      "message": "How does this class handle threading concerns?  Presumably we\u0027re going to use the wificond handle from a state machine running on a different thread that this (binder) thread.",
+      "revId": "5bf1e7998031169cb66b065a94c870bbd597901d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
