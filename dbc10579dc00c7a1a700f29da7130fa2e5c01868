@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "b04b8ffc_de2ce1a5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-09-22T18:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10e1bbe4_1e41ad60",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 4
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b04b8ffc_fe319dfa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-09-22T18:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10e1bbe4_9e6bfde7",
+      "range": {
+        "startLine": 12,
+        "startChar": 40,
+        "endLine": 12,
+        "endChar": 50
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0d7c739_ad441d9f",
         "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2016-09-21T23:33:54Z",
       "side": 1,
       "message": "1. \"Real elapsed time\" is a bit confusing here, as the \"elapsed\" part suggests that this value is relative to the time the scan result was received.\n\nHow about \"Boot-relative timestamp for the last...\", instead?\n\n2. Instead of documenting the granularity in a comment, it\u0027s clearer to document the granularity in the name. E.g. |mScanResultRssiTimestampMillis|. As a bonus, such a name would follow the pattern you set with the name of the timeout constant.\n\n3. Consider eliminating the |mGotCandidateScanResult| field, and using a negative timestamp to indicate that case, instead (e.g. -1, or -TIMEOUT_RSSI_DELTA_MILLIS). My concern here is that, with multiple fields, we risk getting the information out of sync.",
+      "range": {
+        "startLine": 97,
+        "startChar": 7,
+        "endLine": 97,
+        "endChar": 40
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10cc5bf8_a69c865e",
+        "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-09-22T18:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0d7c739_ad441d9f",
       "range": {
         "startLine": 97,
         "startChar": 7,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b04b8ffc_3bedd718",
+        "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-09-22T18:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0e00315_2cf39367",
+      "range": {
+        "startLine": 155,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 21
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0e00315_6c6cfbff",
         "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
         "patchSetId": 3
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "b04b8ffc_7b5d9fe3",
+        "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-09-22T18:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0e00315_6c6cfbff",
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0e00315_8c3f27e3",
         "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
         "patchSetId": 3
@@ -122,6 +236,30 @@
       "writtenOn": "2016-09-21T23:33:54Z",
       "side": 1,
       "message": "You might consider moving all of this code into incrementRssiDeltaRssiCount(), and renaming that method to maybeIncrementRssiDeltaRssiCount().\n\nThe benefit would be in the consolidation of the logic about which samples are valid.",
+      "range": {
+        "startLine": 855,
+        "startChar": 0,
+        "endLine": 859,
+        "endChar": 48
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b04b8ffc_1b6a5b83",
+        "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-09-22T18:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0e00315_8c3f27e3",
       "range": {
         "startLine": 855,
         "startChar": 0,
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "b04b8ffc_3b6717bc",
+        "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-09-22T18:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0e00315_2c4f1388",
+      "range": {
+        "startLine": 868,
+        "startChar": 17,
+        "endLine": 868,
+        "endChar": 44
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f018a7be_856f42bb",
         "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
         "patchSetId": 3
@@ -168,6 +330,30 @@
       "writtenOn": "2016-09-21T23:33:54Z",
       "side": 1,
       "message": "|deltas| is ambiguous. Consider |rssiDeltas|, or something to that affect.",
+      "range": {
+        "startLine": 1156,
+        "startChar": 45,
+        "endLine": 1156,
+        "endChar": 51
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b04b8ffc_7b86ff4d",
+        "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-09-22T18:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f018a7be_856f42bb",
       "range": {
         "startLine": 1156,
         "startChar": 45,
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "b04b8ffc_db1dd322",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-09-22T18:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0e00315_6c187b7e",
+      "range": {
+        "startLine": 649,
+        "startChar": 27,
+        "endLine": 649,
+        "endChar": 33
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0e00315_ec558bf3",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
         "patchSetId": 3
@@ -214,6 +424,30 @@
       "writtenOn": "2016-09-21T23:33:54Z",
       "side": 1,
       "message": "\"timed out rssi deltas\" (there are two here)",
+      "range": {
+        "startLine": 653,
+        "startChar": 18,
+        "endLine": 653,
+        "endChar": 40
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b04b8ffc_fb220f68",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-09-22T18:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0e00315_ec558bf3",
       "range": {
         "startLine": 653,
         "startChar": 18,
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "b04b8ffc_7ee02dbc",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-09-22T18:51:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0e00315_6c4abb52",
+      "range": {
+        "startLine": 672,
+        "startChar": 0,
+        "endLine": 678,
+        "endChar": 70
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0e00315_0cbb372d",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
         "patchSetId": 3
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "b04b8ffc_1e01e912",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-09-22T18:51:22Z",
+      "side": 1,
+      "message": "Done. Added 3 new tests, testing variations of a delta event:\n- INVALID: start, end(failure), poll\n- VALID: start, poll\n- INVALID: start(null_scan), end, poll",
+      "parentUuid": "d0e00315_0cbb372d",
+      "range": {
+        "startLine": 698,
+        "startChar": 0,
+        "endLine": 700,
+        "endChar": 59
+      },
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0e00315_6ce63b43",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
         "patchSetId": 3
@@ -283,6 +565,24 @@
       "writtenOn": "2016-09-21T23:33:54Z",
       "side": 1,
       "message": "Do we have any tests that exercise clear(), as it pertains to rssi deltas?",
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b04b8ffc_9ea979ec",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-09-22T18:51:22Z",
+      "side": 1,
+      "message": "Done. Added a \u0027testMetricsSerializedDuringRssiDeltaEventLogsNothing\u0027 test.\nclear() is a private operation, but the public event that causes it is a Metrics upload. By design I choose to not to log rssiDelta events that occur across a serialization.",
+      "parentUuid": "d0e00315_6ce63b43",
       "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
