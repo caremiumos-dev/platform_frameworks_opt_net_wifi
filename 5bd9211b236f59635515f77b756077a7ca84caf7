@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f08d07b7_a673c7db",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-23T00:29:55Z",
+      "side": 1,
+      "message": "can this not be final as well?",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 46
+      },
+      "revId": "5bd9211b236f59635515f77b756077a7ca84caf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f08d07b7_c629b3ad",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-23T00:29:55Z",
+      "side": 1,
+      "message": "This doesn\u0027t do anything. remove it?",
+      "revId": "5bd9211b236f59635515f77b756077a7ca84caf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
