@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "f08d07b7_4ccce7b2",
+        "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-09-23T18:00:22Z",
+      "side": 1,
+      "message": "It\u0027s still here (updateMetricsFromWifiConfiguration()) in PS5, being used to update RouterFingerprint specific metrics. Nothing has changed in the updateMetricsFromWifiConfig..() method in PS5 (moved my changes to startConnectionEvent)",
+      "parentUuid": "b04b8ffc_e112626b",
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0e00315_2cf39367",
         "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
         "patchSetId": 3
