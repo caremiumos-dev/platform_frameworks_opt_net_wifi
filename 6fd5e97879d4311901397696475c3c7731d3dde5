@@ -16,6 +16,24 @@
       "revId": "6fd5e97879d4311901397696475c3c7731d3dde5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f08d07b7_51839606",
+        "filename": "tests/wifitests/src/com/android/server/wifi/ExternalScoreEvaluatorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-23T19:54:16Z",
+      "side": 1,
+      "message": "ScoreCache is not an input parameter. It\u0027s created by the constructor instead. Let me know if you have better way to mock this. I don\u0027t think we want to make ScoreCache an input just because of testing.",
+      "parentUuid": "f08d07b7_b094d990",
+      "revId": "6fd5e97879d4311901397696475c3c7731d3dde5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
