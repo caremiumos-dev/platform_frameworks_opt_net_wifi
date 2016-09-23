@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f08d07b7_dc79845a",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-23T02:40:52Z",
+      "side": 1,
+      "message": "mScoreCache cannot be final. It gets assigned in setScoreCache() for testing in patch #9. In patch #10 mScoreManager is set to final.",
+      "parentUuid": "f08d07b7_a673c7db",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 46
+      },
+      "revId": "5bd9211b236f59635515f77b756077a7ca84caf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f08d07b7_c629b3ad",
         "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
         "patchSetId": 8
@@ -36,6 +60,24 @@
       "writtenOn": "2016-09-23T00:29:55Z",
       "side": 1,
       "message": "This doesn\u0027t do anything. remove it?",
+      "revId": "5bd9211b236f59635515f77b756077a7ca84caf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f08d07b7_fc6e4091",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-23T02:40:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f08d07b7_c629b3ad",
       "revId": "5bd9211b236f59635515f77b756077a7ca84caf7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
