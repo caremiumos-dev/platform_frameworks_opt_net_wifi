@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f08d07b7_8b016c15",
+        "filename": "libwifi_system/interface_tool.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2016-09-23T18:13:09Z",
+      "side": 1,
+      "message": "I guess this is not intended to be placed in anonymous namespace, cause you defined it in header file as well as mock class?",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 1
+      },
+      "revId": "047c9cc84293f449b1ecb2d560cf10a0ecb81c4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
