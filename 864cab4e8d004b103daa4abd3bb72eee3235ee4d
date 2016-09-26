@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5b2a710_1f1467fb",
+        "filename": "tests/wifitests/src/com/android/server/wifi/ExternalScoreEvaluatorTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1079753
+      },
+      "writtenOn": "2016-09-26T23:35:11Z",
+      "side": 1,
+      "message": "don\u0027t think you need this throws here",
+      "range": {
+        "startLine": 90,
+        "startChar": 24,
+        "endLine": 90,
+        "endChar": 40
+      },
+      "revId": "864cab4e8d004b103daa4abd3bb72eee3235ee4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
