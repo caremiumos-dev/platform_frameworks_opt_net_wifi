@@ -16,6 +16,24 @@
       "revId": "0c09e474a6605376ce078b62b67ce689885f9929",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "452373ec_cad2e3f0",
+        "filename": "service/java/com/android/server/wifi/RttService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2016-09-26T20:49:13Z",
+      "side": 1,
+      "message": "Thanks for the explanation : )\nI change it to a \u0027message\u0027 based implementation.\nIt seems that I can\u0027t change this entire Handler class to static because it needs to access sendMessage().",
+      "parentUuid": "f08d07b7_be22dab1",
+      "revId": "0c09e474a6605376ce078b62b67ce689885f9929",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
