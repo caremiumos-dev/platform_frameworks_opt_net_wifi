@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f08d07b7_defec6fa",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-26T16:49:46Z",
+      "side": 1,
+      "message": "nit: finally",
+      "range": {
+        "startLine": 542,
+        "startChar": 36,
+        "endLine": 542,
+        "endChar": 43
+      },
+      "revId": "55f1cb5a18431557200b79225dba3ca3756d097c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f08d07b7_5ea2b6af",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4041,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-26T16:49:46Z",
+      "side": 1,
+      "message": "I don\u0027t think this method exists any more",
+      "revId": "55f1cb5a18431557200b79225dba3ca3756d097c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
