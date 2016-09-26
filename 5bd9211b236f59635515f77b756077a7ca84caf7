@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "e5b2a710_9f27576f",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-26T23:32:11Z",
+      "side": 1,
+      "message": "Alright, made this mScoreCache final by building a real WifiScoreCache in the unit tests instead of using the mocked one.",
+      "parentUuid": "f08d07b7_31d0caf0",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 46
+      },
+      "revId": "5bd9211b236f59635515f77b756077a7ca84caf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f08d07b7_c629b3ad",
         "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
         "patchSetId": 8
