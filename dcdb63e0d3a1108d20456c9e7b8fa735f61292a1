@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c574c3bf_7319c092",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-26T17:50:30Z",
+      "side": 1,
+      "message": "Any reason not to use generateRssiDelta() here? If not, please update this method to do so. If yes, please add a comment explaining why.",
+      "revId": "dcdb63e0d3a1108d20456c9e7b8fa735f61292a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
