@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5b2a710_5f142f4e",
+        "filename": "service/java/com/android/server/wifi/RttService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-26T23:29:54Z",
+      "side": 1,
+      "message": "It\u0027s super weird to me that both of these methods exist.",
+      "revId": "643dd03261476fecc2b86b773afd8dc38334892c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
