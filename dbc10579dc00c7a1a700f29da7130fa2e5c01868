@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "c574c3bf_93625c33",
+        "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-09-26T17:50:30Z",
+      "side": 1,
+      "message": "Right you are. Not sure how I got confused on that point.",
+      "parentUuid": "f08d07b7_4ccce7b2",
+      "revId": "dbc10579dc00c7a1a700f29da7130fa2e5c01868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0e00315_2cf39367",
         "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
         "patchSetId": 3
