@@ -81,6 +81,24 @@
       "revId": "95be8d1d6c7028141ee0dbc48f493df3fba57896",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5b2a710_d16eee24",
+        "filename": "service/java/com/android/server/wifi/RttService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-27T14:29:04Z",
+      "side": 1,
+      "message": "I think that\u0027s what I\u0027m trying to get at.  It\u0027s not ok to crash the system server because wificond is temporarily unavailable (i.e. a wificond crash should not also turn into a system server crash).  When we see that wificond is not available, we should give up, and go back to DefaultState. Later when the WSM finds wificond again, we can try again to enter the enabled state.",
+      "parentUuid": "e5b2a710_c5cf507c",
+      "revId": "95be8d1d6c7028141ee0dbc48f493df3fba57896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
