@@ -99,6 +99,24 @@
       "revId": "95be8d1d6c7028141ee0dbc48f493df3fba57896",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5b2a710_f1920aaf",
+        "filename": "service/java/com/android/server/wifi/RttService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2016-09-27T16:22:23Z",
+      "side": 1,
+      "message": "Understood :)",
+      "parentUuid": "e5b2a710_d16eee24",
+      "revId": "95be8d1d6c7028141ee0dbc48f493df3fba57896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
