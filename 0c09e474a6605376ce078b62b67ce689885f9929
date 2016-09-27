@@ -52,6 +52,24 @@
       "revId": "0c09e474a6605376ce078b62b67ce689885f9929",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5b2a710_62e6323b",
+        "filename": "service/java/com/android/server/wifi/RttService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2016-09-27T00:08:38Z",
+      "side": 1,
+      "message": "I choose to pass an state machine instance here.",
+      "parentUuid": "e5b2a710_df4f1f35",
+      "revId": "0c09e474a6605376ce078b62b67ce689885f9929",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
