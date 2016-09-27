@@ -16,6 +16,24 @@
       "revId": "643dd03261476fecc2b86b773afd8dc38334892c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5b2a710_02dc0e6b",
+        "filename": "service/java/com/android/server/wifi/RttService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2016-09-27T00:08:38Z",
+      "side": 1,
+      "message": "Are you referring to onStart() and onBootPhase(), which both update the mImpl?",
+      "parentUuid": "e5b2a710_5f142f4e",
+      "revId": "643dd03261476fecc2b86b773afd8dc38334892c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
