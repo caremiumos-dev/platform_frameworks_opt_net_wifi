@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5b2a710_85bb882d",
+        "filename": "service/java/com/android/server/wifi/RttService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-27T00:34:11Z",
+      "side": 1,
+      "message": "Can\u0027t you just use the reference of the containing class?   I\u0027m surprised your linter didn\u0027t complain that you were shadowing that name.",
+      "range": {
+        "startLine": 323,
+        "startChar": 11,
+        "endLine": 323,
+        "endChar": 47
+      },
+      "revId": "95be8d1d6c7028141ee0dbc48f493df3fba57896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5b2a710_45c5809e",
+        "filename": "service/java/com/android/server/wifi/RttService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-27T00:34:11Z",
+      "side": 1,
+      "message": "Probably need to check if this returned null?",
+      "revId": "95be8d1d6c7028141ee0dbc48f493df3fba57896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
