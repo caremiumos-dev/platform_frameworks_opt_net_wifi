@@ -46,6 +46,30 @@
       "revId": "2883a8be17011b784c56123a50d0cb8563ba5df1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5b2a710_c3e06589",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-09-27T16:59:17Z",
+      "side": 1,
+      "message": "I updated the order of the arguments, the call should now match that of the prototype. \n\nRegarding moving this check to getMessenger(), the reason I did not do this is because getMessenger() returns a messenger that is used for all Async channel communication for P2p Service. Miracast service needs additional permissions. It wouldn\u0027t be right to deny P2p Service because the caller does not have Wifi Display config permissions, so this permission is enforced only for Miracast related message/handlers. \n\nIdeally we would want all WFD related API\u0027s over AIDL, all P2P related handlers of Async channel. For WFD it is split up.",
+      "parentUuid": "e5b2a710_3684e8b9",
+      "range": {
+        "startLine": 417,
+        "startChar": 8,
+        "endLine": 419,
+        "endChar": 43
+      },
+      "revId": "2883a8be17011b784c56123a50d0cb8563ba5df1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
