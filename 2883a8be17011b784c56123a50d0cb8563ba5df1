@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5b2a710_d6db84e2",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-09-27T05:46:30Z",
+      "side": 1,
+      "message": "Hmm, I am not familiar with this code. Upon code search,  this is the function signature that I found (https://cs.corp.google.com/android/frameworks/base/core/java/android/content/Context.java?q\u003denforcePerm\u0026sq\u003dpackage:android\u0026l\u003d3779\n):\n\npublic abstract void enforcePermission(\n            @NonNull String permission, int pid, int uid, @Nullable String message);\n\nwhich doesn\u0027t seem to match up with the call here.",
+      "range": {
+        "startLine": 417,
+        "startChar": 8,
+        "endLine": 419,
+        "endChar": 43
+      },
+      "revId": "2883a8be17011b784c56123a50d0cb8563ba5df1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
