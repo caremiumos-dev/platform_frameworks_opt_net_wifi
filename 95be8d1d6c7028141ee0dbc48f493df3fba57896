@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e5b2a710_c5f870ad",
+        "filename": "service/java/com/android/server/wifi/RttService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2016-09-27T00:45:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5b2a710_85bb882d",
+      "range": {
+        "startLine": 323,
+        "startChar": 11,
+        "endLine": 323,
+        "endChar": 47
+      },
+      "revId": "95be8d1d6c7028141ee0dbc48f493df3fba57896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5b2a710_45c5809e",
         "filename": "service/java/com/android/server/wifi/RttService.java",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2016-09-27T00:34:11Z",
       "side": 1,
       "message": "Probably need to check if this returned null?",
+      "revId": "95be8d1d6c7028141ee0dbc48f493df3fba57896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5b2a710_c5cf507c",
+        "filename": "service/java/com/android/server/wifi/RttService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2016-09-27T00:45:19Z",
+      "side": 1,
+      "message": "If it is null it will crashes at the following line anyway.\nI guess crash is good for us because we don\u0027t have better choices here.",
+      "parentUuid": "e5b2a710_45c5809e",
       "revId": "95be8d1d6c7028141ee0dbc48f493df3fba57896",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
