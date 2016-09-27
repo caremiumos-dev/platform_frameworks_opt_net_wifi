@@ -22,6 +22,30 @@
       "revId": "2883a8be17011b784c56123a50d0cb8563ba5df1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5b2a710_3684e8b9",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-09-27T06:06:28Z",
+      "side": 1,
+      "message": "I guess you can use mContext.enforceCallingPermission instead.  Then you can add this permission check in getMessenger() and remove the permission check in the message handling in ClientHandler. \n\nBasically enforcing the permission when giving out the messenger object instead of on receiving a message from the messenger,  since all messages to the ClientHandler will be coming from the messenger.",
+      "parentUuid": "e5b2a710_d6db84e2",
+      "range": {
+        "startLine": 417,
+        "startChar": 8,
+        "endLine": 419,
+        "endChar": 43
+      },
+      "revId": "2883a8be17011b784c56123a50d0cb8563ba5df1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
