@@ -16,6 +16,24 @@
       "revId": "81cc7a93e0f248f69e1d14487c0ea52aef789c15",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45ba9338_11b13f4e",
+        "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-09-28T16:55:23Z",
+      "side": 1,
+      "message": "https://android-review.googlesource.com/280745 to add this",
+      "parentUuid": "45ba9338_b1079324",
+      "revId": "81cc7a93e0f248f69e1d14487c0ea52aef789c15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
