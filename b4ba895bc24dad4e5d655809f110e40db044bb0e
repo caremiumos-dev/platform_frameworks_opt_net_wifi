@@ -22,6 +22,30 @@
       "revId": "b4ba895bc24dad4e5d655809f110e40db044bb0e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45ba9338_bdb48287",
+        "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-09-28T20:13:09Z",
+      "side": 1,
+      "message": "I think this might be better than for last remembered state to be SCANNING until WiFi is re-enabled.",
+      "parentUuid": "45ba9338_670d6df2",
+      "range": {
+        "startLine": 103,
+        "startChar": 25,
+        "endLine": 103,
+        "endChar": 35
+      },
+      "revId": "b4ba895bc24dad4e5d655809f110e40db044bb0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
