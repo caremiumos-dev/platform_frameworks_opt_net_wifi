@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c22d9995_3ac45d08",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-09-29T23:08:33Z",
+      "side": 1,
+      "message": "Like the ModeStates, this might get collapsed into State without an intermediate class.",
+      "range": {
+        "startLine": 301,
+        "startChar": 42,
+        "endLine": 301,
+        "endChar": 57
+      },
+      "revId": "b5ceab8a78388c207987ab0d46a98f1390a27cbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c22d9995_1fe2b390",
         "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
         "patchSetId": 2
