@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45ba9338_cded4e7d",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3481,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-09-29T03:32:03Z",
+      "side": 1,
+      "message": "it seems like this is split from the makeWificond call.  Maybe that is intentional - but since the log message seems like we just tried to get a reference, it is pretty disconnected.",
+      "range": {
+        "startLine": 3478,
+        "startChar": 8,
+        "endLine": 3481,
+        "endChar": 9
+      },
+      "revId": "7c243c4978e1d95f39d5148469a740bc7e3aa7b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
