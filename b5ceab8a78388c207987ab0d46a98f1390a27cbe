@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c22d9995_1fe2b390",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-09-29T22:11:29Z",
+      "side": 1,
+      "message": "The config for the ap will be added here (and then added to the message).  For now it is using the default.",
+      "range": {
+        "startLine": 399,
+        "startChar": 16,
+        "endLine": 399,
+        "endChar": 33
+      },
+      "revId": "b5ceab8a78388c207987ab0d46a98f1390a27cbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
