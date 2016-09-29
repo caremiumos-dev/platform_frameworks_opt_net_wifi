@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e51d474e_0408163a",
+        "filename": "service/java/com/android/server/wifi/SoftApManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2016-09-29T03:06:31Z",
+      "side": 1,
+      "message": "You don\u0027t want to unregister/set to null in this catch block?",
+      "range": {
+        "startLine": 286,
+        "startChar": 26,
+        "endLine": 286,
+        "endChar": 31
+      },
+      "revId": "ffffa76ec4437e08312ebda04a5d1840aa80d4ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e51d474e_e4121a6d",
+        "filename": "service/java/com/android/server/wifi/SoftApManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2016-09-29T03:06:31Z",
+      "side": 1,
+      "message": "You probably want to also set\n\n    mNetworkObserver \u003d null\n\nno?\n\nIf so, might as well have the IdleState.onEnter() version in separate method like\n\n    private void unregisterNetworkObserver() {\n        try {\n            ...\n        } ...\n    }\n\nand just call it from the two call sites.",
+      "range": {
+        "startLine": 300,
+        "startChar": 28,
+        "endLine": 303,
+        "endChar": 29
+      },
+      "revId": "ffffa76ec4437e08312ebda04a5d1840aa80d4ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e51d474e_24051221",
+        "filename": "service/java/com/android/server/wifi/SoftApManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2016-09-29T03:06:31Z",
+      "side": 1,
+      "message": "Can you use mNwService.getInterfaceConfig(ifname)?\n\nThen you can be level-triggered as well in here, i.e.\n\n    if (mIfaceIsUp) {\n        notifyAboutTheUpness();\n    }\n\n    private void notifyAboutTheUpness() {\n        Log.d(TAG, \"SoftAp is ready for use\");\n        updateApState(WifiManager.WIFI_AP_STATE_ENABLED, 0);\n    }",
+      "range": {
+        "startLine": 324,
+        "startChar": 29,
+        "endLine": 324,
+        "endChar": 34
+      },
+      "revId": "ffffa76ec4437e08312ebda04a5d1840aa80d4ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
