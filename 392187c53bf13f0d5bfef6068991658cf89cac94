@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c22d9995_036a59a5",
+        "filename": "service/java/com/android/server/wifi/RttService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2016-09-30T17:33:03Z",
+      "side": 1,
+      "message": "rephrased.",
+      "parentUuid": "c22d9995_c878eeb6",
+      "range": {
+        "startLine": 390,
+        "startChar": 49,
+        "endLine": 390,
+        "endChar": 79
+      },
+      "revId": "392187c53bf13f0d5bfef6068991658cf89cac94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c22d9995_081dd682",
         "filename": "service/java/com/android/server/wifi/RttService.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2016-09-30T16:30:56Z",
       "side": 1,
       "message": "It\u0027s not really clear what case you\u0027re referring to here, probably better to say explicitly:\n\n1) RttService watches for WIFI_STATE_ENABLED broadcasts\n2) WifiStateMachine sends these broadcasts in the SupplicantStarted state\n3) Since WSM will only be in SupplicantStarted for as long as wificond is alive, we don\u0027t subscribe to wificond\u0027s death explicitly.",
+      "range": {
+        "startLine": 391,
+        "startChar": 23,
+        "endLine": 391,
+        "endChar": 36
+      },
+      "revId": "392187c53bf13f0d5bfef6068991658cf89cac94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c22d9995_236d55be",
+        "filename": "service/java/com/android/server/wifi/RttService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2016-09-30T17:33:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c22d9995_081dd682",
       "range": {
         "startLine": 391,
         "startChar": 23,
