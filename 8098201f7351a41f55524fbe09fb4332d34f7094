@@ -22,6 +22,30 @@
       "revId": "8098201f7351a41f55524fbe09fb4332d34f7094",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c22d9995_fe0fe08f",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3978,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-09-30T17:53:58Z",
+      "side": 0,
+      "message": "I guess that\u0027s a fair point. Technically, there is no synchronization between the teardown of the tethering logic and the setup of the next interface.  We simply send a signal to hostapd and mark the interface as down.  That means that whatever IP setup was done on the interface is probably still in play.",
+      "parentUuid": "45ba9338_cd842ebd",
+      "range": {
+        "startLine": 3978,
+        "startChar": 20,
+        "endLine": 3978,
+        "endChar": 25
+      },
+      "revId": "8098201f7351a41f55524fbe09fb4332d34f7094",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
