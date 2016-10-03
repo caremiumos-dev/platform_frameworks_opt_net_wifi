@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c20e797c_1da0c390",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-10-03T16:15:26Z",
+      "side": 1,
+      "message": "I am wondering if we can remove this dependency in WifiNetworkSelector\u0027s constructor. I think WifiInfo is only needed in the function WifiNetworkSelector#selectNetwork.   Instead of pass it in the constructor, you can have the caller for selectNetwork (WifiConnetivityManager) to pass it in. \n\nI think this would avoid the cyclic dependency between WifiNetworkSelector and WifiStateMachine, and makes the construction more easier and cleaner.",
+      "range": {
+        "startLine": 159,
+        "startChar": 16,
+        "endLine": 159,
+        "endChar": 47
+      },
+      "revId": "d0db55773a7393912122e4d94fa17436c787bf6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
