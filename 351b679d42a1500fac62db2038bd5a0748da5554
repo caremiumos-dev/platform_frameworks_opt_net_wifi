@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42ec493c_22da300c",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2091,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2016-10-04T20:52:09Z",
+      "side": 1,
+      "message": "Does running with only the proto dump arg not work anymore?",
+      "range": {
+        "startLine": 2091,
+        "startChar": 19,
+        "endLine": 2091,
+        "endChar": 61
+      },
+      "revId": "351b679d42a1500fac62db2038bd5a0748da5554",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
