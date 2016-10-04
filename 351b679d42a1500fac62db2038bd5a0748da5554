@@ -22,6 +22,30 @@
       "revId": "351b679d42a1500fac62db2038bd5a0748da5554",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42ec493c_02360c07",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2091,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-10-04T21:00:04Z",
+      "side": 1,
+      "message": "It still works",
+      "parentUuid": "42ec493c_22da300c",
+      "range": {
+        "startLine": 2091,
+        "startChar": 19,
+        "endLine": 2091,
+        "endChar": 61
+      },
+      "revId": "351b679d42a1500fac62db2038bd5a0748da5554",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
