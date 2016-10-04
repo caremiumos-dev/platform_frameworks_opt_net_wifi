@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0275f106_855d62ee",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-10-04T00:53:00Z",
+      "side": 1,
+      "message": "I think these two lines are not needed anymore.",
+      "range": {
+        "startLine": 498,
+        "startChar": 0,
+        "endLine": 499,
+        "endChar": 92
+      },
+      "revId": "d0823a4d74cf44bfdbc6bd6e69e6437f665f2874",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0275f106_c50bdaca",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4154,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-10-04T00:53:00Z",
+      "side": 1,
+      "message": "Instead of doing delayed initialization, what about have the WifiInjector construct WifiNetworkSelector before WifiStateMachine.  So then you can just initialize mWifiNetworkSelector in the WifiStateMachine\u0027s constructor.",
+      "range": {
+        "startLine": 4154,
+        "startChar": 16,
+        "endLine": 4154,
+        "endChar": 78
+      },
+      "revId": "d0823a4d74cf44bfdbc6bd6e69e6437f665f2874",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
