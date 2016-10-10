@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fd85cb1_2d0a3936",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-10-10T17:03:28Z",
+      "side": 1,
+      "message": "TextUtils.equals()",
+      "range": {
+        "startLine": 257,
+        "startChar": 41,
+        "endLine": 258,
+        "endChar": 74
+      },
+      "revId": "bfadd8e6ce336695fd74da71b550ba96d09e794a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fd85cb1_cd0f1d3d",
+        "filename": "service/java/com/android/server/wifi/ExternalScoreEvaluator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-10-10T17:03:28Z",
+      "side": 1,
+      "message": "TextUtils.equals()",
+      "range": {
+        "startLine": 291,
+        "startChar": 35,
+        "endLine": 291,
+        "endChar": 96
+      },
+      "revId": "bfadd8e6ce336695fd74da71b550ba96d09e794a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
