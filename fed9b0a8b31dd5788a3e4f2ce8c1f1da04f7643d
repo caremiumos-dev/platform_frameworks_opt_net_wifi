@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f7dbc55_6c7c44ba",
+        "filename": "service/java/com/android/server/wifi/ActiveModeManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-10-11T18:22:52Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 21
+      },
+      "revId": "fed9b0a8b31dd5788a3e4f2ce8c1f1da04f7643d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f7dbc55_8c334860",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-10-11T18:22:52Z",
+      "side": 1,
+      "message": "nit: don\u0027t need this, and it\u0027s probably dangerous to have our own notion of this, given that we can be in 1 or 2 states at a time, and the control of that is in the hands of a different thread",
+      "revId": "fed9b0a8b31dd5788a3e4f2ce8c1f1da04f7643d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f7dbc55_cc663050",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-10-11T18:22:52Z",
+      "side": 1,
+      "message": "Can all of these states be members of the state machine?  That would seem more natural for me.",
+      "revId": "fed9b0a8b31dd5788a3e4f2ce8c1f1da04f7643d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f7dbc55_2cd23cfc",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-10-11T18:22:52Z",
+      "side": 1,
+      "message": "Can we use an ArrayMap?\n\nhttps://developer.android.com/reference/android/support/v4/util/ArrayMap.html\n\nThis seems really small and we can save a chunk of memory this way.  But I\u0027m really unsure why we need this mapping anyway, given that it is 1:1 with the corresponding commands.",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 19
+      },
+      "revId": "fed9b0a8b31dd5788a3e4f2ce8c1f1da04f7643d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f7dbc55_2ce95ca6",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-10-11T18:22:52Z",
+      "side": 1,
+      "message": "nit: don\u0027t need these template args",
+      "range": {
+        "startLine": 52,
+        "startChar": 41,
+        "endLine": 52,
+        "endChar": 55
+      },
+      "revId": "fed9b0a8b31dd5788a3e4f2ce8c1f1da04f7643d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f7dbc55_6cca8416",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-10-11T18:22:52Z",
+      "side": 1,
+      "message": "Can we do work like this with a constructor?",
+      "revId": "fed9b0a8b31dd5788a3e4f2ce8c1f1da04f7643d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f7dbc55_ac39ec29",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-10-11T18:22:52Z",
+      "side": 1,
+      "message": "nit: in all these places can we use HANDLED and NOT_HANDLED?",
+      "range": {
+        "startLine": 109,
+        "startChar": 19,
+        "endLine": 109,
+        "endChar": 24
+      },
+      "revId": "fed9b0a8b31dd5788a3e4f2ce8c1f1da04f7643d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
