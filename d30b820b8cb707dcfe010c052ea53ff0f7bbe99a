@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f7dbc55_cc2e30b1",
+        "filename": "service/java/com/android/server/wifi/SoftApManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-10-11T18:27:49Z",
+      "side": 1,
+      "message": "I do like this a lot better",
+      "revId": "d30b820b8cb707dcfe010c052ea53ff0f7bbe99a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
