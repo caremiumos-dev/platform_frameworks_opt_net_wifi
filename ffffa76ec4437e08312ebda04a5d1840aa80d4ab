@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c22d9995_d1ee520f",
+        "filename": "service/java/com/android/server/wifi/SoftApManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-10-11T23:44:05Z",
+      "side": 1,
+      "message": "I think if we fail to register, it has to be because mNwService is dead, making attempts to unregister sort of pointless.  But I guess it can\u0027t hurt?  Certainly I want to set it to null.",
+      "parentUuid": "e51d474e_0408163a",
+      "range": {
+        "startLine": 286,
+        "startChar": 26,
+        "endLine": 286,
+        "endChar": 31
+      },
+      "revId": "ffffa76ec4437e08312ebda04a5d1840aa80d4ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e51d474e_e4121a6d",
         "filename": "service/java/com/android/server/wifi/SoftApManager.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c22d9995_71255eb0",
+        "filename": "service/java/com/android/server/wifi/SoftApManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-10-11T23:44:05Z",
+      "side": 1,
+      "message": "Good call.",
+      "parentUuid": "e51d474e_e4121a6d",
+      "range": {
+        "startLine": 300,
+        "startChar": 28,
+        "endLine": 303,
+        "endChar": 29
+      },
+      "revId": "ffffa76ec4437e08312ebda04a5d1840aa80d4ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e51d474e_24051221",
         "filename": "service/java/com/android/server/wifi/SoftApManager.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2016-09-29T03:06:31Z",
       "side": 1,
       "message": "Can you use mNwService.getInterfaceConfig(ifname)?\n\nThen you can be level-triggered as well in here, i.e.\n\n    if (mIfaceIsUp) {\n        notifyAboutTheUpness();\n    }\n\n    private void notifyAboutTheUpness() {\n        Log.d(TAG, \"SoftAp is ready for use\");\n        updateApState(WifiManager.WIFI_AP_STATE_ENABLED, 0);\n    }",
+      "range": {
+        "startLine": 324,
+        "startChar": 29,
+        "endLine": 324,
+        "endChar": 34
+      },
+      "revId": "ffffa76ec4437e08312ebda04a5d1840aa80d4ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c22d9995_acb12d9a",
+        "filename": "service/java/com/android/server/wifi/SoftApManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-10-11T23:44:05Z",
+      "side": 1,
+      "message": "I\u0027ll do something like that.",
+      "parentUuid": "e51d474e_24051221",
       "range": {
         "startLine": 324,
         "startChar": 29,
