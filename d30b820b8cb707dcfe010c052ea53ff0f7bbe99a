@@ -16,6 +16,24 @@
       "revId": "d30b820b8cb707dcfe010c052ea53ff0f7bbe99a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ca192a9_5324166f",
+        "filename": "service/java/com/android/server/wifi/SoftApManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-10-12T23:18:52Z",
+      "side": 1,
+      "message": "Thank you! :)",
+      "parentUuid": "9f7dbc55_cc2e30b1",
+      "revId": "d30b820b8cb707dcfe010c052ea53ff0f7bbe99a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
