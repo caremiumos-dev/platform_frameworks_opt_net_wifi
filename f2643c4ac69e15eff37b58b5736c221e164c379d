@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c8bb7e0_aae910a3",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-10-17T18:00:37Z",
+      "side": 1,
+      "message": "I think this check now should be something like:\n\nif (lastUserSelectedNetworkId !\u003d WifiConfiguration.INVALID_NETWORK_ID \u0026\u0026 lastUserSelectedNetworkId \u003d\u003d network.networkId).",
+      "range": {
+        "startLine": 162,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 59
+      },
+      "revId": "f2643c4ac69e15eff37b58b5736c221e164c379d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
