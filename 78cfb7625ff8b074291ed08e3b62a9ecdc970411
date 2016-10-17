@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c8bb7e0_f5e37a1c",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-10-17T17:11:43Z",
+      "side": 1,
+      "message": "Does this block?  Will it exit both the current state and all of its parents?",
+      "revId": "78cfb7625ff8b074291ed08e3b62a9ecdc970411",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c8bb7e0_35ea42f6",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-10-17T17:11:43Z",
+      "side": 1,
+      "message": "HANDLED and NOT_HANDLED?",
+      "range": {
+        "startLine": 205,
+        "startChar": 27,
+        "endLine": 205,
+        "endChar": 32
+      },
+      "revId": "78cfb7625ff8b074291ed08e3b62a9ecdc970411",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
