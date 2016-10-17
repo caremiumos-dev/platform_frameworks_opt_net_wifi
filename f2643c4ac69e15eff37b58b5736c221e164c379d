@@ -46,6 +46,30 @@
       "revId": "f2643c4ac69e15eff37b58b5736c221e164c379d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c8bb7e0_0abb5c7a",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-10-17T18:13:59Z",
+      "side": 1,
+      "message": "The reason behind that extra check is in case an \"invalid\" network config somehow gets passed in.",
+      "parentUuid": "7c8bb7e0_6a1a28e4",
+      "range": {
+        "startLine": 162,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 59
+      },
+      "revId": "f2643c4ac69e15eff37b58b5736c221e164c379d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
