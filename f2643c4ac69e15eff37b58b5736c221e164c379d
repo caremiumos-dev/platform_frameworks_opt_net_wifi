@@ -22,6 +22,30 @@
       "revId": "f2643c4ac69e15eff37b58b5736c221e164c379d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c8bb7e0_6a1a28e4",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-10-17T18:01:52Z",
+      "side": 1,
+      "message": "I did think about that. But, the first check is unnecessary because if it is -1, then the second check would anyway fail? We can\u0027t have a valid network config with -1 as network ID.",
+      "parentUuid": "7c8bb7e0_aae910a3",
+      "range": {
+        "startLine": 162,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 59
+      },
+      "revId": "f2643c4ac69e15eff37b58b5736c221e164c379d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
