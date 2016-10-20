@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c0657a0_28238b6e",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-20T07:44:29Z",
+      "side": 1,
+      "message": "consider no spaces, easier to greg logcats.",
+      "range": {
+        "startLine": 34,
+        "startChar": 43,
+        "endLine": 34,
+        "endChar": 61
+      },
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c0657a0_0820c75d",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-20T07:44:29Z",
+      "side": 1,
+      "message": "only used in one function - just declare locally",
+      "range": {
+        "startLine": 37,
+        "startChar": 19,
+        "endLine": 37,
+        "endChar": 23
+      },
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c0657a0_e84b3326",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-20T07:44:29Z",
+      "side": 1,
+      "message": "same - only used in one method, move into it",
+      "range": {
+        "startLine": 38,
+        "startChar": 25,
+        "endLine": 38,
+        "endChar": 38
+      },
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c0657a0_684063fe",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-20T07:44:29Z",
+      "side": 1,
+      "message": "do you need some prefix here? There are methods where you print multiple messages - is the context always clear?",
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c0657a0_c8506fd5",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-20T07:44:29Z",
+      "side": 1,
+      "message": "I thought you were also going to print (as PII) the other contents of the message!?",
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c0657a0_a8453b11",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-20T07:44:29Z",
+      "side": 1,
+      "message": "is there a need to log this?",
+      "range": {
+        "startLine": 84,
+        "startChar": 39,
+        "endLine": 84,
+        "endChar": 45
+      },
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c0657a0_884a771f",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-20T07:44:29Z",
+      "side": 1,
+      "message": "style: no need for additional parenthesis.",
+      "range": {
+        "startLine": 100,
+        "startChar": 15,
+        "endLine": 100,
+        "endChar": 29
+      },
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c0657a0_283a6b8c",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-20T07:44:29Z",
+      "side": 1,
+      "message": "Is there rest really necessary? I assume they are the cause of modifying the parent class. These are management messages - only sent once at beginning of setup. I\u0027m curious if (1) they ever cause issues, and (2) if you\u0027re going to gain any insights from the contents of these messages. I believe that the setup code already prints out errors if the channel isn\u0027t set up.",
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
