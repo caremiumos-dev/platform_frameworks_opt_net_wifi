@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c886b74_50544568",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-10-20T20:24:58Z",
+      "side": 1,
+      "message": "\u003d\u003detan, although I\u0027d spell it grep. :-P",
+      "parentUuid": "7c0657a0_28238b6e",
+      "range": {
+        "startLine": 34,
+        "startChar": 43,
+        "endLine": 34,
+        "endChar": 61
+      },
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c0657a0_0820c75d",
         "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
         "patchSetId": 2
@@ -71,6 +95,29 @@
     },
     {
       "key": {
+        "uuid": "9c886b74_703e29f3",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-10-20T20:24:58Z",
+      "side": 1,
+      "message": "Similar to Etan\u0027s comment on line 34... Prefer not to use spaces, as it complicates log processing.\n\nWithout spaces, we can do some pretty decent log processing using simple command-line tools like sed/awk/split/join. Spaces makes this much harder.\n\nConcretely, consider something like\n\n  mTag \u003d serviceTag + \".\" + \"asyncChannel\";\n\nThe dot syntax, and the change in ordering, conveys the idea that the async channel is part of the service, by borrowing from the syntax we use in source code itself.",
+      "range": {
+        "startLine": 45,
+        "startChar": 15,
+        "endLine": 45,
+        "endChar": 45
+      },
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c0657a0_684063fe",
         "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
         "patchSetId": 2
@@ -88,6 +135,93 @@
     },
     {
       "key": {
+        "uuid": "9c886b74_d0f6f520",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-10-20T20:24:58Z",
+      "side": 1,
+      "message": "\u003d\u003detan. maybe some sort of inbound/outbound indicator?",
+      "parentUuid": "7c0657a0_684063fe",
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c886b74_302e61ee",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-10-20T20:24:58Z",
+      "side": 1,
+      "message": "Prefer to isolate the WifiLog creation code, and the actual logging code. E.g.\n\n  private @NonNull void fetchOrInitLog() {\n    if (mLog \u003d\u003d null) {\n       // ...\n    }\n    return mLog;\n  }\n\n  private void logMessage(Message msg) {\n    WifiLog log \u003d fetchOrInitLog();\n    log.trace(...).c(msg.what)...;\n  }\n\nor even\n\n  private void logMessage(Message msg) {\n    fetchOrInitLog().trace(...).c(msg.what)...;\n  }",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 9
+      },
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c886b74_10ac7d40",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-10-20T20:24:58Z",
+      "side": 1,
+      "message": "I don\u0027t see why this would ever be null. So consider removing the check, and the else clause.\n\nHowever, if you keep the else clause, prefer to reverse the ordering of the clauses, and exit early in the error case. That makes it easier to see which path in the code represents forward progress.\n\n  if (mLog \u003d\u003d null) {\n    Log.e(...);\n    return;\n  }\n\n  mLog.trace(...);",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 27
+      },
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c886b74_300f414f",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-10-20T20:24:58Z",
+      "side": 1,
+      "message": "1) Not sure why we want a leading space here.\n2) Similar to elsewhere: prefer to have this information be machine parseable. E.g.\n      mLog.trace(\"message\u003d% senderUid\u003d%\");",
+      "range": {
+        "startLine": 56,
+        "startChar": 24,
+        "endLine": 56,
+        "endChar": 49
+      },
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c0657a0_c8506fd5",
         "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
         "patchSetId": 2
@@ -99,6 +233,24 @@
       "writtenOn": "2016-10-20T07:44:29Z",
       "side": 1,
       "message": "I thought you were also going to print (as PII) the other contents of the message!?",
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c886b74_b0c7b1f7",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-10-20T20:24:58Z",
+      "side": 1,
+      "message": "I think Sohani\u0027s code here reflects my suggestion that the generic layer only log the known-safe bits. For anything else, I\u0027d rather leave the logging to the class that has the context to understand the data.",
+      "parentUuid": "7c0657a0_c8506fd5",
       "revId": "7631779874f6daf60cf94528b753e49b612117a8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -162,6 +314,24 @@
       "writtenOn": "2016-10-20T07:44:29Z",
       "side": 1,
       "message": "Is there rest really necessary? I assume they are the cause of modifying the parent class. These are management messages - only sent once at beginning of setup. I\u0027m curious if (1) they ever cause issues, and (2) if you\u0027re going to gain any insights from the contents of these messages. I believe that the setup code already prints out errors if the channel isn\u0027t set up.",
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c886b74_10a1dd30",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-10-20T20:24:58Z",
+      "side": 1,
+      "message": "\u003d\u003detan here. These messages are more about the async-channel setup, than about application-layer work. It\u0027s like tracing TCP SYN/FIN versus tracing TCP data.\n\n(Note that removing these changes also eliminates the need for any changes to AsyncChannel.)",
+      "parentUuid": "7c0657a0_283a6b8c",
       "revId": "7631779874f6daf60cf94528b753e49b612117a8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
