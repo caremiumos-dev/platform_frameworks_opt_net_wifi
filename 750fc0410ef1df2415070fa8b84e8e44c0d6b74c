@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c1b9b2a_a9290554",
+        "filename": "service/java/com/android/server/wifi/WifiScoreReport.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-10-21T22:36:22Z",
+      "side": 1,
+      "message": "Could add the name of the variable CMD_RSSI_POLL? that sets this interval.",
+      "range": {
+        "startLine": 158,
+        "startChar": 7,
+        "endLine": 158,
+        "endChar": 51
+      },
+      "revId": "750fc0410ef1df2415070fa8b84e8e44c0d6b74c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
