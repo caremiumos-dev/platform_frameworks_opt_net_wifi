@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7cce57f1_d7c966b5",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-10-21T06:38:39Z",
+      "side": 1,
+      "message": "I found that I can use the halting state (a hidden state in StateMachine that exits the current and all parent states).  This will keep us from having issues with messages coming in while we are trying to clean up.  Thanks for reminding me about this one!  I had forgotten that I wanted to try it out!",
+      "parentUuid": "7c8bb7e0_f5e37a1c",
+      "revId": "78cfb7625ff8b074291ed08e3b62a9ecdc970411",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c8bb7e0_35ea42f6",
         "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2016-10-17T17:11:43Z",
       "side": 1,
       "message": "HANDLED and NOT_HANDLED?",
+      "range": {
+        "startLine": 205,
+        "startChar": 27,
+        "endLine": 205,
+        "endChar": 32
+      },
+      "revId": "78cfb7625ff8b074291ed08e3b62a9ecdc970411",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cce57f1_37cf22b9",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-10-21T06:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c8bb7e0_35ea42f6",
       "range": {
         "startLine": 205,
         "startChar": 27,
