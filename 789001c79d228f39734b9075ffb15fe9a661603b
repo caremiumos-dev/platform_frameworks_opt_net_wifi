@@ -70,6 +70,30 @@
       "revId": "789001c79d228f39734b9075ffb15fe9a661603b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c1b9b2a_3731cb4f",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-10-24T18:05:06Z",
+      "side": 1,
+      "message": "That is already handled in enableNetwork call above. It would reject a failure. If the app asks us to connect to an invalid network ID, we\u0027ll reject it.",
+      "parentUuid": "1c1b9b2a_54b60529",
+      "range": {
+        "startLine": 1277,
+        "startChar": 16,
+        "endLine": 1277,
+        "endChar": 75
+      },
+      "revId": "789001c79d228f39734b9075ffb15fe9a661603b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
