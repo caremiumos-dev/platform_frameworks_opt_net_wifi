@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c1b9b2a_d445f562",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-10-24T17:03:54Z",
+      "side": 1,
+      "message": "This check is probably redundant if we sanity check if netId \u003d\u003d WifiConfiguration.INVALID_NETWORK_ID and return false at the very beginning of this method. In WifiStateMachine#handleSupplicantStateChange we already have:\n\n \n\n        // Network id is only valid when we start connecting\n        if (SupplicantState.isConnecting(state)) {\n            mWifiInfo.setNetworkId(lookupFrameworkNetworkId(stateChangeResult.networkId));\n        } else {\n            mWifiInfo.setNetworkId(WifiConfiguration.INVALID_NETWORK_ID);\n        }",
+      "range": {
+        "startLine": 1277,
+        "startChar": 16,
+        "endLine": 1277,
+        "endChar": 75
+      },
+      "revId": "789001c79d228f39734b9075ffb15fe9a661603b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
