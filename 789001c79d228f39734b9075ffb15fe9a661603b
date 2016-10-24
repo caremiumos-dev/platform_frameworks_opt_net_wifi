@@ -46,6 +46,30 @@
       "revId": "789001c79d228f39734b9075ffb15fe9a661603b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c1b9b2a_54b60529",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-10-24T17:23:49Z",
+      "side": 1,
+      "message": "Yes, we still need to check if mWifiInfo.getNetworkId() \u003d\u003d netId. That\u0027s why I only highlighted the SupplicantState.isConnecting() part in my last comment.\n\n\nI also made a comment on adding a check of if (netId \u003d\u003d WifiConfiguration.INVALID_NETWORK_ID) at the very beginning of this method. Does it make sense to you?",
+      "parentUuid": "1c1b9b2a_d4ba1519",
+      "range": {
+        "startLine": 1277,
+        "startChar": 16,
+        "endLine": 1277,
+        "endChar": 75
+      },
+      "revId": "789001c79d228f39734b9075ffb15fe9a661603b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
