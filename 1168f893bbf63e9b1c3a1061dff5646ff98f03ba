@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8164840b_a78ab4a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-10-24T21:57:18Z",
+      "side": 1,
+      "message": "It is a nit (and a personal preference), but I like to put the class name first so it is obvious where the change lives.  So something like:\nWifiScoreReport: Add/update some comments",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 40
+      },
+      "revId": "1168f893bbf63e9b1c3a1061dff5646ff98f03ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8164840b_07536055",
+        "filename": "service/java/com/android/server/wifi/WifiScoreReport.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-10-24T21:57:18Z",
+      "side": 1,
+      "message": "very much a nit - maybe include units here and the following lines?",
+      "range": {
+        "startLine": 66,
+        "startChar": 51,
+        "endLine": 66,
+        "endChar": 55
+      },
+      "revId": "1168f893bbf63e9b1c3a1061dff5646ff98f03ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8164840b_073cc0f5",
+        "filename": "service/java/com/android/server/wifi/WifiScoreReport.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-10-24T21:57:18Z",
+      "side": 1,
+      "message": "maybe rephrase to \"Previous score\"",
+      "range": {
+        "startLine": 344,
+        "startChar": 69,
+        "endLine": 344,
+        "endChar": 92
+      },
+      "revId": "1168f893bbf63e9b1c3a1061dff5646ff98f03ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8164840b_e703cc29",
+        "filename": "service/java/com/android/server/wifi/WifiScoreReport.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-10-24T21:57:18Z",
+      "side": 1,
+      "message": "You can create a bug for this and then put the number in the comment.  the short form of the url is fine (b/\u003cbugnumber\u003e)",
+      "range": {
+        "startLine": 438,
+        "startChar": 19,
+        "endLine": 438,
+        "endChar": 23
+      },
+      "revId": "1168f893bbf63e9b1c3a1061dff5646ff98f03ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
