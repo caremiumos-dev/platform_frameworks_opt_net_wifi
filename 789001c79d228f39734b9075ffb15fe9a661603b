@@ -22,6 +22,30 @@
       "revId": "789001c79d228f39734b9075ffb15fe9a661603b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c1b9b2a_d4ba1519",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-10-24T17:14:45Z",
+      "side": 1,
+      "message": "I\u0027ve removed the |isConnecting| check. We still need to check if we\u0027re connected to the same network. If it\u0027s connected to any other network, we need to let user override it.",
+      "parentUuid": "1c1b9b2a_d445f562",
+      "range": {
+        "startLine": 1277,
+        "startChar": 16,
+        "endLine": 1277,
+        "endChar": 75
+      },
+      "revId": "789001c79d228f39734b9075ffb15fe9a661603b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
