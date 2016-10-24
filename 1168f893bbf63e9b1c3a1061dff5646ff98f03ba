@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "e147008e_3bf93714",
+        "filename": "service/java/com/android/server/wifi/WifiScoreReport.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-10-24T23:53:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8164840b_07536055",
+      "range": {
+        "startLine": 66,
+        "startChar": 51,
+        "endLine": 66,
+        "endChar": 55
+      },
+      "revId": "1168f893bbf63e9b1c3a1061dff5646ff98f03ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8164840b_073cc0f5",
         "filename": "service/java/com/android/server/wifi/WifiScoreReport.java",
         "patchSetId": 2
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "e147008e_7bf3bf33",
+        "filename": "service/java/com/android/server/wifi/WifiScoreReport.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-10-24T23:53:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8164840b_073cc0f5",
+      "range": {
+        "startLine": 344,
+        "startChar": 69,
+        "endLine": 344,
+        "endChar": 92
+      },
+      "revId": "1168f893bbf63e9b1c3a1061dff5646ff98f03ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8164840b_e703cc29",
         "filename": "service/java/com/android/server/wifi/WifiScoreReport.java",
         "patchSetId": 2
@@ -82,6 +130,30 @@
       "writtenOn": "2016-10-24T21:57:18Z",
       "side": 1,
       "message": "You can create a bug for this and then put the number in the comment.  the short form of the url is fine (b/\u003cbugnumber\u003e)",
+      "range": {
+        "startLine": 438,
+        "startChar": 19,
+        "endLine": 438,
+        "endChar": 23
+      },
+      "revId": "1168f893bbf63e9b1c3a1061dff5646ff98f03ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e147008e_5bf8830c",
+        "filename": "service/java/com/android/server/wifi/WifiScoreReport.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-10-24T23:53:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8164840b_e703cc29",
       "range": {
         "startLine": 438,
         "startChar": 19,
