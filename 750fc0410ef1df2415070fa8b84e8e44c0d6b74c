@@ -22,6 +22,30 @@
       "revId": "750fc0410ef1df2415070fa8b84e8e44c0d6b74c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c1b9b2a_d474d5f5",
+        "filename": "service/java/com/android/server/wifi/WifiScoreReport.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-10-24T21:51:43Z",
+      "side": 1,
+      "message": "Actually POLL_RSSI_INTERVAL_MSECS",
+      "parentUuid": "1c1b9b2a_a9290554",
+      "range": {
+        "startLine": 158,
+        "startChar": 7,
+        "endLine": 158,
+        "endChar": 51
+      },
+      "revId": "750fc0410ef1df2415070fa8b84e8e44c0d6b74c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
