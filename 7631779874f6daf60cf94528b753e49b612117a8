@@ -49,6 +49,54 @@
     },
     {
       "key": {
+        "uuid": "9c886b74_6926402d",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-25T23:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c0657a0_28238b6e",
+      "range": {
+        "startLine": 34,
+        "startChar": 43,
+        "endLine": 34,
+        "endChar": 61
+      },
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c886b74_a91c28dc",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-25T23:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c886b74_50544568",
+      "range": {
+        "startLine": 34,
+        "startChar": 43,
+        "endLine": 34,
+        "endChar": 61
+      },
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c0657a0_0820c75d",
         "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
         "patchSetId": 2
@@ -72,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "9c886b74_291038c2",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-25T23:16:05Z",
+      "side": 1,
+      "message": "I would need to store either mTag or serviceTag passed into constructor somewhere, because it is used upon first invocation of sendMessage to create a log object.",
+      "parentUuid": "7c0657a0_0820c75d",
+      "range": {
+        "startLine": 37,
+        "startChar": 19,
+        "endLine": 37,
+        "endChar": 23
+      },
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c0657a0_e84b3326",
         "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
         "patchSetId": 2
@@ -83,6 +155,30 @@
       "writtenOn": "2016-10-20T07:44:29Z",
       "side": 1,
       "message": "same - only used in one method, move into it",
+      "range": {
+        "startLine": 38,
+        "startChar": 25,
+        "endLine": 38,
+        "endChar": 38
+      },
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c886b74_891fe4d0",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-25T23:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c0657a0_e84b3326",
       "range": {
         "startLine": 38,
         "startChar": 25,
@@ -146,6 +242,42 @@
       "writtenOn": "2016-10-20T20:24:58Z",
       "side": 1,
       "message": "\u003d\u003detan. maybe some sort of inbound/outbound indicator?",
+      "parentUuid": "7c0657a0_684063fe",
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c886b74_2974b841",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-25T23:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c886b74_d0f6f520",
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c886b74_898364ea",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-25T23:16:05Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "7c0657a0_684063fe",
       "revId": "7631779874f6daf60cf94528b753e49b612117a8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -222,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "9c886b74_ced3b21d",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-25T23:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c886b74_300f414f",
+      "range": {
+        "startLine": 56,
+        "startChar": 24,
+        "endLine": 56,
+        "endChar": 49
+      },
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c0657a0_c8506fd5",
         "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
         "patchSetId": 2
@@ -257,6 +413,42 @@
     },
     {
       "key": {
+        "uuid": "9c886b74_10831d27",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-25T23:16:05Z",
+      "side": 1,
+      "message": "Yes I do. If this patch was headed in the right direction, that\u0027s the next thing I am to do",
+      "parentUuid": "7c0657a0_c8506fd5",
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c886b74_f024597b",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-25T23:16:05Z",
+      "side": 1,
+      "message": "I think the object field of message is tricky and each service will need to implement a toDebugString() function or such to be used in this PII logging. Was trying to break up the change into small chunks.",
+      "parentUuid": "9c886b74_b0c7b1f7",
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c0657a0_a8453b11",
         "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
         "patchSetId": 2
@@ -268,6 +460,30 @@
       "writtenOn": "2016-10-20T07:44:29Z",
       "side": 1,
       "message": "is there a need to log this?",
+      "range": {
+        "startLine": 84,
+        "startChar": 39,
+        "endLine": 84,
+        "endChar": 45
+      },
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc7c072f_a1620453",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-25T23:16:05Z",
+      "side": 1,
+      "message": "We could potentially log the message we are responding too as well.",
+      "parentUuid": "7c0657a0_a8453b11",
       "range": {
         "startLine": 84,
         "startChar": 39,
