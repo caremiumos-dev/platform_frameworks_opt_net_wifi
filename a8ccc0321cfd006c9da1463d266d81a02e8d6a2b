@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e147008e_af5ce133",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-10-25T04:39:14Z",
+      "side": 1,
+      "message": "Good catch!  WifiScoreReportTest: add unittests",
+      "parentUuid": "e147008e_6f1939ec",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 34
+      },
+      "revId": "a8ccc0321cfd006c9da1463d266d81a02e8d6a2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8164840b_92f80c60",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
         "patchSetId": 1
