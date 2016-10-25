@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a19ee87a_35b748bc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-25T22:45:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a19ee87a_6732c656",
+      "revId": "7896efac8d846e1738f93552706a9265b24a6d3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a19ee87a_e7aa5625",
         "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a19ee87a_d5dedcf5",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-25T22:45:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a19ee87a_e7aa5625",
+      "revId": "7896efac8d846e1738f93552706a9265b24a6d3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a19ee87a_07cf7a13",
         "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2016-10-25T22:01:36Z",
       "side": 1,
       "message": "Could you document logic changes above in the commit message?",
+      "revId": "7896efac8d846e1738f93552706a9265b24a6d3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a19ee87a_ea221bbe",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-25T22:45:57Z",
+      "side": 1,
+      "message": "Sure, this is actually reverting back to the original code flow before refactoring.",
+      "parentUuid": "a19ee87a_07cf7a13",
       "revId": "7896efac8d846e1738f93552706a9265b24a6d3f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
