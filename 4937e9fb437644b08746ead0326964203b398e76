@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a19ee87a_956054ec",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-10-25T23:20:49Z",
+      "side": 1,
+      "message": "The way this comment is written makes more sense than the deMorganed version of the code below.  Would it make sense to write out out that way?\n\n    final boolean canUseLocation \u003d checkCallerHasPeersMacAddressPermission(uid)\n            || isCallerActiveNwScorer(uid)\n            || isLocationModeEnabled(pkgName, minVersion);\n\n\n    if (!canUseLocation) {\n        return false;\n    }\n\nFrom here, it\u0027s actually makes it clearer what\u0027s going on in the second if statement in a similar manner.  Further, since it\u0027s clear that you\u0027re using the first two cases of the if-statement, you could consider even go further:\n\n    final bool isUidAllowedLocation  \u003d checkCallerHasPeersMacAddressPermission(uid)\n            || isCallerActiveNwScorer(uid);\n\n    final bool doesSystemAllowLocation \u003d checkCallersLocationPermission(pkgName, uid, minVersion));\n\n    final bool isCallerAllowedLocation \u003d checkCallersLocationPermission(pkgName, uid, minVersion);\n\n    // If the this UID does not inherently have permission, it must either have system-level permission to location, or the caller\u0027s package itself must allow it. \n    if (!isUidAllowedLocation \u0026\u0026 (!doesSystemAllowLocation || !isCallerAllowedLocation)) {\n        return false;\n    }\n\nYou have unit tests to prove out whether this is correct, so you have room to make this more readable, and prevent other people from making mistakes with this logic.  Consider cleaning it up a little more.",
+      "revId": "4937e9fb437644b08746ead0326964203b398e76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
