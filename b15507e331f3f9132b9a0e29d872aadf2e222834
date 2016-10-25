@@ -22,6 +22,30 @@
       "revId": "b15507e331f3f9132b9a0e29d872aadf2e222834",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e147008e_b5df10bf",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-10-25T16:33:40Z",
+      "side": 1,
+      "message": "Yes, but why would that be better?",
+      "parentUuid": "e147008e_cf884d70",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 39
+      },
+      "revId": "b15507e331f3f9132b9a0e29d872aadf2e222834",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
