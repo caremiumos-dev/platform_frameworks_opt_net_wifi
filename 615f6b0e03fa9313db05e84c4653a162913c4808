@@ -187,6 +187,30 @@
       "revId": "615f6b0e03fa9313db05e84c4653a162913c4808",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e147008e_75e468c8",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5616,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-10-25T16:17:27Z",
+      "side": 1,
+      "message": "Let\u0027s chat about what can be pulled out of WifiStateMachine after I get the first phase of the client mode refactor done.  It might be more clear where and how to make a cut on this.",
+      "parentUuid": "e147008e_b57ef01d",
+      "range": {
+        "startLine": 5616,
+        "startChar": 20,
+        "endLine": 5616,
+        "endChar": 59
+      },
+      "revId": "615f6b0e03fa9313db05e84c4653a162913c4808",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
