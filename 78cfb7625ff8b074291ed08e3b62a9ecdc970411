@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a19ee87a_caaf5733",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-10-25T22:02:30Z",
+      "side": 1,
+      "message": "So the halting state didn\u0027t end up working out.  It is using exit() on the current state, which will then call stop for the active mode manager (if there is one).  I will make these blocking calls to avoid odd transitions between states with all of the teardown intermediate states.",
+      "parentUuid": "7cce57f1_d7c966b5",
+      "revId": "78cfb7625ff8b074291ed08e3b62a9ecdc970411",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c8bb7e0_35ea42f6",
         "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
         "patchSetId": 5
