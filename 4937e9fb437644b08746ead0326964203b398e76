@@ -16,6 +16,24 @@
       "revId": "4937e9fb437644b08746ead0326964203b398e76",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "810004b4_7806a1fa",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-26T01:17:50Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "a19ee87a_956054ec",
+      "revId": "4937e9fb437644b08746ead0326964203b398e76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
