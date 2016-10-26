@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "810004b4_6cdc2359",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-26T18:00:18Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "810004b4_ec7cb32a",
+      "range": {
+        "startLine": 74,
+        "startChar": 69,
+        "endLine": 74,
+        "endChar": 80
+      },
+      "revId": "4af535746b6ff1e173cb28ab0dace34ed68ca20e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "810004b4_cc09ef9f",
         "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
         "patchSetId": 7
@@ -36,6 +60,24 @@
       "writtenOn": "2016-10-26T17:29:07Z",
       "side": 1,
       "message": "This file is inconsistent with respect to whether comments end or do not end in punctuation.  I don\u0027t suggest resolving this in the current CL, but consider this for a follow-on CL.",
+      "revId": "4af535746b6ff1e173cb28ab0dace34ed68ca20e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "810004b4_cc556fde",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-26T18:00:18Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "810004b4_cc09ef9f",
       "revId": "4af535746b6ff1e173cb28ab0dace34ed68ca20e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
