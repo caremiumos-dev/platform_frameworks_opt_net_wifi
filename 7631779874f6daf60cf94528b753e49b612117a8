@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "810004b4_8197c02e",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-10-26T17:44:25Z",
+      "side": 1,
+      "message": "Looks like this is done? (If so, please reply with \"Done\".)",
+      "parentUuid": "9c886b74_703e29f3",
+      "range": {
+        "startLine": 45,
+        "startChar": 15,
+        "endLine": 45,
+        "endChar": 45
+      },
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c0657a0_684063fe",
         "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
         "patchSetId": 2
@@ -308,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "21a03809_d63fba1b",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-10-26T17:44:25Z",
+      "side": 1,
+      "message": "Looks like this is done? (If so, please reply with \"Done\".)",
+      "parentUuid": "9c886b74_302e61ee",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 9
+      },
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c886b74_10ac7d40",
         "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
         "patchSetId": 2
@@ -319,6 +367,30 @@
       "writtenOn": "2016-10-20T20:24:58Z",
       "side": 1,
       "message": "I don\u0027t see why this would ever be null. So consider removing the check, and the else clause.\n\nHowever, if you keep the else clause, prefer to reverse the ordering of the clauses, and exit early in the error case. That makes it easier to see which path in the code represents forward progress.\n\n  if (mLog \u003d\u003d null) {\n    Log.e(...);\n    return;\n  }\n\n  mLog.trace(...);",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 27
+      },
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "810004b4_e1a79ca2",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-10-26T17:44:25Z",
+      "side": 1,
+      "message": "Looks like this is done? (If so, please reply with \"Done\".)",
+      "parentUuid": "9c886b74_10ac7d40",
       "range": {
         "startLine": 55,
         "startChar": 8,
@@ -496,6 +568,30 @@
     },
     {
       "key": {
+        "uuid": "810004b4_61bb8cc6",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-10-26T17:44:25Z",
+      "side": 1,
+      "message": "Looks like this is done? (If so, please reply with \"Done\".)",
+      "parentUuid": "fc7c072f_a1620453",
+      "range": {
+        "startLine": 84,
+        "startChar": 39,
+        "endLine": 84,
+        "endChar": 45
+      },
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c0657a0_884a771f",
         "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
         "patchSetId": 2
@@ -548,6 +644,24 @@
       "side": 1,
       "message": "\u003d\u003detan here. These messages are more about the async-channel setup, than about application-layer work. It\u0027s like tracing TCP SYN/FIN versus tracing TCP data.\n\n(Note that removing these changes also eliminates the need for any changes to AsyncChannel.)",
       "parentUuid": "7c0657a0_283a6b8c",
+      "revId": "7631779874f6daf60cf94528b753e49b612117a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "810004b4_2c534b56",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-10-26T17:44:25Z",
+      "side": 1,
+      "message": "Sohani: any more thoughts here? Etan and I both wonder if these log messages will actually be useful. I think we both argue that we can do without this part of the change.",
+      "parentUuid": "9c886b74_10a1dd30",
       "revId": "7631779874f6daf60cf94528b753e49b612117a8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
