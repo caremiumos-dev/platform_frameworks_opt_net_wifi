@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "810004b4_cd727f03",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-27T15:56:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "810004b4_dff18cc6",
+      "range": {
+        "startLine": 69,
+        "startChar": 11,
+        "endLine": 69,
+        "endChar": 19
+      },
+      "revId": "71b9cd27413525b84a44b1328d7d0481f6c0e19c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "810004b4_dfda2c34",
         "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2016-10-26T21:52:48Z",
       "side": 1,
       "message": "will checkstyle let you indent this another 8?  with the || and \u0026\u0026 lined up, it is a little harder to parse (but the comment definitely helps!).",
+      "range": {
+        "startLine": 73,
+        "startChar": 16,
+        "endLine": 73,
+        "endChar": 65
+      },
+      "revId": "71b9cd27413525b84a44b1328d7d0481f6c0e19c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "810004b4_ad6f4b16",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-27T15:56:11Z",
+      "side": 1,
+      "message": "CheckStyle seems to have no problem either ways. Done.",
+      "parentUuid": "810004b4_dfda2c34",
       "range": {
         "startLine": 73,
         "startChar": 16,
