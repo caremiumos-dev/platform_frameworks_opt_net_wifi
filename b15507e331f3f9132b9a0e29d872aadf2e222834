@@ -70,6 +70,30 @@
       "revId": "b15507e331f3f9132b9a0e29d872aadf2e222834",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "663c06f3_53d8643a",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-10-28T23:31:02Z",
+      "side": 1,
+      "message": "Done in patchset 4. Had to mock the 11 resources that are used.",
+      "parentUuid": "e147008e_355b0011",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 39
+      },
+      "revId": "b15507e331f3f9132b9a0e29d872aadf2e222834",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
