@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "810004b4_87e7d068",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-10-28T23:31:02Z",
+      "side": 1,
+      "message": "This is just me trying out this mockito pattern. Doesn\u0027t need to stay.",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 66
+      },
+      "revId": "abe531e40065051df284efbb5684d98af242dbff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
