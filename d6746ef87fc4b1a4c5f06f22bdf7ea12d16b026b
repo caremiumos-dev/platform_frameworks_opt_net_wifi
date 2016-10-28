@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "663c06f3_62931834",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-10-28T18:36:15Z",
+      "side": 1,
+      "message": "Let\u0027s match wpa_supplicant\u0027s format. Below are some example from running wpa_cli:scan_results on Angler:\n\n[WPA2-PSK-CCMP][WPS][ESS]\n[WPA2-EAP+FT/EAP-CCMP][ESS][P2P][HS20]",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "d6746ef87fc4b1a4c5f06f22bdf7ea12d16b026b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a16b489a_b1aeabc9",
+        "filename": "service/java/com/android/server/wifi/util/InformationElementUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-10-28T18:36:15Z",
+      "side": 1,
+      "message": "Remove the letter \u0027h\u0027 please.",
+      "range": {
+        "startLine": 371,
+        "startChar": 29,
+        "endLine": 371,
+        "endChar": 30
+      },
+      "revId": "d6746ef87fc4b1a4c5f06f22bdf7ea12d16b026b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
