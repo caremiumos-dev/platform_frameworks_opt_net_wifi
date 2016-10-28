@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "663c06f3_854bc69e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2016-10-28T20:22:55Z",
+      "side": 1,
+      "message": "It seems that wpa supplicant only put pairwise cihper here:\nhttp://cs/android/external/wpa_supplicant_8/wpa_supplicant/ctrl_iface.c?l\u003d2448\u0026rcl\u003d2bbbbe6a01a24e3c7bf13c64851f4130125ff8d5\n\nHowever framework need both pairwise and group cipher.\nPer offline discussion, we decide to have some additional fields in ScanDetail to store these cipher information, while keep this capabilities string a \"supplicant\" style.",
+      "parentUuid": "663c06f3_62931834",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "d6746ef87fc4b1a4c5f06f22bdf7ea12d16b026b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a16b489a_b1aeabc9",
         "filename": "service/java/com/android/server/wifi/util/InformationElementUtil.java",
         "patchSetId": 4
