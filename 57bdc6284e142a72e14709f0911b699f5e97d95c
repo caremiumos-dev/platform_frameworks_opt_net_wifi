@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "810004b4_9239cc08",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-28T16:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "810004b4_c1941893",
+      "revId": "57bdc6284e142a72e14709f0911b699f5e97d95c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "810004b4_a15124da",
         "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2016-10-26T17:44:25Z",
       "side": 1,
       "message": "This comment is overly verbose, or perhaps entirely unneeded. \n\nPersonally, I think \"fetchOrInitLog()\" strongly implies that we\u0027re trying to do work lazily. Hence, there\u0027s no need for a comment that explains that we\u0027re trying to do work lazily.\n\nIf you don\u0027t buy that argument, I still think a much shorter comment will suffice:\n\n  // Lazy-initialize |mLog|.\n\n\nIf it seems odd that I\u0027m arguing for fewer comments, here\u0027s my rationale:\n- comments are a way of explaining things that the code\n  itself does not\n- it\u0027s better to make the code obvious (where possible)\n- where comments are necessary, they should be short enough for people to actually read. \n- where long comments are necessary, they should use the \"inverted-pyramid\" style. e.g.\n\n  // Not safe for [use-case].\n  //\n  // [explanation of why, for people who really care]",
+      "revId": "57bdc6284e142a72e14709f0911b699f5e97d95c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "810004b4_720b5840",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-28T16:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "810004b4_a15124da",
       "revId": "57bdc6284e142a72e14709f0911b699f5e97d95c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "810004b4_72e4f863",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-28T16:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "810004b4_213eb47f",
+      "range": {
+        "startLine": 54,
+        "startChar": 12,
+        "endLine": 54,
+        "endChar": 40
+      },
+      "revId": "57bdc6284e142a72e14709f0911b699f5e97d95c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "810004b4_a1df6422",
         "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
         "patchSetId": 3
@@ -70,6 +130,30 @@
       "writtenOn": "2016-10-26T17:44:25Z",
       "side": 1,
       "message": "Hopefully not contradicting myself here, but I actually would use a space here, rather than a comma.\n\nBasically, I\u0027m thinking of these as separate fields:\n  [action] [message] [sender]\n\nNow, strictly speaking, we might argue that these are not independent. [message] and [sender] are properties of [action]. But, in that case, the logical grouping would be more like\n\n  sendMessage,{message\u003d% sendingUid\u003d%}\n\nSince both |message|, and |sendingUid| are properties of the action.\n\nBut that gets too hard to work with (using command-line tools). Hence the preference for just\n\n  \"sendMessage message\u003d% sendingUid\u003d%\"",
+      "range": {
+        "startLine": 67,
+        "startChar": 43,
+        "endLine": 67,
+        "endChar": 44
+      },
+      "revId": "57bdc6284e142a72e14709f0911b699f5e97d95c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "810004b4_d21d047d",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-28T16:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "810004b4_a1df6422",
       "range": {
         "startLine": 67,
         "startChar": 43,
@@ -128,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "810004b4_b22210bd",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-28T16:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "810004b4_6c89c306",
+      "range": {
+        "startLine": 83,
+        "startChar": 66,
+        "endLine": 83,
+        "endChar": 67
+      },
+      "revId": "57bdc6284e142a72e14709f0911b699f5e97d95c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "810004b4_ec9b13fc",
         "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
         "patchSetId": 3
@@ -151,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "81b56446_6d80b244",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-28T16:40:24Z",
+      "side": 1,
+      "message": "As per discussion, we only have uid of the received messages since the binder populates the field.",
+      "parentUuid": "810004b4_ec9b13fc",
+      "range": {
+        "startLine": 86,
+        "startChar": 16,
+        "endLine": 86,
+        "endChar": 31
+      },
+      "revId": "57bdc6284e142a72e14709f0911b699f5e97d95c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "810004b4_eccaf336",
         "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
         "patchSetId": 3
@@ -162,6 +294,30 @@
       "writtenOn": "2016-10-26T17:44:25Z",
       "side": 1,
       "message": "As at line 67.",
+      "range": {
+        "startLine": 99,
+        "startChar": 56,
+        "endLine": 99,
+        "endChar": 57
+      },
+      "revId": "57bdc6284e142a72e14709f0911b699f5e97d95c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "810004b4_f22c88b0",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-28T16:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "810004b4_eccaf336",
       "range": {
         "startLine": 99,
         "startChar": 56,
@@ -208,6 +364,30 @@
       "writtenOn": "2016-10-26T17:44:25Z",
       "side": 1,
       "message": "Prefer to stick with the pattern you have, of naming the trace message to mirror the method name. Granted, you\u0027ve got two trace message here, but we can distinguish them in other ways. E.g.\n\n  sendMessageSynchronously.send\n  sendMessageSynchronously.recv\n\nOr\n\n  sendMessageSynchronously.out\n  sendMessageSynchronously.in",
+      "range": {
+        "startLine": 104,
+        "startChar": 32,
+        "endLine": 104,
+        "endChar": 57
+      },
+      "revId": "57bdc6284e142a72e14709f0911b699f5e97d95c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "810004b4_322f20a3",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-28T16:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "810004b4_cc73af0c",
       "range": {
         "startLine": 104,
         "startChar": 32,
