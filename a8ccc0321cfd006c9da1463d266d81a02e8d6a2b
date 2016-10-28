@@ -258,6 +258,30 @@
       "revId": "a8ccc0321cfd006c9da1463d266d81a02e8d6a2b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "663c06f3_f3941829",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-10-28T23:31:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e147008e_ef87099b",
+      "range": {
+        "startLine": 99,
+        "startChar": 8,
+        "endLine": 100,
+        "endChar": 29
+      },
+      "revId": "a8ccc0321cfd006c9da1463d266d81a02e8d6a2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
