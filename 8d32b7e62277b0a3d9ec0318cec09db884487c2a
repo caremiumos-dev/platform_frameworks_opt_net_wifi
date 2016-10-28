@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "663c06f3_6595e286",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-28T20:48:50Z",
+      "side": 1,
+      "message": "the key reason for overriding this method is the msg.obj \u003d this statement on line 113. If this is not overridden, then the response object cannot be typecasted as WifiAsyncChannel. Those that typecast it as AsyncChannel, will still be able to use it but they won\u0027t have the logging mechanism.For reference, in WifiP2pServiceImpl, search for HALF_CONNECTED and you will see that it can be type casted into WifiAsyncChannel  because of this code. The reason we had to copy the entire code of this method is because that msg.obj had to be updated and its right in the  middle.",
+      "parentUuid": "663c06f3_8522a6d4",
+      "revId": "8d32b7e62277b0a3d9ec0318cec09db884487c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "663c06f3_a52d2aae",
         "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2016-10-28T20:36:16Z",
       "side": 1,
       "message": "Same comment as at line 108.",
+      "revId": "8d32b7e62277b0a3d9ec0318cec09db884487c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "663c06f3_c5894e76",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-10-28T20:48:50Z",
+      "side": 1,
+      "message": "Same as above",
+      "parentUuid": "663c06f3_a52d2aae",
       "revId": "8d32b7e62277b0a3d9ec0318cec09db884487c2a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
