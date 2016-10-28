@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "663c06f3_8522a6d4",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-10-28T20:36:16Z",
+      "side": 1,
+      "message": "1) Still not sure that we need to trace the connection setup. Your thoughts?\n\n2) If we do need to trace this, we should do it in a way that doesn\u0027t require copying in the code from the base class. E.g., maybe the base class could have a \"logging hook\" method.\n\n  protected void logOutboundMessage(Message msg) { return; }",
+      "revId": "8d32b7e62277b0a3d9ec0318cec09db884487c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "663c06f3_a52d2aae",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-10-28T20:36:16Z",
+      "side": 1,
+      "message": "Same comment as at line 108.",
+      "revId": "8d32b7e62277b0a3d9ec0318cec09db884487c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
