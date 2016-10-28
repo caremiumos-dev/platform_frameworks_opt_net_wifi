@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81ce44ee_f216352d",
+        "filename": "service/java/com/android/server/wifi/util/InformationElementUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-10-28T00:22:49Z",
+      "side": 1,
+      "message": "What about move this \"GROUP_\" to \u0027String group_cipher \u003d \"GROUP_\"\u0027 so they style is consistent with how we parse other information. If \"GROUP\" is always there, can we start with \"[GROUP_\"?",
+      "range": {
+        "startLine": 370,
+        "startChar": 32,
+        "endLine": 370,
+        "endChar": 40
+      },
+      "revId": "24cf29e1b100a8f68c61d91ed65047557d561f19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81b56446_ede302bf",
+        "filename": "service/java/com/android/server/wifi/util/InformationElementUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-10-28T00:22:49Z",
+      "side": 1,
+      "message": "String \u0027group_cipher\u0027 cannot be empty since on line 370 it always starts with \" GROUP_\".",
+      "range": {
+        "startLine": 425,
+        "startChar": 21,
+        "endLine": 425,
+        "endChar": 52
+      },
+      "revId": "24cf29e1b100a8f68c61d91ed65047557d561f19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1667cd0_0160e9bb",
+        "filename": "service/java/com/android/server/wifi/util/InformationElementUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-10-28T00:22:49Z",
+      "side": 1,
+      "message": "Nit: add \u0027default: return \"?\"\u0027 to the switch statement?",
+      "range": {
+        "startLine": 450,
+        "startChar": 12,
+        "endLine": 450,
+        "endChar": 23
+      },
+      "revId": "24cf29e1b100a8f68c61d91ed65047557d561f19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
