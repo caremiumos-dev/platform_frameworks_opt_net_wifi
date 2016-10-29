@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "663c06f3_942772ce",
+        "filename": "service/java/com/android/server/wifi/WifiScoreReport.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-10-29T05:19:27Z",
+      "side": 1,
+      "message": "please file a bug for this (and you can include the bug number here)",
+      "range": {
+        "startLine": 42,
+        "startChar": 68,
+        "endLine": 42,
+        "endChar": 72
+      },
+      "revId": "757f7b8cdbc43d947c78fb2a9d5bc968d3c6ec22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "663c06f3_d430da03",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-10-29T05:19:27Z",
+      "side": 1,
+      "message": "are these values from another file?  Maybe we should refer to those constants (if they are defined)",
+      "range": {
+        "startLine": 60,
+        "startChar": 24,
+        "endLine": 60,
+        "endChar": 27
+      },
+      "revId": "757f7b8cdbc43d947c78fb2a9d5bc968d3c6ec22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "663c06f3_742c6eb2",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-10-29T05:19:27Z",
+      "side": 1,
+      "message": "add blank line",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 7
+      },
+      "revId": "757f7b8cdbc43d947c78fb2a9d5bc968d3c6ec22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "663c06f3_b42d56ae",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-10-29T05:19:27Z",
+      "side": 1,
+      "message": "These should probably be constants for the class",
+      "range": {
+        "startLine": 105,
+        "startChar": 8,
+        "endLine": 106,
+        "endChar": 25
+      },
+      "revId": "757f7b8cdbc43d947c78fb2a9d5bc968d3c6ec22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "663c06f3_143b62e6",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-10-29T05:19:27Z",
+      "side": 1,
+      "message": "One thing we are trying to start doing is to add details for the test in the comment.  Add things like:\nTest that setup succeeds.\n1. step 1 that does ___\n2. step 2 that does ____\n3. call calculate score (or whatever step n is).\n\nExpect: callback for Network agent should be called once.",
+      "range": {
+        "startLine": 128,
+        "startChar": 7,
+        "endLine": 128,
+        "endChar": 31
+      },
+      "revId": "757f7b8cdbc43d947c78fb2a9d5bc968d3c6ec22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "663c06f3_f437def5",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-10-29T05:19:27Z",
+      "side": 1,
+      "message": "If this is only one time, then we should see times(1) - i think that is the syntax.",
+      "range": {
+        "startLine": 135,
+        "startChar": 30,
+        "endLine": 135,
+        "endChar": 40
+      },
+      "revId": "757f7b8cdbc43d947c78fb2a9d5bc968d3c6ec22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "663c06f3_5444ca67",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-10-29T05:19:27Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need to do this here.  You can just use mWifiInfo. (same for mNetworkAgent and mWifiMetrics).",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 38
+      },
+      "revId": "757f7b8cdbc43d947c78fb2a9d5bc968d3c6ec22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "663c06f3_34494680",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-10-29T05:19:27Z",
+      "side": 1,
+      "message": "I think this should be times(1) - or actually.  it might default to times(1)...\n\n(also for other places where a method should only be called once in tests)",
+      "range": {
+        "startLine": 151,
+        "startChar": 29,
+        "endLine": 151,
+        "endChar": 39
+      },
+      "revId": "757f7b8cdbc43d947c78fb2a9d5bc968d3c6ec22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "663c06f3_7443ce5d",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-10-29T05:19:27Z",
+      "side": 1,
+      "message": "can we also test for an invalid report?",
+      "range": {
+        "startLine": 165,
+        "startChar": 36,
+        "endLine": 165,
+        "endChar": 53
+      },
+      "revId": "757f7b8cdbc43d947c78fb2a9d5bc968d3c6ec22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "663c06f3_943e52d0",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-10-29T05:19:27Z",
+      "side": 1,
+      "message": "this one should be times(8)",
+      "range": {
+        "startLine": 186,
+        "startChar": 29,
+        "endLine": 186,
+        "endChar": 39
+      },
+      "revId": "757f7b8cdbc43d947c78fb2a9d5bc968d3c6ec22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
