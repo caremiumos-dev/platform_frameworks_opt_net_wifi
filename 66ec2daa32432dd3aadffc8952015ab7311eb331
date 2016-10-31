@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2675ae07_7941efa3",
+        "filename": "service/java/com/android/server/wifi/util/InformationElementUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2016-10-31T17:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2675ae07_99806be1",
+      "range": {
+        "startLine": 348,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 22
+      },
+      "revId": "66ec2daa32432dd3aadffc8952015ab7311eb331",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2675ae07_796acf2f",
         "filename": "service/java/com/android/server/wifi/util/InformationElementUtil.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2016-10-31T17:27:00Z",
       "side": 1,
       "message": "Group Data Cipher Suite?",
+      "range": {
+        "startLine": 465,
+        "startChar": 13,
+        "endLine": 465,
+        "endChar": 31
+      },
+      "revId": "66ec2daa32432dd3aadffc8952015ab7311eb331",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2675ae07_f92cfff7",
+        "filename": "service/java/com/android/server/wifi/util/InformationElementUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2016-10-31T17:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2675ae07_796acf2f",
       "range": {
         "startLine": 465,
         "startChar": 13,
