@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "2675ae07_8ea73f94",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-31T15:51:10Z",
+      "side": 1,
+      "message": "nit: get",
+      "range": {
+        "startLine": 44,
+        "startChar": 20,
+        "endLine": 44,
+        "endChar": 25
+      },
+      "revId": "8d32b7e62277b0a3d9ec0318cec09db884487c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "663c06f3_8522a6d4",
         "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
         "patchSetId": 5
