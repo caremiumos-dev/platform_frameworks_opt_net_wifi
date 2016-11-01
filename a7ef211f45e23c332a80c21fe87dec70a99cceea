@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "810004b4_0c6007bc",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-11-01T17:26:59Z",
+      "side": 1,
+      "message": "nit: looks like most of these could validly be marked final",
+      "revId": "a7ef211f45e23c332a80c21fe87dec70a99cceea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06cc2aaa_8e904f67",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-11-01T17:26:59Z",
+      "side": 1,
+      "message": "Maybe more accurately:\n\nThis ensures that the framework and wificond are in a consistent state after a framework restart.",
+      "revId": "a7ef211f45e23c332a80c21fe87dec70a99cceea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06cc2aaa_ee2b434b",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-11-01T17:26:59Z",
+      "side": 1,
+      "message": "This probably indicates that wificond died between our obtaining that reference to it and the request to tear down interfaces.  Maybe:\n\n\"wificond died during framework startup\"?",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 70
+      },
+      "revId": "a7ef211f45e23c332a80c21fe87dec70a99cceea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "810004b4_92beecb4",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-11-01T17:26:59Z",
+      "side": 1,
+      "message": "I think this conditional predates the disabled state.  Wouldn\u0027t it make more sense to always deliver these messages to the state machine?",
+      "revId": "a7ef211f45e23c332a80c21fe87dec70a99cceea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "810004b4_0c2e4758",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-11-01T17:26:59Z",
+      "side": 1,
+      "message": "To the casual observer, it looks like you\u0027re lazily initializing the state machine for no obvious reason.  Could you call out why you\u0027re not just instantiating the state machine in the constructor with this comment?",
+      "range": {
+        "startLine": 130,
+        "startChar": 15,
+        "endLine": 130,
+        "endChar": 76
+      },
+      "revId": "a7ef211f45e23c332a80c21fe87dec70a99cceea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "810004b4_d2a86478",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-11-01T17:26:59Z",
+      "side": 1,
+      "message": "Don\u0027t need this, you always deliver the intended mode afterward.",
+      "range": {
+        "startLine": 156,
+        "startChar": 25,
+        "endLine": 156,
+        "endChar": 40
+      },
+      "revId": "a7ef211f45e23c332a80c21fe87dec70a99cceea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06cc2aaa_cea3e799",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-11-01T17:26:59Z",
+      "side": 1,
+      "message": "Should this not go into the active state as part of its enter()?  Presumably you\u0027d like to do all the things that might increase your chances of entering the active state each time you enter it (like setting up the underlying interface).",
+      "range": {
+        "startLine": 277,
+        "startChar": 15,
+        "endLine": 293,
+        "endChar": 17
+      },
+      "revId": "a7ef211f45e23c332a80c21fe87dec70a99cceea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06cc2aaa_c9c88145",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-11-01T17:26:59Z",
+      "side": 1,
+      "message": "What\u0027s the point of having a state which exists to transition into a child state, then sit around?  Would it not simplify the state machine to:\n  - have the three mode states (plus disabled)\n  - do the startup logic on the combined enter() methods in a helper function on receiving CMD_START_*\n  - write yourself a common helper object which retries sending a given command to a state (e.g. CMD_START_AP) with capped exponential backoff?",
+      "range": {
+        "startLine": 294,
+        "startChar": 16,
+        "endLine": 294,
+        "endChar": 60
+      },
+      "revId": "a7ef211f45e23c332a80c21fe87dec70a99cceea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06cc2aaa_8e9e0f4a",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-11-01T17:26:59Z",
+      "side": 1,
+      "message": "Maybe leave a comment that this field is probably null?  When will this ever be non-null?",
+      "range": {
+        "startLine": 396,
+        "startChar": 71,
+        "endLine": 396,
+        "endChar": 74
+      },
+      "revId": "a7ef211f45e23c332a80c21fe87dec70a99cceea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
