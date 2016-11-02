@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "86b57a46_4a6b1712",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-11-02T22:35:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86b57a46_1fa5cf8a",
+      "range": {
+        "startLine": 107,
+        "startChar": 5,
+        "endLine": 107,
+        "endChar": 6
+      },
+      "revId": "f65997a93b7f0151fad4a99ea4c90ff8bcf31473",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86b57a46_ffdf2bef",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2016-11-02T16:52:45Z",
       "side": 1,
       "message": "I don\u0027t think this line is really needed.  You should be able to just pass in mWifiConfigManager in the line below.",
+      "range": {
+        "startLine": 143,
+        "startChar": 0,
+        "endLine": 143,
+        "endChar": 65
+      },
+      "revId": "f65997a93b7f0151fad4a99ea4c90ff8bcf31473",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86b57a46_aaa28335",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-11-02T22:35:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86b57a46_ffdf2bef",
       "range": {
         "startLine": 143,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "86b57a46_4a315705",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-11-02T22:35:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86b57a46_dfeea799",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 48
+      },
+      "revId": "f65997a93b7f0151fad4a99ea4c90ff8bcf31473",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86b57a46_7ffe9b46",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2016-11-02T16:52:45Z",
       "side": 1,
       "message": "nit: calculated",
+      "range": {
+        "startLine": 188,
+        "startChar": 20,
+        "endLine": 188,
+        "endChar": 30
+      },
+      "revId": "f65997a93b7f0151fad4a99ea4c90ff8bcf31473",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86b57a46_aa21e3bc",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-11-02T22:35:28Z",
+      "side": 1,
+      "message": "good catch -- codespell missed that one.",
+      "parentUuid": "86b57a46_7ffe9b46",
       "range": {
         "startLine": 188,
         "startChar": 20,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "86b57a46_458148e3",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-11-02T22:35:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86b57a46_1f330f57",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 68
+      },
+      "revId": "f65997a93b7f0151fad4a99ea4c90ff8bcf31473",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86b57a46_ffae0b3a",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
         "patchSetId": 7
@@ -128,6 +248,30 @@
       "writtenOn": "2016-11-02T16:52:45Z",
       "side": 1,
       "message": "as with above, checking the actual values would probably be helpful here.",
+      "range": {
+        "startLine": 264,
+        "startChar": 7,
+        "endLine": 265,
+        "endChar": 79
+      },
+      "revId": "f65997a93b7f0151fad4a99ea4c90ff8bcf31473",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86b57a46_4555c834",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-11-02T22:35:28Z",
+      "side": 1,
+      "message": "Done for numUserTriggeredWifiDisableLowRSSI. I don\u0027t want to over-constrain numTicksAtLowRSSI.",
+      "parentUuid": "86b57a46_ffae0b3a",
       "range": {
         "startLine": 264,
         "startChar": 7,
