@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86b57a46_eb764af9",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-11-02T22:40:01Z",
+      "side": 1,
+      "message": "I think the default is times(1), so I am pretty sure you can remove these.",
+      "range": {
+        "startLine": 169,
+        "startChar": 30,
+        "endLine": 169,
+        "endChar": 38
+      },
+      "revId": "6074e68ee8d1b3ee8323d80215cab422dfc91133",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86b57a46_ab7562e9",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-11-02T22:40:01Z",
+      "side": 1,
+      "message": "Can we make this a static final for the test class (in case it changes)",
+      "range": {
+        "startLine": 303,
+        "startChar": 27,
+        "endLine": 303,
+        "endChar": 29
+      },
+      "revId": "6074e68ee8d1b3ee8323d80215cab422dfc91133",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
