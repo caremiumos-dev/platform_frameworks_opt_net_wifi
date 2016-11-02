@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86b57a46_064103a5",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-11-02T23:26:31Z",
+      "side": 1,
+      "message": "nit: These should be marked with \u003cTODO\u003e and a buganizer \u0027b/\u0027 link",
+      "range": {
+        "startLine": 1035,
+        "startChar": 11,
+        "endLine": 1035,
+        "endChar": 28
+      },
+      "revId": "3ebf0b17fd1cdd3a0ef22d9e199c1686c01dcc9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
