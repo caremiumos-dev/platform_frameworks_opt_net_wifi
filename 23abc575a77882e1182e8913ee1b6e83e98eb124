@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86b57a46_41b015c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-11-03T00:50:40Z",
+      "side": 1,
+      "message": "bein what?",
+      "range": {
+        "startLine": 17,
+        "startChar": 62,
+        "endLine": 17,
+        "endChar": 66
+      },
+      "revId": "23abc575a77882e1182e8913ee1b6e83e98eb124",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86b57a46_c1d085b3",
+        "filename": "service/java/com/android/server/wifi/anqp/NAIRealmData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-11-03T00:50:40Z",
+      "side": 1,
+      "message": "replace this with a bug ID",
+      "range": {
+        "startLine": 60,
+        "startChar": 12,
+        "endLine": 60,
+        "endChar": 16
+      },
+      "revId": "23abc575a77882e1182e8913ee1b6e83e98eb124",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86b57a46_a1daa1cb",
+        "filename": "service/java/com/android/server/wifi/anqp/NAIRealmElement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-11-03T00:50:40Z",
+      "side": 1,
+      "message": "replace all of these with bug ids :)",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 16
+      },
+      "revId": "23abc575a77882e1182e8913ee1b6e83e98eb124",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
