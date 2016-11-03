@@ -16,6 +16,46 @@
       "revId": "02a998f352244b5b2bb039f9a885862a91014e23",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86b57a46_62871860",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-11-03T17:08:36Z",
+      "side": 1,
+      "message": "Use bug numbers instead of ldap\u0027s",
+      "range": {
+        "startLine": 150,
+        "startChar": 20,
+        "endLine": 150,
+        "endChar": 24
+      },
+      "revId": "02a998f352244b5b2bb039f9a885862a91014e23",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86b57a46_227b506a",
+        "filename": "tests/wifitests/src/com/android/server/wifi/hotspot2/PasspointManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-11-03T17:08:36Z",
+      "side": 1,
+      "message": "Add javadoc (even though it\u0027s quite simple)",
+      "revId": "02a998f352244b5b2bb039f9a885862a91014e23",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
