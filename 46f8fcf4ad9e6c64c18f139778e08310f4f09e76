@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "86b57a46_5c33d355",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-11-03T22:33:37Z",
+      "side": 1,
+      "message": "The log messages are really long. Can we make them easier to parse? (Even for people, trying to parse a series of long log messages is hard.) For example:\n\n  - \"denied: caller not permitted\"\n  - \"denied: blocked by app-ops\"\n  - \"denied: profile not current\"\n\nRationale: the more verbose text can\u0027t fully capture the nuance of the permission logic anyway. All we really want to accomplish with the log message, is a) classify the failure into the broad categories, and b) provide a pointer to the relevant code.\n\n(The \"pointer\" is the text itself. We dereference that by grepping the source code. And, when grepping, shorter messages are easier to search for, since it\u0027s less likely that the string is broken across multiple lines of source.)",
+      "revId": "46f8fcf4ad9e6c64c18f139778e08310f4f09e76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86b57a46_bca92636",
         "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
         "patchSetId": 2
