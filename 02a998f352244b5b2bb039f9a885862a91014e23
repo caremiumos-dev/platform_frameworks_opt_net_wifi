@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86b57a46_7cc05ee5",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-11-03T05:21:40Z",
+      "side": 1,
+      "message": "Consider logging a message so we know the existing one is overwritten?How likely will this scenario happen?",
+      "revId": "02a998f352244b5b2bb039f9a885862a91014e23",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
