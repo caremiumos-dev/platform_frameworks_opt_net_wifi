@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86b57a46_bca92636",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-11-03T05:14:19Z",
+      "side": 1,
+      "message": "Can we make this slightly more formal with \"do not\"  ?",
+      "range": {
+        "startLine": 78,
+        "startChar": 80,
+        "endLine": 78,
+        "endChar": 85
+      },
+      "revId": "46f8fcf4ad9e6c64c18f139778e08310f4f09e76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86b57a46_1caf9238",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-11-03T05:14:19Z",
+      "side": 1,
+      "message": "does not",
+      "range": {
+        "startLine": 91,
+        "startChar": 24,
+        "endLine": 91,
+        "endChar": 30
+      },
+      "revId": "46f8fcf4ad9e6c64c18f139778e08310f4f09e76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
