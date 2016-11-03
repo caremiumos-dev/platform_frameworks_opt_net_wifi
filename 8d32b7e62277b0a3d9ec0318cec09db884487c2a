@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "86b57a46_3c27efcf",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-11-03T22:47:36Z",
+      "side": 1,
+      "message": "Discussed out-of-band. Because method calls are dispatched dynamically, it doesn\u0027t matter where |msg.obj| is assigned from |this| in the parent class, or the child class.",
+      "parentUuid": "663c06f3_6595e286",
+      "revId": "8d32b7e62277b0a3d9ec0318cec09db884487c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "663c06f3_a52d2aae",
         "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
         "patchSetId": 5
@@ -89,6 +107,24 @@
       "side": 1,
       "message": "Same as above",
       "parentUuid": "663c06f3_a52d2aae",
+      "revId": "8d32b7e62277b0a3d9ec0318cec09db884487c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86b57a46_7c317705",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-11-03T22:47:36Z",
+      "side": 1,
+      "message": "As at line 108.",
+      "parentUuid": "663c06f3_c5894e76",
       "revId": "8d32b7e62277b0a3d9ec0318cec09db884487c2a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
