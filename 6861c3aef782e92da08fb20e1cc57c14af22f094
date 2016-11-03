@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86b57a46_8b8a1768",
+        "filename": "service/java/com/android/server/wifi/util/InformationElementUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-11-03T20:15:36Z",
+      "side": 1,
+      "message": "I think the convention is, the prefix \u0027m\u0027 is used on private attributes, not public ones.",
+      "range": {
+        "startLine": 334,
+        "startChar": 19,
+        "endLine": 334,
+        "endChar": 20
+      },
+      "revId": "6861c3aef782e92da08fb20e1cc57c14af22f094",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
