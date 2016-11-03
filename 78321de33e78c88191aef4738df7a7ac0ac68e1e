@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86b57a46_9c81bb4b",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-11-03T22:51:07Z",
+      "side": 1,
+      "message": "The down-side of going this way is that the compiler can\u0027t tell us if we forget to update this code, when we add a new enum value.\n\nSo I think we\u0027re better off adding cases for each of the values we want to ignore. (Taking advantage of fall-through, of course, to minimize the number of lines.)\n\nWhaddya think?",
+      "revId": "78321de33e78c88191aef4738df7a7ac0ac68e1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
