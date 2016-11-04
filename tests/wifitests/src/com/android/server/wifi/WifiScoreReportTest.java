@@ -21,10 +21,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.app.test.MockAnswerUtil.AnswerWithArguments;
 import android.content.Context;
 import android.content.res.Resources;
 import android.net.NetworkAgent;
@@ -51,6 +53,7 @@ public class WifiScoreReportTest {
     WifiConfiguration mWifiConfiguration;
     WifiScoreReport mWifiScoreReport;
     ScanDetailCache mScanDetailCache;
+    boolean m5GHz;
     @Mock Context mContext;
     @Mock NetworkAgent mNetworkAgent;
     @Mock Resources mResources;
@@ -132,6 +135,17 @@ public class WifiScoreReportTest {
         config.SSID = "nooooooooooo";
         config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
         config.hiddenSSID = false;
+        m5GHz = false;
+        doAnswer(new AnswerWithArguments() {
+            public boolean answer() {
+                return !m5GHz;
+            }
+        }).when(mWifiInfo).is24GHz();
+        doAnswer(new AnswerWithArguments() {
+            public boolean answer() {
+                return m5GHz;
+            }
+        }).when(mWifiInfo).is5GHz();
         when(mWifiConfigManager.getSavedNetworks()).thenReturn(Arrays.asList(config));
         when(mWifiConfigManager.getConfiguredNetwork(anyInt())).thenReturn(config);
         mWifiConfiguration = config;
@@ -221,7 +235,7 @@ public class WifiScoreReportTest {
     public void badLinkspeedCounter() throws Exception {
         when(mWifiInfo.getRssi()).thenReturn(-123);
         when(mWifiInfo.getLinkSpeed()).thenReturn(1);
-        when(mWifiInfo.is24GHz()).thenReturn(true);
+        m5GHz = false;
         assertFalse(mWifiScoreReport.isLastReportValid());
         mWifiScoreReport.enableVerboseLogging(true);
         assertEquals(0, mWifiScoreReport.getLastBadLinkspeedcount());
@@ -257,7 +271,7 @@ public class WifiScoreReportTest {
     public void allowLowRssiIfDataIsMoving() throws Exception {
         when(mWifiInfo.getRssi()).thenReturn(-80);
         when(mWifiInfo.getLinkSpeed()).thenReturn(6); // Mbps
-        when(mWifiInfo.is24GHz()).thenReturn(true);
+        m5GHz = false;
         mWifiInfo.txSuccessRate = 5.1; // proportional to pps
         mWifiInfo.rxSuccessRate = 5.1;
         for (int i = 0; i < 10; i++) {
@@ -280,7 +294,7 @@ public class WifiScoreReportTest {
     public void giveUpOnBadRssiWhenDataIsNotMoving() throws Exception {
         when(mWifiInfo.getRssi()).thenReturn(-100);
         when(mWifiInfo.getLinkSpeed()).thenReturn(6); // Mbps
-        when(mWifiInfo.is24GHz()).thenReturn(true);
+        m5GHz = true;
         mWifiScoreReport.enableVerboseLogging(true);
         mWifiInfo.txSuccessRate = 0.1;
         mWifiInfo.rxSuccessRate = 0.1;
