@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "86b57a46_c9338422",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-11-04T00:53:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2675ae07_8ea73f94",
+      "range": {
+        "startLine": 44,
+        "startChar": 20,
+        "endLine": 44,
+        "endChar": 25
+      },
+      "revId": "8d32b7e62277b0a3d9ec0318cec09db884487c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "663c06f3_8522a6d4",
         "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
         "patchSetId": 5
@@ -78,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "86b57a46_29133080",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-11-04T00:53:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86b57a46_3c27efcf",
+      "revId": "8d32b7e62277b0a3d9ec0318cec09db884487c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "663c06f3_a52d2aae",
         "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
         "patchSetId": 5
@@ -125,6 +167,24 @@
       "side": 1,
       "message": "As at line 108.",
       "parentUuid": "663c06f3_c5894e76",
+      "revId": "8d32b7e62277b0a3d9ec0318cec09db884487c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86b57a46_0918ec98",
+        "filename": "service/java/com/android/server/wifi/util/WifiAsyncChannel.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-11-04T00:53:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86b57a46_7c317705",
       "revId": "8d32b7e62277b0a3d9ec0318cec09db884487c2a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
