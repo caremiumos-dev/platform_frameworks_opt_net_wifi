@@ -16,6 +16,24 @@
       "revId": "78321de33e78c88191aef4738df7a7ac0ac68e1e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86b57a46_57d72cd5",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-11-04T00:01:30Z",
+      "side": 1,
+      "message": "I understand your thinking.  You\u0027re saying that every time someone adds to the enum, you\u0027d like someone to visit this switch state and explicitly decide whether or not this is a case that they care about.  I\u0027m okay with that.",
+      "parentUuid": "86b57a46_9c81bb4b",
+      "revId": "78321de33e78c88191aef4738df7a7ac0ac68e1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
