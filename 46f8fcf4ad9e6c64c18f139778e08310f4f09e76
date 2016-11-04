@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "86b57a46_57e9ecce",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-11-04T00:13:34Z",
+      "side": 1,
+      "message": "Agreed, have shortened the logs",
+      "parentUuid": "86b57a46_5c33d355",
+      "revId": "46f8fcf4ad9e6c64c18f139778e08310f4f09e76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86b57a46_bca92636",
         "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
         "patchSetId": 2
