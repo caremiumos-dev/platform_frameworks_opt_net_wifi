@@ -351,6 +351,13 @@ public class WifiScoreReport {
             score = 0;
         }
 
+        mBadLinkspeedcount = badLinkspeedcount;
+
+        int checkScore = calculateScore(wifiInfo, aggressiveHandover);
+        if (score != checkScore) {
+            Log.e(TAG, "recalculated score does not match: " +  score + "," + checkScore);
+        }
+
         //report score
         if (score != wifiInfo.score) {
             if (mVerboseLoggingEnabled) {
@@ -361,9 +368,114 @@ public class WifiScoreReport {
                 networkAgent.sendNetworkScore(score);
             }
         }
-        mBadLinkspeedcount = badLinkspeedcount;
+
         mReport = sb.toString();
         mReportValid = true;
         wifiMetrics.incrementWifiScoreCount(score);
+    }
+
+    private static final int BAD_IX = 0;
+    private static final int LOW_IX = 1;
+    private static final int MID_IX = 2;
+    private static final int HIGH_IX = 3;
+
+    /**
+     * Calculates the score, without all the cruft.
+     */
+    public int calculateScore(WifiInfo wifiInfo, int aggressiveHandover) {
+        int score = STARTING_SCORE;
+        int[] rssiThresh = {
+                mThresholdMinimumRssi24, mThresholdQualifiedRssi24, mThresholdSaturatedRssi24};
+        int[] linkspeedThresh = {mBadLinkSpeed24, mBadLinkSpeed24, mGoodLinkSpeed24};
+
+        if (wifiInfo.is24GHz() != !(wifiInfo.is5GHz())) {
+            throw new AssertionError("What is happenning here?");
+        }
+
+        if (wifiInfo.is5GHz()) {
+            if (!multiBandScanResults(wifiInfo)) {
+                rssiThresh[BAD_IX] = mThresholdMinimumRssi5;
+                rssiThresh[LOW_IX] = mThresholdQualifiedRssi5;
+                rssiThresh[MID_IX] = mThresholdSaturatedRssi5;
+            }
+            linkspeedThresh[BAD_IX] = mBadLinkSpeed5;
+            linkspeedThresh[LOW_IX] = mBadLinkSpeed5;
+            linkspeedThresh[MID_IX] = mGoodLinkSpeed5;
+        }
+
+        int rssi =  wifiInfo.getRssi();
+        if (aggressiveHandover != 0) {
+            rssi -= AGGRESSIVE_HANDOVER_PENALTY * aggressiveHandover;
+        }
+        if (isHomeNetwork(wifiInfo)) {
+            rssi += WifiConfiguration.HOME_NETWORK_RSSI_BOOST;
+        }
+
+        boolean isBadRSSI = rssi < rssiThresh[BAD_IX];
+        boolean isLowRSSI = rssi < rssiThresh[LOW_IX];
+        boolean isHighRSSI = rssi >= rssiThresh[MID_IX];
+
+        int linkSpeed = wifiInfo.getLinkSpeed();
+
+        // Updates to wifiInfo.linkStuckCount skipped here
+
+        if (wifiInfo.linkStuckCount > MIN_SUSTAINED_LINK_STUCK_COUNT) {
+            // Once link gets stuck for more than 3 seconds, start reducing the score
+            score = score - LINK_STUCK_PENALTY * (wifiInfo.linkStuckCount - 1);
+        }
+
+        if (linkSpeed < linkspeedThresh[BAD_IX]) {
+            score -= BAD_LINKSPEED_PENALTY;
+        } else if ((linkSpeed >= linkspeedThresh[MID_IX]) && (wifiInfo.txSuccessRate > 5)) {
+            score += GOOD_LINKSPEED_BONUS; // So as bad rssi alone doesn't kill us
+        }
+
+        // Updates to wifiInfo.badRssiCount skipped here
+
+        score -= wifiInfo.badRssiCount * BAD_RSSI_COUNT_PENALTY + wifiInfo.lowRssiCount;
+
+        if (isHighRSSI) score += 5;
+
+        if (score > NetworkAgent.WIFI_BASE_SCORE) score = NetworkAgent.WIFI_BASE_SCORE;
+        if (score < 0) score = 0;
+
+        return score;
+    }
+
+    /**
+     * Determines if we can see both 2.4GHz and 5GHz for current config
+     */
+    private boolean multiBandScanResults(WifiInfo wifiInfo) {
+        WifiConfiguration currentConfiguration =
+                mWifiConfigManager.getConfiguredNetwork(wifiInfo.getNetworkId());
+        if (currentConfiguration == null) return false;
+        ScanDetailCache scanDetailCache =
+                mWifiConfigManager.getScanDetailCacheForNetwork(wifiInfo.getNetworkId());
+        if (scanDetailCache == null) return false;
+        // TODO(b/36364366): Nasty that we change state here...
+        currentConfiguration.setVisibility(scanDetailCache.getVisibility(SCAN_CACHE_VISIBILITY_MS));
+        if (currentConfiguration.visibility == null) return false;
+        if (currentConfiguration.visibility.rssi24 == WifiConfiguration.INVALID_RSSI) return false;
+        // TODO: this does not do exactly what is claimed!
+        return (currentConfiguration.visibility.rssi24
+                >= currentConfiguration.visibility.rssi5 - SCAN_CACHE_COUNT_PENALTY);
+    }
+
+    /**
+     * Decides whether the current network is a "home" network
+     */
+    private boolean isHomeNetwork(WifiInfo wifiInfo) {
+        WifiConfiguration currentConfiguration =
+                mWifiConfigManager.getConfiguredNetwork(wifiInfo.getNetworkId());
+        if (currentConfiguration == null) return false;
+        // TODO: This seems like it will only return true for really old routers!
+        if (currentConfiguration.allowedKeyManagement.cardinality() != 1) return false;
+        if (!currentConfiguration.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.WPA_PSK)) {
+            return false;
+        }
+        ScanDetailCache scanDetailCache =
+                mWifiConfigManager.getScanDetailCacheForNetwork(wifiInfo.getNetworkId());
+        if (scanDetailCache == null) return false;
+        return (scanDetailCache.size() <= HOME_VISIBLE_NETWORK_MAX_COUNT);
     }
 }
