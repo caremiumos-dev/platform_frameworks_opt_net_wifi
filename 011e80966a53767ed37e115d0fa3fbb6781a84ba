@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb47df8d_c4b14f2f",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2552,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-05T00:00:54Z",
+      "side": 1,
+      "message": "Move this to WifiConfigurationUtil since we already have a bunch of similar methods there.",
+      "range": {
+        "startLine": 2527,
+        "startChar": 0,
+        "endLine": 2552,
+        "endChar": 5
+      },
+      "revId": "011e80966a53767ed37e115d0fa3fbb6781a84ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb47df8d_04acd7d3",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2565,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-05T00:00:54Z",
+      "side": 1,
+      "message": "This is not the system UID. This is the UID of the quick settings menu. I don\u0027t think we can modify proxy settings via the \"Quick settings menu\".  So, this check maybe redundant.\n\nIf u\u0027re looking for the settings app, then use the |checkConfigOverridePermission| method.",
+      "range": {
+        "startLine": 2565,
+        "startChar": 54,
+        "endLine": 2565,
+        "endChar": 57
+      },
+      "revId": "011e80966a53767ed37e115d0fa3fbb6781a84ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb47df8d_44f89fcc",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConfigManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2231,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-05T00:00:54Z",
+      "side": 1,
+      "message": "space between methods. Here and below.",
+      "range": {
+        "startLine": 2230,
+        "startChar": 0,
+        "endLine": 2231,
+        "endChar": 7
+      },
+      "revId": "011e80966a53767ed37e115d0fa3fbb6781a84ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb47df8d_e4e60b31",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConfigManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2372,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-05T00:00:54Z",
+      "side": 1,
+      "message": "Move to the top along with the other contants in this class.",
+      "range": {
+        "startLine": 2365,
+        "startChar": 0,
+        "endLine": 2372,
+        "endChar": 73
+      },
+      "revId": "011e80966a53767ed37e115d0fa3fbb6781a84ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
