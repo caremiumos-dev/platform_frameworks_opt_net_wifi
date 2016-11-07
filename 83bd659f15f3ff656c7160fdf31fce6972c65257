@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bb12ff1_60992803",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-11-07T23:24:30Z",
+      "side": 1,
+      "message": "1) Logging two messages suggests that two denials occurred, instead of just the one that actually occurred.\n2) The messages are still too verbose. (Log messages do not need to be full English phrases. Unlike proper English, every word in a log message should carry its own weight.)\n\nThe reason I\u0027m pressing the second point is that reading logs is very different from reading prose. In logs, extraneous words are noise, that we have to filter out. It\u0027s better to remove those words, and provide high SNR.",
+      "revId": "83bd659f15f3ff656c7160fdf31fce6972c65257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6bb12ff1_a09260dd",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-11-07T23:24:30Z",
+      "side": 1,
+      "message": "Would you interpret the log message any differently, if this word were not present? If not, please remove it.",
+      "range": {
+        "startLine": 87,
+        "startChar": 51,
+        "endLine": 87,
+        "endChar": 60
+      },
+      "revId": "83bd659f15f3ff656c7160fdf31fce6972c65257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6bb12ff1_008a2ca5",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-11-07T23:24:30Z",
+      "side": 1,
+      "message": "As at line 82.",
+      "revId": "83bd659f15f3ff656c7160fdf31fce6972c65257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
