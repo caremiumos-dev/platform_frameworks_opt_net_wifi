@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6bb12ff1_661220cb",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-11-08T01:03:05Z",
+      "side": 1,
+      "message": "Will shorten further and combine the two",
+      "parentUuid": "6bb12ff1_60992803",
+      "revId": "83bd659f15f3ff656c7160fdf31fce6972c65257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bb12ff1_a09260dd",
         "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "6bb12ff1_a61b58e1",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-11-08T01:03:05Z",
+      "side": 1,
+      "message": "Will remove this.",
+      "parentUuid": "6bb12ff1_a09260dd",
+      "range": {
+        "startLine": 87,
+        "startChar": 51,
+        "endLine": 87,
+        "endChar": 60
+      },
+      "revId": "83bd659f15f3ff656c7160fdf31fce6972c65257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bb12ff1_008a2ca5",
         "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
         "patchSetId": 4
@@ -53,6 +95,24 @@
       "writtenOn": "2016-11-07T23:24:30Z",
       "side": 1,
       "message": "As at line 82.",
+      "revId": "83bd659f15f3ff656c7160fdf31fce6972c65257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6bb12ff1_c6184ce7",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-11-08T01:03:05Z",
+      "side": 1,
+      "message": "Same as 82",
+      "parentUuid": "6bb12ff1_008a2ca5",
       "revId": "83bd659f15f3ff656c7160fdf31fce6972c65257",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
