@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bb12ff1_03379112",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-11-08T18:34:59Z",
+      "side": 1,
+      "message": "Should not be mentioning version \u0027O\u0027 in AOSP, either here, in comments, or method names",
+      "range": {
+        "startLine": 390,
+        "startChar": 57,
+        "endLine": 390,
+        "endChar": 60
+      },
+      "revId": "7c76fd556fc8a65aa62c3f0d73e3d46c598c5e38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6bb12ff1_831c818d",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3256,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-11-08T18:34:59Z",
+      "side": 1,
+      "message": "Fix this, but otherwise the method is ok",
+      "range": {
+        "startLine": 3256,
+        "startChar": 29,
+        "endLine": 3256,
+        "endChar": 51
+      },
+      "revId": "7c76fd556fc8a65aa62c3f0d73e3d46c598c5e38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
