@@ -22,6 +22,30 @@
       "revId": "00d2f0643bbcf24d87206604cca38b436bf8ddf7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6bb12ff1_06b964aa",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-11-08T00:59:52Z",
+      "side": 1,
+      "message": "Agreed. Done.",
+      "parentUuid": "86b57a46_095aac0a",
+      "range": {
+        "startLine": 115,
+        "startChar": 12,
+        "endLine": 115,
+        "endChar": 16
+      },
+      "revId": "00d2f0643bbcf24d87206604cca38b436bf8ddf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
