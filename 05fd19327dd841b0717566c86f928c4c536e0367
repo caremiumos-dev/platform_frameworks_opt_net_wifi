@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b676fa0_cd42ddad",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-11-09T21:46:01Z",
+      "side": 1,
+      "message": "We discussed this offline - there is concern about what happens with two calls to switch in to softap mode in succession.  I am:\n1 - noting it here\n2 - writing a test for it.  :)\n\nMore to come.",
+      "range": {
+        "startLine": 121,
+        "startChar": 8,
+        "endLine": 121,
+        "endChar": 59
+      },
+      "revId": "05fd19327dd841b0717566c86f928c4c536e0367",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
