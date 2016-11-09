@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b676fa0_a79f8a96",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-11-09T19:46:05Z",
+      "side": 1,
+      "message": "Should this really be \"No location permission\" ?  (we are using the can_read_peer_mac_addr as a proxy for a type of location permission...  right?)",
+      "range": {
+        "startLine": 81,
+        "startChar": 29,
+        "endLine": 81,
+        "endChar": 77
+      },
+      "revId": "968156d6b07c5a07de54a3739ace4a7ebde54479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b676fa0_27acfad3",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-11-09T19:46:05Z",
+      "side": 1,
+      "message": "what about \"app wifi scan not allowed\" ?",
+      "range": {
+        "startLine": 86,
+        "startChar": 29,
+        "endLine": 86,
+        "endChar": 50
+      },
+      "revId": "968156d6b07c5a07de54a3739ace4a7ebde54479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b676fa0_c7b71e2e",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-11-09T19:46:05Z",
+      "side": 1,
+      "message": "can we shorten up this error message?  We have three categories of failure - location access, app scanning permission and then the profile related check.  If this is shortened to be something like \"Profile denied\" we not only get the benefit of a short (searchable) log message, but then also capture the type of failure.  That way we do not have to update the error message if the code is changed to check another permission type or profile setting.",
+      "range": {
+        "startLine": 92,
+        "startChar": 21,
+        "endLine": 93,
+        "endChar": 69
+      },
+      "revId": "968156d6b07c5a07de54a3739ace4a7ebde54479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
