@@ -94,6 +94,30 @@
       "revId": "0797f4266d96a8f6b450a48fb467a0aeff0d2091",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b612fbb_fa2005c8",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2351,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-10T21:07:10Z",
+      "side": 1,
+      "message": "In this case, there was no new user. This was just the currently logged-in user locking and then unlocking the device on an encrypted/multi-user device (can\u0027t reproduce this on my device though). So, we should not be loading from store in the first place. That\u0027s why we have this check now, we will only load if there was a user switch.\n\nIf there is a user switch, then we will anyway disconnect the currently connected network, so we should not have any issues. This will be handled separately in b/32802464",
+      "parentUuid": "6b612fbb_57e70cfb",
+      "range": {
+        "startLine": 2351,
+        "startChar": 37,
+        "endLine": 2351,
+        "endChar": 63
+      },
+      "revId": "0797f4266d96a8f6b450a48fb467a0aeff0d2091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
