@@ -22,6 +22,30 @@
       "revId": "0797f4266d96a8f6b450a48fb467a0aeff0d2091",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b676fa0_d0f90d10",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2351,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-10T16:38:23Z",
+      "side": 1,
+      "message": "No. that\u0027s not the cause of crash. What happened was that we were connected to a network and WifiStatMachine had stored the |mLastNetworkId| for the connected network. But, then when we reloaded the networks from config store after unlock which changed the network ID of the connected network in WifiConfigManager\u0027s records. Then when WifiStateMachine tried to lookup the network, it got a null pointer. We can add null pointers everywhere in WifiStateMachine, but the root cause of these isssue is this. WifiStateMachine should be able to assume that the connected network\u0027s network ID will not change abruptly like this.",
+      "parentUuid": "6b676fa0_21d5c2cc",
+      "range": {
+        "startLine": 2351,
+        "startChar": 37,
+        "endLine": 2351,
+        "endChar": 63
+      },
+      "revId": "0797f4266d96a8f6b450a48fb467a0aeff0d2091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
