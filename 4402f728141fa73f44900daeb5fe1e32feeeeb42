@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b612fbb_97fa8405",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-11-10T19:48:12Z",
+      "side": 1,
+      "message": "Should this be updated to reflect that we are doing trace log statements?  (same with the mention of verbose logging in line 9)",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 19
+      },
+      "revId": "4402f728141fa73f44900daeb5fe1e32feeeeb42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b612fbb_d7f4fc1a",
+        "filename": "service/java/com/android/server/wifi/util/WifiPermissionsUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-11-10T19:48:12Z",
+      "side": 1,
+      "message": "Switch to using the same format as above?  \"Denied: profile not permitted\" or something like that?",
+      "range": {
+        "startLine": 92,
+        "startChar": 21,
+        "endLine": 92,
+        "endChar": 34
+      },
+      "revId": "4402f728141fa73f44900daeb5fe1e32feeeeb42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
