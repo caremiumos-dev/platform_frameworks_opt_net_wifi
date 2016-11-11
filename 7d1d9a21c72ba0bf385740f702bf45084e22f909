@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b612fbb_71afb8ca",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-11-11T16:44:43Z",
+      "side": 1,
+      "message": "Is similar check needed here when removing an ephemeral network?  Or we don\u0027t actually use this to remove ephemeral networks.",
+      "revId": "7d1d9a21c72ba0bf385740f702bf45084e22f909",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b612fbb_31b5401b",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConfigManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-11-11T16:44:43Z",
+      "side": 1,
+      "message": "Also verify |openNetwork| is in config store data?",
+      "revId": "7d1d9a21c72ba0bf385740f702bf45084e22f909",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
