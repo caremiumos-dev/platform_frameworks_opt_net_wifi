@@ -22,6 +22,30 @@
       "revId": "ca05e154b63d1329ec7ae87276480810b2080523",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b612fbb_43ed89da",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2039,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-11-11T22:24:35Z",
+      "side": 1,
+      "message": "That makes perfect sense. Patch set#2 has this change.",
+      "parentUuid": "6b612fbb_c39ef9ed",
+      "range": {
+        "startLine": 2039,
+        "startChar": 8,
+        "endLine": 2039,
+        "endChar": 40
+      },
+      "revId": "ca05e154b63d1329ec7ae87276480810b2080523",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
