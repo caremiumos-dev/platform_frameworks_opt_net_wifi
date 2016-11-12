@@ -69,6 +69,30 @@
       "revId": "ca05e154b63d1329ec7ae87276480810b2080523",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b5ca306_f8cba65c",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2076,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-11-12T01:10:04Z",
+      "side": 1,
+      "message": "I am somehow under impression that \"home channel\" means the channel of the currently connected network. There is no such convention in the wifi world?",
+      "parentUuid": "eb935fd8_4e377643",
+      "range": {
+        "startLine": 2076,
+        "startChar": 20,
+        "endLine": 2076,
+        "endChar": 35
+      },
+      "revId": "ca05e154b63d1329ec7ae87276480810b2080523",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
