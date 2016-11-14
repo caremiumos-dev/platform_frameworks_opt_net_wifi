@@ -69,6 +69,30 @@
       "revId": "8e390095d5a37a75bd010c7f8e03fc94a26fea6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f04a7097_82da9e05",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-11-14T22:54:06Z",
+      "side": 1,
+      "message": "This method is invoked by startSingleScan() only if \u0027isFullBandScan\u0027 is evaluated to false, which happens only if the WiFi traffic is heavy. So the device should be connected.\n\nWith that said, I think it\u0027s not a bad idea to add a sanity check against the input frequency value in WifiConfigManager.fetchChannelSetForNetworkForPartialScan(). Will update the CL.",
+      "parentUuid": "f04a7097_bc142109",
+      "range": {
+        "startLine": 653,
+        "startChar": 63,
+        "endLine": 653,
+        "endChar": 87
+      },
+      "revId": "8e390095d5a37a75bd010c7f8e03fc94a26fea6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
