@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f04a7097_1c49d5d1",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2039,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-11-14T21:20:23Z",
+      "side": 1,
+      "message": "Nit: even you aren\u0027t touching this code, can you make it static?",
+      "range": {
+        "startLine": 2039,
+        "startChar": 3,
+        "endLine": 2039,
+        "endChar": 64
+      },
+      "revId": "8e390095d5a37a75bd010c7f8e03fc94a26fea6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f04a7097_bc142109",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-11-14T21:20:23Z",
+      "side": 1,
+      "message": "What happens if getFrequency() does not return a valid value?\nThis code path is reached from startSingleScan() which isn\u0027t always necessarily executed while we are connected.",
+      "range": {
+        "startLine": 653,
+        "startChar": 63,
+        "endLine": 653,
+        "endChar": 87
+      },
+      "revId": "8e390095d5a37a75bd010c7f8e03fc94a26fea6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
