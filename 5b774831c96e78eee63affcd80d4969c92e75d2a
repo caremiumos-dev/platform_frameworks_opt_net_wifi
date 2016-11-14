@@ -39,6 +39,24 @@
       "revId": "5b774831c96e78eee63affcd80d4969c92e75d2a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b612fbb_2cccfd74",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-11-14T18:44:14Z",
+      "side": 1,
+      "message": "We talked about this offline.  This actually related to error handling in the SoftAPModeState.enter().  I think we agreed that this should move closer to the actual errors (ie. it should be in enter()).",
+      "parentUuid": "6b612fbb_ec1be584",
+      "revId": "5b774831c96e78eee63affcd80d4969c92e75d2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
