@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f04a7097_8219fef4",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-11-14T23:01:19Z",
+      "side": 1,
+      "message": "I can also move this to a private method...  would you also like this to be called directly from enter() or is it ok to do this here when the failure to start is handled?",
+      "range": {
+        "startLine": 328,
+        "startChar": 24,
+        "endLine": 337,
+        "endChar": 83
+      },
+      "revId": "9c8d2fd80c3df4ca2bb7d46d14874c1501cd4dff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f04a7097_425d3698",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-11-14T23:01:19Z",
+      "side": 1,
+      "message": "now that we have a disabled state, this can be removed.",
+      "range": {
+        "startLine": 428,
+        "startChar": 26,
+        "endLine": 430,
+        "endChar": 25
+      },
+      "revId": "9c8d2fd80c3df4ca2bb7d46d14874c1501cd4dff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
