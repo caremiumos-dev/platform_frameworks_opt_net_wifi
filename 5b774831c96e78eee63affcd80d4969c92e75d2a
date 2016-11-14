@@ -22,6 +22,23 @@
       "revId": "5b774831c96e78eee63affcd80d4969c92e75d2a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b612fbb_ec1be584",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachinePrime.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-11-14T18:04:50Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand this logic:\n\n1) WSMP sent itself CMD_START_SOFT_AP_MODE and queued a config\n2) some state received that command, transitioned to SoftApModeState\n3) SoftApModeState.enter() *always* transitions to SoftAPModeActiveState\n4) SoftAPModeActiveState.enter() *always* polls the config queue exactly once.\n\nSo it seems like if you wanted to persist that config (that potentially failed), you would store it in SoftAPModeActiveState.enter() right?  This is a different config.",
+      "revId": "5b774831c96e78eee63affcd80d4969c92e75d2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
