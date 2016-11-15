@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f04a7097_a67367c5",
+        "filename": "service/java/com/android/server/wifi/ScanOnlyModeManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-11-15T17:37:14Z",
+      "side": 1,
+      "message": "I\u0027m not a huge fan of this, but I don\u0027t know if I have better suggestions.  You really want to write \"transition to idle state in a blocking way\" right?  After you call this, we have a state machine that seems to be in the active state, but with exit() called, or in the idle state.\n\nDo you only call this from the state machine thread?",
+      "revId": "88bc3d90764871c809607ce09b3be1d5cccd862c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f04a7097_c6fdd3c1",
+        "filename": "service/java/com/android/server/wifi/ScanOnlyModeManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-11-15T17:37:14Z",
+      "side": 1,
+      "message": "I can\u0027t help but think that the presence of an idle state in here is another argument not having a scan mode idle state in the mode state machine.  It seems kind of redundant to have both.",
+      "revId": "88bc3d90764871c809607ce09b3be1d5cccd862c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
