@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f04a7097_32366da3",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5260,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-15T23:04:53Z",
+      "side": 1,
+      "message": "This will not return \"null\". It might return -1, if the network Id does not match. But, that is anyway caught in the check below.",
+      "parentUuid": "f04a7097_7742a75f",
+      "range": {
+        "startLine": 5260,
+        "startChar": 0,
+        "endLine": 5260,
+        "endChar": 76
+      },
+      "revId": "c04842331cfe454598bc71863ad0aeb8b495a28d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f04a7097_57016b1f",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 2
@@ -59,6 +83,30 @@
       "writtenOn": "2016-11-15T21:22:13Z",
       "side": 1,
       "message": "it seems like the behavior here is\u0027t change, but we are changing the code to avoid a log message.  Since this is used in other places, are we going to be masking an issue looking up an invalid ID to avoid logging in the case for the log above?",
+      "range": {
+        "startLine": 6912,
+        "startChar": 0,
+        "endLine": 6912,
+        "endChar": 100
+      },
+      "revId": "c04842331cfe454598bc71863ad0aeb8b495a28d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f04a7097_920661ce",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6912,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-15T23:04:53Z",
+      "side": 1,
+      "message": "Hmm. true. I\u0027ll put this back and check if we\u0027re using this when we are not connected. Will do it in a separate CL if needed.",
+      "parentUuid": "f04a7097_77bf4706",
       "range": {
         "startLine": 6912,
         "startChar": 0,
