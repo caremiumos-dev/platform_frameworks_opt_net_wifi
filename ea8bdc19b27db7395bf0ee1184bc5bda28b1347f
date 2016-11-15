@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f04a7097_cd596e49",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5261,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-11-15T23:52:36Z",
+      "side": 1,
+      "message": "In the case of sending CMD_DISCONNECT, do we still need to update this two variables? Anything bad could happen if we update them but then send out the disconnection command? Especially if something happen before CMD_DISCONNECT gets executed? I haven\u0027t gone through the logic of where these two variables get used. Just throw out this question.",
+      "range": {
+        "startLine": 5260,
+        "startChar": 19,
+        "endLine": 5261,
+        "endChar": 33
+      },
+      "revId": "ea8bdc19b27db7395bf0ee1184bc5bda28b1347f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f04a7097_0d62361b",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5275,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-11-15T23:52:36Z",
+      "side": 1,
+      "message": "Add some log to explain what\u0027s going on here? Otherwise a disconnection right after \"Network connection established\" can confuse people.",
+      "revId": "ea8bdc19b27db7395bf0ee1184bc5bda28b1347f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
