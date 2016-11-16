@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f04a7097_08bea462",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5261,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-16T00:24:29Z",
+      "side": 1,
+      "message": "Hmm. It shouldn\u0027t. We seem to be null checking everywhere else. Again, all of these sketchy logic should be removed in the WifiStateMachine refactor. We shouldn\u0027t even be reaching this state(no unnecessary config store loads, all necessary config store loads should be followed by total reset of WifiStateMachine state).\nThis is just a temporary workaround till then.",
+      "parentUuid": "f04a7097_cd596e49",
+      "range": {
+        "startLine": 5260,
+        "startChar": 19,
+        "endLine": 5261,
+        "endChar": 33
+      },
+      "revId": "ea8bdc19b27db7395bf0ee1184bc5bda28b1347f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f04a7097_0d62361b",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2016-11-15T23:52:36Z",
       "side": 1,
       "message": "Add some log to explain what\u0027s going on here? Otherwise a disconnection right after \"Network connection established\" can confuse people.",
+      "revId": "ea8bdc19b27db7395bf0ee1184bc5bda28b1347f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f04a7097_680f68a8",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5275,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-16T00:24:29Z",
+      "side": 1,
+      "message": "It\u0027s explained in the comment above. \n\n\"Hence the old network Id lookups may not work, so disconnect the network and let network selector reselect a new network.\"",
+      "parentUuid": "f04a7097_0d62361b",
       "revId": "ea8bdc19b27db7395bf0ee1184bc5bda28b1347f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
