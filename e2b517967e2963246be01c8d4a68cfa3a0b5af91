@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f04a7097_2889e00c",
+        "filename": "service/java/com/android/server/wifi/util/InformationElementUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-16T00:15:36Z",
+      "side": 1,
+      "message": "Do u need to do this? You should be able to just do: keyManagement.add(ScanResult.AKM_EAP);",
+      "range": {
+        "startLine": 388,
+        "startChar": 46,
+        "endLine": 388,
+        "endChar": 58
+      },
+      "revId": "e2b517967e2963246be01c8d4a68cfa3a0b5af91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
