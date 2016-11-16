@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6bb12ff1_d70f1c4d",
+        "filename": "service/java/com/android/server/wifi/util/InformationElementUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2016-11-16T19:52:27Z",
+      "side": 1,
+      "message": "I put a warning here.",
+      "parentUuid": "eb47df8d_1bc39b29",
+      "range": {
+        "startLine": 428,
+        "startChar": 27,
+        "endLine": 428,
+        "endChar": 49
+      },
+      "revId": "f7726f714366d5cfe71c3f50f335ef8bd8c8f383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb47df8d_5bcd2350",
         "filename": "service/java/com/android/server/wifi/util/InformationElementUtil.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2016-11-04T03:54:15Z",
       "side": 1,
       "message": "Same as above.",
+      "range": {
+        "startLine": 443,
+        "startChar": 27,
+        "endLine": 443,
+        "endChar": 50
+      },
+      "revId": "f7726f714366d5cfe71c3f50f335ef8bd8c8f383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6bb12ff1_b702a826",
+        "filename": "service/java/com/android/server/wifi/util/InformationElementUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2016-11-16T19:52:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb47df8d_5bcd2350",
       "range": {
         "startLine": 443,
         "startChar": 27,
