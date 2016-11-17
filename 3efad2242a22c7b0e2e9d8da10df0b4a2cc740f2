@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "108c6449_a1a5e687",
+        "filename": "libwifi_hal/include/wifi_hal/driver_tool.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2016-11-17T21:53:18Z",
+      "side": 1,
+      "message": "invoke",
+      "range": {
+        "startLine": 43,
+        "startChar": 25,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "3efad2242a22c7b0e2e9d8da10df0b4a2cc740f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
