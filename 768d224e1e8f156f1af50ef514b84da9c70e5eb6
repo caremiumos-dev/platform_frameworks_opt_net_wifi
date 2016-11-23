@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dfd8f27_7e43f163",
+        "filename": "service/java/com/android/server/wifi/hotspot2/DomainMatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-11-23T19:15:35Z",
+      "side": 1,
+      "message": "Replace enum with static int constants",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 48
+      },
+      "revId": "768d224e1e8f156f1af50ef514b84da9c70e5eb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2dfd8f27_7ef531d4",
+        "filename": "service/java/com/android/server/wifi/hotspot2/DomainMatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-11-23T19:15:35Z",
+      "side": 1,
+      "message": "extra \u0027a\u0027?",
+      "range": {
+        "startLine": 144,
+        "startChar": 33,
+        "endLine": 144,
+        "endChar": 34
+      },
+      "revId": "768d224e1e8f156f1af50ef514b84da9c70e5eb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2dfd8f27_3eefa902",
+        "filename": "service/java/com/android/server/wifi/hotspot2/DomainMatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-11-23T19:15:35Z",
+      "side": 1,
+      "message": "repeated or",
+      "range": {
+        "startLine": 145,
+        "startChar": 48,
+        "endLine": 145,
+        "endChar": 50
+      },
+      "revId": "768d224e1e8f156f1af50ef514b84da9c70e5eb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
