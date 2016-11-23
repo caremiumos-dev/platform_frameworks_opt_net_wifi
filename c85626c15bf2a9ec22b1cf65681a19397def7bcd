@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2dfd8f27_44c2a226",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4692,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-11-23T21:53:58Z",
+      "side": 1,
+      "message": "Something like this?\n // We got disabled by user while we were associated.\n // TODO(mplass): Add call from here to maintain state for scoring.\n\nThere isn\u0027t a bug yet.",
+      "parentUuid": "2dfd8f27_9ed59da4",
+      "range": {
+        "startLine": 4692,
+        "startChar": 8,
+        "endLine": 4692,
+        "endChar": 76
+      },
+      "revId": "c85626c15bf2a9ec22b1cf65681a19397def7bcd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dfd8f27_be6df91d",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2016-11-23T18:16:30Z",
       "side": 1,
       "message": "is this part of the comment still applicable?",
+      "range": {
+        "startLine": 252,
+        "startChar": 11,
+        "endLine": 252,
+        "endChar": 47
+      },
+      "revId": "c85626c15bf2a9ec22b1cf65681a19397def7bcd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2dfd8f27_04ac9a68",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-11-23T21:53:58Z",
+      "side": 1,
+      "message": "Nope. I think that whole sentence should go.",
+      "parentUuid": "2dfd8f27_be6df91d",
       "range": {
         "startLine": 252,
         "startChar": 11,
