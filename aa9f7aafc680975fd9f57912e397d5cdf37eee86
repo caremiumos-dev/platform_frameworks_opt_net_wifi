@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6def8770_2a8f604c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-11-29T18:24:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6def8770_b485182a",
+      "range": {
+        "startLine": 11,
+        "startChar": 65,
+        "endLine": 11,
+        "endChar": 75
+      },
+      "revId": "aa9f7aafc680975fd9f57912e397d5cdf37eee86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6def8770_148f244c",
         "filename": "/COMMIT_MSG",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6def8770_ca859429",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-11-29T18:24:46Z",
+      "side": 1,
+      "message": "Updated description.",
+      "parentUuid": "6def8770_148f244c",
+      "range": {
+        "startLine": 14,
+        "startChar": 20,
+        "endLine": 14,
+        "endChar": 31
+      },
+      "revId": "aa9f7aafc680975fd9f57912e397d5cdf37eee86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6def8770_4f74f93e",
         "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
         "patchSetId": 9
@@ -59,6 +107,24 @@
       "writtenOn": "2016-11-29T01:37:27Z",
       "side": 1,
       "message": "I don\u0027t understand the motivation for this part of the change, or for any of the other additions of mLog.trace() calls.\n\nThe commit message only talks about the addition of tracing via WifiAsyncChannel, and WifiHandler. If these other changes are intentional, the commit message should mention them.\n\nThe reference to these changes (in the commit message) should explain the motivation/strategy for these changes. Is the goal, e.g., to trace every public method?\n\nI guess that \"trace every public method\" is what this CL is aiming for, because startService() is _not_ traced. And, on the other hand, replyFailed() is not a public method.\n\nBut, without knowing the intent, I can\u0027t judge whether or not this CL hits the target.",
+      "revId": "aa9f7aafc680975fd9f57912e397d5cdf37eee86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6def8770_2a6640d4",
+        "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-11-29T18:24:46Z",
+      "side": 1,
+      "message": "I have updated the commit message on the new CL. The intention is log ScanningService API surface and to log outgoing messages from the service.",
+      "parentUuid": "6def8770_4f74f93e",
       "revId": "aa9f7aafc680975fd9f57912e397d5cdf37eee86",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
