@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6def8770_e01d172b",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2339,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-29T21:44:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6def8770_ea6df81c",
+      "range": {
+        "startLine": 2338,
+        "startChar": 15,
+        "endLine": 2339,
+        "endChar": 19
+      },
+      "revId": "9063548cf08e7624f0a83befb099410dd4946b3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6def8770_4a55043d",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConfigManagerTest.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2016-11-29T17:53:11Z",
       "side": 1,
       "message": "should you also test for an empty set and already the new user paths?",
+      "range": {
+        "startLine": 1837,
+        "startChar": 8,
+        "endLine": 1837,
+        "endChar": 38
+      },
+      "revId": "9063548cf08e7624f0a83befb099410dd4946b3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6def8770_7b1e588c",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConfigManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1837,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-29T21:44:45Z",
+      "side": 1,
+      "message": "Added a new test for empty set and modified this test to check if we handle userswitch for the same user.",
+      "parentUuid": "6def8770_4a55043d",
       "range": {
         "startLine": 1837,
         "startChar": 8,
