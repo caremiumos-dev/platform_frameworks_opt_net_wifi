@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6def8770_a79169a6",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-29T16:20:52Z",
+      "side": 1,
+      "message": "I\u0027m sorry if i missed this in previous CL. We don\u0027t want to pass WifiInjector to classes directly. You should pass all ur dependencies directly to the class.\n\nIn this class, u need the context, keystore, etc.",
+      "range": {
+        "startLine": 108,
+        "startChar": 45,
+        "endLine": 108,
+        "endChar": 57
+      },
+      "revId": "fb0113d3658efa2f874c4f1a0b56b883a9181f60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6def8770_678b6171",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-29T16:20:52Z",
+      "side": 1,
+      "message": "Don\u0027t use injector to create this instance. Use the keystore instance passed to the class |PasspointManager| to create the provider.",
+      "range": {
+        "startLine": 150,
+        "startChar": 40,
+        "endLine": 150,
+        "endChar": 53
+      },
+      "revId": "fb0113d3658efa2f874c4f1a0b56b883a9181f60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
