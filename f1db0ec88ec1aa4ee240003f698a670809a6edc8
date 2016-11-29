@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6def8770_6f98dd56",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-11-29T01:39:57Z",
+      "side": 1,
+      "message": "Not sure this really needs to mentioned here. I think the subclass relationship is reasonably clear from the class name.",
+      "range": {
+        "startLine": 9,
+        "startChar": 16,
+        "endLine": 9,
+        "endChar": 41
+      },
+      "revId": "f1db0ec88ec1aa4ee240003f698a670809a6edc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
