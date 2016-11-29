@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6def8770_a0f70f6d",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-11-29T19:58:27Z",
+      "side": 1,
+      "message": "I don\u0027t quiet understand the reason for not allowing WifiInjector to be passed into classes directly.  I think it is useful for mocking dynamic object creations (e.g. PasspointEventHandler, PasspointProvider) within the class.  It is not always possible or desired to create objects before hand.",
+      "parentUuid": "6def8770_a79169a6",
+      "range": {
+        "startLine": 108,
+        "startChar": 45,
+        "endLine": 108,
+        "endChar": 57
+      },
+      "revId": "fb0113d3658efa2f874c4f1a0b56b883a9181f60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6def8770_678b6171",
         "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2016-11-29T16:20:52Z",
       "side": 1,
       "message": "Don\u0027t use injector to create this instance. Use the keystore instance passed to the class |PasspointManager| to create the provider.",
+      "range": {
+        "startLine": 150,
+        "startChar": 40,
+        "endLine": 150,
+        "endChar": 53
+      },
+      "revId": "fb0113d3658efa2f874c4f1a0b56b883a9181f60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6def8770_e004f77e",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-11-29T19:58:27Z",
+      "side": 1,
+      "message": "Refer to my comments above.  This allows mocking of objects that are created on-demand.",
+      "parentUuid": "6def8770_678b6171",
       "range": {
         "startLine": 150,
         "startChar": 40,
