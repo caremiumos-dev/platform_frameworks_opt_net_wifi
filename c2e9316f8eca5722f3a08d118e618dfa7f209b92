@@ -22,6 +22,30 @@
       "revId": "c2e9316f8eca5722f3a08d118e618dfa7f209b92",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6def8770_fb3708f6",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3871,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-29T21:56:03Z",
+      "side": 1,
+      "message": "If we\u0027re in disconnecting state, this message is ignored: https://cs.corp.google.com/android/frameworks/opt/net/wifi/service/java/com/android/server/wifi/WifiStateMachine.java?rcl\u003dc4bc8322e0532413bb760f3fc396d16b6e89e624\u0026l\u003d6315.\n\nIf we\u0027re roaming, we will trigger a disconnect to supplicant.",
+      "parentUuid": "6def8770_5b295499",
+      "range": {
+        "startLine": 3871,
+        "startChar": 0,
+        "endLine": 3871,
+        "endChar": 52
+      },
+      "revId": "c2e9316f8eca5722f3a08d118e618dfa7f209b92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
