@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6def8770_5b295499",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3871,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-11-29T21:52:25Z",
+      "side": 1,
+      "message": "What will happen if we are not in the connected state? For  example in roaming or disconnecting state.",
+      "range": {
+        "startLine": 3871,
+        "startChar": 0,
+        "endLine": 3871,
+        "endChar": 52
+      },
+      "revId": "c2e9316f8eca5722f3a08d118e618dfa7f209b92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
