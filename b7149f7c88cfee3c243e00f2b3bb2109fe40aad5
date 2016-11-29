@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6def8770_6000e7b4",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2356,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-11-29T21:02:05Z",
+      "side": 1,
+      "message": "I don\u0027t think this call loads the user config from the legacy store, is that intentional?",
+      "range": {
+        "startLine": 2356,
+        "startChar": 12,
+        "endLine": 2356,
+        "endChar": 36
+      },
+      "revId": "b7149f7c88cfee3c243e00f2b3bb2109fe40aad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6def8770_60d90741",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2495,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-11-29T21:02:05Z",
+      "side": 1,
+      "message": "So does the legacy store contain both shared and user configs? or only shared configs?  if it contains both, wouldn\u0027t the configs for users that didn\u0027t login be lost after a reboot?",
+      "range": {
+        "startLine": 2495,
+        "startChar": 12,
+        "endLine": 2495,
+        "endChar": 47
+      },
+      "revId": "b7149f7c88cfee3c243e00f2b3bb2109fe40aad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2dfd8f27_f27ba28f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConfigManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1746,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-11-29T21:02:05Z",
+      "side": 1,
+      "message": "assertTrue(sharedNetwork1Id !\u003d WifiConfiguration.INVALID_NETWORK_ID);\nassertTrue(sharedNetwork2Id !\u003d WifiConfiguration.INVALID_NETWORK_ID);",
+      "revId": "b7149f7c88cfee3c243e00f2b3bb2109fe40aad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2dfd8f27_f2d84282",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConfigManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1764,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-11-29T21:02:05Z",
+      "side": 1,
+      "message": "int updatedSharedNetwork1Id \u003d WifiConfiguration.INVALID_NETWORK_ID;\nint updatedSharedNetwork2Id \u003d WifiConfiguration.INVALID_NETWORK_ID;",
+      "revId": "b7149f7c88cfee3c243e00f2b3bb2109fe40aad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2dfd8f27_72a672f6",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConfigManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1767,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-11-29T21:02:05Z",
+      "side": 1,
+      "message": "updatedSharedNetwork1Id \u003d network.networkId;",
+      "range": {
+        "startLine": 1767,
+        "startChar": 16,
+        "endLine": 1767,
+        "endChar": 66
+      },
+      "revId": "b7149f7c88cfee3c243e00f2b3bb2109fe40aad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2dfd8f27_d20c2624",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConfigManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1769,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-11-29T21:02:05Z",
+      "side": 1,
+      "message": "updatedSharedNetwork2Id \u003d network.networkId;",
+      "range": {
+        "startLine": 1769,
+        "startChar": 16,
+        "endLine": 1769,
+        "endChar": 66
+      },
+      "revId": "b7149f7c88cfee3c243e00f2b3bb2109fe40aad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2dfd8f27_f20602fc",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConfigManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1771,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-11-29T21:02:05Z",
+      "side": 1,
+      "message": "assertEquals(sharedNetwork1Id, updatedSharedNetwork1Id);\nassertEquals(sharedNetwork2Id, updatedSharedNetwork2Id);",
+      "revId": "b7149f7c88cfee3c243e00f2b3bb2109fe40aad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
