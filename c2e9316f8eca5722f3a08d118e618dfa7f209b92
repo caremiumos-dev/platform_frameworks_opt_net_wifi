@@ -46,6 +46,30 @@
       "revId": "c2e9316f8eca5722f3a08d118e618dfa7f209b92",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6def8770_5b6154ba",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3871,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-11-29T22:22:47Z",
+      "side": 1,
+      "message": "As discussed, if the network to be connected for the new user is the same as the old one, we probably want to stay connected to that network. Disconnection and re-connection can take a few seconds. \n\nWe don\u0027t have to address it in this CL. Filed b/33209440.",
+      "parentUuid": "6def8770_fb3708f6",
+      "range": {
+        "startLine": 3871,
+        "startChar": 0,
+        "endLine": 3871,
+        "endChar": 52
+      },
+      "revId": "c2e9316f8eca5722f3a08d118e618dfa7f209b92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
