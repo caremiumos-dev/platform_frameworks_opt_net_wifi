@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6def8770_96fa11c2",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4692,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-11-30T00:34:05Z",
+      "side": 1,
+      "message": "On further reflection, I\u0027ll just remove this method and its one call site.",
+      "parentUuid": "2dfd8f27_44c2a226",
+      "range": {
+        "startLine": 4692,
+        "startChar": 8,
+        "endLine": 4692,
+        "endChar": 76
+      },
+      "revId": "c85626c15bf2a9ec22b1cf65681a19397def7bcd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dfd8f27_be6df91d",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
         "patchSetId": 3
