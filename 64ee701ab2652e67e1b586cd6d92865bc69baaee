@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6def8770_3108ef48",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-11-30T00:49:24Z",
+      "side": 1,
+      "message": "This list doesn\u0027t explain why we need a WifiHandler. (From this list, it seems like the trace calls in getMessenger(), getAvailableChannels(), WifiAsyncChannel would be enough.)",
+      "revId": "64ee701ab2652e67e1b586cd6d92865bc69baaee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6def8770_36390534",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-11-30T00:49:24Z",
+      "side": 1,
+      "message": "Comma between these two words, please (to separate the clauses). Roughly speaking: if you\u0027d pause between two words when speaking, use a comma when writing.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 10
+      },
+      "revId": "64ee701ab2652e67e1b586cd6d92865bc69baaee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6def8770_31858f5b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-11-30T00:49:24Z",
+      "side": 1,
+      "message": "This is a subtle point, and should be elaborated. If I understand the problem correctly, then something like the following could work:\n\n\"Note that, for fully-connected AsyncChannels, replies do not (necessarily?) use replyToMessage(). Instead replies are (sometimes? always?) sent by calling the send() method of the client-provided Handler.\n\nTo log replies sent on fully-connected messages, we add trace() calls to the (existing) replySucceeded() and replyFailed() methods.\"",
+      "range": {
+        "startLine": 15,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 69
+      },
+      "revId": "64ee701ab2652e67e1b586cd6d92865bc69baaee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
