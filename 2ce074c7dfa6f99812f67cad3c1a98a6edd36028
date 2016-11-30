@@ -46,6 +46,30 @@
       "revId": "2ce074c7dfa6f99812f67cad3c1a98a6edd36028",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6def8770_466614d5",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2549,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-11-30T19:19:17Z",
+      "side": 1,
+      "message": "File operation failure happens. Can you file a bug to track the recovery work?",
+      "parentUuid": "6def8770_06e36c1a",
+      "range": {
+        "startLine": 2549,
+        "startChar": 12,
+        "endLine": 2549,
+        "endChar": 19
+      },
+      "revId": "2ce074c7dfa6f99812f67cad3c1a98a6edd36028",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
