@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6def8770_119e0b50",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2566,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-30T01:29:23Z",
+      "side": 1,
+      "message": "This should be an error message.",
+      "range": {
+        "startLine": 2566,
+        "startChar": 12,
+        "endLine": 2566,
+        "endChar": 13
+      },
+      "revId": "739b801810e186c163189c984add01413af28ce2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6def8770_cc9dac42",
+        "filename": "service/java/com/android/server/wifi/WifiConfigurationUtil.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-30T01:29:23Z",
+      "side": 1,
+      "message": "return !Objects.equals(existingHttpProxy, newHttpProxy)",
+      "range": {
+        "startLine": 155,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 9
+      },
+      "revId": "739b801810e186c163189c984add01413af28ce2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6def8770_4cc75c35",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConfigManagerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-30T01:29:23Z",
+      "side": 1,
+      "message": "Are these being used?",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 74
+      },
+      "revId": "739b801810e186c163189c984add01413af28ce2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6def8770_0ca95458",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConfigManagerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2342,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-30T01:29:23Z",
+      "side": 1,
+      "message": "with-\u003eWith",
+      "range": {
+        "startLine": 2342,
+        "startChar": 39,
+        "endLine": 2342,
+        "endChar": 40
+      },
+      "revId": "739b801810e186c163189c984add01413af28ce2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6def8770_6c18e0ed",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConfigManagerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2672,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-30T01:29:23Z",
+      "side": 1,
+      "message": "Can u rename to |createAddVerifyNetworkWithProxySettingsAndPermissions| to |verifyAddOrUpdateNetworkWithProxySettingsAndPermissions| or something like that because it\u0027s not clear that this method adds or updates the network as necessary.",
+      "range": {
+        "startLine": 2672,
+        "startChar": 32,
+        "endLine": 2672,
+        "endChar": 85
+      },
+      "revId": "739b801810e186c163189c984add01413af28ce2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
