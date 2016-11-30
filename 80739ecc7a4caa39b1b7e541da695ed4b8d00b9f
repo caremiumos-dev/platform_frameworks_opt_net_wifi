@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd47938e_dedf6150",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-30T23:58:34Z",
+      "side": 1,
+      "message": "Can we use a different name (maybe ProviderId?). The term \"uid\" is used to identify process id and used extensively. so, it\u0027s easy confuse what this is holding.",
+      "range": {
+        "startLine": 46,
+        "startChar": 23,
+        "endLine": 46,
+        "endChar": 27
+      },
+      "revId": "80739ecc7a4caa39b1b7e541da695ed4b8d00b9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
