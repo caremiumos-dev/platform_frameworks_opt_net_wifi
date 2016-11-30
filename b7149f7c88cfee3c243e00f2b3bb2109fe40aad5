@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6d64e70a_38c7a936",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2356,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-11-30T17:43:30Z",
+      "side": 1,
+      "message": "Got it.",
+      "parentUuid": "6def8770_9ba7dc5a",
+      "range": {
+        "startLine": 2356,
+        "startChar": 12,
+        "endLine": 2356,
+        "endChar": 36
+      },
+      "revId": "b7149f7c88cfee3c243e00f2b3bb2109fe40aad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6def8770_60d90741",
         "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "The legacy store contains both private and shared configs. Once we load all the configs to memory, we invoke |saveToStore| which pushes all the private networks of other users on the device to the new shared store file until that user logs in to the device after upgrade (to get accesss to CE storage).\n\nThe details are in b/29337176.",
       "parentUuid": "6def8770_60d90741",
+      "range": {
+        "startLine": 2495,
+        "startChar": 12,
+        "endLine": 2495,
+        "endChar": 47
+      },
+      "revId": "b7149f7c88cfee3c243e00f2b3bb2109fe40aad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6def8770_bb96199b",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2495,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-11-30T17:43:30Z",
+      "side": 1,
+      "message": "I see, thanks for the info.",
+      "parentUuid": "6def8770_3b39f033",
       "range": {
         "startLine": 2495,
         "startChar": 12,
