@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6def8770_d291c2a5",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1648,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-11-30T04:21:00Z",
+      "side": 0,
+      "message": "will a separate cl follow to remove them from the config as well?",
+      "range": {
+        "startLine": 1648,
+        "startChar": 8,
+        "endLine": 1648,
+        "endChar": 49
+      },
+      "revId": "04e60c403cfdb750fdaf8b418d63b4386d971fe6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
