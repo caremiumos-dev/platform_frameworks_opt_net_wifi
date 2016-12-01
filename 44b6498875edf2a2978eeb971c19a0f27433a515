@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cd47938e_647b1b69",
+        "filename": "service/java/com/android/server/wifi/hotspot2/ANQPData.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-12-01T17:26:30Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "cd47938e_84f74c1b",
+      "range": {
+        "startLine": 80,
+        "startChar": 34,
+        "endLine": 80,
+        "endChar": 35
+      },
+      "revId": "44b6498875edf2a2978eeb971c19a0f27433a515",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd47938e_642e80bd",
         "filename": "service/java/com/android/server/wifi/hotspot2/AnqpCache.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cd47938e_c462efbd",
+        "filename": "service/java/com/android/server/wifi/hotspot2/AnqpCache.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-12-01T17:26:30Z",
+      "side": 1,
+      "message": "I think this is fine, it is just an initialization of the timestamp.  The cache is empty at the time of creation.",
+      "parentUuid": "cd47938e_642e80bd",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 49
+      },
+      "revId": "44b6498875edf2a2978eeb971c19a0f27433a515",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd47938e_551a0c89",
         "filename": "service/java/com/android/server/wifi/hotspot2/AnqpCache.java",
         "patchSetId": 6
@@ -59,6 +107,24 @@
       "writtenOn": "2016-12-01T04:55:11Z",
       "side": 1,
       "message": "Will it make sense to have the caller do the time checking?",
+      "revId": "44b6498875edf2a2978eeb971c19a0f27433a515",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd47938e_24e3d31a",
+        "filename": "service/java/com/android/server/wifi/hotspot2/AnqpCache.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-12-01T17:26:30Z",
+      "side": 1,
+      "message": "I think it make more sense and cleaner to have it maintained by this class.",
+      "parentUuid": "cd47938e_551a0c89",
       "revId": "44b6498875edf2a2978eeb971c19a0f27433a515",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
