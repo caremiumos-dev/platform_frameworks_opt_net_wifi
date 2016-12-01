@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cd47938e_fd105a03",
+        "filename": "service/java/com/android/server/wifi/hotspot2/DomainMatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-12-01T21:20:18Z",
+      "side": 1,
+      "message": "Enum\u0027s define a bunch of extra methods by extending the Enum class, which is unnecessary for your usage.\nBest practice in framework code is to avoid creating/using these.",
+      "parentUuid": "cd47938e_a7f1a578",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 48
+      },
+      "revId": "768d224e1e8f156f1af50ef514b84da9c70e5eb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dfd8f27_7ef531d4",
         "filename": "service/java/com/android/server/wifi/hotspot2/DomainMatcher.java",
         "patchSetId": 1
