@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6def8770_f1c1673d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-12-01T01:29:37Z",
+      "side": 1,
+      "message": "Async Channel messages are received by Handler. It\u0027s implied but not explicitly mentioned, I can add that.",
+      "parentUuid": "6def8770_3108ef48",
+      "revId": "64ee701ab2652e67e1b586cd6d92865bc69baaee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6def8770_36390534",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -76,6 +94,30 @@
       "writtenOn": "2016-11-30T18:15:41Z",
       "side": 1,
       "message": "Why is a spy being used, instead of a mock or real FakeWifiLog?",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 26
+      },
+      "revId": "64ee701ab2652e67e1b586cd6d92865bc69baaee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd47938e_cfd4cddb",
+        "filename": "tests/wifitests/src/com/android/server/wifi/scanner/WifiScanningServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-12-01T01:29:37Z",
+      "side": 1,
+      "message": "I need the real object in this case because I\u0027m not mocking the methods called on this object. I need the real object to be defined. If I use a mock, I get a null pointer exception when the methods are invoked.",
+      "parentUuid": "6def8770_26a9d058",
       "range": {
         "startLine": 92,
         "startChar": 4,
