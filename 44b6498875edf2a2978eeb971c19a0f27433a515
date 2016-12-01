@@ -45,6 +45,23 @@
       "revId": "44b6498875edf2a2978eeb971c19a0f27433a515",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd47938e_551a0c89",
+        "filename": "service/java/com/android/server/wifi/hotspot2/AnqpCache.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-01T04:55:11Z",
+      "side": 1,
+      "message": "Will it make sense to have the caller do the time checking?",
+      "revId": "44b6498875edf2a2978eeb971c19a0f27433a515",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
