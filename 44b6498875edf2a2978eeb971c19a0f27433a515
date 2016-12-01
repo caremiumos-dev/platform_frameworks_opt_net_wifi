@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd47938e_84f74c1b",
+        "filename": "service/java/com/android/server/wifi/hotspot2/ANQPData.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-01T01:04:45Z",
+      "side": 1,
+      "message": "Remove the white space.",
+      "range": {
+        "startLine": 80,
+        "startChar": 34,
+        "endLine": 80,
+        "endChar": 35
+      },
+      "revId": "44b6498875edf2a2978eeb971c19a0f27433a515",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd47938e_642e80bd",
+        "filename": "service/java/com/android/server/wifi/hotspot2/AnqpCache.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-01T01:04:45Z",
+      "side": 1,
+      "message": "Understand this is from the original code. But at this point of time we haven\u0027t done any sweep yet.",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 49
+      },
+      "revId": "44b6498875edf2a2978eeb971c19a0f27433a515",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
