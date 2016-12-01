@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd47938e_69a76cf4",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2132,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-01T22:37:52Z",
+      "side": 1,
+      "message": "I thought we are moving this LocalLog dump to WifiService. If the goal is just to remove mWifiNetworkSelector from WSM constructor, we can do something like \"mWifiInjector.getWifiNetworkSelector().dump()\" here. This way we don\u0027t need to make that change to WifiConnectivityManager which simply calls into WifiNetworkSelector.dump().",
+      "revId": "8f7de906925cf417b7571b9db53ab98c8da5b311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
