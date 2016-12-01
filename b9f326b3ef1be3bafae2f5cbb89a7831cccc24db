@@ -22,6 +22,30 @@
       "revId": "b9f326b3ef1be3bafae2f5cbb89a7831cccc24db",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd47938e_e4b290c5",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5305,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-01T01:12:24Z",
+      "side": 1,
+      "message": "Could config.meteredHint be set and potentially not trigger a supplicant state change? It seems safer to check it again",
+      "parentUuid": "cd47938e_a1d19ae9",
+      "range": {
+        "startLine": 5305,
+        "startChar": 23,
+        "endLine": 5305,
+        "endChar": 34
+      },
+      "revId": "b9f326b3ef1be3bafae2f5cbb89a7831cccc24db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
