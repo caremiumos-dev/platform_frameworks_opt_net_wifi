@@ -34,6 +34,24 @@
       "revId": "8f7de906925cf417b7571b9db53ab98c8da5b311",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd47938e_f0b23c97",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2132,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-01T23:57:22Z",
+      "side": 1,
+      "message": "Sorry, I missed your comment in the bug. WifiConnectivityManager and WifiNetworkSelector share a local buffer. However WifiConnectivityManager depends on WifiNetworkSelector, which is initialized then passed to WifiConnectivityManager constructor. That\u0027s why the local buffer is created in WifiNetworkSelector.",
+      "parentUuid": "cd47938e_ed10a715",
+      "revId": "8f7de906925cf417b7571b9db53ab98c8da5b311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
