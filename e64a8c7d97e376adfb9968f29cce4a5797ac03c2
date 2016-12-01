@@ -22,6 +22,30 @@
       "revId": "e64a8c7d97e376adfb9968f29cce4a5797ac03c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd47938e_2198ea55",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkHistory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-01T00:05:01Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "cd47938e_de600116",
+      "range": {
+        "startLine": 95,
+        "startChar": 3,
+        "endLine": 95,
+        "endChar": 26
+      },
+      "revId": "e64a8c7d97e376adfb9968f29cce4a5797ac03c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
