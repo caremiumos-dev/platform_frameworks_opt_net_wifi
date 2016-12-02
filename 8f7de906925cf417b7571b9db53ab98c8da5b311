@@ -70,6 +70,24 @@
       "revId": "8f7de906925cf417b7571b9db53ab98c8da5b311",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd47938e_bcdb6b09",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2132,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-02T04:43:27Z",
+      "side": 1,
+      "message": "Depending on how you look at it, WifiNetworkSelector(WNS) and WifiConnectivityManager(WCM) are literally two entities. The job of WNS is to evaluate scan results, regardless of whether they come from WCM or other modules (for example in WNS unit tests the scan results are all mocked and WCM is not there at all). The job of WCM is mainly to schedule connectivity scans. Each class used to have its own LocalLog buffer. We consolidate them into one recently just to make better use of the memory. WNS doesn\u0027t have to be always reached via WCM.",
+      "parentUuid": "cd47938e_96e130b9",
+      "revId": "8f7de906925cf417b7571b9db53ab98c8da5b311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
