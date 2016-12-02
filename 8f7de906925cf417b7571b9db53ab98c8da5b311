@@ -106,6 +106,24 @@
       "revId": "8f7de906925cf417b7571b9db53ab98c8da5b311",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd47938e_3c38fbe4",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2132,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-02T07:28:20Z",
+      "side": 1,
+      "message": "One additional question about an alternate place to call NetworkSelector from, if that does happen, then won\u0027t the logs from ConnectivityManager be mixed in?  If there is to be a separate call path, then we potentially should have CM share with WSM and NS have an independent call.  Mixing the two and then arguing they should be separate seems a bit confusing.\n\nIn the end, won\u0027t they move to the alternate logging service and make this decision obsolete?",
+      "parentUuid": "cd47938e_fcf05322",
+      "revId": "8f7de906925cf417b7571b9db53ab98c8da5b311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
