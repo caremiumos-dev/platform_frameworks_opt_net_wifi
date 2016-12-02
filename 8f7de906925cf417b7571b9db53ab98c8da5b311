@@ -142,6 +142,24 @@
       "revId": "8f7de906925cf417b7571b9db53ab98c8da5b311",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8decbb0b_513af488",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2132,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-02T18:53:35Z",
+      "side": 1,
+      "message": "We can do the cleanup for WifiInjector after I switch over.  I am not actually changing WSM in its current state, I am incrementally building the new code in parallel and will switch over at a later date.  This allows me to continue with my development of ClientMode without losing the logs held in the shared LocalLog (or forgetting to call it later).",
+      "parentUuid": "8decbb0b_11634cf2",
+      "revId": "8f7de906925cf417b7571b9db53ab98c8da5b311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
