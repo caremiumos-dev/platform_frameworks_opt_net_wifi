@@ -124,6 +124,24 @@
       "revId": "8f7de906925cf417b7571b9db53ab98c8da5b311",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8decbb0b_11634cf2",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2132,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-02T18:39:44Z",
+      "side": 1,
+      "message": "The CL makes sense now after I understand what you are doing to clean up WSM. Since WSM is no longer calling into WifiInjector#getWifiNetworkSelector, we can remove \"when(mWifiInjector.getWifiNetworkSelector()).thenReturn(mock(WifiNetworkSelector.class));\" from WifiStateMachineTest.java. Also it would be good if we just remove getWifiNetworkSelector() from WifiInjector.",
+      "parentUuid": "cd47938e_3c38fbe4",
+      "revId": "8f7de906925cf417b7571b9db53ab98c8da5b311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
