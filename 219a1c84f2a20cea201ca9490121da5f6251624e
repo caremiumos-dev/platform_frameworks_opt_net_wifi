@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8decbb0b_e6fb6456",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-12-02T23:40:36Z",
+      "side": 1,
+      "message": "silberst@ to verify whether this is the right place for this instantiation.",
+      "revId": "219a1c84f2a20cea201ca9490121da5f6251624e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
