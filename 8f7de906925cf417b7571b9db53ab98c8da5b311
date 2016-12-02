@@ -52,6 +52,24 @@
       "revId": "8f7de906925cf417b7571b9db53ab98c8da5b311",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd47938e_96e130b9",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2132,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-02T01:29:43Z",
+      "side": 1,
+      "message": "NetworkSelector is created in WifiInjector, but the only class that directly interacts with it is ConnectivityManager.  No one else holds the NetworkSelector and it is pretty unnatural for another class to reach around ConnectivityManager to get to it.  (It is possible thanks to WifiInjector, but it is awkward.",
+      "parentUuid": "cd47938e_f0b23c97",
+      "revId": "8f7de906925cf417b7571b9db53ab98c8da5b311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
