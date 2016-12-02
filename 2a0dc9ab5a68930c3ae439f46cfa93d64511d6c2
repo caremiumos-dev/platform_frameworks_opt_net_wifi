@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd47938e_16b6c08d",
+        "filename": "service/java/com/android/server/wifi/util/WifiHandler.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-12-02T01:47:37Z",
+      "side": 1,
+      "message": "I know you mentioned that you\u0027ve gone with a |protected| field here, to avoid the need to pass a WifiInjector into WifiHandler.\n\nCould you elaborate, though, on what problems we\u0027d run into, if we _did_ pass WifiInjector into WifiHandler?\n\n(I\u0027m not necessarily opposed to this approach. But I\u0027d like to understand why we need to diverge from the pattern used in other Wifi code.)",
+      "revId": "2a0dc9ab5a68930c3ae439f46cfa93d64511d6c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
