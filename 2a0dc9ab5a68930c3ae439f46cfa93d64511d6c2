@@ -34,6 +34,24 @@
       "revId": "2a0dc9ab5a68930c3ae439f46cfa93d64511d6c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8decbb0b_cb7989e7",
+        "filename": "service/java/com/android/server/wifi/util/WifiHandler.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-12-02T22:57:12Z",
+      "side": 1,
+      "message": "Makes sense. Please do three things:\n\n1. @VisibleForTesting annotation for this field.\n2. Include this explanation (or an excerpt of it), in the commit message. (This explanation is the \"why this is the best approach\" part of t he commit message. https://engdoc.corp.google.com/eng/doc/devguide/coding/review/developer/cl-descriptions.md)\n3. Add a TODO(b/\u003cnew-bug-number\u003e) comment for cleaning this up, once the ordering issue is resolved. (b/\u003cnew-bug-number) should block on b/31651755)\n\nThanks.",
+      "parentUuid": "8decbb0b_911cdce1",
+      "revId": "2a0dc9ab5a68930c3ae439f46cfa93d64511d6c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
