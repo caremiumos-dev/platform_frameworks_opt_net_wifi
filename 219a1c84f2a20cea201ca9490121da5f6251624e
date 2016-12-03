@@ -16,6 +16,52 @@
       "revId": "219a1c84f2a20cea201ca9490121da5f6251624e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8decbb0b_4670f086",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-03T00:26:34Z",
+      "side": 1,
+      "message": "I don\u0027t think the injector needs to be passed (though there are bad examples, we should not be passing the injector itself around to classes).\n\nI do see hints that you might be wanted to get to WifiScanner...  is that why this is here?",
+      "range": {
+        "startLine": 164,
+        "startChar": 73,
+        "endLine": 164,
+        "endChar": 77
+      },
+      "revId": "219a1c84f2a20cea201ca9490121da5f6251624e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8decbb0b_26e04c0b",
+        "filename": "service/java/com/android/server/wifi/WifiWakeupController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-03T00:26:34Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 45
+      },
+      "revId": "219a1c84f2a20cea201ca9490121da5f6251624e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
