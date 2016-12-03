@@ -52,6 +52,24 @@
       "revId": "2a0dc9ab5a68930c3ae439f46cfa93d64511d6c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8decbb0b_bdfb2a05",
+        "filename": "service/java/com/android/server/wifi/util/WifiHandler.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-12-03T03:06:55Z",
+      "side": 1,
+      "message": "#1 Just adding that field didn\u0027t make it visible in WifiHandlerTest. I have added a hidden API instead.\n2. Done\n3. Also done",
+      "parentUuid": "8decbb0b_cb7989e7",
+      "revId": "2a0dc9ab5a68930c3ae439f46cfa93d64511d6c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
