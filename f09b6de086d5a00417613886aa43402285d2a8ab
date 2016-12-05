@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8decbb0b_f3ab1a23",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiWakeupControllerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-05T22:52:11Z",
+      "side": 1,
+      "message": "You will probably want to move this to a class variable so you can call the dispatch methods later when you have real tests.",
+      "range": {
+        "startLine": 62,
+        "startChar": 8,
+        "endLine": 62,
+        "endChar": 18
+      },
+      "revId": "f09b6de086d5a00417613886aa43402285d2a8ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
