@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8decbb0b_3f0cc920",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-12-05T19:51:54Z",
+      "side": 1,
+      "message": "Empty result, which is still a List thou, that\u0027s why I didn\u0027t say anything about returning null.\n\nI can be more explicit if you prefer.",
+      "parentUuid": "8decbb0b_6663f4c3",
+      "revId": "274ed28c316e0fbe4333409fb3e1fa21f289c947",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8decbb0b_64e3e71a",
         "filename": "tests/wifitests/src/com/android/server/wifi/hotspot2/PasspointManagerTest.java",
         "patchSetId": 6
@@ -76,6 +94,30 @@
       "writtenOn": "2016-12-05T19:24:28Z",
       "side": 1,
       "message": "This test is kind of pointless, it calls a wrapper method on the ANQPcache, which is mocked, and checks it got called.\n\nIdeally this test would create the conditions which cause PasspointManager to trigger an AnqpCache sweep. What does trigger this behaviour?\n\nIs there an AnqpTest.java that tests the functionality of sweep()?",
+      "range": {
+        "startLine": 527,
+        "startChar": 7,
+        "endLine": 527,
+        "endChar": 46
+      },
+      "revId": "274ed28c316e0fbe4333409fb3e1fa21f289c947",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8decbb0b_1ffb45a1",
+        "filename": "tests/wifitests/src/com/android/server/wifi/hotspot2/PasspointManagerTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-12-05T19:51:54Z",
+      "side": 1,
+      "message": "Yes, AnqpCacheTest does test sweep().\n\nThis is just to make sure we are actually invoking mAnqpCache.sweep when PasspointManager.sweepCache is called.\n\nPasspointManager.sweepCache will be invoke by PasspointNetworkEvaluator to sweep the cache before performing providers matching.  We could\u0027ve put the cache sweep in the matchProvider function, but that\u0027s a bit inefficient since it would be invoked when matching each ScanDetail.  Instead, we can have PasspointNetworkEvaluator do something like:\n\npublic WifiConfiguration evaulateNetworks(..) {\n  ...\n  mPasspointManager.sweepCache();\n  for each scanDetail\n    mPasspointManager.matchProvider(..)\n    ...\n  ..\n}",
+      "parentUuid": "8decbb0b_3f45e9b6",
       "range": {
         "startLine": 527,
         "startChar": 7,
