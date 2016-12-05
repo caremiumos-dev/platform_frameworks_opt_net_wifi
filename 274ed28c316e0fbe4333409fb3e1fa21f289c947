@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8decbb0b_c8d2a165",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-12-05T22:21:28Z",
+      "side": 1,
+      "message": "Please do",
+      "parentUuid": "8decbb0b_3f0cc920",
+      "revId": "274ed28c316e0fbe4333409fb3e1fa21f289c947",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8decbb0b_64e3e71a",
         "filename": "tests/wifitests/src/com/android/server/wifi/hotspot2/PasspointManagerTest.java",
         "patchSetId": 6
@@ -142,6 +160,30 @@
       "side": 1,
       "message": "Yes, AnqpCacheTest does test sweep().\n\nThis is just to make sure we are actually invoking mAnqpCache.sweep when PasspointManager.sweepCache is called.\n\nPasspointManager.sweepCache will be invoke by PasspointNetworkEvaluator to sweep the cache before performing providers matching.  We could\u0027ve put the cache sweep in the matchProvider function, but that\u0027s a bit inefficient since it would be invoked when matching each ScanDetail.  Instead, we can have PasspointNetworkEvaluator do something like:\n\npublic WifiConfiguration evaulateNetworks(..) {\n  ...\n  mPasspointManager.sweepCache();\n  for each scanDetail\n    mPasspointManager.matchProvider(..)\n    ...\n  ..\n}",
       "parentUuid": "8decbb0b_3f45e9b6",
+      "range": {
+        "startLine": 527,
+        "startChar": 7,
+        "endLine": 527,
+        "endChar": 46
+      },
+      "revId": "274ed28c316e0fbe4333409fb3e1fa21f289c947",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8decbb0b_28112d3c",
+        "filename": "tests/wifitests/src/com/android/server/wifi/hotspot2/PasspointManagerTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-12-05T22:21:28Z",
+      "side": 1,
+      "message": "Ok, I\u0027m cool with that.",
+      "parentUuid": "8decbb0b_1ffb45a1",
       "range": {
         "startLine": 527,
         "startChar": 7,
