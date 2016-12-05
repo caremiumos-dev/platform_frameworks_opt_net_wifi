@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8decbb0b_2825ad71",
+        "filename": "service/java/com/android/server/wifi/hotspot2/anqp/DomainNameElement.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-12-05T22:47:50Z",
+      "side": 1,
+      "message": "I don\u0027t think this throws a ProtocolException anymore, it potentially throws a bunch of other exceptions.",
+      "range": {
+        "startLine": 19,
+        "startChar": 12,
+        "endLine": 19,
+        "endChar": 36
+      },
+      "revId": "d6eb267d94bf1195052f27ce215c5ef1c3865dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8decbb0b_33b882ab",
+        "filename": "tests/wifitests/src/com/android/server/wifi/ByteBufferReaderTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-12-05T22:47:50Z",
+      "side": 1,
+      "message": "You\u0027ve actually already stated \u0027the expectations\u0027 but you have stated the conditions.\n\n\u0027Verify that reading an integer from a too short buffer results in a buffer underflow\u0027",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 30
+      },
+      "revId": "d6eb267d94bf1195052f27ce215c5ef1c3865dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8decbb0b_5330a645",
+        "filename": "tests/wifitests/src/com/android/server/wifi/ByteBufferReaderTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-12-05T22:47:50Z",
+      "side": 1,
+      "message": "Reword all these. Explicityly state the expectation. Make sure you state what the test does, and what it expects.",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 93
+      },
+      "revId": "d6eb267d94bf1195052f27ce215c5ef1c3865dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
