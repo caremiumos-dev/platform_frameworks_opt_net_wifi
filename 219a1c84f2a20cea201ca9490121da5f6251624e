@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "8decbb0b_84b5abd1",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-05T18:43:06Z",
+      "side": 1,
+      "message": "Yes, the intention is to use WifiScanner\u0027s scan results for logic to wake up Wi-Fi. I\u0027ll remove this injector pass for now until the logic is implemented.",
+      "parentUuid": "8decbb0b_4670f086",
+      "range": {
+        "startLine": 164,
+        "startChar": 73,
+        "endLine": 164,
+        "endChar": 77
+      },
+      "revId": "219a1c84f2a20cea201ca9490121da5f6251624e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8decbb0b_26e04c0b",
         "filename": "service/java/com/android/server/wifi/WifiWakeupController.java",
         "patchSetId": 2
