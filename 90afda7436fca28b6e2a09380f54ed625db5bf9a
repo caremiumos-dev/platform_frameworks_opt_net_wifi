@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad1edff1_03faf4c3",
+        "filename": "service/java/com/android/server/wifi/hotspot2/anqp/ANQPFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-06T19:47:12Z",
+      "side": 1,
+      "message": "Add a log to indicate what\u0027s going on here?",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 36
+      },
+      "revId": "90afda7436fca28b6e2a09380f54ed625db5bf9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_2ea11f79",
+        "filename": "service/java/com/android/server/wifi/hotspot2/anqp/IPAddressTypeAvailabilityElement.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-06T19:47:12Z",
+      "side": 1,
+      "message": "Can we define macro for these masks?",
+      "range": {
+        "startLine": 101,
+        "startChar": 39,
+        "endLine": 101,
+        "endChar": 42
+      },
+      "revId": "90afda7436fca28b6e2a09380f54ed625db5bf9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_eeb7a7bb",
+        "filename": "service/java/com/android/server/wifi/hotspot2/anqp/IPAddressTypeAvailabilityElement.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-06T19:47:12Z",
+      "side": 1,
+      "message": "Can we define macro for these masks?",
+      "range": {
+        "startLine": 106,
+        "startChar": 46,
+        "endLine": 106,
+        "endChar": 50
+      },
+      "revId": "90afda7436fca28b6e2a09380f54ed625db5bf9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
