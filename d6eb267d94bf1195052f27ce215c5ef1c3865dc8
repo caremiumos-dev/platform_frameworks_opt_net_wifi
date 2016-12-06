@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad1edff1_9df0a774",
+        "filename": "service/java/com/android/server/wifi/hotspot2/anqp/DomainNameElement.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-12-06T16:59:27Z",
+      "side": 1,
+      "message": "This will be cleanup in the upcoming CLs as part of the ANQP element cleanups.",
+      "parentUuid": "8decbb0b_2825ad71",
+      "range": {
+        "startLine": 19,
+        "startChar": 12,
+        "endLine": 19,
+        "endChar": 36
+      },
+      "revId": "d6eb267d94bf1195052f27ce215c5ef1c3865dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8decbb0b_33b882ab",
         "filename": "tests/wifitests/src/com/android/server/wifi/ByteBufferReaderTest.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ad1edff1_7d083391",
+        "filename": "tests/wifitests/src/com/android/server/wifi/ByteBufferReaderTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-12-06T16:59:27Z",
+      "side": 1,
+      "message": "Will update.",
+      "parentUuid": "8decbb0b_33b882ab",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 30
+      },
+      "revId": "d6eb267d94bf1195052f27ce215c5ef1c3865dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8decbb0b_5330a645",
         "filename": "tests/wifitests/src/com/android/server/wifi/ByteBufferReaderTest.java",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2016-12-05T22:47:50Z",
       "side": 1,
       "message": "Reword all these. Explicityly state the expectation. Make sure you state what the test does, and what it expects.",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 93
+      },
+      "revId": "d6eb267d94bf1195052f27ce215c5ef1c3865dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_1d057778",
+        "filename": "tests/wifitests/src/com/android/server/wifi/ByteBufferReaderTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-12-06T16:59:27Z",
+      "side": 1,
+      "message": "Will update.",
+      "parentUuid": "8decbb0b_5330a645",
       "range": {
         "startLine": 48,
         "startChar": 7,
