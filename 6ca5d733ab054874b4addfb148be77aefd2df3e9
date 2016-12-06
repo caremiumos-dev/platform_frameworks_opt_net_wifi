@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8decbb0b_590fa54f",
+        "filename": "service/java/com/android/server/wifi/hotspot2/ANQPData.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-12-06T00:26:22Z",
+      "side": 1,
+      "message": "Hmm, prefer to leave it as is, since this is the allowed lifetime for an entry (there is no maximum or minimum).",
+      "parentUuid": "8decbb0b_bf143909",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 21
+      },
+      "revId": "6ca5d733ab054874b4addfb148be77aefd2df3e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8decbb0b_5feaedbc",
         "filename": "service/java/com/android/server/wifi/hotspot2/ANQPNetworkKey.java",
         "patchSetId": 8
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "8decbb0b_99406d73",
+        "filename": "service/java/com/android/server/wifi/hotspot2/ANQPNetworkKey.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-12-06T00:26:22Z",
+      "side": 1,
+      "message": "will update. checkStyle have been crashing, not sure it has been fixed or not.",
+      "parentUuid": "8decbb0b_5feaedbc",
+      "revId": "6ca5d733ab054874b4addfb148be77aefd2df3e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8decbb0b_c2a7228e",
         "filename": "tests/wifitests/src/com/android/server/wifi/hotspot2/ANQPDataTest.java",
         "patchSetId": 8
@@ -53,6 +95,30 @@
       "writtenOn": "2016-12-05T20:13:48Z",
       "side": 1,
       "message": "unused",
+      "range": {
+        "startLine": 81,
+        "startChar": 7,
+        "endLine": 81,
+        "endChar": 29
+      },
+      "revId": "6ca5d733ab054874b4addfb148be77aefd2df3e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8decbb0b_b95a116b",
+        "filename": "tests/wifitests/src/com/android/server/wifi/hotspot2/ANQPDataTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-12-06T00:26:22Z",
+      "side": 1,
+      "message": "Will remove.",
+      "parentUuid": "8decbb0b_c2a7228e",
       "range": {
         "startLine": 81,
         "startChar": 7,
