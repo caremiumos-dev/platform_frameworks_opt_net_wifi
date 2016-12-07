@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad1edff1_5c2c3f07",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-12-07T19:53:59Z",
+      "side": 1,
+      "message": "nit. Can u move this above the block of debug fields to line 855?",
+      "range": {
+        "startLine": 860,
+        "startChar": 44,
+        "endLine": 860,
+        "endChar": 58
+      },
+      "revId": "e68255b65d91e5d9413437b0bf7ebec4817db146",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_fcdf53f3",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4923,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-12-07T19:53:59Z",
+      "side": 1,
+      "message": "This is not needed. We should only be updating the config if we\u0027re connected to the network. This should already be handled in handleSupplicantStateChange() change above.",
+      "range": {
+        "startLine": 4922,
+        "startChar": 0,
+        "endLine": 4923,
+        "endChar": 51
+      },
+      "revId": "e68255b65d91e5d9413437b0bf7ebec4817db146",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_bcd23beb",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5302,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-12-07T19:53:59Z",
+      "side": 1,
+      "message": "nit. Extra line.",
+      "revId": "e68255b65d91e5d9413437b0bf7ebec4817db146",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
