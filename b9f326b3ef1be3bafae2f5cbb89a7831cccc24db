@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad1edff1_d72348bc",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-07T20:54:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd47938e_905c989d",
+      "revId": "b9f326b3ef1be3bafae2f5cbb89a7831cccc24db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd47938e_a1d19ae9",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 3
@@ -78,6 +96,30 @@
       "side": 1,
       "message": "How does config.meteredHint change? Will the settings UI write it into the config store directly? If so, then it can race with the WifiStateMachine thread and we cannot guarantee that mWifiInfo.getMeteredHint() will be correct at any time.",
       "parentUuid": "cd47938e_e4b290c5",
+      "range": {
+        "startLine": 5305,
+        "startChar": 23,
+        "endLine": 5305,
+        "endChar": 34
+      },
+      "revId": "b9f326b3ef1be3bafae2f5cbb89a7831cccc24db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_f129bc4c",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5305,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-07T20:54:02Z",
+      "side": 1,
+      "message": "config.meteredHint changes via ExternalScoreEvaluator, which calls WifiConfigManager#addOrUpdateNetwork. handleSupplicantStateChange will in turn update the capabilities to match when a connection is made. The Settings UI will also call the same method to update config.meteredOverride.\n\nIt is worth noting that this means when user toggles a network as metered within Settings UI, the capability change will only happen on the next connection. That seems acceptable because the UI is not used often, thoughts?",
+      "parentUuid": "cd47938e_8429079d",
       "range": {
         "startLine": 5305,
         "startChar": 23,
