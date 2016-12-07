@@ -70,6 +70,24 @@
       "revId": "2a0dc9ab5a68930c3ae439f46cfa93d64511d6c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_9a9e624e",
+        "filename": "service/java/com/android/server/wifi/util/WifiHandler.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-12-07T01:45:42Z",
+      "side": 1,
+      "message": "Sorry, I didn\u0027t fully explain #1. Yes, the annotation doesn\u0027t change the visibility. This particular annotation is more like a formalized+standardized comment.",
+      "parentUuid": "8decbb0b_bdfb2a05",
+      "revId": "2a0dc9ab5a68930c3ae439f46cfa93d64511d6c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
