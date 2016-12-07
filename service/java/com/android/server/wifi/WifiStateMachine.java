@@ -87,6 +87,7 @@ import android.os.Messenger;
 import android.os.PowerManager;
 import android.os.Process;
 import android.os.RemoteException;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.os.WorkSource;
@@ -3911,6 +3912,13 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             logStateAndMessage(message, this);
             switch (message.what) {
                 case CMD_START_SUPPLICANT:
+                    if (("trigger_reset_main").equals(SystemProperties.get("vold.decrypt"))
+                            || ("trigger_restart_min_framework").equals(
+                            SystemProperties.get("vold.decrypt"))) {
+                        loge("Not encrypted yet. Need to restart SystemServer");
+                        return HANDLED;
+                    }
+
                     mClientInterface = mWifiNative.setupDriverForClientMode();
                     if (mClientInterface == null
                             || !mDeathRecipient.linkToDeath(mClientInterface.asBinder())) {
