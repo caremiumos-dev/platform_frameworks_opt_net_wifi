@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ad1edff1_351f2779",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-12-07T02:14:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6def8770_f1c1673d",
+      "revId": "64ee701ab2652e67e1b586cd6d92865bc69baaee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6def8770_36390534",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -60,6 +78,30 @@
     },
     {
       "key": {
+        "uuid": "ad1edff1_f528cf98",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-12-07T02:14:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6def8770_36390534",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 10
+      },
+      "revId": "64ee701ab2652e67e1b586cd6d92865bc69baaee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6def8770_31858f5b",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -71,6 +113,30 @@
       "writtenOn": "2016-11-30T00:49:24Z",
       "side": 1,
       "message": "This is a subtle point, and should be elaborated. If I understand the problem correctly, then something like the following could work:\n\n\"Note that, for fully-connected AsyncChannels, replies do not (necessarily?) use replyToMessage(). Instead replies are (sometimes? always?) sent by calling the send() method of the client-provided Handler.\n\nTo log replies sent on fully-connected messages, we add trace() calls to the (existing) replySucceeded() and replyFailed() methods.\"",
+      "range": {
+        "startLine": 15,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 69
+      },
+      "revId": "64ee701ab2652e67e1b586cd6d92865bc69baaee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_952e33a1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-12-07T02:14:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6def8770_31858f5b",
       "range": {
         "startLine": 15,
         "startChar": 9,
