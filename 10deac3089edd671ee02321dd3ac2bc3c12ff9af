@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0d5d2bd4_453d6a7e",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2016-12-07T18:18:01Z",
+      "side": 1,
+      "message": "After some intensive experimentation, I\u0027m happy to report that yes I can.",
+      "parentUuid": "ad1edff1_2ba7c3f4",
+      "range": {
+        "startLine": 1055,
+        "startChar": 7,
+        "endLine": 1055,
+        "endChar": 13
+      },
+      "revId": "10deac3089edd671ee02321dd3ac2bc3c12ff9af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad1edff1_6b0a9b02",
         "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0d5d2bd4_8542820c",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2016-12-07T18:18:01Z",
+      "side": 1,
+      "message": "The uid of the app might not exist any more.",
+      "parentUuid": "ad1edff1_6b0a9b02",
+      "range": {
+        "startLine": 1072,
+        "startChar": 48,
+        "endLine": 1072,
+        "endChar": 60
+      },
+      "revId": "10deac3089edd671ee02321dd3ac2bc3c12ff9af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad1edff1_eba0ebda",
         "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2016-12-07T18:13:47Z",
       "side": 1,
       "message": "Same.",
+      "range": {
+        "startLine": 1083,
+        "startChar": 6,
+        "endLine": 1083,
+        "endChar": 14
+      },
+      "revId": "10deac3089edd671ee02321dd3ac2bc3c12ff9af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d5d2bd4_653ae689",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2016-12-07T18:18:01Z",
+      "side": 1,
+      "message": "Same.",
+      "parentUuid": "ad1edff1_eba0ebda",
       "range": {
         "startLine": 1083,
         "startChar": 6,
