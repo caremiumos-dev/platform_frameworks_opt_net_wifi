@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad1edff1_416ea119",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-12-07T05:15:56Z",
+      "side": 1,
+      "message": "A suggestion that\u0027s out of the scope of this CL: maybe separate this function into two functions, one for disable and one for enable.",
+      "range": {
+        "startLine": 412,
+        "startChar": 19,
+        "endLine": 412,
+        "endChar": 49
+      },
+      "revId": "56cb1d3a84e6dd310190a2d71bad436d5a920646",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
