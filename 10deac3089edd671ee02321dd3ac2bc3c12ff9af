@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad1edff1_2ba7c3f4",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-12-07T18:13:47Z",
+      "side": 1,
+      "message": "Can u update the javadocs?",
+      "range": {
+        "startLine": 1055,
+        "startChar": 7,
+        "endLine": 1055,
+        "endChar": 13
+      },
+      "revId": "10deac3089edd671ee02321dd3ac2bc3c12ff9af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_6b0a9b02",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-12-07T18:13:47Z",
+      "side": 1,
+      "message": "Why was this needed? The uid of the app should have enough permission to remove it\u0027s own networks.",
+      "range": {
+        "startLine": 1072,
+        "startChar": 48,
+        "endLine": 1072,
+        "endChar": 60
+      },
+      "revId": "10deac3089edd671ee02321dd3ac2bc3c12ff9af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_eba0ebda",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-12-07T18:13:47Z",
+      "side": 1,
+      "message": "Same.",
+      "range": {
+        "startLine": 1083,
+        "startChar": 6,
+        "endLine": 1083,
+        "endChar": 14
+      },
+      "revId": "10deac3089edd671ee02321dd3ac2bc3c12ff9af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
