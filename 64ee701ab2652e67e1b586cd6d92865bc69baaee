@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ad1edff1_8b612f1a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-12-07T17:52:29Z",
+      "side": 1,
+      "message": "The explicit mentioning is done in the paragraph below.",
+      "parentUuid": "6def8770_f1c1673d",
+      "revId": "64ee701ab2652e67e1b586cd6d92865bc69baaee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6def8770_36390534",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
