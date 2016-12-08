@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad1edff1_7f5c879b",
+        "filename": "tests/wifitests/src/com/android/server/wifi/RecommendedNetworkEvaluatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1060801
+      },
+      "writtenOn": "2016-12-08T18:39:59Z",
+      "side": 1,
+      "message": "nit: should be on the same line as the field def.",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 11
+      },
+      "revId": "e49a6dbf8d14b856ff5cf258d5e341d2c4aa55bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
