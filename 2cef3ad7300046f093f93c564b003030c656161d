@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad1edff1_7d4ecc3a",
+        "filename": "service/java/com/android/server/wifi/wificond/SingleScanSettings.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-12-08T22:55:20Z",
+      "side": 1,
+      "message": "Don\u0027t u want to copy over the |channelSettings| and |hiddenNetworks| also?",
+      "range": {
+        "startLine": 38,
+        "startChar": 10,
+        "endLine": 40,
+        "endChar": 5
+      },
+      "revId": "2cef3ad7300046f093f93c564b003030c656161d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
