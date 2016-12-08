@@ -22,6 +22,30 @@
       "revId": "2cef3ad7300046f093f93c564b003030c656161d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_00a5e384",
+        "filename": "service/java/com/android/server/wifi/wificond/SingleScanSettings.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2016-12-08T23:09:10Z",
+      "side": 1,
+      "message": "oops my bad.\nI add them here.\nI am not very sure what kind of copy do we need here.\nI think either deep/shallow are fine.",
+      "parentUuid": "ad1edff1_7d4ecc3a",
+      "range": {
+        "startLine": 38,
+        "startChar": 10,
+        "endLine": 40,
+        "endChar": 5
+      },
+      "revId": "2cef3ad7300046f093f93c564b003030c656161d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
