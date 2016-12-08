@@ -196,6 +196,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     private WifiInjector mWifiInjector;
     private WifiMonitor mWifiMonitor;
     private WifiNative mWifiNative;
+    private WifiSupplicantHal mWifiSupplicantHal;
     private WifiConfigManager mWifiConfigManager;
     private WifiSupplicantControl mWifiSupplicantControl;
     private WifiConnectivityManager mWifiConnectivityManager;
@@ -848,7 +849,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     public WifiStateMachine(Context context, FrameworkFacade facade, Looper looper,
                             UserManager userManager, WifiInjector wifiInjector,
                             BackupManagerProxy backupManagerProxy, WifiCountryCode countryCode,
-                            WifiNative wifiNative) {
+                            WifiNative wifiNative, WifiSupplicantHal wifiSupplicantHal) {
         super("WifiStateMachine", looper);
         mWifiInjector = wifiInjector;
         mWifiMetrics = mWifiInjector.getWifiMetrics();
@@ -858,6 +859,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         mContext = context;
         mFacade = facade;
         mWifiNative = wifiNative;
+        mWifiSupplicantHal = wifiSupplicantHal;
         mBackupManagerProxy = backupManagerProxy;
 
         // TODO refactor WifiNative use of context out into it's own class
@@ -4013,6 +4015,9 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     } catch (RemoteException e) {
                         cleanup();
                         break;
+                    }
+                    if (!mWifiSupplicantHal.initialize()) {
+                        Log.e(TAG, "Failed to start supplicant Hal");
                     }
                     setSupplicantLogLevel();
                     setWifiState(WIFI_STATE_ENABLING);
