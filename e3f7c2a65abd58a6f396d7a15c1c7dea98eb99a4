@@ -140,6 +140,24 @@
     },
     {
       "key": {
+        "uuid": "ad1edff1_3945d2b6",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-08T04:15:57Z",
+      "side": 1,
+      "message": "Actually, I see this elsewhere too. I would imagine this error checking is done at a lower level, but we should check with Jeremy.",
+      "parentUuid": "ad1edff1_3e0cd820",
+      "revId": "e3f7c2a65abd58a6f396d7a15c1c7dea98eb99a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad1edff1_1e48f429",
         "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
         "patchSetId": 1
