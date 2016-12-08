@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad1edff1_5ec3cc9a",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-08T03:21:20Z",
+      "side": 1,
+      "message": "why are we passing in a null parameter?",
+      "range": {
+        "startLine": 165,
+        "startChar": 58,
+        "endLine": 165,
+        "endChar": 62
+      },
+      "revId": "e3f7c2a65abd58a6f396d7a15c1c7dea98eb99a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_fea0a0da",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-08T03:21:20Z",
+      "side": 1,
+      "message": "I believe this is always available before WifiService is created. NetworkScoreSErvice is started on line 811 in SystemServer and WifiService is started on line 844. If this is true, we can pass in NetworkScoreManager in the constructor here.",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 21
+      },
+      "revId": "e3f7c2a65abd58a6f396d7a15c1c7dea98eb99a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_5e4e6c3a",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-08T03:21:20Z",
+      "side": 1,
+      "message": "It\u0027s unlikely that these arrays will be the same size as the scan results. Also, if there are no open networks, then we\u0027ve just wasted 2 allocations (the backing Object[] is set to a static ArrayList#EMPTY_ELEMENTDATA if nothing is added to the list). The default constructor is likely the best choice here.",
+      "range": {
+        "startLine": 203,
+        "startChar": 69,
+        "endLine": 203,
+        "endChar": 87
+      },
+      "revId": "e3f7c2a65abd58a6f396d7a15c1c7dea98eb99a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_de635cc1",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-08T03:21:20Z",
+      "side": 1,
+      "message": "ScanResultUtil.createQuotedSSID",
+      "range": {
+        "startLine": 214,
+        "startChar": 55,
+        "endLine": 214,
+        "endChar": 65
+      },
+      "revId": "e3f7c2a65abd58a6f396d7a15c1c7dea98eb99a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_de8cbc56",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-08T03:21:20Z",
+      "side": 1,
+      "message": "Only add to openNetworkKeys if mScoreCache.isScoredNetwork return false",
+      "range": {
+        "startLine": 216,
+        "startChar": 28,
+        "endLine": 216,
+        "endChar": 43
+      },
+      "revId": "e3f7c2a65abd58a6f396d7a15c1c7dea98eb99a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_3e0cd820",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-08T03:21:20Z",
+      "side": 1,
+      "message": "This will never happen. Remove try catch",
+      "range": {
+        "startLine": 218,
+        "startChar": 33,
+        "endLine": 218,
+        "endChar": 57
+      },
+      "revId": "e3f7c2a65abd58a6f396d7a15c1c7dea98eb99a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_1e48f429",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-08T03:21:20Z",
+      "side": 1,
+      "message": "nit: !openNetworks.isEmpty()",
+      "range": {
+        "startLine": 224,
+        "startChar": 20,
+        "endLine": 224,
+        "endChar": 32
+      },
+      "revId": "e3f7c2a65abd58a6f396d7a15c1c7dea98eb99a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_7e0a5002",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-08T03:21:20Z",
+      "side": 1,
+      "message": "The system has the permissions to request scores, so this will never happen. Remove try catch.",
+      "range": {
+        "startLine": 228,
+        "startChar": 29,
+        "endLine": 228,
+        "endChar": 46
+      },
+      "revId": "e3f7c2a65abd58a6f396d7a15c1c7dea98eb99a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_bee9c8fb",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-08T03:21:20Z",
+      "side": 1,
+      "message": "No need to have this if statement - a score of Byte.MIN_VALUE will be returned if there is no score.",
+      "revId": "e3f7c2a65abd58a6f396d7a15c1c7dea98eb99a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_de07dcc8",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-08T03:21:20Z",
+      "side": 1,
+      "message": "Early return here after setting the notification visible. Or move this out of the loop and create a variable to contain the highest scoring network beyond the threshold and pass that in to setNotificationVisible to prepare for your next change.",
+      "range": {
+        "startLine": 243,
+        "startChar": 36,
+        "endLine": 243,
+        "endChar": 58
+      },
+      "revId": "e3f7c2a65abd58a6f396d7a15c1c7dea98eb99a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
