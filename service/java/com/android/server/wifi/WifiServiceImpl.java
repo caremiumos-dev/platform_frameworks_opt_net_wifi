@@ -161,6 +161,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
     private final boolean mPermissionReviewRequired;
     private final PasspointManager mPasspointManager;
 
+    private final WifiSupplicantHal mWifiSupplicantHal;
     /**
      * Handles client connections
      */
@@ -316,6 +317,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         mWifiInjector = wifiInjector;
 
         mFacade = mWifiInjector.getFrameworkFacade();
+        mWifiSupplicantHal = mWifiInjector.getWifiSupplicantHal();
         mWifiMetrics = mWifiInjector.getWifiMetrics();
         mTrafficPoller = mWifiInjector.getWifiTrafficPoller();
         mUserManager = UserManager.get(mContext);

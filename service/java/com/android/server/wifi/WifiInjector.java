@@ -70,6 +70,7 @@ public class WifiInjector {
     private final BackupManagerProxy mBackupManagerProxy = new BackupManagerProxy();
     private final WifiApConfigStore mWifiApConfigStore;
     private final WifiNative mWifiNative;
+    private final WifiSupplicantHal mWifiSupplicantHal;
     private final WifiStateMachine mWifiStateMachine;
     private final WifiSettingsStore mSettingsStore;
     private final WifiCertManager mCertManager;
@@ -102,7 +103,6 @@ public class WifiInjector {
     private final PasspointManager mPasspointManager;
     private final SIMAccessor mSimAccessor;
     private HandlerThread mWifiAwareHandlerThread;
-
     private final boolean mUseRealLogger;
 
     public WifiInjector(Context context) {
@@ -144,6 +144,7 @@ public class WifiInjector {
                         .getBoolean(R.bool.config_wifi_revert_country_code_on_cellular_loss));
         mWifiApConfigStore = new WifiApConfigStore(mContext, mBackupManagerProxy);
         mWifiNative = WifiNative.getWlanNativeInterface();
+        mWifiSupplicantHal = new WifiSupplicantHal();
 
         // WifiConfigManager/Store objects and their dependencies.
         // New config store
@@ -181,7 +182,7 @@ public class WifiInjector {
                 mPasspointManager, mWifiConfigManager, localLog);
         mWifiStateMachine = new WifiStateMachine(mContext, mFrameworkFacade,
                 wifiStateMachineLooper, UserManager.get(mContext),
-                this, mBackupManagerProxy, mCountryCode, mWifiNative);
+                this, mBackupManagerProxy, mCountryCode, mWifiNative, mWifiSupplicantHal);
         mCertManager = new WifiCertManager(mContext);
         mLockManager = new WifiLockManager(mContext, BatteryStatsService.getService());
         mWifiController = new WifiController(mContext, mWifiStateMachine, mSettingsStore,
@@ -207,6 +208,10 @@ public class WifiInjector {
 
     public WifiMetrics getWifiMetrics() {
         return mWifiMetrics;
+    }
+
+    public WifiSupplicantHal getWifiSupplicantHal() {
+        return mWifiSupplicantHal;
     }
 
     public BackupManagerProxy getBackupManagerProxy() {
