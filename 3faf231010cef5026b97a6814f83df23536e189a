@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad1edff1_ca9b8f5d",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-12-08T19:55:54Z",
+      "side": 1,
+      "message": "Why does WifiConnectivityManager need to know whether ExternalScoreEvaluator or RecommendedNetworkEvaluator should be employed?  Shouldn\u0027t this be an implementation detail of ExternalScoreEvaluator, or perhaps an factory object?",
+      "revId": "3faf231010cef5026b97a6814f83df23536e189a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
