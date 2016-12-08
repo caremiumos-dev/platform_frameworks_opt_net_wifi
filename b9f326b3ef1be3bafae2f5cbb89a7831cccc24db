@@ -129,6 +129,30 @@
       "revId": "b9f326b3ef1be3bafae2f5cbb89a7831cccc24db",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d3f4f99_6eb36fcb",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5305,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2016-12-08T23:49:22Z",
+      "side": 1,
+      "message": "Actually, if I\u0027m reading the code correctly, it doesn\u0027t seem hard to have this take effect dynamically.\n\nIf you make the settings UI call WifiManager#updateNetwork, then it will result in WifiStateMachine getting CMD_ADD_OR_UPDATE_NETWORK and calling WifiConfigManager#addOrUpdateNetwork for you, on the right thread.\n\nThen all you need to do is make sure that the handling code for CMD_ADD_OR_UPDATE_NETWORK calls updateCapabilities() if the update succeeded and the network is the current network. Then the metered bit will be updated properly.\n\nRoshan, I assume this is safe to do?",
+      "parentUuid": "ad1edff1_f129bc4c",
+      "range": {
+        "startLine": 5305,
+        "startChar": 23,
+        "endLine": 5305,
+        "endChar": 34
+      },
+      "revId": "b9f326b3ef1be3bafae2f5cbb89a7831cccc24db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
