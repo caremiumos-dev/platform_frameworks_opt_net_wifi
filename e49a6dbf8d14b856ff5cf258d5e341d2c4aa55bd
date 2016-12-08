@@ -22,6 +22,24 @@
       "revId": "e49a6dbf8d14b856ff5cf258d5e341d2c4aa55bd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_eab3f3c8",
+        "filename": "tests/wifitests/src/com/android/server/wifi/RecommendedNetworkEvaluatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-08T19:18:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad1edff1_7f5c879b",
+      "revId": "e49a6dbf8d14b856ff5cf258d5e341d2c4aa55bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
