@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "ad1edff1_cbe39118",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-08T22:19:54Z",
+      "side": 1,
+      "message": "Is this RecommendedNetworkEvaluator going to handle networks that are saved but marked as externally scored?",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 9
+      },
+      "revId": "3faf231010cef5026b97a6814f83df23536e189a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_106778d0",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-08T22:19:54Z",
+      "side": 1,
+      "message": "Why this evaluator specific input parameter needs to be passed down via WifiConnectivityManager? Can\u0027t RecommendedNetworkEvaluator obtain it via NETWORK_SCORE_SERVICE?",
+      "range": {
+        "startLine": 472,
+        "startChar": 49,
+        "endLine": 472,
+        "endChar": 88
+      },
+      "revId": "3faf231010cef5026b97a6814f83df23536e189a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad1edff1_ca9b8f5d",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 2
