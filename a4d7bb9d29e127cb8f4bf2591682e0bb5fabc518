@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad1edff1_30aabc4e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-12-08T21:32:11Z",
+      "side": 1,
+      "message": "(Cont\u0027d from PS3)\n\nPlease list WifiHandler here, so that a reader can get the important information by skimming the commit message.\n\nAs is, a reviewer will miss this information, unless they very carefully parse the paragraph below.",
+      "revId": "a4d7bb9d29e127cb8f4bf2591682e0bb5fabc518",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_50dbb00a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-12-08T21:32:11Z",
+      "side": 1,
+      "message": "No need to describe the implementation details of WifiAsyncChannel here. (That code was added in its own CL, with its own explanation of implementation strategy.)",
+      "range": {
+        "startLine": 15,
+        "startChar": 16,
+        "endLine": 16,
+        "endChar": 65
+      },
+      "revId": "a4d7bb9d29e127cb8f4bf2591682e0bb5fabc518",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_f00764f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-12-08T21:32:11Z",
+      "side": 1,
+      "message": "The rest of this commit message is hard to follow.\n- Using a single, long, paragraph makes the text hard to skim.\n- The relationship between the subtopics of this paragraph, and the goals above is hard to see.\n- The paragraph contains information that isn\u0027t relevant to this commit. (E.g., implementation details of WifiAsyncChannel, and WifiHandler.)\n\nPlease have a look at go/lotl-178, and incorporate some of that advice here. The ideal structure of this commit message might be something like:\n\n   Log API surfaces...\n\n   The following interfaces may be used...\n   - AIDL...\n   - Async...\n   - Handler ...\n\n   We trace these interfaces as follows:\n   - AIDL: manual addition of WifiLog.trace() calls\n   - AsyncChannel:\n     - use of WifiAsyncChannel\n     - addition of trace() calls to replySucceeded() and\n       replyFailed() calls [1]\n   - Handler: use of WifiHandler\n\n   [1] This compensates for the fact that WifiScanningService uses a fully-connected AsyncChannel. In fully-connected mode, replies can\u0027t be logged by WifiAsyncChannel, because the replies aren\u0027t sent using replyToMessage().\n\nKey features of the structure above:\n- easy to skim\n- mapping from problem to solution is clear\n- most important information is at the top, with greater levels of details as we reader further (e.g., the detail about replyToMessage() is at the bottom).",
+      "revId": "a4d7bb9d29e127cb8f4bf2591682e0bb5fabc518",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_d087c09f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-12-08T21:32:11Z",
+      "side": 1,
+      "message": "Similar to comment at line 15: no need to describe the implementation details of other classes.",
+      "range": {
+        "startLine": 24,
+        "startChar": 26,
+        "endLine": 25,
+        "endChar": 48
+      },
+      "revId": "a4d7bb9d29e127cb8f4bf2591682e0bb5fabc518",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_30b4fc82",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-12-08T21:32:11Z",
+      "side": 1,
+      "message": "Recommend leaving this last sentence out. It\u0027s unsurprising that a mock was added to a test fixture. So, unless there\u0027s something subtle going on, no need to mention this.",
+      "revId": "a4d7bb9d29e127cb8f4bf2591682e0bb5fabc518",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
