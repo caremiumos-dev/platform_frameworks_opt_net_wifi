@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "ad1edff1_dda7d88d",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-08T22:48:43Z",
+      "side": 1,
+      "message": "Yes it will.",
+      "parentUuid": "ad1edff1_cbe39118",
+      "revId": "3faf231010cef5026b97a6814f83df23536e189a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad1edff1_106778d0",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 2
@@ -42,6 +60,24 @@
         "endLine": 472,
         "endChar": 88
       },
+      "revId": "3faf231010cef5026b97a6814f83df23536e189a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1edff1_3d1b745b",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-08T22:48:43Z",
+      "side": 1,
+      "message": "RecommendedNetworkEvaluator could obtain NetworkScoreManager from Context, but it is better to inject direct dependencies instead of indirect ones. go/di-practices/inject-direct-dependencies\n\nUsing that logic, it would make more sense to actually inject SavedNetworkEvaluator, RecommendedNetworkEvaluator and ExternalScoreEvaluator directly into WifiConnectivityManager instead of constructing those objects within this constructor. I\u0027d be happy to make that change in this commit if you agree. That would remove the WifiNetworkScoreCache and NetworkScoreManager arguments and add ones for the 3 evaluators.",
+      "parentUuid": "ad1edff1_106778d0",
       "revId": "3faf231010cef5026b97a6814f83df23536e189a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
