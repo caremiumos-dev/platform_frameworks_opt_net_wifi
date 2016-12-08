@@ -69,6 +69,9 @@ public class WifiInjector {
     private final BackupManagerProxy mBackupManagerProxy = new BackupManagerProxy();
     private final WifiApConfigStore mWifiApConfigStore;
     private final WifiNative mWifiNative;
+    private final WifiNativeNew mWifiNativeNew;
+    private final WifiMonitorNew mWifiMonitorNew;
+    private final WifiP2pNativeNew mWifiP2pNativeNew;
     private final WifiStateMachine mWifiStateMachine;
     private final WifiSettingsStore mSettingsStore;
     private final WifiCertManager mCertManager;
@@ -101,7 +104,6 @@ public class WifiInjector {
     private final PasspointManager mPasspointManager;
     private final SIMAccessor mSimAccessor;
     private HandlerThread mWifiAwareHandlerThread;
-
     private final boolean mUseRealLogger;
 
     public WifiInjector(Context context) {
@@ -143,6 +145,10 @@ public class WifiInjector {
         mWifiApConfigStore = new WifiApConfigStore(mContext, mBackupManagerProxy);
         mWifiNative = WifiNative.getWlanNativeInterface();
 
+        mWifiNativeNew = new WifiNativeNew();
+        mWifiMonitorNew = new WifiMonitorNew();
+        mWifiP2pNativeNew = new WifiP2pNativeNew();
+
         // WifiConfigManager/Store objects and their dependencies.
         // New config store
         mWifiKeyStore = new WifiKeyStore(mKeyStore);
@@ -179,7 +185,8 @@ public class WifiInjector {
                 mPasspointManager, mWifiConfigManager, localLog);
         mWifiStateMachine = new WifiStateMachine(mContext, mFrameworkFacade,
                 mWifiStateMachineHandlerThread.getLooper(), UserManager.get(mContext),
-                this, mBackupManagerProxy, mCountryCode, mWifiNative);
+                this, mBackupManagerProxy, mCountryCode, mWifiNative, mWifiNativeNew,
+                mWifiMonitorNew, mWifiP2pNativeNew);
         mCertManager = new WifiCertManager(mContext);
         mLockManager = new WifiLockManager(mContext, BatteryStatsService.getService());
         mWifiController = new WifiController(mContext, mWifiStateMachine, mSettingsStore,
@@ -205,6 +212,18 @@ public class WifiInjector {
 
     public WifiMetrics getWifiMetrics() {
         return mWifiMetrics;
+    }
+
+    public WifiNativeNew getWifiNativeNew() {
+        return mWifiNativeNew;
+    }
+
+    public WifiMonitorNew getWifiMonitorNew() {
+        return mWifiMonitorNew;
+    }
+
+    public WifiP2pNativeNew getWifiP2pNativeNew() {
+        return mWifiP2pNativeNew;
     }
 
     public BackupManagerProxy getBackupManagerProxy() {

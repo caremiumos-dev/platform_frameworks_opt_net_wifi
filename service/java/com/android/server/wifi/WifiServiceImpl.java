@@ -161,6 +161,9 @@ public class WifiServiceImpl extends IWifiManager.Stub {
     private final boolean mPermissionReviewRequired;
     private final PasspointManager mPasspointManager;
 
+    private final WifiNativeNew mWifiNativeNew;
+    private final WifiMonitorNew mWifiMonitorNew;
+    private final WifiP2pNativeNew mWifiP2pNativeNew;
     /**
      * Handles client connections
      */
@@ -316,6 +319,9 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         mWifiInjector = wifiInjector;
 
         mFacade = mWifiInjector.getFrameworkFacade();
+        mWifiNativeNew = mWifiInjector.getWifiNativeNew();
+        mWifiMonitorNew = mWifiInjector.getWifiMonitorNew();
+        mWifiP2pNativeNew = mWifiInjector.getWifiP2pNativeNew();
         mWifiMetrics = mWifiInjector.getWifiMetrics();
         mTrafficPoller = mWifiInjector.getWifiTrafficPoller();
         mUserManager = UserManager.get(mContext);
