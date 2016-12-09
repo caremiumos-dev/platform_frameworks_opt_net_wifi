@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a26a7ad_7328b74b",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-12-09T19:58:56Z",
+      "side": 1,
+      "message": "Rather than nest more conditionals making this method larger, can you factor this method out so it doesn\u0027t continue to get more cumbersome?",
+      "revId": "8f78374516d67e42e539786b5b5a1882954a631f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a26a7ad_53d13b0e",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-12-09T19:58:56Z",
+      "side": 1,
+      "message": "It seems like this logic sitting here in the notification controller is a bit awkward.  First you filter for open networks, then you request scores for those open networks from the score manager, and then you ask the score cache to get to get a network score for each of these open networks (presuming, I think that the score manager is related to the score cache in some way not visible to the notification controller).\n\nIt would make more sense to me and anyone reading this code that we\u0027d ask some facility opaque to WifiNotificationController how confident it was that there were good networks to associate to, given the scan results.  Within here you could also encapsulate concepts of whether this device had a suitable scoring mechanism and what to do under those circumstances.",
+      "revId": "8f78374516d67e42e539786b5b5a1882954a631f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a26a7ad_1354e314",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNotificationControllerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-12-09T19:58:56Z",
+      "side": 1,
+      "message": "Having a refactor here makes sense.  However the way you\u0027ve done it creates an asymmetry.  There are some sequences of calls where:\n\n   when(mWifiScanner.getSingleScanResults()).thenReturn(scanResults);\n\nneeds to be called by the test implementation, and other situations where it does not.  Also \"createScanResult\" (as opposed to \"setOpenAccessPoint\") loses the information that the scan result being created is open.\n\nCould you restructure these methods so that their usage is more consistent?  For example \"addOpenAccessPoint\" and \"addOpenAccessPointWithScore\" might be one way, although you\u0027ll need to make decisions about the storage ownership of \"scanResult\".  Having it class-wide might make sense.",
+      "range": {
+        "startLine": 114,
+        "startChar": 23,
+        "endLine": 114,
+        "endChar": 39
+      },
+      "revId": "8f78374516d67e42e539786b5b5a1882954a631f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
