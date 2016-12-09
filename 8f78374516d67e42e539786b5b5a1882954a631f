@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a26a7ad_911c6b93",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-09T22:28:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a26a7ad_7328b74b",
+      "revId": "8f78374516d67e42e539786b5b5a1882954a631f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a26a7ad_53d13b0e",
         "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3a26a7ad_513ff3c8",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-09T22:28:30Z",
+      "side": 1,
+      "message": "Makes sense to pull this out, but will tackle this in a separate CL since it could potentially live outside of opt/net/wifi.",
+      "parentUuid": "3a26a7ad_53d13b0e",
+      "revId": "8f78374516d67e42e539786b5b5a1882954a631f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a26a7ad_1354e314",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiNotificationControllerTest.java",
         "patchSetId": 4
@@ -47,6 +83,30 @@
       "writtenOn": "2016-12-09T19:58:56Z",
       "side": 1,
       "message": "Having a refactor here makes sense.  However the way you\u0027ve done it creates an asymmetry.  There are some sequences of calls where:\n\n   when(mWifiScanner.getSingleScanResults()).thenReturn(scanResults);\n\nneeds to be called by the test implementation, and other situations where it does not.  Also \"createScanResult\" (as opposed to \"setOpenAccessPoint\") loses the information that the scan result being created is open.\n\nCould you restructure these methods so that their usage is more consistent?  For example \"addOpenAccessPoint\" and \"addOpenAccessPointWithScore\" might be one way, although you\u0027ll need to make decisions about the storage ownership of \"scanResult\".  Having it class-wide might make sense.",
+      "range": {
+        "startLine": 114,
+        "startChar": 23,
+        "endLine": 114,
+        "endChar": 39
+      },
+      "revId": "8f78374516d67e42e539786b5b5a1882954a631f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a26a7ad_91c0eb1f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNotificationControllerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-09T22:28:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a26a7ad_1354e314",
       "range": {
         "startLine": 114,
         "startChar": 23,
