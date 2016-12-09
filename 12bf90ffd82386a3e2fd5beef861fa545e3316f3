@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a26a7ad_67690d36",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-12-09T23:29:46Z",
+      "side": 1,
+      "message": "Having this test buried within a method named \"checkGoodOpenNetwork\" doesn\u0027t seem right.  Should this test move back out to checkAndSetNotification?  Doing these tests out of order (making sure that we\u0027ve seen NUM_SCANS_... of GOOD networks before displaying the notification) makes sense to me.",
+      "revId": "12bf90ffd82386a3e2fd5beef861fa545e3316f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
