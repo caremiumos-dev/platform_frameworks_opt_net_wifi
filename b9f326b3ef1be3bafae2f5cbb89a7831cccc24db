@@ -153,6 +153,30 @@
       "revId": "b9f326b3ef1be3bafae2f5cbb89a7831cccc24db",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a26a7ad_7f2c03c9",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5305,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-12-09T02:05:22Z",
+      "side": 1,
+      "message": "Yeah. That\u0027s safe. You can use |mLastNetworkId| to check if the network being updated is the currently connected network ID.",
+      "parentUuid": "2d3f4f99_6eb36fcb",
+      "range": {
+        "startLine": 5305,
+        "startChar": 23,
+        "endLine": 5305,
+        "endChar": 34
+      },
+      "revId": "b9f326b3ef1be3bafae2f5cbb89a7831cccc24db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
