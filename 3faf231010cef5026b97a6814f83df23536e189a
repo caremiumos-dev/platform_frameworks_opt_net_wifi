@@ -79,6 +79,24 @@
     },
     {
       "key": {
+        "uuid": "3a26a7ad_ea296f9c",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-09T04:27:06Z",
+      "side": 1,
+      "message": "1) Saved but externally scored network is considered as trusted network. They should be evaluated and connected even if untrusted network is not allowed.\n2) Instead of having WifiManager#addNetwork to create WifiConfiguration, why not leave the details of such within Wifi stack, just as what we are doing today.  This way, NetworkRecommendationProvider can simply focus on network ranking.\n3) If NetworkRecommendationProvider needs to differentiate saved but externally scored network and ephemeral network, can we add a hidden field in scan result to indicate network type and have RecommendedNetworkEvaluator set it? This way you don\u0027t need to query WifiManager#getConfiguredNetworks.",
+      "parentUuid": "3a26a7ad_bf2a9bed",
+      "revId": "3faf231010cef5026b97a6814f83df23536e189a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad1edff1_106778d0",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 2
