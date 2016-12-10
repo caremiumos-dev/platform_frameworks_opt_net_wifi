@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a26a7ad_047134f7",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-10T01:04:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a26a7ad_021ec7d6",
+      "revId": "7aca8eda3a7363269181feed2b4d51c143b9e45a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a26a7ad_e22aabee",
         "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3a26a7ad_e46d181f",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-10T01:04:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a26a7ad_e22aabee",
+      "revId": "7aca8eda3a7363269181feed2b4d51c143b9e45a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a26a7ad_2208a393",
         "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2016-12-10T00:12:22Z",
       "side": 1,
       "message": "indexed iterator, please.",
+      "revId": "7aca8eda3a7363269181feed2b4d51c143b9e45a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a26a7ad_448e0cc3",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-10T01:04:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a26a7ad_2208a393",
       "revId": "7aca8eda3a7363269181feed2b4d51c143b9e45a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
