@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a26a7ad_021ec7d6",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000691
+      },
+      "writtenOn": "2016-12-10T00:12:22Z",
+      "side": 1,
+      "message": "blank line",
+      "revId": "7aca8eda3a7363269181feed2b4d51c143b9e45a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a26a7ad_e22aabee",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000691
+      },
+      "writtenOn": "2016-12-10T00:12:22Z",
+      "side": 1,
+      "message": "blank line",
+      "revId": "7aca8eda3a7363269181feed2b4d51c143b9e45a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a26a7ad_2208a393",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000691
+      },
+      "writtenOn": "2016-12-10T00:12:22Z",
+      "side": 1,
+      "message": "indexed iterator, please.",
+      "revId": "7aca8eda3a7363269181feed2b4d51c143b9e45a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a26a7ad_a2a15349",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000691
+      },
+      "writtenOn": "2016-12-10T00:12:22Z",
+      "side": 1,
+      "message": "fyi: depending on uses of scan details in the interface and other calls, it might be worth changing interfaces up and down to [].",
+      "range": {
+        "startLine": 86,
+        "startChar": 51,
+        "endLine": 86,
+        "endChar": 61
+      },
+      "revId": "7aca8eda3a7363269181feed2b4d51c143b9e45a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
