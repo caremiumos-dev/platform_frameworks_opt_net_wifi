@@ -97,6 +97,24 @@
     },
     {
       "key": {
+        "uuid": "3a26a7ad_67758da7",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-10T01:04:46Z",
+      "side": 1,
+      "message": "1) That is the current plan for implementing the NetworkRecommendationProvider.\n2) I\u0027ll leave this the logic  for adding/updating networks to the framework makes sense. I\u0027ll just need to add to RecommendationResult a ScanResult field so the chosen ScanResult can be returned as well as a WifiConfiguration (since NetworkSelectionStatus is hidden).\n3) Would simply exposing the untrusted bit in ScanResult work? \n\nb/33490132 contains the API changes for 2) and 3)\n\nI updated this change to reflect this new design. I also filtered out untrusted networks from the ScanResults passed to the NetworkScoreManager instead of passing along NetworkCapabilities.",
+      "parentUuid": "3a26a7ad_ea296f9c",
+      "revId": "3faf231010cef5026b97a6814f83df23536e189a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad1edff1_106778d0",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 2
