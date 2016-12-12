@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a26a7ad_cdfebff7",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-12T05:38:56Z",
+      "side": 1,
+      "message": "Is this being used to make it easier to test?  It might be just me, but I find this much more difficult to read.",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 135,
+        "endChar": 5
+      },
+      "revId": "eb83ca8c3090052d2a52906645ed036d8171e8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a26a7ad_2d3d33ee",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-12T05:38:56Z",
+      "side": 1,
+      "message": "In the existing code we bow out if the scan results list is empty.  Is there a reason we are not doing that here?",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 12
+      },
+      "revId": "eb83ca8c3090052d2a52906645ed036d8171e8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a26a7ad_0d3a77f5",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-12T05:38:56Z",
+      "side": 1,
+      "message": "I realize this is in the existing code, but why does this start at the end and go to 0?  It just makes it a bit odd to read.  We could also switch to:\n\"for (ScanResult scanResult : scanResults) {\"",
+      "range": {
+        "startLine": 228,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 63
+      },
+      "revId": "eb83ca8c3090052d2a52906645ed036d8171e8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a26a7ad_0d15d75f",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-12T05:38:56Z",
+      "side": 1,
+      "message": "I haven\u0027t been in this code before so I am checking if I get it.\n\nIt looks like this asks NetworkScoreManager to recalculate scores for the networks in the provided array.  This call doesn\u0027t happen to check the returned boolean (should it?).\n\nSo then the NetworkScoreManager sends a broadcast to trigger the scores to be redone.  This code then forges ahead and checks the existing scores.  Is that ok?  It is certainly possible that I am missing something, but this flow seems confusing.",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 280,
+        "endChar": 60
+      },
+      "revId": "eb83ca8c3090052d2a52906645ed036d8171e8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a26a7ad_ed117b73",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNotificationControllerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-12T05:38:56Z",
+      "side": 1,
+      "message": "This should be updated too.",
+      "range": {
+        "startLine": 60,
+        "startChar": 38,
+        "endLine": 60,
+        "endChar": 61
+      },
+      "revId": "eb83ca8c3090052d2a52906645ed036d8171e8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
