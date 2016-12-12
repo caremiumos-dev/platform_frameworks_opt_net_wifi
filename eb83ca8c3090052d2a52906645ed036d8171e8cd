@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a26a7ad_532b70ae",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-12T18:41:04Z",
+      "side": 1,
+      "message": "Yes, preferred to do this as apposed to passing in a null object in WifiInjector",
+      "parentUuid": "3a26a7ad_cdfebff7",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 135,
+        "endChar": 5
+      },
+      "revId": "eb83ca8c3090052d2a52906645ed036d8171e8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a26a7ad_2d3d33ee",
         "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2016-12-12T05:38:56Z",
       "side": 1,
       "message": "In the existing code we bow out if the scan results list is empty.  Is there a reason we are not doing that here?",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 12
+      },
+      "revId": "eb83ca8c3090052d2a52906645ed036d8171e8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a26a7ad_931c6893",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-12T18:41:04Z",
+      "side": 1,
+      "message": "thanks, added null check.",
+      "parentUuid": "3a26a7ad_2d3d33ee",
       "range": {
         "startLine": 227,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3a26a7ad_733aecda",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-12T18:41:04Z",
+      "side": 1,
+      "message": "The idea was to not allocate a List iterator and to do scanResults.size() once, suggested to me previously and part of android best practices. I do think the optimizations are a little trivial here though, so can go either way.\n\nhttps://docs.google.com/document/d/1772U-6hNWjEYNpsvqFo-mwPSrBD_r6Wn08qeAd6ltBk/view#heading\u003dh.woei4s95qf53",
+      "parentUuid": "3a26a7ad_0d3a77f5",
+      "range": {
+        "startLine": 228,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 63
+      },
+      "revId": "eb83ca8c3090052d2a52906645ed036d8171e8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a26a7ad_1883d758",
         "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
         "patchSetId": 7
@@ -82,6 +154,24 @@
       "writtenOn": "2016-12-12T17:06:22Z",
       "side": 1,
       "message": "The loop above looks for \"open networks\".  The call below asks for a \"good open network\".  When I made my comment in patchset #5, I talked about the test below (regarding mNumScansSincenetworkStateChange), and this looks good.  Pulling the code up to filter open networks when there\u0027s  a method dedicated for returning \"good open networks\" doesn\u0027t make as much sense.",
+      "revId": "eb83ca8c3090052d2a52906645ed036d8171e8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a26a7ad_738c2c8b",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-12T18:41:04Z",
+      "side": 1,
+      "message": "Agreed, this should live in checkGoodOpenNetwork() eventually. I did this because the current notification needs an openNetworks.size(), but I will move this in future CLs when that changes.",
+      "parentUuid": "3a26a7ad_1883d758",
       "revId": "eb83ca8c3090052d2a52906645ed036d8171e8cd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "3a26a7ad_fe2a43ee",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-12T18:41:04Z",
+      "side": 1,
+      "message": "The call returns false when no scorer is active, and we plan to turn off the feature when the recommendation service is not up, so it shouldn\u0027t need to check the boolean.\n\nWhen the broadcast is sent to trigger the score cache to be updated, the following code may not retrieve the updated scores yet, which is fine because the behavior should still pick the best qualified network based on existing scores in the cache.",
+      "parentUuid": "3a26a7ad_0d15d75f",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 280,
+        "endChar": 60
+      },
+      "revId": "eb83ca8c3090052d2a52906645ed036d8171e8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a26a7ad_587a6f99",
         "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
         "patchSetId": 7
@@ -122,6 +236,30 @@
       "writtenOn": "2016-12-12T17:06:22Z",
       "side": 1,
       "message": "\"score\" isn\u0027t needed in this scope.  Please remove this and do \"int score \u003d mScoreCache.getNetworks...\" below.",
+      "range": {
+        "startLine": 284,
+        "startChar": 38,
+        "endLine": 284,
+        "endChar": 45
+      },
+      "revId": "eb83ca8c3090052d2a52906645ed036d8171e8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a26a7ad_53cc90c9",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-12T18:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a26a7ad_587a6f99",
       "range": {
         "startLine": 284,
         "startChar": 38,
