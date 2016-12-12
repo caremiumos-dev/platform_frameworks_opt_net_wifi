@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa632f25_a3040480",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-12T23:54:28Z",
+      "side": 1,
+      "message": "I think I have this correct...  As pstew mentions, we do an extra loop through the scan results to pull out the open networks.  Can\u0027 this just be part of the call below?  In checkGoodOpenNetwork(scanResults) we could trivially check each scan result for the capability and also if it is scored.",
+      "range": {
+        "startLine": 233,
+        "startChar": 16,
+        "endLine": 234,
+        "endChar": 69
+      },
+      "revId": "cf6b744a04c6cb6e02b1ec9ba80362314c4b2e11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
