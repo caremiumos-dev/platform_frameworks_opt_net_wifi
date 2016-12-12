@@ -71,6 +71,23 @@
     },
     {
       "key": {
+        "uuid": "3a26a7ad_1883d758",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-12-12T17:06:22Z",
+      "side": 1,
+      "message": "The loop above looks for \"open networks\".  The call below asks for a \"good open network\".  When I made my comment in patchset #5, I talked about the test below (regarding mNumScansSincenetworkStateChange), and this looks good.  Pulling the code up to filter open networks when there\u0027s  a method dedicated for returning \"good open networks\" doesn\u0027t make as much sense.",
+      "revId": "eb83ca8c3090052d2a52906645ed036d8171e8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a26a7ad_0d15d75f",
         "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
         "patchSetId": 7
@@ -87,6 +104,29 @@
         "startChar": 0,
         "endLine": 280,
         "endChar": 60
+      },
+      "revId": "eb83ca8c3090052d2a52906645ed036d8171e8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a26a7ad_587a6f99",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-12-12T17:06:22Z",
+      "side": 1,
+      "message": "\"score\" isn\u0027t needed in this scope.  Please remove this and do \"int score \u003d mScoreCache.getNetworks...\" below.",
+      "range": {
+        "startLine": 284,
+        "startChar": 38,
+        "endLine": 284,
+        "endChar": 45
       },
       "revId": "eb83ca8c3090052d2a52906645ed036d8171e8cd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
