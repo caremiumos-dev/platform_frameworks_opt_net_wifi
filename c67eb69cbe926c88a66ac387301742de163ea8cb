@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa632f25_e3cc3c50",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-12-12T23:50:55Z",
+      "side": 1,
+      "message": "Now that you have a null-pointer test in WifiInjector.java, this might be the first point at which we would get an NPE.  Doesn\u0027t seem right?",
+      "revId": "c67eb69cbe926c88a66ac387301742de163ea8cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
