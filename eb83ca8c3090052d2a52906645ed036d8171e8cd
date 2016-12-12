@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "fa632f25_23e754cd",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-12T23:54:28Z",
+      "side": 1,
+      "message": "I like that this is allowing us to make mNotificationBuilder be final and I don\u0027t like passing in null either.  I want to get this set of comments in before our meeting, so I can\u0027t go look at the test...  but could we create the object in the constructor like it was constructed below?  I am guessing not...  but haven\u0027t had a chance to look.\n\nI am not opposed to this style..  and we don\u0027t handle this well in the current code.  It is just different than what we are doing and it might end up as the example. :)",
+      "parentUuid": "3a26a7ad_532b70ae",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 135,
+        "endChar": 5
+      },
+      "revId": "eb83ca8c3090052d2a52906645ed036d8171e8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a26a7ad_2d3d33ee",
         "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
         "patchSetId": 7
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "fa632f25_c3202012",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-12T23:54:28Z",
+      "side": 1,
+      "message": "Yeah, in this case I think it would be a bit easier to read if there was an iterator and am leaning towards that.",
+      "parentUuid": "3a26a7ad_733aecda",
+      "range": {
+        "startLine": 228,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 63
+      },
+      "revId": "eb83ca8c3090052d2a52906645ed036d8171e8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a26a7ad_1883d758",
         "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
         "patchSetId": 7
@@ -213,6 +261,53 @@
       "side": 1,
       "message": "The call returns false when no scorer is active, and we plan to turn off the feature when the recommendation service is not up, so it shouldn\u0027t need to check the boolean.\n\nWhen the broadcast is sent to trigger the score cache to be updated, the following code may not retrieve the updated scores yet, which is fine because the behavior should still pick the best qualified network based on existing scores in the cache.",
       "parentUuid": "3a26a7ad_0d15d75f",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 280,
+        "endChar": 60
+      },
+      "revId": "eb83ca8c3090052d2a52906645ed036d8171e8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa632f25_48f54fa9",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-12T23:54:28Z",
+      "side": 1,
+      "message": "Question about the requestScores call:\nWhy are we only requesting score updates for the scores that already have a value?  Shouldn\u0027t all open networks get a score (including those that don\u0027t have a score yet)?\n\nI think this is confusing because we go get the cached score for all open networks - even those that we just saw didn\u0027t have a cached score.",
+      "range": {
+        "startLine": 280,
+        "startChar": 36,
+        "endLine": 280,
+        "endChar": 51
+      },
+      "revId": "eb83ca8c3090052d2a52906645ed036d8171e8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa632f25_08219761",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-12T23:54:28Z",
+      "side": 1,
+      "message": "I guess I have two questions on this:\n1 - I am not sure what is actually doing the score update.  In other words, can you help me understand who/what is doing the actual computation for scores?  I thought I saw a comment in ScoreManager that the caller would be doing the work, and I want to make sure that this is not WifiScanner.\n2 - Would it be worth restructuring this to base the notification on the completion of new scores?  It seems like it is always one set of scan results behind.",
+      "parentUuid": "3a26a7ad_fe2a43ee",
       "range": {
         "startLine": 280,
         "startChar": 0,
