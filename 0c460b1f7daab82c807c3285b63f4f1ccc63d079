@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "3a26a7ad_3e655bc8",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-12T19:42:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a26a7ad_be0debb2",
+      "revId": "0c460b1f7daab82c807c3285b63f4f1ccc63d079",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a26a7ad_5e993706",
         "filename": "tests/wifitests/src/com/android/server/wifi/RecommendedNetworkEvaluatorTest.java",
         "patchSetId": 6
@@ -36,6 +54,24 @@
       "writtenOn": "2016-12-12T18:52:42Z",
       "side": 1,
       "message": "Can we add some tests for saved but externally scored networks?",
+      "revId": "0c460b1f7daab82c807c3285b63f4f1ccc63d079",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a26a7ad_d96d611f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/RecommendedNetworkEvaluatorTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-12T19:42:28Z",
+      "side": 1,
+      "message": "RecommendedNetworkEvaluator does not check the useExternalScored bit - it simply filters ScanResults based on whether untrusted networks are supported (this filtering is tested in the above testEvaluateNetworks* tests). NetworkRecommendationProvider contains all of that logic for actually deciding which WifiConfiguration to select based on whether they are saved and/or have external scores (and we\u0027ll add tests for this behavior when we check it in).\n\nSavedNetworkEvaluator contains the logic for not considering networks that have useExternalScores set for selection (I added a test for this in this change).",
+      "parentUuid": "3a26a7ad_5e993706",
       "revId": "0c460b1f7daab82c807c3285b63f4f1ccc63d079",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
