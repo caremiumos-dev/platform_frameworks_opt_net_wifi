@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa632f25_e827fb23",
+        "filename": "libwifi_hal/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-12-12T23:07:54Z",
+      "side": 0,
+      "message": "If I had to guess this was done so that vendors could provide their own HAL implementation without conflicting with this one.  However, let\u0027s remove and see whether that\u0027s of any practical concern.",
+      "revId": "d0258ee4816148ff4ab9ac6b854fc5c51ea53be3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
