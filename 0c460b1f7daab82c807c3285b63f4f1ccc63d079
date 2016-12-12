@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a26a7ad_be0debb2",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-12T18:52:42Z",
+      "side": 1,
+      "message": "Can we create these objects outside of makeWifiConnectivityManager() so it is consistent with other objects creation. Note, we don\u0027t need a getter methods for these evaluators.",
+      "range": {
+        "startLine": 380,
+        "startChar": 0,
+        "endLine": 385,
+        "endChar": 92
+      },
+      "revId": "0c460b1f7daab82c807c3285b63f4f1ccc63d079",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a26a7ad_5e993706",
+        "filename": "tests/wifitests/src/com/android/server/wifi/RecommendedNetworkEvaluatorTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-12T18:52:42Z",
+      "side": 1,
+      "message": "Can we add some tests for saved but externally scored networks?",
+      "revId": "0c460b1f7daab82c807c3285b63f4f1ccc63d079",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
