@@ -3745,6 +3745,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     // get other services that we need to manage
                     getAdditionalWifiServiceInterfaces();
                     maybeRegisterNetworkFactory();
+                    mWifiNativeNew.registerForServiceNotification();
                     break;
                 case CMD_SCREEN_STATE_CHANGED:
                     handleScreenStateChanged(message.arg1 != 0);
