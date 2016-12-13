@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa632f25_8f8f660e",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-12-13T19:10:09Z",
+      "side": 1,
+      "message": "This could be local, right?",
+      "range": {
+        "startLine": 47,
+        "startChar": 50,
+        "endLine": 47,
+        "endChar": 77
+      },
+      "revId": "174ad0d08a27f20f3d93b605d21d941f65dcefb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa632f25_0f84f6f3",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-12-13T19:10:09Z",
+      "side": 1,
+      "message": "Is there any significance to the extra spacing?",
+      "range": {
+        "startLine": 47,
+        "startChar": 11,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "174ad0d08a27f20f3d93b605d21d941f65dcefb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa632f25_6f5f6a90",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-12-13T19:10:09Z",
+      "side": 1,
+      "message": "Should we have Hidl in this name or not?",
+      "range": {
+        "startLine": 48,
+        "startChar": 34,
+        "endLine": 48,
+        "endChar": 48
+      },
+      "revId": "174ad0d08a27f20f3d93b605d21d941f65dcefb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa632f25_efb41a84",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-12-13T19:10:09Z",
+      "side": 1,
+      "message": "The old WifiNative has locking in most of its methods. Presumably we will need that as well?\n\nAlso, I\u0027m seeing this failure some of the time:\n04-20 00:27:23.669  6154  6358 E AndroidRuntime: *** FATAL EXCEPTION IN SYSTEM PROCESS: WifiStateMachine\n04-20 00:27:23.669  6154  6358 E AndroidRuntime: java.util.NoSuchElementException\n04-20 00:27:23.669  6154  6358 E AndroidRuntime: \tat android.os.HwBinder.getService(Native Method)\n04-20 00:27:23.669  6154  6358 E AndroidRuntime: \tat android.hardware.wifi.V1_0.IWifi.getService(IWifi.java:24)\n04-20 00:27:23.669  6154  6358 E AndroidRuntime: \tat com.android.server.wifi.WifiNativeNew.startHidlHal(WifiNativeNew.java:61)\n04-20 00:27:23.669  6154  6358 E AndroidRuntime: \tat com.android.server.wifi.WifiStateMachine$InitialState.processMessage(WifiStateMachine.java:3989)\n04-20 00:27:23.669  6154  6358 E AndroidRuntime: \tat com.android.internal.util.StateMachine$SmHandler.processMsg(StateMachine.java:990)\n04-20 00:27:23.669  6154  6358 E AndroidRuntime: \tat com.android.internal.util.StateMachine$SmHandler.handleMessage(StateMachine.java:807)\n04-20 00:27:23.669  6154  6358 E AndroidRuntime: \tat android.os.Handler.dispatchMessage(Handler.java:102)\n04-20 00:27:23.669  6154  6358 E AndroidRuntime: \tat android.os.Looper.loop(Looper.java:154)\n04-20 00:27:23.669  6154  6358 E AndroidRuntime: \tat android.os.HandlerThread.run(HandlerThread.java:61)\n\nShould I be catching an exception, or should lower levels be catching it and turning it into an error return?",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 60
+      },
+      "revId": "174ad0d08a27f20f3d93b605d21d941f65dcefb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa632f25_4fc0ae1e",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-12-13T19:10:09Z",
+      "side": 1,
+      "message": "Is this what is meant by a lambda in the comment above, or are we talking java 8 lambdas?",
+      "range": {
+        "startLine": 107,
+        "startChar": 40,
+        "endLine": 107,
+        "endChar": 83
+      },
+      "revId": "174ad0d08a27f20f3d93b605d21d941f65dcefb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa632f25_2fd0d2de",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-12-13T19:10:09Z",
+      "side": 1,
+      "message": "Shortly after I coded this, I saw the ToT post warning against deeply nested for loops. But this seems pretty clear, given the data structures.",
+      "range": {
+        "startLine": 123,
+        "startChar": 8,
+        "endLine": 128,
+        "endChar": 45
+      },
+      "revId": "174ad0d08a27f20f3d93b605d21d941f65dcefb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa632f25_2f2bb2f4",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-12-13T19:10:09Z",
+      "side": 1,
+      "message": "Could early-out here, if we don\u0027t care about the possibility of multiple matches. Do we?",
+      "range": {
+        "startLine": 129,
+        "startChar": 28,
+        "endLine": 129,
+        "endChar": 32
+      },
+      "revId": "174ad0d08a27f20f3d93b605d21d941f65dcefb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa632f25_ef07fa82",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-12-13T19:10:09Z",
+      "side": 1,
+      "message": "Is it cool to copy the ref here?",
+      "range": {
+        "startLine": 156,
+        "startChar": 16,
+        "endLine": 156,
+        "endChar": 39
+      },
+      "revId": "174ad0d08a27f20f3d93b605d21d941f65dcefb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
