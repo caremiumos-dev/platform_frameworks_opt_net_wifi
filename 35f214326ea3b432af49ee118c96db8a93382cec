@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba845725_6d54d13f",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-12-13T22:12:08Z",
+      "side": 1,
+      "message": "When I tried this, the compiler said there was no code to raise it (ditto when I tried it around the \"start\" call).",
+      "range": {
+        "startLine": 68,
+        "startChar": 19,
+        "endLine": 68,
+        "endChar": 34
+      },
+      "revId": "35f214326ea3b432af49ee118c96db8a93382cec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
