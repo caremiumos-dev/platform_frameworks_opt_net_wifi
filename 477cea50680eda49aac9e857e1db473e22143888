@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba845725_071089fd",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-12-14T17:55:56Z",
+      "side": 1,
+      "message": "This hides the mocking that is actually occuring in WifiInjector.\nInstead of using a TestWifiServiceImpl, why not just add WifiInjector to the constructor of WifiServiceImpl, and mock like normal?",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 63
+      },
+      "revId": "477cea50680eda49aac9e857e1db473e22143888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
