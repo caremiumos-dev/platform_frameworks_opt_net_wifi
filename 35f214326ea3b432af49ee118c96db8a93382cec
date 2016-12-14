@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ba845725_41998662",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-12-14T23:12:04Z",
+      "side": 1,
+      "message": "Never needed on non-frameworks/base code.",
+      "range": {
+        "startLine": 40,
+        "startChar": 3,
+        "endLine": 40,
+        "endChar": 10
+      },
+      "revId": "35f214326ea3b432af49ee118c96db8a93382cec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba845725_6d54d13f",
         "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
         "patchSetId": 2
