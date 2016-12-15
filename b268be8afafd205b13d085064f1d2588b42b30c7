@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba845725_894abc9e",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-12-15T21:29:10Z",
+      "side": 1,
+      "message": "Make this a regular import",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 13
+      },
+      "revId": "b268be8afafd205b13d085064f1d2588b42b30c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba845725_660db21a",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-12-15T21:29:10Z",
+      "side": 1,
+      "message": "Have you verified that using this won\u0027t cause an unhandled exception?",
+      "range": {
+        "startLine": 234,
+        "startChar": 17,
+        "endLine": 234,
+        "endChar": 50
+      },
+      "revId": "b268be8afafd205b13d085064f1d2588b42b30c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
