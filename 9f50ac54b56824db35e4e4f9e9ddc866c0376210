@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ad3a349_9590649c",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3195,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2016-12-15T08:16:23Z",
+      "side": 1,
+      "message": "Does this mean that meteredHint can never go from true to false? Is this still correct?\n\nLooks like this was added by jjoslin in March: https://googleplex-android-review.git.corp.google.com/#/c/891541/ .\n\nSeems like it would be more correct if the NetworkScoreCache set meteredOverride instead, perhaps?",
+      "range": {
+        "startLine": 3195,
+        "startChar": 16,
+        "endLine": 3195,
+        "endChar": 61
+      },
+      "revId": "9f50ac54b56824db35e4e4f9e9ddc866c0376210",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
