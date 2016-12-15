@@ -649,6 +649,24 @@
       "revId": "88a56c8a0f572e876e02bb7e193f07ea118187a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba845725_6f8745fb",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNotificationControllerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-15T22:45:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba845725_624be576",
+      "revId": "88a56c8a0f572e876e02bb7e193f07ea118187a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
