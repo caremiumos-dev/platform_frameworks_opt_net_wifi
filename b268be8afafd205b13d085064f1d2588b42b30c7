@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ba845725_e4643dce",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-15T21:38:00Z",
+      "side": 1,
+      "message": "since this object will be started much earlier (ie - before we even know if wifi is going in to client mode, or enabled at all), this should default to false.",
+      "range": {
+        "startLine": 139,
+        "startChar": 20,
+        "endLine": 139,
+        "endChar": 58
+      },
+      "revId": "b268be8afafd205b13d085064f1d2588b42b30c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba845725_894abc9e",
         "filename": "service/java/com/android/server/wifi/WifiInjector.java",
         "patchSetId": 2
@@ -25,6 +48,75 @@
     },
     {
       "key": {
+        "uuid": "ba845725_e4efddcf",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-15T21:38:00Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this.",
+      "range": {
+        "startLine": 172,
+        "startChar": 8,
+        "endLine": 172,
+        "endChar": 35
+      },
+      "revId": "b268be8afafd205b13d085064f1d2588b42b30c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba845725_a42de55c",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-15T21:38:00Z",
+      "side": 1,
+      "message": "I think we can just do new WifiInfo() here.  I don\u0027t think we hang on to this for anything.",
+      "range": {
+        "startLine": 175,
+        "startChar": 69,
+        "endLine": 175,
+        "endChar": 79
+      },
+      "revId": "b268be8afafd205b13d085064f1d2588b42b30c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba845725_a444051b",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-15T21:38:00Z",
+      "side": 1,
+      "message": "I like this phased approach.  It is a much more formal (and understandable) way to initialize objects in a safe way.\n\nThe main concern I have is that now we are creating the objects by default as soon as we get the SystemServicesReady message.  These were previously only created if they were needed.",
+      "range": {
+        "startLine": 210,
+        "startChar": 16,
+        "endLine": 210,
+        "endChar": 36
+      },
+      "revId": "b268be8afafd205b13d085064f1d2588b42b30c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba845725_660db21a",
         "filename": "service/java/com/android/server/wifi/WifiInjector.java",
         "patchSetId": 2
@@ -41,6 +133,29 @@
         "startChar": 17,
         "endLine": 234,
         "endChar": 50
+      },
+      "revId": "b268be8afafd205b13d085064f1d2588b42b30c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba845725_240d751b",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-15T21:38:00Z",
+      "side": 1,
+      "message": "I have a CL in a huge stack that does this too! :)",
+      "range": {
+        "startLine": 850,
+        "startChar": 35,
+        "endLine": 850,
+        "endChar": 52
       },
       "revId": "b268be8afafd205b13d085064f1d2588b42b30c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
