@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba845725_4f00c1e2",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-15T23:02:51Z",
+      "side": 1,
+      "message": "end these constants in _MILLIS",
+      "range": {
+        "startLine": 93,
+        "startChar": 29,
+        "endLine": 93,
+        "endChar": 52
+      },
+      "revId": "ddd0a6fa724dce12d09e8656eb2762fa2bfc5fd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
