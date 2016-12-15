@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba845725_ee3fbee5",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-15T20:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba845725_a24b1dcb",
+      "range": {
+        "startLine": 98,
+        "startChar": 24,
+        "endLine": 98,
+        "endChar": 46
+      },
+      "revId": "88a56c8a0f572e876e02bb7e193f07ea118187a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba845725_df1e2e48",
         "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ba845725_0e3df2ed",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-15T20:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba845725_df1e2e48",
+      "range": {
+        "startLine": 130,
+        "startChar": 8,
+        "endLine": 130,
+        "endChar": 15
+      },
+      "revId": "88a56c8a0f572e876e02bb7e193f07ea118187a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba845725_e278b531",
         "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2016-12-15T03:58:36Z",
       "side": 1,
       "message": "You can revert this back to registering an anonymous class since we don\u0027t need the references to mBroadcastReceiver anymore",
+      "range": {
+        "startLine": 140,
+        "startChar": 8,
+        "endLine": 140,
+        "endChar": 26
+      },
+      "revId": "88a56c8a0f572e876e02bb7e193f07ea118187a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba845725_4e128a78",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-15T20:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba845725_e278b531",
       "range": {
         "startLine": 140,
         "startChar": 8,
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "ba845725_8e456269",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-15T20:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba845725_e24515b6",
+      "range": {
+        "startLine": 191,
+        "startChar": 62,
+        "endLine": 191,
+        "endChar": 66
+      },
+      "revId": "88a56c8a0f572e876e02bb7e193f07ea118187a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba845725_42bfc15d",
         "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
         "patchSetId": 1
@@ -128,6 +224,30 @@
       "writtenOn": "2016-12-15T03:58:36Z",
       "side": 1,
       "message": "looks like you don\u0027t need the null check here if you have it below in checkGoodOpenNetwork",
+      "range": {
+        "startLine": 215,
+        "startChar": 19,
+        "endLine": 215,
+        "endChar": 38
+      },
+      "revId": "88a56c8a0f572e876e02bb7e193f07ea118187a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba845725_ee533e2c",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-15T20:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba845725_42bfc15d",
       "range": {
         "startLine": 215,
         "startChar": 19,
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "ba845725_4e4b6a76",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-15T20:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba845725_82c8d911",
+      "range": {
+        "startLine": 243,
+        "startChar": 33,
+        "endLine": 243,
+        "endChar": 53
+      },
+      "revId": "88a56c8a0f572e876e02bb7e193f07ea118187a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba845725_822c59ca",
         "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
         "patchSetId": 1
@@ -180,6 +324,24 @@
     },
     {
       "key": {
+        "uuid": "ba845725_2e4e3688",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-15T20:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba845725_822c59ca",
+      "revId": "88a56c8a0f572e876e02bb7e193f07ea118187a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba845725_8217f96d",
         "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
         "patchSetId": 1
@@ -191,6 +353,30 @@
       "writtenOn": "2016-12-15T03:58:36Z",
       "side": 1,
       "message": "I think create* is a more common pattern for method names that create objects.",
+      "range": {
+        "startLine": 278,
+        "startChar": 24,
+        "endLine": 278,
+        "endChar": 28
+      },
+      "revId": "88a56c8a0f572e876e02bb7e193f07ea118187a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba845725_4e7d2a83",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-15T20:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba845725_8217f96d",
       "range": {
         "startLine": 278,
         "startChar": 24,
@@ -226,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "ba845725_4eafeac6",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-15T20:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba845725_a2031d2a",
+      "range": {
+        "startLine": 303,
+        "startChar": 11,
+        "endLine": 303,
+        "endChar": 15
+      },
+      "revId": "88a56c8a0f572e876e02bb7e193f07ea118187a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba845725_e2fd15f9",
         "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
         "patchSetId": 1
@@ -243,6 +453,24 @@
     },
     {
       "key": {
+        "uuid": "ba845725_6e0f4e1a",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-15T20:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba845725_e2fd15f9",
+      "revId": "88a56c8a0f572e876e02bb7e193f07ea118187a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba845725_222acd90",
         "filename": "service/java/com/android/server/wifi/WifiNotificationHelper.java",
         "patchSetId": 1
@@ -254,6 +482,24 @@
       "writtenOn": "2016-12-15T03:58:36Z",
       "side": 1,
       "message": "Might be useful to have a constructor that takes in Context so you can store it in a field and not pass it in to every method. It will make using and testing this class cleaner",
+      "revId": "88a56c8a0f572e876e02bb7e193f07ea118187a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba845725_8efba2c5",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-15T20:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba845725_222acd90",
       "revId": "88a56c8a0f572e876e02bb7e193f07ea118187a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -283,6 +529,30 @@
     },
     {
       "key": {
+        "uuid": "ba845725_6e510ef1",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-15T20:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba845725_4237c1f4",
+      "range": {
+        "startLine": 42,
+        "startChar": 16,
+        "endLine": 42,
+        "endChar": 20
+      },
+      "revId": "88a56c8a0f572e876e02bb7e193f07ea118187a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba845725_a245dd68",
         "filename": "service/java/com/android/server/wifi/WifiNotificationHelper.java",
         "patchSetId": 1
@@ -300,6 +570,24 @@
     },
     {
       "key": {
+        "uuid": "ba845725_ce603abb",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-15T20:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba845725_a245dd68",
+      "revId": "88a56c8a0f572e876e02bb7e193f07ea118187a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba845725_0254e914",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiNotificationControllerTest.java",
         "patchSetId": 1
@@ -311,6 +599,30 @@
       "writtenOn": "2016-12-15T03:58:36Z",
       "side": 1,
       "message": "this is a copy of above",
+      "range": {
+        "startLine": 103,
+        "startChar": 37,
+        "endLine": 103,
+        "endChar": 62
+      },
+      "revId": "88a56c8a0f572e876e02bb7e193f07ea118187a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba845725_2e6f16a9",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNotificationControllerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-15T20:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba845725_0254e914",
       "range": {
         "startLine": 103,
         "startChar": 37,
