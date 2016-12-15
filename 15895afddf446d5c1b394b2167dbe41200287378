@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba845725_699e653f",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareNative.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-15T22:08:45Z",
+      "side": 1,
+      "message": "this should be handed the WifiAwareStateManager instead of WifiInjector",
+      "range": {
+        "startLine": 130,
+        "startChar": 27,
+        "endLine": 130,
+        "endChar": 52
+      },
+      "revId": "15895afddf446d5c1b394b2167dbe41200287378",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba845725_293aad27",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-15T22:08:45Z",
+      "side": 1,
+      "message": "the objects should be passed in instead of handing in WifiInjector.",
+      "range": {
+        "startLine": 80,
+        "startChar": 22,
+        "endLine": 80,
+        "endChar": 47
+      },
+      "revId": "15895afddf446d5c1b394b2167dbe41200287378",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba845725_09cb2943",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareStateManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-15T22:08:45Z",
+      "side": 1,
+      "message": "pass in WifiAwareNative instead",
+      "range": {
+        "startLine": 198,
+        "startChar": 33,
+        "endLine": 198,
+        "endChar": 58
+      },
+      "revId": "15895afddf446d5c1b394b2167dbe41200287378",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
