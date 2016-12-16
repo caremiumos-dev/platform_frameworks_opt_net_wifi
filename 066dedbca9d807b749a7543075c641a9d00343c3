@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a772381_8f8429f6",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-12-16T16:48:27Z",
+      "side": 1,
+      "message": "Per Rebecca: remove - not needed from injector. Can just be created in Service.",
+      "range": {
+        "startLine": 408,
+        "startChar": 4,
+        "endLine": 427,
+        "endChar": 5
+      },
+      "revId": "066dedbca9d807b749a7543075c641a9d00343c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
