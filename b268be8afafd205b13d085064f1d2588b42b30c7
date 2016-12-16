@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "ba845725_15797a33",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-16T00:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba845725_e4643dce",
+      "revId": "b268be8afafd205b13d085064f1d2588b42b30c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba845725_894abc9e",
         "filename": "service/java/com/android/server/wifi/WifiInjector.java",
         "patchSetId": 2
@@ -42,6 +60,24 @@
         "endLine": 19,
         "endChar": 13
       },
+      "revId": "b268be8afafd205b13d085064f1d2588b42b30c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba845725_46e7ce27",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-16T00:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba845725_894abc9e",
       "revId": "b268be8afafd205b13d085064f1d2588b42b30c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -94,6 +130,24 @@
     },
     {
       "key": {
+        "uuid": "ba845725_a0ff8a3b",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-16T00:02:56Z",
+      "side": 1,
+      "message": "This seems to be accesses a bunch internally in WifiStateMachine and it is also shared with WifiConnectivityManager, which passes this through to WifiNetworkSelector to inspect the currently connected network. By moving this up to WifiInjector, we can pass this on to WifiConnectivityManager directly instead of having a parameter in the getter method.",
+      "parentUuid": "ba845725_a42de55c",
+      "revId": "b268be8afafd205b13d085064f1d2588b42b30c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba845725_a444051b",
         "filename": "service/java/com/android/server/wifi/WifiInjector.java",
         "patchSetId": 2
@@ -117,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "ba845725_c078fe6c",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-16T00:02:56Z",
+      "side": 1,
+      "message": "At least right now, the 2 objects being created earlier are WifiScanner and WifiConnectivityManager. The only work WifiConnectivityManager does in its constructor is register a ScanListener with WifiScanner. WifiScanner binds itself to the WifiScanningService.\n\nI believe WifiScanningService should be calling WifiScanningServiceImpl#startService in WifiScanningService#onStart, so that a WifiScanner can be constructed in PHASE_SYSTEM_SERVICES_READY (the javadoc for this phase says that services should be published at this point, which I assume means clients should be able to connect to it). Otherwise WifiScanner\u0027s constructor throws an exception trying to access the service\u0027s Messenger since WifiScanningServiceImpl.mClientHandler isn\u0027t initialized until PHASE_SYSTEM_SERVICES_READY.\n\nI\u0027ve tested this on device and everything seems to work properly and the tests pass. If you think this change is an issue, I can revert back to lazily creating these objects.",
+      "parentUuid": "ba845725_a444051b",
+      "revId": "b268be8afafd205b13d085064f1d2588b42b30c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba845725_660db21a",
         "filename": "service/java/com/android/server/wifi/WifiInjector.java",
         "patchSetId": 2
@@ -134,6 +206,24 @@
         "endLine": 234,
         "endChar": 50
       },
+      "revId": "b268be8afafd205b13d085064f1d2588b42b30c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba845725_9ae759f5",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-16T00:02:56Z",
+      "side": 1,
+      "message": "This assertion has not causes any exceptions when I ran this on a device, however, the see note above.",
+      "parentUuid": "ba845725_660db21a",
       "revId": "b268be8afafd205b13d085064f1d2588b42b30c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
