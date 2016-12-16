@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a772381_aa49d336",
+        "filename": "service/java/com/android/server/wifi/WifiWakeupController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000691
+      },
+      "writtenOn": "2016-12-16T19:07:51Z",
+      "side": 1,
+      "message": "It\u0027d be nice to add a description of how this class makes its decision to re-enable Wifi, and how it decides to connect to a network for new engineers looking at this code.",
+      "revId": "eee21c0c0285fade9d4554cc3b8c78f598fd8a0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a772381_ca552fde",
+        "filename": "service/java/com/android/server/wifi/WifiWakeupController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000691
+      },
+      "writtenOn": "2016-12-16T19:07:51Z",
+      "side": 1,
+      "message": "fyi: using ArraySet: Nice.",
+      "revId": "eee21c0c0285fade9d4554cc3b8c78f598fd8a0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a772381_6ac5fb48",
+        "filename": "service/java/com/android/server/wifi/WifiWakeupController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000691
+      },
+      "writtenOn": "2016-12-16T19:07:51Z",
+      "side": 1,
+      "message": "bug to un-register for these config changes if our feature is disabled?",
+      "revId": "eee21c0c0285fade9d4554cc3b8c78f598fd8a0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a772381_4a067fd0",
+        "filename": "service/java/com/android/server/wifi/WifiWakeupController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000691
+      },
+      "writtenOn": "2016-12-16T19:07:51Z",
+      "side": 1,
+      "message": "Protect log statments:\nprivate static final DEBUG \u003d false;\nprivate static final VERBOSE \u003d false;\n\nif (VERBOSE) Log.v\n\nor a fun pattern that only requires adb restart:\nprivate static final boolean DEBUG \u003d Log.isLoggable(TAG, Log.DEBUG)",
+      "revId": "eee21c0c0285fade9d4554cc3b8c78f598fd8a0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a772381_aa771379",
+        "filename": "service/java/com/android/server/wifi/WifiWakeupController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000691
+      },
+      "writtenOn": "2016-12-16T19:07:51Z",
+      "side": 1,
+      "message": "b/?",
+      "revId": "eee21c0c0285fade9d4554cc3b8c78f598fd8a0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a772381_2af063ad",
+        "filename": "service/java/com/android/server/wifi/WifiWakeupController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000691
+      },
+      "writtenOn": "2016-12-16T19:07:51Z",
+      "side": 1,
+      "message": "@jjoslin has background on outputting SSIDs in dumpsys / logs. Double check with him about this.",
+      "revId": "eee21c0c0285fade9d4554cc3b8c78f598fd8a0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
