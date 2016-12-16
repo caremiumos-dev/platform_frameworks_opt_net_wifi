@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a772381_5e64843a",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000691
+      },
+      "writtenOn": "2016-12-16T19:21:48Z",
+      "side": 1,
+      "message": "@zpan\n\nWhat\u0027s the call on when we should be using WifiSsid in our code?",
+      "revId": "ce721cf61905475a5b4c57fdd1bc3dc4c25bd4f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
