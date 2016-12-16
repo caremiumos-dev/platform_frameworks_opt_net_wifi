@@ -22,6 +22,30 @@
       "revId": "477cea50680eda49aac9e857e1db473e22143888",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba845725_aa53042d",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-16T00:31:46Z",
+      "side": 1,
+      "message": "Awesome idea!",
+      "parentUuid": "ba845725_071089fd",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 63
+      },
+      "revId": "477cea50680eda49aac9e857e1db473e22143888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
