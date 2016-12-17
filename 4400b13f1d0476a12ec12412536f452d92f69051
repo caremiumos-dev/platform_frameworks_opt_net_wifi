@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a772381_462672de",
+        "filename": "service/java/com/android/server/wifi/WifiWakeupController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-17T05:59:41Z",
+      "side": 1,
+      "message": "this text seems to have disappeared",
+      "range": {
+        "startLine": 45,
+        "startChar": 1,
+        "endLine": 51,
+        "endChar": 2
+      },
+      "revId": "4400b13f1d0476a12ec12412536f452d92f69051",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
