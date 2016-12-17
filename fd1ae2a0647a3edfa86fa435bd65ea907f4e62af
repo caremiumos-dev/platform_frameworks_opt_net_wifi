@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a772381_c937f309",
+        "filename": "service/java/com/android/server/wifi/hotspot2/anqp/HSWanMetricsElement.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-17T21:35:58Z",
+      "side": 1,
+      "message": "nit: ideally we want to use bit operations like (1 \u003c\u003c 0 | 1 \u003c\u003c 1)",
+      "range": {
+        "startLine": 49,
+        "startChar": 47,
+        "endLine": 49,
+        "endChar": 50
+      },
+      "revId": "fd1ae2a0647a3edfa86fa435bd65ea907f4e62af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a772381_a93ab7f3",
+        "filename": "service/java/com/android/server/wifi/hotspot2/anqp/HSWanMetricsElement.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-17T21:35:58Z",
+      "side": 1,
+      "message": "Nit: Ideally we want to do sth like \"1 \u003c\u003c 2\".",
+      "range": {
+        "startLine": 52,
+        "startChar": 50,
+        "endLine": 52,
+        "endChar": 54
+      },
+      "revId": "fd1ae2a0647a3edfa86fa435bd65ea907f4e62af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a772381_e9166f71",
+        "filename": "service/java/com/android/server/wifi/hotspot2/anqp/HSWanMetricsElement.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-17T21:35:58Z",
+      "side": 1,
+      "message": "nit: ideally we want to do sth like \"1 \u003c\u003c 3\"",
+      "range": {
+        "startLine": 55,
+        "startChar": 47,
+        "endLine": 55,
+        "endChar": 50
+      },
+      "revId": "fd1ae2a0647a3edfa86fa435bd65ea907f4e62af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a772381_091c8b90",
+        "filename": "service/java/com/android/server/wifi/hotspot2/anqp/HSWanMetricsElement.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-17T21:35:58Z",
+      "side": 1,
+      "message": "Understand this is from the original code. But can we have macros for these values?",
+      "range": {
+        "startLine": 171,
+        "startChar": 32,
+        "endLine": 171,
+        "endChar": 45
+      },
+      "revId": "fd1ae2a0647a3edfa86fa435bd65ea907f4e62af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a772381_292147c6",
+        "filename": "service/java/com/android/server/wifi/hotspot2/anqp/ProtocolPortTuple.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-17T21:35:58Z",
+      "side": 1,
+      "message": "Why is it defined here?",
+      "range": {
+        "startLine": 40,
+        "startChar": 28,
+        "endLine": 40,
+        "endChar": 41
+      },
+      "revId": "fd1ae2a0647a3edfa86fa435bd65ea907f4e62af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
