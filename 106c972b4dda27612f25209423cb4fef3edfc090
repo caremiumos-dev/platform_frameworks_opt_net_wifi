@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a772381_262336c0",
+        "filename": "service/java/com/android/server/wifi/WifiWakeupController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-17T05:59:41Z",
+      "side": 1,
+      "message": "does this mean that if a user toggles wifi off (say to save battery) but they have location scans on and a scan result comes in, then they would be fighting the notification?\n\nAlso, I might be missing it, but since I don\u0027t see a lot of protection here between updating the wifi state and handling scan results, i can imagine that some scan results would come in and at that time, the user might have started hotspot or something.  This would cause wifi to be disabled, a scan result to come in and then the hotspot that was just started by the user would be turned off.",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 60
+      },
+      "revId": "106c972b4dda27612f25209423cb4fef3edfc090",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a772381_662d2ea8",
+        "filename": "service/java/com/android/server/wifi/WifiWakeupController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-17T05:59:41Z",
+      "side": 1,
+      "message": "I asked quiche@ to comment on dumping ssids.  I know he has discussed this at length recently with the logging changes coming to wifi.",
+      "range": {
+        "startLine": 183,
+        "startChar": 9,
+        "endLine": 183,
+        "endChar": 13
+      },
+      "revId": "106c972b4dda27612f25209423cb4fef3edfc090",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a772381_86088a4d",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiWakeupControllerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-17T05:59:41Z",
+      "side": 1,
+      "message": "please add a comment for each test.  We are trying for a short summary + steps and expectations for each test.",
+      "range": {
+        "startLine": 119,
+        "startChar": 4,
+        "endLine": 120,
+        "endChar": 51
+      },
+      "revId": "106c972b4dda27612f25209423cb4fef3edfc090",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
