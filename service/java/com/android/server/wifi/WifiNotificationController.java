@@ -231,23 +231,26 @@ class WifiNotificationController {
 
         if (state == NetworkInfo.State.DISCONNECTED
                 || state == NetworkInfo.State.UNKNOWN) {
-            RecommendationResult result = getOpenNetworkRecommendation(scanResults);
-            if (result != null
-                    && result.getWifiConfiguration() != null) {
-                mRecommendedNetwork = result.getWifiConfiguration();
-                if (++mNumScansSinceNetworkStateChange >= NUM_SCANS_BEFORE_ACTUALLY_SCANNING) {
-                    /*
-                     * We have scanned continuously at least
-                     * NUM_SCANS_BEFORE_NOTIFICATION times. The user
-                     * probably does not have a remembered network in range,
-                     * since otherwise supplicant would have tried to
-                     * associate and thus resetting this counter.
-                     */
+//          RecommendationResult result = getOpenNetworkRecommendation(scanResults);
+//          if (result != null
+//                  && result.getWifiConfiguration() != null) {
+//              mRecommendedNetwork = result.getWifiConfiguration();
+                mRecommendedNetwork = new WifiConfiguration();
+                mRecommendedNetwork.SSID = "\"GoogleGuest\"";
+                mRecommendedNetwork.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+//              if (++mNumScansSinceNetworkStateChange >= NUM_SCANS_BEFORE_ACTUALLY_SCANNING) {
+//                  /*
+//                   * We have scanned continuously at least
+//                   * NUM_SCANS_BEFORE_NOTIFICATION times. The user
+//                   * probably does not have a remembered network in range,
+//                   * since otherwise supplicant would have tried to
+//                   * associate and thus resetting this counter.
+//                   */
                     displayNotification();
-                }
+//              }
                 return;
-            }
-        }
+//          }
+      }
 
         // No open networks in range, remove the notification
         removeNotification();

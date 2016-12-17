@@ -23,7 +23,16 @@ import android.app.Notification.Action;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
+import android.graphics.drawable.LayerDrawable;
 import android.net.wifi.WifiManager;
+
+import com.android.internal.util.ImageUtils;
 
 /**
  * Helper class that creates notifications for {@link WifiNotificationController}.
@@ -102,9 +111,18 @@ public class WifiNotificationHelper {
                 0,
                 new Intent(WifiNotificationController.ACTION_NOTIFICATION_DELETED),
                 FLAG_UPDATE_CURRENT);
+        LayerDrawable layerDrawable = new LayerDrawable(new Drawable[]{
+                mContext.getDrawable(com.android.internal.R.drawable.ic_signal_wifi_badged_4_bars),
+                mContext.getDrawable(com.android.internal.R.drawable.ic_signal_wifi_badged_4k)
+        });
+        Resources resources = mContext.getResources();
+        Bitmap bitmap = ImageUtils.buildScaledBitmap(layerDrawable,
+                resources.getDimensionPixelSize(android.R.dimen.notification_large_icon_width),
+                resources.getDimensionPixelSize(android.R.dimen.notification_large_icon_height));
         return new Notification.Builder(mContext)
                 .setDeleteIntent(deleteIntent)
                 .setSmallIcon(com.android.internal.R.drawable.stat_notify_wifi_in_range)
+                .setLargeIcon(bitmap)
                 .setAutoCancel(true)
                 .setColor(mContext.getColor(
                         com.android.internal.R.color.system_notification_accent_color))
