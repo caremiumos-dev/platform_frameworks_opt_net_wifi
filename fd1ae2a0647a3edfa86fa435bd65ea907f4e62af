@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a772381_17c746a7",
+        "filename": "service/java/com/android/server/wifi/hotspot2/anqp/HSWanMetricsElement.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-12-19T17:28:45Z",
+      "side": 1,
+      "message": "Personally I prefer using the value directly, since these masks are fairly trivial.\n\nI can update it if you prefer.",
+      "parentUuid": "1a772381_c937f309",
+      "range": {
+        "startLine": 49,
+        "startChar": 47,
+        "endLine": 49,
+        "endChar": 50
+      },
+      "revId": "fd1ae2a0647a3edfa86fa435bd65ea907f4e62af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a772381_a93ab7f3",
         "filename": "service/java/com/android/server/wifi/hotspot2/anqp/HSWanMetricsElement.java",
         "patchSetId": 6
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "1a772381_77cebac1",
+        "filename": "service/java/com/android/server/wifi/hotspot2/anqp/HSWanMetricsElement.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-12-19T17:28:45Z",
+      "side": 1,
+      "message": "This is for converting the load value (0 - 256) to percentage (0 - 100). I can define a macro for the max load value (256).\n\nWill update.",
+      "parentUuid": "1a772381_091c8b90",
+      "range": {
+        "startLine": 171,
+        "startChar": 32,
+        "endLine": 171,
+        "endChar": 45
+      },
+      "revId": "fd1ae2a0647a3edfa86fa435bd65ea907f4e62af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a772381_292147c6",
         "filename": "service/java/com/android/server/wifi/hotspot2/anqp/ProtocolPortTuple.java",
         "patchSetId": 6
@@ -105,6 +153,30 @@
       "writtenOn": "2016-12-17T21:35:58Z",
       "side": 1,
       "message": "Why is it defined here?",
+      "range": {
+        "startLine": 40,
+        "startChar": 28,
+        "endLine": 40,
+        "endChar": 41
+      },
+      "revId": "fd1ae2a0647a3edfa86fa435bd65ea907f4e62af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a772381_d7a30ee7",
+        "filename": "service/java/com/android/server/wifi/hotspot2/anqp/ProtocolPortTuple.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-12-19T17:28:45Z",
+      "side": 1,
+      "message": "This is used only in the unit test, will move it there.",
+      "parentUuid": "1a772381_292147c6",
       "range": {
         "startLine": 40,
         "startChar": 28,
