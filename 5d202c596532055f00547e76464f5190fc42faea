@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba7d3755_c230c21b",
+        "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1106048
+      },
+      "writtenOn": "2016-12-19T08:35:10Z",
+      "side": 1,
+      "message": "Not needed. Removed.",
+      "parentUuid": "ba7d3755_22216e14",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 53
+      },
+      "revId": "5d202c596532055f00547e76464f5190fc42faea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba7d3755_421e72d7",
         "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2016-12-16T11:13:37Z",
       "side": 1,
       "message": "Same as above.",
+      "range": {
+        "startLine": 17,
+        "startChar": 1,
+        "endLine": 18,
+        "endChar": 48
+      },
+      "revId": "5d202c596532055f00547e76464f5190fc42faea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba7d3755_e225c6da",
+        "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1106048
+      },
+      "writtenOn": "2016-12-19T08:35:10Z",
+      "side": 1,
+      "message": "Not needed. Removed.",
+      "parentUuid": "ba7d3755_421e72d7",
       "range": {
         "startLine": 17,
         "startChar": 1,
