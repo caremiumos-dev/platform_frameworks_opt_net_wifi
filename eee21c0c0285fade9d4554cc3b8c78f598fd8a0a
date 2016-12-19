@@ -227,6 +227,24 @@
       "revId": "eee21c0c0285fade9d4554cc3b8c78f598fd8a0a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_8e4e9b85",
+        "filename": "service/java/com/android/server/wifi/WifiWakeupController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-12-19T23:05:21Z",
+      "side": 1,
+      "message": "AIUI, dumpsys and logs are two different beasts. For some context about logs, please see go/r-314495-logging.\n\nThis particular case looks to be around dumpsys. For dumpsys, I think Joe and Jeremy are more knowledgeable than I am.",
+      "parentUuid": "1a772381_061c7a90",
+      "revId": "eee21c0c0285fade9d4554cc3b8c78f598fd8a0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
