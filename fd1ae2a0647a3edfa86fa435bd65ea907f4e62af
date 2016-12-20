@@ -186,6 +186,30 @@
       "revId": "fd1ae2a0647a3edfa86fa435bd65ea907f4e62af",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_d4318d48",
+        "filename": "service/java/com/android/server/wifi/hotspot2/anqp/ProtocolPortTuple.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-12-20T17:03:26Z",
+      "side": 1,
+      "message": "This defines the number of bytes needed for a ProtoPort Tuple.  It is used by multiple test (HSConnectionCapabilityElementTest and ProtocolPortTupleTest) for constructing raw bytes for a tuple.\n\nI prefer leaving this definition here rather than adding one for each test file.",
+      "parentUuid": "1a772381_d7a30ee7",
+      "range": {
+        "startLine": 40,
+        "startChar": 28,
+        "endLine": 40,
+        "endChar": 41
+      },
+      "revId": "fd1ae2a0647a3edfa86fa435bd65ea907f4e62af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
