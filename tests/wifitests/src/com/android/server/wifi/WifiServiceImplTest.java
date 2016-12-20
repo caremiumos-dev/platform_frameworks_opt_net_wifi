@@ -17,6 +17,7 @@
 package com.android.server.wifi;
 
 import static org.junit.Assert.assertFalse;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
@@ -31,6 +32,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 /**
  * Unit tests for {@link WifiServiceImpl}.
@@ -58,6 +60,7 @@ public class WifiServiceImplTest {
     @Mock WifiMulticastLockManager mWifiMulticastLockManager;
     @Mock WifiLastResortWatchdog mWifiLastResortWatchdog;
     @Mock WifiBackupRestore mWifiBackupRestore;
+    @Spy FakeWifiLog mLog;
 
     @Before public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -72,6 +75,7 @@ public class WifiServiceImplTest {
         when(mWifiInjector.getWifiMulticastLockManager()).thenReturn(mWifiMulticastLockManager);
         when(mWifiInjector.getWifiLastResortWatchdog()).thenReturn(mWifiLastResortWatchdog);
         when(mWifiInjector.getWifiBackupRestore()).thenReturn(mWifiBackupRestore);
+        when(mWifiInjector.makeLog(anyString())).thenReturn(mLog);
         mWifiServiceImpl = new WifiServiceImpl(mContext, mWifiInjector, mAsyncChannel);
     }
 
