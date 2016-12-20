@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "d7c9e645_fa4ef5de",
+        "filename": "service/java/com/android/server/wifi/WifiWakeupController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-20T03:56:48Z",
+      "side": 1,
+      "message": "Added a check to ensure that wifi ap state is also disabled before checking whether to enable wifi.",
+      "parentUuid": "1a772381_262336c0",
+      "revId": "106c972b4dda27612f25209423cb4fef3edfc090",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a772381_662d2ea8",
         "filename": "service/java/com/android/server/wifi/WifiWakeupController.java",
         "patchSetId": 4
@@ -65,6 +83,24 @@
         "endLine": 120,
         "endChar": 51
       },
+      "revId": "106c972b4dda27612f25209423cb4fef3edfc090",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_9a5b319c",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiWakeupControllerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-20T03:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a772381_86088a4d",
       "revId": "106c972b4dda27612f25209423cb4fef3edfc090",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
