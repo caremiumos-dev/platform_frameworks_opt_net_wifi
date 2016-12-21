@@ -34,6 +34,24 @@
       "revId": "c58d06e87e160cfc9b403d37f87bca99094a8824",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_d76d02af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2016-12-21T16:37:51Z",
+      "side": 1,
+      "message": "I\u0027d prefer to see it in the CL description.",
+      "parentUuid": "17237e9f_5b55dbdc",
+      "revId": "c58d06e87e160cfc9b403d37f87bca99094a8824",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
