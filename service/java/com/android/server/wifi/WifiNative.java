@@ -137,6 +137,7 @@ public class WifiNative {
     private final String mInterfaceName;
     private final String mInterfacePrefix;
     private SupplicantStaIfaceHal mSupplicantStaIfaceHal;
+    private SupplicantP2pIfaceHal mSupplicantP2pIfaceHal;
     private WifiVendorHal mWifiVendorHal;
 
     private Context mContext = null;
@@ -154,6 +155,16 @@ public class WifiNative {
     public void setSupplicantStaIfaceHal(SupplicantStaIfaceHal wifiSupplicantHal) {
         mSupplicantStaIfaceHal = wifiSupplicantHal;
     }
+
+    /**
+     * Explicitly sets the SupplicantP2pIfaceHal instance
+     * TODO(b/34722734): move this into the constructor of WifiNative when I clean up the awful
+     * double singleton pattern
+     */
+    public void setSupplicantP2pIfaceHal(SupplicantP2pIfaceHal wifiSupplicantHal) {
+        mSupplicantP2pIfaceHal = wifiSupplicantHal;
+    }
+
 
     /**
      * Explicitly sets the WifiVendorHal instance
@@ -195,6 +206,13 @@ public class WifiNative {
         if (!HIDL_ENABLE) {
             return true;
         }
+
+        if (mSupplicantP2pIfaceHal != null) {
+            if (!mSupplicantP2pIfaceHal.initialize()) {
+                return false;
+            }
+        }
+
         return mSupplicantStaIfaceHal.initialize();
     }
 
@@ -1149,11 +1167,11 @@ public class WifiNative {
        return doBooleanCommand("P2P_STOP_FIND");
     }
 
-    public boolean p2pListen() {
+    private boolean p2pListen() {
         return doBooleanCommand("P2P_LISTEN");
     }
 
-    public boolean p2pListen(int timeout) {
+    private boolean p2pListen(int timeout) {
         if (timeout <= 0) {
             return p2pListen();
         }
@@ -1367,7 +1385,7 @@ public class WifiNative {
         return gc;
     }
 
-    public String p2pPeer(String deviceAddress) {
+    private String p2pPeer(String deviceAddress) {
         return doStringCommand("P2P_PEER " + deviceAddress);
     }
 
