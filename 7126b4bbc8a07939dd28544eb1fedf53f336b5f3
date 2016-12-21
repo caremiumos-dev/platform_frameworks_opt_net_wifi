@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "d7c9e645_bde29dea",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-21T01:17:19Z",
+      "side": 1,
+      "message": "Changed to use if statements",
+      "parentUuid": "d7c9e645_7d819598",
+      "revId": "7126b4bbc8a07939dd28544eb1fedf53f336b5f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c9e645_dd61a91b",
         "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
         "patchSetId": 1
@@ -42,6 +60,24 @@
         "endLine": 131,
         "endChar": 66
       },
+      "revId": "7126b4bbc8a07939dd28544eb1fedf53f336b5f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_dd11a905",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-21T01:17:19Z",
+      "side": 1,
+      "message": "No need to, but I added it anyways.",
+      "parentUuid": "d7c9e645_dd61a91b",
       "revId": "7126b4bbc8a07939dd28544eb1fedf53f336b5f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
