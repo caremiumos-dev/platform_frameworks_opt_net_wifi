@@ -142,8 +142,8 @@ public class WifiInjector {
         mWifiApConfigStore = new WifiApConfigStore(mContext, mBackupManagerProxy);
         mWifiNative = WifiNative.getWlanNativeInterface();
 
-        mWifiNativeNew = new WifiNativeNew();
         mWifiMonitorNew = new WifiMonitorNew();
+        mWifiNativeNew = new WifiNativeNew(mWifiMonitorNew);
         mWifiP2pNativeNew = new WifiP2pNativeNew();
 
         // WifiConfigManager/Store objects and their dependencies.
