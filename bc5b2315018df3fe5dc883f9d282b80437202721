@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7c9e645_1fce3c46",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-12-21T21:33:06Z",
+      "side": 1,
+      "message": "I suspect there will be multiple places where we want to log a bool. Perhaps we should add a corresponding overload of LogMessage.c() instead?",
+      "range": {
+        "startLine": 593,
+        "startChar": 19,
+        "endLine": 593,
+        "endChar": 44
+      },
+      "revId": "bc5b2315018df3fe5dc883f9d282b80437202721",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_3f20d80f",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-12-21T21:33:06Z",
+      "side": 1,
+      "message": "As at line 593.",
+      "range": {
+        "startLine": 660,
+        "startChar": 19,
+        "endLine": 660,
+        "endChar": 45
+      },
+      "revId": "bc5b2315018df3fe5dc883f9d282b80437202721",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
