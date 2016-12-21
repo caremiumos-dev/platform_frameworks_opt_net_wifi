@@ -3719,7 +3719,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     break;
                 case CMD_BOOT_COMPLETED:
                     maybeRegisterNetworkFactory();
-                    mWifiNativeNew.registerForServiceNotification();
+                    mWifiNativeNew.registerForSupplicantHidlServiceNotification();
                     break;
                 case CMD_SCREEN_STATE_CHANGED:
                     handleScreenStateChanged(message.arg1 != 0);
