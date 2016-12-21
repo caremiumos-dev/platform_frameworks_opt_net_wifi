@@ -3745,7 +3745,6 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     // get other services that we need to manage
                     getAdditionalWifiServiceInterfaces();
                     maybeRegisterNetworkFactory();
-                    mWifiNativeNew.registerForServiceNotification();
                     break;
                 case CMD_SCREEN_STATE_CHANGED:
                     handleScreenStateChanged(message.arg1 != 0);
@@ -4032,6 +4031,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     setSupplicantLogLevel();
                     setWifiState(WIFI_STATE_ENABLING);
                     if (mVerboseLoggingEnabled) log("Supplicant start successful");
+                    mWifiNativeNew.registerForSupplicantHidlServiceNotification();
                     mWifiMonitor.startMonitoring(mInterfaceName);
                     transitionTo(mSupplicantStartingState);
                     break;

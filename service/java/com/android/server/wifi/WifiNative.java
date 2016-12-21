@@ -130,6 +130,13 @@ public class WifiNative {
         return p2pNativeInterface;
     }
 
+    /** Temporary shunting in of the new supplicant HIDL to facilitate switching between new HIDL and
+        legacy Native commands. Add this to the construction path before SUBMITTING!!!! 
+        Will throw NULL exceptions if any native stuff is called before this is set!*/
+    public void setSupplicantHidl(WifiNativeNew mSupplicantHidl) {
+        this.mSupplicantHidl = mSupplicantHidl;
+    }
+    private WifiNativeNew mSupplicantHidl = null;
 
     private final String mTAG;
     private final String mInterfaceName;
@@ -352,14 +359,36 @@ public class WifiNative {
     }
 
     public String listNetworks() {
+        if (mSupplicantHidl != null) {
+            ArrayList<Integer> networks = mSupplicantHidl.listNetworks();
+            if (networks == null) return "";
+            StringBuilder listStr = new StringBuilder();
+            listStr.append("network id / ssid / bssid / flags\n");
+            for (Integer netId : networks) {
+                listStr.append(netId).append("\n");
+            }
+
+        }
         return doStringCommand("LIST_NETWORKS");
     }
 
+    /** Tested this, last_id doesn't do anything different to listNetworks() */
     public String listNetworks(int last_id) {
+        if (mSupplicantHidl != null) {
+            return listNetworks();
+        }
         return doStringCommand("LIST_NETWORKS LAST_ID=" + last_id);
     }
 
     public int addNetwork() {
+        if (mSupplicantHidl != null) {
+            SupplicantStaNetwork network = mSupplicantHidl.addNetwork();
+            if (network.getId()) {
+                return network.id;
+            } else {
+                return -1;
+            }
+        }
         return doIntCommand("ADD_NETWORK");
     }
 
