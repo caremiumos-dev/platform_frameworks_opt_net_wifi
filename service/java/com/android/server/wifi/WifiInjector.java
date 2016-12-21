@@ -31,7 +31,6 @@ import android.os.IBinder;
 import android.os.INetworkManagementService;
 import android.os.ServiceManager;
 import android.os.SystemProperties;
-import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
 import android.security.KeyStore;
@@ -142,8 +141,8 @@ public class WifiInjector {
         mWifiApConfigStore = new WifiApConfigStore(mContext, mBackupManagerProxy);
         mWifiNative = WifiNative.getWlanNativeInterface();
 
-        mWifiNativeNew = new WifiNativeNew();
         mWifiMonitorNew = new WifiMonitorNew();
+        mWifiNativeNew = new WifiNativeNew(mWifiMonitorNew);
         mWifiP2pNativeNew = new WifiP2pNativeNew();
 
         // WifiConfigManager/Store objects and their dependencies.
