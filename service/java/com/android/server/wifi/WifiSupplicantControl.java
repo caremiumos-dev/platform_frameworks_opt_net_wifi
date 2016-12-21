@@ -70,6 +70,7 @@ public class WifiSupplicantControl {
     private final WpaConfigFileObserver mFileObserver;
     private final TelephonyManager mTelephonyManager;
     private final WifiNative mWifiNative;
+    private final WifiNativeNew mSupplicantHidl;
 
     // TODO (b/31080843): This will need to be a map when we have multiple networks in supplicant.
     // Supplicant network ID of the only configured network in wpa_supplicant.
@@ -83,10 +84,10 @@ public class WifiSupplicantControl {
     private boolean mSystemSupportsFastBssTransition = false;
 
     WifiSupplicantControl(TelephonyManager telephonyManager, WifiNative wifiNative,
-            LocalLog localLog) {
+            LocalLog localLog, WifiNativeNew wifiNativeNew) {
         mTelephonyManager = telephonyManager;
         mWifiNative = wifiNative;
-
+        mSupplicantHidl = wifiNativeNew;
         mLocalLog = localLog;
         mFileObserver = new WpaConfigFileObserver();
         mFileObserver.startWatching();
@@ -589,6 +590,30 @@ public class WifiSupplicantControl {
     }
 
     /**
+     * Add a network configuration to wpa_supplicant, via HIDL
+     * 
+     * @param config Config corresponding to the network.
+     * @return SupplicantStaNetwork of the added network in wpa_supplicant.
+     */
+    private SupplicantStaNetwork addNetwork(WifiConfiguration config) {
+        if (config == null) {
+            loge("Cannot add NULL network!");
+            return null;
+        }
+        SupplicantStaNetwork network = mSupplicantHidl.addNetwork();
+        if (network == null) {
+            loge("Failed to add a network!");
+            return null;
+        }
+        if (network.saveWifiConfiguration(config)) {
+            return network;
+        } else {
+            loge("Failed to save variables for: " + config.configKey());
+            return null;
+        }
+    }
+
+    /**
      * Add the provided network configuration to wpa_supplicant and initiate connection to it.
      * This method does the following:
      * 1. Triggers disconnect command to wpa_supplicant (if |shouldDisconnect| is true).
@@ -603,10 +628,42 @@ public class WifiSupplicantControl {
      * @return {@code true} if it succeeds, {@code false} otherwise
      */
     public boolean connectToNetwork(WifiConfiguration configuration, boolean shouldDisconnect) {
-        mFrameworkNetworkId = WifiConfiguration.INVALID_NETWORK_ID;
-        mSupplicantNetworkId = WifiConfiguration.INVALID_NETWORK_ID;
         logd("connectToNetwork " + configuration.configKey() +
                 " (shouldDisconnect " + shouldDisconnect + ")");
+
+        if (mSupplicantHidl != null) {
+            if (shouldDisconnect && !mSupplicantHidl.disconnect()) {
+                loge("Failed to trigger disconnect");
+                return false;
+            }
+            if (!mSupplicantHidl.removeAllNetworks()) {
+                loge("Failed to remove existing networks");
+                return false;
+            }
+            SupplicantStaNetwork network = addNetwork(configuration);
+            if (network == null) {
+                loge("Failed to add/save network configuration: " + configuration.configKey());
+                return false;
+            }
+            if (!network.getId()) {
+                loge("Failed to get network id for configuration: " +configuration.configKey());
+                return false;
+            }
+            mSupplicantNetworkId = network.id;
+            if (!network.select()) {
+                loge("Failed to select network configuration: " + configuration.configKey());
+                return false;
+            }
+            if (!mSupplicantHidl.reconnect()) {
+                loge("Failed to trigger reconnect");
+                return false;
+            }
+            mFrameworkNetworkId = configuration.networkId;
+            return true;
+        }
+
+        mFrameworkNetworkId = WifiConfiguration.INVALID_NETWORK_ID;
+        mSupplicantNetworkId = WifiConfiguration.INVALID_NETWORK_ID;
         if (shouldDisconnect && !mWifiNative.disconnect()) {
             loge("Failed to trigger disconnect");
             return false;
