@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7c9e645_7d819598",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1060801
+      },
+      "writtenOn": "2016-12-21T00:43:16Z",
+      "side": 1,
+      "message": "I find this pretty hard to read.",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 99
+      },
+      "revId": "7126b4bbc8a07939dd28544eb1fedf53f336b5f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_dd61a91b",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1060801
+      },
+      "writtenOn": "2016-12-21T00:43:16Z",
+      "side": 1,
+      "message": "Do you need to check for INVALID_NETWORK_ID here and return null?",
+      "range": {
+        "startLine": 130,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 66
+      },
+      "revId": "7126b4bbc8a07939dd28544eb1fedf53f336b5f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
