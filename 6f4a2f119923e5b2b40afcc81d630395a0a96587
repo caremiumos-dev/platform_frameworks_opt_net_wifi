@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7c9e645_71f45e64",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-21T06:58:55Z",
+      "side": 1,
+      "message": "can we also log if they wanted it enabled or disabled?",
+      "range": {
+        "startLine": 591,
+        "startChar": 20,
+        "endLine": 591,
+        "endChar": 34
+      },
+      "revId": "6f4a2f119923e5b2b40afcc81d630395a0a96587",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_11095a97",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-21T06:58:55Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 641,
+        "startChar": 39,
+        "endLine": 641,
+        "endChar": 40
+      },
+      "revId": "6f4a2f119923e5b2b40afcc81d630395a0a96587",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_3106d689",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-21T06:58:55Z",
+      "side": 1,
+      "message": "also log if it is enabled or disabled",
+      "range": {
+        "startLine": 654,
+        "startChar": 20,
+        "endLine": 654,
+        "endChar": 36
+      },
+      "revId": "6f4a2f119923e5b2b40afcc81d630395a0a96587",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_d102f272",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-21T06:58:55Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 768,
+        "startChar": 27,
+        "endLine": 768,
+        "endChar": 29
+      },
+      "revId": "6f4a2f119923e5b2b40afcc81d630395a0a96587",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_51684231",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-21T06:58:55Z",
+      "side": 1,
+      "message": "i don\u0027t know if this is something we want to do here, but it would be good to log the network id and the boolean too.  then we will know if a particular network is enabled, who is to blame..  or after one is disabled, why the rest are also disabled.",
+      "range": {
+        "startLine": 990,
+        "startChar": 20,
+        "endLine": 990,
+        "endChar": 33
+      },
+      "revId": "6f4a2f119923e5b2b40afcc81d630395a0a96587",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_1152ba83",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-21T06:58:55Z",
+      "side": 1,
+      "message": "say which network?  (then we will know if someone is disabling networks that shouldn\u0027t be doing it)",
+      "range": {
+        "startLine": 1009,
+        "startChar": 20,
+        "endLine": 1009,
+        "endChar": 34
+      },
+      "revId": "6f4a2f119923e5b2b40afcc81d630395a0a96587",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_d15bd29a",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1494,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-21T06:58:55Z",
+      "side": 1,
+      "message": "was this not working?  it seems like it should have been ok",
+      "range": {
+        "startLine": 1494,
+        "startChar": 29,
+        "endLine": 1494,
+        "endChar": 30
+      },
+      "revId": "6f4a2f119923e5b2b40afcc81d630395a0a96587",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_f1584ea0",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1544,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-21T06:58:55Z",
+      "side": 1,
+      "message": "tracing the lockMode here would be helpful",
+      "range": {
+        "startLine": 1544,
+        "startChar": 20,
+        "endLine": 1544,
+        "endChar": 35
+      },
+      "revId": "6f4a2f119923e5b2b40afcc81d630395a0a96587",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_113b9a2b",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1599,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-21T06:58:55Z",
+      "side": 1,
+      "message": "trace the setting here would be nice too",
+      "range": {
+        "startLine": 1599,
+        "startChar": 20,
+        "endLine": 1599,
+        "endChar": 40
+      },
+      "revId": "6f4a2f119923e5b2b40afcc81d630395a0a96587",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_f1312e48",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1629,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-21T06:58:55Z",
+      "side": 1,
+      "message": "trace this one?",
+      "range": {
+        "startLine": 1629,
+        "startChar": 15,
+        "endLine": 1629,
+        "endChar": 36
+      },
+      "revId": "6f4a2f119923e5b2b40afcc81d630395a0a96587",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_91a0ea45",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1637,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-21T06:58:55Z",
+      "side": 1,
+      "message": "param?",
+      "range": {
+        "startLine": 1637,
+        "startChar": 20,
+        "endLine": 1637,
+        "endChar": 44
+      },
+      "revId": "6f4a2f119923e5b2b40afcc81d630395a0a96587",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_d134323b",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1651,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-21T06:58:55Z",
+      "side": 1,
+      "message": "log the param too so we know if it is on or off?",
+      "range": {
+        "startLine": 1651,
+        "startChar": 20,
+        "endLine": 1651,
+        "endChar": 51
+      },
+      "revId": "6f4a2f119923e5b2b40afcc81d630395a0a96587",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_b1a5e655",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1804,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2016-12-21T06:58:55Z",
+      "side": 1,
+      "message": "and the param?",
+      "range": {
+        "startLine": 1804,
+        "startChar": 20,
+        "endLine": 1804,
+        "endChar": 49
+      },
+      "revId": "6f4a2f119923e5b2b40afcc81d630395a0a96587",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
