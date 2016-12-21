@@ -1105,11 +1105,11 @@ public class WifiNative {
        return doBooleanCommand("P2P_STOP_FIND");
     }
 
-    public boolean p2pListen() {
+    private boolean p2pListen() {
         return doBooleanCommand("P2P_LISTEN");
     }
 
-    public boolean p2pListen(int timeout) {
+    private boolean p2pListen(int timeout) {
         if (timeout <= 0) {
             return p2pListen();
         }
@@ -1323,7 +1323,7 @@ public class WifiNative {
         return gc;
     }
 
-    public String p2pPeer(String deviceAddress) {
+    private String p2pPeer(String deviceAddress) {
         return doStringCommand("P2P_PEER " + deviceAddress);
     }
 
