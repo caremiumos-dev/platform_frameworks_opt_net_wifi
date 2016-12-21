@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7c9e645_8622edb9",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-12-21T19:09:40Z",
+      "side": 1,
+      "message": "Done\n\nDidn\u0027t have checkstyle enabled on branch so wasn\u0027t caught. Fixed that glitch.",
+      "parentUuid": "d7c9e645_97aa27ba",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 59
+      },
+      "revId": "32ac38dfe2c7f08c191e2de71df07a94e72e742a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c9e645_b70ba305",
         "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareServiceImplTest.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2016-12-20T18:57:32Z",
       "side": 1,
       "message": "is this for testing message handling?  you can use the TestLooper",
+      "range": {
+        "startLine": 109,
+        "startChar": 7,
+        "endLine": 110,
+        "endChar": 31
+      },
+      "revId": "32ac38dfe2c7f08c191e2de71df07a94e72e742a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_86f98d0d",
+        "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareServiceImplTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-12-21T19:09:40Z",
+      "side": 1,
+      "message": "Replaced with a full mock. It is passed to another mock so don\u0027t really need a functioning one.",
+      "parentUuid": "d7c9e645_b70ba305",
       "range": {
         "startLine": 109,
         "startChar": 7,
