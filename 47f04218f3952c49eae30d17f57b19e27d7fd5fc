@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7c9e645_bcf4d6af",
+        "filename": "service/java/com/android/server/wifi/LogcatLog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-12-21T21:20:41Z",
+      "side": 1,
+      "message": "Could we simply declare sVerboseLogging as |volatile|, instead?\n\n\nNote that Java\u0027s notion of \"volatile\" provides stronger guarantees than C\u0027s notion. (https://docs.oracle.com/javase/tutorial/essential/concurrency/atomic.html)",
+      "revId": "47f04218f3952c49eae30d17f57b19e27d7fd5fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_7cd74e0e",
+        "filename": "service/java/com/android/server/wifi/LogcatLog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-12-21T21:20:41Z",
+      "side": 1,
+      "message": "Assuming that |volatile| is sufficient, these three methods can (and should) be simplified.",
+      "revId": "47f04218f3952c49eae30d17f57b19e27d7fd5fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_3c3f8678",
+        "filename": "service/java/com/android/server/wifi/LogcatLog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-12-21T21:20:41Z",
+      "side": 1,
+      "message": "IIRC, |VERBOSE| was just our first stab at trying to filter the messages out. Now that we\u0027ve got a better way (one that actually works :-)), I think we can back out this part of the change.",
+      "range": {
+        "startLine": 90,
+        "startChar": 34,
+        "endLine": 90,
+        "endChar": 41
+      },
+      "revId": "47f04218f3952c49eae30d17f57b19e27d7fd5fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_bcc6165c",
+        "filename": "service/java/com/android/server/wifi/LogcatLog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-12-21T21:20:41Z",
+      "side": 1,
+      "message": "Assuming we change trace() to map to DEBUG, we should change this condition as well.",
+      "range": {
+        "startLine": 202,
+        "startChar": 51,
+        "endLine": 202,
+        "endChar": 62
+      },
+      "revId": "47f04218f3952c49eae30d17f57b19e27d7fd5fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
