@@ -131,19 +131,20 @@ public class WifiInjector {
         mWifiStateMachineHandlerThread = new HandlerThread("WifiStateMachine");
         mWifiStateMachineHandlerThread.start();
 
+        mWifiMonitorNew = new WifiMonitorNew();
+        mWifiNativeNew = new WifiNativeNew(mWifiMonitorNew);
+
         // Now get instances of all the objects that depend on the HandlerThreads
+        mWifiNative = WifiNative.getWlanNativeInterface();
+        mWifiNative.setSupplicantHidl(mWifiNativeNew);
         mTrafficPoller =  new WifiTrafficPoller(mContext, mWifiServiceHandlerThread.getLooper(),
-                WifiNative.getWlanNativeInterface().getInterfaceName());
-        mCountryCode = new WifiCountryCode(WifiNative.getWlanNativeInterface(),
+                mWifiNative.getInterfaceName());
+        mCountryCode = new WifiCountryCode(mWifiNative,
                 SystemProperties.get(BOOT_DEFAULT_WIFI_COUNTRY_CODE),
                 mFrameworkFacade.getStringSetting(mContext, Settings.Global.WIFI_COUNTRY_CODE),
                 mContext.getResources()
                         .getBoolean(R.bool.config_wifi_revert_country_code_on_cellular_loss));
         mWifiApConfigStore = new WifiApConfigStore(mContext, mBackupManagerProxy);
-        mWifiNative = WifiNative.getWlanNativeInterface();
-
-        mWifiNativeNew = new WifiNativeNew();
-        mWifiMonitorNew = new WifiMonitorNew();
         mWifiP2pNativeNew = new WifiP2pNativeNew();
 
         // WifiConfigManager/Store objects and their dependencies.
@@ -156,7 +157,8 @@ public class WifiInjector {
         DelayedDiskWrite writer = new DelayedDiskWrite();
         mWifiNetworkHistory = new WifiNetworkHistory(mContext, mWifiNative.getLocalLog(), writer);
         mWifiSupplicantControl = new WifiSupplicantControl(
-                TelephonyManager.from(mContext), mWifiNative, mWifiNative.getLocalLog());
+                TelephonyManager.from(mContext), mWifiNative, mWifiNative.getLocalLog(),
+                mWifiNativeNew);
         mIpConfigStore = new IpConfigStore(writer);
         mWifiConfigStoreLegacy = new WifiConfigStoreLegacy(
                 mWifiNetworkHistory, mWifiSupplicantControl, mIpConfigStore);
