@@ -157,6 +157,7 @@ public class WifiSupplicantControlTest {
             + "}\n";
 
     @Mock private WifiNative mWifiNative;
+    @Mock private WifiNativeNew mSupplicantHidl;
     @Mock private TelephonyManager mTelephonyManager;
     private WifiSupplicantControl mWifiSupplicantControl;
 
@@ -166,7 +167,8 @@ public class WifiSupplicantControlTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        mWifiSupplicantControl = new WifiSupplicantControl(mTelephonyManager, mWifiNative, null);
+        mWifiSupplicantControl = new WifiSupplicantControl(mTelephonyManager, mWifiNative, null,
+                mSupplicantHidl);
     }
 
     /**

@@ -17,15 +17,24 @@ package com.android.server.wifi;
 
 import android.hardware.wifi.supplicant.V1_0.ISupplicant;
 import android.hardware.wifi.supplicant.V1_0.ISupplicantIface;
+import android.hardware.wifi.supplicant.V1_0.ISupplicantNetwork;
 import android.hardware.wifi.supplicant.V1_0.ISupplicantStaIface;
+import android.hardware.wifi.supplicant.V1_0.ISupplicantStaNetwork;
 import android.hardware.wifi.supplicant.V1_0.IfaceType;
 import android.hardware.wifi.supplicant.V1_0.SupplicantStatus;
 import android.hardware.wifi.supplicant.V1_0.SupplicantStatusCode;
 import android.hidl.manager.V1_0.IServiceManager;
 import android.hidl.manager.V1_0.IServiceNotification;
+import android.net.wifi.WifiConfiguration;
+import android.os.RemoteException;
 import android.util.Log;
+import android.util.MutableBoolean;
+import android.util.SparseArray;
 
 import java.util.ArrayList;
+import java.util.Map;
+
+import libcore.util.HexEncoding;
 /**
  * Native calls for bring up/shut down of the supplicant daemon and for
  * sending requests to the supplicant daemon
@@ -36,41 +45,75 @@ import java.util.ArrayList;
  * {@hide}
  */
 public class WifiNativeNew {
-
+    /** Invalid Supplicant Iface type */
+    public static final int INVALID_IFACE_TYPE = -1;
+    /** Development flag, turning the SUPPLICANT HIDL on and off, and toggling WifiNative calls
+        between HIDL and legacy */
+    public static final boolean ENABLED = true;
     private static final boolean DBG = false;
     private static final String TAG = "WifiNativeNew";
     private static final String SUPPLICANT_HIDL_SERVICE_NAME = "wpa_supplicant";
+
     // Supplicant HAL HIDL interface objects
     private ISupplicant mHidlSupplicant;
     private ISupplicantIface mHidlSupplicantIface;
     private ISupplicantStaIface mHidlSupplicantStaIface;
 
+    private final WifiMonitorNew mWifiMonitorNew;
+
+    private final Object mLock = new Object();
+
+    WifiNativeNew(WifiMonitorNew wifiMonitorNew) {
+        mWifiMonitorNew = wifiMonitorNew;
+    }
+
     /**
      * Register for service notification & bring up Supplicant HIDL interfaces when service is ready
      */
-    public boolean registerForServiceNotification() {
+    public boolean registerForSupplicantHidlServiceNotification() {
+        if (!ENABLED) return false;
         Log.i(TAG, "Registering SupplicantHidl service ready callback.");
-        final IServiceManager serviceManager = IServiceManager.getService("manager");
-        if (serviceManager == null) {
-            Log.e(TAG, "Failed to get HIDL Service Manager");
-            return false;
-        }
-        IServiceNotification serviceNotificationCb = new IServiceNotification.Stub() {
-            public void onRegistration(String fqName, String name, boolean preexisting) {
-                Log.i(TAG, "Registered " + fqName + ", " + name + " preexisting=" + preexisting);
-                startSupplicantHidl();
-            }
-        };
-        /* TODO(b/33639391) : Use the new ISupplicant.registerForNotifications() once it exists */
-        if (!serviceManager.registerForNotifications(ISupplicant.kInterfaceName,
-                "", serviceNotificationCb)) {
-            Log.e(TAG, "Failed to register for notifcations to " + ISupplicant.kInterfaceName
-                    + ", " + SUPPLICANT_HIDL_SERVICE_NAME);
-            return false;
-        }
-        return true;
-    }
+        synchronized (mLock) {
+            try {
+                final IServiceManager serviceManager = IServiceManager.getService("manager");
+                if (serviceManager == null) {
+                    Log.e(TAG, "Failed to get HIDL Service Manager");
+                    return false;
+                }
 
+                IServiceNotification serviceNotificationCb = new IServiceNotification.Stub() {
+                    public void onRegistration(String fqName, String name, boolean preexisting) {
+                        Log.i(TAG, "IServiceNotification.onRegistration for: " + fqName + ", "
+                                + name + " preexisting=" + preexisting);
+                        startSupplicantHidl();
+                    }
+                };
+                if (!serviceManager.linkToDeath(cookie -> {
+                    Log.wtf(TAG, "IServiceManager died: cookie=" + cookie);
+                    synchronized (mLock) {
+                        iSupplicantServiceDiedHandler();
+                    }
+                }, 0)) {
+                    Log.wtf(TAG, "Error on linkToDeath on IServiceManager");
+                    iSupplicantServiceDiedHandler();
+                    return false;
+                }
+                /* TODO(b/33639391) : Use the new ISupplicant.registerForNotifications() once it
+                   exists */
+                if (!serviceManager.registerForNotifications(ISupplicant.kInterfaceName,
+                        "", serviceNotificationCb)) {
+                    Log.e(TAG, "Failed to register for notifications to "
+                            + ISupplicant.kInterfaceName
+                            + ", " + SUPPLICANT_HIDL_SERVICE_NAME);
+                    return false;
+                }
+            } catch (RemoteException e) {
+                Log.e(TAG, "Exception while trying to register a listener for ISupplicant service: "
+                        + e);
+            }
+            return true;
+        }
+    }
 
     /**
      * Bring up the HIDL Vendor HAL and configure for STA mode
@@ -83,67 +126,678 @@ public class WifiNativeNew {
     /**
      * Bring up the Supplicant Hal
      */
-    public boolean startSupplicantHidl() {
-        Log.i(TAG, "Bringing up supplicant HIDL");
-        mHidlSupplicantStaIface = null;
-        mHidlSupplicant = ISupplicant.getService(SUPPLICANT_HIDL_SERVICE_NAME);
-        if (mHidlSupplicant == null) {
-            Log.e(TAG, "Failed to get wpa_supplicant HIDL service.");
-            return false;
+    public void startSupplicantHidl() {
+        synchronized (mLock) {
+            mHidlSupplicantStaIface = null;
+            try {
+                mHidlSupplicant = ISupplicant.getService(SUPPLICANT_HIDL_SERVICE_NAME);
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicant.getService exception: " + e);
+                iSupplicantServiceDiedHandler();
+            }
+            if (mHidlSupplicant == null) {
+                Log.e(TAG, "Got null ISupplicant service. Stopping supplicant HIDL startup");
+                return;
+            }
         }
+        Log.i(TAG, "Got ISupplicant service");
+        startSupplicantStaHidl();
+    }
 
-        /** get interfaces controlled by Supplicant*/
-        /** List available Wifi chips */
-        final ArrayList<ISupplicant.IfaceInfo> supplicantIfaces = new ArrayList<>();
-        // Use lambda's here.
-        ISupplicant.listInterfacesCallback listIfacesCb = new ISupplicant.listInterfacesCallback() {
-            public void onValues(SupplicantStatus status,
-                    java.util.ArrayList<ISupplicant.IfaceInfo> ifaces) {
-                if (status.code != SupplicantStatusCode.SUCCESS) {
-                    Log.e(TAG, "Getting Supplicant Interfaces failed: " + status.code);
-                    return;
-                }
-                supplicantIfaces.addAll(ifaces);
+    public void startSupplicantStaHidl() {
+        synchronized (mLock) {
+            /** List all supplicant Ifaces */
+            final ArrayList<ISupplicant.IfaceInfo> supplicantIfaces = new ArrayList<>();
+            try {
+                mHidlSupplicant.listInterfaces((SupplicantStatus status,
+                        ArrayList<ISupplicant.IfaceInfo> ifaces) -> {
+                    if (status.code != SupplicantStatusCode.SUCCESS) {
+                            Log.e(TAG, "Getting Supplicant Interfaces failed: " + status.code);
+                        return;
+                    }
+                    supplicantIfaces.addAll(ifaces);
+                });
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicant.listInterfaces exception: " + e);
+                iSupplicantServiceDiedHandler();
+                return;
             }
-        };
-        mHidlSupplicant.listInterfaces(listIfacesCb);
-        if (supplicantIfaces.size() == 0) {
-            Log.e(TAG, "Got zero HIDL supplicant ifaces.");
-            return false;
-        }
+            if (supplicantIfaces.size() == 0) {
+                Log.e(TAG, "Got zero HIDL supplicant ifaces. Stopping supplicant HIDL startup.");
+                return;
+            }
+            /** Get the STA iface */
+            boolean hasStaIface = false;
+            for (ISupplicant.IfaceInfo ifaceInfo : supplicantIfaces) {
+                if (ifaceInfo.type == IfaceType.STA) {
+                    hasStaIface = true;
+                    try {
+                        mHidlSupplicant.getInterface(ifaceInfo,
+                                (SupplicantStatus status, ISupplicantIface iface) -> {
+                            if (status.code != SupplicantStatusCode.SUCCESS) {
+                                Log.e(TAG, "Failed to get Supplicant STA Interface " + status.code);
+                                return;
+                            }
+                            mHidlSupplicantIface = iface;
+                        });
+                    } catch (RemoteException e) {
+                        Log.e(TAG, "ISupplicant.getInterface exception: " + e);
+                        iSupplicantServiceDiedHandler();
+                        return;
+                    }
+                    break;
+                }
+            }
+            if (!hasStaIface) {
+                Log.e(TAG, "ISupplicant has no STA interface, got " + supplicantIfaces.size()
+                        + " ifaces.");
+                return;
+            }
+            if (mHidlSupplicantIface == null) {
+                Log.e(TAG, "ISupplicantIface is null");
+                return;
+            }
 
-        /**
-         * Get Supplicant HIDL iface
-         */
-        ISupplicant.getInterfaceCallback getIfaceCb = new ISupplicant.getInterfaceCallback() {
-            public void onValues(SupplicantStatus status, ISupplicantIface iface) {
-                if (status.code != SupplicantStatusCode.SUCCESS) {
-                    Log.e(TAG, "Failed to get Supplicant STA Interface " + status.code);
-                    return;
-                }
-                mHidlSupplicantIface = iface;
-            }
-        };
-        boolean hasStaIface = false;
-        for (ISupplicant.IfaceInfo ifaceInfo : supplicantIfaces) {
-            if (ifaceInfo.type == IfaceType.STA) {
-                hasStaIface = true;
-                mHidlSupplicant.getInterface(ifaceInfo, getIfaceCb);
-                break;
-            }
-        }
-        if (!hasStaIface) {
-            Log.e(TAG, "Supplicant HIDL has no STA interface, got " + supplicantIfaces.size()
-                    + " ifaces.");
-        }
-        if (mHidlSupplicantIface == null) {
-            Log.e(TAG, "Supplicant STA Interface is null");
-            return false;
-        } else {
+            /** Cast ISupplicantIface into ISupplicantStaIface*/
             mHidlSupplicantStaIface =
                 ISupplicantStaIface.asInterface(mHidlSupplicantIface.asBinder());
-            Log.i(TAG, "Got supplicant STA HIDL Iface");
-            return true;
+            Log.i(TAG, "Got HIDL SupplicantStaIface");
+
+            /** Register SupplicantStaIfaceCallback handler*/
+/*            try {
+                SupplicantStatus status = mHidlSupplicantStaIface.registerCallback(
+                        mWifiMonitorNew.getSupplicantStaIfaceCallback());
+                if (status.code != SupplicantStatusCode.SUCCESS) {
+                    Log.e(TAG, "ISupplicantStaIface.registerCallback failed: "
+                            + status.debugMessage);
+                    return;
+                }
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface.registerCallback exception: " + e);
+                iSupplicantServiceDiedHandler();
+                return;
+            }
+            Log.i(TAG, "Registered WifiMonitorNew as handler for SupplicantStaIfaceCallback");
+*/
         }
     }
+
+    /** ISupplicantStaIface super calls */
+    /**
+     * @return returns the name of Iface or null if the call fails
+     */
+    public String getName() {
+        synchronized (mLock) {
+            MutableBoolean statusSuccess = new MutableBoolean(false);
+            final String methodStr = "getName";
+            Log.i(TAG, methodStr);
+            final StringBuilder builder = new StringBuilder();
+            try {
+                mHidlSupplicantStaIface.getName((SupplicantStatus status, String name) -> {
+                    statusSuccess.value = status.code == SupplicantStatusCode.SUCCESS;
+                    if(!statusSuccess.value) {
+                        Log.e(TAG, methodStr + " failed: " + status.debugMessage);
+                    } else {
+                        builder.append(name);
+                }});
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception: " + e);
+                iSupplicantServiceDiedHandler();
+            }
+            if (statusSuccess.value) {
+                return builder.toString();
+            } else {
+                return null;
+            }
+        }
+    }
+
+    public void iSupplicantServiceDiedHandler() {
+        synchronized (mLock) {
+            mHidlSupplicant = null;
+            mHidlSupplicantIface = null;
+            mHidlSupplicantStaIface = null;
+        }
+        startSupplicantStaHidl();
+    }
+
+    /**
+     * @return the IfaceType value for this interface, or INVALID_IFACE_TYPE if call fails
+     */
+    public int getType() {
+        synchronized (mLock) {
+            MutableBoolean statusSuccess = new MutableBoolean(false);
+            Mutable<Integer> gotType = new Mutable<>();
+            final String methodStr = "getType";
+            Log.i(TAG, methodStr);
+            try {
+                mHidlSupplicantStaIface.getType((SupplicantStatus status, int type) -> {
+                    statusSuccess.value = status.code == SupplicantStatusCode.SUCCESS;
+                    if(!statusSuccess.value) {
+                        Log.e(TAG, methodStr + " failed: " + status.debugMessage);
+                    } else {
+                        gotType.value = type;
+                }});
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception: " + e);
+                iSupplicantServiceDiedHandler();
+            }
+            if (statusSuccess.value) {
+                return gotType.value;
+            } else {
+                return INVALID_IFACE_TYPE;
+            }
+        }
+    }
+    /**
+     * @return The ISupplicantNetwork object for the new network, or null if the call fails
+     */
+    public SupplicantStaNetwork addNetwork() {
+        synchronized (mLock) {
+            MutableBoolean statusSuccess = new MutableBoolean(false);
+            Mutable<ISupplicantNetwork> newNetwork = new Mutable<>();
+            final String methodStr = "addNetwork";
+            Log.i(TAG, methodStr);
+            try {
+                mHidlSupplicantStaIface.addNetwork((SupplicantStatus status,
+                        ISupplicantNetwork network) -> {
+                    statusSuccess.value = status.code == SupplicantStatusCode.SUCCESS;
+                    if(!statusSuccess.value) {
+                        Log.e(TAG, methodStr + " failed: " + status.debugMessage);
+                    } else {
+                        newNetwork.value = network;
+                }});
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception: " + e);
+                iSupplicantServiceDiedHandler();
+            }
+            if (statusSuccess.value) {
+                return new SupplicantStaNetwork(ISupplicantStaNetwork.asInterface(
+                        newNetwork.value.asBinder()));
+            } else {
+                return null;
+            }
+        }
+    }
+    public boolean removeNetwork(int id) {
+        synchronized (mLock) {
+            final String methodStr = "removeNetwork";
+            Log.i(TAG, methodStr);
+            if (!checkSupplicantStaIfaceAndLogFailure(methodStr)) return false;
+            try {
+                SupplicantStatus status = mHidlSupplicantStaIface.removeNetwork(id);
+                return checkStatusAndLogFailure(status, methodStr);
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception:" + e);
+                iSupplicantServiceDiedHandler();
+                return false;
+            }
+        }
+    }
+
+    public boolean getStaNetworkVariables(WifiConfiguration config)
+    {
+        SupplicantStaNetwork network = getNetwork(config.networkId);
+        if (network == null) {
+            Log.e(TAG, "getStaNetworkVariables failed: got null network for netID " + config.networkId);
+            return false;
+        }
+        return network.loadToWifiConfiguration(config);
+    }
+
+    /**
+     * Read all networks from wpa_supplicant
+     */
+    public int loadNetworks(Map<String, WifiConfiguration> configs,
+            SparseArray<Map<String, String>> networkExtras) {
+        ArrayList<Integer> networkIds = listNetworks();
+        if (networkIds == null) {
+            Log.e(TAG, "Can't loadNetworks: listNetworks returned null");
+            return 0;
+        }
+        for (int netId : networkIds) {
+            
+        }
+        return 0;
+    }
+
+
+    /**
+     * Remove all networks from supplicant
+     * TODO(b/34454675) use ISupplicantIface.removeAllNetworks when it exists
+     */
+    public boolean removeAllNetworks() {
+        synchronized (mLock) {
+            ArrayList<Integer> networks = listNetworks();
+            if (networks == null) {
+                Log.e(TAG, "removeAllNetworks failed, got null networks");
+                return false;
+            }
+            for (int id : networks) {
+                if (!removeNetwork(id)) {
+                    Log.e(TAG, "removeAllNetworks failed to remove network: " + id);
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    /**
+     * @return The ISupplicantNetwork object for the given SupplicantNetworkId int, returns null if
+     * the call fails
+     */
+    public SupplicantStaNetwork getNetwork(int id) {
+        synchronized (mLock) {
+            MutableBoolean statusSuccess = new MutableBoolean(false);
+            Mutable<ISupplicantNetwork> gotNetwork = new Mutable<>();
+            final String methodStr = "getNetwork";
+            Log.i(TAG, methodStr);
+            try {
+                mHidlSupplicantStaIface.getNetwork(id, (SupplicantStatus status,
+                        ISupplicantNetwork network) -> {
+                    statusSuccess.value = status.code == SupplicantStatusCode.SUCCESS;
+                    if(!statusSuccess.value) {
+                        Log.e(TAG, methodStr + " failed: " + status.debugMessage);
+                    } else {
+                        gotNetwork.value = network;
+                }});
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception: " + e);
+                iSupplicantServiceDiedHandler();
+            }
+            if (statusSuccess.value) {
+                return new SupplicantStaNetwork(ISupplicantStaNetwork.asInterface(
+                        gotNetwork.value.asBinder()));
+            } else {
+                return null;
+            }
+        }
+    }
+    /**
+     * @return a list of SupplicantNetworkID ints for all networks controlled by supplicant, returns
+     * null if the call fails
+     */
+    public java.util.ArrayList<Integer> listNetworks() {
+        synchronized (mLock) {
+            MutableBoolean statusSuccess = new MutableBoolean(false);
+            Mutable<ArrayList<Integer>> networkIdList = new Mutable<>();
+            final String methodStr = "listNetworks";
+            Log.i(TAG, methodStr);
+            try {
+                mHidlSupplicantStaIface.listNetworks((SupplicantStatus status,
+                        java.util.ArrayList<Integer> networkIds) -> {
+                    statusSuccess.value = status.code == SupplicantStatusCode.SUCCESS;
+                    if(!statusSuccess.value) {
+                        Log.e(TAG, methodStr + " failed: " + status.debugMessage);
+                    } else {
+                        networkIdList.value = networkIds;
+                }});
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception: " + e);
+                iSupplicantServiceDiedHandler();
+            }
+            if (statusSuccess.value) {
+                return networkIdList.value;
+            } else {
+                return null;
+            }
+        }
+    }
+
+    /** ISupplicantStaIface callers */
+    public boolean reassociate() {
+        synchronized (mLock) {
+            final String methodStr = "reassociate";
+            Log.i(TAG, methodStr);
+            if (!checkSupplicantStaIfaceAndLogFailure(methodStr)) return false;
+            try {
+                SupplicantStatus status = mHidlSupplicantStaIface.reassociate();
+                return checkStatusAndLogFailure(status, methodStr);
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception:" + e);
+                iSupplicantServiceDiedHandler();
+                return false;
+            }
+        }
+    }
+    public boolean reconnect() {
+        synchronized (mLock) {
+            final String methodStr = "reconnect";
+            Log.i(TAG, methodStr);
+            if (!checkSupplicantStaIfaceAndLogFailure(methodStr)) return false;
+            try {
+                SupplicantStatus status = mHidlSupplicantStaIface.reconnect();
+                return checkStatusAndLogFailure(status, methodStr);
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception:" + e);
+                iSupplicantServiceDiedHandler();
+                return false;
+            }
+        }
+    }
+    public boolean disconnect() {
+        synchronized (mLock) {
+            final String methodStr = "disconnect";
+            Log.i(TAG, methodStr);
+            if (!checkSupplicantStaIfaceAndLogFailure(methodStr)) return false;
+            try {
+                SupplicantStatus status = mHidlSupplicantStaIface.disconnect();
+                return checkStatusAndLogFailure(status, methodStr);
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception:" + e);
+                iSupplicantServiceDiedHandler();
+                return false;
+            }
+        }
+    }
+    public boolean setPowerSave(boolean enable) {
+        synchronized (mLock) {
+            final String methodStr = "setPowerSave";
+            Log.i(TAG, methodStr);
+            if (!checkSupplicantStaIfaceAndLogFailure(methodStr)) return false;
+            try {
+                SupplicantStatus status = mHidlSupplicantStaIface.setPowerSave(enable);
+                return checkStatusAndLogFailure(status, methodStr);
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception:" + e);
+                iSupplicantServiceDiedHandler();
+                return false;
+            }
+        }
+    }
+    public boolean initiateTdlsDiscover(byte[/* 6 */] macAddress) {
+        synchronized (mLock) {
+            final String methodStr = "initiateTdlsDiscover";
+            Log.i(TAG, methodStr);
+            if (!checkSupplicantStaIfaceAndLogFailure(methodStr)) return false;
+            try {
+                SupplicantStatus status = mHidlSupplicantStaIface.initiateTdlsDiscover(macAddress);
+                return checkStatusAndLogFailure(status, methodStr);
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception:" + e);
+                iSupplicantServiceDiedHandler();
+                return false;
+            }
+        }
+    }
+    public boolean initiateTdlsSetup(byte[/* 6 */] macAddress) {
+        synchronized (mLock) {
+            final String methodStr = "initiateTdlsSetup";
+            Log.i(TAG, methodStr);
+            if (!checkSupplicantStaIfaceAndLogFailure(methodStr)) return false;
+            try {
+                SupplicantStatus status = mHidlSupplicantStaIface.initiateTdlsSetup(macAddress);
+                return checkStatusAndLogFailure(status, methodStr);
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception:" + e);
+                iSupplicantServiceDiedHandler();
+                return false;
+            }
+        }
+    }
+    public boolean initiateTdlsTeardown(byte[/* 6 */] macAddress) {
+        synchronized (mLock) {
+            final String methodStr = "initiateTdlsTeardown";
+            Log.i(TAG, methodStr);
+            if (!checkSupplicantStaIfaceAndLogFailure(methodStr)) return false;
+            try {
+                SupplicantStatus status = mHidlSupplicantStaIface.initiateTdlsTeardown(macAddress);
+                return checkStatusAndLogFailure(status, methodStr);
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception:" + e);
+                iSupplicantServiceDiedHandler();
+                return false;
+            }
+        }
+    }
+    public boolean initiateAnqpQuery(byte[/* 6 */] macAddress,
+            java.util.ArrayList<Short> infoElements, java.util.ArrayList<Integer> subTypes) {
+        synchronized (mLock) {
+            final String methodStr = "initiateAnqpQuery";
+            Log.i(TAG, methodStr);
+            if (!checkSupplicantStaIfaceAndLogFailure(methodStr)) return false;
+            try {
+                SupplicantStatus status = mHidlSupplicantStaIface.initiateAnqpQuery(macAddress, infoElements, subTypes);
+                return checkStatusAndLogFailure(status, methodStr);
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception:" + e);
+                iSupplicantServiceDiedHandler();
+                return false;
+            }
+        }
+    }
+    public boolean initiateHs20IconQuery(byte[/* 6 */] macAddress, String fileName) {
+        synchronized (mLock) {
+            final String methodStr = "initiateHs20IconQuery";
+            Log.i(TAG, methodStr);
+            if (!checkSupplicantStaIfaceAndLogFailure(methodStr)) return false;
+            try {
+                SupplicantStatus status = mHidlSupplicantStaIface.initiateHs20IconQuery(macAddress, fileName);
+                return checkStatusAndLogFailure(status, methodStr);
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception:" + e);
+                iSupplicantServiceDiedHandler();
+                return false;
+            }
+        }
+    }
+    /**
+     * Makes a callback to HIDL to getMacAddress from supplicant
+     * @return string containing the MAC address, or null on a failed call
+     */
+    public String getMacAddress() {
+        synchronized (mLock) {
+            MutableBoolean statusSuccess = new MutableBoolean(false);
+            final String methodStr = "getMacAddress";
+            Log.i(TAG, methodStr);
+            if (!checkSupplicantStaIfaceAndLogFailure(methodStr)) return null;
+            Mutable<String> gotMac = new Mutable<>();
+            try { //blehbleh
+            mHidlSupplicantStaIface.getMacAddress((SupplicantStatus status, byte[/* 6 */] macAddr) -> {
+                statusSuccess.value = status.code == SupplicantStatusCode.SUCCESS;
+                if (!statusSuccess.value) {
+                    Log.e(TAG, methodStr + " failed: " + status.debugMessage);
+                } else {
+                    gotMac.value = String.valueOf(HexEncoding.encode(macAddr));
+                }
+            });
+        } catch (RemoteException e) {
+            Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception: " + e);
+            iSupplicantServiceDiedHandler();
+        }
+            if (statusSuccess.value) {
+                return gotMac.value;
+            } else {
+                return null;
+            }
+        }
+    }
+    public boolean startRxFilter() {
+        synchronized (mLock) {
+            final String methodStr = "startRxFilter";
+            Log.i(TAG, methodStr);
+            if (!checkSupplicantStaIfaceAndLogFailure(methodStr)) return false;
+            try {
+                SupplicantStatus status = mHidlSupplicantStaIface.startRxFilter();
+                return checkStatusAndLogFailure(status, methodStr);
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception:" + e);
+                iSupplicantServiceDiedHandler();
+                return false;
+            }
+        }
+    }
+    public boolean stopRxFilter() {
+        synchronized (mLock) {
+            final String methodStr = "stopRxFilter";
+            Log.i(TAG, methodStr);
+            if (!checkSupplicantStaIfaceAndLogFailure(methodStr)) return false;
+            try {
+                SupplicantStatus status = mHidlSupplicantStaIface.stopRxFilter();
+                return checkStatusAndLogFailure(status, methodStr);
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception:" + e);
+                iSupplicantServiceDiedHandler();
+                return false;
+            }
+        }
+    }
+    public boolean addRxFilter(byte type) {
+        synchronized (mLock) {
+            final String methodStr = "addRxFilter";
+            Log.i(TAG, methodStr);
+            if (!checkSupplicantStaIfaceAndLogFailure(methodStr)) return false;
+            try {
+                SupplicantStatus status = mHidlSupplicantStaIface.addRxFilter(type);
+                return checkStatusAndLogFailure(status, methodStr);
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception:" + e);
+                iSupplicantServiceDiedHandler();
+                return false;
+            }
+        }
+    }
+    public boolean removeRxFilter(byte type) {
+        synchronized (mLock) {
+            final String methodStr = "removeRxFilter";
+            Log.i(TAG, methodStr);
+            if (!checkSupplicantStaIfaceAndLogFailure(methodStr)) return false;
+            try {
+                SupplicantStatus status = mHidlSupplicantStaIface.removeRxFilter(type);
+                return checkStatusAndLogFailure(status, methodStr);
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception:" + e);
+                iSupplicantServiceDiedHandler();
+                return false;
+            }
+        }
+    }
+    public boolean setBtCoexistenceMode(byte mode) {
+        synchronized (mLock) {
+            final String methodStr = "setBtCoexistenceMode";
+            Log.i(TAG, methodStr);
+            if (!checkSupplicantStaIfaceAndLogFailure(methodStr)) return false;
+            try {
+                SupplicantStatus status = mHidlSupplicantStaIface.setBtCoexistenceMode(mode);
+                return checkStatusAndLogFailure(status, methodStr);
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception:" + e);
+                iSupplicantServiceDiedHandler();
+                return false;
+            }
+        }
+    }
+    public boolean setBtCoexistenceScanModeEnabled(boolean enable) {
+        synchronized (mLock) {
+            final String methodStr = "setBtCoexistenceScanModeEnabled";
+            Log.i(TAG, methodStr);
+            if (!checkSupplicantStaIfaceAndLogFailure(methodStr)) return false;
+            try {
+                SupplicantStatus status = mHidlSupplicantStaIface.setBtCoexistenceScanModeEnabled(enable);
+                return checkStatusAndLogFailure(status, methodStr);
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception:" + e);
+                iSupplicantServiceDiedHandler();
+                return false;
+            }
+        }
+    }
+    public boolean setSuspendModeEnabled(boolean enable) {
+        synchronized (mLock) {
+            final String methodStr = "setSuspendModeEnabled";
+            Log.i(TAG, methodStr);
+            if (!checkSupplicantStaIfaceAndLogFailure(methodStr)) return false;
+            try {
+                SupplicantStatus status = mHidlSupplicantStaIface.setSuspendModeEnabled(enable);
+                return checkStatusAndLogFailure(status, methodStr);
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception:" + e);
+                iSupplicantServiceDiedHandler();
+                return false;
+            }
+        }
+    }
+    public boolean setCountryCode(byte[/* 2 */] code) {
+        synchronized (mLock) {
+            final String methodStr = "setCountryCode";
+            Log.i(TAG, methodStr);
+            if (!checkSupplicantStaIfaceAndLogFailure(methodStr)) return false;
+            try {
+                SupplicantStatus status = mHidlSupplicantStaIface.setCountryCode(code);
+                return checkStatusAndLogFailure(status, methodStr);
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantStaIface." + methodStr + ": exception:" + e);
+                iSupplicantServiceDiedHandler();
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Returns false if SupplicantStaIface is null, and logs failure to call methodStr
+     */
+    public boolean checkSupplicantStaIfaceAndLogFailure(final String methodStr) {
+        Log.i(TAG, methodStr);
+        if (mHidlSupplicantStaIface == null) {
+            Log.e(TAG, "Can't call " + methodStr + ", ISupplicantStaIface is null");
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Returns true if provided status code is SUCCESS, logs debug message and returns false
+     * otherwise
+     */
+    public static boolean checkStatusAndLogFailure(SupplicantStatus status, final String methodStr) {
+        Log.i(TAG, methodStr);
+        if (status.code != SupplicantStatusCode.SUCCESS) {
+            Log.e(TAG, methodStr + " failed: " + supplicantStatusCodeToString(status.code) + ", " + status.debugMessage);
+            return false;
+        }
+        return true;
+    }
+
+    public static String supplicantStatusCodeToString(int code) {
+        switch (code) {
+            case 0: 
+                return "SUCCESS";
+            case 1: 
+                return "FAILURE_UNKNOWN";
+            case 2: 
+                return "FAILURE_ARGS_INVALID";
+            case 3: 
+                return "FAILURE_IFACE_INVALID";
+            case 4: 
+                return "FAILURE_IFACE_UNKNOWN";
+            case 5: 
+                return "FAILURE_IFACE_EXISTS";
+            case 6: 
+                return "FAILURE_IFACE_DISABLED";
+            case 7: 
+                return "FAILURE_IFACE_NOT_DISCONNECTED";
+            case 8: 
+                return "FAILURE_NETWORK_INVALID";
+            case 9: 
+                return "FAILURE_NETWORK_UNKNOWN";
+            default:
+                return "??? UNKNOWN_CODE";
+        }
+    }
+
+    private static class Mutable<E> {
+        public E value;
+
+        Mutable() {
+            value = null;
+        }
+
+        Mutable(E value) {
+            this.value = value;
+        }
+    }
+
+    /** Cuckoo'd WifiNative calls */
+
+
 }
