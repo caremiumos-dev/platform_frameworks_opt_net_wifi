@@ -42,6 +42,7 @@ import com.android.server.am.BatteryStatsService;
 import com.android.server.net.DelayedDiskWrite;
 import com.android.server.net.IpConfigStore;
 import com.android.server.wifi.hotspot2.PasspointManager;
+import com.android.server.wifi.hotspot2.PasspointNetworkEvaluator;
 import com.android.server.wifi.hotspot2.PasspointObjectFactory;
 import com.android.server.wifi.util.WifiPermissionsUtil;
 import com.android.server.wifi.util.WifiPermissionsWrapper;
@@ -91,6 +92,7 @@ public class WifiInjector {
     private final WifiConfigManager mWifiConfigManager;
     private final WifiNetworkSelector mWifiNetworkSelector;
     private final SavedNetworkEvaluator mSavedNetworkEvaluator;
+    private final PasspointNetworkEvaluator mPasspointNetworkEvaluator;
     private final ExternalScoreEvaluator mExternalScoreEvaluator;
     private final RecommendedNetworkEvaluator mRecommendedNetworkEvaluator;
     private final WifiNetworkScoreCache mWifiNetworkScoreCache;
@@ -167,6 +169,11 @@ public class WifiInjector {
                 mContext, mWifiConfigManager, mWifiNetworkScoreCache, mClock, localLog);
         mRecommendedNetworkEvaluator = new RecommendedNetworkEvaluator(
                 mWifiNetworkScoreCache, mNetworkScoreManager, mWifiConfigManager, localLog);
+        mSimAccessor = new SIMAccessor(mContext);
+        mPasspointManager = new PasspointManager(mContext, mWifiNative, mWifiKeyStore, mClock,
+                mSimAccessor, new PasspointObjectFactory());
+        mPasspointNetworkEvaluator = new PasspointNetworkEvaluator(
+                mPasspointManager, mWifiConfigManager, localLog);
         mWifiStateMachine = new WifiStateMachine(mContext, mFrameworkFacade,
                 mWifiStateMachineHandlerThread.getLooper(), UserManager.get(mContext),
                 this, mBackupManagerProxy, mCountryCode, mWifiNative);
@@ -181,9 +188,6 @@ public class WifiInjector {
         mWifiPermissionsWrapper = new WifiPermissionsWrapper(mContext);
         mWifiPermissionsUtil = new WifiPermissionsUtil(mWifiPermissionsWrapper, mContext,
                 mSettingsStore, UserManager.get(mContext), new NetworkScorerAppManager(mContext));
-        mSimAccessor = new SIMAccessor(mContext);
-        mPasspointManager = new PasspointManager(mContext, mWifiNative, mWifiKeyStore, mClock,
-                mSimAccessor, new PasspointObjectFactory());
     }
 
     /**
@@ -375,7 +379,8 @@ public class WifiInjector {
                 mWifiConfigManager, wifiInfo, mWifiNetworkSelector, mWifiLastResortWatchdog,
                 mWifiMetrics, mWifiStateMachineHandlerThread.getLooper(), mClock,
                 hasConnectionRequests, mFrameworkFacade, mSavedNetworkEvaluator,
-                mExternalScoreEvaluator, mRecommendedNetworkEvaluator);
+                mExternalScoreEvaluator, mRecommendedNetworkEvaluator,
+                mPasspointNetworkEvaluator);
     }
 
     public WifiPermissionsUtil getWifiPermissionsUtil() {
