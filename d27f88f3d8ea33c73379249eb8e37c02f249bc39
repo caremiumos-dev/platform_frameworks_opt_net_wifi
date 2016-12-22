@@ -22,6 +22,30 @@
       "revId": "d27f88f3d8ea33c73379249eb8e37c02f249bc39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_f5afcc7a",
+        "filename": "service/java/com/android/server/wifi/hotspot2/anqp/CellularNetwork.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-12-22T04:13:28Z",
+      "side": 1,
+      "message": "Yes, it is used by ThreeGPPNetworkElement, where it contains a list of CellularNetwork.",
+      "parentUuid": "d7c9e645_2bddfac9",
+      "range": {
+        "startLine": 37,
+        "startChar": 13,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "d27f88f3d8ea33c73379249eb8e37c02f249bc39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
