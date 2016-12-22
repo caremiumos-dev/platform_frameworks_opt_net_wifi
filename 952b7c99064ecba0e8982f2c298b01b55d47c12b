@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7c9e645_ae924ea2",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-22T20:27:26Z",
+      "side": 1,
+      "message": "This means that the NetworkRecommendationProvider is misbehaving by not creating a matching WifiConfiguration from a ScanResult that it receives. We need to ensure that RecommendedNetworkEvaluator deals with this properly and doesn\u0027t return the invalid WifiConfiguration to WifiNetworkSelector.\n\nWhat do you mean by raise a flag? I don\u0027t think we should throw an exception since the framework should be able to deal with providers that misbehave.",
+      "parentUuid": "d7c9e645_d8dd202f",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 9
+      },
+      "revId": "952b7c99064ecba0e8982f2c298b01b55d47c12b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c9e645_3886a4a7",
         "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2016-12-22T19:18:45Z",
       "side": 1,
       "message": "Since there is already ScanResultUtil#createQuotedSSID, why not apply that to ScanResult.SSID then compare against WifiConfiguration#SSID?",
+      "range": {
+        "startLine": 144,
+        "startChar": 16,
+        "endLine": 144,
+        "endChar": 48
+      },
+      "revId": "952b7c99064ecba0e8982f2c298b01b55d47c12b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_6eff86b6",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-22T20:27:26Z",
+      "side": 1,
+      "message": "I thought it was wasteful to allocate a new string for each of the scan results instead of simply allocating one string for the unquoted WifiConfiguration and comparing it to ScanResult#SSID",
+      "parentUuid": "d7c9e645_3886a4a7",
       "range": {
         "startLine": 144,
         "startChar": 16,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d7c9e645_cea55aee",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-22T20:27:26Z",
+      "side": 1,
+      "message": "Yes that makes sense - it\u0027s the same behavior as the current ExternalScoreEvaluator. We call WifiConfigManager#getConfiguredNetwork for the returned networkId to retrieve the internal config above.",
+      "parentUuid": "d7c9e645_7ba2e681",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 73
+      },
+      "revId": "952b7c99064ecba0e8982f2c298b01b55d47c12b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c9e645_9bc47234",
         "filename": "service/java/com/android/server/wifi/util/ScanResultUtil.java",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2016-12-22T19:18:45Z",
       "side": 1,
       "message": "Don\u0027t need this. See the comment in RecommendedNetworkEvaluator.java.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 5
+      },
+      "revId": "952b7c99064ecba0e8982f2c298b01b55d47c12b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_4eebaaf4",
+        "filename": "service/java/com/android/server/wifi/util/ScanResultUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-22T20:27:26Z",
+      "side": 1,
+      "message": "This was made to avoid the extra String allocations since there are many ScanResult objects and only one WifiConfiguration.",
+      "parentUuid": "d7c9e645_9bc47234",
       "range": {
         "startLine": 91,
         "startChar": 0,
