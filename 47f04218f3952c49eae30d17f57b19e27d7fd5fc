@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7c9e645_c4d7800c",
+        "filename": "service/java/com/android/server/wifi/LogcatLog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-12-22T18:15:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7c9e645_bcf4d6af",
+      "revId": "47f04218f3952c49eae30d17f57b19e27d7fd5fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c9e645_7cd74e0e",
         "filename": "service/java/com/android/server/wifi/LogcatLog.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2016-12-21T21:20:41Z",
       "side": 1,
       "message": "Assuming that |volatile| is sufficient, these three methods can (and should) be simplified.",
+      "revId": "47f04218f3952c49eae30d17f57b19e27d7fd5fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_a4eef4d1",
+        "filename": "service/java/com/android/server/wifi/LogcatLog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-12-22T18:15:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7c9e645_7cd74e0e",
       "revId": "47f04218f3952c49eae30d17f57b19e27d7fd5fc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "d7c9e645_44eb90c2",
+        "filename": "service/java/com/android/server/wifi/LogcatLog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-12-22T18:15:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7c9e645_3c3f8678",
+      "range": {
+        "startLine": 90,
+        "startChar": 34,
+        "endLine": 90,
+        "endChar": 41
+      },
+      "revId": "47f04218f3952c49eae30d17f57b19e27d7fd5fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c9e645_bcc6165c",
         "filename": "service/java/com/android/server/wifi/LogcatLog.java",
         "patchSetId": 2
@@ -70,6 +130,30 @@
       "writtenOn": "2016-12-21T21:20:41Z",
       "side": 1,
       "message": "Assuming we change trace() to map to DEBUG, we should change this condition as well.",
+      "range": {
+        "startLine": 202,
+        "startChar": 51,
+        "endLine": 202,
+        "endChar": 62
+      },
+      "revId": "47f04218f3952c49eae30d17f57b19e27d7fd5fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_64e80cc5",
+        "filename": "service/java/com/android/server/wifi/LogcatLog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-12-22T18:15:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7c9e645_bcc6165c",
       "range": {
         "startLine": 202,
         "startChar": 51,
