@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7c9e645_475f0d58",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-12-22T22:33:42Z",
+      "side": 1,
+      "message": "Unless there\u0027s a pressing need to get this CL in, I\u0027d like to have this CL updated to use the new overload, rather than landing as-is.\n\n(If there\u0027s a pressing need, please elaborate. Thanks.)",
+      "revId": "5bcdd00e772ea56bc317fe077b8cba09b54c9234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_e72dd9c4",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2016-12-22T22:33:42Z",
+      "side": 1,
+      "message": "As at line 590.",
+      "revId": "5bcdd00e772ea56bc317fe077b8cba09b54c9234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
