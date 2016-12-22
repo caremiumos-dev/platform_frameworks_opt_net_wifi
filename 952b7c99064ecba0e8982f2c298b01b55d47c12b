@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d7c9e645_d10e5b1c",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-22T21:05:20Z",
+      "side": 1,
+      "message": "So in theory this should never happen. When it does occur, it means NetworkRecommendationProvider has a bug. In that case we probably want to make sure the alert is obvious and fix the bug ASAP. So IMO, an exception might not be a bad thing.",
+      "parentUuid": "d7c9e645_ae924ea2",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 9
+      },
+      "revId": "952b7c99064ecba0e8982f2c298b01b55d47c12b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c9e645_3886a4a7",
         "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
         "patchSetId": 5
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "I thought it was wasteful to allocate a new string for each of the scan results instead of simply allocating one string for the unquoted WifiConfiguration and comparing it to ScanResult#SSID",
       "parentUuid": "d7c9e645_3886a4a7",
+      "range": {
+        "startLine": 144,
+        "startChar": 16,
+        "endLine": 144,
+        "endChar": 48
+      },
+      "revId": "952b7c99064ecba0e8982f2c298b01b55d47c12b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_f19837c6",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-22T21:05:20Z",
+      "side": 1,
+      "message": "That\u0027s a valid concern. WifiSupplicantControl#removeDoubleQuotes achieves the same as ScanResultUtil#getUnquotedSSID. Let\u0027s consolidate them.",
+      "parentUuid": "d7c9e645_6eff86b6",
       "range": {
         "startLine": 144,
         "startChar": 16,
@@ -178,6 +226,30 @@
       "side": 1,
       "message": "This was made to avoid the extra String allocations since there are many ScanResult objects and only one WifiConfiguration.",
       "parentUuid": "d7c9e645_9bc47234",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 5
+      },
+      "revId": "952b7c99064ecba0e8982f2c298b01b55d47c12b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_d1bc1b10",
+        "filename": "service/java/com/android/server/wifi/util/ScanResultUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-12-22T21:05:20Z",
+      "side": 1,
+      "message": "WifiSupplicantControl#removeDoubleQuotes achieves the same as ScanResultUtil#getUnquotedSSID. Let\u0027s consolidate them.",
+      "parentUuid": "d7c9e645_4eebaaf4",
       "range": {
         "startLine": 91,
         "startChar": 0,
