@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7c9e645_d027437b",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointMatchInfo.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-12-22T00:00:21Z",
+      "side": 1,
+      "message": "Can this scoring expression be explained in comments? Where does it come from?",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 83
+      },
+      "revId": "e47859edc96f980af2f23e99bf1dfb6e557647f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_0b591ea2",
+        "filename": "tests/wifitests/src/com/android/server/wifi/hotspot2/anqp/HSWanMetricsElementTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-12-22T00:00:21Z",
+      "side": 1,
+      "message": "Make these unique values so the test will fail if they get mixed up or mis-parsed.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 47
+      },
+      "revId": "e47859edc96f980af2f23e99bf1dfb6e557647f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
