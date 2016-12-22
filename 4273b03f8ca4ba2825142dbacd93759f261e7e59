@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7c9e645_db0e7a1c",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-12-22T20:59:34Z",
+      "side": 1,
+      "message": "Should this be named something more explicit, like authMatch()?\nIf this is specifically for matching auth, I think yes, but if auth is being used as the generic matcher, then i understand.",
+      "range": {
+        "startLine": 202,
+        "startChar": 26,
+        "endLine": 202,
+        "endChar": 31
+      },
+      "revId": "4273b03f8ca4ba2825142dbacd93759f261e7e59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
