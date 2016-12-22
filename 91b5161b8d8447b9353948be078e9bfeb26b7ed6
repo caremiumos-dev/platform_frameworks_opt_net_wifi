@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7c9e645_d1ddfb2e",
+        "filename": "service/java/com/android/server/wifi/hotspot2/ANQPRequestManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-12-22T23:57:15Z",
+      "side": 1,
+      "message": "What does this Long key represent?",
+      "range": {
+        "startLine": 46,
+        "startChar": 22,
+        "endLine": 46,
+        "endChar": 26
+      },
+      "revId": "91b5161b8d8447b9353948be078e9bfeb26b7ed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_a7f111e6",
+        "filename": "service/java/com/android/server/wifi/hotspot2/ANQPRequestManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-12-22T23:57:15Z",
+      "side": 1,
+      "message": "Please also explicitly state what ANQP Elements (or sets of elements) you are requesting by setting these flags",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 74
+      },
+      "revId": "91b5161b8d8447b9353948be078e9bfeb26b7ed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
