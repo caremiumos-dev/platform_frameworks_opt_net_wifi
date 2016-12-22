@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7c9e645_b8dcd42f",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-12-22T19:12:26Z",
+      "side": 1,
+      "message": "Sure, I have created another CL for that and added you as reviewer.",
+      "parentUuid": "d7c9e645_1fce3c46",
+      "range": {
+        "startLine": 593,
+        "startChar": 19,
+        "endLine": 593,
+        "endChar": 44
+      },
+      "revId": "bc5b2315018df3fe5dc883f9d282b80437202721",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c9e645_3f20d80f",
         "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2016-12-21T21:33:06Z",
       "side": 1,
       "message": "As at line 593.",
+      "range": {
+        "startLine": 660,
+        "startChar": 19,
+        "endLine": 660,
+        "endChar": 45
+      },
+      "revId": "bc5b2315018df3fe5dc883f9d282b80437202721",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_58f130b1",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2016-12-22T19:12:26Z",
+      "side": 1,
+      "message": "Same as Line 593",
+      "parentUuid": "d7c9e645_3f20d80f",
       "range": {
         "startLine": 660,
         "startChar": 19,
