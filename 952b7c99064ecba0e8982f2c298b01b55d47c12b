@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "1751be1f_ee284e98",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-23T23:05:23Z",
+      "side": 1,
+      "message": "The wifi platform should not crash if a NetworkRecommendationProvider returns and invalid configuration. I added a Slog.e log make it easier to debug this issue should it ever arise. We\u0027ll add tests to ensure that this does not occur in the default NetworkRecommendationProvider implementation.\n\nI believe returning null is the correct behavior for dealing with misbehaving 3rd party NetworkRecommendationProviders because it indicates to that platform that no network should be joined. Throwing an exception and crashing the service may help developers debug the situation, but at the expense of crashing a user\u0027s device without much indication on how to resolve the issue. I\u0027d be happy to chat offline about this if you want.",
+      "parentUuid": "d7c9e645_d10e5b1c",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 9
+      },
+      "revId": "952b7c99064ecba0e8982f2c298b01b55d47c12b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c9e645_3886a4a7",
         "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
         "patchSetId": 5
@@ -250,6 +274,30 @@
       "side": 1,
       "message": "WifiSupplicantControl#removeDoubleQuotes achieves the same as ScanResultUtil#getUnquotedSSID. Let\u0027s consolidate them.",
       "parentUuid": "d7c9e645_4eebaaf4",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 5
+      },
+      "revId": "952b7c99064ecba0e8982f2c298b01b55d47c12b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1751be1f_4ef9a20a",
+        "filename": "service/java/com/android/server/wifi/util/ScanResultUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-23T23:05:23Z",
+      "side": 1,
+      "message": "Just discovered that WifiInfo also has a removeDoubleQuotes method. Consolidated both implementations to use that method.",
+      "parentUuid": "d7c9e645_d1bc1b10",
       "range": {
         "startLine": 91,
         "startChar": 0,
