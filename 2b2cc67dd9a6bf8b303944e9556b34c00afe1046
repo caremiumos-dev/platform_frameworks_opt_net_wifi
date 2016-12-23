@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7c9e645_07ffc089",
+        "filename": "service/Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-12-23T18:11:00Z",
+      "side": 1,
+      "message": "Needed to build - not necessary to submit with this CL.",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 34
+      },
+      "revId": "2b2cc67dd9a6bf8b303944e9556b34c00afe1046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
