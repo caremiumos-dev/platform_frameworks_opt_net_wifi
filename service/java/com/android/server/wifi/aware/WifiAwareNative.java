@@ -19,9 +19,7 @@ package com.android.server.wifi.aware;
 import android.net.wifi.aware.ConfigRequest;
 import android.net.wifi.aware.PublishConfig;
 import android.net.wifi.aware.SubscribeConfig;
-import android.net.wifi.aware.WifiAwareCharacteristics;
 import android.net.wifi.aware.WifiAwareDiscoverySessionCallback;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.android.server.wifi.WifiNative;
@@ -46,52 +44,6 @@ public class WifiAwareNative {
     private boolean mNativeHandlersIsInitialized = false;
 
     private static native int registerAwareNatives();
-
-    /**
-     * A container class for Aware (vendor) implementation capabilities (or
-     * limitations). Filled-in by the firmware.
-     */
-    public static class Capabilities {
-        public int maxConcurrentAwareClusters;
-        public int maxPublishes;
-        public int maxSubscribes;
-        public int maxServiceNameLen;
-        public int maxMatchFilterLen;
-        public int maxTotalMatchFilterLen;
-        public int maxServiceSpecificInfoLen;
-        public int maxVsaDataLen;
-        public int maxMeshDataLen;
-        public int maxNdiInterfaces;
-        public int maxNdpSessions;
-        public int maxAppInfoLen;
-        public int maxQueuedTransmitMessages;
-
-        /**
-         * Converts the internal capabilities to a parcelable & potentially app-facing
-         * characteristics bundle. Only some of the information is exposed.
-         */
-        public WifiAwareCharacteristics toPublicCharacteristics() {
-            Bundle bundle = new Bundle();
-            bundle.putInt(WifiAwareCharacteristics.KEY_MAX_SERVICE_NAME_LENGTH, maxServiceNameLen);
-            bundle.putInt(WifiAwareCharacteristics.KEY_MAX_SERVICE_SPECIFIC_INFO_LENGTH,
-                    maxServiceSpecificInfoLen);
-            bundle.putInt(WifiAwareCharacteristics.KEY_MAX_MATCH_FILTER_LENGTH, maxMatchFilterLen);
-            return new WifiAwareCharacteristics(bundle);
-        }
-
-        @Override
-        public String toString() {
-            return "Capabilities [maxConcurrentAwareClusters=" + maxConcurrentAwareClusters
-                    + ", maxPublishes=" + maxPublishes + ", maxSubscribes=" + maxSubscribes
-                    + ", maxServiceNameLen=" + maxServiceNameLen + ", maxMatchFilterLen="
-                    + maxMatchFilterLen + ", maxTotalMatchFilterLen=" + maxTotalMatchFilterLen
-                    + ", maxServiceSpecificInfoLen=" + maxServiceSpecificInfoLen
-                    + ", maxVsaDataLen=" + maxVsaDataLen + ", maxMeshDataLen=" + maxMeshDataLen
-                    + ", maxNdiInterfaces=" + maxNdiInterfaces + ", maxNdpSessions="
-                    + maxNdpSessions + ", maxAppInfoLen=" + maxAppInfoLen
-                    + ", maxQueuedTransmitMessages=" + maxQueuedTransmitMessages + "]";
-        }
-    }
 
     /* package */ static native int initAwareHandlersNative(Class<WifiNative> cls, int iface);
 
