@@ -53,9 +53,6 @@ using android::wifi_system::InterfaceTool;
 
 namespace android {
 
-extern "C"
-jint Java_com_android_server_wifi_WifiNative_registerAwareNatives(JNIEnv* env, jclass clazz);
-
 static jint DBG = false;
 
 //Please put all HAL function call here and call from the function table instead of directly call

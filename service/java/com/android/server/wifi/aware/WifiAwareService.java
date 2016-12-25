@@ -21,6 +21,7 @@ import android.os.HandlerThread;
 import android.util.Log;
 
 import com.android.server.SystemService;
+import com.android.server.wifi.HalInterfacePolicyManager;
 import com.android.server.wifi.WifiInjector;
 
 /**
@@ -52,12 +53,15 @@ public final class WifiAwareService extends SystemService {
             }
 
             HandlerThread awareHandlerThread = wifiInjector.getmWifiAwareHandlerThread();
-            WifiAwareStateManager awareStateManager = new WifiAwareStateManager();
-            WifiAwareNative awareNative = new WifiAwareNative(true);
-            awareStateManager.setNative(awareNative);
-            awareNative.setStateManager(awareStateManager);
+            WifiAwareStateManager wifiAwareStateManager = new WifiAwareStateManager();
+            HalInterfacePolicyManager halInterfacePolicyManager = new HalInterfacePolicyManager();
+            WifiAwareNativeApi wifiAwareNativeApi = new WifiAwareNativeApi();
+            WifiAwareNativeManager wifiAwareNativeManager = new WifiAwareNativeManager(
+                    wifiAwareStateManager, halInterfacePolicyManager, wifiAwareNativeApi);
+            wifiAwareNativeApi.setRefs(wifiAwareNativeManager, wifiAwareStateManager);
+            wifiAwareStateManager.setNative(wifiAwareNativeApi);
 
-            mImpl.start(awareHandlerThread, awareStateManager);
+            mImpl.start(awareHandlerThread, wifiAwareStateManager);
         } else if (phase == SystemService.PHASE_BOOT_COMPLETED) {
             mImpl.startLate();
         }

@@ -17,6 +17,9 @@
 package com.android.server.wifi.aware;
 
 import android.hardware.wifi.V1_0.IWifiNanIface;
+import android.hardware.wifi.V1_0.WifiStatus;
+import android.hardware.wifi.V1_0.WifiStatusCode;
+import android.os.RemoteException;
 import android.util.Log;
 
 import com.android.server.wifi.HalInterfacePolicyManager;
@@ -33,6 +36,7 @@ public class WifiAwareNativeManager {
 
     private WifiAwareStateManager mWifiAwareStateManager;
     private HalInterfacePolicyManager mHalInterfacePolicyManager;
+    private WifiAwareNativeApi mWifiAwareNativeApi;
     private IWifiNanIface mWifiNanIface = null;
     private InterfaceDestroyedListener mInterfaceDestroyedListener =
             new InterfaceDestroyedListener();
@@ -40,9 +44,11 @@ public class WifiAwareNativeManager {
             new InterfaceAvailableForRequestListener();
 
     public WifiAwareNativeManager(WifiAwareStateManager awareStateManager,
-            HalInterfacePolicyManager halInterfacePolicyManager) {
+            HalInterfacePolicyManager halInterfacePolicyManager,
+            WifiAwareNativeApi wifiAwareNativeApi) {
         mWifiAwareStateManager = awareStateManager;
         mHalInterfacePolicyManager = halInterfacePolicyManager;
+        mWifiAwareNativeApi = wifiAwareNativeApi;
         mHalInterfacePolicyManager.registerStatusCallback(
                 new HalInterfacePolicyManager.ManagerStatusCallback() {
                     @Override
@@ -73,6 +79,18 @@ public class WifiAwareNativeManager {
                 if (DBG) Log.d(TAG, "Was not able to obtain an IWifiNanIface");
             } else {
                 if (DBG) Log.d(TAG, "Obtained an IWifiNanIface");
+
+                try {
+                    WifiStatus status = iface.registerEventCallback(mWifiAwareNativeApi);
+                    if (status.code != WifiStatusCode.SUCCESS) {
+                        Log.e(TAG, "registerEventCallback error: code=" + status.code + " ("
+                                + status.description + ")");
+                        return;
+                    }
+                } catch (RemoteException e) {
+                    Log.e(TAG, "registerEventCallback exception: " + e);
+                    return;
+                }
 
                 mWifiNanIface = iface;
                 mWifiAwareStateManager.enableUsage();
