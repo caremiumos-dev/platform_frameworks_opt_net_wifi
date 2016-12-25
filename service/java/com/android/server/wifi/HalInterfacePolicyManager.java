@@ -213,7 +213,7 @@ public class HalInterfacePolicyManager {
     /**
      * Wrapper function to access the HIDL Wi-Fi service. Created to be mockable in unit-tests.
      */
-    private IWifi getWifiServiceMockable() {
+    private IWifi getWifiServiceMockable() throws RemoteException {
         return IWifi.getService(HAL_HIDL_WIFI_SERVICE_NAME);
     }
 

@@ -318,8 +318,8 @@ public class WifiAwareHalTest {
         final int max_app_info_len = 12;
         final int max_queued_transmit_followup_msgs = 7;
 
-        ArgumentCaptor<WifiAwareNative.Capabilities> capabilitiesCapture = ArgumentCaptor
-                .forClass(WifiAwareNative.Capabilities.class);
+        ArgumentCaptor<Capabilities> capabilitiesCapture = ArgumentCaptor
+                .forClass(Capabilities.class);
 
         Bundle args = new Bundle();
         args.putInt("status", WifiAwareNative.AWARE_STATUS_SUCCESS);
@@ -348,7 +348,7 @@ public class WifiAwareHalTest {
 
         verify(mAwareStateManager).onCapabilitiesUpdateResponse(eq(transactionId),
                 capabilitiesCapture.capture());
-        WifiAwareNative.Capabilities capabilities = capabilitiesCapture.getValue();
+        Capabilities capabilities = capabilitiesCapture.getValue();
         collector.checkThat("max_concurrent_aware_clusters",
                 capabilities.maxConcurrentAwareClusters, equalTo(max_concurrent_aware_clusters));
         collector.checkThat("max_publishes", capabilities.maxPublishes, equalTo(max_publishes));
