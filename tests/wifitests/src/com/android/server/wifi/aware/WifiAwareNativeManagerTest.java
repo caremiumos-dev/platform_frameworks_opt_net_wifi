@@ -57,6 +57,7 @@ public class WifiAwareNativeManagerTest {
 
     // mocks
     @Mock private WifiAwareStateManager mWifiAwareStateManagerMock;
+    @Mock private WifiAwareNativeCallbacks mWifiAwareNativeCallbacks;
     @Mock private IWifi mWifiMock;
     @Mock private IWifiChip mWifiChipMock;
     @Mock private IWifiNanIface mWifiNanIfaceMock;
@@ -94,7 +95,7 @@ public class WifiAwareNativeManagerTest {
         MockitoAnnotations.initMocks(this);
 
         mDut = new WifiAwareNativeManagerSpy();
-        mDut.setRefs(mWifiAwareStateManagerMock);
+        mDut.setRefs(mWifiAwareStateManagerMock, mWifiAwareNativeCallbacks);
 
         when(mWifiMock.linkToDeath(any(IHwBinder.DeathRecipient.class), anyInt())).thenReturn(true);
         when(mWifiMock.registerEventCallback(any(IWifiEventCallback.class))).thenReturn(

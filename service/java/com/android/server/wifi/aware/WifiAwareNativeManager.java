@@ -47,6 +47,7 @@ public class WifiAwareNativeManager {
     /* project */  final Object mLock = new Object();
 
     private WifiAwareStateManager mWifiAwareStateManager;
+    private WifiAwareNativeCallbacks mWifiAwareNativeCallbacks;
 
     private IWifi mWifi;
     private boolean mWifiIsStarted = false;
@@ -69,8 +70,10 @@ public class WifiAwareNativeManager {
         }
     }
 
-    /* project */  void setRefs(WifiAwareStateManager awareStateManager) {
+    /* project */ void setRefs(WifiAwareStateManager awareStateManager,
+            WifiAwareNativeCallbacks wifiAwareNativeCallbacks) {
         mWifiAwareStateManager = awareStateManager;
+        mWifiAwareNativeCallbacks = wifiAwareNativeCallbacks;
     }
 
     /**
@@ -148,10 +151,41 @@ public class WifiAwareNativeManager {
                 if (mWifiNanIface == null) {
                     return false;
                 }
+                if (!initializeCallbacks()) { // TODO: not clear how will be re-initialized
+                    mWifiNanIface = null;
+                    return false;
+                }
             }
         }
 
         return true;
+    }
+
+    private boolean initializeCallbacks() {
+        if (VDBG) Log.v(TAG, "initializeCallbacks");
+
+        synchronized (mLock) {
+            IWifiNanIface iface = getWifiNanIface();
+            if (iface == null) {
+                Log.w(TAG, "initializeCallbacks: null interface");
+                return false;
+            }
+
+            try {
+                WifiStatus status = iface.registerEventCallback(mWifiAwareNativeCallbacks);
+                if (status.code == WifiStatusCode.SUCCESS) {
+                    return true;
+                } else {
+                    Log.w(TAG, "initializeCallbacks: error: " + status.code + "("
+                            + status.description + ")");
+                    return false;
+                }
+            } catch (RuntimeException e) {
+                Log.w(TAG, "initializeCallbacks: exception: " + e);
+                serviceDiedHandler();
+                return false;
+            }
+        }
     }
 
     /**
