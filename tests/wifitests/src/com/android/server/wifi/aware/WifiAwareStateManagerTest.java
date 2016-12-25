@@ -1694,35 +1694,35 @@ public class WifiAwareStateManagerTest {
 
     @Test
     public void testSendMessageQueueAllQueueFail() throws Exception {
-        WifiAwareNative.Capabilities cap = getCapabilities();
+        Capabilities cap = getCapabilities();
         testSendMessageQueue(SendMessageAnswer.OP_QUEUE_FAIL, cap,
                 cap.maxQueuedTransmitMessages + 5);
     }
 
     @Test
     public void testSendMessageQueueAllTxSuccess() throws Exception {
-        WifiAwareNative.Capabilities cap = getCapabilities();
+        Capabilities cap = getCapabilities();
         testSendMessageQueue(SendMessageAnswer.OP_QUEUE_OK_SEND_OK, cap,
                 cap.maxQueuedTransmitMessages + 5);
     }
 
     @Test
     public void testSendMessageQueueAllTxFailRetxOk() throws Exception {
-        WifiAwareNative.Capabilities cap = getCapabilities();
+        Capabilities cap = getCapabilities();
         testSendMessageQueue(SendMessageAnswer.OP_QUEUE_OK_SEND_RETX_OK, cap,
                 cap.maxQueuedTransmitMessages + 5);
     }
 
     @Test
     public void testSendMessageQueueAllTxFail() throws Exception {
-        WifiAwareNative.Capabilities cap = getCapabilities();
+        Capabilities cap = getCapabilities();
         testSendMessageQueue(SendMessageAnswer.OP_QUEUE_OK_SEND_RETX_FAIL, cap,
                 cap.maxQueuedTransmitMessages + 5);
     }
 
     @Test
     public void testSendMessageQueueRandomize() throws Exception {
-        WifiAwareNative.Capabilities cap = getCapabilities();
+        Capabilities cap = getCapabilities();
         testSendMessageQueue(SendMessageAnswer.OP_QUEUE_RANDOMIZE, cap,
                 cap.maxQueuedTransmitMessages * 10);
     }
@@ -1732,7 +1732,7 @@ public class WifiAwareStateManagerTest {
      * capability information) they are queued. Support all possible test success/failure codes.
      * @param behavior: SendMessageAnswer.OP_*.
      */
-    private void testSendMessageQueue(int behavior, WifiAwareNative.Capabilities cap,
+    private void testSendMessageQueue(int behavior, Capabilities cap,
             int numMessages) throws Exception {
         final int clientId = 1005;
         final int uid = 1000;
@@ -2572,8 +2572,8 @@ public class WifiAwareStateManagerTest {
         }
     }
 
-    private static WifiAwareNative.Capabilities getCapabilities() {
-        WifiAwareNative.Capabilities cap = new WifiAwareNative.Capabilities();
+    private static Capabilities getCapabilities() {
+        Capabilities cap = new Capabilities();
         cap.maxConcurrentAwareClusters = 1;
         cap.maxPublishes = 2;
         cap.maxSubscribes = 2;

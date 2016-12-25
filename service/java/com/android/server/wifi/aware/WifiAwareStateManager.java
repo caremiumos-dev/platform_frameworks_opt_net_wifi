@@ -180,7 +180,7 @@ public class WifiAwareStateManager {
      * handler thread: no need to use a lock.
      */
     private Context mContext;
-    private volatile WifiAwareNative.Capabilities mCapabilities;
+    private volatile Capabilities mCapabilities;
     private volatile WifiAwareCharacteristics mCharacteristics = null;
     private WifiAwareStateMachine mSm;
     private WifiAwareRttStateManager mRtt;
@@ -236,7 +236,7 @@ public class WifiAwareStateManager {
     /**
      * Get the capabilities.
      */
-    public WifiAwareNative.Capabilities getCapabilities() {
+    public Capabilities getCapabilities() {
         return mCapabilities;
     }
 
@@ -593,7 +593,7 @@ public class WifiAwareStateManager {
      * capabilities of the Aware stack.
      */
     public void onCapabilitiesUpdateResponse(short transactionId,
-            WifiAwareNative.Capabilities capabilities) {
+            Capabilities capabilities) {
         Message msg = mSm.obtainMessage(MESSAGE_TYPE_RESPONSE);
         msg.arg1 = RESPONSE_TYPE_ON_CAPABILITIES_UPDATED;
         msg.arg2 = transactionId;
@@ -1487,7 +1487,7 @@ public class WifiAwareStateManager {
                     break;
                 }
                 case RESPONSE_TYPE_ON_CAPABILITIES_UPDATED: {
-                    onCapabilitiesUpdatedResponseLocal((WifiAwareNative.Capabilities) msg.obj);
+                    onCapabilitiesUpdatedResponseLocal((Capabilities) msg.obj);
                     break;
                 }
                 case RESPONSE_TYPE_ON_CREATE_INTERFACE:
@@ -2286,7 +2286,7 @@ public class WifiAwareStateManager {
         }
     }
 
-    private void onCapabilitiesUpdatedResponseLocal(WifiAwareNative.Capabilities capabilities) {
+    private void onCapabilitiesUpdatedResponseLocal(Capabilities capabilities) {
         if (VDBG) {
             Log.v(TAG, "onCapabilitiesUpdatedResponseLocal: capabilites=" + capabilities);
         }

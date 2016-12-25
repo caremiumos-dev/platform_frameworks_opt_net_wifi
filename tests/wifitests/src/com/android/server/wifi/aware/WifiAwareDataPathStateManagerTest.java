@@ -161,7 +161,7 @@ public class WifiAwareDataPathStateManagerTest {
         final int numNdis = 3;
         final int failCreateInterfaceIndex = 1;
 
-        WifiAwareNative.Capabilities capabilities = new WifiAwareNative.Capabilities();
+        Capabilities capabilities = new Capabilities();
         capabilities.maxNdiInterfaces = numNdis;
 
         ArgumentCaptor<Short> transactionId = ArgumentCaptor.forClass(Short.class);
@@ -747,7 +747,7 @@ public class WifiAwareDataPathStateManagerTest {
         final PublishConfig publishConfig = new PublishConfig.Builder().build();
         final SubscribeConfig subscribeConfig = new SubscribeConfig.Builder().build();
 
-        WifiAwareNative.Capabilities capabilities = new WifiAwareNative.Capabilities();
+        Capabilities capabilities = new Capabilities();
         capabilities.maxNdiInterfaces = 1;
 
         ArgumentCaptor<Short> transactionId = ArgumentCaptor.forClass(Short.class);
