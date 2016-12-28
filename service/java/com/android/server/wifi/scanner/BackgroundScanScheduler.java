@@ -27,7 +27,8 @@ import android.util.Pair;
 import android.util.Rational;
 import android.util.Slog;
 
-import com.android.server.wifi.WifiNative;
+import com.android.server.wifi.WifiNotive;
+import com.android.server.wifi.WifiNotiveTypes;
 import com.android.server.wifi.scanner.ChannelHelper.ChannelCollection;
 
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ import java.util.Set;
  * the last buckets (lower priority) are placed in the next best bucket until the number of buckets
  * is less than the number supported by the hardware.
  *
- * <p>Finally, the scheduler creates a WifiNative.ScanSettings from the list of buckets which may be
+ * <p>Finally, the scheduler creates a WifiNotiveTypes.ScanSettings from the list of buckets which may be
  * passed through the Wifi HAL.</p>
  *
  * <p>This class is not thread safe.</p>
@@ -80,7 +81,7 @@ public class BackgroundScanScheduler {
     private static final int DEFAULT_PERIOD_MS = 30000;
     /**
      * Scan report threshold percentage to assign to the schedule by default
-     * @see com.android.server.wifi.WifiNative.ScanSettings#report_threshold_percent
+     * @see com.android.server.wifi.WifiNotiveTypes.ScanSettings#report_threshold_percent
      */
     private static final int DEFAULT_REPORT_THRESHOLD_PERCENTAGE = 100;
 
@@ -153,8 +154,8 @@ public class BackgroundScanScheduler {
         /**
          * convert ChannelSpec to native representation
          */
-        private WifiNative.ChannelSettings createChannelSettings(int frequency) {
-            WifiNative.ChannelSettings channelSettings = new WifiNative.ChannelSettings();
+        private WifiNotiveTypes.ChannelSettings createChannelSettings(int frequency) {
+            WifiNotiveTypes.ChannelSettings channelSettings = new WifiNotiveTypes.ChannelSettings();
             channelSettings.frequency = frequency;
             return channelSettings;
         }
@@ -193,7 +194,7 @@ public class BackgroundScanScheduler {
         /**
          * convert the setting for this bucket to HAL representation
          */
-        public WifiNative.BucketSettings createBucketSettings(int bucketId, int maxChannels) {
+        public WifiNotiveTypes.BucketSettings createBucketSettings(int bucketId, int maxChannels) {
             this.bucketId = bucketId;
             int reportEvents = WifiScanner.REPORT_EVENT_NO_BATCH;
             int maxPeriodInMs = 0;
@@ -231,7 +232,7 @@ public class BackgroundScanScheduler {
                 }
             }
 
-            WifiNative.BucketSettings bucketSettings = new WifiNative.BucketSettings();
+            WifiNotiveTypes.BucketSettings bucketSettings = new WifiNotiveTypes.BucketSettings();
             bucketSettings.bucket = bucketId;
             bucketSettings.report_events = reportEvents;
             bucketSettings.period_ms = period;
@@ -361,7 +362,7 @@ public class BackgroundScanScheduler {
 
     private final BucketList mBuckets = new BucketList();
     private final ChannelHelper mChannelHelper;
-    private WifiNative.ScanSettings mSchedule;
+    private WifiNotiveTypes.ScanSettings mSchedule;
     // This keeps track of the settings to the max time period bucket to which it was scheduled.
     private final Map<ScanSettings, Bucket> mSettingsToScheduledBucket = new HashMap<>();
 
@@ -393,7 +394,7 @@ public class BackgroundScanScheduler {
     /**
      * Retrieves the current scanning schedule.
      */
-    public @NonNull WifiNative.ScanSettings getSchedule() {
+    public @NonNull WifiNotiveTypes.ScanSettings getSchedule() {
         return mSchedule;
     }
 
@@ -434,9 +435,9 @@ public class BackgroundScanScheduler {
      * creates a schedule for the current buckets
      */
     private void createSchedule(List<Bucket> bucketList, int maxChannelsPerBucket) {
-        WifiNative.ScanSettings schedule = new WifiNative.ScanSettings();
+        WifiNotiveTypes.ScanSettings schedule = new WifiNotiveTypes.ScanSettings();
         schedule.num_buckets = bucketList.size();
-        schedule.buckets = new WifiNative.BucketSettings[bucketList.size()];
+        schedule.buckets = new WifiNotiveTypes.BucketSettings[bucketList.size()];
 
         schedule.max_ap_per_scan = 0;
         schedule.report_threshold_num_scans = getMaxBatch();

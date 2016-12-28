@@ -27,7 +27,7 @@ import android.util.Log;
  */
 public class WifiCountryCode {
     private static final String TAG = "WifiCountryCode";
-    private final WifiNative mWifiNative;
+    private final WifiNotive mWifiNotive;
     private boolean DBG = false;
     private boolean mReady = false;
 
@@ -40,12 +40,12 @@ public class WifiCountryCode {
     private String mCurrentCountryCode = null;
 
     public WifiCountryCode(
-            WifiNative wifiNative,
+            WifiNotive wifiNotive,
             String oemDefaultCountryCode,
             String persistentCountryCode,
             boolean revertCountryCodeOnCellularLoss) {
 
-        mWifiNative = wifiNative;
+        mWifiNotive = wifiNotive;
         mRevertCountryCodeOnCellularLoss = revertCountryCodeOnCellularLoss;
 
         if (!TextUtils.isEmpty(persistentCountryCode)) {
@@ -203,7 +203,7 @@ public class WifiCountryCode {
     }
 
     private boolean setCountryCodeNative(String country) {
-        if (mWifiNative.setCountryCode(country)) {
+        if (mWifiNotive.setCountryCode(country)) {
             Log.d(TAG, "Succeeded to set country code to: " + country);
             mCurrentCountryCode = country;
             return true;

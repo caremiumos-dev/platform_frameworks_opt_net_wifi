@@ -138,7 +138,7 @@ public final class RttService extends SystemService {
             }
         }
 
-        private final WifiNative mWifiNative;
+        private final WifiNotive mWifiNotive;
         private final Context mContext;
         private final Looper mLooper;
         private RttStateMachine mStateMachine;
@@ -147,7 +147,7 @@ public final class RttService extends SystemService {
 
         RttServiceImpl(Context context, Looper looper, WifiInjector wifiInjector) {
             mContext = context;
-            mWifiNative = WifiNative.getWlanNativeInterface();
+            mWifiNotive = WifiNotive.getWlanNativeInterface();
             mLooper = looper;
             mWifiInjector = wifiInjector;
         }
@@ -465,12 +465,12 @@ public final class RttService extends SystemService {
                         case RttManager.CMD_OP_ENABLE_RESPONDER:
                             int key = msg.arg2;
                             mResponderConfig =
-                                    mWifiNative.enableRttResponder(MAX_RESPONDER_DURATION_SECONDS);
-                            if (DBG) Log.d(TAG, "mWifiNative.enableRttResponder called");
+                                    mWifiNotive.enableRttResponder(MAX_RESPONDER_DURATION_SECONDS);
+                            if (DBG) Log.d(TAG, "mWifiNotive.enableRttResponder called");
 
                             if (mResponderConfig != null) {
                                 // TODO: remove once mac address is added when enabling responder.
-                                mResponderConfig.macAddress = mWifiNative.getMacAddress();
+                                mResponderConfig.macAddress = mWifiNotive.getMacAddress();
                                 ci.addResponderRequest(key);
                                 ci.reportResponderEnableSucceed(key, mResponderConfig);
                                 transitionTo(mResponderEnabledState);
@@ -504,7 +504,7 @@ public final class RttService extends SystemService {
                     switch (msg.what) {
                         case CMD_DRIVER_UNLOADED:
                             if (mOutstandingRequest != null) {
-                                mWifiNative.cancelRtt(mOutstandingRequest.params);
+                                mWifiNotive.cancelRtt(mOutstandingRequest.params);
                                 if (DBG) Log.d(TAG, "abort key: " + mOutstandingRequest.key);
                                 mOutstandingRequest.ci.reportAborted(mOutstandingRequest.key);
                                 mOutstandingRequest = null;
@@ -543,7 +543,7 @@ public final class RttService extends SystemService {
                             if (mOutstandingRequest != null
                                     && msg.arg2 == mOutstandingRequest.key) {
                                 if (DBG) Log.d(TAG, "Cancelling ongoing RTT of: " + msg.arg2);
-                                mWifiNative.cancelRtt(mOutstandingRequest.params);
+                                mWifiNotive.cancelRtt(mOutstandingRequest.params);
                                 mOutstandingRequest.ci.reportAborted(mOutstandingRequest.key);
                                 mOutstandingRequest = null;
                                 sendMessage(CMD_ISSUE_NEXT_REQUEST);
@@ -595,10 +595,10 @@ public final class RttService extends SystemService {
                             }
                             // Only disable responder when there are no outstanding clients.
                             if (!hasOutstandingReponderRequests()) {
-                                if (!mWifiNative.disableRttResponder()) {
+                                if (!mWifiNotive.disableRttResponder()) {
                                     Log.e(TAG, "disable responder failed");
                                 }
-                                if (DBG) Log.d(TAG, "mWifiNative.disableRttResponder called");
+                                if (DBG) Log.d(TAG, "mWifiNotive.disableRttResponder called");
                                 transitionTo(mEnabledState);
                             }
                             return HANDLED;
@@ -690,7 +690,7 @@ public final class RttService extends SystemService {
             }
         }
 
-        private WifiNative.RttEventHandler mEventHandler = new WifiNative.RttEventHandler() {
+        private WifiNotive.RttEventHandler mEventHandler = new WifiNotive.RttEventHandler() {
             @Override
             public void onRttResults(RttManager.RttResult[] result) {
                 mStateMachine.sendMessage(CMD_RTT_RESPONSE, result);
@@ -702,7 +702,7 @@ public final class RttService extends SystemService {
             while (mRequestQueue.isEmpty() == false) {
                 request = mRequestQueue.remove();
                 if(request !=  null) {
-                    if (mWifiNative.requestRtt(request.params, mEventHandler)) {
+                    if (mWifiNotive.requestRtt(request.params, mEventHandler)) {
                         if (DBG) Log.d(TAG, "Issued next RTT request with key: " + request.key);
                         return request;
                     } else {
@@ -719,7 +719,7 @@ public final class RttService extends SystemService {
         }
         @Override
         public RttManager.RttCapabilities getRttCapabilities() {
-            return mWifiNative.getRttCapabilities();
+            return mWifiNotive.getRttCapabilities();
         }
     }
 

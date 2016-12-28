@@ -37,10 +37,10 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
- * Unit tests for {@link com.android.server.wifi.WifiNative}.
+ * Unit tests for {@link com.android.server.wifi.WifiNotive}.
  */
 @SmallTest
-public class WifiNativeTest {
+public class WifiNotiveTest {
     private static final int NETWORK_ID = 0;
     private static final String NETWORK_EXTRAS_VARIABLE = "test";
     private static final Map<String, String> NETWORK_EXTRAS_VALUES = new HashMap<>();
@@ -54,13 +54,13 @@ public class WifiNativeTest {
     private static final long FATE_REPORT_DRIVER_TIMESTAMP_USEC = 12345;
     private static final byte[] FATE_REPORT_FRAME_BYTES = new byte[] {
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 0, 1, 2, 3, 4, 5, 6, 7};
-    private static final WifiNative.TxFateReport TX_FATE_REPORT = new WifiNative.TxFateReport(
+    private static final WifiNotiveTypes.TxFateReport TX_FATE_REPORT = new WifiNotiveTypes.TxFateReport(
             WifiLoggerHal.TX_PKT_FATE_SENT,
             FATE_REPORT_DRIVER_TIMESTAMP_USEC,
             WifiLoggerHal.FRAME_TYPE_ETHERNET_II,
             FATE_REPORT_FRAME_BYTES
     );
-    private static final WifiNative.RxFateReport RX_FATE_REPORT = new WifiNative.RxFateReport(
+    private static final WifiNotiveTypes.RxFateReport RX_FATE_REPORT = new WifiNotiveTypes.RxFateReport(
             WifiLoggerHal.RX_PKT_FATE_FW_DROP_INVALID,
             FATE_REPORT_DRIVER_TIMESTAMP_USEC,
             WifiLoggerHal.FRAME_TYPE_ETHERNET_II,
@@ -113,14 +113,14 @@ public class WifiNativeTest {
             new FateMapping((byte) 42, "42")
     };
 
-    private WifiNative mWifiNative;
+    private WifiNotive mWifiNotive;
 
     @Before
     public void setUp() throws Exception {
-        final Constructor<WifiNative> wifiNativeConstructor =
-                WifiNative.class.getDeclaredConstructor(String.class, Boolean.TYPE);
-        wifiNativeConstructor.setAccessible(true);
-        mWifiNative = spy(wifiNativeConstructor.newInstance("test", true));
+        final Constructor<WifiNotive> wifiNotiveConstructor =
+                WifiNotive.class.getDeclaredConstructor(String.class, Boolean.TYPE);
+        wifiNotiveConstructor.setAccessible(true);
+        mWifiNotive = spy(wifiNotiveConstructor.newInstance("test", true));
     }
 
     /**
@@ -128,10 +128,10 @@ public class WifiNativeTest {
      */
     @Test
     public void testSetNetworkExtra() {
-        when(mWifiNative.setNetworkVariable(anyInt(), anyString(), anyString())).thenReturn(true);
-        assertTrue(mWifiNative.setNetworkExtra(NETWORK_ID, NETWORK_EXTRAS_VARIABLE,
+        when(mWifiNotive.setNetworkVariable(anyInt(), anyString(), anyString())).thenReturn(true);
+        assertTrue(mWifiNotive.setNetworkExtra(NETWORK_ID, NETWORK_EXTRAS_VARIABLE,
                 NETWORK_EXTRAS_VALUES));
-        verify(mWifiNative).setNetworkVariable(NETWORK_ID, NETWORK_EXTRAS_VARIABLE,
+        verify(mWifiNotive).setNetworkVariable(NETWORK_ID, NETWORK_EXTRAS_VARIABLE,
                 NETWORK_EXTRAS_SERIALIZED);
     }
 
@@ -140,10 +140,10 @@ public class WifiNativeTest {
      */
     @Test
     public void testGetNetworkExtra() {
-        when(mWifiNative.getNetworkVariable(NETWORK_ID, NETWORK_EXTRAS_VARIABLE))
+        when(mWifiNotive.getNetworkVariable(NETWORK_ID, NETWORK_EXTRAS_VARIABLE))
                 .thenReturn(NETWORK_EXTRAS_SERIALIZED);
         final Map<String, String> actualValues =
-                mWifiNative.getNetworkExtra(NETWORK_ID, NETWORK_EXTRAS_VARIABLE);
+                mWifiNotive.getNetworkExtra(NETWORK_ID, NETWORK_EXTRAS_VARIABLE);
         assertEquals(NETWORK_EXTRAS_VALUES, actualValues);
     }
 
@@ -152,7 +152,7 @@ public class WifiNativeTest {
      */
     @Test
     public void testTxFateReportCtorSetsFields() {
-        WifiNative.TxFateReport fateReport = new WifiNative.TxFateReport(
+        WifiNotiveTypes.TxFateReport fateReport = new WifiNotiveTypes.TxFateReport(
                 WifiLoggerHal.TX_PKT_FATE_SENT,  // non-zero value
                 FATE_REPORT_DRIVER_TIMESTAMP_USEC,
                 WifiLoggerHal.FRAME_TYPE_ETHERNET_II,  // non-zero value
@@ -169,7 +169,7 @@ public class WifiNativeTest {
      */
     @Test
     public void testRxFateReportCtorSetsFields() {
-        WifiNative.RxFateReport fateReport = new WifiNative.RxFateReport(
+        WifiNotiveTypes.RxFateReport fateReport = new WifiNotiveTypes.RxFateReport(
                 WifiLoggerHal.RX_PKT_FATE_FW_DROP_INVALID,  // non-zero value
                 FATE_REPORT_DRIVER_TIMESTAMP_USEC,
                 WifiLoggerHal.FRAME_TYPE_ETHERNET_II,  // non-zero value
@@ -206,7 +206,7 @@ public class WifiNativeTest {
      */
     @Test
     public void testFateReportTableHeader() {
-        final String header = WifiNative.FateReport.getTableHeader();
+        final String header = WifiNotiveTypes.FateReport.getTableHeader();
         assertEquals(
                 "\nTime usec        Walltime      Direction  Fate                              "
                 + "Protocol      Type                     Result\n"
@@ -219,7 +219,7 @@ public class WifiNativeTest {
      */
     @Test
     public void testTxFateReportToTableRowString() {
-        WifiNative.TxFateReport fateReport = TX_FATE_REPORT;
+        WifiNotiveTypes.TxFateReport fateReport = TX_FATE_REPORT;
         assertTrue(
                 fateReport.toTableRowString().replaceAll("\\s+", " ").trim().matches(
                     FATE_REPORT_DRIVER_TIMESTAMP_USEC + " "  // timestamp
@@ -233,7 +233,7 @@ public class WifiNativeTest {
         );
 
         for (FrameTypeMapping frameTypeMapping : FRAME_TYPE_MAPPINGS) {
-            fateReport = new WifiNative.TxFateReport(
+            fateReport = new WifiNotiveTypes.TxFateReport(
                     WifiLoggerHal.TX_PKT_FATE_SENT,
                     FATE_REPORT_DRIVER_TIMESTAMP_USEC,
                     frameTypeMapping.mTypeNumber,
@@ -253,7 +253,7 @@ public class WifiNativeTest {
         }
 
         for (FateMapping fateMapping : TX_FATE_MAPPINGS) {
-            fateReport = new WifiNative.TxFateReport(
+            fateReport = new WifiNotiveTypes.TxFateReport(
                     fateMapping.mFateNumber,
                     FATE_REPORT_DRIVER_TIMESTAMP_USEC,
                     WifiLoggerHal.FRAME_TYPE_80211_MGMT,
@@ -279,7 +279,7 @@ public class WifiNativeTest {
      */
     @Test
     public void testTxFateReportToVerboseStringWithPiiAllowed() {
-        WifiNative.TxFateReport fateReport = TX_FATE_REPORT;
+        WifiNotiveTypes.TxFateReport fateReport = TX_FATE_REPORT;
 
         String verboseFateString = fateReport.toVerboseStringWithPiiAllowed();
         assertTrue(verboseFateString.contains("Frame direction: TX"));
@@ -295,7 +295,7 @@ public class WifiNativeTest {
         // assertTrue(verboseFateString.contains("abcdefgh........"));  // hex dump
 
         for (FrameTypeMapping frameTypeMapping : FRAME_TYPE_MAPPINGS) {
-            fateReport = new WifiNative.TxFateReport(
+            fateReport = new WifiNotiveTypes.TxFateReport(
                     WifiLoggerHal.TX_PKT_FATE_SENT,
                     FATE_REPORT_DRIVER_TIMESTAMP_USEC,
                     frameTypeMapping.mTypeNumber,
@@ -307,7 +307,7 @@ public class WifiNativeTest {
         }
 
         for (FateMapping fateMapping : TX_FATE_MAPPINGS) {
-            fateReport = new WifiNative.TxFateReport(
+            fateReport = new WifiNotiveTypes.TxFateReport(
                     fateMapping.mFateNumber,
                     FATE_REPORT_DRIVER_TIMESTAMP_USEC,
                     WifiLoggerHal.FRAME_TYPE_80211_MGMT,
@@ -323,7 +323,7 @@ public class WifiNativeTest {
      */
     @Test
     public void testRxFateReportToTableRowString() {
-        WifiNative.RxFateReport fateReport = RX_FATE_REPORT;
+        WifiNotiveTypes.RxFateReport fateReport = RX_FATE_REPORT;
         assertTrue(
                 fateReport.toTableRowString().replaceAll("\\s+", " ").trim().matches(
                         FATE_REPORT_DRIVER_TIMESTAMP_USEC + " "  // timestamp
@@ -339,7 +339,7 @@ public class WifiNativeTest {
         // FrameTypeMappings omitted, as they're the same as for TX.
 
         for (FateMapping fateMapping : RX_FATE_MAPPINGS) {
-            fateReport = new WifiNative.RxFateReport(
+            fateReport = new WifiNotiveTypes.RxFateReport(
                     fateMapping.mFateNumber,
                     FATE_REPORT_DRIVER_TIMESTAMP_USEC,
                     WifiLoggerHal.FRAME_TYPE_80211_MGMT,
@@ -365,7 +365,7 @@ public class WifiNativeTest {
      */
     @Test
     public void testRxFateReportToVerboseStringWithPiiAllowed() {
-        WifiNative.RxFateReport fateReport = RX_FATE_REPORT;
+        WifiNotiveTypes.RxFateReport fateReport = RX_FATE_REPORT;
 
         String verboseFateString = fateReport.toVerboseStringWithPiiAllowed();
         assertTrue(verboseFateString.contains("Frame direction: RX"));
@@ -383,7 +383,7 @@ public class WifiNativeTest {
         // FrameTypeMappings omitted, as they're the same as for TX.
 
         for (FateMapping fateMapping : RX_FATE_MAPPINGS) {
-            fateReport = new WifiNative.RxFateReport(
+            fateReport = new WifiNotiveTypes.RxFateReport(
                     fateMapping.mFateNumber,
                     FATE_REPORT_DRIVER_TIMESTAMP_USEC,
                     WifiLoggerHal.FRAME_TYPE_80211_MGMT,
@@ -399,8 +399,8 @@ public class WifiNativeTest {
      */
     @Test
     public void testStartPktFateMonitoringReturnsFalseWhenHalIsNotStarted() {
-        assertFalse(mWifiNative.isHalStarted());
-        assertFalse(mWifiNative.startPktFateMonitoring());
+        assertFalse(mWifiNotive.isHalStarted());
+        assertFalse(mWifiNotive.startPktFateMonitoring());
     }
 
     /**
@@ -408,9 +408,9 @@ public class WifiNativeTest {
      */
     @Test
     public void testGetTxPktFatesReturnsErrorWhenHalIsNotStarted() {
-        WifiNative.TxFateReport[] fateReports = null;
-        assertFalse(mWifiNative.isHalStarted());
-        assertFalse(mWifiNative.getTxPktFates(fateReports));
+        WifiNotiveTypes.TxFateReport[] fateReports = null;
+        assertFalse(mWifiNotive.isHalStarted());
+        assertFalse(mWifiNotive.getTxPktFates(fateReports));
     }
 
     /**
@@ -418,9 +418,9 @@ public class WifiNativeTest {
      */
     @Test
     public void testGetRxPktFatesReturnsErrorWhenHalIsNotStarted() {
-        WifiNative.RxFateReport[] fateReports = null;
-        assertFalse(mWifiNative.isHalStarted());
-        assertFalse(mWifiNative.getRxPktFates(fateReports));
+        WifiNotiveTypes.RxFateReport[] fateReports = null;
+        assertFalse(mWifiNotive.isHalStarted());
+        assertFalse(mWifiNotive.getRxPktFates(fateReports));
     }
 
     // TODO(quiche): Add tests for the success cases (when HAL has been started). Specifically:
@@ -435,7 +435,7 @@ public class WifiNativeTest {
     /** Verifies that getDriverStateDumpNative returns null when HAL is not started. */
     @Test
     public void testGetDriverStateDumpReturnsNullWhenHalIsNotStarted() {
-        assertEquals(null, mWifiNative.getDriverStateDump());
+        assertEquals(null, mWifiNotive.getDriverStateDump());
     }
 
     // TODO(b/28005116): Add test for the success case of getDriverStateDump().

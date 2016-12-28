@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import android.test.suitebuilder.annotation.SmallTest;
-import com.android.server.wifi.WifiNative;
+import com.android.server.wifi.WifiNotive;
 import com.android.server.wifi.hotspot2.anqp.Constants;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,7 +47,7 @@ public class PasspointEventHandlerTest {
     private static final String BSSID_STR = "11:22:33:44:55:66";
     private static final String ICON_FILENAME = "icon.test";
 
-    @Mock WifiNative mWifiNative;
+    @Mock WifiNotive mWifiNotive;
     @Mock PasspointEventHandler.Callbacks mCallbacks;
     PasspointEventHandler mHandler;
 
@@ -55,7 +55,7 @@ public class PasspointEventHandlerTest {
     @Before
     public void setUp() throws Exception {
         initMocks(this);
-        mHandler = new PasspointEventHandler(mWifiNative, mCallbacks);
+        mHandler = new PasspointEventHandler(mWifiNotive, mCallbacks);
     }
 
     /**
@@ -70,11 +70,11 @@ public class PasspointEventHandlerTest {
                         Constants.ANQPElementType.ANQPRoamingConsortium);
 
         // wpa_supplicant succeeded the request.
-        when(mWifiNative.doCustomSupplicantCommand(expectedCommand)).thenReturn("OK");
+        when(mWifiNotive.doCustomSupplicantCommand(expectedCommand)).thenReturn("OK");
         assertTrue(mHandler.requestANQP(BSSID, elementToRequest));
 
         // wpa_supplicant failed the request.
-        when(mWifiNative.doCustomSupplicantCommand(expectedCommand)).thenReturn("FAILED");
+        when(mWifiNotive.doCustomSupplicantCommand(expectedCommand)).thenReturn("FAILED");
         assertFalse(mHandler.requestANQP(BSSID, elementToRequest));
     }
 
@@ -89,11 +89,11 @@ public class PasspointEventHandlerTest {
                 Constants.getHS20ElementID(Constants.ANQPElementType.HSFriendlyName);
 
         // wpa_supplicant succeeded the request.
-        when(mWifiNative.doCustomSupplicantCommand(expectedCommand)).thenReturn("OK");
+        when(mWifiNotive.doCustomSupplicantCommand(expectedCommand)).thenReturn("OK");
         assertTrue(mHandler.requestANQP(BSSID, elementToRequest));
 
         // wpa_supplicant failed the request.
-        when(mWifiNative.doCustomSupplicantCommand(expectedCommand)).thenReturn("FAILED");
+        when(mWifiNotive.doCustomSupplicantCommand(expectedCommand)).thenReturn("FAILED");
         assertFalse(mHandler.requestANQP(BSSID, elementToRequest));
     }
 
@@ -114,11 +114,11 @@ public class PasspointEventHandlerTest {
                 Constants.getHS20ElementID(Constants.ANQPElementType.HSFriendlyName);
 
         // wpa_supplicant succeeded the request.
-        when(mWifiNative.doCustomSupplicantCommand(expectedCommand)).thenReturn("OK");
+        when(mWifiNotive.doCustomSupplicantCommand(expectedCommand)).thenReturn("OK");
         assertTrue(mHandler.requestANQP(BSSID, elementToRequest));
 
         // wpa_supplicant failed the request.
-        when(mWifiNative.doCustomSupplicantCommand(expectedCommand)).thenReturn("FAILED");
+        when(mWifiNotive.doCustomSupplicantCommand(expectedCommand)).thenReturn("FAILED");
         assertFalse(mHandler.requestANQP(BSSID, elementToRequest));
     }
 
@@ -130,11 +130,11 @@ public class PasspointEventHandlerTest {
         String expectedCommand = "REQ_HS20_ICON " + BSSID_STR + " " + ICON_FILENAME;
 
         // wpa_supplicant succeeded the request.
-        when(mWifiNative.doCustomSupplicantCommand(expectedCommand)).thenReturn("OK");
+        when(mWifiNotive.doCustomSupplicantCommand(expectedCommand)).thenReturn("OK");
         assertTrue(mHandler.requestIcon(BSSID, ICON_FILENAME));
 
         // wpa_supplicant failed the request.
-        when(mWifiNative.doCustomSupplicantCommand(expectedCommand)).thenReturn("FAILED");
+        when(mWifiNotive.doCustomSupplicantCommand(expectedCommand)).thenReturn("FAILED");
         assertFalse(mHandler.requestIcon(BSSID, ICON_FILENAME));
     }
 
@@ -144,7 +144,7 @@ public class PasspointEventHandlerTest {
     @Test
     public void anqpRequestCompletedWithError() {
         mHandler.notifyANQPDone(BSSID, false);
-        verify(mWifiNative, never()).scanResult(anyString());
+        verify(mWifiNotive, never()).scanResult(anyString());
         verify(mCallbacks).onANQPResponse(BSSID, null);
     }
 }

@@ -20,7 +20,7 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiScanner;
 import android.util.Log;
 
-import com.android.server.wifi.WifiNative;
+import com.android.server.wifi.WifiNotive;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -103,18 +103,18 @@ public class ApConfigUtil {
     /**
      * Update AP band and channel based on the provided country code and band.
      * This will also set
-     * @param wifiNative reference to WifiNative
+     * @param wifiNotive reference to WifiNotive
      * @param countryCode country code
      * @param allowed2GChannels list of allowed 2GHz channels
      * @param config configuration to update
      * @return an integer result code
      */
-    public static int updateApChannelConfig(WifiNative wifiNative,
+    public static int updateApChannelConfig(WifiNotive wifiNotive,
                                             String countryCode,
                                             ArrayList<Integer> allowed2GChannels,
                                             WifiConfiguration config) {
         /* Use default band and channel for device without HAL. */
-        if (!wifiNative.isHalStarted()) {
+        if (!wifiNotive.isHalStarted()) {
             config.apBand = DEFAULT_AP_BAND;
             config.apChannel = DEFAULT_AP_CHANNEL;
             return SUCCESS;
@@ -131,9 +131,9 @@ public class ApConfigUtil {
         if (config.apChannel == 0) {
             config.apChannel = chooseApChannel(
                     config.apBand, allowed2GChannels,
-                    wifiNative.getChannelsForBand(WifiScanner.WIFI_BAND_5_GHZ));
+                    wifiNotive.getChannelsForBand(WifiScanner.WIFI_BAND_5_GHZ));
             if (config.apChannel == -1) {
-                if (wifiNative.isGetChannelsForBandSupported()) {
+                if (wifiNotive.isGetChannelsForBandSupported()) {
                     /* We're not able to get channel when it is supported by HAL. */
                     Log.e(TAG, "Failed to get available channel.");
                     return ERROR_NO_CHANNEL;

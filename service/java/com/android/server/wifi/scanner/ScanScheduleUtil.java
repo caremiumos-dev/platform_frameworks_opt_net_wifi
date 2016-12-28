@@ -21,7 +21,8 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiScanner.ScanData;
 import android.net.wifi.WifiScanner.ScanSettings;
 
-import com.android.server.wifi.WifiNative;
+import com.android.server.wifi.WifiNotive;
+import com.android.server.wifi.WifiNotiveTypes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +35,8 @@ public class ScanScheduleUtil {
     /**
      * Compares two ChannelSettings for equality.
      */
-    public static boolean channelEquals(@Nullable WifiNative.ChannelSettings channel1,
-                                         @Nullable WifiNative.ChannelSettings channel2) {
+    public static boolean channelEquals(@Nullable WifiNotiveTypes.ChannelSettings channel1,
+                                         @Nullable WifiNotiveTypes.ChannelSettings channel2) {
         if (channel1 == null || channel2 == null) return false;
         if (channel1 == channel2) return true;
 
@@ -47,8 +48,8 @@ public class ScanScheduleUtil {
     /**
      * Compares two BucketSettings for equality.
      */
-    public static boolean bucketEquals(@Nullable WifiNative.BucketSettings bucket1,
-                                        @Nullable WifiNative.BucketSettings bucket2) {
+    public static boolean bucketEquals(@Nullable WifiNotiveTypes.BucketSettings bucket1,
+                                        @Nullable WifiNotiveTypes.BucketSettings bucket2) {
         if (bucket1 == null || bucket2 == null) return false;
         if (bucket1 == bucket2) return true;
 
@@ -69,8 +70,8 @@ public class ScanScheduleUtil {
     /**
      * Compares two ScanSettings for equality.
      */
-    public static boolean scheduleEquals(@Nullable WifiNative.ScanSettings schedule1,
-                                         @Nullable WifiNative.ScanSettings schedule2) {
+    public static boolean scheduleEquals(@Nullable WifiNotiveTypes.ScanSettings schedule1,
+                                         @Nullable WifiNotiveTypes.ScanSettings schedule2) {
         if (schedule1 == null || schedule2 == null) return false;
         if (schedule1 == schedule2) return true;
 

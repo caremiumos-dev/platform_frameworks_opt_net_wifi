@@ -16,10 +16,10 @@ public class BaseWifiDiagnostics {
     public BaseWifiDiagnostics() { }
 
     public synchronized void startLogging(boolean verboseEnabled) {
-        WifiNative wifiNative = WifiNative.getWlanNativeInterface();
-        mFirmwareVersion = wifiNative.getFirmwareVersion();
-        mDriverVersion = wifiNative.getDriverVersion();
-        mSupportedFeatureSet = wifiNative.getSupportedLoggerFeatureSet();
+        WifiNotive wifiNotive = WifiNotive.getWlanNativeInterface();
+        mFirmwareVersion = wifiNotive.getFirmwareVersion();
+        mDriverVersion = wifiNotive.getDriverVersion();
+        mSupportedFeatureSet = wifiNotive.getSupportedLoggerFeatureSet();
     }
 
     public synchronized void startPacketLog() { }

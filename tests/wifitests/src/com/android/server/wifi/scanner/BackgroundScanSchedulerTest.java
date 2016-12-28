@@ -31,8 +31,9 @@ import android.net.wifi.WifiScanner.ScanSettings;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.util.ArraySet;
 
-import com.android.server.wifi.WifiNative;
-import com.android.server.wifi.WifiNative.BucketSettings;
+import com.android.server.wifi.WifiNotive;
+import com.android.server.wifi.WifiNotiveTypes;
+import com.android.server.wifi.WifiNotiveTypes.BucketSettings;
 import com.android.server.wifi.scanner.KnownBandsChannelHelper.KnownBandsChannelCollection;
 
 import org.junit.After;
@@ -82,7 +83,7 @@ public class BackgroundScanSchedulerTest {
         Collection<ScanSettings> requests = Collections.emptyList();
 
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals(30000, schedule.base_period_ms);
         assertBuckets(schedule, 0);
@@ -96,7 +97,7 @@ public class BackgroundScanSchedulerTest {
         ));
 
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals(30000, schedule.base_period_ms);
         assertBuckets(schedule, 1);
@@ -113,7 +114,7 @@ public class BackgroundScanSchedulerTest {
         ));
 
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals("base_period_ms", 10000, schedule.base_period_ms);
         assertBuckets(schedule, 1);
@@ -131,7 +132,7 @@ public class BackgroundScanSchedulerTest {
                 WifiScanner.REPORT_EVENT_FULL_SCAN_RESULT));
 
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals("base_period_ms", 10000, schedule.base_period_ms);
         assertBuckets(schedule, 2);
@@ -151,7 +152,7 @@ public class BackgroundScanSchedulerTest {
                 WifiScanner.REPORT_EVENT_FULL_SCAN_RESULT));
 
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals("base_period_ms", 10000, schedule.base_period_ms);
         assertBuckets(schedule, 2);
@@ -169,7 +170,7 @@ public class BackgroundScanSchedulerTest {
                 WifiScanner.REPORT_EVENT_FULL_SCAN_RESULT));
 
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals("base_period_ms", 10000, schedule.base_period_ms);
         assertBuckets(schedule, 2);
@@ -191,7 +192,7 @@ public class BackgroundScanSchedulerTest {
                 WifiScanner.REPORT_EVENT_NO_BATCH));
 
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals("base_period_ms", 60000, schedule.base_period_ms);
         assertBuckets(schedule, 1);
@@ -208,7 +209,7 @@ public class BackgroundScanSchedulerTest {
 
         mScheduler.setMaxBatch(5);
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals("base_period_ms", 30000, schedule.base_period_ms);
         assertBuckets(schedule, 1);
@@ -226,7 +227,7 @@ public class BackgroundScanSchedulerTest {
 
         mScheduler.setMaxBatch(6);
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals("base_period_ms", 60000, schedule.base_period_ms);
         assertBuckets(schedule, 1);
@@ -244,7 +245,7 @@ public class BackgroundScanSchedulerTest {
 
         mScheduler.setMaxApPerScan(5);
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals("maxScansToCache", 5, schedule.max_ap_per_scan);
     }
@@ -257,7 +258,7 @@ public class BackgroundScanSchedulerTest {
 
         mScheduler.setMaxApPerScan(8);
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals("maxApsPerScan", 8, schedule.max_ap_per_scan);
     }
@@ -274,7 +275,7 @@ public class BackgroundScanSchedulerTest {
 
         mScheduler.setMaxBuckets(2);
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals("base_period_ms", 30000, schedule.base_period_ms);
         assertBuckets(schedule, 2);
@@ -295,7 +296,7 @@ public class BackgroundScanSchedulerTest {
 
         mScheduler.setMaxBuckets(2);
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals("base_period_ms", 30000, schedule.base_period_ms);
         assertBuckets(schedule, 2);
@@ -332,7 +333,7 @@ public class BackgroundScanSchedulerTest {
 
         mScheduler.setMaxBuckets(6);
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals("base_period_ms", 10000, schedule.base_period_ms);
         assertBuckets(schedule, 6);
@@ -350,7 +351,7 @@ public class BackgroundScanSchedulerTest {
         mScheduler.setMaxBuckets(2);
         mScheduler.setMaxChannelsPerBucket(1);
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals("base_period_ms", 30000, schedule.base_period_ms);
         assertBuckets(schedule, 2);
@@ -368,7 +369,7 @@ public class BackgroundScanSchedulerTest {
         mScheduler.setMaxBuckets(2);
         mScheduler.setMaxChannelsPerBucket(2);
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals("base_period_ms", 30000, schedule.base_period_ms);
         assertBuckets(schedule, 2);
@@ -388,7 +389,7 @@ public class BackgroundScanSchedulerTest {
         mScheduler.setMaxBuckets(2);
         mScheduler.setMaxChannelsPerBucket(2);
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals("base_period_ms", 30000, schedule.base_period_ms);
         assertBuckets(schedule, 2);
@@ -421,7 +422,7 @@ public class BackgroundScanSchedulerTest {
         ));
 
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals(30000, schedule.base_period_ms);
         assertBuckets(schedule, 1);
@@ -439,7 +440,7 @@ public class BackgroundScanSchedulerTest {
                 WifiScanner.REPORT_EVENT_AFTER_BUFFER_FULL));
 
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals("base_period_ms", 30000, schedule.base_period_ms);
         assertBuckets(schedule, 2);
@@ -464,7 +465,7 @@ public class BackgroundScanSchedulerTest {
         mScheduler.setMaxBuckets(2);
         mScheduler.setMaxChannelsPerBucket(2);
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals("base_period_ms", 10000, schedule.base_period_ms);
         assertBuckets(schedule, 1);
@@ -497,7 +498,7 @@ public class BackgroundScanSchedulerTest {
         mScheduler.setMaxBuckets(2);
         mScheduler.setMaxChannelsPerBucket(2);
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals("base_period_ms", 10000, schedule.base_period_ms);
         assertBuckets(schedule, 1);
@@ -530,7 +531,7 @@ public class BackgroundScanSchedulerTest {
         mScheduler.setMaxBuckets(2);
         mScheduler.setMaxChannelsPerBucket(2);
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals("base_period_ms", 10000, schedule.base_period_ms);
         assertBuckets(schedule, 2);
@@ -568,7 +569,7 @@ public class BackgroundScanSchedulerTest {
 
         mScheduler.setMaxBuckets(3);
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals("base_period_ms", 10000, schedule.base_period_ms);
         assertBuckets(schedule, 3);
@@ -617,7 +618,7 @@ public class BackgroundScanSchedulerTest {
         mScheduler.setMaxBuckets(5);
         mScheduler.setMaxChannelsPerBucket(2);
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         assertEquals("base_period_ms", 10000, schedule.base_period_ms);
         assertBuckets(schedule, 4);
@@ -669,7 +670,7 @@ public class BackgroundScanSchedulerTest {
         scheduler.setMaxBuckets(2);
         scheduler.setMaxChannelsPerBucket(2);
         scheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = scheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = scheduler.getSchedule();
 
         assertEquals("base_period_ms", 10000, schedule.base_period_ms);
         assertBuckets(schedule, 1);
@@ -698,7 +699,7 @@ public class BackgroundScanSchedulerTest {
         scheduler.setMaxBuckets(2);
         scheduler.setMaxChannelsPerBucket(3);
         scheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = scheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = scheduler.getSchedule();
 
         assertEquals("base_period_ms", 10000, schedule.base_period_ms);
         assertBuckets(schedule, 2);
@@ -733,7 +734,7 @@ public class BackgroundScanSchedulerTest {
         scheduler.setMaxBuckets(3);
         scheduler.setMaxChannelsPerBucket(2);
         scheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = scheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = scheduler.getSchedule();
 
         assertEquals("base_period_ms", 10000, schedule.base_period_ms);
         assertBuckets(schedule, 3);
@@ -774,7 +775,7 @@ public class BackgroundScanSchedulerTest {
         requests.add(settings);
 
         mScheduler.updateSchedule(requests);
-        WifiNative.ScanSettings schedule = mScheduler.getSchedule();
+        WifiNotiveTypes.ScanSettings schedule = mScheduler.getSchedule();
 
         int expectedPeriod = computeExpectedPeriod(settings.periodInMs);
         NativeScanSettingsBuilder expectedBuilder = new NativeScanSettingsBuilder()
@@ -795,7 +796,7 @@ public class BackgroundScanSchedulerTest {
         assertNativeScanSettingsEquals(expectedBuilder.build(), schedule);
     }
 
-    private void assertBuckets(WifiNative.ScanSettings schedule, int numBuckets) {
+    private void assertBuckets(WifiNotiveTypes.ScanSettings schedule, int numBuckets) {
         assertEquals("num_buckets", numBuckets, schedule.num_buckets);
         assertNotNull("buckets was null", schedule.buckets);
         assertEquals("num_buckets and actual buckets", schedule.num_buckets,
@@ -818,7 +819,7 @@ public class BackgroundScanSchedulerTest {
         }
     }
 
-    private void assertSettingsSatisfied(WifiNative.ScanSettings schedule,
+    private void assertSettingsSatisfied(WifiNotiveTypes.ScanSettings schedule,
             ScanSettings settings, boolean bucketsLimited, boolean exactPeriod) {
         assertTrue("bssids per scan: " + schedule.max_ap_per_scan + " /<= "
                 + settings.numBssidsPerScan,
@@ -967,7 +968,7 @@ public class BackgroundScanSchedulerTest {
 
     // find closest bucket period to the requested period that exists in the schedule
     private static int computeExpectedPeriod(int requestedPeriod,
-            WifiNative.ScanSettings schedule) {
+            WifiNotiveTypes.ScanSettings schedule) {
         int period = 0;
         int minDiff = Integer.MAX_VALUE;
         for (int i = 0; i < schedule.num_buckets; ++i) {

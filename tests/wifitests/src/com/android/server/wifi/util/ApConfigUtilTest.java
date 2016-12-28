@@ -25,7 +25,7 @@ import android.net.wifi.WifiScanner;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import com.android.internal.util.ArrayUtils;
-import com.android.server.wifi.WifiNative;
+import com.android.server.wifi.WifiNotive;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -104,7 +104,7 @@ public class ApConfigUtilTest {
     private static final int[] ALLOWED_5G_FREQS = {5180, 5190, 5200};
     private static final int[] ALLOWED_5G_CHANNELS = {36, 38, 40};
 
-    @Mock WifiNative mWifiNative;
+    @Mock WifiNotive mWifiNotive;
     private final ArrayList<Integer> mAllowed2GChannels =
             new ArrayList<Integer>(Arrays.asList(ALLOWED_2G_CHANNELS));
 
@@ -185,10 +185,10 @@ public class ApConfigUtilTest {
         WifiConfiguration config = new WifiConfiguration();
         config.apChannel = 36;
         config.apBand = WifiConfiguration.AP_BAND_5GHZ;
-        when(mWifiNative.isHalStarted()).thenReturn(false);
+        when(mWifiNotive.isHalStarted()).thenReturn(false);
         assertEquals(ApConfigUtil.SUCCESS,
                 ApConfigUtil.updateApChannelConfig(
-                        mWifiNative, TEST_COUNTRY_CODE, mAllowed2GChannels, config));
+                        mWifiNotive, TEST_COUNTRY_CODE, mAllowed2GChannels, config));
         /* Verify default band and channel is used. */
         assertEquals(ApConfigUtil.DEFAULT_AP_BAND, config.apBand);
         assertEquals(ApConfigUtil.DEFAULT_AP_CHANNEL, config.apChannel);
@@ -202,10 +202,10 @@ public class ApConfigUtilTest {
     public void updateApChannelConfig5GBandNoCountryCode() throws Exception {
         WifiConfiguration config = new WifiConfiguration();
         config.apBand = WifiConfiguration.AP_BAND_5GHZ;
-        when(mWifiNative.isHalStarted()).thenReturn(true);
+        when(mWifiNotive.isHalStarted()).thenReturn(true);
         assertEquals(ApConfigUtil.ERROR_GENERIC,
                 ApConfigUtil.updateApChannelConfig(
-                        mWifiNative, null, mAllowed2GChannels, config));
+                        mWifiNotive, null, mAllowed2GChannels, config));
     }
 
     /**
@@ -216,10 +216,10 @@ public class ApConfigUtilTest {
         WifiConfiguration config = new WifiConfiguration();
         config.apBand = WifiConfiguration.AP_BAND_5GHZ;
         config.apChannel = 36;
-        when(mWifiNative.isHalStarted()).thenReturn(true);
+        when(mWifiNotive.isHalStarted()).thenReturn(true);
         assertEquals(ApConfigUtil.SUCCESS,
                 ApConfigUtil.updateApChannelConfig(
-                        mWifiNative, TEST_COUNTRY_CODE, mAllowed2GChannels, config));
+                        mWifiNotive, TEST_COUNTRY_CODE, mAllowed2GChannels, config));
         assertEquals(WifiConfiguration.AP_BAND_5GHZ, config.apBand);
         assertEquals(36, config.apChannel);
     }
@@ -232,13 +232,13 @@ public class ApConfigUtilTest {
     public void updateApChannelConfigWith5GBandNoChannelAllowed() throws Exception {
         WifiConfiguration config = new WifiConfiguration();
         config.apBand = WifiConfiguration.AP_BAND_5GHZ;
-        when(mWifiNative.isHalStarted()).thenReturn(true);
-        when(mWifiNative.getChannelsForBand(WifiScanner.WIFI_BAND_5_GHZ))
+        when(mWifiNotive.isHalStarted()).thenReturn(true);
+        when(mWifiNotive.getChannelsForBand(WifiScanner.WIFI_BAND_5_GHZ))
                 .thenReturn(null);
-        when(mWifiNative.isGetChannelsForBandSupported()).thenReturn(true);
+        when(mWifiNotive.isGetChannelsForBandSupported()).thenReturn(true);
         assertEquals(ApConfigUtil.ERROR_NO_CHANNEL,
                 ApConfigUtil.updateApChannelConfig(
-                        mWifiNative, TEST_COUNTRY_CODE, mAllowed2GChannels, config));
+                        mWifiNotive, TEST_COUNTRY_CODE, mAllowed2GChannels, config));
     }
 
     /**
@@ -249,13 +249,13 @@ public class ApConfigUtilTest {
     public void updateApChannelConfigWithoutChannelsForBandSupported() throws Exception {
         WifiConfiguration config = new WifiConfiguration();
         config.apBand = WifiConfiguration.AP_BAND_5GHZ;
-        when(mWifiNative.isHalStarted()).thenReturn(true);
-        when(mWifiNative.getChannelsForBand(WifiScanner.WIFI_BAND_5_GHZ))
+        when(mWifiNotive.isHalStarted()).thenReturn(true);
+        when(mWifiNotive.getChannelsForBand(WifiScanner.WIFI_BAND_5_GHZ))
                 .thenReturn(null);
-        when(mWifiNative.isGetChannelsForBandSupported()).thenReturn(false);
+        when(mWifiNotive.isGetChannelsForBandSupported()).thenReturn(false);
         assertEquals(ApConfigUtil.SUCCESS,
                 ApConfigUtil.updateApChannelConfig(
-                        mWifiNative, TEST_COUNTRY_CODE, mAllowed2GChannels, config));
+                        mWifiNotive, TEST_COUNTRY_CODE, mAllowed2GChannels, config));
         assertEquals(ApConfigUtil.DEFAULT_AP_BAND, config.apBand);
         assertEquals(ApConfigUtil.DEFAULT_AP_CHANNEL, config.apChannel);
     }

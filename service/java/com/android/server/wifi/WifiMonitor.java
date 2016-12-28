@@ -528,9 +528,9 @@ public class WifiMonitor {
         return sWifiMonitor;
     }
 
-    private final WifiNative mWifiNative;
+    private final WifiNotive mWifiNotive;
     private WifiMonitor() {
-        mWifiNative = WifiNative.getWlanNativeInterface();
+        mWifiNotive = WifiNotive.getWlanNativeInterface();
     }
 
     private int mRecvErrors = 0;
@@ -592,9 +592,9 @@ public class WifiMonitor {
         if (mVerboseLoggingEnabled) Log.d(TAG, "connecting to supplicant");
         int connectTries = 0;
         while (true) {
-            if (mWifiNative.connectToSupplicant()) {
+            if (mWifiNotive.connectToSupplicant()) {
                 mConnected = true;
-                new MonitorThread(mWifiNative.getLocalLog()).start();
+                new MonitorThread(mWifiNotive.getLocalLog()).start();
                 return true;
             }
             if (connectTries++ < 5) {
@@ -632,7 +632,7 @@ public class WifiMonitor {
     }
 
     public synchronized void stopSupplicant() {
-        mWifiNative.stopSupplicant();
+        mWifiNotive.stopSupplicant();
     }
 
     public synchronized void stopAllMonitoring() {
@@ -737,7 +737,7 @@ public class WifiMonitor {
                     }
                     break;
                 }
-                String eventStr = mWifiNative.waitForEvent();
+                String eventStr = mWifiNotive.waitForEvent();
 
                 // Skip logging the common but mostly uninteresting events
                 if (!eventStr.contains(BSS_ADDED_STR) && !eventStr.contains(BSS_REMOVED_STR)) {

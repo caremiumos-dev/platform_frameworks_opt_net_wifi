@@ -56,7 +56,8 @@ import com.android.server.wifi.WifiInjector;
 import com.android.server.wifi.WifiLog;
 import com.android.server.wifi.WifiMetrics;
 import com.android.server.wifi.WifiMetricsProto;
-import com.android.server.wifi.WifiNative;
+import com.android.server.wifi.WifiNotive;
+import com.android.server.wifi.WifiNotiveTypes;
 import com.android.server.wifi.WifiStateMachine;
 import com.android.server.wifi.scanner.ChannelHelper.ChannelCollection;
 import com.android.server.wifi.util.WifiAsyncChannel;
@@ -271,7 +272,7 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
 
     private ChannelHelper mChannelHelper;
     private BackgroundScanScheduler mBackgroundScheduler;
-    private WifiNative.ScanSettings mPreviousSchedule;
+    private WifiNotiveTypes.ScanSettings mPreviousSchedule;
 
     private WifiBackgroundScanStateMachine mBackgroundScanStateMachine;
     private WifiSingleScanStateMachine mSingleScanStateMachine;
@@ -439,13 +440,13 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
      * ScanningState. Any requests queued while scanning will be placed in the pending queue and
      * executed after transitioning back to IdleState.
      */
-    class WifiSingleScanStateMachine extends StateMachine implements WifiNative.ScanEventHandler {
+    class WifiSingleScanStateMachine extends StateMachine implements WifiNotiveTypes.ScanEventHandler {
         private final DefaultState mDefaultState = new DefaultState();
         private final DriverStartedState mDriverStartedState = new DriverStartedState();
         private final IdleState  mIdleState  = new IdleState();
         private final ScanningState  mScanningState  = new ScanningState();
 
-        private WifiNative.ScanSettings mActiveScanSettings = null;
+        private WifiNotiveTypes.ScanSettings mActiveScanSettings = null;
         private RequestList<ScanSettings> mActiveScans = new RequestList<>();
         private RequestList<ScanSettings> mPendingScans = new RequestList<>();
 
@@ -475,12 +476,12 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
         public void onScanStatus(int event) {
             if (DBG) localLog("onScanStatus event received, event=" + event);
             switch(event) {
-                case WifiNative.WIFI_SCAN_RESULTS_AVAILABLE:
-                case WifiNative.WIFI_SCAN_THRESHOLD_NUM_SCANS:
-                case WifiNative.WIFI_SCAN_THRESHOLD_PERCENT:
+                case WifiNotive.WIFI_SCAN_RESULTS_AVAILABLE:
+                case WifiNotive.WIFI_SCAN_THRESHOLD_NUM_SCANS:
+                case WifiNotive.WIFI_SCAN_THRESHOLD_PERCENT:
                     sendMessage(CMD_SCAN_RESULTS_AVAILABLE);
                     break;
-                case WifiNative.WIFI_SCAN_FAILED:
+                case WifiNotive.WIFI_SCAN_FAILED:
                     sendMessage(CMD_SCAN_FAILED);
                     break;
                 default:
@@ -710,7 +711,7 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
             }
 
             // there is always one bucket for a single scan
-            WifiNative.BucketSettings activeBucket = mActiveScanSettings.buckets[0];
+            WifiNotiveTypes.BucketSettings activeBucket = mActiveScanSettings.buckets[0];
 
             // validate that all requested channels are being scanned
             ChannelCollection activeChannels = mChannelHelper.createChannelCollection();
@@ -730,12 +731,12 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
                 if (mActiveScanSettings.hiddenNetworks == null) {
                     return false;
                 }
-                List<WifiNative.HiddenNetwork> activeHiddenNetworks = new ArrayList<>();
-                for (WifiNative.HiddenNetwork hiddenNetwork : mActiveScanSettings.hiddenNetworks) {
+                List<WifiNotiveTypes.HiddenNetwork> activeHiddenNetworks = new ArrayList<>();
+                for (WifiNotiveTypes.HiddenNetwork hiddenNetwork : mActiveScanSettings.hiddenNetworks) {
                     activeHiddenNetworks.add(hiddenNetwork);
                 }
                 for (ScanSettings.HiddenNetwork hiddenNetwork : settings.hiddenNetworks) {
-                    WifiNative.HiddenNetwork nativeHiddenNetwork = new WifiNative.HiddenNetwork();
+                    WifiNotiveTypes.HiddenNetwork nativeHiddenNetwork = new WifiNotiveTypes.HiddenNetwork();
                     nativeHiddenNetwork.ssid = hiddenNetwork.ssid;
                     if (!activeHiddenNetworks.contains(nativeHiddenNetwork)) {
                         return false;
@@ -768,20 +769,20 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
             }
             mChannelHelper.updateChannels();
             // TODO move merging logic to a scheduler
-            WifiNative.ScanSettings settings = new WifiNative.ScanSettings();
+            WifiNotiveTypes.ScanSettings settings = new WifiNotiveTypes.ScanSettings();
             settings.num_buckets = 1;
-            WifiNative.BucketSettings bucketSettings = new WifiNative.BucketSettings();
+            WifiNotiveTypes.BucketSettings bucketSettings = new WifiNotiveTypes.BucketSettings();
             bucketSettings.bucket = 0;
             bucketSettings.period_ms = 0;
             bucketSettings.report_events = WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN;
 
             ChannelCollection channels = mChannelHelper.createChannelCollection();
-            List<WifiNative.HiddenNetwork> hiddenNetworkList = new ArrayList<>();
+            List<WifiNotiveTypes.HiddenNetwork> hiddenNetworkList = new ArrayList<>();
             for (RequestInfo<ScanSettings> entry : mPendingScans) {
                 channels.addChannels(entry.settings);
                 if (entry.settings.hiddenNetworks != null) {
                     for (int i = 0; i < entry.settings.hiddenNetworks.length; i++) {
-                        WifiNative.HiddenNetwork hiddenNetwork = new WifiNative.HiddenNetwork();
+                        WifiNotiveTypes.HiddenNetwork hiddenNetwork = new WifiNotiveTypes.HiddenNetwork();
                         hiddenNetwork.ssid = entry.settings.hiddenNetworks[i].ssid;
                         hiddenNetworkList.add(hiddenNetwork);
                     }
@@ -792,16 +793,16 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
                 }
             }
             if (hiddenNetworkList.size() > 0) {
-                settings.hiddenNetworks = new WifiNative.HiddenNetwork[hiddenNetworkList.size()];
+                settings.hiddenNetworks = new WifiNotiveTypes.HiddenNetwork[hiddenNetworkList.size()];
                 int numHiddenNetworks = 0;
-                for (WifiNative.HiddenNetwork hiddenNetwork : hiddenNetworkList) {
+                for (WifiNotiveTypes.HiddenNetwork hiddenNetwork : hiddenNetworkList) {
                     settings.hiddenNetworks[numHiddenNetworks++] = hiddenNetwork;
                 }
             }
 
             channels.fillBucketSettings(bucketSettings, Integer.MAX_VALUE);
 
-            settings.buckets = new WifiNative.BucketSettings[] {bucketSettings};
+            settings.buckets = new WifiNotiveTypes.BucketSettings[] {bucketSettings};
             if (mScannerImpl.startSingleScan(settings, this)) {
                 // store the active scan settings
                 mActiveScanSettings = settings;
@@ -892,7 +893,7 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
     }
 
     class WifiBackgroundScanStateMachine extends StateMachine
-            implements WifiNative.ScanEventHandler, WifiNative.HotlistEventHandler {
+            implements WifiNotiveTypes.ScanEventHandler, WifiNotiveTypes.HotlistEventHandler {
 
         private final DefaultState mDefaultState = new DefaultState();
         private final StartedState mStartedState = new StartedState();
@@ -935,12 +936,12 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
         public void onScanStatus(int event) {
             if (DBG) localLog("onScanStatus event received, event=" + event);
             switch(event) {
-                case WifiNative.WIFI_SCAN_RESULTS_AVAILABLE:
-                case WifiNative.WIFI_SCAN_THRESHOLD_NUM_SCANS:
-                case WifiNative.WIFI_SCAN_THRESHOLD_PERCENT:
+                case WifiNotive.WIFI_SCAN_RESULTS_AVAILABLE:
+                case WifiNotive.WIFI_SCAN_THRESHOLD_NUM_SCANS:
+                case WifiNotive.WIFI_SCAN_THRESHOLD_PERCENT:
                     sendMessage(CMD_SCAN_RESULTS_AVAILABLE);
                     break;
-                case WifiNative.WIFI_SCAN_FAILED:
+                case WifiNotive.WIFI_SCAN_FAILED:
                     sendMessage(CMD_SCAN_FAILED);
                     break;
                 default:
@@ -1001,8 +1002,8 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
 
                         mBackgroundScheduler = new BackgroundScanScheduler(mChannelHelper);
 
-                        WifiNative.ScanCapabilities capabilities =
-                                new WifiNative.ScanCapabilities();
+                        WifiNotiveTypes.ScanCapabilities capabilities =
+                                new WifiNotiveTypes.ScanCapabilities();
                         if (!mScannerImpl.getScanCapabilities(capabilities)) {
                             loge("could not get scan capabilities");
                             return HANDLED;
@@ -1232,7 +1233,7 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
             Collection<ScanSettings> settings = mActiveBackgroundScans.getAllSettings();
 
             mBackgroundScheduler.updateSchedule(settings);
-            WifiNative.ScanSettings schedule = mBackgroundScheduler.getSchedule();
+            WifiNotiveTypes.ScanSettings schedule = mBackgroundScheduler.getSchedule();
 
             if (ScanScheduleUtil.scheduleEquals(mPreviousSchedule, schedule)) {
                 if (DBG) Log.d(TAG, "schedule updated with no change");
@@ -1251,7 +1252,7 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
                         + ", max ap per scan=" + schedule.max_ap_per_scan
                         + ", batched scans=" + schedule.report_threshold_num_scans);
                 for (int b = 0; b < schedule.num_buckets; b++) {
-                    WifiNative.BucketSettings bucket = schedule.buckets[b];
+                    WifiNotiveTypes.BucketSettings bucket = schedule.buckets[b];
                     localLog("bucket " + bucket.bucket + " (" + bucket.period_ms + "ms)"
                             + "[" + bucket.report_events + "]: "
                             + ChannelHelper.toString(bucket));
@@ -1270,7 +1271,7 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
                             + ", max ap per scan=" + schedule.max_ap_per_scan
                             + ", batched scans=" + schedule.report_threshold_num_scans);
                     for (int b = 0; b < schedule.num_buckets; b++) {
-                        WifiNative.BucketSettings bucket = schedule.buckets[b];
+                        WifiNotiveTypes.BucketSettings bucket = schedule.buckets[b];
                         loge("bucket " + bucket.bucket + " (" + bucket.period_ms + "ms)"
                                 + "[" + bucket.report_events + "]: "
                                 + ChannelHelper.toString(bucket));
@@ -1476,7 +1477,7 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
      * multiple requests at the same time, so will need non-trivial changes to support (if at all
      * possible) in WifiScanningService.
      */
-    class WifiPnoScanStateMachine extends StateMachine implements WifiNative.PnoEventHandler {
+    class WifiPnoScanStateMachine extends StateMachine implements WifiNotiveTypes.PnoEventHandler {
 
         private final DefaultState mDefaultState = new DefaultState();
         private final StartedState mStartedState = new StartedState();
@@ -1757,8 +1758,8 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
             }
         }
 
-        private WifiNative.PnoSettings convertPnoSettingsToNative(PnoSettings pnoSettings) {
-            WifiNative.PnoSettings nativePnoSetting = new WifiNative.PnoSettings();
+        private WifiNotiveTypes.PnoSettings convertPnoSettingsToNative(PnoSettings pnoSettings) {
+            WifiNotiveTypes.PnoSettings nativePnoSetting = new WifiNotiveTypes.PnoSettings();
             nativePnoSetting.min5GHzRssi = pnoSettings.min5GHzRssi;
             nativePnoSetting.min24GHzRssi = pnoSettings.min24GHzRssi;
             nativePnoSetting.initialScoreMax = pnoSettings.initialScoreMax;
@@ -1768,9 +1769,9 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
             nativePnoSetting.band5GHzBonus = pnoSettings.band5GHzBonus;
             nativePnoSetting.isConnected = pnoSettings.isConnected;
             nativePnoSetting.networkList =
-                    new WifiNative.PnoNetwork[pnoSettings.networkList.length];
+                    new WifiNotiveTypes.PnoNetwork[pnoSettings.networkList.length];
             for (int i = 0; i < pnoSettings.networkList.length; i++) {
-                nativePnoSetting.networkList[i] = new WifiNative.PnoNetwork();
+                nativePnoSetting.networkList[i] = new WifiNotiveTypes.PnoNetwork();
                 nativePnoSetting.networkList[i].ssid = pnoSettings.networkList[i].ssid;
                 nativePnoSetting.networkList[i].flags = pnoSettings.networkList[i].flags;
                 nativePnoSetting.networkList[i].auth_bit_field =
@@ -1828,7 +1829,7 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
                 loge("Failing scan request because there is already an active scan");
                 return false;
             }
-            WifiNative.PnoSettings nativePnoSettings = convertPnoSettingsToNative(pnoSettings);
+            WifiNotiveTypes.PnoSettings nativePnoSettings = convertPnoSettingsToNative(pnoSettings);
             if (!mScannerImpl.setHwPnoList(nativePnoSettings, mPnoScanStateMachine)) {
                 return false;
             }
@@ -2179,7 +2180,7 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
      * TODO: This state machine doesn't handle driver loading/unloading yet.
      */
     class WifiChangeStateMachine extends StateMachine
-            implements WifiNative.SignificantWifiChangeEventHandler {
+            implements WifiNotiveTypes.SignificantWifiChangeEventHandler {
 
         private static final int MAX_APS_TO_TRACK = 3;
         private static final int MOVING_SCAN_PERIOD_MS      = 10000;
@@ -2664,7 +2665,7 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
             }
         }
         if (mBackgroundScheduler != null) {
-            WifiNative.ScanSettings schedule = mBackgroundScheduler.getSchedule();
+            WifiNotiveTypes.ScanSettings schedule = mBackgroundScheduler.getSchedule();
             if (schedule != null) {
                 pw.println("schedule:");
                 pw.println("  base period: " + schedule.base_period_ms);
@@ -2672,7 +2673,7 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
                 pw.println("  batched scans: " + schedule.report_threshold_num_scans);
                 pw.println("  buckets:");
                 for (int b = 0; b < schedule.num_buckets; b++) {
-                    WifiNative.BucketSettings bucket = schedule.buckets[b];
+                    WifiNotiveTypes.BucketSettings bucket = schedule.buckets[b];
                     pw.println("    bucket " + bucket.bucket + " (" + bucket.period_ms + "ms)["
                             + bucket.report_events + "]: "
                             + ChannelHelper.toString(bucket));

@@ -302,7 +302,7 @@ public class WifiStateMachineTest {
     TestIpManager mTestIpManager;
     TestLooper mLooper;
 
-    @Mock WifiNative mWifiNative;
+    @Mock WifiNotive mWifiNotive;
     @Mock WifiScanner mWifiScanner;
     @Mock SupplicantStateTracker mSupplicantStateTracker;
     @Mock WifiMetrics mWifiMetrics;
@@ -354,7 +354,7 @@ public class WifiStateMachineTest {
         when(mWifiInjector.makeWifiConnectivityManager(any(WifiInfo.class), anyBoolean()))
                 .thenReturn(mWifiConnectivityManager);
 
-        when(mWifiNative.getInterfaceName()).thenReturn("mockWlan");
+        when(mWifiNotive.getInterfaceName()).thenReturn("mockWlan");
         when(mWifiSupplicantControl.getFrameworkNetworkId(anyInt())).thenReturn(0);
 
 
@@ -388,7 +388,7 @@ public class WifiStateMachineTest {
         when(mClientInterface.disableSupplicant()).thenReturn(true);
 
         mWsm = new WifiStateMachine(context, factory, mLooper.getLooper(),
-            mUserManager, mWifiInjector, mBackupManagerProxy, mCountryCode, mWifiNative);
+            mUserManager, mWifiInjector, mBackupManagerProxy, mCountryCode, mWifiNotive);
         mWsmThread = getWsmHandlerThread(mWsm);
 
         final AsyncChannel channel = new AsyncChannel();
@@ -443,21 +443,21 @@ public class WifiStateMachineTest {
 
     @Test
     public void loadComponents() throws Exception {
-        when(mWifiNative.startHal()).thenReturn(true);
+        when(mWifiNotive.startHal()).thenReturn(true);
         mWsm.setSupplicantRunning(true);
         mLooper.dispatchAll();
 
         assertEquals("SupplicantStartingState", getCurrentState().getName());
 
-        when(mWifiNative.setDeviceName(anyString())).thenReturn(true);
-        when(mWifiNative.setManufacturer(anyString())).thenReturn(true);
-        when(mWifiNative.setModelName(anyString())).thenReturn(true);
-        when(mWifiNative.setModelNumber(anyString())).thenReturn(true);
-        when(mWifiNative.setSerialNumber(anyString())).thenReturn(true);
-        when(mWifiNative.setConfigMethods(anyString())).thenReturn(true);
-        when(mWifiNative.setDeviceType(anyString())).thenReturn(true);
-        when(mWifiNative.setSerialNumber(anyString())).thenReturn(true);
-        when(mWifiNative.setScanningMacOui(any(byte[].class))).thenReturn(true);
+        when(mWifiNotive.setDeviceName(anyString())).thenReturn(true);
+        when(mWifiNotive.setManufacturer(anyString())).thenReturn(true);
+        when(mWifiNotive.setModelName(anyString())).thenReturn(true);
+        when(mWifiNotive.setModelNumber(anyString())).thenReturn(true);
+        when(mWifiNotive.setSerialNumber(anyString())).thenReturn(true);
+        when(mWifiNotive.setConfigMethods(anyString())).thenReturn(true);
+        when(mWifiNotive.setDeviceType(anyString())).thenReturn(true);
+        when(mWifiNotive.setSerialNumber(anyString())).thenReturn(true);
+        when(mWifiNotive.setScanningMacOui(any(byte[].class))).thenReturn(true);
 
         mWsm.sendMessage(WifiMonitor.SUP_CONNECTION_EVENT);
         mLooper.dispatchAll();
@@ -499,14 +499,14 @@ public class WifiStateMachineTest {
 
     @Test
     public void loadComponentsFailure() throws Exception {
-        when(mWifiNative.startHal()).thenReturn(false);
+        when(mWifiNotive.startHal()).thenReturn(false);
         when(mClientInterface.enableSupplicant()).thenReturn(false);
 
         mWsm.setSupplicantRunning(true);
         mLooper.dispatchAll();
         assertEquals("InitialState", getCurrentState().getName());
 
-        when(mWifiNative.startHal()).thenReturn(true);
+        when(mWifiNotive.startHal()).thenReturn(true);
         mWsm.setSupplicantRunning(true);
         mLooper.dispatchAll();
         assertEquals("InitialState", getCurrentState().getName());
@@ -526,7 +526,7 @@ public class WifiStateMachineTest {
 
     @Test
     public void shouldStartSupplicantWhenConnectModeRequested() throws Exception {
-        when(mWifiNative.startHal()).thenReturn(true);
+        when(mWifiNotive.startHal()).thenReturn(true);
 
         // The first time we start out in InitialState, we sit around here.
         mLooper.dispatchAll();
@@ -545,7 +545,7 @@ public class WifiStateMachineTest {
      */
     @Test
     public void checkStartInCorrectStateAfterChangingInitialState() throws Exception {
-        when(mWifiNative.startHal()).thenReturn(true);
+        when(mWifiNotive.startHal()).thenReturn(true);
 
         // Check initial state
         mLooper.dispatchAll();
@@ -561,15 +561,15 @@ public class WifiStateMachineTest {
         mWsm.setSupplicantRunning(true);
         mLooper.dispatchAll();
         assertEquals("SupplicantStartingState", getCurrentState().getName());
-        when(mWifiNative.setDeviceName(anyString())).thenReturn(true);
-        when(mWifiNative.setManufacturer(anyString())).thenReturn(true);
-        when(mWifiNative.setModelName(anyString())).thenReturn(true);
-        when(mWifiNative.setModelNumber(anyString())).thenReturn(true);
-        when(mWifiNative.setSerialNumber(anyString())).thenReturn(true);
-        when(mWifiNative.setConfigMethods(anyString())).thenReturn(true);
-        when(mWifiNative.setDeviceType(anyString())).thenReturn(true);
-        when(mWifiNative.setSerialNumber(anyString())).thenReturn(true);
-        when(mWifiNative.setScanningMacOui(any(byte[].class))).thenReturn(true);
+        when(mWifiNotive.setDeviceName(anyString())).thenReturn(true);
+        when(mWifiNotive.setManufacturer(anyString())).thenReturn(true);
+        when(mWifiNotive.setModelName(anyString())).thenReturn(true);
+        when(mWifiNotive.setModelNumber(anyString())).thenReturn(true);
+        when(mWifiNotive.setSerialNumber(anyString())).thenReturn(true);
+        when(mWifiNotive.setConfigMethods(anyString())).thenReturn(true);
+        when(mWifiNotive.setDeviceType(anyString())).thenReturn(true);
+        when(mWifiNotive.setSerialNumber(anyString())).thenReturn(true);
+        when(mWifiNotive.setScanningMacOui(any(byte[].class))).thenReturn(true);
 
         mWsm.sendMessage(WifiMonitor.SUP_CONNECTION_EVENT);
         mLooper.dispatchAll();
@@ -650,7 +650,7 @@ public class WifiStateMachineTest {
         }
         assertEquals("hidden networks", hiddenNetworkSSIDSet, actualHiddenNetworkSSIDSet);
 
-        when(mWifiNative.getScanResults()).thenReturn(getMockScanResults());
+        when(mWifiNotive.getScanResults()).thenReturn(getMockScanResults());
         mWsm.sendMessage(WifiMonitor.SCAN_RESULTS_EVENT);
 
         mLooper.dispatchAll();

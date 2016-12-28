@@ -25,6 +25,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.android.server.wifi.WifiNative;
+import com.android.server.wifi.WifiNotive;
+
 
 import libcore.util.HexEncoding;
 
@@ -96,8 +98,8 @@ public class WifiAwareNative {
     /* package */ static native int initAwareHandlersNative(Class<WifiNative> cls, int iface);
 
     private boolean isAwareInit() {
-        synchronized (WifiNative.sLock) {
-            if (!WifiNative.getWlanNativeInterface().isHalStarted()) {
+        synchronized (WifiNotive.sLock) {
+            if (!WifiNotive.getWlanNativeInterface().isHalStarted()) {
                 /*
                  * We should never start the HAL - that's done at a higher level
                  * by the Wi-Fi state machine.
@@ -105,7 +107,7 @@ public class WifiAwareNative {
                 mNativeHandlersIsInitialized = false;
                 return false;
             } else if (!mNativeHandlersIsInitialized) {
-                int ret = initAwareHandlersNative(WifiNative.class, WifiNative.sWlan0Index);
+                int ret = initAwareHandlersNative(WifiNative.class, WifiNotive.sWlan0Index);
                 if (DBG) Log.d(TAG, "initAwareHandlersNative: res=" + ret);
                 mNativeHandlersIsInitialized = ret == WIFI_SUCCESS;
 
@@ -149,9 +151,9 @@ public class WifiAwareNative {
         if (VDBG) Log.d(TAG, "getCapabilities");
         if (isAwareInit()) {
             int ret;
-            synchronized (WifiNative.sLock) {
+            synchronized (WifiNotive.sLock) {
                 ret = getCapabilitiesNative(transactionId, WifiNative.class,
-                        WifiNative.sWlan0Index);
+                        WifiNotive.sWlan0Index);
             }
             if (ret != WIFI_SUCCESS) {
                 Log.w(TAG, "getCapabilities: HAL API returned non-success -- " + ret);
@@ -184,17 +186,17 @@ public class WifiAwareNative {
         if (isAwareInit()) {
             int ret;
             if (initialConfiguration) {
-                synchronized (WifiNative.sLock) {
+                synchronized (WifiNotive.sLock) {
                     ret = enableAndConfigureNative(transactionId, WifiNative.class,
-                            WifiNative.sWlan0Index, configRequest);
+                            WifiNotive.sWlan0Index, configRequest);
                 }
                 if (ret != WIFI_SUCCESS) {
                     Log.w(TAG, "enableAndConfigureNative: HAL API returned non-success -- " + ret);
                 }
             } else {
-                synchronized (WifiNative.sLock) {
+                synchronized (WifiNotive.sLock) {
                     ret = updateConfigurationNative(transactionId, WifiNative.class,
-                            WifiNative.sWlan0Index, configRequest);
+                            WifiNotive.sWlan0Index, configRequest);
                 }
                 if (ret != WIFI_SUCCESS) {
                     Log.w(TAG, "updateConfigurationNative: HAL API returned non-success -- " + ret);
@@ -219,8 +221,8 @@ public class WifiAwareNative {
         if (VDBG) Log.d(TAG, "disableAware");
         if (isAwareInit()) {
             int ret;
-            synchronized (WifiNative.sLock) {
-                ret = disableNative(transactionId, WifiNative.class, WifiNative.sWlan0Index);
+            synchronized (WifiNotive.sLock) {
+                ret = disableNative(transactionId, WifiNative.class, WifiNotive.sWlan0Index);
             }
             if (ret != WIFI_SUCCESS) {
                 Log.w(TAG, "disableNative: HAL API returned non-success -- " + ret);
@@ -251,9 +253,9 @@ public class WifiAwareNative {
 
         if (isAwareInit()) {
             int ret;
-            synchronized (WifiNative.sLock) {
+            synchronized (WifiNotive.sLock) {
                 ret = publishNative(transactionId, publishId, WifiNative.class,
-                        WifiNative.sWlan0Index, publishConfig);
+                        WifiNotive.sWlan0Index, publishConfig);
             }
             if (ret != WIFI_SUCCESS) {
                 Log.w(TAG, "publishNative: HAL API returned non-success -- " + ret);
@@ -285,9 +287,9 @@ public class WifiAwareNative {
 
         if (isAwareInit()) {
             int ret;
-            synchronized (WifiNative.sLock) {
+            synchronized (WifiNotive.sLock) {
                 ret = subscribeNative(transactionId, subscribeId, WifiNative.class,
-                        WifiNative.sWlan0Index, subscribeConfig);
+                        WifiNotive.sWlan0Index, subscribeConfig);
             }
             if (ret != WIFI_SUCCESS) {
                 Log.w(TAG, "subscribeNative: HAL API returned non-success -- " + ret);
@@ -328,8 +330,8 @@ public class WifiAwareNative {
 
         if (isAwareInit()) {
             int ret;
-            synchronized (WifiNative.sLock) {
-                ret = sendMessageNative(transactionId, WifiNative.class, WifiNative.sWlan0Index,
+            synchronized (WifiNotive.sLock) {
+                ret = sendMessageNative(transactionId, WifiNative.class, WifiNotive.sWlan0Index,
                         pubSubId, requestorInstanceId, dest, message);
             }
             if (ret != WIFI_SUCCESS) {
@@ -360,8 +362,8 @@ public class WifiAwareNative {
 
         if (isAwareInit()) {
             int ret;
-            synchronized (WifiNative.sLock) {
-                ret = stopPublishNative(transactionId, WifiNative.class, WifiNative.sWlan0Index,
+            synchronized (WifiNotive.sLock) {
+                ret = stopPublishNative(transactionId, WifiNative.class, WifiNotive.sWlan0Index,
                         pubSubId);
             }
             if (ret != WIFI_SUCCESS) {
@@ -392,8 +394,8 @@ public class WifiAwareNative {
 
         if (isAwareInit()) {
             int ret;
-            synchronized (WifiNative.sLock) {
-                ret = stopSubscribeNative(transactionId, WifiNative.class, WifiNative.sWlan0Index,
+            synchronized (WifiNotive.sLock) {
+                ret = stopSubscribeNative(transactionId, WifiNative.class, WifiNotive.sWlan0Index,
                         pubSubId);
             }
             if (ret != WIFI_SUCCESS) {
@@ -426,9 +428,9 @@ public class WifiAwareNative {
 
         if (isAwareInit()) {
             int ret;
-            synchronized (WifiNative.sLock) {
-                ret = createAwareNetworkInterfaceNative(transactionId, WifiNative.class, WifiNative
-                        .sWlan0Index, interfaceName);
+            synchronized (WifiNotive.sLock) {
+                ret = createAwareNetworkInterfaceNative(transactionId, WifiNative.class,
+                        WifiNotive.sWlan0Index, interfaceName);
             }
             if (ret != WIFI_SUCCESS) {
                 Log.w(TAG, "createAwareNetworkInterfaceNative: HAL API returned non-success -- "
@@ -460,9 +462,9 @@ public class WifiAwareNative {
 
         if (isAwareInit()) {
             int ret;
-            synchronized (WifiNative.sLock) {
-                ret = deleteAwareNetworkInterfaceNative(transactionId, WifiNative.class, WifiNative
-                        .sWlan0Index, interfaceName);
+            synchronized (WifiNotive.sLock) {
+                ret = deleteAwareNetworkInterfaceNative(transactionId, WifiNative.class,
+                        WifiNotive.sWlan0Index, interfaceName);
             }
             if (ret != WIFI_SUCCESS) {
                 Log.w(TAG, "deleteAwareNetworkInterfaceNative: HAL API returned non-success -- "
@@ -510,10 +512,10 @@ public class WifiAwareNative {
 
         if (isAwareInit()) {
             int ret;
-            synchronized (WifiNative.sLock) {
-                ret = initiateDataPathNative(transactionId, WifiNative.class, WifiNative
-                        .sWlan0Index, peerId, channelRequestType, channel, peer, interfaceName,
-                        message);
+            synchronized (WifiNotive.sLock) {
+                ret = initiateDataPathNative(transactionId, WifiNative.class,
+                        WifiNotive.sWlan0Index, peerId, channelRequestType, channel, peer,
+                        interfaceName, message);
             }
             if (ret != WIFI_SUCCESS) {
                 Log.w(TAG, "initiateDataPathNative: HAL API returned non-success -- " + ret);
@@ -549,9 +551,9 @@ public class WifiAwareNative {
 
         if (isAwareInit()) {
             int ret;
-            synchronized (WifiNative.sLock) {
-                ret = respondToDataPathRequestNative(transactionId, WifiNative.class, WifiNative
-                        .sWlan0Index, accept, ndpId, interfaceName, message);
+            synchronized (WifiNotive.sLock) {
+                ret = respondToDataPathRequestNative(transactionId, WifiNative.class,
+                        WifiNotive.sWlan0Index, accept, ndpId, interfaceName, message);
             }
             if (ret != WIFI_SUCCESS) {
                 Log.w(TAG,
@@ -581,8 +583,8 @@ public class WifiAwareNative {
 
         if (isAwareInit()) {
             int ret;
-            synchronized (WifiNative.sLock) {
-                ret = endDataPathNative(transactionId, WifiNative.class, WifiNative.sWlan0Index,
+            synchronized (WifiNotive.sLock) {
+                ret = endDataPathNative(transactionId, WifiNative.class, WifiNotive.sWlan0Index,
                         ndpId);
             }
             if (ret != WIFI_SUCCESS) {

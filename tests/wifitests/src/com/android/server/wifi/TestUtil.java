@@ -34,14 +34,14 @@ import java.util.ArrayList;
 public class TestUtil {
 
     /**
-     * Override wifi interface using {@code wifiNative}.
+     * Override wifi interface using {@code wifiNotive}.
      */
-    public static void installWlanWifiNative(WifiNative wifiNative) throws Exception {
-        Field field = WifiNative.class.getDeclaredField("wlanNativeInterface");
+    public static void installWlanWifiNotive(WifiNotive wifiNotive) throws Exception {
+        Field field = WifiNotive.class.getDeclaredField("wlanNativeInterface");
         field.setAccessible(true);
-        field.set(null, wifiNative);
+        field.set(null, wifiNotive);
 
-        when(wifiNative.getInterfaceName()).thenReturn("mockWlan");
+        when(wifiNotive.getInterfaceName()).thenReturn("mockWlan");
     }
 
     /**

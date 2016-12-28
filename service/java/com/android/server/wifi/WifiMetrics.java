@@ -181,7 +181,7 @@ public class WifiMetrics {
         public static final int FAILURE_AUTHENTICATION_FAILURE = 3;
         // SSID_TEMP_DISABLED (Also Auth failure)
         public static final int FAILURE_SSID_TEMP_DISABLED = 4;
-        // reconnect() or reassociate() call to WifiNative failed
+        // reconnect() or reassociate() call to WifiNotive failed
         public static final int FAILURE_CONNECT_NETWORK_FAILED = 5;
         // NETWORK_DISCONNECTION_EVENT
         public static final int FAILURE_NETWORK_DISCONNECTION = 6;

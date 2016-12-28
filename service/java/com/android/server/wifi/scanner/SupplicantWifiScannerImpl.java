@@ -29,7 +29,8 @@ import com.android.internal.R;
 import com.android.server.wifi.Clock;
 import com.android.server.wifi.ScanDetail;
 import com.android.server.wifi.WifiMonitor;
-import com.android.server.wifi.WifiNative;
+import com.android.server.wifi.WifiNotive;
+import com.android.server.wifi.WifiNotiveTypes;
 import com.android.server.wifi.scanner.ChannelHelper.ChannelCollection;
 
 import java.util.ArrayDeque;
@@ -61,7 +62,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
             "com.android.server.util.SupplicantWifiScannerImpl.action.SCAN_PERIOD";
 
     private final Context mContext;
-    private final WifiNative mWifiNative;
+    private final WifiNotive mWifiNotive;
     private final AlarmManager mAlarmManager;
     private final Handler mEventHandler;
     private final ChannelHelper mChannelHelper;
@@ -70,14 +71,14 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
     private final Object mSettingsLock = new Object();
 
     // Next scan settings to apply when the previous scan completes
-    private WifiNative.ScanSettings mPendingBackgroundScanSettings = null;
-    private WifiNative.ScanEventHandler mPendingBackgroundScanEventHandler = null;
-    private WifiNative.ScanSettings mPendingSingleScanSettings = null;
-    private WifiNative.ScanEventHandler mPendingSingleScanEventHandler = null;
+    private WifiNotiveTypes.ScanSettings mPendingBackgroundScanSettings = null;
+    private WifiNotiveTypes.ScanEventHandler mPendingBackgroundScanEventHandler = null;
+    private WifiNotiveTypes.ScanSettings mPendingSingleScanSettings = null;
+    private WifiNotiveTypes.ScanEventHandler mPendingSingleScanEventHandler = null;
 
     // Active background scan settings/state
-    private WifiNative.ScanSettings mBackgroundScanSettings = null;
-    private WifiNative.ScanEventHandler mBackgroundScanEventHandler = null;
+    private WifiNotiveTypes.ScanSettings mBackgroundScanSettings = null;
+    private WifiNotiveTypes.ScanEventHandler mBackgroundScanEventHandler = null;
     private int mNextBackgroundScanPeriod = 0;
     private int mNextBackgroundScanId = 0;
     private boolean mBackgroundScanPeriodPending = false;
@@ -91,12 +92,12 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
     private LastScanSettings mLastScanSettings = null;
 
     // Active hotlist settings
-    private WifiNative.HotlistEventHandler mHotlistHandler = null;
+    private WifiNotiveTypes.HotlistEventHandler mHotlistHandler = null;
     private ChangeBuffer mHotlistChangeBuffer = new ChangeBuffer();
 
     // Pno related info.
-    private WifiNative.PnoSettings mPnoSettings = null;
-    private WifiNative.PnoEventHandler mPnoEventHandler;
+    private WifiNotiveTypes.PnoSettings mPnoSettings = null;
+    private WifiNotiveTypes.PnoEventHandler mPnoEventHandler;
     private final boolean mHwPnoScanSupported;
     private final HwPnoDebouncer mHwPnoDebouncer;
     private final HwPnoDebouncer.Listener mHwPnoDebouncerListener = new HwPnoDebouncer.Listener() {
@@ -130,30 +131,30 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
             }
         };
 
-    public SupplicantWifiScannerImpl(Context context, WifiNative wifiNative,
+    public SupplicantWifiScannerImpl(Context context, WifiNotive wifiNotive,
             ChannelHelper channelHelper, Looper looper, Clock clock) {
         mContext = context;
-        mWifiNative = wifiNative;
+        mWifiNotive = wifiNotive;
         mChannelHelper = channelHelper;
         mAlarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
         mEventHandler = new Handler(looper, this);
         mClock = clock;
-        mHwPnoDebouncer = new HwPnoDebouncer(mWifiNative, mAlarmManager, mEventHandler, mClock);
+        mHwPnoDebouncer = new HwPnoDebouncer(mWifiNotive, mAlarmManager, mEventHandler, mClock);
 
         // Check if the device supports HW PNO scans.
         mHwPnoScanSupported = mContext.getResources().getBoolean(
                 R.bool.config_wifi_background_scan_support);
 
-        WifiMonitor.getInstance().registerHandler(mWifiNative.getInterfaceName(),
+        WifiMonitor.getInstance().registerHandler(mWifiNotive.getInterfaceName(),
                 WifiMonitor.SCAN_FAILED_EVENT, mEventHandler);
-        WifiMonitor.getInstance().registerHandler(mWifiNative.getInterfaceName(),
+        WifiMonitor.getInstance().registerHandler(mWifiNotive.getInterfaceName(),
                 WifiMonitor.SCAN_RESULTS_EVENT, mEventHandler);
     }
 
-    public SupplicantWifiScannerImpl(Context context, WifiNative wifiNative, Looper looper,
+    public SupplicantWifiScannerImpl(Context context, WifiNotive wifiNotive, Looper looper,
             Clock clock) {
         // TODO figure out how to get channel information from supplicant
-        this(context, wifiNative, new NoBandChannelHelper(), looper, clock);
+        this(context, wifiNotive, new NoBandChannelHelper(), looper, clock);
     }
 
     @Override
@@ -170,7 +171,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
     }
 
     @Override
-    public boolean getScanCapabilities(WifiNative.ScanCapabilities capabilities) {
+    public boolean getScanCapabilities(WifiNotiveTypes.ScanCapabilities capabilities) {
         capabilities.max_scan_cache_size = Integer.MAX_VALUE;
         capabilities.max_scan_buckets = MAX_SCAN_BUCKETS;
         capabilities.max_ap_cache_per_scan = MAX_APS_PER_SCAN;
@@ -187,8 +188,8 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
     }
 
     @Override
-    public boolean startSingleScan(WifiNative.ScanSettings settings,
-            WifiNative.ScanEventHandler eventHandler) {
+    public boolean startSingleScan(WifiNotiveTypes.ScanSettings settings,
+            WifiNotiveTypes.ScanEventHandler eventHandler) {
         if (eventHandler == null || settings == null) {
             Log.w(TAG, "Invalid arguments for startSingleScan: settings=" + settings
                     + ",eventHandler=" + eventHandler);
@@ -213,8 +214,8 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
     }
 
     @Override
-    public boolean startBatchedScan(WifiNative.ScanSettings settings,
-            WifiNative.ScanEventHandler eventHandler) {
+    public boolean startBatchedScan(WifiNotiveTypes.ScanSettings settings,
+            WifiNotiveTypes.ScanEventHandler eventHandler) {
         if (settings == null || eventHandler == null) {
             Log.w(TAG, "Invalid arguments for startBatched: settings=" + settings
                     + ",eventHandler=" + eventHandler);
@@ -238,7 +239,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
             return false;
         }
         for (int i = 0; i < settings.num_buckets; ++i) {
-            WifiNative.BucketSettings bucket = settings.buckets[i];
+            WifiNotiveTypes.BucketSettings bucket = settings.buckets[i];
             if (bucket.period_ms % settings.base_period_ms != 0) {
                 return false;
             }
@@ -361,7 +362,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
                     int reportEvents = WifiScanner.REPORT_EVENT_NO_BATCH; // default to no batch
                     for (int bucket_id = 0; bucket_id < mBackgroundScanSettings.num_buckets;
                             ++bucket_id) {
-                        WifiNative.BucketSettings bucket =
+                        WifiNotiveTypes.BucketSettings bucket =
                                 mBackgroundScanSettings.buckets[bucket_id];
                         if (mNextBackgroundScanPeriod % (bucket.period_ms
                                         / mBackgroundScanSettings.base_period_ms) == 0) {
@@ -400,7 +401,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
                 boolean reportFullResults = false;
                 ChannelCollection singleScanFreqs = mChannelHelper.createChannelCollection();
                 for (int i = 0; i < mPendingSingleScanSettings.num_buckets; ++i) {
-                    WifiNative.BucketSettings bucketSettings =
+                    WifiNotiveTypes.BucketSettings bucketSettings =
                             mPendingSingleScanSettings.buckets[i];
                     if ((bucketSettings.report_events
                                     & WifiScanner.REPORT_EVENT_FULL_SCAN_RESULT) != 0) {
@@ -412,7 +413,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
                 newScanSettings.setSingleScan(reportFullResults, singleScanFreqs,
                         mPendingSingleScanEventHandler);
 
-                WifiNative.HiddenNetwork[] hiddenNetworks =
+                WifiNotiveTypes.HiddenNetwork[] hiddenNetworks =
                         mPendingSingleScanSettings.hiddenNetworks;
                 if (hiddenNetworks != null) {
                     int numHiddenNetworks =
@@ -430,7 +431,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
                     && !allFreqs.isEmpty()) {
                 pauseHwPnoScan();
                 Set<Integer> freqs = allFreqs.getSupplicantScanFreqs();
-                boolean success = mWifiNative.scan(freqs, hiddenNetworkSSIDSet);
+                boolean success = mWifiNotive.scan(freqs, hiddenNetworkSSIDSet);
                 if (success) {
                     // TODO handle scan timeout
                     if (DBG) {
@@ -449,7 +450,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
                             public void run() {
                                 if (newScanSettings.singleScanEventHandler != null) {
                                     newScanSettings.singleScanEventHandler
-                                            .onScanStatus(WifiNative.WIFI_SCAN_FAILED);
+                                            .onScanStatus(WifiNotive.WIFI_SCAN_FAILED);
                                 }
                             }
                         });
@@ -510,7 +511,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
             if (mLastScanSettings != null) {
                 if (mLastScanSettings.singleScanEventHandler != null) {
                     mLastScanSettings.singleScanEventHandler
-                            .onScanStatus(WifiNative.WIFI_SCAN_FAILED);
+                            .onScanStatus(WifiNotive.WIFI_SCAN_FAILED);
                 }
                 // TODO(b/27769665) background scans should be failed too if scans fail enough
                 mLastScanSettings = null;
@@ -540,7 +541,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
             }
 
             if (DBG) Log.d(TAG, "Polling scan data for scan: " + mLastScanSettings.scanId);
-            ArrayList<ScanDetail> nativeResults = mWifiNative.getScanResults();
+            ArrayList<ScanDetail> nativeResults = mWifiNotive.getScanResults();
             List<ScanResult> singleScanResults = new ArrayList<>();
             List<ScanResult> backgroundScanResults = new ArrayList<>();
             List<ScanResult> hwPnoScanResults = new ArrayList<>();
@@ -602,7 +603,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
                                             || mBackgroundScanBuffer.size()
                                             >= mLastScanSettings.reportNumScansThreshold))) {
                         mBackgroundScanEventHandler
-                                .onScanStatus(WifiNative.WIFI_SCAN_RESULTS_AVAILABLE);
+                                .onScanStatus(WifiNotive.WIFI_SCAN_RESULTS_AVAILABLE);
                     }
                 }
 
@@ -633,7 +634,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
                         mLastScanSettings.singleScanFreqs.isAllChannels(),
                         singleScanResults.toArray(new ScanResult[singleScanResults.size()]));
                 mLastScanSettings.singleScanEventHandler
-                        .onScanStatus(WifiNative.WIFI_SCAN_RESULTS_AVAILABLE);
+                        .onScanStatus(WifiNotive.WIFI_SCAN_RESULTS_AVAILABLE);
             }
 
             if (mLastScanSettings.hwPnoScanActive
@@ -693,8 +694,8 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
     }
 
     @Override
-    public boolean setHwPnoList(WifiNative.PnoSettings settings,
-            WifiNative.PnoEventHandler eventHandler) {
+    public boolean setHwPnoList(WifiNotiveTypes.PnoSettings settings,
+            WifiNotiveTypes.PnoEventHandler eventHandler) {
         synchronized (mSettingsLock) {
             if (mPnoSettings != null) {
                 Log.w(TAG, "Already running a PNO scan");
@@ -736,7 +737,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
 
     @Override
     public boolean setHotlist(WifiScanner.HotlistSettings settings,
-            WifiNative.HotlistEventHandler eventHandler) {
+            WifiNotiveTypes.HotlistEventHandler eventHandler) {
         if (settings == null || eventHandler == null) {
             return false;
         }
@@ -760,7 +761,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
      */
     @Override
     public boolean trackSignificantWifiChange(WifiScanner.WifiChangeSettings settings,
-            WifiNative.SignificantWifiChangeEventHandler handler) {
+            WifiNotiveTypes.SignificantWifiChangeEventHandler handler) {
         return false;
     }
     @Override
@@ -796,11 +797,11 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
         public boolean singleScanActive = false;
         public boolean reportSingleScanFullResults;
         public ChannelCollection singleScanFreqs;
-        public WifiNative.ScanEventHandler singleScanEventHandler;
+        public WifiNotiveTypes.ScanEventHandler singleScanEventHandler;
 
         public void setSingleScan(boolean reportSingleScanFullResults,
                 ChannelCollection singleScanFreqs,
-                WifiNative.ScanEventHandler singleScanEventHandler) {
+                WifiNotiveTypes.ScanEventHandler singleScanEventHandler) {
             singleScanActive = true;
             this.reportSingleScanFullResults = reportSingleScanFullResults;
             this.singleScanFreqs = singleScanFreqs;
@@ -808,12 +809,12 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
         }
 
         public boolean hwPnoScanActive = false;
-        public WifiNative.PnoNetwork[] pnoNetworkList;
-        public WifiNative.PnoEventHandler pnoScanEventHandler;
+        public WifiNotiveTypes.PnoNetwork[] pnoNetworkList;
+        public WifiNotiveTypes.PnoEventHandler pnoScanEventHandler;
 
         public void setHwPnoScan(
-                WifiNative.PnoNetwork[] pnoNetworkList,
-                WifiNative.PnoEventHandler pnoScanEventHandler) {
+                WifiNotiveTypes.PnoNetwork[] pnoNetworkList,
+                WifiNotiveTypes.PnoEventHandler pnoScanEventHandler) {
             hwPnoScanActive = true;
             this.pnoNetworkList = pnoNetworkList;
             this.pnoScanEventHandler = pnoScanEventHandler;
@@ -999,7 +1000,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
         public static final String PNO_DEBOUNCER_ALARM_TAG = TAG + "Pno Monitor";
         private static final int MINIMUM_PNO_GAP_MS = 5 * 1000;
 
-        private final WifiNative mWifiNative;
+        private final WifiNotive mWifiNotive;
         private final AlarmManager mAlarmManager;
         private final Handler mEventHandler;
         private final Clock mClock;
@@ -1019,9 +1020,9 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
             void onPnoScanFailed();
         }
 
-        public HwPnoDebouncer(WifiNative wifiNative, AlarmManager alarmManager,
+        public HwPnoDebouncer(WifiNotive wifiNotive, AlarmManager alarmManager,
                 Handler eventHandler, Clock clock) {
-            mWifiNative = wifiNative;
+            mWifiNotive = wifiNotive;
             mAlarmManager = alarmManager;
             mEventHandler = eventHandler;
             mClock = clock;
@@ -1037,7 +1038,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
                 return true;
             }
             mLastPnoChangeTimeStamp = mClock.getElapsedSinceBootMillis();
-            if (mWifiNative.setPnoScan(enable)) {
+            if (mWifiNotive.setPnoScan(enable)) {
                 Log.d(TAG, "Changed PNO state from " + mCurrentPnoState + " to " + enable);
                 mCurrentPnoState = enable;
                 return true;
