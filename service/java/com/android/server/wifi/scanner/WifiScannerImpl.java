@@ -22,7 +22,8 @@ import android.net.wifi.WifiScanner;
 import android.os.Looper;
 
 import com.android.server.wifi.Clock;
-import com.android.server.wifi.WifiNative;
+import com.android.server.wifi.WifiNotive;
+import com.android.server.wifi.WifiNotiveTypes;
 
 import java.util.Comparator;
 
@@ -44,11 +45,11 @@ public abstract class WifiScannerImpl {
      */
     public static final WifiScannerImplFactory DEFAULT_FACTORY = new WifiScannerImplFactory() {
             public WifiScannerImpl create(Context context, Looper looper, Clock clock) {
-                WifiNative wifiNative = WifiNative.getWlanNativeInterface();
-                if (wifiNative.getScanCapabilities(new WifiNative.ScanCapabilities())) {
-                    return new HalWifiScannerImpl(context, wifiNative, looper, clock);
+                WifiNotive wifiNotive = WifiNotive.getWlanNativeInterface();
+                if (wifiNotive.getScanCapabilities(new WifiNotiveTypes.ScanCapabilities())) {
+                    return new HalWifiScannerImpl(context, wifiNotive, looper, clock);
                 } else {
-                    return new SupplicantWifiScannerImpl(context, wifiNative, looper, clock);
+                    return new SupplicantWifiScannerImpl(context, wifiNotive, looper, clock);
                 }
             }
         };
@@ -75,7 +76,7 @@ public abstract class WifiScannerImpl {
      * @param capabilities Object that will be filled with the supported capabilities if successful
      * @return true if the scan capabilities were retrieved successfully
      */
-    public abstract boolean getScanCapabilities(WifiNative.ScanCapabilities capabilities);
+    public abstract boolean getScanCapabilities(WifiNotiveTypes.ScanCapabilities capabilities);
 
     /**
      * Get a ChannelHelper that can be used to perform operations on scan channels
@@ -89,8 +90,8 @@ public abstract class WifiScannerImpl {
      * Note this may return true even if the parameters are not accepted by the chip because the
      * scan may be scheduled async.
      */
-    public abstract boolean startSingleScan(WifiNative.ScanSettings settings,
-            WifiNative.ScanEventHandler eventHandler);
+    public abstract boolean startSingleScan(WifiNotiveTypes.ScanSettings settings,
+            WifiNotiveTypes.ScanEventHandler eventHandler);
     /**
      * Get the scan results of the most recent single scan. This should be called immediately when
      * the scan success callback is receieved.
@@ -104,8 +105,8 @@ public abstract class WifiScannerImpl {
      * Note this may return true even if the parameters are not accepted by the chip because the
      * scan may be scheduled async.
      */
-    public abstract boolean startBatchedScan(WifiNative.ScanSettings settings,
-            WifiNative.ScanEventHandler eventHandler);
+    public abstract boolean startBatchedScan(WifiNotiveTypes.ScanSettings settings,
+            WifiNotiveTypes.ScanEventHandler eventHandler);
     /**
      * Stop the currently active background scan
      */
@@ -133,8 +134,8 @@ public abstract class WifiScannerImpl {
      * @param eventHandler Event handler for notifying the scan results.
      * @return true if success, false otherwise
      */
-    public abstract boolean setHwPnoList(WifiNative.PnoSettings settings,
-            WifiNative.PnoEventHandler eventHandler);
+    public abstract boolean setHwPnoList(WifiNotiveTypes.PnoSettings settings,
+            WifiNotiveTypes.PnoEventHandler eventHandler);
 
     /**
      * Reset PNO list to terminate PNO background scan.
@@ -159,7 +160,7 @@ public abstract class WifiScannerImpl {
      * Set a new hotlist
      */
     public abstract boolean setHotlist(WifiScanner.HotlistSettings settings,
-            WifiNative.HotlistEventHandler eventHandler);
+            WifiNotiveTypes.HotlistEventHandler eventHandler);
 
     /**
      * Reset any active hotlist
@@ -170,7 +171,7 @@ public abstract class WifiScannerImpl {
      * Start tracking significant wifi changes
      */
     public abstract boolean trackSignificantWifiChange(WifiScanner.WifiChangeSettings settings,
-            WifiNative.SignificantWifiChangeEventHandler handler);
+            WifiNotiveTypes.SignificantWifiChangeEventHandler handler);
 
     /**
      * Stop tracking significant wifi changes

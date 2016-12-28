@@ -31,7 +31,8 @@ import android.test.suitebuilder.annotation.SmallTest;
 import com.android.server.wifi.ScanDetail;
 import com.android.server.wifi.ScanResults;
 import com.android.server.wifi.WifiMonitor;
-import com.android.server.wifi.WifiNative;
+import com.android.server.wifi.WifiNotive;
+import com.android.server.wifi.WifiNotiveTypes;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -48,13 +49,13 @@ public class SupplicantWifiScannerTest extends BaseWifiScannerImplTest {
 
     @Before
     public void setup() throws Exception {
-        mScanner = new SupplicantWifiScannerImpl(mContext, mWifiNative,
+        mScanner = new SupplicantWifiScannerImpl(mContext, mWifiNotive,
                 mLooper.getLooper(), mClock);
     }
 
     @Test
     public void backgroundScanSuccessSingleBucket() {
-        WifiNative.ScanSettings settings = new NativeScanSettingsBuilder()
+        WifiNotiveTypes.ScanSettings settings = new NativeScanSettingsBuilder()
                 .withBasePeriod(10000)
                 .withMaxApPerScan(10)
                 .addBucketWithBand(10000, WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN,
@@ -75,7 +76,7 @@ public class SupplicantWifiScannerTest extends BaseWifiScannerImplTest {
 
     @Test
     public void backgroundScanMaxApExceeded() {
-        WifiNative.ScanSettings settings = new NativeScanSettingsBuilder()
+        WifiNotiveTypes.ScanSettings settings = new NativeScanSettingsBuilder()
                 .withBasePeriod(10000)
                 .withMaxApPerScan(2)
                 .addBucketWithBand(10000,
@@ -103,7 +104,7 @@ public class SupplicantWifiScannerTest extends BaseWifiScannerImplTest {
 
     @Test
     public void backgroundScanSuccessWithFullScanResults() {
-        WifiNative.ScanSettings settings = new NativeScanSettingsBuilder()
+        WifiNotiveTypes.ScanSettings settings = new NativeScanSettingsBuilder()
                 .withBasePeriod(10000)
                 .withMaxApPerScan(10)
                 .addBucketWithBand(10000,
@@ -126,7 +127,7 @@ public class SupplicantWifiScannerTest extends BaseWifiScannerImplTest {
 
     @Test
     public void backgroundScanSuccessWithMixedFullResultsAndNot() {
-        WifiNative.ScanSettings settings = new NativeScanSettingsBuilder()
+        WifiNotiveTypes.ScanSettings settings = new NativeScanSettingsBuilder()
                 .withBasePeriod(10000)
                 .withMaxApPerScan(10)
                 .addBucketWithBand(10000,
@@ -155,7 +156,7 @@ public class SupplicantWifiScannerTest extends BaseWifiScannerImplTest {
 
     @Test
     public void backgroundScanNoBatch() {
-        WifiNative.ScanSettings settings = new NativeScanSettingsBuilder()
+        WifiNotiveTypes.ScanSettings settings = new NativeScanSettingsBuilder()
                 .withBasePeriod(10000)
                 .withMaxApPerScan(10)
                 .addBucketWithBand(10000,
@@ -180,7 +181,7 @@ public class SupplicantWifiScannerTest extends BaseWifiScannerImplTest {
 
     @Test
     public void backgroundScanBatch() {
-        WifiNative.ScanSettings settings = new NativeScanSettingsBuilder()
+        WifiNotiveTypes.ScanSettings settings = new NativeScanSettingsBuilder()
                 .withBasePeriod(10000)
                 .withMaxApPerScan(10)
                 .withMaxScansToCache(3)
@@ -232,7 +233,7 @@ public class SupplicantWifiScannerTest extends BaseWifiScannerImplTest {
 
     @Test
     public void backgroundScanSuccessWithMultipleBuckets() {
-        WifiNative.ScanSettings settings = new NativeScanSettingsBuilder()
+        WifiNotiveTypes.ScanSettings settings = new NativeScanSettingsBuilder()
                 .withBasePeriod(10000)
                 .withMaxApPerScan(10)
                 .addBucketWithBand(10000, WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN,
@@ -272,7 +273,7 @@ public class SupplicantWifiScannerTest extends BaseWifiScannerImplTest {
 
     @Test
     public void backgroundScanSuccessWithMultipleBucketsWhereAPeriodDoesNotRequireAScan() {
-        WifiNative.ScanSettings settings = new NativeScanSettingsBuilder()
+        WifiNotiveTypes.ScanSettings settings = new NativeScanSettingsBuilder()
                 .withBasePeriod(10000)
                 .withMaxApPerScan(10)
                 .addBucketWithBand(30000, WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN,
@@ -307,18 +308,18 @@ public class SupplicantWifiScannerTest extends BaseWifiScannerImplTest {
 
     @Test
     public void backgroundScanStartFailed() {
-        WifiNative.ScanEventHandler eventHandler = mock(WifiNative.ScanEventHandler.class);
-        WifiNative.ScanSettings settings = new NativeScanSettingsBuilder()
+        WifiNotiveTypes.ScanEventHandler eventHandler = mock(WifiNotiveTypes.ScanEventHandler.class);
+        WifiNotiveTypes.ScanSettings settings = new NativeScanSettingsBuilder()
                 .withBasePeriod(10000)
                 .withMaxApPerScan(10)
                 .addBucketWithBand(10000, WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN,
                         WifiScanner.WIFI_BAND_24_GHZ)
                 .build();
 
-        InOrder order = inOrder(eventHandler, mWifiNative);
+        InOrder order = inOrder(eventHandler, mWifiNotive);
 
         // All scans fail
-        when(mWifiNative.scan(any(Set.class), any(Set.class))).thenReturn(false);
+        when(mWifiNotive.scan(any(Set.class), any(Set.class))).thenReturn(false);
 
         // Start scan
         mScanner.startBatchedScan(settings, eventHandler);
@@ -342,18 +343,18 @@ public class SupplicantWifiScannerTest extends BaseWifiScannerImplTest {
 
     @Test
     public void backgroundScanEventFailed() {
-        WifiNative.ScanEventHandler eventHandler = mock(WifiNative.ScanEventHandler.class);
-        WifiNative.ScanSettings settings = new NativeScanSettingsBuilder()
+        WifiNotiveTypes.ScanEventHandler eventHandler = mock(WifiNotiveTypes.ScanEventHandler.class);
+        WifiNotiveTypes.ScanSettings settings = new NativeScanSettingsBuilder()
                 .withBasePeriod(10000)
                 .withMaxApPerScan(10)
                 .addBucketWithBand(10000, WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN,
                         WifiScanner.WIFI_BAND_24_GHZ)
                 .build();
 
-        InOrder order = inOrder(eventHandler, mWifiNative);
+        InOrder order = inOrder(eventHandler, mWifiNotive);
 
         // All scan starts succeed
-        when(mWifiNative.scan(any(Set.class), any(Set.class))).thenReturn(true);
+        when(mWifiNotive.scan(any(Set.class), any(Set.class))).thenReturn(true);
 
         // Start scan
         mScanner.startBatchedScan(settings, eventHandler);
@@ -380,8 +381,8 @@ public class SupplicantWifiScannerTest extends BaseWifiScannerImplTest {
      */
     @Test
     public void pauseWhileWaitingToStartNextScanAndResumeScan() {
-        WifiNative.ScanEventHandler eventHandler = mock(WifiNative.ScanEventHandler.class);
-        WifiNative.ScanSettings settings = new NativeScanSettingsBuilder()
+        WifiNotiveTypes.ScanEventHandler eventHandler = mock(WifiNotiveTypes.ScanEventHandler.class);
+        WifiNotiveTypes.ScanSettings settings = new NativeScanSettingsBuilder()
                 .withBasePeriod(10000)
                 .withMaxApPerScan(10)
                 .addBucketWithBand(10000, WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN,
@@ -397,10 +398,10 @@ public class SupplicantWifiScannerTest extends BaseWifiScannerImplTest {
                     expectedBandScanFreqs(WifiScanner.WIFI_BAND_24_GHZ))
         };
 
-        InOrder order = inOrder(eventHandler, mWifiNative);
+        InOrder order = inOrder(eventHandler, mWifiNotive);
 
         // All scan starts succeed
-        when(mWifiNative.scan(any(Set.class), any(Set.class))).thenReturn(true);
+        when(mWifiNotive.scan(any(Set.class), any(Set.class))).thenReturn(true);
 
         // Start scan
         mScanner.startBatchedScan(settings, eventHandler);
@@ -434,8 +435,8 @@ public class SupplicantWifiScannerTest extends BaseWifiScannerImplTest {
      */
     @Test
     public void pauseWhileScanningAndResumeScan() {
-        WifiNative.ScanEventHandler eventHandler = mock(WifiNative.ScanEventHandler.class);
-        WifiNative.ScanSettings settings = new NativeScanSettingsBuilder()
+        WifiNotiveTypes.ScanEventHandler eventHandler = mock(WifiNotiveTypes.ScanEventHandler.class);
+        WifiNotiveTypes.ScanSettings settings = new NativeScanSettingsBuilder()
                 .withBasePeriod(10000)
                 .withMaxApPerScan(10)
                 .addBucketWithBand(10000, WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN,
@@ -451,17 +452,17 @@ public class SupplicantWifiScannerTest extends BaseWifiScannerImplTest {
                     expectedBandScanFreqs(WifiScanner.WIFI_BAND_24_GHZ))
         };
 
-        InOrder order = inOrder(eventHandler, mWifiNative);
+        InOrder order = inOrder(eventHandler, mWifiNotive);
 
         // All scan starts succeed
-        when(mWifiNative.scan(any(Set.class), any(Set.class))).thenReturn(true);
+        when(mWifiNotive.scan(any(Set.class), any(Set.class))).thenReturn(true);
 
         // Start scan
         mScanner.startBatchedScan(settings, eventHandler);
 
         assertBackgroundPeriodAlarmPending();
 
-        order.verify(mWifiNative).scan(eq(expectedPeriods[0].getScanFreqs()), any(Set.class));
+        order.verify(mWifiNotive).scan(eq(expectedPeriods[0].getScanFreqs()), any(Set.class));
 
         mScanner.pauseBatchedScan();
 
@@ -471,11 +472,11 @@ public class SupplicantWifiScannerTest extends BaseWifiScannerImplTest {
         assertBackgroundPeriodAlarmNotPending();
 
         // Setup scan results
-        when(mWifiNative.getScanResults()).thenReturn(expectedPeriods[0]
+        when(mWifiNotive.getScanResults()).thenReturn(expectedPeriods[0]
                 .getResultsToBeDelivered()[0].getScanDetailArrayList());
 
         // Notify scan has finished
-        mWifiMonitor.sendMessage(mWifiNative.getInterfaceName(), WifiMonitor.SCAN_RESULTS_EVENT);
+        mWifiMonitor.sendMessage(mWifiNotive.getInterfaceName(), WifiMonitor.SCAN_RESULTS_EVENT);
         assertEquals("dispatch message after results event", 1, mLooper.dispatchAll());
 
         // listener should not be notified
@@ -497,15 +498,15 @@ public class SupplicantWifiScannerTest extends BaseWifiScannerImplTest {
      */
     @Test
     public void pauseWhileWaitingToStartNextScanAndStartNewScan() {
-        WifiNative.ScanEventHandler eventHandler = mock(WifiNative.ScanEventHandler.class);
-        WifiNative.ScanSettings settings = new NativeScanSettingsBuilder()
+        WifiNotiveTypes.ScanEventHandler eventHandler = mock(WifiNotiveTypes.ScanEventHandler.class);
+        WifiNotiveTypes.ScanSettings settings = new NativeScanSettingsBuilder()
                 .withBasePeriod(10000)
                 .withMaxApPerScan(10)
                 .addBucketWithBand(10000, WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN,
                         WifiScanner.WIFI_BAND_24_GHZ)
                 .build();
 
-        WifiNative.ScanSettings settings2 = new NativeScanSettingsBuilder()
+        WifiNotiveTypes.ScanSettings settings2 = new NativeScanSettingsBuilder()
                 .withBasePeriod(10000)
                 .withMaxApPerScan(10)
                 .addBucketWithBand(10000, WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN,
@@ -524,10 +525,10 @@ public class SupplicantWifiScannerTest extends BaseWifiScannerImplTest {
                     expectedBandScanFreqs(WifiScanner.WIFI_BAND_5_GHZ)),
         };
 
-        InOrder order = inOrder(eventHandler, mWifiNative);
+        InOrder order = inOrder(eventHandler, mWifiNotive);
 
         // All scan starts succeed
-        when(mWifiNative.scan(any(Set.class), any(Set.class))).thenReturn(true);
+        when(mWifiNotive.scan(any(Set.class), any(Set.class))).thenReturn(true);
 
         // Start scan
         mScanner.startBatchedScan(settings, eventHandler);
@@ -559,13 +560,13 @@ public class SupplicantWifiScannerTest extends BaseWifiScannerImplTest {
      * starting the scan settings and then dispatching the scan period alarm to start the
      * next scan.
      */
-    private void doSuccessfulTest(WifiNative.ScanSettings settings, ScanPeriod[] expectedPeriods) {
-        WifiNative.ScanEventHandler eventHandler = mock(WifiNative.ScanEventHandler.class);
+    private void doSuccessfulTest(WifiNotiveTypes.ScanSettings settings, ScanPeriod[] expectedPeriods) {
+        WifiNotiveTypes.ScanEventHandler eventHandler = mock(WifiNotiveTypes.ScanEventHandler.class);
 
-        InOrder order = inOrder(eventHandler, mWifiNative);
+        InOrder order = inOrder(eventHandler, mWifiNotive);
 
         // All scans succeed
-        when(mWifiNative.scan(any(Set.class), any(Set.class))).thenReturn(true);
+        when(mWifiNotive.scan(any(Set.class), any(Set.class))).thenReturn(true);
 
         // Start scan
         mScanner.startBatchedScan(settings, eventHandler);
@@ -589,7 +590,7 @@ public class SupplicantWifiScannerTest extends BaseWifiScannerImplTest {
      * dispatching the period alarm.
      */
     private void expectSuccessfulBackgroundScan(InOrder order,
-            WifiNative.ScanEventHandler eventHandler, ScanPeriod period, int periodId) {
+            WifiNotiveTypes.ScanEventHandler eventHandler, ScanPeriod period, int periodId) {
         WifiScanner.ScanData[] scanDatas = null;
         ArrayList<ScanDetail> nativeResults = null;
         ScanResult[] fullResults = null;
@@ -617,18 +618,18 @@ public class SupplicantWifiScannerTest extends BaseWifiScannerImplTest {
      * dispatching the period alarm.
      */
     private void expectSuccessfulBackgroundScan(InOrder order,
-            WifiNative.ScanEventHandler eventHandler, Set<Integer> scanFreqs,
+            WifiNotiveTypes.ScanEventHandler eventHandler, Set<Integer> scanFreqs,
             ArrayList<ScanDetail> nativeResults,
             WifiScanner.ScanData[] expectedScanResults,
             ScanResult[] fullResults, int periodId) {
         // Verify scan started
-        order.verify(mWifiNative).scan(eq(scanFreqs), any(Set.class));
+        order.verify(mWifiNotive).scan(eq(scanFreqs), any(Set.class));
 
         // Setup scan results
-        when(mWifiNative.getScanResults()).thenReturn(nativeResults);
+        when(mWifiNotive.getScanResults()).thenReturn(nativeResults);
 
         // Notify scan has finished
-        mWifiMonitor.sendMessage(mWifiNative.getInterfaceName(), WifiMonitor.SCAN_RESULTS_EVENT);
+        mWifiMonitor.sendMessage(mWifiNotive.getInterfaceName(), WifiMonitor.SCAN_RESULTS_EVENT);
         assertEquals("dispatch message after results event", 1, mLooper.dispatchAll());
 
         if (fullResults != null) {
@@ -639,25 +640,25 @@ public class SupplicantWifiScannerTest extends BaseWifiScannerImplTest {
 
         if (expectedScanResults != null) {
             // Verify scan results delivered
-            order.verify(eventHandler).onScanStatus(WifiNative.WIFI_SCAN_RESULTS_AVAILABLE);
+            order.verify(eventHandler).onScanStatus(WifiNotive.WIFI_SCAN_RESULTS_AVAILABLE);
             assertScanDatasEquals("period[" + periodId + "].", expectedScanResults,
                     mScanner.getLatestBatchedScanResults(true));
         }
     }
 
-    private void expectFailedScanStart(InOrder order, WifiNative.ScanEventHandler eventHandler,
+    private void expectFailedScanStart(InOrder order, WifiNotiveTypes.ScanEventHandler eventHandler,
             Set<Integer> scanFreqs) {
         // Verify scan started
-        order.verify(mWifiNative).scan(eq(scanFreqs), any(Set.class));
+        order.verify(mWifiNotive).scan(eq(scanFreqs), any(Set.class));
     }
 
-    private void expectFailedEventScan(InOrder order, WifiNative.ScanEventHandler eventHandler,
+    private void expectFailedEventScan(InOrder order, WifiNotiveTypes.ScanEventHandler eventHandler,
             Set<Integer> scanFreqs) {
         // Verify scan started
-        order.verify(mWifiNative).scan(eq(scanFreqs), any(Set.class));
+        order.verify(mWifiNotive).scan(eq(scanFreqs), any(Set.class));
 
         // Notify scan has failed
-        mWifiMonitor.sendMessage(mWifiNative.getInterfaceName(), WifiMonitor.SCAN_FAILED_EVENT);
+        mWifiMonitor.sendMessage(mWifiNotive.getInterfaceName(), WifiMonitor.SCAN_FAILED_EVENT);
         assertEquals("dispatch message after results event", 1, mLooper.dispatchAll());
 
         // TODO: verify failure event

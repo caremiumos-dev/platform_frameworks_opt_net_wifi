@@ -48,7 +48,7 @@ import com.android.server.wifi.IMSIParameter;
 import com.android.server.wifi.SIMAccessor;
 import com.android.server.wifi.ScanDetail;
 import com.android.server.wifi.WifiKeyStore;
-import com.android.server.wifi.WifiNative;
+import com.android.server.wifi.WifiNotive;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -78,7 +78,7 @@ public class PasspointManagerTest {
     private static final int TEST_ANQP_DOMAIN_ID = 1;
 
     @Mock Context mContext;
-    @Mock WifiNative mWifiNative;
+    @Mock WifiNotive mWifiNotive;
     @Mock WifiKeyStore mWifiKeyStore;
     @Mock Clock mClock;
     @Mock SIMAccessor mSimAccessor;
@@ -92,11 +92,11 @@ public class PasspointManagerTest {
     public void setUp() throws Exception {
         initMocks(this);
         when(mObjectFactory.makeAnqpCache(mClock)).thenReturn(mAnqpCache);
-        mManager = new PasspointManager(mContext, mWifiNative, mWifiKeyStore, mClock,
+        mManager = new PasspointManager(mContext, mWifiNotive, mWifiKeyStore, mClock,
                 mSimAccessor, mObjectFactory);
         ArgumentCaptor<PasspointEventHandler.Callbacks> callbacks =
                 ArgumentCaptor.forClass(PasspointEventHandler.Callbacks.class);
-        verify(mObjectFactory).makePasspointEventHandler(any(WifiNative.class),
+        verify(mObjectFactory).makePasspointEventHandler(any(WifiNotive.class),
                                                          callbacks.capture());
         mCallbacks = callbacks.getValue();
     }

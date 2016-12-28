@@ -30,10 +30,10 @@ public class HalWifiScannerTest extends BaseWifiScannerImplTest {
 
     @Before
     public void setUp() throws Exception {
-        setupMockChannels(mWifiNative,
+        setupMockChannels(mWifiNotive,
                 new int[]{2400, 2450},
                 new int[]{5150, 5175},
                 new int[]{5600, 5650});
-        mScanner = new HalWifiScannerImpl(mContext, mWifiNative, mLooper.getLooper(), mClock);
+        mScanner = new HalWifiScannerImpl(mContext, mWifiNotive, mLooper.getLooper(), mClock);
     }
 }

@@ -38,13 +38,13 @@ import java.util.Set;
  */
 public class ScanTestUtil {
 
-    public static void setupMockChannels(WifiNative wifiNative, int[] channels24, int[] channels5,
+    public static void setupMockChannels(WifiNotive wifiNotive, int[] channels24, int[] channels5,
             int[] channelsDfs) throws Exception {
-        when(wifiNative.getChannelsForBand(WifiScanner.WIFI_BAND_24_GHZ))
+        when(wifiNotive.getChannelsForBand(WifiScanner.WIFI_BAND_24_GHZ))
                 .thenReturn(channels24);
-        when(wifiNative.getChannelsForBand(WifiScanner.WIFI_BAND_5_GHZ))
+        when(wifiNotive.getChannelsForBand(WifiScanner.WIFI_BAND_5_GHZ))
                 .thenReturn(channels5);
-        when(wifiNative.getChannelsForBand(WifiScanner.WIFI_BAND_5_GHZ_DFS_ONLY))
+        when(wifiNotive.getChannelsForBand(WifiScanner.WIFI_BAND_5_GHZ_DFS_ONLY))
                 .thenReturn(channelsDfs);
     }
 
@@ -83,12 +83,12 @@ public class ScanTestUtil {
     }
 
     /**
-     * Builder to create WifiNative.ScanSettings objects for testing
+     * Builder to create WifiNotiveTypes.ScanSettings objects for testing
      */
     public static class NativeScanSettingsBuilder {
-        private final WifiNative.ScanSettings mSettings = new WifiNative.ScanSettings();
+        private final WifiNotiveTypes.ScanSettings mSettings = new WifiNotiveTypes.ScanSettings();
         public NativeScanSettingsBuilder() {
-            mSettings.buckets = new WifiNative.BucketSettings[0];
+            mSettings.buckets = new WifiNotiveTypes.BucketSettings[0];
             mSettings.num_buckets = 0;
             mSettings.report_threshold_percent = 100;
         }
@@ -116,9 +116,9 @@ public class ScanTestUtil {
          * @return builder object
          */
         public NativeScanSettingsBuilder withHiddenNetworkSSIDs(String[] networkSSIDs) {
-            mSettings.hiddenNetworks = new WifiNative.HiddenNetwork[networkSSIDs.length];
+            mSettings.hiddenNetworks = new WifiNotiveTypes.HiddenNetwork[networkSSIDs.length];
             for (int i = 0; i < networkSSIDs.length; i++) {
-                mSettings.hiddenNetworks[i] = new WifiNative.HiddenNetwork();
+                mSettings.hiddenNetworks[i] = new WifiNotiveTypes.HiddenNetwork();
                 mSettings.hiddenNetworks[i].ssid = networkSSIDs[i];
             }
             return this;
@@ -126,7 +126,7 @@ public class ScanTestUtil {
 
         public NativeScanSettingsBuilder addBucketWithBand(
                 int period, int reportEvents, int band) {
-            WifiNative.BucketSettings bucket = new WifiNative.BucketSettings();
+            WifiNotiveTypes.BucketSettings bucket = new WifiNotiveTypes.BucketSettings();
             bucket.bucket = mSettings.num_buckets;
             bucket.band = band;
             bucket.period_ms = period;
@@ -145,7 +145,7 @@ public class ScanTestUtil {
 
         public NativeScanSettingsBuilder addBucketWithChannels(
                 int period, int reportEvents, int... channels) {
-            WifiNative.BucketSettings bucket = new WifiNative.BucketSettings();
+            WifiNotiveTypes.BucketSettings bucket = new WifiNotiveTypes.BucketSettings();
             bucket.bucket = mSettings.num_buckets;
             bucket.band = WifiScanner.WIFI_BAND_UNSPECIFIED;
             bucket.num_channels = channels.length;
@@ -155,14 +155,14 @@ public class ScanTestUtil {
             return addBucket(bucket);
         }
 
-        public NativeScanSettingsBuilder addBucket(WifiNative.BucketSettings bucket) {
+        public NativeScanSettingsBuilder addBucket(WifiNotiveTypes.BucketSettings bucket) {
             mSettings.buckets = Arrays.copyOf(mSettings.buckets, mSettings.num_buckets + 1);
             mSettings.buckets[mSettings.num_buckets] = bucket;
             mSettings.num_buckets = mSettings.num_buckets + 1;
             return this;
         }
 
-        public WifiNative.ScanSettings build() {
+        public WifiNotiveTypes.ScanSettings build() {
             return mSettings;
         }
     }
@@ -171,7 +171,7 @@ public class ScanTestUtil {
      * Compute the expected native scan settings that are expected for the given
      * WifiScanner.ScanSettings.
      */
-    public static WifiNative.ScanSettings computeSingleScanNativeSettings(
+    public static WifiNotiveTypes.ScanSettings computeSingleScanNativeSettings(
             WifiScanner.ScanSettings requestSettings) {
         int reportEvents = requestSettings.reportEvents | WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN;
         NativeScanSettingsBuilder builder = new NativeScanSettingsBuilder()
@@ -191,7 +191,7 @@ public class ScanTestUtil {
     /**
      * Compute the expected native scan settings that are expected for the given channels.
      */
-    public static WifiNative.ScanSettings createSingleScanNativeSettingsForChannels(
+    public static WifiNotiveTypes.ScanSettings createSingleScanNativeSettingsForChannels(
             int reportEvents, WifiScanner.ChannelSpec... channels) {
         int actualReportEvents = reportEvents | WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN;
         return new NativeScanSettingsBuilder()
@@ -310,8 +310,8 @@ public class ScanTestUtil {
         return channelSpecs;
     }
 
-    public static void assertNativeScanSettingsEquals(WifiNative.ScanSettings expected,
-            WifiNative.ScanSettings actual) {
+    public static void assertNativeScanSettingsEquals(WifiNotiveTypes.ScanSettings expected,
+            WifiNotiveTypes.ScanSettings actual) {
         assertEquals("bssids per scan", expected.max_ap_per_scan, actual.max_ap_per_scan);
         assertEquals("scans to cache", expected.report_threshold_num_scans,
                 actual.report_threshold_num_scans);
@@ -332,11 +332,11 @@ public class ScanTestUtil {
                     expected.buckets[i].band, actual.buckets[i].band);
             if (expected.buckets[i].band == WifiScanner.WIFI_BAND_UNSPECIFIED) {
                 Set<Integer> expectedChannels = new HashSet<>();
-                for (WifiNative.ChannelSettings channel : expected.buckets[i].channels) {
+                for (WifiNotiveTypes.ChannelSettings channel : expected.buckets[i].channels) {
                     expectedChannels.add(channel.frequency);
                 }
                 Set<Integer> actualChannels = new HashSet<>();
-                for (WifiNative.ChannelSettings channel : actual.buckets[i].channels) {
+                for (WifiNotiveTypes.ChannelSettings channel : actual.buckets[i].channels) {
                     actualChannels.add(channel.frequency);
                 }
                 assertEquals("channels", expectedChannels, actualChannels);
@@ -356,8 +356,8 @@ public class ScanTestUtil {
     /**
      * Asserts if the provided pno settings are the same.
      */
-    public static void assertNativePnoSettingsEquals(WifiNative.PnoSettings expected,
-            WifiNative.PnoSettings actual) {
+    public static void assertNativePnoSettingsEquals(WifiNotiveTypes.PnoSettings expected,
+            WifiNotiveTypes.PnoSettings actual) {
         assertNotNull("expected was null", expected);
         assertNotNull("actaul was null", actual);
         assertEquals("min5GHzRssi", expected.min5GHzRssi, actual.min5GHzRssi);
@@ -383,12 +383,12 @@ public class ScanTestUtil {
     }
 
     /**
-     * Convert a list of channel frequencies to an array of equivalent WifiNative.ChannelSettings
+     * Convert a list of channel frequencies to an array of equivalent WifiNotiveTypes.ChannelSettings
      */
-    public static WifiNative.ChannelSettings[] channelsToNativeSettings(int... channels) {
-        WifiNative.ChannelSettings[] channelSpecs = new WifiNative.ChannelSettings[channels.length];
+    public static WifiNotiveTypes.ChannelSettings[] channelsToNativeSettings(int... channels) {
+        WifiNotiveTypes.ChannelSettings[] channelSpecs = new WifiNotiveTypes.ChannelSettings[channels.length];
         for (int i = 0; i < channels.length; ++i) {
-            channelSpecs[i] = new WifiNative.ChannelSettings();
+            channelSpecs[i] = new WifiNotiveTypes.ChannelSettings();
             channelSpecs[i].frequency = channels[i];
         }
         return channelSpecs;
@@ -397,10 +397,10 @@ public class ScanTestUtil {
     /**
      * Matcher to check that a BucketSettings has the given band
      */
-    public static Matcher<WifiNative.BucketSettings> bandIs(final int expectedBand) {
-        return new TypeSafeDiagnosingMatcher<WifiNative.BucketSettings>() {
+    public static Matcher<WifiNotiveTypes.BucketSettings> bandIs(final int expectedBand) {
+        return new TypeSafeDiagnosingMatcher<WifiNotiveTypes.BucketSettings>() {
             @Override
-            public boolean matchesSafely(WifiNative.BucketSettings bucketSettings,
+            public boolean matchesSafely(WifiNotiveTypes.BucketSettings bucketSettings,
                     Description mismatchDescription) {
                 if (bucketSettings.band != expectedBand) {
                     mismatchDescription
@@ -422,10 +422,10 @@ public class ScanTestUtil {
     /**
      * Matcher to check that a BucketSettings has exactly the given channels
      */
-    public static Matcher<WifiNative.BucketSettings> channelsAre(final int... expectedChannels) {
-        return new TypeSafeDiagnosingMatcher<WifiNative.BucketSettings>() {
+    public static Matcher<WifiNotiveTypes.BucketSettings> channelsAre(final int... expectedChannels) {
+        return new TypeSafeDiagnosingMatcher<WifiNotiveTypes.BucketSettings>() {
             @Override
-            public boolean matchesSafely(WifiNative.BucketSettings bucketSettings,
+            public boolean matchesSafely(WifiNotiveTypes.BucketSettings bucketSettings,
                     Description mismatchDescription) {
                 if (bucketSettings.band != WifiScanner.WIFI_BAND_UNSPECIFIED) {
                     mismatchDescription.appendText("did not have expected unspecified band, was ")

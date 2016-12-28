@@ -29,7 +29,8 @@ import static org.mockito.Mockito.verify;
 import android.net.wifi.WifiScanner;
 import android.test.suitebuilder.annotation.SmallTest;
 
-import com.android.server.wifi.WifiNative;
+import com.android.server.wifi.WifiNotive;
+import com.android.server.wifi.WifiNotiveTypes;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -109,7 +110,7 @@ public class ChannelHelperTest {
             doCallRealMethod().when(mChannelCollection)
                     .addChannels(any(WifiScanner.ScanSettings.class));
             doCallRealMethod().when(mChannelCollection)
-                    .addChannels(any(WifiNative.BucketSettings.class));
+                    .addChannels(any(WifiNotiveTypes.BucketSettings.class));
         }
 
         /**
@@ -140,11 +141,11 @@ public class ChannelHelperTest {
         }
 
         /**
-         * Verify adding channels from a WifiNative.BucketSetting with channels
+         * Verify adding channels from a WifiNotive.BucketSetting with channels
          */
         @Test
-        public void addChannelsWifiNativeBucket_channels() {
-            WifiNative.BucketSettings testBucket = new WifiNative.BucketSettings();
+        public void addChannelsWifiNotiveBucket_channels() {
+            WifiNotiveTypes.BucketSettings testBucket = new WifiNotiveTypes.BucketSettings();
             testBucket.band = WifiScanner.WIFI_BAND_UNSPECIFIED;
             testBucket.num_channels = 2;
             testBucket.channels = channelsToNativeSettings(2450, 5100);
@@ -156,11 +157,11 @@ public class ChannelHelperTest {
         }
 
         /**
-         * Verify adding channels from a WifiNative.BucketSetting with bands
+         * Verify adding channels from a WifiNotive.BucketSetting with bands
          */
         @Test
-        public void addChannelsWifiNativeBucket_band() {
-            WifiNative.BucketSettings testBucket = new WifiNative.BucketSettings();
+        public void addChannelsWifiNotiveBucket_band() {
+            WifiNotiveTypes.BucketSettings testBucket = new WifiNotiveTypes.BucketSettings();
             testBucket.band = WifiScanner.WIFI_BAND_5_GHZ;
 
             mChannelCollection.addChannels(testBucket);

@@ -46,7 +46,7 @@ import java.util.Locale;
 public class SoftApManager implements ActiveModeManager {
     private static final String TAG = "SoftApManager";
 
-    private final WifiNative mWifiNative;
+    private final WifiNotive mWifiNotive;
 
     private final String mCountryCode;
 
@@ -72,7 +72,7 @@ public class SoftApManager implements ActiveModeManager {
     }
 
     public SoftApManager(Looper looper,
-                         WifiNative wifiNative,
+                         WifiNotive wifiNotive,
                          String countryCode,
                          Listener listener,
                          IApInterface apInterface,
@@ -81,7 +81,7 @@ public class SoftApManager implements ActiveModeManager {
                          WifiConfiguration config) {
         mStateMachine = new SoftApStateMachine(looper);
 
-        mWifiNative = wifiNative;
+        mWifiNotive = wifiNotive;
         mCountryCode = countryCode;
         mListener = listener;
         mApInterface = apInterface;
@@ -133,7 +133,7 @@ public class SoftApManager implements ActiveModeManager {
         WifiConfiguration localConfig = new WifiConfiguration(config);
 
         int result = ApConfigUtil.updateApChannelConfig(
-                mWifiNative, mCountryCode,
+                mWifiNotive, mCountryCode,
                 mWifiApConfigStore.getAllowed2GChannel(), localConfig);
         if (result != SUCCESS) {
             Log.e(TAG, "Failed to update AP band and channel");
@@ -144,7 +144,7 @@ public class SoftApManager implements ActiveModeManager {
         if (mCountryCode != null) {
             // Country code is mandatory for 5GHz band, return an error if failed to set
             // country code when AP is configured for 5GHz band.
-            if (!mWifiNative.setCountryCodeHal(mCountryCode.toUpperCase(Locale.ROOT))
+            if (!mWifiNotive.setCountryCodeHal(mCountryCode.toUpperCase(Locale.ROOT))
                     && config.apBand == WifiConfiguration.AP_BAND_5GHZ) {
                 Log.e(TAG, "Failed to set country code, required for setting up "
                         + "soft ap in 5GHz");

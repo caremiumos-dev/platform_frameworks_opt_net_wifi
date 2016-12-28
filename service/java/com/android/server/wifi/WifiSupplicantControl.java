@@ -68,7 +68,7 @@ public class WifiSupplicantControl {
     private final LocalLog mLocalLog;
     private final WpaConfigFileObserver mFileObserver;
     private final TelephonyManager mTelephonyManager;
-    private final WifiNative mWifiNative;
+    private final WifiNotive mWifiNotive;
 
     // TODO (b/31080843): This will need to be a map when we have multiple networks in supplicant.
     // Supplicant network ID of the only configured network in wpa_supplicant.
@@ -81,10 +81,10 @@ public class WifiSupplicantControl {
     // Indicates whether the system is capable of 802.11r fast BSS transition.
     private boolean mSystemSupportsFastBssTransition = false;
 
-    WifiSupplicantControl(TelephonyManager telephonyManager, WifiNative wifiNative,
+    WifiSupplicantControl(TelephonyManager telephonyManager, WifiNotive wifiNotive,
             LocalLog localLog) {
         mTelephonyManager = telephonyManager;
-        mWifiNative = wifiNative;
+        mWifiNotive = wifiNotive;
 
         mLocalLog = localLog;
         mFileObserver = new WpaConfigFileObserver();
@@ -162,7 +162,7 @@ public class WifiSupplicantControl {
 
     private void readNetworkBitsetVariable(int netId, BitSet variable, String varName,
             String[] strings) {
-        String value = mWifiNative.getNetworkVariable(netId, varName);
+        String value = mWifiNotive.getNetworkVariable(netId, varName);
         if (!TextUtils.isEmpty(value)) {
             variable.clear();
             String[] vals = value.split(" ");
@@ -196,7 +196,7 @@ public class WifiSupplicantControl {
          */
         String value;
 
-        value = mWifiNative.getNetworkVariable(netId, WifiConfiguration.ssidVarName);
+        value = mWifiNotive.getNetworkVariable(netId, WifiConfiguration.ssidVarName);
         if (!TextUtils.isEmpty(value)) {
             if (value.charAt(0) != '"') {
                 config.SSID = "\"" + WifiSsid.createFromHex(value).toString() + "\"";
@@ -209,14 +209,14 @@ public class WifiSupplicantControl {
             config.SSID = null;
         }
 
-        value = mWifiNative.getNetworkVariable(netId, WifiConfiguration.bssidVarName);
+        value = mWifiNotive.getNetworkVariable(netId, WifiConfiguration.bssidVarName);
         if (!TextUtils.isEmpty(value)) {
             config.getNetworkSelectionStatus().setNetworkSelectionBSSID(value);
         } else {
             config.getNetworkSelectionStatus().setNetworkSelectionBSSID(null);
         }
 
-        value = mWifiNative.getNetworkVariable(netId, WifiConfiguration.priorityVarName);
+        value = mWifiNotive.getNetworkVariable(netId, WifiConfiguration.priorityVarName);
         config.priority = -1;
         if (!TextUtils.isEmpty(value)) {
             try {
@@ -225,7 +225,7 @@ public class WifiSupplicantControl {
             }
         }
 
-        value = mWifiNative.getNetworkVariable(netId, WifiConfiguration.hiddenSSIDVarName);
+        value = mWifiNotive.getNetworkVariable(netId, WifiConfiguration.hiddenSSIDVarName);
         config.hiddenSSID = false;
         if (!TextUtils.isEmpty(value)) {
             try {
@@ -234,7 +234,7 @@ public class WifiSupplicantControl {
             }
         }
 
-        value = mWifiNative.getNetworkVariable(netId, WifiConfiguration.pmfVarName);
+        value = mWifiNotive.getNetworkVariable(netId, WifiConfiguration.pmfVarName);
         config.requirePMF = false;
         if (!TextUtils.isEmpty(value)) {
             try {
@@ -243,7 +243,7 @@ public class WifiSupplicantControl {
             }
         }
 
-        value = mWifiNative.getNetworkVariable(netId, WifiConfiguration.wepTxKeyIdxVarName);
+        value = mWifiNotive.getNetworkVariable(netId, WifiConfiguration.wepTxKeyIdxVarName);
         config.wepTxKeyIndex = -1;
         if (!TextUtils.isEmpty(value)) {
             try {
@@ -253,7 +253,7 @@ public class WifiSupplicantControl {
         }
 
         for (int i = 0; i < 4; i++) {
-            value = mWifiNative.getNetworkVariable(netId,
+            value = mWifiNotive.getNetworkVariable(netId,
                     WifiConfiguration.wepKeyVarNames[i]);
             if (!TextUtils.isEmpty(value)) {
                 config.wepKeys[i] = value;
@@ -262,7 +262,7 @@ public class WifiSupplicantControl {
             }
         }
 
-        value = mWifiNative.getNetworkVariable(netId, WifiConfiguration.pskVarName);
+        value = mWifiNotive.getNetworkVariable(netId, WifiConfiguration.pskVarName);
         if (!TextUtils.isEmpty(value)) {
             config.preSharedKey = value;
         } else {
@@ -304,7 +304,7 @@ public class WifiSupplicantControl {
         int last_id = -1;
         boolean done = false;
         while (!done) {
-            String listStr = mWifiNative.listNetworks(last_id);
+            String listStr = mWifiNotive.listNetworks(last_id);
             if (listStr == null) {
                 return lastPriority;
             }
@@ -332,13 +332,13 @@ public class WifiSupplicantControl {
                 readNetworkVariables(config);
                 // Parse the serialized JSON dictionary in ID_STRING_VAR_NAME once and cache the
                 // result for efficiency.
-                Map<String, String> extras = mWifiNative.getNetworkExtra(config.networkId,
+                Map<String, String> extras = mWifiNotive.getNetworkExtra(config.networkId,
                         ID_STRING_VAR_NAME);
                 if (extras == null) {
                     extras = new HashMap<String, String>();
                     // If ID_STRING_VAR_NAME did not contain a dictionary, assume that it contains
                     // just a quoted FQDN. This is the legacy format that was used in Marshmallow.
-                    final String fqdn = Utils.unquote(mWifiNative.getNetworkVariable(
+                    final String fqdn = Utils.unquote(mWifiNotive.getNetworkVariable(
                             config.networkId, ID_STRING_VAR_NAME));
                     if (fqdn != null) {
                         extras.put(ID_STRING_KEY_FQDN, fqdn);
@@ -375,7 +375,7 @@ public class WifiSupplicantControl {
                     // This can happen after the user manually connected to an AP and tried to use
                     // WPS to connect the AP later. In this case, the supplicant will create a new
                     // network for the AP although there is an existing network already.
-                    mWifiNative.removeNetwork(duplicateConfig.networkId);
+                    mWifiNotive.removeNetwork(duplicateConfig.networkId);
                 }
             }
             done = (lines.length == 1);
@@ -397,7 +397,7 @@ public class WifiSupplicantControl {
         }
         metadata.put(ID_STRING_KEY_CONFIG_KEY, config.configKey());
         metadata.put(ID_STRING_KEY_CREATOR_UID, Integer.toString(config.creatorUid));
-        if (!mWifiNative.setNetworkExtra(netId, ID_STRING_VAR_NAME, metadata)) {
+        if (!mWifiNotive.setNetworkExtra(netId, ID_STRING_VAR_NAME, metadata)) {
             loge("failed to set id_str: " + metadata.toString());
             return false;
         }
@@ -430,10 +430,10 @@ public class WifiSupplicantControl {
         if (config == null) {
             return false;
         }
-        if (config.SSID != null && !mWifiNative.setNetworkVariable(
+        if (config.SSID != null && !mWifiNotive.setNetworkVariable(
                 netId,
                 WifiConfiguration.ssidVarName,
-                WifiNative.encodeSSID(config.SSID))) {
+                WifiNotive.encodeSSID(config.SSID))) {
             loge("failed to set SSID: " + config.SSID);
             return false;
         }
@@ -443,7 +443,7 @@ public class WifiSupplicantControl {
         //set selected BSSID to supplicant
         if (config.getNetworkSelectionStatus().getNetworkSelectionBSSID() != null) {
             String bssid = config.getNetworkSelectionStatus().getNetworkSelectionBSSID();
-            if (!mWifiNative.setNetworkVariable(netId, WifiConfiguration.bssidVarName, bssid)) {
+            if (!mWifiNotive.setNetworkVariable(netId, WifiConfiguration.bssidVarName, bssid)) {
                 loge("failed to set BSSID: " + bssid);
                 return false;
             }
@@ -451,7 +451,7 @@ public class WifiSupplicantControl {
         BitSet allowedKeyManagement = addFastTransitionFlags(config.allowedKeyManagement);
         String allowedKeyManagementString =
                 makeString(allowedKeyManagement, WifiConfiguration.KeyMgmt.strings);
-        if (config.allowedKeyManagement.cardinality() != 0 && !mWifiNative.setNetworkVariable(
+        if (config.allowedKeyManagement.cardinality() != 0 && !mWifiNotive.setNetworkVariable(
                 netId,
                 WifiConfiguration.KeyMgmt.varName,
                 allowedKeyManagementString)) {
@@ -460,7 +460,7 @@ public class WifiSupplicantControl {
         }
         String allowedProtocolsString =
                 makeString(config.allowedProtocols, WifiConfiguration.Protocol.strings);
-        if (config.allowedProtocols.cardinality() != 0 && !mWifiNative.setNetworkVariable(
+        if (config.allowedProtocols.cardinality() != 0 && !mWifiNotive.setNetworkVariable(
                 netId,
                 WifiConfiguration.Protocol.varName,
                 allowedProtocolsString)) {
@@ -470,7 +470,7 @@ public class WifiSupplicantControl {
         String allowedAuthAlgorithmsString =
                 makeString(config.allowedAuthAlgorithms,
                         WifiConfiguration.AuthAlgorithm.strings);
-        if (config.allowedAuthAlgorithms.cardinality() != 0 && !mWifiNative.setNetworkVariable(
+        if (config.allowedAuthAlgorithms.cardinality() != 0 && !mWifiNotive.setNetworkVariable(
                 netId,
                 WifiConfiguration.AuthAlgorithm.varName,
                 allowedAuthAlgorithmsString)) {
@@ -479,7 +479,7 @@ public class WifiSupplicantControl {
         }
         String allowedPairwiseCiphersString = makeString(config.allowedPairwiseCiphers,
                 WifiConfiguration.PairwiseCipher.strings);
-        if (config.allowedPairwiseCiphers.cardinality() != 0 && !mWifiNative.setNetworkVariable(
+        if (config.allowedPairwiseCiphers.cardinality() != 0 && !mWifiNotive.setNetworkVariable(
                 netId,
                 WifiConfiguration.PairwiseCipher.varName,
                 allowedPairwiseCiphersString)) {
@@ -493,7 +493,7 @@ public class WifiSupplicantControl {
                         WifiConfiguration.GroupCipher.strings,
                         WifiConfiguration.GroupCipher
                                 .strings[WifiConfiguration.GroupCipher.GTK_NOT_USED]);
-        if (config.allowedGroupCiphers.cardinality() != 0 && !mWifiNative.setNetworkVariable(
+        if (config.allowedGroupCiphers.cardinality() != 0 && !mWifiNotive.setNetworkVariable(
                 netId,
                 WifiConfiguration.GroupCipher.varName,
                 allowedGroupCiphersString)) {
@@ -503,7 +503,7 @@ public class WifiSupplicantControl {
         // Prevent client screw-up by passing in a WifiConfiguration we gave it
         // by preventing "*" as a key.
         if (config.preSharedKey != null && !config.preSharedKey.equals("*")
-                && !mWifiNative.setNetworkVariable(
+                && !mWifiNotive.setNetworkVariable(
                 netId,
                 WifiConfiguration.pskVarName,
                 config.preSharedKey)) {
@@ -516,7 +516,7 @@ public class WifiSupplicantControl {
                 // Prevent client screw-up by passing in a WifiConfiguration we gave it
                 // by preventing "*" as a key.
                 if (config.wepKeys[i] != null && !config.wepKeys[i].equals("*")) {
-                    if (!mWifiNative.setNetworkVariable(
+                    if (!mWifiNotive.setNetworkVariable(
                             netId,
                             WifiConfiguration.wepKeyVarNames[i],
                             config.wepKeys[i])) {
@@ -528,7 +528,7 @@ public class WifiSupplicantControl {
             }
         }
         if (hasSetKey) {
-            if (!mWifiNative.setNetworkVariable(
+            if (!mWifiNotive.setNetworkVariable(
                     netId,
                     WifiConfiguration.wepTxKeyIdxVarName,
                     Integer.toString(config.wepTxKeyIndex))) {
@@ -536,28 +536,28 @@ public class WifiSupplicantControl {
                 return false;
             }
         }
-        if (!mWifiNative.setNetworkVariable(
+        if (!mWifiNotive.setNetworkVariable(
                 netId,
                 WifiConfiguration.priorityVarName,
                 Integer.toString(config.priority))) {
             loge(config.SSID + ": failed to set priority: " + config.priority);
             return false;
         }
-        if (config.hiddenSSID && !mWifiNative.setNetworkVariable(
+        if (config.hiddenSSID && !mWifiNotive.setNetworkVariable(
                 netId,
                 WifiConfiguration.hiddenSSIDVarName,
                 Integer.toString(config.hiddenSSID ? 1 : 0))) {
             loge(config.SSID + ": failed to set hiddenSSID: " + config.hiddenSSID);
             return false;
         }
-        if (config.requirePMF && !mWifiNative.setNetworkVariable(
+        if (config.requirePMF && !mWifiNotive.setNetworkVariable(
                 netId,
                 WifiConfiguration.pmfVarName,
                 Integer.toString(STORED_VALUE_FOR_REQUIRE_PMF))) {
             loge(config.SSID + ": failed to set requirePMF: " + config.requirePMF);
             return false;
         }
-        if (config.updateIdentifier != null && !mWifiNative.setNetworkVariable(
+        if (config.updateIdentifier != null && !mWifiNotive.setNetworkVariable(
                 netId,
                 WifiConfiguration.updateIdentiferVarName,
                 config.updateIdentifier)) {
@@ -581,7 +581,7 @@ public class WifiSupplicantControl {
         if (config == null) {
             return WifiConfiguration.INVALID_NETWORK_ID;
         }
-        int netId = mWifiNative.addNetwork();
+        int netId = mWifiNotive.addNetwork();
         if (netId < 0) {
             loge("Failed to add a network!");
             return WifiConfiguration.INVALID_NETWORK_ID;
@@ -589,7 +589,7 @@ public class WifiSupplicantControl {
             logi("addNetwork created netId=" + netId);
         }
         if (!saveNetworkVariables(config, netId)) {
-            mWifiNative.removeNetwork(netId);
+            mWifiNotive.removeNetwork(netId);
             loge("Failed to set a network variable, removed network: " + netId);
             return WifiConfiguration.INVALID_NETWORK_ID;
         }
@@ -615,11 +615,11 @@ public class WifiSupplicantControl {
         mSupplicantNetworkId = WifiConfiguration.INVALID_NETWORK_ID;
         logd("connectToNetwork " + configuration.configKey() +
                 " (shouldDisconnect " + shouldDisconnect + ")");
-        if (shouldDisconnect && !mWifiNative.disconnect()) {
+        if (shouldDisconnect && !mWifiNotive.disconnect()) {
             loge("Failed to trigger disconnect");
             return false;
         }
-        if (!mWifiNative.removeAllNetworks()) {
+        if (!mWifiNotive.removeAllNetworks()) {
             loge("Failed to remove existing networks");
             return false;
         }
@@ -628,11 +628,11 @@ public class WifiSupplicantControl {
             loge("Failed to add/save network configuration: " + configuration.configKey());
             return false;
         }
-        if (!mWifiNative.selectNetwork(mSupplicantNetworkId)) {
+        if (!mWifiNotive.selectNetwork(mSupplicantNetworkId)) {
             loge("Failed to select network configuration: " + configuration.configKey());
             return false;
         }
-        if (!mWifiNative.reconnect()) {
+        if (!mWifiNotive.reconnect()) {
             loge("Failed to trigger reconnect");
             return false;
         }
@@ -664,7 +664,7 @@ public class WifiSupplicantControl {
             loge("Failed to set new bssid on network: " + configuration.configKey());
             return false;
         }
-        if (!mWifiNative.reassociate()) {
+        if (!mWifiNotive.reassociate()) {
             loge("Failed to trigger reassociate");
             return false;
         }
@@ -694,7 +694,7 @@ public class WifiSupplicantControl {
      * @return {@code true} if it succeeds, {@code false} otherwise
      */
     public boolean removeAllNetworks() {
-        if (!mWifiNative.removeAllNetworks()) {
+        if (!mWifiNotive.removeAllNetworks()) {
             loge("Remove all networks in wpa_supplicant failed");
             return false;
         }
@@ -707,7 +707,7 @@ public class WifiSupplicantControl {
      * @return true if successful, false otherwise.
      */
     public boolean setConfiguredNetworkBSSID(String bssid) {
-        if (!mWifiNative.setNetworkVariable(
+        if (!mWifiNotive.setNetworkVariable(
                 mSupplicantNetworkId, WifiConfiguration.bssidVarName, bssid)) {
             loge("Set BSSID of network in wpa_supplicant failed on " + mSupplicantNetworkId);
             return false;
@@ -719,7 +719,7 @@ public class WifiSupplicantControl {
      * Save the current configuration to wpa_supplicant.conf.
      */
     public boolean saveConfig() {
-        return mWifiNative.saveConfig();
+        return mWifiNotive.saveConfig();
     }
 
     /**
@@ -814,7 +814,7 @@ public class WifiSupplicantControl {
      */
     public WpsResult startWpsWithPinFromAccessPoint(WpsInfo config) {
         WpsResult result = new WpsResult();
-        if (mWifiNative.startWpsRegistrar(config.BSSID, config.pin)) {
+        if (mWifiNotive.startWpsRegistrar(config.BSSID, config.pin)) {
             result.status = WpsResult.Status.SUCCESS;
         } else {
             loge("Failed to start WPS pin method configuration");
@@ -831,7 +831,7 @@ public class WifiSupplicantControl {
      */
     public WpsResult startWpsWithPinFromDevice(WpsInfo config) {
         WpsResult result = new WpsResult();
-        result.pin = mWifiNative.startWpsPinDisplay(config.BSSID);
+        result.pin = mWifiNotive.startWpsPinDisplay(config.BSSID);
         if (!TextUtils.isEmpty(result.pin)) {
             result.status = WpsResult.Status.SUCCESS;
         } else {
@@ -849,7 +849,7 @@ public class WifiSupplicantControl {
      */
     public WpsResult startWpsPbc(WpsInfo config) {
         WpsResult result = new WpsResult();
-        if (mWifiNative.startWpsPbc(config.BSSID)) {
+        if (mWifiNotive.startWpsPbc(config.BSSID)) {
             result.status = WpsResult.Status.SUCCESS;
         } else {
             loge("Failed to start WPS push button configuration");
@@ -943,7 +943,7 @@ public class WifiSupplicantControl {
             if (value == null) {
                 value = "\"\"";
             }
-            if (!mWifiNative.setNetworkVariable(mNetId, key, value)) {
+            if (!mWifiNotive.setNetworkVariable(mNetId, key, value)) {
                 loge(mSetterSSID + ": failed to set " + key + ": " + value);
                 return false;
             }
@@ -960,7 +960,7 @@ public class WifiSupplicantControl {
 
         @Override
         public String loadValue(String key) {
-            String value = mWifiNative.getNetworkVariable(mNetId, key);
+            String value = mWifiNotive.getNetworkVariable(mNetId, key);
             if (!TextUtils.isEmpty(value)) {
                 if (!enterpriseConfigKeyShouldBeQuoted(key)) {
                     value = removeDoubleQuotes(value);
