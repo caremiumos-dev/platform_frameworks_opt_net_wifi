@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7c9e645_9ef1aeb4",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareNativeManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-12-28T01:33:00Z",
+      "side": 1,
+      "message": "Does this really need to be set here?",
+      "range": {
+        "startLine": 322,
+        "startChar": 16,
+        "endLine": 322,
+        "endChar": 38
+      },
+      "revId": "ba455af14ea3f8c5b7d1e61a19fbb0639f1a77a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_1ef5beaa",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareNativeManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-12-28T01:33:00Z",
+      "side": 1,
+      "message": "Unused in this module?",
+      "range": {
+        "startLine": 396,
+        "startChar": 0,
+        "endLine": 406,
+        "endChar": 5
+      },
+      "revId": "ba455af14ea3f8c5b7d1e61a19fbb0639f1a77a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_3eb51aca",
+        "filename": "tests/wifitests/src/com/android/server/wifi/HidlMockUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-12-28T01:33:00Z",
+      "side": 1,
+      "message": "Is the intention for other IFace kinds to be added to HidlMockJava, or is it in Nan specific?\n\n(my vote would be for the first option, I think.)",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 44
+      },
+      "revId": "ba455af14ea3f8c5b7d1e61a19fbb0639f1a77a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
