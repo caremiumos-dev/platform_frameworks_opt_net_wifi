@@ -19,7 +19,7 @@ package com.android.server.wifi.hotspot2;
 import android.util.Base64;
 import android.util.Log;
 
-import com.android.server.wifi.WifiNative;
+import com.android.server.wifi.WifiNotive;
 import com.android.server.wifi.hotspot2.anqp.ANQPElement;
 import com.android.server.wifi.hotspot2.anqp.ANQPParser;
 import com.android.server.wifi.hotspot2.anqp.Constants;
@@ -40,7 +40,7 @@ import java.util.Map;
  * event notifications.
  */
 public class PasspointEventHandler {
-    private final WifiNative mSupplicantHook;
+    private final WifiNotive mSupplicantHook;
     private final Callbacks mCallbacks;
 
     private static final int ICON_CHUNK_SIZE = 1400;  // 2K*3/4 - overhead
@@ -89,7 +89,7 @@ public class PasspointEventHandler {
         void onWnmFrameReceived(WnmData data);
     }
 
-    public PasspointEventHandler(WifiNative supplicantHook, Callbacks callbacks) {
+    public PasspointEventHandler(WifiNotive supplicantHook, Callbacks callbacks) {
         mSupplicantHook = supplicantHook;
         mCallbacks = callbacks;
     }

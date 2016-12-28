@@ -40,7 +40,7 @@ import com.android.server.wifi.IMSIParameter;
 import com.android.server.wifi.SIMAccessor;
 import com.android.server.wifi.ScanDetail;
 import com.android.server.wifi.WifiKeyStore;
-import com.android.server.wifi.WifiNative;
+import com.android.server.wifi.WifiNotive;
 import com.android.server.wifi.hotspot2.anqp.ANQPElement;
 import com.android.server.wifi.hotspot2.anqp.Constants;
 
@@ -128,9 +128,9 @@ public class PasspointManager {
         }
     }
 
-    public PasspointManager(Context context, WifiNative wifiNative, WifiKeyStore keyStore,
+    public PasspointManager(Context context, WifiNotive wifiNotive, WifiKeyStore keyStore,
             Clock clock, SIMAccessor simAccessor, PasspointObjectFactory objectFactory) {
-        mHandler = objectFactory.makePasspointEventHandler(wifiNative,
+        mHandler = objectFactory.makePasspointEventHandler(wifiNotive,
                 new CallbackHandler(context));
         mKeyStore = keyStore;
         mClock = clock;

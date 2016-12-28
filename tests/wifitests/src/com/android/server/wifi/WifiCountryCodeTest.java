@@ -41,7 +41,7 @@ public class WifiCountryCodeTest {
     private String mTelephonyCountryCode = "JP";
     private String mPersistCountryCode = "";
     private boolean mRevertCountryCodeOnCellularLoss = true;
-    @Mock WifiNative mWifiNative;
+    @Mock WifiNotive mWifiNotive;
     private WifiCountryCode mWifiCountryCode;
 
     /**
@@ -51,10 +51,10 @@ public class WifiCountryCodeTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        when(mWifiNative.setCountryCode(anyString())).thenReturn(true);
+        when(mWifiNotive.setCountryCode(anyString())).thenReturn(true);
 
         mWifiCountryCode = new WifiCountryCode(
-                mWifiNative,
+                mWifiNotive,
                 mDefaultCountryCode,
                 mPersistCountryCode,
                 mRevertCountryCodeOnCellularLoss);
@@ -70,7 +70,7 @@ public class WifiCountryCodeTest {
         mWifiCountryCode.setReadyForChange(true);
         // Wifi get L2 connected.
         mWifiCountryCode.setReadyForChange(false);
-        verify(mWifiNative).setCountryCode(anyString());
+        verify(mWifiNotive).setCountryCode(anyString());
         assertEquals(mDefaultCountryCode, mWifiCountryCode.getCountryCodeSentToDriver());
     }
 
@@ -86,7 +86,7 @@ public class WifiCountryCodeTest {
         mWifiCountryCode.setReadyForChange(true);
         // Wifi get L2 connected.
         mWifiCountryCode.setReadyForChange(false);
-        verify(mWifiNative).setCountryCode(anyString());
+        verify(mWifiNotive).setCountryCode(anyString());
         assertEquals(mTelephonyCountryCode, mWifiCountryCode.getCountryCodeSentToDriver());
     }
 
@@ -103,7 +103,7 @@ public class WifiCountryCodeTest {
         mWifiCountryCode.setCountryCode(mTelephonyCountryCode, false);
         // Wifi get L2 connected.
         mWifiCountryCode.setReadyForChange(false);
-        verify(mWifiNative, times(2)).setCountryCode(anyString());
+        verify(mWifiNotive, times(2)).setCountryCode(anyString());
         assertEquals(mTelephonyCountryCode, mWifiCountryCode.getCountryCodeSentToDriver());
     }
 
@@ -123,7 +123,7 @@ public class WifiCountryCodeTest {
         assertEquals(mDefaultCountryCode, mWifiCountryCode.getCountryCodeSentToDriver());
         mWifiCountryCode.setReadyForChange(true);
         // Telephony coutry is applied after supplicant is ready.
-        verify(mWifiNative, times(2)).setCountryCode(anyString());
+        verify(mWifiNotive, times(2)).setCountryCode(anyString());
         assertEquals(mTelephonyCountryCode, mWifiCountryCode.getCountryCodeSentToDriver());
     }
 
@@ -145,7 +145,7 @@ public class WifiCountryCodeTest {
         assertEquals(mTelephonyCountryCode, mWifiCountryCode.getCountryCodeSentToDriver());
         mWifiCountryCode.setReadyForChange(true);
         // Country code restting is applied when supplicant is ready.
-        verify(mWifiNative, times(2)).setCountryCode(anyString());
+        verify(mWifiNotive, times(2)).setCountryCode(anyString());
         assertEquals(mDefaultCountryCode, mWifiCountryCode.getCountryCodeSentToDriver());
     }
 
@@ -167,7 +167,7 @@ public class WifiCountryCodeTest {
         assertEquals(mTelephonyCountryCode, mWifiCountryCode.getCountryCodeSentToDriver());
         mWifiCountryCode.setReadyForChange(true);
         // Country code restting is applied when supplicant is ready.
-        verify(mWifiNative, times(2)).setCountryCode(anyString());
+        verify(mWifiNotive, times(2)).setCountryCode(anyString());
         assertEquals(mDefaultCountryCode, mWifiCountryCode.getCountryCodeSentToDriver());
     }
 
@@ -179,7 +179,7 @@ public class WifiCountryCodeTest {
     public void usePersistentCountryCode() throws Exception {
         String persistentCountryCode = "CH";
         mWifiCountryCode = new WifiCountryCode(
-                mWifiNative,
+                mWifiNotive,
                 mDefaultCountryCode,
                 persistentCountryCode,
                 mRevertCountryCodeOnCellularLoss);
@@ -187,7 +187,7 @@ public class WifiCountryCodeTest {
         mWifiCountryCode.setReadyForChange(true);
         // Wifi get L2 connected.
         mWifiCountryCode.setReadyForChange(false);
-        verify(mWifiNative).setCountryCode(anyString());
+        verify(mWifiNotive).setCountryCode(anyString());
         assertEquals(persistentCountryCode, mWifiCountryCode.getCountryCodeSentToDriver());
     }
 }

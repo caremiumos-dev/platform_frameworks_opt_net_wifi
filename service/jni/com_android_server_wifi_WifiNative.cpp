@@ -389,8 +389,8 @@ static jboolean android_net_wifi_startScan(
     ALOGD("Initialized common fields %d, %d, %d, %d", params.base_period, params.max_ap_per_scan,
             params.report_threshold_percent, params.report_threshold_num_scans);
 
-    const char *bucket_array_type = "[Lcom/android/server/wifi/WifiNative$BucketSettings;";
-    const char *channel_array_type = "[Lcom/android/server/wifi/WifiNative$ChannelSettings;";
+    const char *bucket_array_type = "[Lcom/android/server/wifi/WifiNotiveTypes$BucketSettings;";
+    const char *channel_array_type = "[Lcom/android/server/wifi/WifiNotiveTypes$ChannelSettings;";
 
     params.num_buckets = helper.getIntField(settings, "num_buckets");
 
@@ -1497,7 +1497,7 @@ static jobject android_net_wifi_get_tdls_status(JNIEnv *env,jclass cls, jint ifa
         return NULL;
     } else {
         JNIObject<jobject> tdls_status = helper.createObject(
-                "com/android/server/wifi/WifiNative$TdlsStatus");
+                "com/android/server/wifi/WifiNotiveTypes$TdlsStatus");
         helper.setIntField(tdls_status, "channel", status.channel);
         helper.setIntField(tdls_status, "global_operating_class", status.global_operating_class);
         helper.setIntField(tdls_status, "state", status.state);
@@ -1515,7 +1515,7 @@ static jobject android_net_wifi_get_tdls_capabilities(JNIEnv *env, jclass cls, j
 
     if (WIFI_SUCCESS == ret) {
          JNIObject<jobject> capabilities = helper.createObject(
-                 "com/android/server/wifi/WifiNative$TdlsCapabilities");
+                 "com/android/server/wifi/WifiNotiveTypes$TdlsCapabilities");
          helper.setIntField(capabilities, "maxConcurrentTdlsSessionNumber",
                  tdls_capabilities.max_concurrent_tdls_session_num);
          helper.setBooleanField(capabilities, "isGlobalTdlsSupported",
@@ -1632,14 +1632,14 @@ static jobject android_net_wifi_get_ring_buffer_status (JNIEnv *env, jclass cls,
         ALOGD("status is %p, number is %d", status, num_rings);
 
         JNIObject<jobjectArray> ringBuffersStatus = helper.newObjectArray(
-            num_rings, "com/android/server/wifi/WifiNative$RingBufferStatus", NULL);
+            num_rings, "com/android/server/wifi/WifiNotiveTypes$RingBufferStatus", NULL);
 
         wifi_ring_buffer_status *tmp = status;
 
         for(u32 i = 0; i < num_rings; i++, tmp++) {
 
             JNIObject<jobject> ringStatus = helper.createObject(
-                    "com/android/server/wifi/WifiNative$RingBufferStatus");
+                    "com/android/server/wifi/WifiNotiveTypes$RingBufferStatus");
 
             if (ringStatus == NULL) {
                 ALOGE("Error in creating ringBufferStatus");
@@ -1687,7 +1687,7 @@ static void on_ring_buffer_data(char *ring_name, char *buffer, int buffer_size,
             mCls, env, buffer_size); */
 
     JNIObject<jobject> ringStatus = helper.createObject(
-                    "com/android/server/wifi/WifiNative$RingBufferStatus");
+                    "com/android/server/wifi/WifiNotiveTypes$RingBufferStatus");
     if (status == NULL) {
         ALOGE("Error in creating ringBufferStatus");
         return;
@@ -1706,7 +1706,7 @@ static void on_ring_buffer_data(char *ring_name, char *buffer, int buffer_size,
     helper.setByteArrayRegion(bytes, 0, buffer_size, (jbyte*)buffer);
 
     helper.reportEvent(mCls,"onRingBufferData",
-            "(Lcom/android/server/wifi/WifiNative$RingBufferStatus;[B)V",
+            "(Lcom/android/server/wifi/WifiNotiveTypes$RingBufferStatus;[B)V",
             ringStatus.get(), bytes.get());
 }
 
@@ -2026,7 +2026,7 @@ static jint android_net_wifi_get_tx_pkt_fates(JNIEnv *env, jclass cls, jint ifac
     jobjectArray reports) {
 
     return get_pkt_fates<wifi_tx_report>(
-        hal_fn.wifi_get_tx_pkt_fates, "com/android/server/wifi/WifiNative$TxFateReport",
+        hal_fn.wifi_get_tx_pkt_fates, "com/android/server/wifi/WifiNotiveTypes$TxFateReport",
         env, cls, iface, reports);
 }
 
@@ -2034,7 +2034,7 @@ static jint android_net_wifi_get_rx_pkt_fates(JNIEnv *env, jclass cls, jint ifac
     jobjectArray reports) {
 
     return get_pkt_fates<wifi_rx_report>(
-        hal_fn.wifi_get_rx_pkt_fates, "com/android/server/wifi/WifiNative$RxFateReport",
+        hal_fn.wifi_get_rx_pkt_fates, "com/android/server/wifi/WifiNotiveTypes$RxFateReport",
         env, cls, iface, reports);
 }
 
@@ -2104,7 +2104,7 @@ static jboolean android_net_wifi_setPnoListNative(
     }
 
     JNIObject<jobjectArray> list = helper.getArrayField(settings, "networkList",
-            "[Lcom/android/server/wifi/WifiNative$PnoNetwork;");
+            "[Lcom/android/server/wifi/WifiNotiveTypes$PnoNetwork;");
     if (list == NULL) {
         return false;
     }
@@ -2413,9 +2413,9 @@ static JNINativeMethod gWifiMethods[] = {
     { "waitForHalEventNative", "()V", (void*) android_net_wifi_waitForHalEvents },
     { "getInterfacesNative", "()I", (void*) android_net_wifi_getInterfaces},
     { "getInterfaceNameNative", "(I)Ljava/lang/String;", (void*) android_net_wifi_getInterfaceName},
-    { "getScanCapabilitiesNative", "(ILcom/android/server/wifi/WifiNative$ScanCapabilities;)Z",
+    { "getScanCapabilitiesNative", "(ILcom/android/server/wifi/WifiNotiveTypes$ScanCapabilities;)Z",
             (void *) android_net_wifi_getScanCapabilities},
-    { "startScanNative", "(IILcom/android/server/wifi/WifiNative$ScanSettings;)Z",
+    { "startScanNative", "(IILcom/android/server/wifi/WifiNotiveTypes$ScanSettings;)Z",
             (void*) android_net_wifi_startScan},
     { "stopScanNative", "(II)Z", (void*) android_net_wifi_stopScan},
     { "getScanResultsNative", "(IZ)[Landroid/net/wifi/WifiScanner$ScanData;",
@@ -2438,7 +2438,7 @@ static JNINativeMethod gWifiMethods[] = {
     { "cancelRangeRequestNative", "(II[Landroid/net/wifi/RttManager$RttParams;)Z",
             (void*) android_net_wifi_cancelRange},
     { "enableRttResponderNative",
-        "(IIILcom/android/server/wifi/WifiNative$WifiChannelInfo;)Landroid/net/wifi/RttManager$ResponderConfig;",
+        "(IIILcom/android/server/wifi/WifiNotiveTypes$WifiChannelInfo;)Landroid/net/wifi/RttManager$ResponderConfig;",
             (void*) android_net_wifi_enableResponder},
     { "disableRttResponderNative", "(II)Z",
             (void*) android_net_wifi_disableResponder},
@@ -2453,14 +2453,14 @@ static JNINativeMethod gWifiMethods[] = {
     { "installPacketFilterNative", "(I[B)Z", (void*) android_net_wifi_install_packet_filter},
     {"setCountryCodeHalNative", "(ILjava/lang/String;)Z",
             (void*) android_net_wifi_set_Country_Code_Hal},
-    { "setPnoListNative", "(IILcom/android/server/wifi/WifiNative$PnoSettings;)Z",
+    { "setPnoListNative", "(IILcom/android/server/wifi/WifiNotiveTypes$PnoSettings;)Z",
             (void*) android_net_wifi_setPnoListNative},
     { "resetPnoListNative", "(II)Z", (void*) android_net_wifi_resetPnoListNative},
     {"enableDisableTdlsNative", "(IZLjava/lang/String;)Z",
             (void*) android_net_wifi_enable_disable_tdls},
-    {"getTdlsStatusNative", "(ILjava/lang/String;)Lcom/android/server/wifi/WifiNative$TdlsStatus;",
+    {"getTdlsStatusNative", "(ILjava/lang/String;)Lcom/android/server/wifi/WifiNotiveTypes$TdlsStatus;",
             (void*) android_net_wifi_get_tdls_status},
-    {"getTdlsCapabilitiesNative", "(I)Lcom/android/server/wifi/WifiNative$TdlsCapabilities;",
+    {"getTdlsCapabilitiesNative", "(I)Lcom/android/server/wifi/WifiNotiveTypes$TdlsCapabilities;",
             (void*) android_net_wifi_get_tdls_capabilities},
     {"getSupportedLoggerFeatureSetNative","(I)I",
             (void*) android_net_wifi_get_supported_logger_feature},
@@ -2468,7 +2468,7 @@ static JNINativeMethod gWifiMethods[] = {
             (void*) android_net_wifi_get_driver_version},
     {"getFirmwareVersionNative", "(I)Ljava/lang/String;",
             (void*) android_net_wifi_get_firmware_version},
-    {"getRingBufferStatusNative", "(I)[Lcom/android/server/wifi/WifiNative$RingBufferStatus;",
+    {"getRingBufferStatusNative", "(I)[Lcom/android/server/wifi/WifiNotiveTypes$RingBufferStatus;",
             (void*) android_net_wifi_get_ring_buffer_status},
     {"startLoggingRingBufferNative", "(IIIIILjava/lang/String;)Z",
             (void*) android_net_wifi_start_logging_ring_buffer},
@@ -2479,9 +2479,9 @@ static JNINativeMethod gWifiMethods[] = {
     {"setLoggingEventHandlerNative", "(II)Z", (void *) android_net_wifi_set_log_handler},
     {"resetLogHandlerNative", "(II)Z", (void *) android_net_wifi_reset_log_handler},
     {"startPktFateMonitoringNative", "(I)I", (void*) android_net_wifi_start_pkt_fate_monitoring},
-    {"getTxPktFatesNative", "(I[Lcom/android/server/wifi/WifiNative$TxFateReport;)I",
+    {"getTxPktFatesNative", "(I[Lcom/android/server/wifi/WifiNotiveTypes$TxFateReport;)I",
             (void*) android_net_wifi_get_tx_pkt_fates},
-    {"getRxPktFatesNative", "(I[Lcom/android/server/wifi/WifiNative$RxFateReport;)I",
+    {"getRxPktFatesNative", "(I[Lcom/android/server/wifi/WifiNotiveTypes$RxFateReport;)I",
             (void*) android_net_wifi_get_rx_pkt_fates},
     { "startSendingOffloadedPacketNative", "(II[B[B[BI)I",
              (void*)android_net_wifi_start_sending_offloaded_packet},

@@ -19,7 +19,8 @@ package com.android.server.wifi.scanner;
 import android.net.wifi.WifiScanner;
 import android.util.ArraySet;
 
-import com.android.server.wifi.WifiNative;
+import com.android.server.wifi.WifiNotive;
+import com.android.server.wifi.WifiNotiveTypes;
 
 import java.util.Set;
 
@@ -137,7 +138,7 @@ public abstract class ChannelHelper {
         /**
          * Add all channels in the BucketSettings to the collection
          */
-        public void addChannels(WifiNative.BucketSettings bucketSettings) {
+        public void addChannels(WifiNotiveTypes.BucketSettings bucketSettings) {
             if (bucketSettings.band == WifiScanner.WIFI_BAND_UNSPECIFIED) {
                 for (int j = 0; j < bucketSettings.channels.length; ++j) {
                     addChannel(bucketSettings.channels[j].frequency);
@@ -219,7 +220,7 @@ public abstract class ChannelHelper {
          * exceeded or a band better describes the channels then a band is specified instead of a
          * channel list.
          */
-        public abstract void fillBucketSettings(WifiNative.BucketSettings bucket, int maxChannels);
+        public abstract void fillBucketSettings(WifiNotiveTypes.BucketSettings bucket, int maxChannels);
 
         /**
          * Gets the list of channels that should be supplied to supplicant for a scan. Will either
@@ -251,7 +252,7 @@ public abstract class ChannelHelper {
      * If it contains a list of channels then the channels are returned, otherwise a string name of
      * the band is returned.
      */
-    public static String toString(WifiNative.BucketSettings bucketSettings) {
+    public static String toString(WifiNotiveTypes.BucketSettings bucketSettings) {
         if (bucketSettings.band == WifiScanner.WIFI_BAND_UNSPECIFIED) {
             return toString(bucketSettings.channels, bucketSettings.num_channels);
         } else {
@@ -276,7 +277,7 @@ public abstract class ChannelHelper {
         return sb.toString();
     }
 
-    private static String toString(WifiNative.ChannelSettings[] channels, int numChannels) {
+    private static String toString(WifiNotiveTypes.ChannelSettings[] channels, int numChannels) {
         if (channels == null) {
             return "null";
         }

@@ -23,6 +23,7 @@ import com.android.internal.R;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.server.wifi.util.ByteArrayRingBuffer;
 import com.android.server.wifi.util.StringUtil;
+import com.android.server.wifi.WifiNotiveTypes;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -98,16 +99,16 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
     private final int RING_BUFFER_BYTE_LIMIT_LARGE;
     private int mLogLevel = VERBOSE_NO_LOG;
     private boolean mIsLoggingEventHandlerRegistered;
-    private WifiNative.RingBufferStatus[] mRingBuffers;
-    private WifiNative.RingBufferStatus mPerPacketRingBuffer;
+    private WifiNotiveTypes.RingBufferStatus[] mRingBuffers;
+    private WifiNotiveTypes.RingBufferStatus mPerPacketRingBuffer;
     private WifiStateMachine mWifiStateMachine;
-    private final WifiNative mWifiNative;
+    private final WifiNotive mWifiNotive;
     private final BuildProperties mBuildProperties;
     private int mMaxRingBufferSizeBytes;
     private WifiLog mLog;
 
     public WifiDiagnostics(Context context, WifiInjector wifiInjector,
-                           WifiStateMachine wifiStateMachine, WifiNative wifiNative,
+                           WifiStateMachine wifiStateMachine, WifiNotive wifiNotive,
                            BuildProperties buildProperties) {
         RING_BUFFER_BYTE_LIMIT_SMALL = context.getResources().getInteger(
                 R.integer.config_wifi_logger_ring_buffer_default_size_limit_kb) * 1024;
@@ -115,7 +116,7 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
                 R.integer.config_wifi_logger_ring_buffer_verbose_size_limit_kb) * 1024;
 
         mWifiStateMachine = wifiStateMachine;
-        mWifiNative = wifiNative;
+        mWifiNotive = wifiNotive;
         mBuildProperties = buildProperties;
         mIsLoggingEventHandlerRegistered = false;
         mMaxRingBufferSizeBytes = RING_BUFFER_BYTE_LIMIT_SMALL;
@@ -124,12 +125,12 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
 
     @Override
     public synchronized void startLogging(boolean verboseEnabled) {
-        mFirmwareVersion = mWifiNative.getFirmwareVersion();
-        mDriverVersion = mWifiNative.getDriverVersion();
-        mSupportedFeatureSet = mWifiNative.getSupportedLoggerFeatureSet();
+        mFirmwareVersion = mWifiNotive.getFirmwareVersion();
+        mDriverVersion = mWifiNotive.getDriverVersion();
+        mSupportedFeatureSet = mWifiNotive.getSupportedLoggerFeatureSet();
 
         if (!mIsLoggingEventHandlerRegistered) {
-            mIsLoggingEventHandlerRegistered = mWifiNative.setLoggingEventHandler(mHandler);
+            mIsLoggingEventHandlerRegistered = mWifiNotive.setLoggingEventHandler(mHandler);
         }
 
         if (verboseEnabled) {
@@ -153,7 +154,7 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
             startLoggingAllExceptPerPacketBuffers();
         }
 
-        if (!mWifiNative.startPktFateMonitoring()) {
+        if (!mWifiNotive.startPktFateMonitoring()) {
             mLog.wC("Failed to start packet fate monitoring");
         }
     }
@@ -179,7 +180,7 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
     @Override
     public synchronized void stopLogging() {
         if (mIsLoggingEventHandlerRegistered) {
-            if (!mWifiNative.resetLogHandler()) {
+            if (!mWifiNotive.resetLogHandler()) {
                 mLog.wC("Fail to reset log handler");
             } else {
                 if (DBG) mLog.tC("Reset log handler");
@@ -234,9 +235,9 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
         dumpPacketFates(pw);
         pw.println("--------------------------------------------------------------------");
 
-        pw.println("WifiNative - Log Begin ----");
-        mWifiNative.getLocalLog().dump(fd, pw, args);
-        pw.println("WifiNative - Log End ----");
+        pw.println("WifiNotive - Log Begin ----");
+        mWifiNotive.getLocalLog().dump(fd, pw, args);
+        pw.println("WifiNotive - Log End ----");
     }
 
     /* private methods and data */
@@ -365,10 +366,10 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
             new LimitedCircularArray<BugReport>(MAX_BUG_REPORTS);
     private final HashMap<String, ByteArrayRingBuffer> mRingBufferData = new HashMap();
 
-    private final WifiNative.WifiLoggerEventHandler mHandler =
-            new WifiNative.WifiLoggerEventHandler() {
+    private final WifiNotiveTypes.WifiLoggerEventHandler mHandler =
+            new WifiNotiveTypes.WifiLoggerEventHandler() {
         @Override
-        public void onRingBufferData(WifiNative.RingBufferStatus status, byte[] buffer) {
+        public void onRingBufferData(WifiNotiveTypes.RingBufferStatus status, byte[] buffer) {
             WifiDiagnostics.this.onRingBufferData(status, buffer);
         }
 
@@ -378,7 +379,7 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
         }
     };
 
-    synchronized void onRingBufferData(WifiNative.RingBufferStatus status, byte[] buffer) {
+    synchronized void onRingBufferData(WifiNotiveTypes.RingBufferStatus status, byte[] buffer) {
         ByteArrayRingBuffer ring = mRingBufferData.get(status.name);
         if (ring != null) {
             ring.appendBuffer(buffer);
@@ -411,9 +412,9 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
     private boolean fetchRingBuffers() {
         if (mRingBuffers != null) return true;
 
-        mRingBuffers = mWifiNative.getRingBufferStatus();
+        mRingBuffers = mWifiNotive.getRingBufferStatus();
         if (mRingBuffers != null) {
-            for (WifiNative.RingBufferStatus buffer : mRingBuffers) {
+            for (WifiNotiveTypes.RingBufferStatus buffer : mRingBuffers) {
                 if (DBG) mLog.trace("RingBufferStatus is: %").c(buffer.name).flush();
                 if (mRingBufferData.containsKey(buffer.name) == false) {
                     mRingBufferData.put(buffer.name,
@@ -443,7 +444,7 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
             return false;
         }
 
-        for (WifiNative.RingBufferStatus buffer : mRingBuffers){
+        for (WifiNotiveTypes.RingBufferStatus buffer : mRingBuffers){
 
             if ((buffer.flag & RING_BUFFER_FLAG_HAS_PER_PACKET_ENTRIES) != 0) {
                 /* skip per-packet-buffer */
@@ -457,12 +458,12 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
         return true;
     }
 
-    private boolean startLoggingRingBuffer(WifiNative.RingBufferStatus buffer) {
+    private boolean startLoggingRingBuffer(WifiNotiveTypes.RingBufferStatus buffer) {
 
         int minInterval = MinWakeupIntervals[mLogLevel];
         int minDataSize = MinBufferSizes[mLogLevel];
 
-        if (mWifiNative.startLoggingRingBuffer(
+        if (mWifiNotive.startLoggingRingBuffer(
                 mLogLevel, 0, minInterval, minDataSize, buffer.name) == false) {
             if (DBG) mLog.warn("Could not start logging ring %").c(buffer.name).flush();
             return false;
@@ -471,8 +472,8 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
         return true;
     }
 
-    private boolean stopLoggingRingBuffer(WifiNative.RingBufferStatus buffer) {
-        if (mWifiNative.startLoggingRingBuffer(0, 0, 0, 0, buffer.name) == false) {
+    private boolean stopLoggingRingBuffer(WifiNotiveTypes.RingBufferStatus buffer) {
+        if (mWifiNotive.startLoggingRingBuffer(0, 0, 0, 0, buffer.name) == false) {
             if (DBG) mLog.warn("Could not stop logging ring %").c(buffer.name).flush();
         }
         return true;
@@ -480,7 +481,7 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
 
     private boolean stopLoggingAllBuffers() {
         if (mRingBuffers != null) {
-            for (WifiNative.RingBufferStatus buffer : mRingBuffers) {
+            for (WifiNotiveTypes.RingBufferStatus buffer : mRingBuffers) {
                 stopLoggingRingBuffer(buffer);
             }
         }
@@ -498,9 +499,9 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
         report.kernelTimeNanos = System.nanoTime();
 
         if (mRingBuffers != null) {
-            for (WifiNative.RingBufferStatus buffer : mRingBuffers) {
+            for (WifiNotiveTypes.RingBufferStatus buffer : mRingBuffers) {
                 /* this will push data in mRingBuffers */
-                mWifiNative.getRingBufferData(buffer.name);
+                mWifiNotive.getRingBufferData(buffer.name);
                 ByteArrayRingBuffer data = mRingBufferData.get(buffer.name);
                 byte[][] buffers = new byte[data.getNumBuffers()][];
                 for (int i = 0; i < data.getNumBuffers(); i++) {
@@ -514,8 +515,8 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
         report.kernelLogLines = getKernelLog(127);
 
         if (captureFWDump) {
-            report.fwMemoryDump = mWifiNative.getFwMemoryDump();
-            report.mDriverStateDump = mWifiNative.getDriverStateDump();
+            report.fwMemoryDump = mWifiNotive.getFwMemoryDump();
+            report.mDriverStateDump = mWifiNotive.getDriverStateDump();
         }
         return report;
     }
@@ -590,7 +591,7 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
     private LimitedCircularArray<String> getKernelLog(int maxLines) {
         if (DBG) mLog.tC("Reading kernel log ...");
         LimitedCircularArray<String> lines = new LimitedCircularArray<String>(maxLines);
-        String log = mWifiNative.readKernelLog();
+        String log = mWifiNotive.readKernelLog();
         String logLines[] = log.split("\n");
         for (int i = 0; i < logLines.length; i++) {
             lines.addLast(logLines[i]);
@@ -600,29 +601,29 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
     }
 
     /** Packet fate reporting */
-    private ArrayList<WifiNative.FateReport> mPacketFatesForLastFailure;
+    private ArrayList<WifiNotiveTypes.FateReport> mPacketFatesForLastFailure;
 
-    private ArrayList<WifiNative.FateReport> fetchPacketFates() {
-        ArrayList<WifiNative.FateReport> mergedFates = new ArrayList<WifiNative.FateReport>();
-        WifiNative.TxFateReport[] txFates =
-                new WifiNative.TxFateReport[WifiLoggerHal.MAX_FATE_LOG_LEN];
-        if (mWifiNative.getTxPktFates(txFates)) {
+    private ArrayList<WifiNotiveTypes.FateReport> fetchPacketFates() {
+        ArrayList<WifiNotiveTypes.FateReport> mergedFates = new ArrayList<WifiNotiveTypes.FateReport>();
+        WifiNotiveTypes.TxFateReport[] txFates =
+                new WifiNotiveTypes.TxFateReport[WifiLoggerHal.MAX_FATE_LOG_LEN];
+        if (mWifiNotive.getTxPktFates(txFates)) {
             for (int i = 0; i < txFates.length && txFates[i] != null; i++) {
                 mergedFates.add(txFates[i]);
             }
         }
 
-        WifiNative.RxFateReport[] rxFates =
-                new WifiNative.RxFateReport[WifiLoggerHal.MAX_FATE_LOG_LEN];
-        if (mWifiNative.getRxPktFates(rxFates)) {
+        WifiNotiveTypes.RxFateReport[] rxFates =
+                new WifiNotiveTypes.RxFateReport[WifiLoggerHal.MAX_FATE_LOG_LEN];
+        if (mWifiNotive.getRxPktFates(rxFates)) {
             for (int i = 0; i < rxFates.length && rxFates[i] != null; i++) {
                 mergedFates.add(rxFates[i]);
             }
         }
 
-        Collections.sort(mergedFates, new Comparator<WifiNative.FateReport>() {
+        Collections.sort(mergedFates, new Comparator<WifiNotiveTypes.FateReport>() {
             @Override
-            public int compare(WifiNative.FateReport lhs, WifiNative.FateReport rhs) {
+            public int compare(WifiNotiveTypes.FateReport lhs, WifiNotiveTypes.FateReport rhs) {
                 return Long.compare(lhs.mDriverTimestampUSec, rhs.mDriverTimestampUSec);
             }
         });
@@ -637,7 +638,7 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
     }
 
     private static void dumpPacketFatesInternal(PrintWriter pw, String description,
-            ArrayList<WifiNative.FateReport> fates, boolean verbose) {
+            ArrayList<WifiNotiveTypes.FateReport> fates, boolean verbose) {
         if (fates == null) {
             pw.format("No fates fetched for \"%s\"\n", description);
             return;
@@ -651,8 +652,8 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
         pw.format("--------------------- %s ----------------------\n", description);
 
         StringBuilder verboseOutput = new StringBuilder();
-        pw.print(WifiNative.FateReport.getTableHeader());
-        for (WifiNative.FateReport fate : fates) {
+        pw.print(WifiNotiveTypes.FateReport.getTableHeader());
+        for (WifiNotiveTypes.FateReport fate : fates) {
             pw.print(fate.toTableRowString());
             if (verbose) {
                 // Important: only print Personally Identifiable Information (PII) if verbose

@@ -156,7 +156,7 @@ public class WifiSupplicantControlTest {
             + "        " + KEY_ID_STR + "=" + NETWORK_3_VARS.get(KEY_ID_STR) + "\n"
             + "}\n";
 
-    @Mock private WifiNative mWifiNative;
+    @Mock private WifiNotive mWifiNotive;
     @Mock private TelephonyManager mTelephonyManager;
     private WifiSupplicantControl mWifiSupplicantControl;
 
@@ -166,7 +166,7 @@ public class WifiSupplicantControlTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        mWifiSupplicantControl = new WifiSupplicantControl(mTelephonyManager, mWifiNative, null);
+        mWifiSupplicantControl = new WifiSupplicantControl(mTelephonyManager, mWifiNotive, null);
     }
 
     /**

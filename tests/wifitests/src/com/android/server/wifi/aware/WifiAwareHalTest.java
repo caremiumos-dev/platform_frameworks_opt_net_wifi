@@ -32,6 +32,7 @@ import android.test.suitebuilder.annotation.SmallTest;
 
 import com.android.server.wifi.HalMockUtils;
 import com.android.server.wifi.WifiNative;
+import com.android.server.wifi.WifiNotive;
 
 import libcore.util.HexEncoding;
 
@@ -67,7 +68,7 @@ public class WifiAwareHalTest {
 
         HalMockUtils.initHalMockLibrary();
         WifiAwareHalMock.initAwareHalMockLibrary(mDut);
-        WifiAwareNative.initAwareHandlersNative(WifiNative.class, WifiNative.sWlan0Index);
+        WifiAwareNative.initAwareHandlersNative(WifiNative.class, WifiNotive.sWlan0Index);
         HalMockUtils.setHalMockObject(mAwareHalMock);
     }
 

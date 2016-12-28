@@ -68,7 +68,7 @@ public class WifiInjector {
     private final WifiCountryCode mCountryCode;
     private final BackupManagerProxy mBackupManagerProxy = new BackupManagerProxy();
     private final WifiApConfigStore mWifiApConfigStore;
-    private final WifiNative mWifiNative;
+    private final WifiNotive mWifiNotive;
     private final WifiStateMachine mWifiStateMachine;
     private final WifiSettingsStore mSettingsStore;
     private final WifiCertManager mCertManager;
@@ -131,14 +131,14 @@ public class WifiInjector {
 
         // Now get instances of all the objects that depend on the HandlerThreads
         mTrafficPoller =  new WifiTrafficPoller(mContext, mWifiServiceHandlerThread.getLooper(),
-                WifiNative.getWlanNativeInterface().getInterfaceName());
-        mCountryCode = new WifiCountryCode(WifiNative.getWlanNativeInterface(),
+                WifiNotive.getWlanNativeInterface().getInterfaceName());
+        mCountryCode = new WifiCountryCode(WifiNotive.getWlanNativeInterface(),
                 SystemProperties.get(BOOT_DEFAULT_WIFI_COUNTRY_CODE),
                 mFrameworkFacade.getStringSetting(mContext, Settings.Global.WIFI_COUNTRY_CODE),
                 mContext.getResources()
                         .getBoolean(R.bool.config_wifi_revert_country_code_on_cellular_loss));
         mWifiApConfigStore = new WifiApConfigStore(mContext, mBackupManagerProxy);
-        mWifiNative = WifiNative.getWlanNativeInterface();
+        mWifiNotive = WifiNotive.getWlanNativeInterface();
 
         // WifiConfigManager/Store objects and their dependencies.
         // New config store
@@ -148,9 +148,9 @@ public class WifiInjector {
                 WifiConfigStore.createSharedFile());
         // Legacy config store
         DelayedDiskWrite writer = new DelayedDiskWrite();
-        mWifiNetworkHistory = new WifiNetworkHistory(mContext, mWifiNative.getLocalLog(), writer);
+        mWifiNetworkHistory = new WifiNetworkHistory(mContext, mWifiNotive.getLocalLog(), writer);
         mWifiSupplicantControl = new WifiSupplicantControl(
-                TelephonyManager.from(mContext), mWifiNative, mWifiNative.getLocalLog());
+                TelephonyManager.from(mContext), mWifiNotive, mWifiNotive.getLocalLog());
         mIpConfigStore = new IpConfigStore(writer);
         mWifiConfigStoreLegacy = new WifiConfigStoreLegacy(
                 mWifiNetworkHistory, mWifiSupplicantControl, mIpConfigStore);
@@ -171,7 +171,7 @@ public class WifiInjector {
                 mWifiNetworkScoreCache, mNetworkScoreManager, mWifiConfigManager, localLog);
         mWifiStateMachine = new WifiStateMachine(mContext, mFrameworkFacade,
                 mWifiStateMachineHandlerThread.getLooper(), UserManager.get(mContext),
-                this, mBackupManagerProxy, mCountryCode, mWifiNative);
+                this, mBackupManagerProxy, mCountryCode, mWifiNotive);
         mSettingsStore = new WifiSettingsStore(mContext);
         mCertManager = new WifiCertManager(mContext);
         mNotificationController = new WifiNotificationController(mContext,
@@ -188,7 +188,7 @@ public class WifiInjector {
         mWifiPermissionsUtil = new WifiPermissionsUtil(mWifiPermissionsWrapper, mContext,
                 mSettingsStore, UserManager.get(mContext), new NetworkScorerAppManager(mContext));
         mSimAccessor = new SIMAccessor(mContext);
-        mPasspointManager = new PasspointManager(mContext, mWifiNative, mWifiKeyStore, mClock,
+        mPasspointManager = new PasspointManager(mContext, mWifiNotive, mWifiKeyStore, mClock,
                 mSimAccessor, new PasspointObjectFactory());
     }
 
@@ -331,7 +331,7 @@ public class WifiInjector {
                                            IApInterface apInterface,
                                            WifiConfiguration config) {
         return new SoftApManager(mWifiServiceHandlerThread.getLooper(),
-                                 mWifiNative, mCountryCode.getCountryCode(),
+                                 mWifiNotive, mCountryCode.getCountryCode(),
                                  listener, apInterface, nmService,
                                  mWifiApConfigStore, config);
     }
@@ -344,10 +344,10 @@ public class WifiInjector {
         return new LogcatLog(tag);
     }
 
-    public BaseWifiDiagnostics makeWifiDiagnostics(WifiNative wifiNative) {
+    public BaseWifiDiagnostics makeWifiDiagnostics(WifiNotive wifiNotive) {
         if (mUseRealLogger) {
             return new WifiDiagnostics(
-                    mContext, this, mWifiStateMachine, wifiNative, mBuildProperties);
+                    mContext, this, mWifiStateMachine, wifiNotive, mBuildProperties);
         } else {
             return new BaseWifiDiagnostics();
         }
