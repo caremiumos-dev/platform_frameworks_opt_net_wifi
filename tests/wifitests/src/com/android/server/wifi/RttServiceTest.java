@@ -63,7 +63,7 @@ public class RttServiceTest {
     @Mock
     Context mContext;
     @Mock
-    WifiNative mWifiNative;
+    WifiNotive mWifiNotive;
     TestLooper mLooper;
     @Mock
     WifiInjector mWifiInjector;
@@ -77,7 +77,7 @@ public class RttServiceTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        TestUtil.installWlanWifiNative(mWifiNative);
+        TestUtil.installWlanWifiNotive(mWifiNotive);
         mLooper = new TestLooper();
         when(mWifiInjector.makeWificond()).thenReturn(mWificond);
         mRttServiceImpl = new RttService.RttServiceImpl(mContext,
@@ -112,7 +112,7 @@ public class RttServiceTest {
         Message message = sendRangingRequest(channel, handler, clientKey, params);
         assertEquals("ranging request did not fail",
                 RttManager.CMD_OP_FAILED, message.what);
-        verifyNoMoreInteractions(mWifiNative);
+        verifyNoMoreInteractions(mWifiNotive);
     }
 
     // Send rtt ranging request message and verify failure.
@@ -134,7 +134,7 @@ public class RttServiceTest {
             Handler handler, int clientKey) {
         Message message = sendEnableResponder(channel, handler, clientKey,
                 createResponderConfig());
-        verify(mWifiNative).enableRttResponder(anyInt());
+        verify(mWifiNotive).enableRttResponder(anyInt());
         assertEquals("reponse status is not success",
                 RttManager.CMD_OP_ENALBE_RESPONDER_SUCCEEDED, message.what);
         String actualMac = ((ResponderConfig) message.obj).macAddress;
@@ -153,8 +153,8 @@ public class RttServiceTest {
 
     private Message sendEnableResponder(BidirectionalAsyncChannel channel, Handler handler,
             int clientKey, ResponderConfig config) {
-        when(mWifiNative.enableRttResponder(anyInt())).thenReturn(config);
-        when(mWifiNative.getMacAddress()).thenReturn(MAC);
+        when(mWifiNotive.enableRttResponder(anyInt())).thenReturn(config);
+        when(mWifiNotive.getMacAddress()).thenReturn(MAC);
         Message message = new Message();
         message.what = RttManager.CMD_OP_ENABLE_RESPONDER;
         message.arg2 = clientKey;
@@ -166,7 +166,7 @@ public class RttServiceTest {
     }
 
     private void sendDisableResponder(BidirectionalAsyncChannel channel, int key, boolean success) {
-        when(mWifiNative.disableRttResponder()).thenReturn(success);
+        when(mWifiNotive.disableRttResponder()).thenReturn(success);
         Message message = new Message();
         message.what = RttManager.CMD_OP_DISABLE_RESPONDER;
         message.arg2 = key;
@@ -207,7 +207,7 @@ public class RttServiceTest {
         sendEnableResponderSucceed(channel, handler, CLIENT_KEY1);
         sendEnableResponderSucceed(channel, handler, CLIENT_KEY2);
         // Native method should be called only once when multiple clients enabled responder.
-        verify(mWifiNative, times(1)).enableRttResponder(anyInt());
+        verify(mWifiNotive, times(1)).enableRttResponder(anyInt());
     }
 
     @Test
@@ -218,7 +218,7 @@ public class RttServiceTest {
         sendEnableResponderSucceed(channel, handler, CLIENT_KEY1);
         // Disable after successfully enabling.
         sendDisableResponder(channel, CLIENT_KEY1, false);
-        verify(mWifiNative).disableRttResponder();
+        verify(mWifiNotive).disableRttResponder();
     }
 
     /**
@@ -228,7 +228,7 @@ public class RttServiceTest {
     public void testEnableResponderFailure() throws Exception {
         startWifi();
         Handler handler = mock(Handler.class);
-        when(mWifiNative.enableRttResponder(anyInt())).thenReturn(null);
+        when(mWifiNotive.enableRttResponder(anyInt())).thenReturn(null);
         BidirectionalAsyncChannel channel = connectChannel(handler);
         // Disable failed.
         sendEnableResponderFailed(channel, handler, CLIENT_KEY1, RttManager.REASON_UNSPECIFIED);
@@ -242,7 +242,7 @@ public class RttServiceTest {
         // Disable without enabling should fail.
         sendDisableResponder(channel, CLIENT_KEY1, false);
         // Native disable method shouldn't be called.
-        verifyNoMoreInteractions(mWifiNative);
+        verifyNoMoreInteractions(mWifiNotive);
     }
 
     @Test
@@ -254,8 +254,8 @@ public class RttServiceTest {
         sendEnableResponderSucceed(channel, handler, CLIENT_KEY2);
         // Two clients enabled, one client disabled.
         sendDisableResponder(channel, CLIENT_KEY1, true);
-        verify(mWifiNative, times(1)).getMacAddress();
-        verifyNoMoreInteractions(mWifiNative);
+        verify(mWifiNotive, times(1)).getMacAddress();
+        verifyNoMoreInteractions(mWifiNotive);
     }
 
     /**
@@ -267,7 +267,7 @@ public class RttServiceTest {
         BidirectionalAsyncChannel channel = connectChannel(handler);
         // Wifi is disabled as startWifi() is not invoked.
         sendEnableResponderFailed(channel, handler, CLIENT_KEY1, RttManager.REASON_NOT_AVAILABLE);
-        verifyNoMoreInteractions(mWifiNative);
+        verifyNoMoreInteractions(mWifiNotive);
     }
 
     /**

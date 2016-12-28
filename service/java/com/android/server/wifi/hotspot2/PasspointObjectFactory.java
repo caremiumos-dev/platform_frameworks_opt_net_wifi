@@ -20,7 +20,7 @@ import android.net.wifi.hotspot2.PasspointConfiguration;
 
 import com.android.server.wifi.Clock;
 import com.android.server.wifi.WifiKeyStore;
-import com.android.server.wifi.WifiNative;
+import com.android.server.wifi.WifiNotive;
 
 /**
  * Factory class for creating Passpoint related objects. Useful for mocking object creations
@@ -30,13 +30,13 @@ public class PasspointObjectFactory{
     /**
      * Create a PasspointEventHandler instance.
      *
-     * @param wifiNative Instance of {@link WifiNative}
+     * @param wifiNotive Instance of {@link WifiNotive}
      * @param callbacks Instance of {@link PasspointEventHandler.Callbacks}
      * @return {@link PasspointEventHandler}
      */
-    public PasspointEventHandler makePasspointEventHandler(WifiNative wifiNative,
+    public PasspointEventHandler makePasspointEventHandler(WifiNotive wifiNotive,
             PasspointEventHandler.Callbacks callbacks) {
-        return new PasspointEventHandler(wifiNative, callbacks);
+        return new PasspointEventHandler(wifiNotive, callbacks);
     }
 
     /**

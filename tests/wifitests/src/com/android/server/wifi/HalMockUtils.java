@@ -43,30 +43,30 @@ public class HalMockUtils {
     public static void initHalMockLibrary() throws Exception {
         /*
          * Setting the Wi-Fi HAL handle and interface (array) to dummy values.
-         * Need to install a default WifiNative (since another mock may have
+         * Need to install a default WifiNotive (since another mock may have
          * installed something else). Required to fake the init checking code to
          * think that the HAL actually started. Note that values are not
          * important since they are only used by the real HAL - which is
          * mocked-out in this use-case.
          */
 
-        Constructor<WifiNative> ctr = WifiNative.class.getDeclaredConstructor(String.class,
+        Constructor<WifiNotive> ctr = WifiNotive.class.getDeclaredConstructor(String.class,
                                                                               Boolean.TYPE);
         ctr.setAccessible(true);
-        WifiNative wifiNativeInstance = ctr.newInstance("wlan0", true);
+        WifiNotive wifiNotiveInstance = ctr.newInstance("wlan0", true);
 
-        Field field = WifiNative.class.getDeclaredField("wlanNativeInterface");
+        Field field = WifiNotive.class.getDeclaredField("wlanNativeInterface");
         field.setAccessible(true);
-        field.set(null, wifiNativeInstance);
+        field.set(null, wifiNotiveInstance);
 
-        field = WifiNative.class.getDeclaredField("sWifiHalHandle");
+        field = WifiNotive.class.getDeclaredField("sWifiHalHandle");
         field.setAccessible(true);
         long currentWifiHalHandle = field.getLong(null);
         if (DBG) Log.d(TAG, "currentWifiHalHandle=" + currentWifiHalHandle);
         if (currentWifiHalHandle == 0) {
             field.setLong(null, 5);
 
-            field = WifiNative.class.getDeclaredField("sWifiIfaceHandles");
+            field = WifiNotive.class.getDeclaredField("sWifiIfaceHandles");
             field.setAccessible(true);
             long[] wifiIfaceHandles = {
                     10 };

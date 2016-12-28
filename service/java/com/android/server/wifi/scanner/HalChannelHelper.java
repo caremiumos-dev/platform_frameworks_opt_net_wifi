@@ -19,7 +19,7 @@ package com.android.server.wifi.scanner;
 import android.net.wifi.WifiScanner;
 import android.util.Log;
 
-import com.android.server.wifi.WifiNative;
+import com.android.server.wifi.WifiNotive;
 
 /**
  * KnownBandsChannelHelper that uses band to channel mappings retrieved from the HAL.
@@ -28,10 +28,10 @@ import com.android.server.wifi.WifiNative;
 public class HalChannelHelper extends KnownBandsChannelHelper {
     private static final String TAG = "HalChannelHelper";
 
-    private final WifiNative mWifiNative;
+    private final WifiNotive mWifiNotive;
 
-    public HalChannelHelper(WifiNative wifiNative) {
-        mWifiNative = wifiNative;
+    public HalChannelHelper(WifiNotive wifiNotive) {
+        mWifiNotive = wifiNotive;
         final int[] emptyFreqList = new int[0];
         setBandChannels(emptyFreqList, emptyFreqList, emptyFreqList);
         updateChannels();
@@ -39,11 +39,11 @@ public class HalChannelHelper extends KnownBandsChannelHelper {
 
     @Override
     public void updateChannels() {
-        int[] channels24G = mWifiNative.getChannelsForBand(WifiScanner.WIFI_BAND_24_GHZ);
+        int[] channels24G = mWifiNotive.getChannelsForBand(WifiScanner.WIFI_BAND_24_GHZ);
         if (channels24G == null) Log.e(TAG, "Failed to get channels for 2.4GHz band");
-        int[] channels5G = mWifiNative.getChannelsForBand(WifiScanner.WIFI_BAND_5_GHZ);
+        int[] channels5G = mWifiNotive.getChannelsForBand(WifiScanner.WIFI_BAND_5_GHZ);
         if (channels5G == null) Log.e(TAG, "Failed to get channels for 5GHz band");
-        int[] channelsDfs = mWifiNative.getChannelsForBand(WifiScanner.WIFI_BAND_5_GHZ_DFS_ONLY);
+        int[] channelsDfs = mWifiNotive.getChannelsForBand(WifiScanner.WIFI_BAND_5_GHZ_DFS_ONLY);
         if (channelsDfs == null) Log.e(TAG, "Failed to get channels for 5GHz DFS only band");
         if (channels24G == null || channels5G == null || channelsDfs == null) {
             Log.e(TAG, "Failed to get all channels for band, not updating band channel lists");

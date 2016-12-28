@@ -683,7 +683,7 @@ public class WifiBackupRestore {
                 if (mParsedIdStrLine != null) {
                     String idString =
                             mParsedIdStrLine.substring(mParsedIdStrLine.indexOf('=') + 1);
-                    Map<String, String> extras = WifiNative.parseNetworkExtra(idString);
+                    Map<String, String> extras = WifiNotive.parseNetworkExtra(idString);
                     String configKey = extras.get(WifiSupplicantControl.ID_STRING_KEY_CONFIG_KEY);
                     if (!configKey.equals(configuration.configKey())) {
                         // ConfigKey mismatches are expected for private networks because the

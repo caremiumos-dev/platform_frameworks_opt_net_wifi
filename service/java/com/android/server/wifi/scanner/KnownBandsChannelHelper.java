@@ -19,7 +19,8 @@ package com.android.server.wifi.scanner;
 import android.net.wifi.WifiScanner;
 import android.util.ArraySet;
 
-import com.android.server.wifi.WifiNative;
+import com.android.server.wifi.WifiNotive;
+import com.android.server.wifi.WifiNotiveTypes;
 
 import java.util.Set;
 
@@ -244,7 +245,7 @@ public class KnownBandsChannelHelper extends ChannelHelper {
         }
 
         @Override
-        public void fillBucketSettings(WifiNative.BucketSettings bucketSettings, int maxChannels) {
+        public void fillBucketSettings(WifiNotiveTypes.BucketSettings bucketSettings, int maxChannels) {
             if ((mChannels.size() > maxChannels || mAllBands == mExactBands)
                     && mAllBands != 0) {
                 bucketSettings.band = mAllBands;
@@ -253,9 +254,9 @@ public class KnownBandsChannelHelper extends ChannelHelper {
             } else {
                 bucketSettings.band = WifiScanner.WIFI_BAND_UNSPECIFIED;
                 bucketSettings.num_channels = mChannels.size();
-                bucketSettings.channels = new WifiNative.ChannelSettings[mChannels.size()];
+                bucketSettings.channels = new WifiNotiveTypes.ChannelSettings[mChannels.size()];
                 for (int i = 0; i < mChannels.size(); ++i) {
-                    WifiNative.ChannelSettings channelSettings = new WifiNative.ChannelSettings();
+                    WifiNotiveTypes.ChannelSettings channelSettings = new WifiNotiveTypes.ChannelSettings();
                     channelSettings.frequency = mChannels.valueAt(i);
                     bucketSettings.channels[i] = channelSettings;
                 }

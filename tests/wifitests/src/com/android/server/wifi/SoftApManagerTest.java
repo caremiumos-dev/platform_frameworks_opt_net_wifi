@@ -67,7 +67,7 @@ public class SoftApManagerTest {
     private final WifiConfiguration mDefaultApConfig = createDefaultApConfig();
 
     TestLooper mLooper;
-    @Mock WifiNative mWifiNative;
+    @Mock WifiNotive mWifiNotive;
     @Mock SoftApManager.Listener mListener;
     @Mock InterfaceConfiguration mInterfaceConfiguration;
     @Mock IBinder mApInterfaceBinder;
@@ -106,7 +106,7 @@ public class SoftApManagerTest {
         when(mApInterface.startHostapd()).thenReturn(true);
         when(mApInterface.stopHostapd()).thenReturn(true);
         SoftApManager newSoftApManager = new SoftApManager(mLooper.getLooper(),
-                                                           mWifiNative,
+                                                           mWifiNotive,
                                                            TEST_COUNTRY_CODE,
                                                            mListener,
                                                            mApInterface,
@@ -189,8 +189,8 @@ public class SoftApManagerTest {
         String expectedSSID;
         InOrder order = inOrder(mListener, mApInterfaceBinder, mApInterface, mNmService);
 
-        when(mWifiNative.isHalStarted()).thenReturn(false);
-        when(mWifiNative.setCountryCodeHal(TEST_COUNTRY_CODE.toUpperCase(Locale.ROOT)))
+        when(mWifiNotive.isHalStarted()).thenReturn(false);
+        when(mWifiNotive.setCountryCodeHal(TEST_COUNTRY_CODE.toUpperCase(Locale.ROOT)))
                 .thenReturn(true);
 
         mSoftApManager = createSoftApManager(config);
