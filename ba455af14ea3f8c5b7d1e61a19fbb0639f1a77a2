@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7c9e645_b9636433",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareNativeManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-12-28T02:19:41Z",
+      "side": 1,
+      "message": "No objection. Note that I\u0027m trying to separate (WIP) the framework HIDL interface into 3 pieces (classes):\n- Manager\n- API\n- Callbacks/events (API related - not management related)",
+      "parentUuid": "d7c9e645_bb0281eb",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 35
+      },
+      "revId": "ba455af14ea3f8c5b7d1e61a19fbb0639f1a77a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c9e645_dbff4db4",
         "filename": "service/java/com/android/server/wifi/aware/WifiAwareNativeManager.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2016-12-28T01:44:51Z",
       "side": 1,
       "message": "Are you expecting multithreaded usage?",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 28
+      },
+      "revId": "ba455af14ea3f8c5b7d1e61a19fbb0639f1a77a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_59d7e0a9",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareNativeManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-12-28T02:19:41Z",
+      "side": 1,
+      "message": "I assume all events from the callbacks are on a different thread. Not?",
+      "parentUuid": "d7c9e645_dbff4db4",
       "range": {
         "startLine": 79,
         "startChar": 8,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d7c9e645_19739808",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareNativeManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-12-28T02:19:41Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s set elsewhere. I.e. I do a:\n- register callback\n- check if started: if not already started then rely on callback to set variable",
+      "parentUuid": "d7c9e645_9ef1aeb4",
+      "range": {
+        "startLine": 322,
+        "startChar": 16,
+        "endLine": 322,
+        "endChar": 38
+      },
+      "revId": "ba455af14ea3f8c5b7d1e61a19fbb0639f1a77a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c9e645_1ef5beaa",
         "filename": "service/java/com/android/server/wifi/aware/WifiAwareNativeManager.java",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d7c9e645_d97c30d6",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareNativeManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-12-28T02:19:41Z",
+      "side": 1,
+      "message": "True. I\u0027ll remove ... or should move to a utility class to be used elsewhere.",
+      "parentUuid": "d7c9e645_1ef5beaa",
+      "range": {
+        "startLine": 396,
+        "startChar": 0,
+        "endLine": 406,
+        "endChar": 5
+      },
+      "revId": "ba455af14ea3f8c5b7d1e61a19fbb0639f1a77a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c9e645_3eb51aca",
         "filename": "tests/wifitests/src/com/android/server/wifi/HidlMockUtil.java",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2016-12-28T01:33:00Z",
       "side": 1,
       "message": "Is the intention for other IFace kinds to be added to HidlMockJava, or is it in Nan specific?\n\n(my vote would be for the first option, I think.)",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 44
+      },
+      "revId": "ba455af14ea3f8c5b7d1e61a19fbb0639f1a77a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_f981ec99",
+        "filename": "tests/wifitests/src/com/android/server/wifi/HidlMockUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-12-28T02:19:41Z",
+      "side": 1,
+      "message": "Yes - that\u0027s why I placed it in wifi/xxx and not wifi/aware/xxx. Should be a common resource.",
+      "parentUuid": "d7c9e645_3eb51aca",
       "range": {
         "startLine": 97,
         "startChar": 0,
