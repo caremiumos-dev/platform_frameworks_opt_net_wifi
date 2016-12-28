@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "d7c9e645_bb0281eb",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareNativeManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-12-28T01:44:51Z",
+      "side": 1,
+      "message": "Why not \u0027WifiAwareHidlManager\u0027?\nI\u0027ve used \u0027native\u0027 in mine, but I should probably change that",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 35
+      },
+      "revId": "ba455af14ea3f8c5b7d1e61a19fbb0639f1a77a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_dbff4db4",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareNativeManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-12-28T01:44:51Z",
+      "side": 1,
+      "message": "Are you expecting multithreaded usage?",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 28
+      },
+      "revId": "ba455af14ea3f8c5b7d1e61a19fbb0639f1a77a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c9e645_9ef1aeb4",
         "filename": "service/java/com/android/server/wifi/aware/WifiAwareNativeManager.java",
         "patchSetId": 5
