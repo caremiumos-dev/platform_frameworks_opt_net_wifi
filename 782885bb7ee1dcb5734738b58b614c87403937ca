@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7c9e645_ac76bff4",
+        "filename": "service/java/com/android/server/wifi/WifiNotiveTypes.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-12-29T00:31:46Z",
+      "side": 1,
+      "message": "I\u0027d keep these as an inner class of Notive or Native",
+      "range": {
+        "startLine": 37,
+        "startChar": 13,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "782885bb7ee1dcb5734738b58b614c87403937ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
