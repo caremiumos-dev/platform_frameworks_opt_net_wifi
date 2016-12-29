@@ -46,6 +46,30 @@
       "revId": "782885bb7ee1dcb5734738b58b614c87403937ca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_dd8973b6",
+        "filename": "service/java/com/android/server/wifi/WifiNotiveTypes.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2016-12-29T17:51:56Z",
+      "side": 1,
+      "message": "IMO, it\u0027s not reducing clutter, it\u0027s just spreading it around.\nIf you just push these to the bottom of WifiNative they\u0027re not really in the way, and splitting it up adds more effort required to understand the WifiNative class.",
+      "parentUuid": "d7c9e645_7d763f46",
+      "range": {
+        "startLine": 37,
+        "startChar": 13,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "782885bb7ee1dcb5734738b58b614c87403937ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
