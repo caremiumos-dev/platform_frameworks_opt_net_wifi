@@ -22,6 +22,30 @@
       "revId": "782885bb7ee1dcb5734738b58b614c87403937ca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_7d763f46",
+        "filename": "service/java/com/android/server/wifi/WifiNotiveTypes.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-12-29T16:59:34Z",
+      "side": 1,
+      "message": "Can you explain why? For me, they introduce a lot of clutter into the Native layer. I think it would be better to break this up into several classes.",
+      "parentUuid": "d7c9e645_ac76bff4",
+      "range": {
+        "startLine": 37,
+        "startChar": 13,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "782885bb7ee1dcb5734738b58b614c87403937ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
