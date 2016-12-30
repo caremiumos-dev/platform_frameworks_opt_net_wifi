@@ -159,7 +159,7 @@ public class SoftApManager implements ActiveModeManager {
             // However, it seems that whatever is handing us these configurations does not obey
             // this convention.
             boolean success = mApInterface.writeHostapdConfig(
-                    localConfig.SSID.getBytes(StandardCharsets.UTF_8), false,
+                    localConfig.SSID.getBytes(StandardCharsets.UTF_8), localConfig.hiddenSSID,
                     localConfig.apChannel, encryptionType,
                     (localConfig.preSharedKey != null)
                             ? localConfig.preSharedKey.getBytes(StandardCharsets.UTF_8)
