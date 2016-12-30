@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7c9e645_220ad38c",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-12-30T00:57:27Z",
+      "side": 1,
+      "message": "This seems racy - what thread is this called on?",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 38
+      },
+      "revId": "895f74752e025410e296ad7478108c88e5de4828",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_a2f6c36d",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2016-12-30T00:57:27Z",
+      "side": 1,
+      "message": "Should we fail if we have already started the Hidl?",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 39
+      },
+      "revId": "895f74752e025410e296ad7478108c88e5de4828",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
