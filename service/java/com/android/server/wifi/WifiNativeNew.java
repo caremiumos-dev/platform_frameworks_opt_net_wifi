@@ -23,8 +23,6 @@ import android.hardware.wifi.V1_0.IWifiStaIface;
 import android.hardware.wifi.V1_0.IfaceType;
 import android.hardware.wifi.V1_0.RttConfig;
 import android.hardware.wifi.V1_0.RttResponder;
-import android.hardware.wifi.V1_0.StaBackgroundScanCapabilities;
-import android.hardware.wifi.V1_0.StaLinkLayerStats;
 import android.hardware.wifi.V1_0.WifiStatus;
 import android.hardware.wifi.V1_0.WifiStatusCode;
 import android.hardware.wifi.supplicant.V1_0.ISupplicant;
@@ -96,54 +94,48 @@ public class WifiNativeNew {
             return false;
         }
         /** Start the Wifi Service*/
-        WifiStatus status = mHidlWifi.start();
-        if (status.code != WifiStatusCode.SUCCESS) {
-            Log.e(TAG, "Starting wifi hal failed. Error code: " + status.code);
+        WifiStatus startStatus = mHidlWifi.start();
+        if (startStatus.code != WifiStatusCode.SUCCESS) {
+            Log.e(TAG, "Starting wifi hal failed. Error code: " + startStatus.code);
             return false;
         }
         /** List available Wifi chips */
         final ArrayList<Integer> chipIdsInternal = new ArrayList<>();
-        // Use lambda's here.
-        IWifi.getChipIdsCallback chipIdsCb = new IWifi.getChipIdsCallback() {
-            public void onValues(WifiStatus status, java.util.ArrayList<Integer> chipIds) {
-                if (status.code != WifiStatusCode.SUCCESS) {
-                    Log.e(TAG, "Getting chip ids failed. Error code: " + status.code);
-                    return;
+        mHidlWifi.getChipIds((status, chipIds) -> {
+                    if (status.code != WifiStatusCode.SUCCESS) {
+                        Log.e(TAG, "Getting chip ids failed. Error code: " + status.code);
+                        return;
+                    }
+                    chipIdsInternal.addAll(chipIds);
                 }
-                chipIdsInternal.addAll(chipIds);
-            }
-        };
-        mHidlWifi.getChipIds(chipIdsCb);
+        );
         if (chipIdsInternal.size() != 1) {
             Log.e(TAG, "Expected 1 chip to be present, got: " + chipIdsInternal.size());
             return false;
         }
         /** Get chip 0 */
-        // Use lambda's here.
-        IWifi.getChipCallback chipCb = new IWifi.getChipCallback() {
-            public void onValues(WifiStatus status, IWifiChip chip) {
-                if (status.code != WifiStatusCode.SUCCESS) {
-                    Log.e(TAG, "Getting chip failed. Error code: " + status.code);
-                    return;
+
+        mHidlWifi.getChip(chipIdsInternal.get(0).intValue(), (status, chip) -> {
+                    if (status.code != WifiStatusCode.SUCCESS) {
+                        Log.e(TAG, "Getting chip failed. Error code: " + status.code);
+                        return;
+                    }
+                    mHidlWifiChip = chip;
                 }
-                mHidlWifiChip = chip;
-            }
-        };
-        mHidlWifi.getChip(chipIdsInternal.get(0).intValue(), chipCb);
+        );
         if (mHidlWifiChip == null) {
             Log.e(TAG, "Failed to get WifiChip HIDL interface objects.");
             return false;
         }
         /** Configure Chip Mode for STA */
-        mHidlWifiChip.getAvailableModes(new IWifiChip.getAvailableModesCallback() {
-            public void onValues(WifiStatus status, ArrayList<IWifiChip.ChipMode> modes) {
-                if (status.code != WifiStatusCode.SUCCESS) {
-                    Log.e(TAG, "Getting chip modes failed. Error code: " + status.code);
-                    return;
+        mHidlWifiChip.getAvailableModes((status, modes) -> {
+                    if (status.code != WifiStatusCode.SUCCESS) {
+                        Log.e(TAG, "Getting chip modes failed. Error code: " + status.code);
+                        return;
+                    }
+                    mHidlWifiChipAvailableModes = modes;
                 }
-                mHidlWifiChipAvailableModes = modes;
-            }
-        });
+        );
         if (mHidlWifiChipAvailableModes == null) {
             Log.e(TAG, "Failed to get WifiChip HIDL chip available modes.");
             return false;
@@ -177,17 +169,14 @@ public class WifiNativeNew {
 
         /** Create Wifi STA Interface */
 
-        IWifiChip.createStaIfaceCallback createStaIfaceCb =
-                new IWifiChip.createStaIfaceCallback() {
-            public void onValues(WifiStatus status, IWifiStaIface iface) {
-                if (status.code != WifiStatusCode.SUCCESS) {
-                    Log.e(TAG, "Create STA Iface failed. Error code: " + status.code);
-                    return;
+        mHidlWifiChip.createStaIface((status, iface) -> {
+                    if (status.code != WifiStatusCode.SUCCESS) {
+                        Log.e(TAG, "Create STA Iface failed. Error code: " + status.code);
+                        return;
+                    }
+                    mIWifiStaIface = iface;
                 }
-                mIWifiStaIface = iface;
-            }
-        };
-        mHidlWifiChip.createStaIface(createStaIfaceCb);
+        );
         if (mIWifiStaIface == null) {
             return false;
         }
@@ -196,12 +185,10 @@ public class WifiNativeNew {
         mIWifiRttController = null;
         mHidlWifiChip.createRttController(
                 mIWifiStaIface,
-                new IWifiChip.createRttControllerCallback() {
-                    public void onValues(WifiStatus status, IWifiRttController rtt) {
-                        if (status.code ==  WifiStatusCode.SUCCESS) {
-                            mIWifiRttController = rtt;
-                            Log.e(TAG, "Made " + mIWifiRttController);
-                        }
+                (status, rtt) -> {
+                    if (status.code == WifiStatusCode.SUCCESS) {
+                        mIWifiRttController = rtt;
+                        Log.e(TAG, "Made " + mIWifiRttController);
                     }
                 }
         );
@@ -266,25 +253,20 @@ public class WifiNativeNew {
         if (!isHalStarted()) {
             return false;
         }
-        mIWifiStaIface.getBackgroundScanCapabilities(
-                new IWifiStaIface.getBackgroundScanCapabilitiesCallback() {
-                    public void onValues(
-                            WifiStatus status,
-                            StaBackgroundScanCapabilities capabilities) {
-                        if (status.code != WifiStatusCode.SUCCESS) return;
-                        out.max_scan_cache_size = capabilities.maxCacheSize;
-                        out.max_ap_cache_per_scan = capabilities.maxApCachePerScan;
-                        out.max_scan_buckets = capabilities.maxBuckets;
-                        out.max_rssi_sample_size = 0;
-                        out.max_scan_reporting_threshold = capabilities.maxReportingThreshold;
-                        out.max_hotlist_bssids = 0;
-                        out.max_significant_wifi_change_aps = 0;
-                        out.max_bssid_history_entries = 0;
-                        out.max_number_epno_networks = 0;
-                        out.max_number_epno_networks_by_ssid = 0;
-                        out.max_number_of_white_listed_ssid = 0;
-                        ok.value = true;
-                    }
+        mIWifiStaIface.getBackgroundScanCapabilities((status, cap) -> {
+                    if (status.code != WifiStatusCode.SUCCESS) return;
+                    out.max_scan_cache_size = cap.maxCacheSize;
+                    out.max_ap_cache_per_scan = cap.maxApCachePerScan;
+                    out.max_scan_buckets = cap.maxBuckets;
+                    out.max_rssi_sample_size = 0;
+                    out.max_scan_reporting_threshold = cap.maxReportingThreshold;
+                    out.max_hotlist_bssids = 0;
+                    out.max_significant_wifi_change_aps = 0;
+                    out.max_bssid_history_entries = 0;
+                    out.max_number_epno_networks = 0;
+                    out.max_number_epno_networks_by_ssid = 0;
+                    out.max_number_of_white_listed_ssid = 0;
+                    ok.value = true;
                 }
         );
         return ok.value;
@@ -300,47 +282,42 @@ public class WifiNativeNew {
         if (!isHalStarted()) return null;
         WifiLinkLayerStats out = new WifiLinkLayerStats();
         MutableBoolean ok = new MutableBoolean(false);
-        mIWifiStaIface.getLinkLayerStats(
-                new IWifiStaIface.getLinkLayerStatsCallback() {
-                    public void onValues(
-                            WifiStatus status,
-                            StaLinkLayerStats stats) {
-                        if (status.code != WifiStatusCode.SUCCESS) return;
-                        out.status = 0; // TODO
-                        out.SSID = null; // TODO
-                        out.BSSID = null; // TODO
-                        out.beacon_rx = stats.iface.beaconRx;
-                        out.rssi_mgmt = stats.iface.avgRssiMgmt;
+        mIWifiStaIface.getLinkLayerStats((status, stats) -> {
+                    if (status.code != WifiStatusCode.SUCCESS) return;
+                    out.status = 0; // TODO
+                    out.SSID = null; // TODO
+                    out.BSSID = null; // TODO
+                    out.beacon_rx = stats.iface.beaconRx;
+                    out.rssi_mgmt = stats.iface.avgRssiMgmt;
                         /* WME Best Effort Access Category */
-                        out.rxmpdu_be = stats.iface.wmeBePktStats.rxMpdu;
-                        out.txmpdu_be = stats.iface.wmeBePktStats.txMpdu;
-                        out.lostmpdu_be = stats.iface.wmeBePktStats.lostMpdu;
-                        out.retries_be = stats.iface.wmeBePktStats.retries;
+                    out.rxmpdu_be = stats.iface.wmeBePktStats.rxMpdu;
+                    out.txmpdu_be = stats.iface.wmeBePktStats.txMpdu;
+                    out.lostmpdu_be = stats.iface.wmeBePktStats.lostMpdu;
+                    out.retries_be = stats.iface.wmeBePktStats.retries;
                         /* WME Background Access Category */
-                        out.rxmpdu_bk = stats.iface.wmeBkPktStats.rxMpdu;
-                        out.txmpdu_bk = stats.iface.wmeBkPktStats.txMpdu;
-                        out.lostmpdu_bk = stats.iface.wmeBkPktStats.lostMpdu;
-                        out.retries_bk = stats.iface.wmeBkPktStats.retries;
+                    out.rxmpdu_bk = stats.iface.wmeBkPktStats.rxMpdu;
+                    out.txmpdu_bk = stats.iface.wmeBkPktStats.txMpdu;
+                    out.lostmpdu_bk = stats.iface.wmeBkPktStats.lostMpdu;
+                    out.retries_bk = stats.iface.wmeBkPktStats.retries;
                         /* WME Video Access Category */
-                        out.rxmpdu_vi = stats.iface.wmeViPktStats.rxMpdu;
-                        out.txmpdu_vi = stats.iface.wmeViPktStats.txMpdu;
-                        out.lostmpdu_vi = stats.iface.wmeViPktStats.lostMpdu;
-                        out.retries_vi = stats.iface.wmeViPktStats.retries;
+                    out.rxmpdu_vi = stats.iface.wmeViPktStats.rxMpdu;
+                    out.txmpdu_vi = stats.iface.wmeViPktStats.txMpdu;
+                    out.lostmpdu_vi = stats.iface.wmeViPktStats.lostMpdu;
+                    out.retries_vi = stats.iface.wmeViPktStats.retries;
                         /* WME Voice Access Category */
-                        out.rxmpdu_vo = stats.iface.wmeVoPktStats.rxMpdu;
-                        out.txmpdu_vo = stats.iface.wmeVoPktStats.txMpdu;
-                        out.lostmpdu_vo = stats.iface.wmeVoPktStats.lostMpdu;
-                        out.retries_vo = stats.iface.wmeVoPktStats.retries;
-                        out.on_time = stats.radio.onTimeInMs;
-                        out.tx_time = stats.radio.txTimeInMs;
-                        out.tx_time_per_level = new int[stats.radio.txTimeInMsPerLevel.size()];
-                        for (int i = 0; i < out.tx_time_per_level.length; i++) {
-                            out.tx_time_per_level[i] = stats.radio.txTimeInMsPerLevel.get(i);
-                        }
-                        out.rx_time = stats.radio.rxTimeInMs;
-                        out.on_time_scan = stats.radio.onTimeInMsForScan;
-                        ok.value = true;
+                    out.rxmpdu_vo = stats.iface.wmeVoPktStats.rxMpdu;
+                    out.txmpdu_vo = stats.iface.wmeVoPktStats.txMpdu;
+                    out.lostmpdu_vo = stats.iface.wmeVoPktStats.lostMpdu;
+                    out.retries_vo = stats.iface.wmeVoPktStats.retries;
+                    out.on_time = stats.radio.onTimeInMs;
+                    out.tx_time = stats.radio.txTimeInMs;
+                    out.tx_time_per_level = new int[stats.radio.txTimeInMsPerLevel.size()];
+                    for (int i = 0; i < out.tx_time_per_level.length; i++) {
+                        out.tx_time_per_level[i] = stats.radio.txTimeInMsPerLevel.get(i);
                     }
+                    out.rx_time = stats.radio.rxTimeInMs;
+                    out.on_time_scan = stats.radio.onTimeInMsForScan;
+                    ok.value = true;
                 }
         );
         return ok.value ? out : null;
@@ -364,7 +341,7 @@ public class WifiNativeNew {
         }
     }
 
-    /** Tranlation table used by getSupportedFeatureSet */
+    /** Translation table used by getSupportedFeatureSet */
     private static final int[][] sFeatureCapabilityTranslation = {
             {WifiManager.WIFI_FEATURE_INFRA, -1}, // will be set if anything else is set
             {WifiManager.WIFI_FEATURE_INFRA_5G,
@@ -429,18 +406,15 @@ public class WifiNativeNew {
     public int getSupportedFeatureSet() {
         if (!isHalStarted()) return 0;
         final MutableInt feat = new MutableInt(0);
-        mIWifiStaIface.getCapabilities(
-                new IWifiStaIface.getCapabilitiesCallback() {
-                    public void onValues(WifiStatus status, int capabilities) {
-                        if (status.code != WifiStatusCode.SUCCESS) return;
-                        int features = 0;
-                        for (int i = 0; i < sFeatureCapabilityTranslation.length; i++) {
-                            if ((capabilities & sFeatureCapabilityTranslation[i][1]) != 0) {
-                                features |= sFeatureCapabilityTranslation[i][0];
-                            }
+        mIWifiStaIface.getCapabilities((status, capabilities) -> {
+                    if (status.code != WifiStatusCode.SUCCESS) return;
+                    int features = 0;
+                    for (int i = 0; i < sFeatureCapabilityTranslation.length; i++) {
+                        if ((capabilities & sFeatureCapabilityTranslation[i][1]) != 0) {
+                            features |= sFeatureCapabilityTranslation[i][0];
                         }
-                        feat.value = features;
                     }
+                    feat.value = features;
                 }
         );
         return feat.value;
