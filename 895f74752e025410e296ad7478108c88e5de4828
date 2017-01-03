@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d7c9e645_497a9b63",
+        "filename": "service/Android.mk",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-03T19:54:11Z",
+      "side": 1,
+      "message": "not clear why others are -static and this isn\u0027t (and not clear to me which one is the right one)",
+      "range": {
+        "startLine": 67,
+        "startChar": 26,
+        "endLine": 67,
+        "endChar": 30
+      },
+      "revId": "895f74752e025410e296ad7478108c88e5de4828",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c9e645_220ad38c",
         "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
         "patchSetId": 6
