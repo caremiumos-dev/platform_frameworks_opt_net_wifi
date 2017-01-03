@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7c9e645_bee0130e",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-03T19:03:34Z",
+      "side": 1,
+      "message": "No there isn\u0027t. I will rebase and use boolean value directly.",
+      "parentUuid": "d7c9e645_475f0d58",
+      "revId": "5bcdd00e772ea56bc317fe077b8cba09b54c9234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c9e645_e72dd9c4",
         "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
         "patchSetId": 7
