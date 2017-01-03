@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "d7c9e645_d80897dd",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-03T16:51:39Z",
+      "side": 1,
+      "message": "All HIDL calls can throw a RuntimeException (which will be replaced with a checked exception). Must be caught - otherwise system service will crash.",
+      "range": {
+        "startLine": 152,
+        "startChar": 58,
+        "endLine": 152,
+        "endChar": 74
+      },
+      "revId": "89be9fcb8724c599628931b66c2afaac3fe9660b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1728de81_2140b654",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-03T16:51:39Z",
+      "side": 1,
+      "message": "doesn\u0027t seem necessary as you initialized it to false,\n\nand/or - do the same in all clauses (the above clause didn\u0027t set it to false on failure).",
+      "range": {
+        "startLine": 235,
+        "startChar": 16,
+        "endLine": 235,
+        "endChar": 43
+      },
+      "revId": "89be9fcb8724c599628931b66c2afaac3fe9660b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "376ec20e_5cc99547",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-03T16:51:39Z",
+      "side": 1,
+      "message": "Consider using the utilities in HexEncoding instead of recreating",
+      "range": {
+        "startLine": 237,
+        "startChar": 16,
+        "endLine": 239,
+        "endChar": 17
+      },
+      "revId": "89be9fcb8724c599628931b66c2afaac3fe9660b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_9b9f6938",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-03T16:51:39Z",
+      "side": 1,
+      "message": "you didn\u0027t set this to true anywhere",
+      "range": {
+        "startLine": 242,
+        "startChar": 12,
+        "endLine": 242,
+        "endChar": 31
+      },
+      "revId": "89be9fcb8724c599628931b66c2afaac3fe9660b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c9e645_c2a42f5a",
         "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
         "patchSetId": 2
