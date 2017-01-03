@@ -29,7 +29,15 @@ public final class WifiService extends SystemService {
 
     public WifiService(Context context) {
         super(context);
-        mImpl = new WifiServiceImpl(context, new WifiInjector(context), new AsyncChannel());
+
+        WifiInjector injector;
+        try {
+            injector = new WifiInjector(context);
+        } catch (IllegalStateException e) {
+            injector = WifiInjector.getInstance();
+        }
+
+        mImpl = new WifiServiceImpl(context, injector, new AsyncChannel());
     }
 
     @Override

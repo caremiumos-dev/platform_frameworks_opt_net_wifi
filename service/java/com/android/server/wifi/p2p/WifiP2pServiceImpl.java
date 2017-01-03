@@ -361,9 +361,10 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
     }
     private ClientHandler mClientHandler;
 
-    public WifiP2pServiceImpl(Context context) {
+    public WifiP2pServiceImpl(Context context, WifiInjector injector) {
         mContext = context;
 
+        mWifiInjector = injector;
         mNetworkInfo = new NetworkInfo(ConnectivityManager.TYPE_WIFI_P2P, 0, NETWORKTYPE, "");
 
         mP2pSupported = mContext.getPackageManager().hasSystemFeature(
@@ -375,7 +376,8 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
         HandlerThread wifiP2pThread = new HandlerThread("WifiP2pService");
         wifiP2pThread.start();
         mClientHandler = new ClientHandler(TAG, wifiP2pThread.getLooper());
-        mP2pStateMachine = new P2pStateMachine(TAG, wifiP2pThread.getLooper(), mP2pSupported);
+        mP2pStateMachine = new P2pStateMachine(
+                TAG, wifiP2pThread.getLooper(), mP2pSupported, mWifiInjector);
         mP2pStateMachine.start();
     }
 
@@ -516,9 +518,6 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
     }
 
     private boolean getWfdPermission(int uid) {
-        if (mWifiInjector == null) {
-            mWifiInjector = WifiInjector.getInstance();
-        }
         WifiPermissionsWrapper wifiPermissionsWrapper = mWifiInjector.getWifiPermissionsWrapper();
         return wifiPermissionsWrapper.getUidPermission(
                 android.Manifest.permission.CONFIGURE_WIFI_DISPLAY, uid)
@@ -608,7 +607,7 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
         // or if it is connected without any ongoing join request
         private WifiP2pConfig mSavedPeerConfig = new WifiP2pConfig();
 
-        P2pStateMachine(String name, Looper looper, boolean p2pSupported) {
+        P2pStateMachine(String name, Looper looper, boolean p2pSupported, WifiInjector injector) {
             super(name, looper);
 
             // CHECKSTYLE:OFF IndentationCheck
@@ -629,6 +628,9 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                         addState(mUserAuthorizingJoinState, mGroupCreatedState);
                         addState(mOngoingGroupRemovalState, mGroupCreatedState);
             // CHECKSTYLE:ON IndentationCheck
+
+            mWifiInjector = injector;
+            mWifiP2pNativeNew = mWifiInjector.getWifiP2pNativeNew();
 
             if (p2pSupported) {
                 setInitialState(mP2pDisabledState);
@@ -2895,12 +2897,7 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
             // STA has higher priority over P2P
             mWifiNative.setConcurrencyPriority("sta");
 
-            if (mWifiInjector == null) {
-                mWifiInjector = WifiInjector.getInstance();
-                mWifiP2pNativeNew = mWifiInjector.getWifiP2pNativeNew();
-                mWifiP2pNativeNew.waitSupplicantReady();
-            }
-
+            mWifiP2pNativeNew.waitSupplicantReady();
 
             mThisDevice.deviceAddress = mWifiNative.p2pGetDeviceAddress();
             String newAddress = mWifiP2pNativeNew.getDeviceAddress();
