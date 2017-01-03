@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d70e467c_0996cd2a",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-03T23:36:59Z",
+      "side": 1,
+      "message": "yep, it looks like this is no longer going to work.  This should have an async channel passed in so we can test the class.",
+      "parentUuid": "d70e467c_c69b044a",
+      "revId": "ad69d8ad1dfbf00dcd4e628a37f77a101668e6c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d70e467c_66ddf0fb",
         "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
         "patchSetId": 9
@@ -35,6 +53,29 @@
         "startChar": 69,
         "endLine": 321,
         "endChar": 96
+      },
+      "revId": "ad69d8ad1dfbf00dcd4e628a37f77a101668e6c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d70e467c_a9a4d98d",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-03T23:36:59Z",
+      "side": 1,
+      "message": "asyncChannel should be used here",
+      "range": {
+        "startLine": 345,
+        "startChar": 85,
+        "endLine": 345,
+        "endChar": 86
       },
       "revId": "ad69d8ad1dfbf00dcd4e628a37f77a101668e6c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
