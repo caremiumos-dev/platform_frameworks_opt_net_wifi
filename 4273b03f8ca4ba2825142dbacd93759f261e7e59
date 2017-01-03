@@ -22,6 +22,30 @@
       "revId": "4273b03f8ca4ba2825142dbacd93759f261e7e59",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_1e5b6711",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-01-03T19:03:38Z",
+      "side": 1,
+      "message": "Auth matching is just one of the matching criteria.  The function performs the provider matching using matchProvider function with the provided ANQP elements, then perform additional verification with auth matching.\n\nWill leave it as is unless you have strong preference.",
+      "parentUuid": "d7c9e645_db0e7a1c",
+      "range": {
+        "startLine": 202,
+        "startChar": 26,
+        "endLine": 202,
+        "endChar": 31
+      },
+      "revId": "4273b03f8ca4ba2825142dbacd93759f261e7e59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
