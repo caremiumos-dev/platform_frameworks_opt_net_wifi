@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "d7c9e645_a9e0df0d",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-03T20:05:29Z",
+      "side": 1,
+      "message": "To be consistent, can we create PasspointNetworkEvaluator the same way as SavedNetworkEvaluator and ExternalNetworkEvaluator?",
+      "revId": "31d55c8f3b58efd0a9ba8285e8eac7a71dc090b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_a9821f20",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointNetworkEvaluator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-03T20:05:29Z",
+      "side": 1,
+      "message": "Should this file be at the same folder as other evaluators?",
+      "revId": "31d55c8f3b58efd0a9ba8285e8eac7a71dc090b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c9e645_5b14bd29",
         "filename": "service/java/com/android/server/wifi/hotspot2/PasspointNetworkEvaluator.java",
         "patchSetId": 3
@@ -89,6 +123,52 @@
         "startChar": 13,
         "endLine": 36,
         "endChar": 38
+      },
+      "revId": "31d55c8f3b58efd0a9ba8285e8eac7a71dc090b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_a9e69ff8",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointNetworkEvaluator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-03T20:05:29Z",
+      "side": 1,
+      "message": "Need to take the currentNetwork \u0026 BSSID into count to avoid aggressive roaming.",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 9
+      },
+      "revId": "31d55c8f3b58efd0a9ba8285e8eac7a71dc090b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_e90347be",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointNetworkEvaluator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-03T20:05:29Z",
+      "side": 1,
+      "message": "ScanResultUtil#createQuotedSSID does this.",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 57
       },
       "revId": "31d55c8f3b58efd0a9ba8285e8eac7a71dc090b5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
