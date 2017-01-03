@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "97d20e17_e16d46af",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-03T23:39:10Z",
+      "side": 1,
+      "message": "When I did a cherry pick onto the latest change, it just completed the merge. I assumed there were no other changes. But it seems like it has oddly undone the previous changes. I will fix this. BTW, I was running into unit tests failures, so this wouldn\u0027t have gone in as is anyways. I uploaded the patch assuming the rebase was trivial. My bad.",
+      "parentUuid": "d70e467c_0996cd2a",
+      "revId": "ad69d8ad1dfbf00dcd4e628a37f77a101668e6c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d70e467c_66ddf0fb",
         "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
         "patchSetId": 9
@@ -106,6 +124,30 @@
     },
     {
       "key": {
+        "uuid": "d70e467c_46cb94b1",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-03T23:39:10Z",
+      "side": 1,
+      "message": "Yes I\u0027ll do it.",
+      "parentUuid": "d70e467c_434a6626",
+      "range": {
+        "startLine": 998,
+        "startChar": 19,
+        "endLine": 998,
+        "endChar": 51
+      },
+      "revId": "ad69d8ad1dfbf00dcd4e628a37f77a101668e6c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d70e467c_23f48aae",
         "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
         "patchSetId": 9
@@ -117,6 +159,30 @@
       "writtenOn": "2017-01-03T23:11:35Z",
       "side": 1,
       "message": "Use boolean overload instead?",
+      "range": {
+        "startLine": 1669,
+        "startChar": 19,
+        "endLine": 1669,
+        "endChar": 45
+      },
+      "revId": "ad69d8ad1dfbf00dcd4e628a37f77a101668e6c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d70e467c_669fb09d",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-03T23:39:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d70e467c_23f48aae",
       "range": {
         "startLine": 1669,
         "startChar": 19,
@@ -152,6 +218,30 @@
     },
     {
       "key": {
+        "uuid": "d70e467c_06aa3cbb",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1685,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-03T23:39:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d70e467c_46af1432",
+      "range": {
+        "startLine": 1685,
+        "startChar": 20,
+        "endLine": 1685,
+        "endChar": 43
+      },
+      "revId": "ad69d8ad1dfbf00dcd4e628a37f77a101668e6c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d70e467c_a307dacc",
         "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
         "patchSetId": 9
@@ -163,6 +253,30 @@
       "writtenOn": "2017-01-03T23:11:35Z",
       "side": 1,
       "message": "Use boolean overload instead?",
+      "range": {
+        "startLine": 1824,
+        "startChar": 14,
+        "endLine": 1824,
+        "endChar": 42
+      },
+      "revId": "ad69d8ad1dfbf00dcd4e628a37f77a101668e6c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d70e467c_c6d66454",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1824,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-03T23:39:10Z",
+      "side": 1,
+      "message": "Sorry, I did a search on enable\u003d%, makes sense why I missed it.",
+      "parentUuid": "d70e467c_a307dacc",
       "range": {
         "startLine": 1824,
         "startChar": 14,
