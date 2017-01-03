@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7c9e645_9e12f707",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointNetworkEvaluator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-01-03T19:08:41Z",
+      "side": 1,
+      "message": "Currently the provider scoring is done in PasspointMatchInfo.java, will update that file in a separate CL.",
+      "parentUuid": "d7c9e645_5b14bd29",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 22
+      },
+      "revId": "31d55c8f3b58efd0a9ba8285e8eac7a71dc090b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c9e645_fb18095d",
         "filename": "service/java/com/android/server/wifi/hotspot2/PasspointNetworkEvaluator.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2016-12-26T03:11:59Z",
       "side": 1,
       "message": "This should have some unit tests.",
+      "range": {
+        "startLine": 36,
+        "startChar": 13,
+        "endLine": 36,
+        "endChar": 38
+      },
+      "revId": "31d55c8f3b58efd0a9ba8285e8eac7a71dc090b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_1ed8473a",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointNetworkEvaluator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-01-03T19:08:41Z",
+      "side": 1,
+      "message": "Yup, this is still a WIP CL, unit tests will be added.",
+      "parentUuid": "d7c9e645_fb18095d",
       "range": {
         "startLine": 36,
         "startChar": 13,
