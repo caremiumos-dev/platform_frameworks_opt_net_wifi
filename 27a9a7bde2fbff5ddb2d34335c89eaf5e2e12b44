@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7c9e645_7ef86ba0",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-03T19:06:38Z",
+      "side": 1,
+      "message": "removing this line",
+      "revId": "27a9a7bde2fbff5ddb2d34335c89eaf5e2e12b44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_1effe789",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-03T19:06:38Z",
+      "side": 1,
+      "message": "removing this line",
+      "revId": "27a9a7bde2fbff5ddb2d34335c89eaf5e2e12b44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
