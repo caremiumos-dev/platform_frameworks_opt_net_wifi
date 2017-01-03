@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d70e467c_c69b044a",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-03T23:11:35Z",
+      "side": 1,
+      "message": "I\u0027m not sure about the way this merge conflict was resolved. The conflict resolution may break the functionality added in https://android-review.googlesource.com/#/c/307410/.\n\nsilberst@, can you chime in?",
+      "revId": "ad69d8ad1dfbf00dcd4e628a37f77a101668e6c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d70e467c_66ddf0fb",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-03T23:11:35Z",
+      "side": 1,
+      "message": "This argument appears to be unused. If that\u0027s correct, please remove the unused argument.\n\nHowever: if removing this argument would cause this CL to grow very large, then please file a bug to do this in a follow-up CL, instead. (And reference that bug here.)",
+      "range": {
+        "startLine": 321,
+        "startChar": 69,
+        "endLine": 321,
+        "endChar": 96
+      },
+      "revId": "ad69d8ad1dfbf00dcd4e628a37f77a101668e6c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d70e467c_434a6626",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-03T23:11:35Z",
+      "side": 1,
+      "message": "Should this use WifiLog.LogMessage.c(boolean) as well?",
+      "range": {
+        "startLine": 998,
+        "startChar": 19,
+        "endLine": 998,
+        "endChar": 51
+      },
+      "revId": "ad69d8ad1dfbf00dcd4e628a37f77a101668e6c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d70e467c_23f48aae",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-03T23:11:35Z",
+      "side": 1,
+      "message": "Use boolean overload instead?",
+      "range": {
+        "startLine": 1669,
+        "startChar": 19,
+        "endLine": 1669,
+        "endChar": 45
+      },
+      "revId": "ad69d8ad1dfbf00dcd4e628a37f77a101668e6c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d70e467c_46af1432",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1685,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-03T23:11:35Z",
+      "side": 1,
+      "message": "I believe that this format string should end with \"uid\u003d%\". Either that, or the call to c() should be removed.",
+      "range": {
+        "startLine": 1685,
+        "startChar": 20,
+        "endLine": 1685,
+        "endChar": 43
+      },
+      "revId": "ad69d8ad1dfbf00dcd4e628a37f77a101668e6c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d70e467c_a307dacc",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1824,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-03T23:11:35Z",
+      "side": 1,
+      "message": "Use boolean overload instead?",
+      "range": {
+        "startLine": 1824,
+        "startChar": 14,
+        "endLine": 1824,
+        "endChar": 42
+      },
+      "revId": "ad69d8ad1dfbf00dcd4e628a37f77a101668e6c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
