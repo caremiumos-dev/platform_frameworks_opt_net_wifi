@@ -45,6 +45,29 @@
       "revId": "895f74752e025410e296ad7478108c88e5de4828",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c9e645_fba9cd5a",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-03T16:55:01Z",
+      "side": 1,
+      "message": "Error printing and then what? Do we never recover?",
+      "range": {
+        "startLine": 135,
+        "startChar": 8,
+        "endLine": 147,
+        "endChar": 9
+      },
+      "revId": "895f74752e025410e296ad7478108c88e5de4828",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
