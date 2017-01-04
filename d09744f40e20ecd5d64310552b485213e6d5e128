@@ -22,6 +22,30 @@
       "revId": "d09744f40e20ecd5d64310552b485213e6d5e128",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17c7fe66_098339ef",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareNativeManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-04T06:26:20Z",
+      "side": 1,
+      "message": "Uggh - the others are wrong. Will fix.",
+      "parentUuid": "17c7fe66_be043dc9",
+      "range": {
+        "startLine": 160,
+        "startChar": 4,
+        "endLine": 160,
+        "endChar": 17
+      },
+      "revId": "d09744f40e20ecd5d64310552b485213e6d5e128",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
