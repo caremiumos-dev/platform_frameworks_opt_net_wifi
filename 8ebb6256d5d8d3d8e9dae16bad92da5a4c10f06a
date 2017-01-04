@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17c7fe66_0409600c",
+        "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2017-01-04T17:05:36Z",
+      "side": 1,
+      "message": "Why not just call sendSupplicantChangeStateBroadcast() instead?  Also, why not do so in the enter() method of UninitializedState?",
+      "revId": "8ebb6256d5d8d3d8e9dae16bad92da5a4c10f06a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
