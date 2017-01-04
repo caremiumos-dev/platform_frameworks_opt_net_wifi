@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "17c7fe66_7eae257f",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareNativeManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-04T04:41:27Z",
+      "side": 1,
+      "message": "It looks like start() calls initWifiHidl(), which sets mWifiIsStarted \u003d mWifi.isStarted();",
+      "parentUuid": "d7c9e645_19739808",
+      "range": {
+        "startLine": 322,
+        "startChar": 16,
+        "endLine": 322,
+        "endChar": 38
+      },
+      "revId": "ba455af14ea3f8c5b7d1e61a19fbb0639f1a77a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c9e645_1ef5beaa",
         "filename": "service/java/com/android/server/wifi/aware/WifiAwareNativeManager.java",
         "patchSetId": 5
