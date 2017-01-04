@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "17c7fe66_c91ce1df",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareNativeManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-04T06:26:20Z",
+      "side": 1,
+      "message": "that path only happens once - when IWifi is created. The logic is:\n\n- create iwifi\n- register for callbacks\n- check if isstarted\n\nThen never go through that path again: wait for onStarted to be called.\n\nOnly time that the path is called again is if the remote server crashes",
+      "parentUuid": "17c7fe66_7eae257f",
+      "range": {
+        "startLine": 322,
+        "startChar": 16,
+        "endLine": 322,
+        "endChar": 38
+      },
+      "revId": "ba455af14ea3f8c5b7d1e61a19fbb0639f1a77a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c9e645_1ef5beaa",
         "filename": "service/java/com/android/server/wifi/aware/WifiAwareNativeManager.java",
         "patchSetId": 5
