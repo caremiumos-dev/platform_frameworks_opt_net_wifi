@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17c7fe66_be043dc9",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareNativeManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-04T04:41:27Z",
+      "side": 1,
+      "message": "The other comments say \"project\".",
+      "range": {
+        "startLine": 160,
+        "startChar": 4,
+        "endLine": 160,
+        "endChar": 17
+      },
+      "revId": "d09744f40e20ecd5d64310552b485213e6d5e128",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
