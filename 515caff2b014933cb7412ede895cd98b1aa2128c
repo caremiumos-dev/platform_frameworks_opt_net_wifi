@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17c7fe66_b4153905",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-04T21:38:23Z",
+      "side": 1,
+      "message": "It\u0027s okay to overload parseHex, but why not make a parseHex() which doesn\u0027t include length and call it instead.",
+      "revId": "515caff2b014933cb7412ede895cd98b1aa2128c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17c7fe66_146b4d9a",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-04T21:38:23Z",
+      "side": 1,
+      "message": "Are you ensuring the result is at least 12 bytes?",
+      "revId": "515caff2b014933cb7412ede895cd98b1aa2128c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
