@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97c76e81_9c764943",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000691
+      },
+      "writtenOn": "2017-01-04T23:34:40Z",
+      "side": 1,
+      "message": "there is no documentation in your CL description about why you don\u0027t need to synchronize these values anymore, etc. Please elaborate on this.",
+      "revId": "f79bdcd725da2fff1e95d88b134362908fbe0341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
