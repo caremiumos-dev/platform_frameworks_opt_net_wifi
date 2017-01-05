@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97c76e81_ecf0e6e2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-05T23:03:01Z",
+      "side": 1,
+      "message": "No need. (Just |WifiServiceImplTest| is sufficient.)",
+      "range": {
+        "startLine": 15,
+        "startChar": 26,
+        "endLine": 15,
+        "endChar": 31
+      },
+      "revId": "18ec778bcc4dd65ecc00bd9801332f56cff0c409",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_ccf522d1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-05T23:03:01Z",
+      "side": 1,
+      "message": "No need.",
+      "range": {
+        "startLine": 16,
+        "startChar": 18,
+        "endLine": 16,
+        "endChar": 23
+      },
+      "revId": "18ec778bcc4dd65ecc00bd9801332f56cff0c409",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
