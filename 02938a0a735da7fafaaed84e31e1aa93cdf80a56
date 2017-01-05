@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97c76e81_8cabaa53",
+        "filename": "service/java/com/android/server/wifi/WifiNotificationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2017-01-05T22:32:55Z",
+      "side": 0,
+      "message": "I think you can also delete this and the below string resource if it is no longer used.",
+      "range": {
+        "startLine": 283,
+        "startChar": 51,
+        "endLine": 283,
+        "endChar": 64
+      },
+      "revId": "02938a0a735da7fafaaed84e31e1aa93cdf80a56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
