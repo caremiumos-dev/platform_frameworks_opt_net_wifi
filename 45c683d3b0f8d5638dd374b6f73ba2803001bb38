@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97c76e81_767020f5",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointNetworkScore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-06T07:27:31Z",
+      "side": 1,
+      "message": "Rename and add a javadoc",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "45c683d3b0f8d5638dd374b6f73ba2803001bb38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
