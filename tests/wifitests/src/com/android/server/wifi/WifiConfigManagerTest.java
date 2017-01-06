@@ -33,6 +33,7 @@ import android.net.wifi.WifiEnterpriseConfig;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiScanner;
 import android.net.wifi.WifiSsid;
+import android.net.wifi.util.WifiConfigurationUtil;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.telephony.TelephonyManager;

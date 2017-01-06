@@ -177,7 +177,7 @@ public class WifiConnectivityManagerTest {
                 }}).when(scanner).startScan(anyObject(), anyObject(), anyObject());
 
         // This unfortunately needs to be a somewhat valid scan result, otherwise
-        // |ScanDetailUtil.toScanDetail| raises exceptions.
+        // |ScanDetailUtil.fromScanResult| raises exceptions.
         final ScanResult[] scanResults = new ScanResult[1];
         scanResults[0] = new ScanResult(WifiSsid.createFromAsciiEncoded(CANDIDATE_SSID),
                 CANDIDATE_SSID, CANDIDATE_BSSID, 1245, 0, "some caps",

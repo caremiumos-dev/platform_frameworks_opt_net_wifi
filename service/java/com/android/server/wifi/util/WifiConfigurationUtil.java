@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.server.wifi;
+package com.android.server.wifi.util;
 
 import android.content.pm.UserInfo;
 import android.net.IpConfiguration;
@@ -36,9 +36,9 @@ import java.util.Objects;
  * WifiConfiguration utility for any {@link android.net.wifi.WifiConfiguration} related operations.
  * Currently contains:
  *   > Helper method to check if the WifiConfiguration object is visible to the provided users.
- *   > Helper methods to identify the encryption of a WifiConfiguration object.
  */
 public class WifiConfigurationUtil {
+
     /**
      * Check whether a network configuration is visible to a user or any of its managed profiles.
      *
@@ -71,46 +71,30 @@ public class WifiConfigurationUtil {
     }
 
     /**
-     * Checks if the provided |wepKeys| array contains any non-null value;
+     * Create a PnoNetwork object from the provided WifiConfiguration.
+     *
+     * @param config      Configuration corresponding to the network.
+     * @param newPriority New priority to be assigned to the network.
+     * @return PnoNetwork object corresponding to the network.
      */
-    public static boolean hasAnyValidWepKey(String[] wepKeys) {
-        for (int i = 0; i < wepKeys.length; i++) {
-            if (wepKeys[i] != null) {
-                return true;
-            }
+    public static WifiScanner.PnoSettings.PnoNetwork createPnoNetwork(
+            WifiConfiguration config, int newPriority) {
+        WifiScanner.PnoSettings.PnoNetwork pnoNetwork =
+                new WifiScanner.PnoSettings.PnoNetwork(config.SSID);
+        if (config.hiddenSSID) {
+            pnoNetwork.flags |= WifiScanner.PnoSettings.PnoNetwork.FLAG_DIRECTED_SCAN;
         }
-        return false;
-    }
-
-    /**
-     * Helper method to check if the provided |config| corresponds to a PSK network or not.
-     */
-    public static boolean isConfigForPskNetwork(WifiConfiguration config) {
-        return config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.WPA_PSK);
-    }
-
-    /**
-     * Helper method to check if the provided |config| corresponds to a EAP network or not.
-     */
-    public static boolean isConfigForEapNetwork(WifiConfiguration config) {
-        return (config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.WPA_EAP)
-                || config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.IEEE8021X));
-    }
-
-    /**
-     * Helper method to check if the provided |config| corresponds to a WEP network or not.
-     */
-    public static boolean isConfigForWepNetwork(WifiConfiguration config) {
-        return (config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.NONE)
-                && hasAnyValidWepKey(config.wepKeys));
-    }
-
-    /**
-     * Helper method to check if the provided |config| corresponds to an open network or not.
-     */
-    public static boolean isConfigForOpenNetwork(WifiConfiguration config) {
-        return !(isConfigForWepNetwork(config) || isConfigForPskNetwork(config)
-                || isConfigForEapNetwork(config));
+        pnoNetwork.flags |= WifiScanner.PnoSettings.PnoNetwork.FLAG_A_BAND;
+        pnoNetwork.flags |= WifiScanner.PnoSettings.PnoNetwork.FLAG_G_BAND;
+        if (config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.WPA_PSK)) {
+            pnoNetwork.authBitField |= WifiScanner.PnoSettings.PnoNetwork.AUTH_CODE_PSK;
+        } else if (config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.WPA_EAP)
+                || config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.IEEE8021X)) {
+            pnoNetwork.authBitField |= WifiScanner.PnoSettings.PnoNetwork.AUTH_CODE_EAPOL;
+        } else {
+            pnoNetwork.authBitField |= WifiScanner.PnoSettings.PnoNetwork.AUTH_CODE_OPEN;
+        }
+        return pnoNetwork;
     }
 
     /**
@@ -241,33 +225,6 @@ public class WifiConfigurationUtil {
     }
 
     /**
-     * Create a PnoNetwork object from the provided WifiConfiguration.
-     *
-     * @param config      Configuration corresponding to the network.
-     * @param newPriority New priority to be assigned to the network.
-     * @return PnoNetwork object corresponding to the network.
-     */
-    public static WifiScanner.PnoSettings.PnoNetwork createPnoNetwork(
-            WifiConfiguration config, int newPriority) {
-        WifiScanner.PnoSettings.PnoNetwork pnoNetwork =
-                new WifiScanner.PnoSettings.PnoNetwork(config.SSID);
-        if (config.hiddenSSID) {
-            pnoNetwork.flags |= WifiScanner.PnoSettings.PnoNetwork.FLAG_DIRECTED_SCAN;
-        }
-        pnoNetwork.flags |= WifiScanner.PnoSettings.PnoNetwork.FLAG_A_BAND;
-        pnoNetwork.flags |= WifiScanner.PnoSettings.PnoNetwork.FLAG_G_BAND;
-        if (config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.WPA_PSK)) {
-            pnoNetwork.authBitField |= WifiScanner.PnoSettings.PnoNetwork.AUTH_CODE_PSK;
-        } else if (config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.WPA_EAP)
-                || config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.IEEE8021X)) {
-            pnoNetwork.authBitField |= WifiScanner.PnoSettings.PnoNetwork.AUTH_CODE_EAPOL;
-        } else {
-            pnoNetwork.authBitField |= WifiScanner.PnoSettings.PnoNetwork.AUTH_CODE_OPEN;
-        }
-        return pnoNetwork;
-    }
-
-    /**
      * General WifiConfiguration list sorting algorithm:
      * 1, Place the fully enabled networks first.
      * 2. Next place all the temporarily disabled networks.
@@ -295,8 +252,8 @@ public class WifiConfigurationUtil {
             }
         }
 
-        // This needs to be implemented by the connected/disconnected PNO list comparator.
-        abstract int compareNetworksWithSameStatus(WifiConfiguration a, WifiConfiguration b);
+        /** This needs to be implemented by the connected/disconnected PNO list comparator. */
+        public abstract int compareNetworksWithSameStatus(WifiConfiguration a, WifiConfiguration b);
 
         /**
          * Returns an integer representing a score for each configuration. The scores are assigned

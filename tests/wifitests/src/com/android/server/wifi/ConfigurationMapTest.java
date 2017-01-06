@@ -29,6 +29,8 @@ import android.os.UserManager;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.util.SparseArray;
 
+import com.android.server.wifi.util.WifiConfigurationUtil;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

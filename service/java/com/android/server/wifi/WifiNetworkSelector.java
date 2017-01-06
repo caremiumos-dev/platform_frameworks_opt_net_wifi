@@ -23,6 +23,7 @@ import android.net.NetworkKey;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
+import android.net.wifi.util.WifiConfigurationUtil;
 import android.text.TextUtils;
 import android.util.LocalLog;
 import android.util.Pair;

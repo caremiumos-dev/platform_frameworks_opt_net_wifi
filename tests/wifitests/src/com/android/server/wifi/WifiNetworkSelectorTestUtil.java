@@ -18,8 +18,14 @@ package com.android.server.wifi;
 
 import static com.android.server.wifi.WifiConfigurationTestUtil.generateWifiConfig;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyInt;
+import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import android.app.test.MockAnswerUtil.AnswerWithArguments;
 import android.net.NetworkKey;
@@ -31,10 +37,9 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiConfiguration.NetworkSelectionStatus;
 import android.net.wifi.WifiNetworkScoreCache;
 import android.net.wifi.WifiSsid;
+import android.net.wifi.util.ScanResultUtil;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.text.TextUtils;
-
-import com.android.server.wifi.util.ScanResultUtil;
 
 import java.util.ArrayList;
 import java.util.List;

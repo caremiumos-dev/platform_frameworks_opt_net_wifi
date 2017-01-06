@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.server.wifi;
+package com.android.server.wifi.util;
 
 import static org.junit.Assert.*;
 
@@ -24,6 +24,9 @@ import android.net.wifi.WifiEnterpriseConfig;
 import android.net.wifi.WifiScanner;
 import android.os.UserHandle;
 import android.test.suitebuilder.annotation.SmallTest;
+
+import com.android.server.wifi.FakeKeys;
+import com.android.server.wifi.WifiConfigurationTestUtil;
 
 import org.junit.Test;
 

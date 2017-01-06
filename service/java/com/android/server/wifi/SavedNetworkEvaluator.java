@@ -19,6 +19,7 @@ package com.android.server.wifi;
 import android.content.Context;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.util.WifiConfigurationUtil;
 import android.util.LocalLog;
 import android.util.Pair;
 

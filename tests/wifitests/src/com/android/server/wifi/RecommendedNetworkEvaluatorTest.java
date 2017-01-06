@@ -36,11 +36,10 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiNetworkScoreCache;
 import android.net.wifi.WifiSsid;
+import android.net.wifi.util.ScanResultUtil;
 import android.os.Process;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.util.LocalLog;
-
-import com.android.server.wifi.util.ScanResultUtil;
 
 import com.google.android.collect.Lists;
 
