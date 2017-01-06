@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97c76e81_a1b67020",
+        "filename": "service/java/com/android/server/wifi/WifiApConfigStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-01-06T17:09:41Z",
+      "side": 1,
+      "message": "I have been using public  with @VisibleForTesting annotation for such constants to avoid adding them in the unit tests.  However, I think annotations are merely for documentation purpose (doesn\u0027t prevent non-test code from accessing them).  So it could go either way I guess.\n\nNot sure if there is a standard way for doing such in our codebase.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 54
+      },
+      "revId": "c4d0de0346332a43155580c28097c3bdc9976875",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
