@@ -1,6 +1,5 @@
 package com.android.server.wifi;
 
-import android.content.pm.UserInfo;
 import android.net.wifi.WifiConfiguration;
 import android.os.UserHandle;
 import android.os.UserManager;
@@ -8,11 +7,9 @@ import android.os.UserManager;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class ConfigurationMap {
     private final Map<Integer, WifiConfiguration> mPerID = new HashMap<>();
@@ -31,7 +28,7 @@ public class ConfigurationMap {
     // RW methods:
     public WifiConfiguration put(WifiConfiguration config) {
         final WifiConfiguration current = mPerID.put(config.networkId, config);
-        if (WifiConfigurationUtil.isVisibleToAnyProfile(config,
+        if (com.android.server.wifi.util.WifiConfigurationUtil.isVisibleToAnyProfile(config,
                 mUserManager.getProfiles(mCurrentUserId))) {
             mPerIDForCurrentUser.put(config.networkId, config);
             if (config.FQDN != null && config.FQDN.length() > 0) {

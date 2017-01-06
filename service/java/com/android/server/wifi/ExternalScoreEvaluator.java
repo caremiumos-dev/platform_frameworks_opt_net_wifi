@@ -24,12 +24,11 @@ import android.net.WifiKey;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiNetworkScoreCache;
+import android.net.wifi.util.ScanResultUtil;
 import android.os.Process;
 import android.text.TextUtils;
 import android.util.LocalLog;
 import android.util.Pair;
-
-import com.android.server.wifi.util.ScanResultUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;

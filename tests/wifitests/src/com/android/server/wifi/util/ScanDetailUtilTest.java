@@ -16,11 +16,12 @@
 
 package com.android.server.wifi.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import android.net.wifi.ScanResult;
 import android.net.wifi.ScanResult.InformationElement;
-import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiSsid;
 import android.test.suitebuilder.annotation.SmallTest;
 
@@ -32,10 +33,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 /**
- * Unit tests for {@link com.android.server.wifi.util.ScanResultUtil}.
+ * Unit tests for {@link ScanDetailUtil}.
  */
 @SmallTest
-public class ScanResultUtilTest {
+public class ScanDetailUtilTest {
 
     @Test
     public void convertScanResult() {
@@ -48,7 +49,7 @@ public class ScanResultUtilTest {
             createIE(InformationElement.EID_SSID, ssid.getBytes(StandardCharsets.UTF_8))
         };
 
-        ScanDetail output = ScanResultUtil.toScanDetail(input);
+        ScanDetail output = ScanDetailUtil.fromScanResult(input);
 
         validateScanDetail(input, output);
     }
@@ -65,7 +66,7 @@ public class ScanResultUtilTest {
         };
         input.anqpLines = Arrays.asList("LINE 1", "line 2", "Line 3");
 
-        ScanDetail output = ScanResultUtil.toScanDetail(input);
+        ScanDetail output = ScanDetailUtil.fromScanResult(input);
 
         validateScanDetail(input, output);
     }
@@ -79,66 +80,9 @@ public class ScanResultUtilTest {
             createIE(InformationElement.EID_SSID, ssid.getBytes(StandardCharsets.UTF_8))
         };
 
-        ScanDetail output = ScanResultUtil.toScanDetail(input);
+        ScanDetail output = ScanDetailUtil.fromScanResult(input);
 
         validateScanDetail(input, output);
-    }
-
-    @Test
-    public void testScanResultMatchingWithNetwork() {
-        final String ssid = "Another SSid";
-        WifiConfiguration config = new WifiConfiguration();
-        config.SSID = ScanResultUtil.createQuotedSSID(ssid);
-        ScanResult scanResult = new ScanResult(ssid, "ab:cd:01:ef:45:89", 1245, 0, "",
-                -78, 2450, 1025, 22, 33, 20, 0, 0, true);
-
-        config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-        scanResult.capabilities = "";
-        assertTrue(ScanResultUtil.doesScanResultMatchWithNetwork(scanResult, config));
-
-        config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-        config.wepKeys[0] = "45592364648547";
-        scanResult.capabilities = "WEP";
-        assertTrue(ScanResultUtil.doesScanResultMatchWithNetwork(scanResult, config));
-
-        config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-        scanResult.capabilities = "PSK";
-        assertTrue(ScanResultUtil.doesScanResultMatchWithNetwork(scanResult, config));
-
-        config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_EAP);
-        scanResult.capabilities = "EAP";
-        assertTrue(ScanResultUtil.doesScanResultMatchWithNetwork(scanResult, config));
-    }
-
-    @Test
-    public void testNetworkCreationFromScanResult() {
-        final String ssid = "Another SSid";
-        ScanResult scanResult = new ScanResult(ssid, "ab:cd:01:ef:45:89", 1245, 0, "",
-                -78, 2450, 1025, 22, 33, 20, 0, 0, true);
-        WifiConfiguration config;
-
-        scanResult.capabilities = "";
-        config = ScanResultUtil.createNetworkFromScanResult(scanResult);
-        assertEquals(config.SSID, ScanResultUtil.createQuotedSSID(ssid));
-        assertTrue(config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.NONE));
-
-        scanResult.capabilities = "WEP";
-        config = ScanResultUtil.createNetworkFromScanResult(scanResult);
-        assertEquals(config.SSID, ScanResultUtil.createQuotedSSID(ssid));
-        assertTrue(config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.NONE));
-        assertTrue(config.allowedAuthAlgorithms.get(WifiConfiguration.AuthAlgorithm.OPEN));
-        assertTrue(config.allowedAuthAlgorithms.get(WifiConfiguration.AuthAlgorithm.SHARED));
-
-        scanResult.capabilities = "PSK";
-        config = ScanResultUtil.createNetworkFromScanResult(scanResult);
-        assertEquals(config.SSID, ScanResultUtil.createQuotedSSID(ssid));
-        assertTrue(config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.WPA_PSK));
-
-        scanResult.capabilities = "EAP";
-        config = ScanResultUtil.createNetworkFromScanResult(scanResult);
-        assertEquals(config.SSID, ScanResultUtil.createQuotedSSID(ssid));
-        assertTrue(config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.WPA_EAP));
-        assertTrue(config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.IEEE8021X));
     }
 
     private static InformationElement createIE(int id, byte[] bytes) {

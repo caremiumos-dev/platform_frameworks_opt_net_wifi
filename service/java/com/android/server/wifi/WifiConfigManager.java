@@ -34,6 +34,7 @@ import android.net.wifi.WifiEnterpriseConfig;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiScanner;
+import android.net.wifi.util.ScanResultUtil;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.os.UserManager;
@@ -48,8 +49,8 @@ import com.android.internal.R;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.server.LocalServices;
 import com.android.server.wifi.WifiConfigStoreLegacy.WifiConfigStoreDataLegacy;
-import com.android.server.wifi.util.ScanResultUtil;
 import com.android.server.wifi.util.TelephonyUtil;
+import com.android.server.wifi.util.WifiConfigurationUtil;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -186,7 +187,9 @@ public class WifiConfigManager {
      * have the same |numAssociation|, place the configurations with
      * |lastSeenInQualifiedNetworkSelection| set first.
      */
-    private static final WifiConfigurationUtil.WifiConfigurationComparator sScanListComparator =
+    private static final WifiConfigurationUtil.WifiConfigurationComparator
+
+            sScanListComparator =
             new WifiConfigurationUtil.WifiConfigurationComparator() {
                 @Override
                 public int compareNetworksWithSameStatus(WifiConfiguration a, WifiConfiguration b) {

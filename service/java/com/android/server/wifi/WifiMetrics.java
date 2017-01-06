@@ -19,13 +19,13 @@ package com.android.server.wifi;
 import android.net.NetworkAgent;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.util.ScanResultUtil;
 import android.util.Base64;
 import android.util.Log;
 import android.util.SparseIntArray;
 
 import com.android.server.wifi.hotspot2.NetworkDetail;
 import com.android.server.wifi.util.InformationElementUtil;
-import com.android.server.wifi.util.ScanResultUtil;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
