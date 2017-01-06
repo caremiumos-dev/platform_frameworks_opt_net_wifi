@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97c76e81_f32c3dad",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-06T19:39:13Z",
+      "side": 1,
+      "message": "For running tests...  I am guessing this will fail with the same problem as b/34127212\n\nWe don\u0027t really exercise anything in service impl tests yet...  you might need to find a way to exercise this to hit the failure.",
+      "range": {
+        "startLine": 203,
+        "startChar": 42,
+        "endLine": 203,
+        "endChar": 58
+      },
+      "revId": "4205031562360852e2a09f8247e14734dd794f97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_539889c4",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-06T19:39:13Z",
+      "side": 1,
+      "message": "should we log the new country code?  this does impact things like what channels we can use",
+      "range": {
+        "startLine": 1167,
+        "startChar": 20,
+        "endLine": 1167,
+        "endChar": 34
+      },
+      "revId": "4205031562360852e2a09f8247e14734dd794f97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_b3812551",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1633,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-06T19:39:13Z",
+      "side": 1,
+      "message": "can we get the enabled setting?",
+      "range": {
+        "startLine": 1633,
+        "startChar": 20,
+        "endLine": 1633,
+        "endChar": 44
+      },
+      "revId": "4205031562360852e2a09f8247e14734dd794f97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
