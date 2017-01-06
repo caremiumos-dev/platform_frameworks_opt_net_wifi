@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97c76e81_1b7ead55",
+        "filename": "service/java/com/android/server/wifi/IMSIParameter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-06T05:48:29Z",
+      "side": 1,
+      "message": "update to 2017?",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "15d7b08f64f6114e438de5372633ee6303f188ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_3b22916e",
+        "filename": "service/java/com/android/server/wifi/hotspot2/ANQPMatcher.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-06T05:48:29Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "15d7b08f64f6114e438de5372633ee6303f188ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
