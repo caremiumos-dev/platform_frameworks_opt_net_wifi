@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97c76e81_2a047d32",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-06T01:01:38Z",
+      "side": 1,
+      "message": "@weiwa, could you have a look at the RTT responder pieces?\n\nThanks!",
+      "range": {
+        "startLine": 490,
+        "startChar": 0,
+        "endLine": 742,
+        "endChar": 5
+      },
+      "revId": "28db26b51402a5466971dc8ec8591ac151dd6a00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
