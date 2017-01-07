@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "97c76e81_a758c972",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-07T00:09:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1728de81_2140b654",
+      "range": {
+        "startLine": 235,
+        "startChar": 16,
+        "endLine": 235,
+        "endChar": 43
+      },
+      "revId": "89be9fcb8724c599628931b66c2afaac3fe9660b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "376ec20e_5cc99547",
         "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
         "patchSetId": 2
@@ -59,6 +83,30 @@
       "writtenOn": "2017-01-03T16:51:39Z",
       "side": 1,
       "message": "Consider using the utilities in HexEncoding instead of recreating",
+      "range": {
+        "startLine": 237,
+        "startChar": 16,
+        "endLine": 239,
+        "endChar": 17
+      },
+      "revId": "89be9fcb8724c599628931b66c2afaac3fe9660b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_c7529d54",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-07T00:09:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "376ec20e_5cc99547",
       "range": {
         "startLine": 237,
         "startChar": 16,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "97c76e81_c7fdfdf7",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-07T00:09:39Z",
+      "side": 1,
+      "message": "I set it in the first line of the lambda (235)",
+      "parentUuid": "d7c9e645_9b9f6938",
+      "range": {
+        "startLine": 242,
+        "startChar": 12,
+        "endLine": 242,
+        "endChar": 31
+      },
+      "revId": "89be9fcb8724c599628931b66c2afaac3fe9660b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c9e645_c2a42f5a",
         "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
         "patchSetId": 2
@@ -105,6 +177,30 @@
       "writtenOn": "2016-12-30T01:18:04Z",
       "side": 1,
       "message": "Wrong method name",
+      "range": {
+        "startLine": 279,
+        "startChar": 34,
+        "endLine": 279,
+        "endChar": 54
+      },
+      "revId": "89be9fcb8724c599628931b66c2afaac3fe9660b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_071d357c",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-07T00:09:39Z",
+      "side": 1,
+      "message": "Good catch",
+      "parentUuid": "d7c9e645_c2a42f5a",
       "range": {
         "startLine": 279,
         "startChar": 34,
