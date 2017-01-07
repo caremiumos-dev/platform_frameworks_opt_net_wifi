@@ -64,6 +64,9 @@ LOCAL_REQUIRED_MODULES := services
 LOCAL_MODULE_TAGS :=
 LOCAL_MODULE := wifi-service
 LOCAL_PROTOC_OPTIMIZE_TYPE := nano
+ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
+LOCAL_INIT_RC := wifi-events.rc
+endif
 
 ifeq ($(EMMA_INSTRUMENT_FRAMEWORK),true)
 LOCAL_EMMA_INSTRUMENT := true
@@ -73,4 +76,4 @@ LOCAL_JACK_COVERAGE_INCLUDE_FILTER := com.android.server.wifi.*
 
 include $(BUILD_JAVA_LIBRARY)
 
-endif
+endif  # !TARGET_BUILD_PDK
