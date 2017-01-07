@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97c76e81_b54c648d",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1060801
+      },
+      "writtenOn": "2017-01-07T01:29:54Z",
+      "side": 1,
+      "message": "Why do you need to pass this in instead of just grabbing it from the context in the ctor?",
+      "range": {
+        "startLine": 59,
+        "startChar": 55,
+        "endLine": 59,
+        "endChar": 86
+      },
+      "revId": "0b0c12aed31325d036caffcb8375df1885ef6ce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
