@@ -336,7 +336,8 @@ public class WifiInjector {
     public BaseWifiDiagnostics makeWifiDiagnostics(WifiNative wifiNative) {
         if (mUseRealLogger) {
             return new WifiDiagnostics(
-                    mContext, this, mWifiStateMachine, wifiNative, mBuildProperties);
+                    mContext, this, mWifiStateMachine, wifiNative, mBuildProperties,
+                    new LastMileLogger(this));
         } else {
             return new BaseWifiDiagnostics();
         }
