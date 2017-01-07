@@ -22,6 +22,30 @@
       "revId": "c4d0de0346332a43155580c28097c3bdc9976875",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_3e46f1c2",
+        "filename": "service/java/com/android/server/wifi/WifiApConfigStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-07T07:50:47Z",
+      "side": 1,
+      "message": "Yeah, I think there are at least 2 camps with this.  It might be worth a discussion at some point to see how we want to handle it.  In other CLs the preferred approach was what I did above.  I can certainly switch this (and almost submitted it that way anyway :) ).\n\nAfter checking the test code (quickly), I think the approach above is more common.  Are you ok with leaving it as is?",
+      "parentUuid": "97c76e81_a1b67020",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 54
+      },
+      "revId": "c4d0de0346332a43155580c28097c3bdc9976875",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
