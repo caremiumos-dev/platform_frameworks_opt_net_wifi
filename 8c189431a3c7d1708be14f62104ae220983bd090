@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97c76e81_84492cad",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointNetworkScore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-08T18:18:06Z",
+      "side": 1,
+      "message": "1) Can we have a macro for this and other constants here?\n2) When WifiNetworkSelector filters scan results, the lowest RSSI for 2.4GHz AP is -85 by default. And -82 for 5GHz.\n3) In the future the lowest acceptable RSSI values can change depending on device. For example, Sailfish may have bigger value than Angler. The best way to obtain the value for each device is: \n\ncontext.getResources().getInteger(\n                         R.integer.config_wifi_framework_wifi_score_bad_rssi_threshold_24GHz);",
+      "range": {
+        "startLine": 88,
+        "startChar": 61,
+        "endLine": 88,
+        "endChar": 64
+      },
+      "revId": "8c189431a3c7d1708be14f62104ae220983bd090",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
