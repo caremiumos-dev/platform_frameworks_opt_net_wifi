@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97c76e81_24594076",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointNetworkEvaluator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-08T18:22:01Z",
+      "side": 1,
+      "message": "Please address Glen\u0027s comment.",
+      "range": {
+        "startLine": 174,
+        "startChar": 71,
+        "endLine": 174,
+        "endChar": 80
+      },
+      "revId": "16665440757740ae3540d51023806f79f6391693",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
