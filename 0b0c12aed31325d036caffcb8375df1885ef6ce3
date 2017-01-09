@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "97c76e81_435c2034",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-09T23:46:09Z",
+      "side": 1,
+      "message": "nit: if",
+      "range": {
+        "startLine": 9,
+        "startChar": 45,
+        "endLine": 9,
+        "endChar": 48
+      },
+      "revId": "0b0c12aed31325d036caffcb8375df1885ef6ce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97c76e81_b54c648d",
         "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
         "patchSetId": 2
@@ -37,6 +60,52 @@
       "side": 1,
       "message": "It\u0027s dependency injection best practice to inject direct dependencies when constructing objects. Passing around Context as a means to get another object violates this.  Ideally, FrameworkFacade#get*Setting should take in a ContentResolver, not a Context object, so we can remove the Context dependency here entirely. \n\ngo/di-practices/inject-direct-dependencies",
       "parentUuid": "97c76e81_b54c648d",
+      "revId": "0b0c12aed31325d036caffcb8375df1885ef6ce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_6365e4c7",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-09T23:46:09Z",
+      "side": 1,
+      "message": "Will this always be invoked during boot-up? My question basically is, if the setting remains unchanged, will we get the correct value?\n\nAlso, add a log so we know evaluator is being used. Otherwise, it can become confusing during the transition period.",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 13
+      },
+      "revId": "0b0c12aed31325d036caffcb8375df1885ef6ce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_63a4c49c",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-09T23:46:09Z",
+      "side": 1,
+      "message": "This is pretty confusing. Can we append something to \"mExternalScoreEvalutor.getName()\" so we know it is actually called via RecommendedNetworkEvaluator?",
+      "range": {
+        "startLine": 204,
+        "startChar": 15,
+        "endLine": 204,
+        "endChar": 87
+      },
       "revId": "0b0c12aed31325d036caffcb8375df1885ef6ce3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
