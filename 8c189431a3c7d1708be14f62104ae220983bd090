@@ -22,6 +22,30 @@
       "revId": "8c189431a3c7d1708be14f62104ae220983bd090",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_8a5013d7",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointNetworkScore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-01-09T17:24:42Z",
+      "side": 1,
+      "message": "This curve is used for categorizing RSSI levels into different buckets for scoring purpose.\n\n1) Not sure if we need to define each number used here. RSSI_SCORE itself is a \"constant\" and the numbers are not used by others.  Also each number are commented.\n\n2) Any RSSI lower than the start value (-80) will be returned with a score belong to the lowest bucket (-10).  So the start value doesn\u0027t have to be in sync with the lowest RSSI allowed.\n\n3) The purpose of this curve is for converting RSSI level into a score.  I don\u0027t think it is necessary to make the curve values device dependent.\n\nI would prefer to leave it as is for now.  Let me know what you think?",
+      "parentUuid": "97c76e81_84492cad",
+      "range": {
+        "startLine": 88,
+        "startChar": 61,
+        "endLine": 88,
+        "endChar": 64
+      },
+      "revId": "8c189431a3c7d1708be14f62104ae220983bd090",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
