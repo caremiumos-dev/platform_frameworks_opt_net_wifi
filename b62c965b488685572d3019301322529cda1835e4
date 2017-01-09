@@ -22,6 +22,30 @@
       "revId": "b62c965b488685572d3019301322529cda1835e4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_aaf4f7ae",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointNetworkEvaluator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-01-09T17:25:44Z",
+      "side": 1,
+      "message": "Oops :), will update",
+      "parentUuid": "97c76e81_b336c5f7",
+      "range": {
+        "startLine": 175,
+        "startChar": 36,
+        "endLine": 175,
+        "endChar": 45
+      },
+      "revId": "b62c965b488685572d3019301322529cda1835e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
