@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "97c76e81_068756a3",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2017-01-10T00:47:17Z",
+      "side": 1,
+      "message": "Yes, it will always be invoked during boot up. Below I call mContentObserver.onChange so we have the right value from the start",
+      "parentUuid": "97c76e81_6365e4c7",
+      "revId": "0b0c12aed31325d036caffcb8375df1885ef6ce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97c76e81_63a4c49c",
         "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
         "patchSetId": 2
@@ -106,6 +124,24 @@
         "endLine": 204,
         "endChar": 87
       },
+      "revId": "0b0c12aed31325d036caffcb8375df1885ef6ce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_6965c3c7",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2017-01-10T00:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97c76e81_63a4c49c",
       "revId": "0b0c12aed31325d036caffcb8375df1885ef6ce3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
