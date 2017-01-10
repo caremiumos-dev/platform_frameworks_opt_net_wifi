@@ -46,6 +46,30 @@
       "revId": "8c189431a3c7d1708be14f62104ae220983bd090",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_003a9184",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointNetworkScore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-10T19:37:15Z",
+      "side": 1,
+      "message": "After all these scores not that precise. I agree that we can leave it as is for now.",
+      "parentUuid": "97c76e81_8a5013d7",
+      "range": {
+        "startLine": 88,
+        "startChar": 61,
+        "endLine": 88,
+        "endChar": 64
+      },
+      "revId": "8c189431a3c7d1708be14f62104ae220983bd090",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
