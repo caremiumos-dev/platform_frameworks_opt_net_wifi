@@ -1,0 +1,265 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97c76e81_282c6ac3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-10T00:01:38Z",
+      "side": 1,
+      "message": "Do we plan to have unit tests for this code?",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_8341195f",
+        "filename": "service/java/com/android/server/wifi/wificond/ChannelSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-10T00:01:38Z",
+      "side": 1,
+      "message": "Should we document the fact that, during deserialization, incoming data is not validated in any way? In particular:\n\n  - A malformed Parcel may cause a RuntimeException, during deserialization.\n  - Even if the Parcel deserializes without error, the values of the fields are not guaranteed to be meaningful. (E.g. frequency could be 9999.)",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_0853e688",
+        "filename": "service/java/com/android/server/wifi/wificond/ChannelSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-10T00:01:38Z",
+      "side": 1,
+      "message": "Consider documenting the fact that |flags| is ignored.",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_83447995",
+        "filename": "service/java/com/android/server/wifi/wificond/ChannelSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-10T00:01:38Z",
+      "side": 1,
+      "message": "Consider checking that in.dataAvail() \u003d\u003d 0 at this point. (i.e., there\u0027s no trailing garbage.)",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_433b01dd",
+        "filename": "service/java/com/android/server/wifi/wificond/HiddenNetwork.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-10T00:01:38Z",
+      "side": 1,
+      "message": "As in previous file, regarding deserialization comment.",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_e84f92d9",
+        "filename": "service/java/com/android/server/wifi/wificond/HiddenNetwork.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-10T00:01:38Z",
+      "side": 1,
+      "message": "Consider documenting that |flags| is ignored.",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_e855523a",
+        "filename": "service/java/com/android/server/wifi/wificond/HiddenNetwork.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-10T00:01:38Z",
+      "side": 1,
+      "message": "Is this correct? Parcel.writeByteArray() writes the length itself. So I think this method writes the length twice.",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_68fca2bc",
+        "filename": "service/java/com/android/server/wifi/wificond/HiddenNetwork.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-10T00:01:38Z",
+      "side": 1,
+      "message": "Would the following make more sense?\n\n  result.ssid \u003d createByteArray();\n\n(That is, along with the proposed change at line 47.)",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 42
+      },
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_634965aa",
+        "filename": "service/java/com/android/server/wifi/wificond/HiddenNetwork.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-10T00:01:38Z",
+      "side": 1,
+      "message": "As in previous file, consider verifying that there\u0027s no trailing garbage.",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_a34c1d8d",
+        "filename": "service/java/com/android/server/wifi/wificond/SingleScanSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-10T00:01:38Z",
+      "side": 1,
+      "message": "As in previous file, regarding deserialization comment.",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_ad840c2e",
+        "filename": "service/java/com/android/server/wifi/wificond/SingleScanSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-10T00:01:38Z",
+      "side": 1,
+      "message": "(Continued from PS3)\n\nForgive me if this is just my ignorance of Parcelable and/or Java showing here, but... Do we need a \"copy-constructor\" at all? Nothing in Parcelable seems to require it. And it seems like the more idiomatic thing in Java would be to call \u003cinstance\u003e.clone().",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_c85cce95",
+        "filename": "service/java/com/android/server/wifi/wificond/SingleScanSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-10T00:01:38Z",
+      "side": 1,
+      "message": "Consider documenting that |flags| is ignored.",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_438b0103",
+        "filename": "service/java/com/android/server/wifi/wificond/SingleScanSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-10T00:01:38Z",
+      "side": 1,
+      "message": "Could the rest of this method body be simplified using writeTypedList()? Something like:\n\n  out.writeTypedList(channelSettings);\n  out.writeTypedList(hiddenNetworks);",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_e8a0b289",
+        "filename": "service/java/com/android/server/wifi/wificond/SingleScanSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-10T00:01:38Z",
+      "side": 1,
+      "message": "Analogously to the comments in writeToParcel(), can this method be simplified by making use of readTypedList()?",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_e38c55c8",
+        "filename": "service/java/com/android/server/wifi/wificond/SingleScanSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-10T00:01:38Z",
+      "side": 1,
+      "message": "As in other files, consider verifying that there\u0027s no trailing garbage.",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
