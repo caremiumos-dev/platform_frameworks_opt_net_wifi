@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97c76e81_a106463e",
+        "filename": "service/java/com/android/server/wifi/FrameworkFacade.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-10T22:58:24Z",
+      "side": 1,
+      "message": "should probably be makeWifiAsyncChannel since there isn\u0027t a single one that we are sharing",
+      "range": {
+        "startLine": 124,
+        "startChar": 28,
+        "endLine": 124,
+        "endChar": 31
+      },
+      "revId": "06e33633b07b5a332e684339d4ca7293ba55df54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_41008a20",
+        "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-10T22:58:24Z",
+      "side": 1,
+      "message": "I think this can be final",
+      "range": {
+        "startLine": 286,
+        "startChar": 3,
+        "endLine": 286,
+        "endChar": 27
+      },
+      "revId": "06e33633b07b5a332e684339d4ca7293ba55df54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
