@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97c76e81_8cf9400e",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3954,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-10T07:38:24Z",
+      "side": 0,
+      "message": "I don\u0027t seem to understand why this was here in the first place.",
+      "revId": "4718fa7418ebb57bb62e51697a6ba073e777b149",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

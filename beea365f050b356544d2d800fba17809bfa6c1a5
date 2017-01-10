@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97c76e81_ec11dc74",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-10T07:38:24Z",
+      "side": 1,
+      "message": "I need to understand this better",
+      "revId": "beea365f050b356544d2d800fba17809bfa6c1a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c76e81_0c153060",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3657,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-10T07:38:24Z",
+      "side": 1,
+      "message": "This is a change in functionality, original code always gets a handle to the P2p service and establishes an AsyncChannel with it. \n\nThe reason why this may be important is that P2pStateMachine has different initial states depending on whether or not P2p is supported. The responses sent over the Async Channel are different depending on the state, however, it is expected even when this feature is not supported that the P2p State Machine be running albeit in stay in a different state. A command from the Wifi state machine, including one to enable P2p service can be send over this async channel. \n\nCould we remove the check for P2p Supported?",
+      "revId": "beea365f050b356544d2d800fba17809bfa6c1a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
