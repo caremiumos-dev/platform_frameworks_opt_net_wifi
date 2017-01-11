@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a364350b_ad7cd55f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-11T18:31:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97c76e81_c42dc8a8",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 21
+      },
+      "revId": "06e33633b07b5a332e684339d4ca7293ba55df54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97c76e81_a106463e",
         "filename": "service/java/com/android/server/wifi/FrameworkFacade.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a364350b_0d7dc183",
+        "filename": "service/java/com/android/server/wifi/FrameworkFacade.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-11T18:31:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97c76e81_a106463e",
+      "range": {
+        "startLine": 124,
+        "startChar": 28,
+        "endLine": 124,
+        "endChar": 31
+      },
+      "revId": "06e33633b07b5a332e684339d4ca7293ba55df54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97c76e81_41008a20",
         "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-01-10T22:58:24Z",
       "side": 1,
       "message": "I think this can be final",
+      "range": {
+        "startLine": 286,
+        "startChar": 3,
+        "endLine": 286,
+        "endChar": 27
+      },
+      "revId": "06e33633b07b5a332e684339d4ca7293ba55df54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a364350b_8db8f128",
+        "filename": "service/java/com/android/server/wifi/scanner/WifiScanningServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-11T18:31:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97c76e81_41008a20",
       "range": {
         "startLine": 286,
         "startChar": 3,
