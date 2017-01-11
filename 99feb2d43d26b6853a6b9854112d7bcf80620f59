@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a356f512_88c6771e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-11T01:12:42Z",
+      "side": 1,
+      "message": "classes",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 28
+      },
+      "revId": "99feb2d43d26b6853a6b9854112d7bcf80620f59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "032ee190_0bdb9dff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-11T01:12:42Z",
+      "side": 1,
+      "message": "It would be a good idea to have this comment in the code as well.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 55
+      },
+      "revId": "99feb2d43d26b6853a6b9854112d7bcf80620f59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a364350b_18942585",
+        "filename": "service/java/com/android/server/wifi/wificond/PnoSettings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-11T01:12:42Z",
+      "side": 1,
+      "message": "Does it work if this is null?",
+      "range": {
+        "startLine": 40,
+        "startChar": 38,
+        "endLine": 40,
+        "endChar": 56
+      },
+      "revId": "99feb2d43d26b6853a6b9854112d7bcf80620f59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a364350b_b87659a4",
+        "filename": "service/java/com/android/server/wifi/wificond/PnoSettings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-11T01:12:42Z",
+      "side": 1,
+      "message": "If you start with an object with a zero-length pnoNetworks, it comes through as null instead. Is this OK?",
+      "range": {
+        "startLine": 76,
+        "startChar": 16,
+        "endLine": 76,
+        "endChar": 40
+      },
+      "revId": "99feb2d43d26b6853a6b9854112d7bcf80620f59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
