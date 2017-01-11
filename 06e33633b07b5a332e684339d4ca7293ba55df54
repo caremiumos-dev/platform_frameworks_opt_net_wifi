@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "97c76e81_c42dc8a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-11T18:16:55Z",
+      "side": 1,
+      "message": "did you test both the full set + the scanning tests in isolation?  Please update here so we have a record.  Thanks!",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 21
+      },
+      "revId": "06e33633b07b5a332e684339d4ca7293ba55df54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97c76e81_a106463e",
         "filename": "service/java/com/android/server/wifi/FrameworkFacade.java",
         "patchSetId": 6
