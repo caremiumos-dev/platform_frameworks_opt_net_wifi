@@ -22,6 +22,30 @@
       "revId": "d2fb19c523f2605b5dfc4952353a1724d0baa2f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a364350b_d8222207",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-11T21:28:10Z",
+      "side": 1,
+      "message": "Your statement is correct, there is a good reason to use lazy initialization in WifiHandler and WifiAsyncChannel. There\u0027s no issue when all the unit tests are run together or WifiScanning service runs on the device. The problem is described in line 11 - the unit tests fails if it is run stand alone. \n\nThe only missing line is perhaps \" A non null instance of WifiInjector is necessary to create logging objects for WifiAsyncChannel and WifiHandler\", however, one could argue that this line states the obvious.  Let me know if you want me to add that anyways.",
+      "parentUuid": "a364350b_e265f71f",
+      "range": {
+        "startLine": 10,
+        "startChar": 17,
+        "endLine": 10,
+        "endChar": 43
+      },
+      "revId": "d2fb19c523f2605b5dfc4952353a1724d0baa2f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
