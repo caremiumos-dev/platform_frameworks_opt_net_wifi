@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a364350b_e76c1774",
+        "filename": "service/java/com/android/server/wifi/util/InformationElementUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-12T18:58:00Z",
+      "side": 1,
+      "message": "While you\u0027re here... can you add a javadoc specifying the bit/wire format of this IE parser",
+      "range": {
+        "startLine": 264,
+        "startChar": 24,
+        "endLine": 264,
+        "endChar": 44
+      },
+      "revId": "898c36158501c4c12dc26a70f4616614512a9c43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
