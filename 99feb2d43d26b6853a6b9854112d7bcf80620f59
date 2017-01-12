@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "a364350b_0dc7f71c",
+        "filename": "service/java/com/android/server/wifi/wificond/PnoSettings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-12T00:52:03Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a364350b_18942585",
+      "range": {
+        "startLine": 40,
+        "startChar": 38,
+        "endLine": 40,
+        "endChar": 56
+      },
+      "revId": "99feb2d43d26b6853a6b9854112d7bcf80620f59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a364350b_b87659a4",
         "filename": "service/java/com/android/server/wifi/wificond/PnoSettings.java",
         "patchSetId": 2
@@ -82,6 +106,30 @@
       "writtenOn": "2017-01-11T01:12:42Z",
       "side": 1,
       "message": "If you start with an object with a zero-length pnoNetworks, it comes through as null instead. Is this OK?",
+      "range": {
+        "startLine": 76,
+        "startChar": 16,
+        "endLine": 76,
+        "endChar": 40
+      },
+      "revId": "99feb2d43d26b6853a6b9854112d7bcf80620f59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a364350b_0acefdb0",
+        "filename": "service/java/com/android/server/wifi/wificond/PnoSettings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-12T00:52:03Z",
+      "side": 1,
+      "message": "Thank you for finding out this.\nKeeping this non-null makes life easier.\nDone.",
+      "parentUuid": "a364350b_b87659a4",
       "range": {
         "startLine": 76,
         "startChar": 16,
