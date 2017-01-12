@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a364350b_543d68f8",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaNetwork.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-12T23:17:16Z",
+      "side": 1,
+      "message": "curious why you use this style of \u0027this.\u0027?",
+      "range": {
+        "startLine": 353,
+        "startChar": 20,
+        "endLine": 353,
+        "endChar": 25
+      },
+      "revId": "b7b1fc6c7cec90b7dd7f3f8fa4760defa82b7529",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
