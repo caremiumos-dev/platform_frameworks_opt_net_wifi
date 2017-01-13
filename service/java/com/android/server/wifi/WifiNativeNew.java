@@ -38,6 +38,8 @@ import android.util.Log;
 import android.util.MutableBoolean;
 import android.util.MutableInt;
 
+import com.android.server.connectivity.KeepalivePacketData;
+
 import libcore.util.HexEncoding;
 
 import java.util.ArrayList;
@@ -478,19 +480,27 @@ public class WifiNativeNew {
 //            {WifiManager.WIFI_FEATURE_HAL_EPNO,
 //                    IWifiStaIface.StaIfaceCapabilityMask.
 //            },
-//TODO(mplass): some codes are not defined in WifiMonitor, but are present in Hidl
-//            {WifiManager.WIFI_FEATURE_RSSI_MONITOR,
-//                    IWifiStaIface.StaIfaceCapabilityMask.RSSI_MONITOR
+            {WifiManager.WIFI_FEATURE_RSSI_MONITOR,
+                    IWifiStaIface.StaIfaceCapabilityMask.RSSI_MONITOR
+            },
+            {WifiManager.WIFI_FEATURE_MKEEP_ALIVE,
+                    IWifiStaIface.StaIfaceCapabilityMask.KEEP_ALIVE
+            },
+//            {WifiManager.WIFI_FEATURE_CONFIG_NDO,
+//                    IWifiStaIface.StaIfaceCapabilityMask.
 //            },
-//            {WifiManager.WIFI_FEATURE_CONTROL_ROAMING,
-//                    IWifiStaIface.StaIfaceCapabilityMask.CONTROL_ROAMING
+//            {WifiManager.WIFI_FEATURE_TRANSMIT_POWER,
+//                    IWifiStaIface.StaIfaceCapabilityMask.
 //            },
-//            {WifiManager.WIFI_FEATURE_PROBE_IE_WHITELIST,
-//                    IWifiStaIface.StaIfaceCapabilityMask.PROBE_IE_WHITELIST
-//            },
-//            {WifiManager.WIFI_FEATURE_SCAN_RAND,
-//                    IWifiStaIface.StaIfaceCapabilityMask.SCAN_RAND
-//            },
+            {WifiManager.WIFI_FEATURE_CONTROL_ROAMING,
+                    IWifiStaIface.StaIfaceCapabilityMask.CONTROL_ROAMING
+            },
+            {WifiManager.WIFI_FEATURE_IE_WHITELIST,
+                    IWifiStaIface.StaIfaceCapabilityMask.PROBE_IE_WHITELIST
+            },
+            {WifiManager.WIFI_FEATURE_SCAN_RAND,
+                    IWifiStaIface.StaIfaceCapabilityMask.SCAN_RAND
+            },
     };
 
     /**
@@ -849,9 +859,76 @@ public class WifiNativeNew {
     // PNO - moved to wificond
 
 
-    //    public int startSendingOffloadedPacket(int slot,
-    //           KeepalivePacketData keepAlivePacket, int period);
-    //    public int stopSendingOffloadedPacket(int slot);
+    /**
+     * Start sending the specified keep alive packets periodically.
+     *
+     * @return 0 for success, -1 for error
+     */
+    public int startSendingOffloadedPacket(
+            int slot, KeepalivePacketData keepAlivePacket, int periodInMs) {
+        Log.d(TAG, "startSendingOffloadedPacket slot=" + slot + " periodInMs=" + periodInMs);
+
+        String macWithColons = WifiNative.getWlanNativeInterface().getMacAddress();
+        String[] macAddrStr = macWithColons.split(":");
+        byte[] srcMac = new byte[6];
+        for (int i = 0; i < 6; i++) {
+            Integer hexVal = Integer.parseInt(macAddrStr[i], 16);
+            srcMac[i] = hexVal.byteValue();
+        }
+
+        ArrayList<Byte> data = new ArrayList<Byte>(keepAlivePacket.data.length);
+        for (byte b : keepAlivePacket.data) {
+            data.add(b);
+        }
+        short protocol = (short) (keepAlivePacket.protocol);
+
+        synchronized (sLock) {
+            try {
+                if (!isHalStarted()) return -1;
+                WifiStatus wifiStatus = mIWifiStaIface.startSendingKeepAlivePackets(
+                        slot,
+                        data,
+                        protocol,
+                        srcMac,
+                        keepAlivePacket.dstMac,
+                        periodInMs);
+                if (wifiStatus.code != WifiStatusCode.SUCCESS) {
+                    noteHidlError(wifiStatus, "startSendingOffloadedPacket");
+                    return -1;
+                }
+            } catch (RemoteException e) {
+                handleRemoteException(e);
+                return -1;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Stop sending the specified keep alive packets.
+     *
+     * @param slot id - same as startSendingOffloadedPacket call.
+     * @return 0 for success, -1 for error
+     */
+    public int stopSendingOffloadedPacket(int slot) {
+        Log.d(TAG, "stopSendingOffloadedPacket " + slot);
+
+        synchronized (sLock) {
+            try {
+                if (!isHalStarted()) return -1;
+                WifiStatus wifiStatus = mIWifiStaIface.stopSendingKeepAlivePackets(slot);
+                if (wifiStatus.code != WifiStatusCode.SUCCESS) {
+                    noteHidlError(wifiStatus, "stopSendingKeepAlivePackets");
+                    return -1;
+                }
+            } catch (RemoteException e) {
+                handleRemoteException(e);
+                return -1;
+            }
+        }
+        return 0;
+    }
+
 
 
     // public static interface WifiRssiEventHandler;
@@ -865,7 +942,25 @@ public class WifiNativeNew {
      */
     // public WifiWakeReasonAndCounts getWlanWakeReasonCount();
 
-    // public boolean configureNeighborDiscoveryOffload(boolean enabled);
+    /**
+     * Enable/Disable Neighbour discovery offload functionality in the firmware.
+     */
+    public boolean configureNeighborDiscoveryOffload(boolean enabled) {
+        synchronized (sLock) {
+            try {
+                if (!isHalStarted()) return false;
+                WifiStatus wifiStatus = mIWifiStaIface.enableNdOffload(enabled);
+                if (wifiStatus.code != WifiStatusCode.SUCCESS) {
+                    noteHidlError(wifiStatus, "configureNeighborDiscoveryOffload");
+                    return false;
+                }
+            } catch (RemoteException e) {
+                handleRemoteException(e);
+                return false;
+            }
+        }
+        return true;
+    }
 
 
     private boolean startSupplicantHal() {
