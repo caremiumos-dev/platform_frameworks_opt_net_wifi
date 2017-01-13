@@ -38,6 +38,8 @@ import android.util.Log;
 import android.util.MutableBoolean;
 import android.util.MutableInt;
 
+import com.android.server.connectivity.KeepalivePacketData;
+
 import libcore.util.HexEncoding;
 
 import java.util.ArrayList;
@@ -849,9 +851,70 @@ public class WifiNativeNew {
     // PNO - moved to wificond
 
 
-    //    public int startSendingOffloadedPacket(int slot,
-    //           KeepalivePacketData keepAlivePacket, int period);
-    //    public int stopSendingOffloadedPacket(int slot);
+    /**
+     * Start sending the specified keep alive packets periodically.
+     *
+     * @return 0 for success, -1 for error
+     */
+    public int startSendingOffloadedPacket(
+            int slot, KeepalivePacketData keepAlivePacket, int periodInMs) {
+        Log.d(TAG, "startSendingOffloadedPacket slot=" + slot + " periodInMs=" + periodInMs);
+
+        String[] macAddrStr = getMacAddress().split(":");
+        byte[] srcMac = new byte[6];
+        for (int i = 0; i < 6; i++) {
+            Integer hexVal = Integer.parseInt(macAddrStr[i], 16);
+            srcMac[i] = hexVal.byteValue();
+        }
+
+        synchronized (sLock) {
+            try {
+                if (!isHalStarted()) return -1;
+                int etherType = 0; //TODO - figure out correct default
+                WifiStatus wifiStatus = mIWifiStaIface.startSendingKeepAlivePackets(
+                        slot,
+                        keepAlivePacket.data,
+                        keepAlivePacket.protocol,
+                        srcMac,
+                        keepAlivePacket.dstMac,
+                        periodInMs);
+                if (wifiStatus.code != WifiStatusCode.SUCCESS) {
+                    noteHidlError(wifiStatus, "startSendingOffloadedPacket");
+                    return -1;
+                }
+            } catch (RemoteException e) {
+                handleRemoteException(e);
+                return -1;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Stop sending the specified keep alive packets.
+     *
+     * @param slot id - same as startSendingOffloadedPacket call.
+     * @return 0 for success, -1 for error
+     */
+    public int stopSendingOffloadedPacket(int slot) {
+        Log.d(TAG, "stopSendingOffloadedPacket " + slot);
+
+        synchronized (sLock) {
+            try {
+                if (!isHalStarted()) return -1;
+                WifiStatus wifiStatus = mIWifiStaIface.stopSendingKeepAlivePackets(slot);
+                if (wifiStatus.code != WifiStatusCode.SUCCESS) {
+                    noteHidlError(wifiStatus, "stopSendingKeepAlivePackets");
+                    return -1;
+                }
+            } catch (RemoteException e) {
+                handleRemoteException(e);
+                return -1;
+            }
+        }
+        return 0;
+    }
+
 
 
     // public static interface WifiRssiEventHandler;
@@ -865,7 +928,25 @@ public class WifiNativeNew {
      */
     // public WifiWakeReasonAndCounts getWlanWakeReasonCount();
 
-    // public boolean configureNeighborDiscoveryOffload(boolean enabled);
+    /**
+     * Enable/Disable Neighbour discovery offload functionality in the firmware.
+     */
+    public boolean configureNeighborDiscoveryOffload(boolean enabled) {
+        synchronized (sLock) {
+            try {
+                if (!isHalStarted()) return false;
+                WifiStatus wifiStatus = mIWifiStaIface.enableNdOffload(enabled);
+                if (wifiStatus.code != WifiStatusCode.SUCCESS) {
+                    noteHidlError(wifiStatus, "configureNeighborDiscoveryOffload");
+                    return false;
+                }
+            } catch (RemoteException e) {
+                handleRemoteException(e);
+                return false;
+            }
+        }
+        return true;
+    }
 
 
     private boolean startSupplicantHal() {
