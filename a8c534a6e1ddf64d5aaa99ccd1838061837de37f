@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3bbe9cf_a80ec3e9",
+        "filename": "service/wifi-events.rc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2017-01-13T21:43:26Z",
+      "side": 1,
+      "message": "Technically debugfs isn\u0027t guaranteed to be mounted until \"on post-fs\", so writing this early may be premature...",
+      "revId": "a8c534a6e1ddf64d5aaa99ccd1838061837de37f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
