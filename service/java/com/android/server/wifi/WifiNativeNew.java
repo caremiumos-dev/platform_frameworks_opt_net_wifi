@@ -929,12 +929,16 @@ public class WifiNativeNew {
         return 0;
     }
 
+    /** to be implemented */
+    public int startRssiMonitoring(byte maxRssi, byte minRssi,
+                                   WifiNative.WifiRssiEventHandler rssiEventHandler) {
+        throw new UnsupportedOperationException();
+    }
 
-
-    // public static interface WifiRssiEventHandler;
-    // public int startRssiMonitoring(byte maxRssi, byte minRssi,
-    //                                            WifiRssiEventHandler rssiEventHandler);
-    // public int stopRssiMonitoring();
+    /** to be implemented */
+    public int stopRssiMonitoring()  {
+        throw new UnsupportedOperationException();
+    }
 
     /**
      * Fetch the host wakeup reasons stats from wlan driver.

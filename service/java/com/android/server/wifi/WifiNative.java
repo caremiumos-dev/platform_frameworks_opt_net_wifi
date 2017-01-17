@@ -154,6 +154,8 @@ public class WifiNative {
         }
     }
 
+    private WifiNativeNew mWifiNativeNew;
+
     public String getInterfaceName() {
         return mInterfaceName;
     }
@@ -2979,6 +2981,12 @@ public class WifiNative {
 
     public int startRssiMonitoring(byte maxRssi, byte minRssi,
                                                 WifiRssiEventHandler rssiEventHandler) {
+        try {
+            if (mWifiNativeNew != null) {
+                return mWifiNativeNew.startRssiMonitoring(maxRssi, minRssi, rssiEventHandler);
+            }
+        } catch (UnsupportedOperationException e) { }
+
         Log.d(TAG, "startRssiMonitoring: maxRssi=" + maxRssi + " minRssi=" + minRssi);
         synchronized (sLock) {
             sWifiRssiEventHandler = rssiEventHandler;
@@ -3004,6 +3012,12 @@ public class WifiNative {
     private native static int stopRssiMonitoringNative(int iface, int idx);
 
     public int stopRssiMonitoring() {
+        try {
+            if (mWifiNativeNew != null) {
+                return mWifiNativeNew.stopRssiMonitoring();
+            }
+        } catch (UnsupportedOperationException e) { }
+
         Log.d(TAG, "stopRssiMonitoring, cmdId " + sRssiMonitorCmdId);
         synchronized (sLock) {
             if (isHalStarted()) {
