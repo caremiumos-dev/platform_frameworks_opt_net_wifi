@@ -22,6 +22,29 @@
       "revId": "b7b1fc6c7cec90b7dd7f3f8fa4760defa82b7529",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23fa05cb_479590cd",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaNetwork.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-17T20:49:29Z",
+      "side": 1,
+      "message": "But \u0027blah\u0027 is just what you\u0027ve come to expect from me? :P\nI was still figuring out scope of lambda methods (they share it with class), and attempting to provide simple public var names without conflicting with lambda args. Figured it out in latest patch set, but haven\u0027t removed \u0027this\u0027s yet...",
+      "range": {
+        "startLine": 353,
+        "startChar": 20,
+        "endLine": 353,
+        "endChar": 25
+      },
+      "revId": "b7b1fc6c7cec90b7dd7f3f8fa4760defa82b7529",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
