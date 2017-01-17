@@ -16,6 +16,23 @@
       "revId": "01c63e12701f6a58f38adbc3488f7cd49e68510a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23fa05cb_470a3048",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3693,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-17T21:06:58Z",
+      "side": 1,
+      "message": "I think this could be debatable.  Let me present both sides:\n\n1 - this is a message we are sending to ourselves (not to the p2p service).  When this message is processed by WSM, this will do a check if P2P is supported before sending the enable message over to the p2p service.  I could certainly add it in, however...\n\n2 - The next CL will conditionally create the p2p channel which means that we could only get in this code IF we did have p2p supported, so then the check would be redundant and adding a check here could/should (?) be removed.\n\nAdditional information is that we only start P2P service if it is supported in master (the cherry-pick is heading to aosp), so this code will also not execute is p2p service is not supported.",
+      "revId": "01c63e12701f6a58f38adbc3488f7cd49e68510a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
