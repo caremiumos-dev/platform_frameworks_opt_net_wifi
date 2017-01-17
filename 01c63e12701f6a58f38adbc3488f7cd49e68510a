@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3bbe9cf_b0329bc5",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3693,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-17T19:12:18Z",
+      "side": 1,
+      "message": "All other CMD_ENABLE_P2P messages in this file have been encapsulated inside the check mP2pSupported. Is there a reason to eliminate that check here?",
+      "revId": "01c63e12701f6a58f38adbc3488f7cd49e68510a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
