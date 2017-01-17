@@ -21,18 +21,26 @@ import android.hardware.wifi.V1_0.IWifiChip;
 import android.hardware.wifi.V1_0.IWifiRttController;
 import android.hardware.wifi.V1_0.IWifiRttControllerEventCallback;
 import android.hardware.wifi.V1_0.IWifiStaIface;
+import android.hardware.wifi.V1_0.IWifiStaIfaceEventCallback;
 import android.hardware.wifi.V1_0.IfaceType;
 import android.hardware.wifi.V1_0.RttConfig;
 import android.hardware.wifi.V1_0.RttResponder;
 import android.hardware.wifi.V1_0.RttResult;
+import android.hardware.wifi.V1_0.StaScanData;
+import android.hardware.wifi.V1_0.StaScanResult;
+import android.hardware.wifi.V1_0.WifiDebugRxPacketFateReport;
+import android.hardware.wifi.V1_0.WifiDebugTxPacketFateReport;
 import android.hardware.wifi.V1_0.WifiStatus;
 import android.hardware.wifi.V1_0.WifiStatusCode;
 import android.hardware.wifi.supplicant.V1_0.ISupplicant;
 import android.hardware.wifi.supplicant.V1_0.ISupplicantStaIface;
+import android.net.apf.ApfCapabilities;
 import android.net.wifi.RttManager;
 import android.net.wifi.RttManager.ResponderConfig;
 import android.net.wifi.WifiLinkLayerStats;
 import android.net.wifi.WifiManager;
+import android.net.wifi.WifiScanner;
+import android.net.wifi.WifiWakeReasonAndCounts;
 import android.os.RemoteException;
 import android.util.Log;
 import android.util.MutableBoolean;
@@ -193,7 +201,7 @@ public class WifiNativeNew {
 
             mHidlWifiChip.createStaIface((status, iface) -> {
                         if (status.code != WifiStatusCode.SUCCESS) {
-                            noteHidlError(startStatus, "startHidlHal");
+                            noteHidlError(status, "startHidlHal");
                             Log.e(TAG, "Create STA Iface failed. Error code: " + status.code);
                             return;
                         }
@@ -227,8 +235,11 @@ public class WifiNativeNew {
      * Stops the HAL
      * (SOMEDAY)
      */
-    public void stopHal() {
+    public void stopHidlHal() {
         // XXX
+
+        mDriverDescription = null;
+        mFirmwareDescription = null;
     }
 
     /**
@@ -257,22 +268,22 @@ public class WifiNativeNew {
         return "notyet0";
     }
 
-    /**
-     * Holds the result of getScanCapabilities
-     */
-    public static class ScanCapabilities {
-        public int max_scan_cache_size;
-        public int max_scan_buckets;
-        public int max_ap_cache_per_scan;
-        public int max_rssi_sample_size;
-        public int max_scan_reporting_threshold;
-        public int max_hotlist_bssids;
-        public int max_significant_wifi_change_aps;
-        public int max_bssid_history_entries;
-        public int max_number_epno_networks;
-        public int max_number_epno_networks_by_ssid;
-        public int max_number_of_white_listed_ssid;
-    }
+//    /**
+//     * Holds the result of getScanCapabilities
+//     */
+//    public static class ScanCapabilities {
+//        public int max_scan_cache_size;
+//        public int max_scan_buckets;
+//        public int max_ap_cache_per_scan;
+//        public int max_rssi_sample_size;
+//        public int max_scan_reporting_threshold;
+//        public int max_hotlist_bssids;
+//        public int max_significant_wifi_change_aps;
+//        public int max_bssid_history_entries;
+//        public int max_number_epno_networks;
+//        public int max_number_epno_networks_by_ssid;
+//        public int max_number_of_white_listed_ssid;
+//    }
 
     /**
      * Gets the scan capabilities
@@ -280,10 +291,10 @@ public class WifiNativeNew {
      * @param capabilities object to be filled in
      * @return true for success. false for failure
      */
-    public boolean getScanCapabilities(ScanCapabilities capabilities) {
+    public boolean getScanCapabilities(WifiNative.ScanCapabilities capabilities) {
         try {
             MutableBoolean ok = new MutableBoolean(false);
-            ScanCapabilities out = capabilities;
+            WifiNative.ScanCapabilities out = capabilities;
             if (!isHalStarted()) {
                 return false;
             }
@@ -310,27 +321,42 @@ public class WifiNativeNew {
         }
     }
 
-    // moving to wificond?
-    // ChannelSettings
-    // BucketSettings
-    // HiddenNetwork
+    /** to be implemented */
+    public boolean startScan(WifiNative.ScanSettings settings,
+                             WifiNative.ScanEventHandler eventHandler)  {
+        throw new UnsupportedOperationException();
+    }
+
+    /** to be implemented */
+    public void stopScan()  {
+        throw new UnsupportedOperationException();
+    }
+
+    /** to be implemented */
+    public void pauseScan()  {
+        throw new UnsupportedOperationException();
+    }
+
+    /** to be implemented */
+    public void restartScan()  {
+        throw new UnsupportedOperationException();
+    }
+
+    /** to be implemented */
+    public WifiScanner.ScanData[] getScanResults(boolean flush) {
+        throw new UnsupportedOperationException();
+    }
 
     // moving to wificond?
     // PnoNetwork
-    // PnoSettings
+    // WifiNative.PnoSettings
     // WifiChannelInfo
     // ScanEventHandler
-    // PnoEventHandler
+    // WifiNative.PnoEventHandler
 
     // public static WifiSsid createWifiSsid(byte[] rawSsid);
     // public static String ssidConvert(byte[] rawSsid);
     // public static boolean setSsid(byte[] rawSsid, ScanResult result);
-
-    // public boolean startScan(ScanSettings settings, ScanEventHandler eventHandler);
-    // public void stopScan();
-    // public void pauseScan();
-    // public void restartScan();
-    // public WifiScanner.ScanData[] getScanResults(boolean flush);
 
     // public boolean setHotlist(WifiScanner.HotlistSettings settings,
     //         HotlistEventHandler eventHandler);
@@ -486,9 +512,9 @@ public class WifiNativeNew {
             {WifiManager.WIFI_FEATURE_MKEEP_ALIVE,
                     IWifiStaIface.StaIfaceCapabilityMask.KEEP_ALIVE
             },
-//            {WifiManager.WIFI_FEATURE_CONFIG_NDO,
-//                    IWifiStaIface.StaIfaceCapabilityMask.
-//            },
+            {WifiManager.WIFI_FEATURE_CONFIG_NDO,
+                    IWifiStaIface.StaIfaceCapabilityMask.ND_OFFLOAD
+            },
 //            {WifiManager.WIFI_FEATURE_TRANSMIT_POWER,
 //                    IWifiStaIface.StaIfaceCapabilityMask.
 //            },
@@ -532,15 +558,15 @@ public class WifiNativeNew {
 
     /* Rtt related commands/events */
 
-    /**
-     * Interface for handling RTT events
-     */
-    public interface RttEventHandler {
-        /**
-         * rtt result callback
-         */
-        void onRttResults(RttManager.RttResult[] result);
-    }
+//    /**
+//     * Interface for handling RTT events
+//     */
+//    public interface RttEventHandler {
+//        /**
+//         * rtt result callback
+//         */
+//        void onRttResults(RttManager.RttResult[] result);
+//    }
     private static int sRttCmdId;
     private static RttEventCallback sRttEventCallback;
 
@@ -548,9 +574,9 @@ public class WifiNativeNew {
      * Receives a callback from Hidl and passes it along to our client using RttEventHandler
      */
     private class RttEventCallback extends IWifiRttControllerEventCallback.Stub {
-        RttEventHandler mRttEventHandler;
+        WifiNative.RttEventHandler mRttEventHandler;
         int mRttCmdId;
-        RttEventCallback(int cmdId, RttEventHandler rttEventHandler) {
+        RttEventCallback(int cmdId, WifiNative.RttEventHandler rttEventHandler) {
             mRttCmdId = cmdId;
             mRttEventHandler = rttEventHandler;
         }
@@ -661,7 +687,7 @@ public class WifiNativeNew {
      * @param handler
      * @return success indication
      */
-    public boolean requestRtt(RttManager.RttParams[] params, RttEventHandler handler) {
+    public boolean requestRtt(RttManager.RttParams[] params, WifiNative.RttEventHandler handler) {
         ArrayList<RttConfig> rttConfigs = rttConfigsFromRttParams(params);
         synchronized (sLock) {
             try {
@@ -819,45 +845,285 @@ public class WifiNativeNew {
         return false;
     }
 
-    // TODO(mplass)
-    // public RttManager.RttCapabilities getRttCapabilities();
+    /**
+     *  RTT (Round Trip Time) measurement capabilities of the device.
+     */
+    public RttManager.RttCapabilities getRttCapabilities() {
+        try {
+            if (!isHalStarted()) return null;
+            if (mIWifiRttController == null) return null;
+            final RttManager.RttCapabilities cap = new RttManager.RttCapabilities();
+            mIWifiRttController.getCapabilities((status, capabilities) -> {
+                if (status.code != WifiStatusCode.SUCCESS) return;
+                cap.oneSidedRttSupported = capabilities.rttOneSidedSupported;
+                cap.twoSided11McRttSupported = capabilities.rttFtmSupported; //TODO - verify
+                cap.lciSupported = capabilities.lciSupported;
+                cap.lcrSupported = capabilities.lcrSupported;
+                cap.preambleSupported = capabilities.preambleSupport;
+                cap.bwSupported = capabilities.bwSupport;
+                cap.responderSupported = capabilities.responderSupported;
+                cap.secureRttSupported = false; //TODO - verify
+                cap.mcVersion = capabilities.mcVersion;
+            });
+            return cap;
+        } catch (RemoteException e) {
+            handleRemoteException(e);
+            return null;
+        }
+    }
 
-    // public ApfCapabilities getApfCapabilities();
-    // public boolean installPacketFilter(byte[] filter);
+    /**
+     * Get the APF (Android Packet Filter) capabilities of the device
+     */
+    public ApfCapabilities getApfCapabilities() {
+        try {
+            if (!isHalStarted()) return sNoApfCapabilities;
+            ArrayList<ApfCapabilities> cap = new ArrayList<>(1);
+            mIWifiStaIface.getApfPacketFilterCapabilities((status, capabilities) -> {
+                if (status.code != WifiStatusCode.SUCCESS) return;
+                cap.add(new ApfCapabilities(
+                        /* apfVersionSupported */ capabilities.version,
+                        /* maximumApfProgramSize */ capabilities.maxLength,
+                        /* apfPacketFormat */ 0000000000000000000000000000000)); //TODO
+            });
+            if (cap.size() > 0) {
+                return cap.get(0);
+            }
+            return sNoApfCapabilities;
+        } catch (RemoteException e) {
+            handleRemoteException(e);
+            return sNoApfCapabilities;
+        }
+    }
+    private static final ApfCapabilities sNoApfCapabilities = new ApfCapabilities(0, 0, 0);
+
+    /**
+     * Installs an APF program on this iface, replacing an existing
+     * program if present.
+     */
+    public boolean installPacketFilter(byte[] filter) {
+        // Can filter be null?
+        int cmdId = 0; //TODO
+        ArrayList<Byte> program = new ArrayList<>(filter.length);
+        for (byte b : filter) {
+            program.add(b);
+        }
+        try {
+            if (!isHalStarted()) return false;
+            WifiStatus status = mIWifiStaIface.installApfPacketFilter(cmdId, program);
+            if (status.code != WifiStatusCode.SUCCESS) return false;
+            return true;
+        } catch (RemoteException e) {
+            handleRemoteException(e);
+            return false;
+        }
+    }
 
 
-    // public boolean setCountryCodeHal(String CountryCode);
+    /** to be implemented */
+    public boolean setCountryCodeHal(String countryCode) {
+        throw new UnsupportedOperationException();
+    }
 
-    // TDLS?
+    /** not to be implemented */
+    public boolean enableDisableTdls(boolean enable, String macAdd,
+                                     WifiNative.TdlsEventHandler tdlsCallBack) {
+        throw new UnsupportedOperationException();
+    }
 
-    //  public static interface WifiLoggerEventHandler();
+    /** not to be implemented */
+    public WifiNative.TdlsStatus getTdlsStatus(String macAdd) {
+        throw new UnsupportedOperationException();
+    }
 
-    // public boolean setLoggingEventHandler(WifiLoggerEventHandler handler);
+    /** not to be implemented */
+    public WifiNative.TdlsCapabilities getTdlsCapabilities() {
+        throw new UnsupportedOperationException();
+    }
 
-    // public int getSupportedLoggerFeatureSet();
+    /** to be implemented */
+    public boolean setLoggingEventHandler(WifiNative.WifiLoggerEventHandler handler) {
+        throw new UnsupportedOperationException();
+    }
 
-    //  public boolean resetLogHandler();
+    /** to be implemented */
+    public boolean startLoggingRingBuffer(int verboseLevel, int flags, int maxInterval,
+            int minDataSize, String ringName) {
+        throw new UnsupportedOperationException();
+    }
 
-    // public String getDriverVersion();
+    /** to be implemented */
+    public int getSupportedLoggerFeatureSet() {
+        throw new UnsupportedOperationException();
+    }
 
-    // public String getFirmwareVersion();
+    /** to be implemented */
+    public boolean resetLogHandler() {
+        throw new UnsupportedOperationException();
+    }
 
-    // public static class RingBufferStatus;
-    // public RingBufferStatus[] getRingBufferStatus();
-    // public boolean getRingBufferData(String ringName);
+    private String mDriverDescription;
+    /** Vendor-provided wifi driver version string */
+    public String getDriverVersion() {
+        if (mDriverDescription == null) requestChipDebugInfo();
+        return mDriverDescription;
+    }
 
+    private String mFirmwareDescription;
+    /** Vendor-provided wifi firmware version string */
+    public String getFirmwareVersion() {
+        if (mFirmwareDescription == null) requestChipDebugInfo();
+        return mFirmwareDescription;
+    }
 
-    // public byte[] getFwMemoryDump();
+    /** Refreshes our idea of the driver and firmware versions */
+    private void requestChipDebugInfo() {
+        mDriverDescription = null;
+        mFirmwareDescription = null;
+        try {
+            if (!isHalStarted()) return;
+            if (mHidlWifiChip == null) return;
+            mHidlWifiChip.requestChipDebugInfo((status, chipDebugInfo) -> {
+                if (status.code != WifiStatusCode.SUCCESS) return;
+                mDriverDescription = chipDebugInfo.driverDescription;
+                mFirmwareDescription = chipDebugInfo.firmwareDescription;
+            });
+        } catch (RemoteException e) {
+            handleRemoteException(e);
+            return;
+        }
+    }
 
-    //
-    /** Fetch the driver state, for driver debugging. */
-    // public byte[] getDriverStateDump();
+    /** to be implemented */
+    public WifiNative.RingBufferStatus[] getRingBufferStatus() {
+        throw new UnsupportedOperationException();
+    }
 
-    // Packet fate
+    /** to be implemented */
+    public boolean getRingBufferData(String ringName) {
+        throw new UnsupportedOperationException();
+    }
 
+    /** to be implemented */
+    public byte[] getFwMemoryDump() {
+        throw new UnsupportedOperationException();
+    }
+
+    /** to be implemented */
+    public byte[] getDriverStateDump() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Start packet fate monitoring
+     *
+     * Once started, monitoring remains active until HAL is unloaded.
+     * @return true for success
+     */
+    public boolean startPktFateMonitoring() {
+        try {
+            if (!isHalStarted()) return false;
+            WifiStatus status = mIWifiStaIface.startDebugPacketFateMonitoring();
+            return status.code == WifiStatusCode.SUCCESS;
+        } catch (RemoteException e) {
+            handleRemoteException(e);
+            return false;
+        }
+    }
+
+    /**
+     *  Blob to Blob
+     */
+    private static byte[] bytesFromArrayList(ArrayList<Byte> a) {
+        if (a == null) return null;
+        byte[] b = new byte[a.size()];
+        int i = 0;
+        for (Byte e : a) b[i++] = e;
+        return b;
+    }
+
+    /**
+     * Retrieve fates of outbound packets
+     *
+     * Reports the outbound frames for the most recent association (space allowing).
+     *
+     * @param reportBufs
+     * @return true for success
+     */
+    public boolean getTxPktFates(WifiNative.TxFateReport[] reportBufs) {
+        if (reportBufs == null) return false;
+        if (reportBufs.length == 0) return false;
+        try {
+            MutableBoolean ok = new MutableBoolean(false);
+            if (!isHalStarted()) return false;
+            mIWifiStaIface.getDebugTxPacketFates((status, fates) -> {
+                        if (status.code != WifiStatusCode.SUCCESS) return;
+                        int i = 0;
+                        for (WifiDebugTxPacketFateReport fate : fates) {
+                            if (i >= reportBufs.length) break;
+                            byte code = (byte) fate.fate; // TODO - verify translation
+                            long us = fate.frameInfo.driverTimestampUsec;
+                            byte type = (byte) fate.frameInfo.frameType;
+                            byte[] frame = bytesFromArrayList(fate.frameInfo.frameContent);
+                            reportBufs[i++] = new WifiNative.TxFateReport(code, us, type, frame);
+                        }
+                        ok.value = true;
+                    }
+            );
+            return ok.value;
+        } catch (RemoteException e) {
+            handleRemoteException(e);
+            return false;
+        }
+    }
+
+    /**
+     * Retrieve fates of inbound packets
+     *
+     * Reports the inbound frames for the most recent association (space allowing).
+     *
+     * @param reportBufs
+     * @return true for success
+     */
+    public boolean getRxPktFates(WifiNative.RxFateReport[] reportBufs) {
+        if (reportBufs == null) return false;
+        if (reportBufs.length == 0) return false;
+        try {
+            MutableBoolean ok = new MutableBoolean(false);
+            if (!isHalStarted()) return false;
+            mIWifiStaIface.getDebugRxPacketFates((status, fates) -> {
+                        if (status.code != WifiStatusCode.SUCCESS) return;
+                        int i = 0;
+                        for (WifiDebugRxPacketFateReport fate : fates) {
+                            if (i >= reportBufs.length) break;
+                            byte code = (byte) fate.fate; // TODO - verify translation
+                            long us = fate.frameInfo.driverTimestampUsec;
+                            byte type = (byte) fate.frameInfo.frameType;
+                            byte[] frame = bytesFromArrayList(fate.frameInfo.frameContent);
+                            reportBufs[i++] = new WifiNative.RxFateReport(code, us, type, frame);
+                        }
+                        ok.value = true;
+                    }
+            );
+            return ok.value;
+        } catch (RemoteException e) {
+            handleRemoteException(e);
+            return false;
+        }
+    }
+
+    /** to be implemented */
+    public boolean setPnoList(WifiNative.PnoSettings settings,
+                              WifiNative.PnoEventHandler eventHandler) {
+        throw new UnsupportedOperationException();
+    }
+
+    /** to be implemented */
+    public boolean resetPnoList() {
+        throw new UnsupportedOperationException();
+    }
 
     // PNO - moved to wificond
-
 
     /**
      * Start sending the specified keep alive packets periodically.
@@ -929,18 +1195,93 @@ public class WifiNativeNew {
         return 0;
     }
 
+    /** Callback for events on the interface */
+    private class Foo extends IWifiStaIfaceEventCallback.Stub {
+        public void onBackgroundScanFailure(int cmdId) {
+            Log.e(TAG, "onBackgroundScanFailure " + cmdId);
+        }
+        public void onBackgroundFullScanResult(int cmdId, StaScanResult result) {
+            Log.e(TAG, "onBackgroundFullScanResult " + cmdId);
+        }
+        public void onBackgroundScanResults(int cmdId, ArrayList<StaScanData> scanDatas) {
+            Log.e(TAG, "onBackgroundScanResults " + cmdId);
+        }
+        public void onRssiThresholdBreached(int cmdId, byte[/* 6 */] currBssid, int currRssi) {
+            Log.e(TAG, "onRssiThresholdBreached " + cmdId);
+            synchronized (sLock) {
+                if (mWifiRssiEventHandler != null && cmdId == sRssiMonCmdId) {
+                    assert (currRssi == (int) (byte) currRssi);
+                    mWifiRssiEventHandler.onRssiThresholdBreached((byte) currRssi);
+                }
+            }
+        }
+    }
 
+    /** Callback object instance for events on the interface */
+    private IWifiStaIfaceEventCallback mIWifiStaIfaceEventCallback;
 
-    // public static interface WifiRssiEventHandler;
-    // public int startRssiMonitoring(byte maxRssi, byte minRssi,
-    //                                            WifiRssiEventHandler rssiEventHandler);
-    // public int stopRssiMonitoring();
+    /** A fixed cmdId for our RssiMonitoring (we only do one at a time) */
+    private static final int sRssiMonCmdId = 7551;
+
+    /** Our client's handler */
+    private WifiNative.WifiRssiEventHandler mWifiRssiEventHandler;
+
+    /**
+     * Start RSSI monitoring on the currently connected access point.
+     * @param maxRssi Maximum RSSI threshold.
+     * @param minRssi Minimum RSSI threshold.
+     * @param rssiEventHandler Called when RSSI goes above maxRssi or below minRssi
+     * @return 0 for success, -1 for failure
+     */
+    public int startRssiMonitoring(byte maxRssi, byte minRssi,
+                                   WifiNative.WifiRssiEventHandler rssiEventHandler) {
+        if (maxRssi <= minRssi) return -1;
+        synchronized (sLock) {
+            try {
+                if (!isHalStarted()) return -1;
+                mIWifiStaIface.stopRssiMonitoring(sRssiMonCmdId);
+                WifiStatus wifiStatus;
+                wifiStatus = mIWifiStaIface.startRssiMonitoring(sRssiMonCmdId, maxRssi, minRssi);
+                if (wifiStatus.code != WifiStatusCode.SUCCESS) return -1;
+                if (mIWifiStaIfaceEventCallback == null) {
+                    mIWifiStaIfaceEventCallback = new Foo();
+                }
+                mWifiRssiEventHandler = rssiEventHandler;
+                return 0;
+            } catch (RemoteException e) {
+                handleRemoteException(e);
+                return -1;
+            }
+        }
+    }
+
+    /**
+     * Stop RSSI monitoring
+     * @return 0 for success, -1 for failure
+     */
+    public int stopRssiMonitoring()  {
+        synchronized (sLock) {
+            mWifiRssiEventHandler = null;
+            try {
+                if (!isHalStarted()) return -1;
+                mIWifiStaIface.stopRssiMonitoring(sRssiMonCmdId);
+                WifiStatus wifiStatus = mIWifiStaIface.stopRssiMonitoring(sRssiMonCmdId);
+                if (wifiStatus.code != WifiStatusCode.SUCCESS) return -1;
+                return 0;
+            } catch (RemoteException e) {
+                handleRemoteException(e);
+                return -1;
+            }
+        }
+    }
 
     /**
      * Fetch the host wakeup reasons stats from wlan driver.
      * @return the |WifiWakeReasonAndCounts| object retrieved from the wlan driver.
      */
-    // public WifiWakeReasonAndCounts getWlanWakeReasonCount();
+    public WifiWakeReasonAndCounts getWlanWakeReasonCount() {
+        throw new UnsupportedOperationException();
+    }
 
     /**
      * Enable/Disable Neighbour discovery offload functionality in the firmware.
