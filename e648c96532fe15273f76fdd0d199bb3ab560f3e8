@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c3bbe9cf_3c28274f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-18T01:33:54Z",
+      "side": 1,
+      "message": "b/34281985 is for parceable classes java side unit tests. I plan to finish corresponding unit test CLs in the following week.",
+      "parentUuid": "97c76e81_282c6ac3",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97c76e81_8341195f",
         "filename": "service/java/com/android/server/wifi/wificond/ChannelSettings.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-01-10T00:01:38Z",
       "side": 1,
       "message": "Should we document the fact that, during deserialization, incoming data is not validated in any way? In particular:\n\n  - A malformed Parcel may cause a RuntimeException, during deserialization.\n  - Even if the Parcel deserializes without error, the values of the fields are not guaranteed to be meaningful. (E.g. frequency could be 9999.)",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23b3e516_2bb005c8",
+        "filename": "service/java/com/android/server/wifi/wificond/ChannelSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-18T01:33:54Z",
+      "side": 1,
+      "message": "Comments added to createFromParcel().\nOne fact might need to be mentioned is that currently we only use the \"serialization part\" because these parcelable objects are created by Java code and parsed by c++ code.",
+      "parentUuid": "97c76e81_8341195f",
       "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "236e8540_0d1999a8",
+        "filename": "service/java/com/android/server/wifi/wificond/ChannelSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-18T01:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97c76e81_0853e688",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97c76e81_83447995",
         "filename": "service/java/com/android/server/wifi/wificond/ChannelSettings.java",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-01-10T00:01:38Z",
       "side": 1,
       "message": "Consider checking that in.dataAvail() \u003d\u003d 0 at this point. (i.e., there\u0027s no trailing garbage.)",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43753906_6ed5a398",
+        "filename": "service/java/com/android/server/wifi/wificond/ChannelSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-18T01:33:54Z",
+      "side": 1,
+      "message": "What are we supposed to do upon this failure ?\nI was thinking about logging or throw an IOException.\nException requires the code who call this to catch the exceptions, which might bring extra complexity and reduce readability. \nLogging looks like a more reasonable choice. So I add a one-line logging here.\nAlso I decided not to return a null here because this createFromParcel() interface doesn\u0027t mention null could be returned upon failure.\n\nhttp://cs/android/frameworks/base/core/java/android/os/Parcelable.java?l\u003d126\u0026rcl\u003d3cdde18e3cc62f233d97c0889fc742f2a06fe7fd",
+      "parentUuid": "97c76e81_83447995",
       "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "43753906_94cf5237",
+        "filename": "service/java/com/android/server/wifi/wificond/HiddenNetwork.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-18T01:33:54Z",
+      "side": 1,
+      "message": "Same as previous file.",
+      "parentUuid": "97c76e81_433b01dd",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97c76e81_e84f92d9",
         "filename": "service/java/com/android/server/wifi/wificond/HiddenNetwork.java",
         "patchSetId": 4
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "a39fd578_86dcae55",
+        "filename": "service/java/com/android/server/wifi/wificond/HiddenNetwork.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-18T01:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97c76e81_e84f92d9",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97c76e81_e855523a",
         "filename": "service/java/com/android/server/wifi/wificond/HiddenNetwork.java",
         "patchSetId": 4
@@ -115,6 +223,24 @@
       "writtenOn": "2017-01-10T00:01:38Z",
       "side": 1,
       "message": "Is this correct? Parcel.writeByteArray() writes the length itself. So I think this method writes the length twice.",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23b3e516_2ba5a5ee",
+        "filename": "service/java/com/android/server/wifi/wificond/HiddenNetwork.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-18T01:33:54Z",
+      "side": 1,
+      "message": "I did this intentionally because readByteArray(byte[] val) requires |val| to be initialized with the correct length.\nHowever I realized we can use createByteArray() instead so this is no longer needed.\nI filed b/34359597 to remove this unnecessary workaround.\nI also uploaded corresponding CLs(a few more short CLs for you :)).",
+      "parentUuid": "97c76e81_e855523a",
       "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -144,6 +270,30 @@
     },
     {
       "key": {
+        "uuid": "e399cd94_bc0fc117",
+        "filename": "service/java/com/android/server/wifi/wificond/HiddenNetwork.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-18T01:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97c76e81_68fca2bc",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 42
+      },
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97c76e81_634965aa",
         "filename": "service/java/com/android/server/wifi/wificond/HiddenNetwork.java",
         "patchSetId": 4
@@ -155,6 +305,24 @@
       "writtenOn": "2017-01-10T00:01:38Z",
       "side": 1,
       "message": "As in previous file, consider verifying that there\u0027s no trailing garbage.",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63adddb0_27ca78fd",
+        "filename": "service/java/com/android/server/wifi/wificond/HiddenNetwork.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-18T01:33:54Z",
+      "side": 1,
+      "message": "Same as previous file.",
+      "parentUuid": "97c76e81_634965aa",
       "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "23b3e516_6bc04ddd",
+        "filename": "service/java/com/android/server/wifi/wificond/SingleScanSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-18T01:33:54Z",
+      "side": 1,
+      "message": "Same as previous file.",
+      "parentUuid": "97c76e81_a34c1d8d",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97c76e81_ad840c2e",
         "filename": "service/java/com/android/server/wifi/wificond/SingleScanSettings.java",
         "patchSetId": 4
@@ -189,6 +375,24 @@
       "writtenOn": "2017-01-10T00:01:38Z",
       "side": 1,
       "message": "(Continued from PS3)\n\nForgive me if this is just my ignorance of Parcelable and/or Java showing here, but... Do we need a \"copy-constructor\" at all? Nothing in Parcelable seems to require it. And it seems like the more idiomatic thing in Java would be to call \u003cinstance\u003e.clone().",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "236e8540_ed3efd85",
+        "filename": "service/java/com/android/server/wifi/wificond/SingleScanSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-18T01:33:54Z",
+      "side": 1,
+      "message": "Good point, thanks. I just found out that we don\u0027t need these copy constructors. I implemented them following existing code. However, I think some existing codes which implement copy-constructors are for special cases.\nDone removing copy-constructors.",
+      "parentUuid": "97c76e81_ad840c2e",
       "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -212,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "236e8540_4d2391d8",
+        "filename": "service/java/com/android/server/wifi/wificond/SingleScanSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-18T01:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97c76e81_c85cce95",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97c76e81_438b0103",
         "filename": "service/java/com/android/server/wifi/wificond/SingleScanSettings.java",
         "patchSetId": 4
@@ -223,6 +445,24 @@
       "writtenOn": "2017-01-10T00:01:38Z",
       "side": 1,
       "message": "Could the rest of this method body be simplified using writeTypedList()? Something like:\n\n  out.writeTypedList(channelSettings);\n  out.writeTypedList(hiddenNetworks);",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e399cd94_d76eded8",
+        "filename": "service/java/com/android/server/wifi/wificond/SingleScanSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-18T01:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97c76e81_438b0103",
       "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -246,6 +486,24 @@
     },
     {
       "key": {
+        "uuid": "236e8540_f9779be7",
+        "filename": "service/java/com/android/server/wifi/wificond/SingleScanSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-18T01:33:54Z",
+      "side": 1,
+      "message": "Done.\nThanks a lot for finding out this.\nUsing this also requires a little C++ side changes.\nFiled b/34359499 for that.",
+      "parentUuid": "97c76e81_e8a0b289",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97c76e81_e38c55c8",
         "filename": "service/java/com/android/server/wifi/wificond/SingleScanSettings.java",
         "patchSetId": 4
@@ -257,6 +515,24 @@
       "writtenOn": "2017-01-10T00:01:38Z",
       "side": 1,
       "message": "As in other files, consider verifying that there\u0027s no trailing garbage.",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a39fd578_897ba129",
+        "filename": "service/java/com/android/server/wifi/wificond/SingleScanSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-18T01:33:54Z",
+      "side": 1,
+      "message": "Same as previous file.",
+      "parentUuid": "97c76e81_e38c55c8",
       "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
