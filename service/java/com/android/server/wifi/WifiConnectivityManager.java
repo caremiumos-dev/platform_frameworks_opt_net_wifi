@@ -620,13 +620,29 @@ public class WifiConnectivityManager {
         if (currentConnectedNetwork != null
                 && (currentConnectedNetwork.networkId == candidate.networkId
                 || currentConnectedNetwork.isLinked(candidate))) {
-            localLog("connectToNetwork: Roaming from " + currentAssociationId + " to "
-                        + targetAssociationId);
-            mStateMachine.startRoamToNetwork(candidate.networkId, scanResultCandidate);
+            // Framework initiates roaming only if firmware doesn't support
+            // {@link android.net.wifi.WifiManager#WIFI_FEATURE_CONTROL_ROAMING}.
+            if (mStateMachine.isRoamingControlSupported()) {
+                // Keep this logging here for now to validate the firmware roaming behavior.
+                localLog("connectToNetwork: Roaming candidate - " + targetAssociationId + "."
+                            + " The actual roaming target is up to the firmware.");
+            } else {
+                localLog("connectToNetwork: Roaming from " + currentAssociationId + " to "
+                            + targetAssociationId);
+                mStateMachine.startRoamToNetwork(candidate.networkId, scanResultCandidate);
+            }
         } else {
-            localLog("connectToNetwork: Reconnect from " + currentAssociationId + " to "
-                        + targetAssociationId);
-            mStateMachine.startConnectToNetwork(candidate.networkId, scanResultCandidate.BSSID);
+            // Framework specifies the connection target BSSID only if firmware doesn't support
+            // {@link android.net.wifi.WifiManager#WIFI_FEATURE_CONTROL_ROAMING}.
+            if (mStateMachine.isRoamingControlSupported()) {
+                targetBssid = WifiStateMachine.SUPPLICANT_BSSID_ANY;
+                localLog("connectToNetwork: Reconnect from " + currentAssociationId + " to "
+                            + candidate.SSID + ":" + targetBssid);
+            } else {
+                localLog("connectToNetwork: Reconnect from " + currentAssociationId + " to "
+                            + targetAssociationId);
+            }
+            mStateMachine.startConnectToNetwork(candidate.networkId, targetBssid);
         }
     }
 
