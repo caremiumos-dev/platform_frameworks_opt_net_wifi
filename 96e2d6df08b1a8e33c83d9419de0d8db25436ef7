@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3662dd0_69ffd1b3",
+        "filename": "tests/wifitests/src/com/android/server/wifi/scanner/WifiScanningServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-18T19:54:46Z",
+      "side": 1,
+      "message": "Addressing comment from silberst@, why can\u0027t we setWifiHandlerLogForTest in setup(). Noting here that mClientHandler is constructed after startService() in the internal implementation.",
+      "revId": "96e2d6df08b1a8e33c83d9419de0d8db25436ef7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
