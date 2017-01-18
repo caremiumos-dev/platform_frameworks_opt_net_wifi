@@ -210,6 +210,7 @@ public class WifiConnectivityManagerTest {
         when(stateMachine.isConnected()).thenReturn(false);
         when(stateMachine.isDisconnected()).thenReturn(true);
         when(stateMachine.isSupplicantTransientState()).thenReturn(false);
+        when(stateMachine.isRoamingControlSupported()).thenReturn(false);
 
         return stateMachine;
     }
@@ -997,5 +998,54 @@ public class WifiConnectivityManagerTest {
         // Roaming attempt because full band scan results are available.
         verify(mWifiStateMachine).startConnectToNetwork(
                 CANDIDATE_NETWORK_ID, CANDIDATE_BSSID);
+    }
+
+    /**
+     *  Firmware supports controlled roaming.
+     *  Connect to a network from the DISCONNECTED state.
+     *
+     * Expected behavior: WifiConnectivityManager calls
+     * WifiStateMachine.startConnectToNetwork() with the
+     * expected candidate network ID, and the BSSID value should be
+     * 'any' since firmware controls the roaming.
+     */
+    @Test
+    public void useAnyBssidForConnectionIfFirmwareControlsRoaming() {
+        // Firmware controls roaming
+        when(mWifiStateMachine.isRoamingControlSupported()).thenReturn(true);
+
+        // Set screen to on
+        mWifiConnectivityManager.handleScreenStateChanged(true);
+
+        // Set WiFi to disconnected state
+        mWifiConnectivityManager.handleConnectionStateChanged(
+                WifiConnectivityManager.WIFI_STATE_DISCONNECTED);
+
+        verify(mWifiStateMachine).startConnectToNetwork(
+                CANDIDATE_NETWORK_ID, WifiStateMachine.SUPPLICANT_BSSID_ANY);
+    }
+
+    /**
+     *  Firmware supports controlled roaming.
+     *  WiFi in connected state, framework does not trigger roaming
+     *  as it's handed off to the firmware.
+     *
+     * Expected behavior: WifiConnectivityManager doesn't invoke
+     * WifiStateMachine.startRoamToNetwork().
+     */
+    @Test
+    public void noFrameworkRoamingIfFirmwareControlRoaming() {
+        // Firmware controls roaming
+        when(mWifiStateMachine.isRoamingControlSupported()).thenReturn(true);
+
+        // Set WiFi to connected state
+        mWifiConnectivityManager.handleConnectionStateChanged(
+                WifiConnectivityManager.WIFI_STATE_CONNECTED);
+
+        // Set screen to on
+        mWifiConnectivityManager.handleScreenStateChanged(true);
+
+        verify(mWifiStateMachine, times(0)).startRoamToNetwork(
+                anyInt(), anyObject());
     }
 }
