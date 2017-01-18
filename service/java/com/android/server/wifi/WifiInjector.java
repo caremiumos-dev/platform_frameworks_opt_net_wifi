@@ -97,6 +97,7 @@ public class WifiInjector {
     private final IpConfigStore mIpConfigStore;
     private final WifiConfigStoreLegacy mWifiConfigStoreLegacy;
     private final WifiConfigManager mWifiConfigManager;
+    private final WifiConnectivityHelper mWifiConnectivityHelper;
     private final WifiNetworkSelector mWifiNetworkSelector;
     private final SavedNetworkEvaluator mSavedNetworkEvaluator;
     private final PasspointNetworkEvaluator mPasspointNetworkEvaluator;
@@ -193,6 +194,7 @@ public class WifiInjector {
                 UserManager.get(mContext), TelephonyManager.from(mContext),
                 mWifiKeyStore, mWifiConfigStore, mWifiConfigStoreLegacy, mWifiPermissionsWrapper,
                 new NetworkListStoreData(), new DeletedEphemeralSsidsStoreData());
+        mWifiConnectivityHelper = new WifiConnectivityHelper(mWifiNative);
         mWifiNetworkScoreCache = new WifiNetworkScoreCache(mContext);
         mWifiNetworkSelector = new WifiNetworkSelector(mContext, mWifiConfigManager, mClock);
         LocalLog localLog = mWifiNetworkSelector.getLocalLog();
@@ -412,9 +414,9 @@ public class WifiInjector {
     public WifiConnectivityManager makeWifiConnectivityManager(WifiInfo wifiInfo,
                                                                boolean hasConnectionRequests) {
         return new WifiConnectivityManager(mContext, mWifiStateMachine, getWifiScanner(),
-                mWifiConfigManager, wifiInfo, mWifiNetworkSelector, mWifiLastResortWatchdog,
-                mWifiMetrics, mWifiStateMachineHandlerThread.getLooper(), mClock,
-                hasConnectionRequests, mFrameworkFacade, mSavedNetworkEvaluator,
+                mWifiConfigManager, wifiInfo, mWifiNetworkSelector, mWifiConnectivityHelper,
+                mWifiLastResortWatchdog, mWifiMetrics, mWifiStateMachineHandlerThread.getLooper(),
+                mClock, hasConnectionRequests, mFrameworkFacade, mSavedNetworkEvaluator,
                 mRecommendedNetworkEvaluator, mPasspointNetworkEvaluator);
     }
 
