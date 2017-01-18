@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3662dd0_0999f5bd",
+        "filename": "service/java/com/android/server/wifi/FrameworkFacade.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-18T19:54:46Z",
+      "side": 1,
+      "message": "Addressed comment by Rebecca to remove \"factory\" from comment",
+      "revId": "664eb0672249d4fa35bdf83655655b1c6d4d383f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
