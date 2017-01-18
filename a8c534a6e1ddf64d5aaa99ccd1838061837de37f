@@ -16,6 +16,24 @@
       "revId": "a8c534a6e1ddf64d5aaa99ccd1838061837de37f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_c51fbed5",
+        "filename": "service/wifi-events.rc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-18T23:14:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3bbe9cf_a80ec3e9",
+      "revId": "a8c534a6e1ddf64d5aaa99ccd1838061837de37f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
