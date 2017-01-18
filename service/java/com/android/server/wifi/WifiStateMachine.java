@@ -238,6 +238,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     private final StateMachineDeathRecipient mDeathRecipient =
             new StateMachineDeathRecipient(this, CMD_CLIENT_INTERFACE_BINDER_DEATH);
     private boolean mIpReachabilityDisconnectEnabled = true;
+    private int mSupportedFeatureSet = 0;
 
     @Override
     public void onRssiThresholdBreached(byte curRssi) {
@@ -325,7 +326,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
      * Value to set in wpa_supplicant "bssid" field when we don't want to restrict connection to
      * a specific AP.
      */
-    private static final String SUPPLICANT_BSSID_ANY = "any";
+    public static final String SUPPLICANT_BSSID_ANY = "any";
 
     private int mSupplicantRestartCount = 0;
     /* Tracks sequence number on stop failure message */
@@ -4049,6 +4050,10 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     if (!mWifiNative.startHal(true)) {
                         // TODO(b/34859006): Handle failures.
                         Log.e(TAG, "Failed to start HAL for client mode");
+                    } else {
+                        mSupportedFeatureSet = mWifiNative.getSupportedFeatureSet();
+                        Log.d(TAG, "HAL supported feature set: "
+                                + Integer.toHexString(mSupportedFeatureSet));
                     }
 
                     try {
@@ -6976,5 +6981,12 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         boolean result = (resultMsg.arg1 != FAILURE);
         resultMsg.recycle();
         return result;
+    }
+
+    /*
+     * Check if HAL supports {@link android.net.wifi.WifiManager#WIFI_FEATURE_CONTROL_ROAMING}.
+     */
+    public boolean isRoamingControlSupported() {
+        return (mSupportedFeatureSet & WifiManager.WIFI_FEATURE_CONTROL_ROAMING) > 0;
     }
 }
