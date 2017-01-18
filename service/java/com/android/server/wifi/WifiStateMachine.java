@@ -39,6 +39,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageManager;
 import android.database.ContentObserver;
+import android.hardware.wifi.V1_0.WifiStatusCode;
 import android.net.ConnectivityManager;
 import android.net.DhcpResults;
 import android.net.IpConfiguration;
@@ -374,6 +375,13 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     private int mTargetNetworkId = WifiConfiguration.INVALID_NETWORK_ID;
     private long mLastDriverRoamAttempt = 0;
     private WifiConfiguration targetWificonfiguration = null;
+    // This id is used to track the network to connect to. If firmware supports
+    // {@link android.net.wifi.WifiManager#WIFI_FEATURE_CONTROL_ROAMING} and it is in the middle
+    // of its roaming process, we have to wait for the roaming to complete then connect to the
+    // target network. It means no pending connection request when its value is INVALID_NETWORK_ID.
+    private int mConnectingNetworkId = WifiConfiguration.INVALID_NETWORK_ID;
+    // The bssid to connect to. Used together with mConnectingNetworkId.
+    private String mConnectingBssid;
 
     boolean isRoaming() {
         return mAutoRoaming;
@@ -683,6 +691,9 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
 
     /* used to indicate that the foreground user was switched */
     static final int CMD_USER_STOP                                      = BASE + 207;
+
+    /* stop firmware roaming and connect to the specified network */
+    static final int CMD_STOP_FW_ROAMING_AND_CONNECT                    = BASE + 208;
 
     /**
      * Signals that IClientInterface instance underpinning our state is dead.
@@ -2438,6 +2449,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                 break;
             case CMD_START_CONNECT:
             case WifiManager.CONNECT_NETWORK:
+            case CMD_STOP_FW_ROAMING_AND_CONNECT:
                 sb.append(" ");
                 sb.append(Integer.toString(msg.arg1));
                 sb.append(" ");
@@ -3825,6 +3837,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                 case WifiMonitor.SUP_REQUEST_SIM_AUTH:
                 case CMD_TARGET_BSSID:
                 case CMD_START_CONNECT:
+                case CMD_STOP_FW_ROAMING_AND_CONNECT:
                 case CMD_START_ROAM:
                 case CMD_ASSOCIATED_BSSID:
                 case CMD_UNWANTED_NETWORK:
@@ -4864,6 +4877,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             NetworkUpdateResult result;
             Set<Integer> removedNetworkIds;
             int reasonCode;
+            int returnCode;
             logStateAndMessage(message, this);
 
             switch (message.what) {
@@ -5145,6 +5159,13 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                         lastConnectAttemptTimestamp = mClock.getWallClockMillis();
                         targetWificonfiguration = config;
                         mAutoRoaming = false;
+                        if (isRoamingControlSupported()) {
+                            returnCode = mWifiNative.enableFirmwareRoaming(
+                                WifiNative.ENABLE_FIRMWARE_ROAMING);
+                            if (returnCode != WifiStatusCode.SUCCESS) {
+                                loge("CMD_START_CONNECT Failed to enable fw roaming " + returnCode);
+                            }
+                        }
                         if (isRoaming() || isLinkDebouncing()) {
                             transitionTo(mRoamingState);
                         } else if (shouldDisconnect) {
@@ -5154,12 +5175,34 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                         }
                     } else {
                         loge("CMD_START_CONNECT Failed to start connection to network " + config);
+                        if (isRoamingControlSupported()) {
+                            returnCode = mWifiNative.enableFirmwareRoaming(
+                                WifiNative.ENABLE_FIRMWARE_ROAMING);
+                            if (returnCode != WifiStatusCode.SUCCESS) {
+                                loge("CMD_START_CONNECT Failed to enable fw roaming " + returnCode);
+                            }
+                        }
                         reportConnectionAttemptEnd(
                                 WifiMetrics.ConnectionEvent.FAILURE_CONNECT_NETWORK_FAILED,
                                 WifiMetricsProto.ConnectionEvent.HLF_NONE);
                         replyToMessage(message, WifiManager.CONNECT_NETWORK_FAILED,
                                 WifiManager.ERROR);
                         break;
+                    }
+                    break;
+                case CMD_STOP_FW_ROAMING_AND_CONNECT:
+                    returnCode = mWifiNative.enableFirmwareRoaming(
+                        WifiNative.DISABLE_FIRMWARE_ROAMING);
+                    if (returnCode == WifiStatusCode.SUCCESS) {
+                        sendMessage(CMD_START_CONNECT, message.arg1, message.arg2, message.obj);
+                    } else if (returnCode == WifiStatusCode.ERROR_BUSY) {
+                        logd("CMD_STOP_FW_ROAMING_AND_CONNECT: fw roaming is on-going");
+                        mConnectingNetworkId = message.arg1;
+                        mConnectingBssid = (String) message.obj;
+                        //TODO: start a watchdog timer in case FW never sends a completion event.
+                    } else {
+                        loge("CMD_STOP_FW_ROAMING_AND_CONNECT: failed to stop fw roaming, error "
+                                + returnCode);
                     }
                     break;
                 case CMD_REMOVE_APP_CONFIGURATIONS:
@@ -5313,6 +5356,12 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                             mWifiMetrics.setConnectionScanDetail(scanDetailCache.getScanDetail(
                                     someBssid));
                         }
+                    }
+                    // If there is a pending connection request, execute it.
+                    if (mConnectingNetworkId != WifiConfiguration.INVALID_NETWORK_ID) {
+                        sendMessage(CMD_START_CONNECT, mConnectingNetworkId, 0,
+                                mConnectingBssid);
+                        mConnectingNetworkId = WifiConfiguration.INVALID_NETWORK_ID;
                     }
                     return NOT_HANDLED;
                 case WifiMonitor.NETWORK_CONNECTION_EVENT:
@@ -5801,6 +5850,13 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                         mWifiInfo.setBSSID((String) message.obj);
                         sendNetworkStateChangeBroadcast(mLastBssid);
                     }
+
+                    // If there is a pending connection request, execute it.
+                    if (mConnectingNetworkId != WifiConfiguration.INVALID_NETWORK_ID) {
+                        sendMessage(CMD_START_CONNECT, mConnectingNetworkId, 0,
+                                mConnectingBssid);
+                        mConnectingNetworkId = WifiConfiguration.INVALID_NETWORK_ID;
+                    }
                     break;
                 case CMD_START_RSSI_MONITORING_OFFLOAD:
                 case CMD_RSSI_THRESHOLD_BREACH:
@@ -5907,6 +5963,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
 
             switch(message.what) {
                 case CMD_START_CONNECT:
+                case CMD_STOP_FW_ROAMING_AND_CONNECT:
                 case CMD_START_ROAM:
                     messageHandlingStatus = MESSAGE_HANDLING_STATUS_DISCARD;
                     break;
@@ -6635,6 +6692,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     deferMessage(message);
                     break;
                 case CMD_START_CONNECT:
+                case CMD_STOP_FW_ROAMING_AND_CONNECT:
                 case CMD_START_ROAM:
                     messageHandlingStatus = MESSAGE_HANDLING_STATUS_DISCARD;
                     return HANDLED;
@@ -6848,7 +6906,11 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     public void startConnectToNetwork(int networkId, String bssid) {
         synchronized (mWifiReqCountLock) {
             if (hasConnectionRequests()) {
-                sendMessage(CMD_START_CONNECT, networkId, 0, bssid);
+                if (isRoamingControlSupported()) {
+                    sendMessage(CMD_STOP_FW_ROAMING_AND_CONNECT, networkId, 0, bssid);
+                } else {
+                    sendMessage(CMD_START_CONNECT, networkId, 0, bssid);
+                }
             }
         }
     }
