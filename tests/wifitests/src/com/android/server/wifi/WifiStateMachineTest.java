@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.content.res.Resources;
+import android.hardware.wifi.V1_0.WifiStatusCode;
 import android.net.ConnectivityManager;
 import android.net.DhcpResults;
 import android.net.LinkProperties;
@@ -364,6 +365,7 @@ public class WifiStateMachineTest {
 
         when(mWifiNative.getInterfaceName()).thenReturn("mockWlan");
         when(mWifiSupplicantControl.getFrameworkNetworkId(anyInt())).thenReturn(0);
+        when(mWifiSupplicantControl.connectToNetwork(anyObject(), anyBoolean())).thenReturn(true);
 
 
         FrameworkFacade factory = getFrameworkFacade();
@@ -616,6 +618,7 @@ public class WifiStateMachineTest {
                 .thenReturn(new NetworkUpdateResult(0));
         when(mWifiConfigManager.getSavedNetworks()).thenReturn(Arrays.asList(config));
         when(mWifiConfigManager.getConfiguredNetwork(0)).thenReturn(config);
+        when(mWifiConfigManager.getConfiguredNetworkWithPassword(0)).thenReturn(config);
 
         mLooper.startAutoDispatch();
         mWsm.syncAddOrUpdateNetwork(mWsmAsyncChannel, config);
@@ -973,5 +976,49 @@ public class WifiStateMachineTest {
                 testGetSupportedFeaturesCase(featureInfra | featureD2dRtt | featureD2apRtt, false));
         assertEquals(featureInfra,
                 testGetSupportedFeaturesCase(featureInfra | featureD2dRtt | featureD2apRtt, true));
+    }
+
+    @Test
+    public void stopFwRoamingSuccessThenConnect() throws Exception {
+        // Stop firmware roaming always returns SUCCESS.
+        when(mWifiNative.enableFirmwareRoaming(anyInt())).thenReturn(WifiStatusCode.SUCCESS);
+
+        // Drive WSM to ConnectedState.
+        connect();
+
+        when(mWifiNative.getSupportedFeatureSet()).thenReturn(WifiManager
+                .WIFI_FEATURE_CONTROL_ROAMING);
+        mWsm.sendMessage(WifiStateMachine.CMD_STOP_FW_ROAMING_AND_CONNECT, 0, 0, "any");
+        mLooper.dispatchAll();
+
+        // CMD_START_CONNECT should immediately follow CMD_STOP_FW_ROAMING_AND_CONNECT
+        // because firmware roaming is stopped.
+        mLooper.dispatchAll();
+
+        // Verify WSM is in DisconnectingState, which is a state before we connect to
+        // the new network.
+        assertEquals("DisconnectingState", getCurrentState().getName());
+    }
+
+    @Test
+    public void stopFwRoamingBusy() throws Exception {
+        // Stop firmware roaming always returns BUSY
+        when(mWifiNative.enableFirmwareRoaming(anyInt())).thenReturn(WifiStatusCode.ERROR_BUSY);
+
+        // Drive WSM to ConnectedState.
+        connect();
+
+        when(mWifiNative.getSupportedFeatureSet()).thenReturn(WifiManager
+                .WIFI_FEATURE_CONTROL_ROAMING);
+        mWsm.sendMessage(WifiStateMachine.CMD_STOP_FW_ROAMING_AND_CONNECT, 0, 0, "any");
+        mLooper.dispatchAll();
+
+        // CMD_START_CONNECT won't be issued after CMD_STOP_FW_ROAMING_AND_CONNECT
+        // because firmware roaming is on-going.
+        when(mWifiNative.enableFirmwareRoaming(anyInt())).thenReturn(8);
+        mLooper.dispatchAll();
+
+        // Verify WSM stays in ConnectedState.
+        assertEquals("ConnectedState", getCurrentState().getName());
     }
 }
