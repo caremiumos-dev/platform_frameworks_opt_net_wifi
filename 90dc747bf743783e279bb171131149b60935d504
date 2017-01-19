@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "082efe90_9efa1c97",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-19T07:42:06Z",
+      "side": 1,
+      "message": "is this only called by our running handler thread?",
+      "range": {
+        "startLine": 66,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 37
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_fe45a006",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-19T07:42:06Z",
+      "side": 1,
+      "message": "if you got two calls back to back (not sure how, but i wouldn\u0027t be willing to say it couldn\u0027t happen) that you have a connection started and you already have one running, would you want to clear the trace you already had going?\n\ni could see where this could clear data you need though...  and you might want the trace to continue if you didn\u0027t get a failed/success since they are overlapping anyway.   just a thought.",
+      "range": {
+        "startLine": 68,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 32
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_1e206c69",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-19T07:42:06Z",
+      "side": 1,
+      "message": "since the connection is already done (failed), should you stop tracing first?  (or does that clear the data?  I was just thinking you wouldn\u0027t want to gather more data than you need).",
+      "range": {
+        "startLine": 75,
+        "startChar": 16,
+        "endLine": 76,
+        "endChar": 33
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_beedd8d0",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-19T07:42:06Z",
+      "side": 1,
+      "message": "i am a little confused by the readTrace() calls.  When we have a connection failure, we move the trace over to mLastMileLogForLastFailure - which i think also clears the trace buffer.\n\nThen if we call dump(), we will write out the mLastMileLogForLastFailure and clear out the trace buffer (but that is already empty - or has some stuff from the time between the write and the disable tracing.  This seems odd if we could get a dump call while we are still tracing - the current trace will be logged, but then cleared and then wont we have some odd half-connection attempt logs in the trace buffer?\n\nOn the success side - say we have three successes in a row, then do we keep appending to the buffer?  it seems like the buffer should be cleared when we enable tracing.\n\ni am sure I am making this too hard - so maybe I am just confused. :)",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 62
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_5eab9478",
+        "filename": "tests/wifitests/src/com/android/server/wifi/LastMileLoggerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-19T07:42:06Z",
+      "side": 1,
+      "message": "I think what you have here looks good but we might need some other cases to clearly define what happens if we get a dump during a connection trace or if we get multiple successes in a row (or some of the questions I had in the other file.)",
+      "range": {
+        "startLine": 47,
+        "startChar": 13,
+        "endLine": 47,
+        "endChar": 31
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_be9b9860",
+        "filename": "tests/wifitests/src/com/android/server/wifi/LastMileLoggerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-19T07:42:06Z",
+      "side": 1,
+      "message": "maybe add a similar test for two dumps called in a row?  (with and without a failure trace)",
+      "range": {
+        "startLine": 167,
+        "startChar": 16,
+        "endLine": 167,
+        "endChar": 66
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
