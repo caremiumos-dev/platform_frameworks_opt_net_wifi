@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "082efe90_3e6d68ab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-19T07:11:10Z",
+      "side": 1,
+      "message": "can you add the new name too (in case someone wants to search in git log)?",
+      "range": {
+        "startLine": 9,
+        "startChar": 7,
+        "endLine": 9,
+        "endChar": 32
+      },
+      "revId": "e67b9d617dd3ce7e00751961546f6a3be341e42b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
