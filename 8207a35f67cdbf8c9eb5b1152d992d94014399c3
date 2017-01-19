@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "082efe90_b9c7321c",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3336,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-19T07:55:29Z",
+      "side": 1,
+      "message": "it looks like this is called in a few places that might be a little odd for the dump trace part...  one example is the IP_CONFIGURATION_LOST message.  It looks like it might be called not just when we are attempting to connect or update something connectivity related.",
+      "range": {
+        "startLine": 3336,
+        "startChar": 17,
+        "endLine": 3336,
+        "endChar": 43
+      },
+      "revId": "8207a35f67cdbf8c9eb5b1152d992d94014399c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_99eb5682",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3336,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-19T07:55:29Z",
+      "side": 1,
+      "message": "separately, I wonder if you want to add something on the exit from connect mode - what happens if we have to leave the connect mode state while we are connecting and we don\u0027t explicitly have a failure or success?",
+      "range": {
+        "startLine": 3336,
+        "startChar": 17,
+        "endLine": 3336,
+        "endChar": 23
+      },
+      "revId": "8207a35f67cdbf8c9eb5b1152d992d94014399c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
