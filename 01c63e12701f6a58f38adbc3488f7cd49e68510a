@@ -33,6 +33,24 @@
       "revId": "01c63e12701f6a58f38adbc3488f7cd49e68510a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_29f9aa55",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3693,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-19T23:17:23Z",
+      "side": 1,
+      "message": "Agree with #1. If the handler of the message is checking it anyway, no need to check again here.",
+      "parentUuid": "23fa05cb_470a3048",
+      "revId": "01c63e12701f6a58f38adbc3488f7cd49e68510a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
