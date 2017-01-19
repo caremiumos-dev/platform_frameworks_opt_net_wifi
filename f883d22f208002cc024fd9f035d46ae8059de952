@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "082efe90_f76cab1e",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2017-01-19T00:52:22Z",
+      "side": 1,
+      "message": "nit: NetworkScoreManager.class to avoid the cast",
+      "range": {
+        "startLine": 126,
+        "startChar": 42,
+        "endLine": 126,
+        "endChar": 71
+      },
+      "revId": "f883d22f208002cc024fd9f035d46ae8059de952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
