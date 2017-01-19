@@ -238,6 +238,8 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             new StateMachineDeathRecipient(this, CMD_CLIENT_INTERFACE_BINDER_DEATH);
     private boolean mIpReachabilityDisconnectEnabled = true;
     private int mSupportedFeatureSet = 0;
+    private int mMaxNumBlacklistBssid = -1;
+    private int mMaxNumWhitelistSsid = -1;
 
     @Override
     public void onRssiThresholdBreached(byte curRssi) {
@@ -687,6 +689,9 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
 
     /* used to indicate that the foreground user was switched */
     static final int CMD_USER_STOP                                      = BASE + 207;
+
+    /* configure firmware roaming parameters (e.g. BSSID blacklist, SSID whitelist */
+    static final int CMD_CONFIGURE_FW_ROAMING                           = BASE + 208;
 
     /* Signals that IClientInterface instance underpinning our state is dead. */
     private static final int CMD_CLIENT_INTERFACE_BINDER_DEATH          = BASE + 250;
@@ -3754,6 +3759,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                 case CMD_DISCONNECTING_WATCHDOG_TIMER:
                 case CMD_ROAM_WATCHDOG_TIMER:
                 case CMD_DISABLE_EPHEMERAL_NETWORK:
+                case CMD_CONFIGURE_FW_ROAMING:
                     messageHandlingStatus = MESSAGE_HANDLING_STATUS_DISCARD;
                     break;
                 case CMD_SET_SUSPEND_OPT_ENABLED:
@@ -3947,6 +3953,19 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     mSupportedFeatureSet = mWifiNative.getSupportedFeatureSet();
                     Log.d(TAG, "HAL supported feature set: "
                             + Integer.toHexString(mSupportedFeatureSet));
+                    if (isRoamingControlSupported()) {
+                        WifiNative.RoamingCapabilities roamingCap =
+                                new WifiNative.RoamingCapabilities();
+                        if (mWifiNative.getRoamingCapabilities(roamingCap)) {
+                            mMaxNumBlacklistBssid = roamingCap.maxBlacklistSize;
+                            mMaxNumWhitelistSsid = roamingCap.maxWhitelistSize;
+                            logd("Firmware roaming capabilities: max num blacklist bssid="
+                                    + mMaxNumBlacklistBssid + " max num whitelist ssid="
+                                    + mMaxNumWhitelistSsid);
+                        } else {
+                            loge("Failed to get firmware roaming capabilities");
+                        }
+                    }
 
                     try {
                         // A runtime crash or shutting down AP mode can leave
@@ -4703,6 +4722,8 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             // initialize network state
             setNetworkDetailedState(DetailedState.DISCONNECTED);
 
+            // Reset firmware roaming configruation if supported.
+            if (isRoamingControlSupported()) mWifiNative.resetRoamingConfiguration();
 
             // Inform WifiConnectivityManager that Wifi is enabled
             mWifiConnectivityManager.setWifiEnabled(true);
@@ -5014,6 +5035,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     reportConnectionAttemptStart(config, mTargetRoamBSSID,
                             WifiMetricsProto.ConnectionEvent.ROAM_UNRELATED);
                     boolean shouldDisconnect = (getCurrentState() != mDisconnectedState);
+
                     if (mWifiSupplicantControl.connectToNetwork(config, shouldDisconnect)) {
                         lastConnectAttemptTimestamp = mClock.getWallClockMillis();
                         targetWificonfiguration = config;
@@ -5033,6 +5055,12 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                         replyToMessage(message, WifiManager.CONNECT_NETWORK_FAILED,
                                 WifiManager.ERROR);
                         break;
+                    }
+                    break;
+                case CMD_CONFIGURE_FW_ROAMING:
+                    WifiNative.RoamingConfig roamConfig = (WifiNative.RoamingConfig) message.obj;
+                    if (!mWifiNative.configureRoaming(roamConfig)) {
+                        loge("CMD_CONFIGURE_FW_ROAMING: failed.");
                     }
                     break;
                 case CMD_REMOVE_APP_CONFIGURATIONS:
@@ -6900,5 +6928,45 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
      */
     public boolean isRoamingControlSupported() {
         return (mSupportedFeatureSet & WifiManager.WIFI_FEATURE_CONTROL_ROAMING) > 0;
+    }
+
+    /**
+     * Set firmware roaming configurations.
+     *
+     * @param blacklistBssids BSSIDs to be blacklisted
+     * @param whitelistSsids  SSIDs to be whitelisted
+     *
+     */
+    public void configureFirmwareRoaming(ArrayList<String> blacklistBssids,
+                ArrayList<String> whitelistSsids) {
+        if (!isRoamingControlSupported()) return;
+
+        WifiNative.RoamingConfig roamConfig = new WifiNative.RoamingConfig();
+
+        if (mMaxNumBlacklistBssid > 0) {
+            int blacklistSize = blacklistBssids.size();
+            if (blacklistSize > mMaxNumBlacklistBssid) {
+                for (int i = blacklistSize - 1; i > mMaxNumBlacklistBssid; i--) {
+                    blacklistBssids.remove(i);
+                }
+                logd("Trim down BSSID blacklist size from " + blacklistSize + " to "
+                        + mMaxNumBlacklistBssid);
+            }
+            roamConfig.blacklistBssids = blacklistBssids;
+        }
+
+        if (mMaxNumWhitelistSsid > 0) {
+            int whitelistSize = whitelistSsids.size();
+            if (whitelistSize > mMaxNumWhitelistSsid) {
+                for (int i = whitelistSize - 1; i > mMaxNumWhitelistSsid; i--) {
+                    whitelistSsids.remove(i);
+                }
+                logd("Trim down SSID whitelist size from " + whitelistSize + " to "
+                        + mMaxNumWhitelistSsid);
+            }
+            roamConfig.whitelistSsids = whitelistSsids;
+        }
+
+        sendMessage(CMD_CONFIGURE_FW_ROAMING, 0, 0, roamConfig);
     }
 }

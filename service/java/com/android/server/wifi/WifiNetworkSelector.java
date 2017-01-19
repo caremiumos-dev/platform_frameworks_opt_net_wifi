@@ -57,8 +57,9 @@ public class WifiNetworkSelector {
     @VisibleForTesting
     public static final int REASON_CODE_AP_UNABLE_TO_HANDLE_NEW_STA = 17;
 
-    private WifiConfigManager mWifiConfigManager;
-    private Clock mClock;
+    private final WifiStateMachine mWifiStateMachine;
+    private final WifiConfigManager mWifiConfigManager;
+    private final Clock mClock;
     private static class BssidBlacklistStatus {
         // Number of times this BSSID has been rejected for association.
         public int counter;
@@ -410,8 +411,9 @@ public class WifiNetworkSelector {
      * @param reasonCode enable/disable reason code
      */
     public boolean enableBssidForNetworkSelection(String bssid, boolean enable, int reasonCode) {
+        boolean bssidBlacklistUpdated = false;
         if (enable) {
-            return (mBssidBlacklist.remove(bssid) != null);
+            bssidBlacklistUpdated =  mBssidBlacklist.remove(bssid) != null;
         } else {
             if (bssid != null) {
                 BssidBlacklistStatus status = mBssidBlacklist.get(bssid);
@@ -427,12 +429,16 @@ public class WifiNetworkSelector {
                             || reasonCode == REASON_CODE_AP_UNABLE_TO_HANDLE_NEW_STA) {
                         status.isBlacklisted = true;
                         status.blacklistedTimeStamp = mClock.getElapsedSinceBootMillis();
-                        return true;
+                        bssidBlacklistUpdated = true;
                     }
                 }
             }
         }
-        return false;
+
+        if (bssidBlacklistUpdated) {
+            updateFirmwareRoamingConfiguration();
+        }
+        return bssidBlacklistUpdated;
     }
 
     /**
@@ -442,6 +448,8 @@ public class WifiNetworkSelector {
      * has been blacklisted for BSSID_BLACKLIST_EXPIRE_TIME_MS, then re-enable it.
      */
     private void updateBssidBlacklist() {
+        boolean updated = false;
+
         Iterator<BssidBlacklistStatus> iter = mBssidBlacklist.values().iterator();
         while (iter.hasNext()) {
             BssidBlacklistStatus status = iter.next();
@@ -449,8 +457,13 @@ public class WifiNetworkSelector {
                 if (mClock.getElapsedSinceBootMillis() - status.blacklistedTimeStamp
                             >= BSSID_BLACKLIST_EXPIRE_TIME_MS) {
                     iter.remove();
+                    updated = true;
                 }
             }
+        }
+
+        if (updated) {
+            updateFirmwareRoamingConfiguration();
         }
     }
 
@@ -464,7 +477,28 @@ public class WifiNetworkSelector {
     }
 
     /**
-     *
+     * Update firmware the new roaming configurations.
+     */
+    private void updateFirmwareRoamingConfiguration() {
+        // Compile the BSSID blacklist.
+        ArrayList<String> blacklistBssids = new ArrayList<String>();
+        for (String bssid : mBssidBlacklist.keySet()) {
+            BssidBlacklistStatus status = mBssidBlacklist.get(bssid);
+            if (status != null && status.isBlacklisted) {
+                blacklistBssids.add(bssid);
+            }
+        }
+
+        // TODO: Compile the SSID whitelist. Layer 3 is not ready
+        // to have such a list yet.
+        ArrayList<String> whitelistSsids = new ArrayList<String>();
+
+        // Send this roaming configuration to the firmware.
+        mWifiStateMachine.configureFirmwareRoaming(blacklistBssids, whitelistSsids);
+    }
+
+    /**
+     * Select the best network from the available ones.
      */
     @Nullable
     public WifiConfiguration selectNetwork(List<ScanDetail> scanDetails, WifiInfo wifiInfo,
@@ -570,7 +604,9 @@ public class WifiNetworkSelector {
         return false;
     }
 
-    WifiNetworkSelector(Context context, WifiConfigManager configManager, Clock clock) {
+    WifiNetworkSelector(Context context, WifiStateMachine stateMachine,
+            WifiConfigManager configManager, Clock clock) {
+        mWifiStateMachine = stateMachine;
         mWifiConfigManager = configManager;
         mClock = clock;
 
