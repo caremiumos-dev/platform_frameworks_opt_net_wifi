@@ -1060,7 +1060,7 @@ public class WifiConnectivityManagerTest {
      * WifiStateMachine.startRoamToNetwork().
      */
     @Test
-    public void noFrameworkRoamingIfFirmwareControlRoaming() {
+    public void noFrameworkRoamingIfFirmwareControlsRoaming() {
         // Firmware controls roaming
         when(mWifiStateMachine.isRoamingControlSupported()).thenReturn(true);
 
