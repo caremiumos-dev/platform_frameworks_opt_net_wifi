@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "082efe90_3fac38dc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-19T23:51:53Z",
+      "side": 1,
+      "message": "I plan to add merged-in and run presubmit after it\u0027s merged into git_master.",
+      "parentUuid": "082efe90_06925d76",
+      "revId": "96e2d6df08b1a8e33c83d9419de0d8db25436ef7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3662dd0_69ffd1b3",
         "filename": "tests/wifitests/src/com/android/server/wifi/scanner/WifiScanningServiceTest.java",
         "patchSetId": 10
