@@ -22,6 +22,24 @@
       "revId": "f883d22f208002cc024fd9f035d46ae8059de952",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_f7d94b63",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1060801
+      },
+      "writtenOn": "2017-01-19T01:00:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "082efe90_f76cab1e",
+      "revId": "f883d22f208002cc024fd9f035d46ae8059de952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
