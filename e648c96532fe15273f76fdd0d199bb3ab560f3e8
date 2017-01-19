@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "082efe90_06cdbdb2",
+        "filename": "service/java/com/android/server/wifi/wificond/ChannelSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-19T22:16:58Z",
+      "side": 1,
+      "message": "Agreed that the choice of how to handle this case isn\u0027t obvious. Logging the fact that we had trailing garbage sounds reasonable. Thanks.",
+      "parentUuid": "43753906_6ed5a398",
+      "revId": "e648c96532fe15273f76fdd0d199bb3ab560f3e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97c76e81_433b01dd",
         "filename": "service/java/com/android/server/wifi/wificond/HiddenNetwork.java",
         "patchSetId": 4
