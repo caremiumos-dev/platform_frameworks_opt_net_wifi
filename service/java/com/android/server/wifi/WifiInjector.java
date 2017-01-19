@@ -181,8 +181,12 @@ public class WifiInjector {
         mWifiConfigManager = new WifiConfigManager(mContext, mFrameworkFacade, mClock,
                 UserManager.get(mContext), TelephonyManager.from(mContext),
                 mWifiKeyStore, mWifiConfigStore, mWifiConfigStoreLegacy, mWifiPermissionsWrapper);
+        mWifiStateMachine = new WifiStateMachine(mContext, mFrameworkFacade,
+                wifiStateMachineLooper, UserManager.get(mContext),
+                this, mBackupManagerProxy, mCountryCode, mWifiNative);
         mWifiNetworkScoreCache = new WifiNetworkScoreCache(mContext);
-        mWifiNetworkSelector = new WifiNetworkSelector(mContext, mWifiConfigManager, mClock);
+        mWifiNetworkSelector = new WifiNetworkSelector(mContext, mWifiStateMachine,
+                mWifiConfigManager, mClock);
         LocalLog localLog = mWifiNetworkSelector.getLocalLog();
         mSavedNetworkEvaluator = new SavedNetworkEvaluator(mContext,
                 mWifiConfigManager, mClock, localLog, wifiStateMachineLooper, mFrameworkFacade);
@@ -197,9 +201,6 @@ public class WifiInjector {
                 mSimAccessor, new PasspointObjectFactory());
         mPasspointNetworkEvaluator = new PasspointNetworkEvaluator(
                 mPasspointManager, mWifiConfigManager, localLog);
-        mWifiStateMachine = new WifiStateMachine(mContext, mFrameworkFacade,
-                wifiStateMachineLooper, UserManager.get(mContext),
-                this, mBackupManagerProxy, mCountryCode, mWifiNative);
         mCertManager = new WifiCertManager(mContext);
         mLockManager = new WifiLockManager(mContext, BatteryStatsService.getService());
         mWifiController = new WifiController(mContext, mWifiStateMachine, mSettingsStore,
