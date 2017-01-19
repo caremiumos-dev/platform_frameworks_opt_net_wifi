@@ -22,6 +22,30 @@
       "revId": "266288fd36cfcdcae0a576faa4f571542ce3a455",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_a007f691",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3019,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-01-19T16:33:33Z",
+      "side": 1,
+      "message": "No, we only need the thread-local tag defined when the sockets are first created.  Any sockets created in this window will keep working and be accurately tracked after this LoC until they\u0027re closed.",
+      "parentUuid": "903a1454_fecd18c4",
+      "range": {
+        "startLine": 3019,
+        "startChar": 41,
+        "endLine": 3019,
+        "endChar": 63
+      },
+      "revId": "266288fd36cfcdcae0a576faa4f571542ce3a455",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
