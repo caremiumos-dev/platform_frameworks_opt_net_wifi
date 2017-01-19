@@ -52,10 +52,12 @@ public class WifiNetworkSelectorTest {
     public void setUp() throws Exception {
         mResource = getResource();
         mContext = getContext();
+        mWifiStateMachine = getWifiStateMachine();
         mWifiConfigManager = getWifiConfigManager();
         mWifiInfo = getWifiInfo();
 
-        mWifiNetworkSelector = new WifiNetworkSelector(mContext, mWifiConfigManager, mClock);
+        mWifiNetworkSelector = new WifiNetworkSelector(mContext, mWifiStateMachine,
+                mWifiConfigManager, mClock);
         mWifiNetworkSelector.registerNetworkEvaluator(mDummyEvaluator, 1);
         when(mClock.getElapsedSinceBootMillis()).thenReturn(SystemClock.elapsedRealtime());
 
@@ -112,6 +114,7 @@ public class WifiNetworkSelectorTest {
 
     private WifiNetworkSelector mWifiNetworkSelector = null;
     private DummyNetworkEvaluator mDummyEvaluator = new DummyNetworkEvaluator();
+    private WifiStateMachine mWifiStateMachine = null;
     private WifiConfigManager mWifiConfigManager = null;
     private Context mContext;
     private Resources mResource;
@@ -166,6 +169,11 @@ public class WifiNetworkSelectorTest {
         when(wifiInfo.getNetworkId()).thenReturn(WifiConfiguration.INVALID_NETWORK_ID);
         when(wifiInfo.getBSSID()).thenReturn(null);
         return wifiInfo;
+    }
+
+    WifiStateMachine getWifiStateMachine() {
+        WifiStateMachine wifiStateMachine = mock(WifiStateMachine.class);
+        return wifiStateMachine;
     }
 
     WifiConfigManager getWifiConfigManager() {
@@ -600,5 +608,27 @@ public class WifiNetworkSelectorTest {
 
         // No network recommended by WNS as test1 is blacklisted.
         assertEquals("Expect null configuration", null, candidate);
+    }
+
+    /**
+     * Wifi network selector updates firmware with the new BSSID blacklist.
+     *
+     * Expected behavior: Wifi Network Selector invokes
+     * WifiStateMachine.configureFirmwareRoaming.
+     */
+    @Test
+    public void updateRoamingConfiguration() {
+        String[] ssids = {"\"test1\""};
+        String[] bssids = {"6c:f3:7f:ae:99:f3"};
+        int[] freqs = {2437};
+        String[] caps = {"[WPA2-EAP-CCMP][ESS]"};
+        int[] levels = {mThresholdMinimumRssi2G + 20};
+        int[] securities = {SECURITY_PSK};
+
+        // blacklist test1 with reason code indicating it is unable to handle new stations.
+        mWifiNetworkSelector.enableBssidForNetworkSelection(bssids[0], false,
+                WifiNetworkSelector.REASON_CODE_AP_UNABLE_TO_HANDLE_NEW_STA);
+
+        verify(mWifiStateMachine).configureFirmwareRoaming(anyObject(), anyObject());
     }
 }
