@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "082efe90_fd6466fc",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2017-01-20T22:05:09Z",
+      "side": 1,
+      "message": "is this possible? looks like all of the constructors for ScanDetail either create a ScanResult or require a nonnull one",
+      "range": {
+        "startLine": 133,
+        "startChar": 16,
+        "endLine": 133,
+        "endChar": 34
+      },
+      "revId": "55066b337d76f6e8eb1b8b7aacbcd4b2b9024b9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
