@@ -93,6 +93,54 @@
       "revId": "8207a35f67cdbf8c9eb5b1152d992d94014399c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_6b5442be",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3336,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-20T02:22:27Z",
+      "side": 1,
+      "message": "for this one I was thinking that you would have the stop trace call happen, but not get the start trace - like you said, we are probably declaring success too early.  (not sure if that is possible, but since we aren\u0027t the best about knowing when we do stuff...)",
+      "parentUuid": "082efe90_6bd682a8",
+      "range": {
+        "startLine": 3336,
+        "startChar": 17,
+        "endLine": 3336,
+        "endChar": 43
+      },
+      "revId": "8207a35f67cdbf8c9eb5b1152d992d94014399c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_cbe336ea",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3336,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-20T02:22:27Z",
+      "side": 1,
+      "message": "On this one I was more concerned in the other direction, you could get a start trace and then not have a stop trace.  maybe wifi is disabled while supplicant starts to connect (wifi would be in the disconnected state)\n\nthe complication of not having a connectING state is what I am worried about.",
+      "parentUuid": "082efe90_ab4fcaa0",
+      "range": {
+        "startLine": 3336,
+        "startChar": 17,
+        "endLine": 3336,
+        "endChar": 23
+      },
+      "revId": "8207a35f67cdbf8c9eb5b1152d992d94014399c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
