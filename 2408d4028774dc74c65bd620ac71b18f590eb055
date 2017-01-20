@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "082efe90_d1cd1b6a",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2288,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-01-20T20:24:57Z",
+      "side": 1,
+      "message": "Actually, this is still true. the user CE directory will still be unlocked (even if the files are not there).",
+      "parentUuid": "082efe90_aedd8e23",
+      "range": {
+        "startLine": 2287,
+        "startChar": 6,
+        "endLine": 2288,
+        "endChar": 70
+      },
+      "revId": "2408d4028774dc74c65bd620ac71b18f590eb055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_0e9ca257",
         "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-01-20T19:51:31Z",
       "side": 1,
       "message": "is this actually why it is returning true?  isn\u0027t it returning true because there is nothing to read in?  can\u0027t this happen if you do need migration but supplicant hasn\u0027t been started yet?",
+      "range": {
+        "startLine": 2522,
+        "startChar": 30,
+        "endLine": 2522,
+        "endChar": 60
+      },
+      "revId": "2408d4028774dc74c65bd620ac71b18f590eb055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_51ac8bdc",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2522,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-01-20T20:24:57Z",
+      "side": 1,
+      "message": "Amended the doc string. It will happen only if the file is missing (fresh install/pending migration).",
+      "parentUuid": "082efe90_0e9ca257",
       "range": {
         "startLine": 2522,
         "startChar": 30,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "082efe90_1115e3f5",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3740,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-01-20T20:24:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "082efe90_d16bdb57",
+      "range": {
+        "startLine": 3740,
+        "startChar": 20,
+        "endLine": 3740,
+        "endChar": 55
+      },
+      "revId": "2408d4028774dc74c65bd620ac71b18f590eb055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_717ae725",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-01-20T19:51:31Z",
       "side": 1,
       "message": "also - should we check the return value here and log if interesting?",
+      "range": {
+        "startLine": 4097,
+        "startChar": 39,
+        "endLine": 4097,
+        "endChar": 61
+      },
+      "revId": "2408d4028774dc74c65bd620ac71b18f590eb055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_f1e377e9",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4097,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-01-20T20:24:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "082efe90_717ae725",
       "range": {
         "startLine": 4097,
         "startChar": 39,
