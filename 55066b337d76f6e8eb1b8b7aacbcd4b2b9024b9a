@@ -43,6 +43,24 @@
     },
     {
       "key": {
+        "uuid": "082efe90_8113c081",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-20T22:50:13Z",
+      "side": 1,
+      "message": "The comment is more related to line 164. Let me add more details there :-)",
+      "parentUuid": "082efe90_a17a3cd0",
+      "revId": "55066b337d76f6e8eb1b8b7aacbcd4b2b9024b9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_fd6466fc",
         "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
         "patchSetId": 1
@@ -78,6 +96,29 @@
       "side": 1,
       "message": "I can\u0027t quite tell and I\u0027m just being paranoid because getSavedNetworkForScanDetail() in WifiConfigManager doesn\u0027t a null check too.",
       "parentUuid": "082efe90_fd6466fc",
+      "revId": "55066b337d76f6e8eb1b8b7aacbcd4b2b9024b9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_814aa061",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-20T22:50:13Z",
+      "side": 1,
+      "message": "Can you please elaborate a bit on how this works? A couple of questions here:\n\n1) Ephemeral networks don\u0027t have a WifiConfiguration to start with. So they don\u0027t get added to availableConfiguredNetworks at line 149. Is that what we want?\n\n2) How does connectableNetworks get assigned from this availableConfigsArray?",
+      "range": {
+        "startLine": 164,
+        "startChar": 17,
+        "endLine": 164,
+        "endChar": 61
+      },
       "revId": "55066b337d76f6e8eb1b8b7aacbcd4b2b9024b9a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
