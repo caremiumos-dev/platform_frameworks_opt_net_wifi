@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "082efe90_d5dd15f5",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-20T01:49:42Z",
+      "side": 1,
+      "message": "I don\u0027t know for sure which threads might call this; I can take a closer look if you\u0027d like.\n\nI\u0027m guessing your underlying concern, though, is that LastMileLogger isn\u0027t thread-safe. And that is totally justified, as LML is not thread-safe.\n\nThe idea is that LastMileLogger will only be used by WifiDiagnostics. And WifiDiagnostics _is_ thread-safe. (Or, so I believe. :-))\n\nWould it be useful for me to add this info to the notes in the commit message?",
+      "parentUuid": "082efe90_9efa1c97",
+      "range": {
+        "startLine": 66,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 37
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_fe45a006",
         "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-01-19T07:42:06Z",
       "side": 1,
       "message": "if you got two calls back to back (not sure how, but i wouldn\u0027t be willing to say it couldn\u0027t happen) that you have a connection started and you already have one running, would you want to clear the trace you already had going?\n\ni could see where this could clear data you need though...  and you might want the trace to continue if you didn\u0027t get a failed/success since they are overlapping anyway.   just a thought.",
+      "range": {
+        "startLine": 68,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 32
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_7500a11f",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-20T01:49:42Z",
+      "side": 1,
+      "message": "Yeah, good points.\n\nEchoing what you said, I think there are a couple things to consider:\ni) if we don\u0027t clear the buffer, does the old data interfere with the new data? (premise: the newest connection attempt is the most important)\nii) if we _do_ clear the buffer, are there cases where we\u0027d miss important data?\n\nOn i), it\u0027s important to note that, when the trace buffer fills up, the kernel drops the oldest events. So we don\u0027t need to worry that skipping the clear will cause the new connection to go untraced.\n\nOn ii), I wouldn\u0027t be too surprised if there are cases where we spuriously believe that a new connection has started. Of course, that\u0027s not a strong argument for retaining the buffer, since I don\u0027t have a concrete example.\n\nOn balance, I think it makes sense to keep the buffer. (Keeping the buffer helps with the possible case ii), and doesn\u0027t make case i) bad.)",
+      "parentUuid": "082efe90_fe45a006",
       "range": {
         "startLine": 68,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "082efe90_d587553a",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-20T01:49:42Z",
+      "side": 1,
+      "message": "Makes sense. Done.",
+      "parentUuid": "082efe90_1e206c69",
+      "range": {
+        "startLine": 75,
+        "startChar": 16,
+        "endLine": 76,
+        "endChar": 33
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_beedd8d0",
         "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "082efe90_f0649f25",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-20T01:49:42Z",
+      "side": 1,
+      "message": "\u003e When we have a connection failure, we move the trace over to mLastMileLogForLastFailure - which i think also clears the trace buffer.\n\nYep.\n\n\u003e if we could get a dump call while we are still tracing - the current trace will be logged, but then cleared and then wont we have some odd half-connection attempt logs in the trace buffer?\n\nYour understanding is correct. On a call to dump(), we output the failure that we stashed away, as well as the current contents of the kernel\u0027s trace buffer. The kernel\u0027s trace buffer will contain either a) the latest successful connection attempt following the failure, or b) an in-progress connection attempt.\n\nI think both of these can be useful. In case a), we get a success case to compare against the failure case. That could help us understand the nature of the failure. In case b), we get a way to capture traces in situations where out connection-end-reporting fails. (We capture a trace of the connection that was in-progress at the time that the user triggered the bug report.)\n\n\u003e On the success side - say we have three successes in a row, then do we keep appending to the buffer?  it seems like the buffer should be cleared when we enable tracing.\n\nThe kernel will append events to the trace buffer, until the buffer fills. When that happens, the oldest events will be discarded.\n\nThis does mean that we have to take some care, when looking at traces, to be sure that we\u0027re not looking at old and irrelevant data. But, on the up side, we\u0027re less sensitive to the connection start/end reporting logic being exactly right.\n\nDoes sound reasonable? If yes, should I elaborate on this in the docstring?",
+      "parentUuid": "082efe90_beedd8d0",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 62
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_5eab9478",
         "filename": "tests/wifitests/src/com/android/server/wifi/LastMileLoggerTest.java",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-01-19T07:42:06Z",
       "side": 1,
       "message": "I think what you have here looks good but we might need some other cases to clearly define what happens if we get a dump during a connection trace or if we get multiple successes in a row (or some of the questions I had in the other file.)",
+      "range": {
+        "startLine": 47,
+        "startChar": 13,
+        "endLine": 47,
+        "endChar": 31
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_cb669693",
+        "filename": "tests/wifitests/src/com/android/server/wifi/LastMileLoggerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-20T01:49:42Z",
+      "side": 1,
+      "message": "Based on the comment below (line 167), I\u0027ve added a couple of cases to test the way that dump on your comment below.\n\nFor the two situations you mention here, though, I think it\u0027s better not to over-commit about expected behavior:\n- For dump-while-pending, we have a case that shows that we\u0027ll get the pending data in the dump. But the fact that the residual data might show up in the next dump is not something I want to guarantee. Hence, I don\u0027t think we want to test this aspect of behavior.\n- For multiple-consecutive-successes: again, I consider this an implementation artifact, rather than a behavior that we guarantee to maintain.",
+      "parentUuid": "082efe90_5eab9478",
       "range": {
         "startLine": 47,
         "startChar": 13,
