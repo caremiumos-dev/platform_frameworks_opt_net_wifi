@@ -148,6 +148,8 @@ public class RecommendedNetworkEvaluator implements WifiNetworkSelector.NetworkE
         ScanResult[] scanResultArray = scanResults.toArray(new ScanResult[scanResults.size()]);
         RecommendationRequest request = new RecommendationRequest.Builder()
                 .setScanResults(scanResultArray)
+                .setLastSelectedNetwork(mWifiConfigManager.getLastSelectedNetwork(),
+                    mWifiConfigManager.getLastSelectedTimeStamp())
                 // TODO: pass in currently recommended network
                 .build();
         RecommendationResult result = mNetworkScoreManager.requestRecommendation(request);
