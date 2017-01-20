@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "082efe90_3278ea8f",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-20T03:32:23Z",
+      "side": 1,
+      "message": "i can believe that WifiDiagnostics should be thread safe - but just for fun, can you make sure (code search maybe?) that we don\u0027t have some nasty direct call to connect or something.   I think everything should be triggered through WSM\u0027s handler, but..   you never know.\n\nThere isn\u0027t a call to it from supplicant state tracker or a broadcast handler that gets a supplicant state update..  that is what i was mostly worried about.  We aren\u0027t the most consistent with dealing with stuff like that.",
+      "parentUuid": "082efe90_d5dd15f5",
+      "range": {
+        "startLine": 66,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 37
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_fe45a006",
         "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Yeah, good points.\n\nEchoing what you said, I think there are a couple things to consider:\ni) if we don\u0027t clear the buffer, does the old data interfere with the new data? (premise: the newest connection attempt is the most important)\nii) if we _do_ clear the buffer, are there cases where we\u0027d miss important data?\n\nOn i), it\u0027s important to note that, when the trace buffer fills up, the kernel drops the oldest events. So we don\u0027t need to worry that skipping the clear will cause the new connection to go untraced.\n\nOn ii), I wouldn\u0027t be too surprised if there are cases where we spuriously believe that a new connection has started. Of course, that\u0027s not a strong argument for retaining the buffer, since I don\u0027t have a concrete example.\n\nOn balance, I think it makes sense to keep the buffer. (Keeping the buffer helps with the possible case ii), and doesn\u0027t make case i) bad.)",
       "parentUuid": "082efe90_fe45a006",
+      "range": {
+        "startLine": 68,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 32
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_d2bc061c",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-20T03:32:23Z",
+      "side": 1,
+      "message": "I agree with that.  is there a way to tell in the trace where a connection starts?",
+      "parentUuid": "082efe90_7500a11f",
       "range": {
         "startLine": 68,
         "startChar": 12,
@@ -190,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "082efe90_32cd8ab3",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-20T03:32:23Z",
+      "side": 1,
+      "message": "I think those arguments make sense, but i don\u0027t think i would want to clear the trace on the dump if we are tracing.  maybe the user triggered a bug report while a connection was failing, and then tried to get another helpful bug report.  but the second would be missing half of the failure.",
+      "parentUuid": "082efe90_f0649f25",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 62
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_5eab9478",
         "filename": "tests/wifitests/src/com/android/server/wifi/LastMileLoggerTest.java",
         "patchSetId": 1
@@ -225,6 +297,30 @@
       "side": 1,
       "message": "Based on the comment below (line 167), I\u0027ve added a couple of cases to test the way that dump on your comment below.\n\nFor the two situations you mention here, though, I think it\u0027s better not to over-commit about expected behavior:\n- For dump-while-pending, we have a case that shows that we\u0027ll get the pending data in the dump. But the fact that the residual data might show up in the next dump is not something I want to guarantee. Hence, I don\u0027t think we want to test this aspect of behavior.\n- For multiple-consecutive-successes: again, I consider this an implementation artifact, rather than a behavior that we guarantee to maintain.",
       "parentUuid": "082efe90_5eab9478",
+      "range": {
+        "startLine": 47,
+        "startChar": 13,
+        "endLine": 47,
+        "endChar": 31
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_d20ac607",
+        "filename": "tests/wifitests/src/com/android/server/wifi/LastMileLoggerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-20T03:32:23Z",
+      "side": 1,
+      "message": "that makes sense.  this is also for debugging, not operation correctness\n\n\ncan we make a user\u0027s manual for this so people know what to expect and what not to expect?  making sure people know there could be half of a failed connection trace would be good.  otherwise you might get all kinds of red herrings about what happened.",
+      "parentUuid": "082efe90_cb669693",
       "range": {
         "startLine": 47,
         "startChar": 13,
