@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "082efe90_499aa94e",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-01-20T15:52:11Z",
+      "side": 1,
+      "message": "This might go away soon. See go/aog/325184.",
+      "range": {
+        "startLine": 43,
+        "startChar": 32,
+        "endLine": 43,
+        "endChar": 58
+      },
+      "revId": "08ed7c4360ceba70449af6530283222d73df0462",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_29de3df1",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-01-20T15:52:11Z",
+      "side": 1,
+      "message": "Do we need this here? If the wif HALi service is not up for some reason, this might cause errors. We should only wait for the service manager callback to invoke this method.",
+      "range": {
+        "startLine": 158,
+        "startChar": 8,
+        "endLine": 158,
+        "endChar": 28
+      },
+      "revId": "08ed7c4360ceba70449af6530283222d73df0462",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
