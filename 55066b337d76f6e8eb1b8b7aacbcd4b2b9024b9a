@@ -158,6 +158,24 @@
       "revId": "55066b337d76f6e8eb1b8b7aacbcd4b2b9024b9a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_a7e5ac8a",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1060801
+      },
+      "writtenOn": "2017-01-20T23:50:48Z",
+      "side": 1,
+      "message": "\u003e When we first time see a scan result which can be a potential ephemeral network, there is no WifiConfiguration for this network. The WifiConfiguration gets created only when this network gets picked by the evaluator as the recommended ephemeral network and the .ephemeral flag is set at that time. Later this WifiConfiguration gets deleted when we disconnect from the network.\n\u003e \n\u003e Yes, you are right. An ephemeral config can be returned while we are connecting to it. My question was, what happens to networks that are potential ephemeral networks but don\u0027t have a configuration? This can be networks that are not recommended because there are better ephemeral ones, or even the recommended one but configuration not created yet. \n\nIf there is no config then it\u0027s fine. The point is to add the list of connectable configs to the recommendation request so the recommender doesn\u0027t have to query the WifiManager for this information.\n\n\u003e \n\u003e For 2), I don\u0027t see where \u0027connectableNetworks\u0027 gets assigned by this evaluator. Maybe Amin can chime in? We can discuss this on another thread if that\u0027s what you guys prefer.\n\nconnectableNetworks is not suppose to be assigned or altered in any way as part of this change. I\u0027m adding a new array of configs to the recommendation request.",
+      "parentUuid": "082efe90_641902a7",
+      "revId": "55066b337d76f6e8eb1b8b7aacbcd4b2b9024b9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
