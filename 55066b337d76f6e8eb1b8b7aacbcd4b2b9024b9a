@@ -122,6 +122,24 @@
       "revId": "55066b337d76f6e8eb1b8b7aacbcd4b2b9024b9a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_21052cc9",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1060801
+      },
+      "writtenOn": "2017-01-20T23:02:57Z",
+      "side": 1,
+      "message": "\u003e Can you please elaborate a bit on how this works? A couple of questions here:\n\u003e \n\u003e 1) Ephemeral networks don\u0027t have a WifiConfiguration to start with. So they don\u0027t get added to availableConfiguredNetworks at line 149. Is that what we want?\n\nIf that\u0027s true then why does this code check the ephemeral bit when building its list?\nhttps://cs.corp.google.com/android/frameworks/opt/net/wifi/service/java/com/android/server/wifi/WifiConfigManager.java?rcl\u003dd2d34055c34e800980c53e27000bbb380ee87cbe\u0026l\u003d402\n\ngetInternalConfiguredNetworks() is the same collection that getSavedNetworkForScanDetailAndCache() iterates over and I believe that it can return an ephemeral config if one is connected.\n\n\u003e \n\u003e 2) How does connectableNetworks get assigned from this availableConfigsArray?\n\nIt doesn\u0027t (and shouldn\u0027t be). The connectableNetworks parameter is a completely separate.",
+      "parentUuid": "082efe90_814aa061",
+      "revId": "55066b337d76f6e8eb1b8b7aacbcd4b2b9024b9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
