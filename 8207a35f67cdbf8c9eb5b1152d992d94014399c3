@@ -45,6 +45,54 @@
       "revId": "8207a35f67cdbf8c9eb5b1152d992d94014399c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_6bd682a8",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3336,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-20T02:03:58Z",
+      "side": 1,
+      "message": "IP_CONFIGURATION_LOST might be an interesting case, actually. Consider, e.g., when we roam within a an ESS (i.e., same SSID, different BSSID):\n- After roaming completes at L2, we might ARP the IP gateway, to make sure that the new BSS has the same IP connectivity as the old one.\n- If we fail to get an ARP response, we might declare IP connectivity as broken. That could generate IP_CONFIGURATION_LOST.\n\nIn such a case, it would be worth knowing the problem was that the new AP didn\u0027t send us an ARP reply, or if the ARP reply was lost somewhere between the driver and userspace.\n\nTo be sure, this isn\u0027t a strong example, because it\u0027s contradicted by my comment at line 3340. (I suspect we\u0027ll declare the connection successful prematurely.)\n\nDespite the poor example, I think the underlying principle I\u0027m trying to follow here is to not be overly prescriptive. I think there are too many states (and state machines) for us to get the connection start/end logic exactly right.\n\nSo I\u0027d like to start with the simplest approach, and revise as needed.",
+      "parentUuid": "082efe90_b9c7321c",
+      "range": {
+        "startLine": 3336,
+        "startChar": 17,
+        "endLine": 3336,
+        "endChar": 43
+      },
+      "revId": "8207a35f67cdbf8c9eb5b1152d992d94014399c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_ab4fcaa0",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3336,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-20T02:03:58Z",
+      "side": 1,
+      "message": "Can you tell me more about this situation? E.g., what would cause us to leave the connect mode state, and is this likely to be a common source of connection failures?\n\n(I want to understand the complexity-vs-utility trade-off for handling this case.)",
+      "parentUuid": "082efe90_99eb5682",
+      "range": {
+        "startLine": 3336,
+        "startChar": 17,
+        "endLine": 3336,
+        "endChar": 23
+      },
+      "revId": "8207a35f67cdbf8c9eb5b1152d992d94014399c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
