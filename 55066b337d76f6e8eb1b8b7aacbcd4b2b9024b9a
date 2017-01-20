@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "082efe90_6151f477",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-20T22:32:58Z",
+      "side": 1,
+      "message": "This is more of an output from each evaluator. It\u0027s a list of networks the evaluator thinks the phone might connect to even if it is not the best one chosen the evaluator. The WifiConfiguration field can be null in case it is an ephemeral network. The information is used by the WifiLastResortWatchdog.",
+      "range": {
+        "startLine": 123,
+        "startChar": 54,
+        "endLine": 123,
+        "endChar": 73
+      },
+      "revId": "55066b337d76f6e8eb1b8b7aacbcd4b2b9024b9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_fd6466fc",
         "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
         "patchSetId": 1
