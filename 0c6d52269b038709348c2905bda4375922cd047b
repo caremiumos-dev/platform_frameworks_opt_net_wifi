@@ -164,6 +164,30 @@
       "revId": "0c6d52269b038709348c2905bda4375922cd047b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_3127bf1b",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-20T19:53:53Z",
+      "side": 1,
+      "message": "Sounds good. Opened b/34509013.",
+      "parentUuid": "082efe90_f2eee200",
+      "range": {
+        "startLine": 338,
+        "startChar": 31,
+        "endLine": 338,
+        "endChar": 50
+      },
+      "revId": "0c6d52269b038709348c2905bda4375922cd047b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
