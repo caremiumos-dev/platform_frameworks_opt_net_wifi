@@ -140,6 +140,24 @@
       "revId": "55066b337d76f6e8eb1b8b7aacbcd4b2b9024b9a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_641902a7",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-20T23:18:53Z",
+      "side": 1,
+      "message": "When we first time see a scan result which can be a potential ephemeral network, there is no WifiConfiguration for this network. The WifiConfiguration gets created only when this network gets picked by the evaluator as the recommended ephemeral network and the .ephemeral flag is set at that time. Later this WifiConfiguration gets deleted when we disconnect from the network.\n\nYes, you are right. An ephemeral config can be returned while we are connecting to it. My question was, what happens to networks that are potential ephemeral networks but don\u0027t have a configuration? This can be networks that are not recommended because there are better ephemeral ones, or even the recommended one but configuration not created yet. \n\nFor 2), I don\u0027t see where \u0027connectableNetworks\u0027 gets assigned by this evaluator. Maybe Amin can chime in? We can discuss this on another thread if that\u0027s what you guys prefer.",
+      "parentUuid": "082efe90_21052cc9",
+      "revId": "55066b337d76f6e8eb1b8b7aacbcd4b2b9024b9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
