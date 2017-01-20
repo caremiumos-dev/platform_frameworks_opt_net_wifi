@@ -39,6 +39,24 @@
       "revId": "e67b9d617dd3ce7e00751961546f6a3be341e42b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_912553ce",
+        "filename": "service/java/com/android/server/wifi/BaseWifiDiagnostics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-20T20:02:14Z",
+      "side": 1,
+      "message": "Thanks. Opened b/34509621.",
+      "parentUuid": "082efe90_a39260aa",
+      "revId": "e67b9d617dd3ce7e00751961546f6a3be341e42b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
