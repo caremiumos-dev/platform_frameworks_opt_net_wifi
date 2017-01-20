@@ -22,6 +22,24 @@
       "revId": "55066b337d76f6e8eb1b8b7aacbcd4b2b9024b9a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_ddee4a01",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1060801
+      },
+      "writtenOn": "2017-01-20T22:10:40Z",
+      "side": 1,
+      "message": "I can\u0027t quite tell and I\u0027m just being paranoid because getSavedNetworkForScanDetail() in WifiConfigManager doesn\u0027t a null check too.",
+      "parentUuid": "082efe90_fd6466fc",
+      "revId": "55066b337d76f6e8eb1b8b7aacbcd4b2b9024b9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
