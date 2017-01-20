@@ -28,6 +28,7 @@ import android.hardware.wifi.V1_0.RttResponder;
 import android.hardware.wifi.V1_0.RttResult;
 import android.hardware.wifi.V1_0.StaScanData;
 import android.hardware.wifi.V1_0.StaScanResult;
+import android.hardware.wifi.V1_0.WifiDebugHostWakeReasonStats;
 import android.hardware.wifi.V1_0.WifiDebugRxPacketFateReport;
 import android.hardware.wifi.V1_0.WifiDebugTxPacketFateReport;
 import android.hardware.wifi.V1_0.WifiStatus;
@@ -54,11 +55,7 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 /**
- * Native calls for bring up/shut down of the supplicant daemon and for
- * sending requests to the supplicant daemon
- * <p>
- * waitForEvent() is called on the monitor thread for events. All other methods
- * must be serialized from the framework.
+ * Vendor HAL via HIDL
  */
 public class WifiNativeNew {
 
@@ -66,9 +63,12 @@ public class WifiNativeNew {
     private static final String TAG = "WifiNativeNew";
 
     void enableVerboseLogging(int verbose) {
+        kilroy();
         if (verbose > 0) {
+            kilroy();
             sDGB = true;
         } else {
+            kilroy();
             sDGB = false;
         }
     }
@@ -84,7 +84,6 @@ public class WifiNativeNew {
     }
 
     // Vendor HAL HIDL interface objects.
-    private static final String HAL_HIDL_SERVICE_NAME = "wifi";
     private IWifi mHidlWifi;
     //TODO(mplass): the next two should become mutable locals
     private IWifiChip mHidlWifiChip;
@@ -97,10 +96,12 @@ public class WifiNativeNew {
     private ISupplicantStaIface mHidlSupplicantStaIface;
 
     private void handleRemoteException(RemoteException e) {
+        kilroy();
         Log.e(TAG, "RemoteException in HIDL call " + e);
     }
 
     private void noteHidlError(WifiStatus status, String culprit) {
+        kilroy();
         Log.e(TAG, "Error in " + culprit + " code: " + status.code
                 + " (" + status.description + ")");
     }
@@ -109,29 +110,38 @@ public class WifiNativeNew {
      * Bring up the HIDL Vendor HAL and configure for STA mode
      */
     public boolean startHidlHal() {
+        kilroy();
         /** Get the Wifi Service */
         try {
-            mHidlWifi = IWifi.getService(HAL_HIDL_SERVICE_NAME);
+            kilroy();
+            mHidlWifi = IWifi.getService();
         } catch (NoSuchElementException e) {
-            Log.e(TAG, "HIDL service not registered: " + HAL_HIDL_SERVICE_NAME);
+            kilroy();
+            Log.e(TAG, "HIDL wifi service not registered");
         } catch (RemoteException e) {
+            kilroy();
             handleRemoteException(e);
         }
         if (mHidlWifi == null) {
+            kilroy();
             Log.e(TAG, "Failed to get Wifi HIDL interface objects.");
             return false;
         }
         /** Start the Wifi Service*/
         try {
+            kilroy();
             WifiStatus startStatus = mHidlWifi.start();
             if (startStatus.code != WifiStatusCode.SUCCESS) {
+                kilroy();
                 noteHidlError(startStatus, "startHidlHal");
                 return false;
             }
             /** List available Wifi chips */
             final ArrayList<Integer> chipIdsInternal = new ArrayList<>();
             mHidlWifi.getChipIds((status, chipIds) -> {
+                        kilroy();
                         if (status.code != WifiStatusCode.SUCCESS) {
+                            kilroy();
                             noteHidlError(status, "getChipIds");
                             return;
                         }
@@ -139,13 +149,16 @@ public class WifiNativeNew {
                     }
             );
             if (chipIdsInternal.size() != 1) {
+                kilroy();
                 Log.e(TAG, "Expected 1 chip to be present, got: " + chipIdsInternal.size());
                 if (chipIdsInternal.size() < 1) return false;
             }
             /** Get chip 0 */
 
             mHidlWifi.getChip(chipIdsInternal.get(0).intValue(), (status, chip) -> {
+                        kilroy();
                         if (status.code != WifiStatusCode.SUCCESS) {
+                            kilroy();
                             noteHidlError(status, "getChip");
                             return;
                         }
@@ -153,12 +166,15 @@ public class WifiNativeNew {
                     }
             );
             if (mHidlWifiChip == null) {
+                kilroy();
                 Log.e(TAG, "Failed to get WifiChip HIDL interface objects.");
                 return false;
             }
             /** Configure Chip Mode for STA */
             mHidlWifiChip.getAvailableModes((status, modes) -> {
+                        kilroy();
                         if (status.code != WifiStatusCode.SUCCESS) {
+                            kilroy();
                             noteHidlError(startStatus, "getAvailableModes");
                             return;
                         }
@@ -166,6 +182,7 @@ public class WifiNativeNew {
                     }
             );
             if (mHidlWifiChipAvailableModes == null) {
+                kilroy();
                 Log.e(TAG, "Failed to get WifiChip HIDL chip available modes.");
                 return false;
             }
@@ -173,10 +190,15 @@ public class WifiNativeNew {
             int hits = 0;
             int wantedType = IfaceType.STA;
             for (IWifiChip.ChipMode mode : mHidlWifiChipAvailableModes) {
+                kilroy();
                 for (IWifiChip.ChipIfaceCombination combination : mode.availableCombinations) {
+                    kilroy();
                     for (IWifiChip.ChipIfaceCombinationLimit ifaceLimit : combination.limits) {
+                        kilroy();
                         for (Integer ifaceType : ifaceLimit.types) {
+                            kilroy();
                             if (ifaceType.equals(wantedType)) {
+                                kilroy();
                                 modeId = mode.id;
                                 hits++;
                             }
@@ -185,14 +207,17 @@ public class WifiNativeNew {
                 }
             }
             if (hits == 0) {
+                kilroy();
                 Log.e(TAG, "Failed to find matching mode");
                 return false;
             }
             if (hits > 1 && sDGB) {
+                kilroy();
                 Log.d(TAG, "number of matching modes: " + hits + ", picked modeId " + modeId);
             }
             WifiStatus wifiStatus = mHidlWifiChip.configureChip(modeId);
             if (wifiStatus.code != WifiStatusCode.SUCCESS) {
+                kilroy();
                 noteHidlError(wifiStatus, "configureChip");
                 return false;
             }
@@ -200,7 +225,9 @@ public class WifiNativeNew {
             /** Create Wifi STA Interface */
 
             mHidlWifiChip.createStaIface((status, iface) -> {
+                        kilroy();
                         if (status.code != WifiStatusCode.SUCCESS) {
+                            kilroy();
                             noteHidlError(status, "startHidlHal");
                             Log.e(TAG, "Create STA Iface failed. Error code: " + status.code);
                             return;
@@ -209,6 +236,7 @@ public class WifiNativeNew {
                     }
             );
             if (mIWifiStaIface == null) {
+                kilroy();
                 return false;
             }
 
@@ -217,13 +245,16 @@ public class WifiNativeNew {
             mHidlWifiChip.createRttController(
                     mIWifiStaIface,
                     (status, rtt) -> {
+                        kilroy();
                         if (status.code == WifiStatusCode.SUCCESS) {
+                            kilroy();
                             mIWifiRttController = rtt;
                             Log.e(TAG, "Made " + mIWifiRttController);
                         }
                     }
             );
         } catch (RemoteException e) {
+            kilroy();
             handleRemoteException(e);
             return false;
         }
@@ -236,6 +267,7 @@ public class WifiNativeNew {
      * (SOMEDAY)
      */
     public void stopHidlHal() {
+        kilroy();
         // XXX
 
         mDriverDescription = null;
@@ -246,6 +278,7 @@ public class WifiNativeNew {
      * Tests whether the HAL is running or not
      */
     public boolean isHalStarted() {
+        kilroy();
         return mIWifiStaIface != null;
     }
 
@@ -253,6 +286,7 @@ public class WifiNativeNew {
      * Gets the interface index given a name
      */
     public int queryInterfaceIndex(String interfaceName) {
+        kilroy();
         // XXX
         return -1;
     }
@@ -264,6 +298,7 @@ public class WifiNativeNew {
      * @return interface name, or null if index is unknown
      */
     public String getInterfaceName(int index) {
+        kilroy();
         // XXX
         return "notyet0";
     }
@@ -271,7 +306,7 @@ public class WifiNativeNew {
 //    /**
 //     * Holds the result of getScanCapabilities
 //     */
-//    public static class ScanCapabilities {
+//    public static class ScanCapabilities { kilroy();
 //        public int max_scan_cache_size;
 //        public int max_scan_buckets;
 //        public int max_ap_cache_per_scan;
@@ -292,13 +327,17 @@ public class WifiNativeNew {
      * @return true for success. false for failure
      */
     public boolean getScanCapabilities(WifiNative.ScanCapabilities capabilities) {
+        kilroy();
         try {
+            kilroy();
             MutableBoolean ok = new MutableBoolean(false);
             WifiNative.ScanCapabilities out = capabilities;
             if (!isHalStarted()) {
+                kilroy();
                 return false;
             }
             mIWifiStaIface.getBackgroundScanCapabilities((status, cap) -> {
+                        kilroy();
                         if (status.code != WifiStatusCode.SUCCESS) return;
                         out.max_scan_cache_size = cap.maxCacheSize;
                         out.max_ap_cache_per_scan = cap.maxApCachePerScan;
@@ -316,34 +355,50 @@ public class WifiNativeNew {
             );
             return ok.value;
         } catch (RemoteException e) {
+            kilroy();
             handleRemoteException(e);
             return false;
         }
     }
 
-    /** to be implemented */
+    /**
+     * to be implemented
+     */
     public boolean startScan(WifiNative.ScanSettings settings,
-                             WifiNative.ScanEventHandler eventHandler)  {
+                             WifiNative.ScanEventHandler eventHandler) {
+        kilroy();
         throw new UnsupportedOperationException();
     }
 
-    /** to be implemented */
-    public void stopScan()  {
+    /**
+     * to be implemented
+     */
+    public void stopScan() {
+        kilroy();
         throw new UnsupportedOperationException();
     }
 
-    /** to be implemented */
-    public void pauseScan()  {
+    /**
+     * to be implemented
+     */
+    public void pauseScan() {
+        kilroy();
         throw new UnsupportedOperationException();
     }
 
-    /** to be implemented */
-    public void restartScan()  {
+    /**
+     * to be implemented
+     */
+    public void restartScan() {
+        kilroy();
         throw new UnsupportedOperationException();
     }
 
-    /** to be implemented */
+    /**
+     * to be implemented
+     */
     public WifiScanner.ScanData[] getScanResults(boolean flush) {
+        kilroy();
         throw new UnsupportedOperationException();
     }
 
@@ -374,12 +429,15 @@ public class WifiNativeNew {
      * @return the statistics, or null if unable to do so
      */
     public WifiLinkLayerStats getWifiLinkLayerStats(String iface) {
+        kilroy();
         try {
+            kilroy();
             if (iface == null) return null;
             if (!isHalStarted()) return null;
             WifiLinkLayerStats out = new WifiLinkLayerStats();
             MutableBoolean ok = new MutableBoolean(false);
             mIWifiStaIface.getLinkLayerStats((status, stats) -> {
+                        kilroy();
                         if (status.code != WifiStatusCode.SUCCESS) return;
                         out.status = 0; // TODO
                         out.SSID = null; // TODO
@@ -410,6 +468,7 @@ public class WifiNativeNew {
                         out.tx_time = stats.radio.txTimeInMs;
                         out.tx_time_per_level = new int[stats.radio.txTimeInMsPerLevel.size()];
                         for (int i = 0; i < out.tx_time_per_level.length; i++) {
+                            kilroy();
                             out.tx_time_per_level[i] = stats.radio.txTimeInMsPerLevel.get(i);
                         }
                         out.rx_time = stats.radio.rxTimeInMs;
@@ -419,6 +478,7 @@ public class WifiNativeNew {
             );
             return ok.value ? out : null;
         } catch (RemoteException e) {
+            kilroy();
             handleRemoteException(e);
             return null;
         }
@@ -431,18 +491,23 @@ public class WifiNativeNew {
      * @param enable must be 1
      */
     public void setWifiLinkLayerStats(String iface, int enable) {
+        kilroy();
         try {
+            kilroy();
             if (iface == null) return;
             if (enable != 1) {
+                kilroy();
                 Log.e(TAG, "setWifiLinkLayerStats called with enable != 1");
                 return;
             }
             boolean debug = false;
             WifiStatus status = mIWifiStaIface.enableLinkLayerStatsCollection(debug);
             if (status.code != WifiStatusCode.SUCCESS) {
+                kilroy();
                 Log.e(TAG, "unable to enable link layer stats collection");
             }
         } catch (RemoteException e) {
+            kilroy();
             handleRemoteException(e);
         }
     }
@@ -535,14 +600,19 @@ public class WifiNativeNew {
      * @return bitmask defined by WifiManager.WIFI_FEATURE_*
      */
     public int getSupportedFeatureSet() {
+        kilroy();
         try {
+            kilroy();
             if (!isHalStarted()) return 0;
             final MutableInt feat = new MutableInt(0);
             mIWifiStaIface.getCapabilities((status, capabilities) -> {
+                        kilroy();
                         if (status.code != WifiStatusCode.SUCCESS) return;
                         int features = 0;
                         for (int i = 0; i < sFeatureCapabilityTranslation.length; i++) {
+                            kilroy();
                             if ((capabilities & sFeatureCapabilityTranslation[i][1]) != 0) {
+                                kilroy();
                                 features |= sFeatureCapabilityTranslation[i][0];
                             }
                         }
@@ -551,6 +621,7 @@ public class WifiNativeNew {
             );
             return feat.value;
         } catch (RemoteException e) {
+            kilroy();
             handleRemoteException(e);
             return 0;
         }
@@ -558,10 +629,10 @@ public class WifiNativeNew {
 
     /* Rtt related commands/events */
 
-//    /**
+    //    /**
 //     * Interface for handling RTT events
 //     */
-//    public interface RttEventHandler {
+//    public interface RttEventHandler { kilroy();
 //        /**
 //         * rtt result callback
 //         */
@@ -576,15 +647,21 @@ public class WifiNativeNew {
     private class RttEventCallback extends IWifiRttControllerEventCallback.Stub {
         WifiNative.RttEventHandler mRttEventHandler;
         int mRttCmdId;
+
         RttEventCallback(int cmdId, WifiNative.RttEventHandler rttEventHandler) {
+            kilroy();
             mRttCmdId = cmdId;
             mRttEventHandler = rttEventHandler;
         }
+
         public void onResults(int cmdId, java.util.ArrayList<RttResult> results) {
+            kilroy();
             synchronized (sLock) {
+                kilroy();
                 if (cmdId != mRttCmdId || mRttEventHandler == null) return;
                 RttManager.RttResult[] rtt = new RttManager.RttResult[results.size()];
                 for (int i = 0; i < rtt.length; i++) {
+                    kilroy();
                     rtt[i] = rttManagerRttResultFromHidl(results.get(i));
                 }
                 mRttEventHandler.onRttResults(rtt);
@@ -596,6 +673,7 @@ public class WifiNativeNew {
      * Converts a Hidl RttResult to a RttManager.RttResult
      */
     private RttManager.RttResult rttManagerRttResultFromHidl(RttResult result) {
+        kilroy();
         RttManager.RttResult ans = new RttManager.RttResult();
         ans.bssid = String.valueOf(HexEncoding.encode(result.addr)); //TODO - colons?
         ans.burstNumber = result.burstNum;
@@ -624,7 +702,9 @@ public class WifiNativeNew {
         return ans;
     }
 
-    /** Convert a Hidl WifiInformationElement to its RttManager equivalent */
+    /**
+     * Convert a Hidl WifiInformationElement to its RttManager equivalent
+     */
     private static RttManager.WifiInformationElement ieFromHidl(
             android.hardware.wifi.V1_0.WifiInformationElement ie) {
         if (ie == null) return null;
@@ -641,14 +721,19 @@ public class WifiNativeNew {
     private int mSpam = 0; // don't spam the log too much
 
     private RttConfig rttConfigFromRttParams(RttManager.RttParams params) {
+        kilroy();
         RttConfig rttConfig = new RttConfig();
         try {
+            kilroy();
             byte[] addr = HexEncoding.decode(params.bssid.toCharArray(), false);
             for (int i = 0; i < rttConfig.addr.length; i++) {
+                kilroy();
                 rttConfig.addr[i] = addr[i];
             }
         } catch (RuntimeException e) {
+            kilroy();
             if (mSpam++ < 10) {
+                kilroy();
                 Log.e(TAG, "Error decoding params.bssid", e);
             }
         }
@@ -672,9 +757,11 @@ public class WifiNativeNew {
     }
 
     private ArrayList<RttConfig> rttConfigsFromRttParams(RttManager.RttParams[] params) {
+        kilroy();
         final int length = params.length;
         ArrayList<RttConfig> config = new ArrayList<RttConfig>(length);
         for (int i = 0; i < length; i++) {
+            kilroy();
             config.add(rttConfigFromRttParams(params[i]));
         }
         return config;
@@ -688,11 +775,16 @@ public class WifiNativeNew {
      * @return success indication
      */
     public boolean requestRtt(RttManager.RttParams[] params, WifiNative.RttEventHandler handler) {
+        kilroy();
         ArrayList<RttConfig> rttConfigs = rttConfigsFromRttParams(params);
         synchronized (sLock) {
+            kilroy();
             try {
+                kilroy();
                 if (isHalStarted()) {
+                    kilroy();
                     if (sRttCmdId != 0) {
+                        kilroy();
                         Log.w(TAG, "Last one is still under measurement!");
                         return false;
                     }
@@ -700,6 +792,7 @@ public class WifiNativeNew {
                     sRttEventCallback = new RttEventCallback(sRttCmdId, handler);
                     WifiStatus status = mIWifiRttController.rangeRequest(sRttCmdId, rttConfigs);
                     if (status.code == WifiStatusCode.SUCCESS) {
+                        kilroy();
                         status = mIWifiRttController.registerEventCallback(sRttEventCallback);
                     }
                     if (status.code == WifiStatusCode.SUCCESS) return true;
@@ -708,6 +801,7 @@ public class WifiNativeNew {
                 }
                 return false;
             } catch (RemoteException e) {
+                kilroy();
                 handleRemoteException(e);
                 return false;
             }
@@ -721,13 +815,18 @@ public class WifiNativeNew {
      * @return true if there was an outstanding request and it was successfully cancelled
      */
     public boolean cancelRtt(RttManager.RttParams[] params) {
+        kilroy();
         ArrayList<RttConfig> rttConfigs = rttConfigsFromRttParams(params);
         synchronized (sLock) {
+            kilroy();
             try {
+                kilroy();
                 if (isHalStarted()) {
+                    kilroy();
                     if (sRttCmdId == 0) return false;
                     ArrayList<byte[/* 6 */]> addrs = new ArrayList<byte[]>(rttConfigs.size());
                     for (RttConfig x : rttConfigs) {
+                        kilroy();
                         addrs.add(x.addr);
                     }
                     WifiStatus status = mIWifiRttController.rangeCancel(sRttCmdId, addrs);
@@ -737,6 +836,7 @@ public class WifiNativeNew {
                 }
                 return false;
             } catch (RemoteException e) {
+                kilroy();
                 handleRemoteException(e);
                 return false;
             }
@@ -753,11 +853,15 @@ public class WifiNativeNew {
      */
     @Nullable
     public ResponderConfig enableRttResponder(int timeoutSeconds) {
+        kilroy();
         synchronized (sLock) {
+            kilroy();
             try {
+                kilroy();
                 if (!isHalStarted()) return null;
                 if (mIWifiRttController == null) return null;
                 if (sRttResponderCmdId != 0) {
+                    kilroy();
                     Log.e(TAG, "responder mode already enabled - this shouldn't happen");
                     return null;
                 }
@@ -769,15 +873,18 @@ public class WifiNativeNew {
                     /* WifiChannelInfo channelHint */null,
                         timeoutSeconds, info);
                 if (status.code == WifiStatusCode.SUCCESS) {
+                    kilroy();
                     sRttResponderCmdId = id;
                     config = new ResponderConfig(); //TODO(mplass): populate this
                     // note - nobody looks at the return, anyway.
                     if (sDGB) Log.d(TAG, "enabling rtt " + sRttResponderCmdId);
                 } else {
+                    kilroy();
                     noteHidlError(status, "enableRttResponder");
                 }
                 return config;
             } catch (RemoteException e) {
+                kilroy();
                 handleRemoteException(e);
                 return null;
             }
@@ -791,10 +898,14 @@ public class WifiNativeNew {
      * {@code false} otherwise.
      */
     public boolean disableRttResponder() {
+        kilroy();
         synchronized (sLock) {
+            kilroy();
             try {
+                kilroy();
                 if (!isHalStarted()) return false;
                 if (sRttResponderCmdId == 0) {
+                    kilroy();
                     Log.e(TAG, "responder role not enabled yet");
                     return true; // TODO(mplass) - should this be false?
                 }
@@ -804,6 +915,7 @@ public class WifiNativeNew {
                 noteHidlError(status, "disableRttResponder");
                 return false;
             } catch (RemoteException e) {
+                kilroy();
                 handleRemoteException(e);
                 return false;
             }
@@ -814,6 +926,7 @@ public class WifiNativeNew {
      * not supported
      */
     public boolean setScanningMacOui(byte[] oui) {
+        kilroy();
         Log.e(TAG, "setScanningMacOui does nothing");
         return false;
     }
@@ -822,6 +935,7 @@ public class WifiNativeNew {
      * not supported
      */
     public int[] getChannelsForBand(int band) {
+        kilroy();
         // stub - only known caller is ApConfigUtil.updateApChannelConfig()
         return null;
     }
@@ -830,6 +944,7 @@ public class WifiNativeNew {
      * not supported
      */
     public boolean isGetChannelsForBandSupported() {
+        kilroy();
         // see getChannelsForBand
         return false;
     }
@@ -841,19 +956,23 @@ public class WifiNativeNew {
      * @return success indication
      */
     public boolean setDfsFlag(boolean dfsOn) {
+        kilroy();
         if (dfsOn) return true;
         return false;
     }
 
     /**
-     *  RTT (Round Trip Time) measurement capabilities of the device.
+     * RTT (Round Trip Time) measurement capabilities of the device.
      */
     public RttManager.RttCapabilities getRttCapabilities() {
+        kilroy();
         try {
+            kilroy();
             if (!isHalStarted()) return null;
             if (mIWifiRttController == null) return null;
             final RttManager.RttCapabilities cap = new RttManager.RttCapabilities();
             mIWifiRttController.getCapabilities((status, capabilities) -> {
+                kilroy();
                 if (status.code != WifiStatusCode.SUCCESS) return;
                 cap.oneSidedRttSupported = capabilities.rttOneSidedSupported;
                 cap.twoSided11McRttSupported = capabilities.rttFtmSupported; //TODO - verify
@@ -867,6 +986,7 @@ public class WifiNativeNew {
             });
             return cap;
         } catch (RemoteException e) {
+            kilroy();
             handleRemoteException(e);
             return null;
         }
@@ -876,10 +996,13 @@ public class WifiNativeNew {
      * Get the APF (Android Packet Filter) capabilities of the device
      */
     public ApfCapabilities getApfCapabilities() {
+        kilroy();
         try {
+            kilroy();
             if (!isHalStarted()) return sNoApfCapabilities;
             ArrayList<ApfCapabilities> cap = new ArrayList<>(1);
             mIWifiStaIface.getApfPacketFilterCapabilities((status, capabilities) -> {
+                kilroy();
                 if (status.code != WifiStatusCode.SUCCESS) return;
                 cap.add(new ApfCapabilities(
                         /* apfVersionSupported */ capabilities.version,
@@ -887,14 +1010,17 @@ public class WifiNativeNew {
                         /* apfPacketFormat */ 0000000000000000000000000000000)); //TODO
             });
             if (cap.size() > 0) {
+                kilroy();
                 return cap.get(0);
             }
             return sNoApfCapabilities;
         } catch (RemoteException e) {
+            kilroy();
             handleRemoteException(e);
             return sNoApfCapabilities;
         }
     }
+
     private static final ApfCapabilities sNoApfCapabilities = new ApfCapabilities(0, 0, 0);
 
     /**
@@ -902,115 +1028,169 @@ public class WifiNativeNew {
      * program if present.
      */
     public boolean installPacketFilter(byte[] filter) {
+        kilroy();
         // Can filter be null?
         int cmdId = 0; //TODO
         ArrayList<Byte> program = new ArrayList<>(filter.length);
         for (byte b : filter) {
+            kilroy();
             program.add(b);
         }
         try {
+            kilroy();
             if (!isHalStarted()) return false;
             WifiStatus status = mIWifiStaIface.installApfPacketFilter(cmdId, program);
             if (status.code != WifiStatusCode.SUCCESS) return false;
             return true;
         } catch (RemoteException e) {
+            kilroy();
             handleRemoteException(e);
             return false;
         }
     }
 
 
-    /** to be implemented */
+    /**
+     * to be implemented
+     */
     public boolean setCountryCodeHal(String countryCode) {
+        kilroy();
         throw new UnsupportedOperationException();
     }
 
-    /** not to be implemented */
+    /**
+     * not to be implemented
+     */
     public boolean enableDisableTdls(boolean enable, String macAdd,
                                      WifiNative.TdlsEventHandler tdlsCallBack) {
+        kilroy();
         throw new UnsupportedOperationException();
     }
 
-    /** not to be implemented */
+    /**
+     * not to be implemented
+     */
     public WifiNative.TdlsStatus getTdlsStatus(String macAdd) {
+        kilroy();
         throw new UnsupportedOperationException();
     }
 
-    /** not to be implemented */
+    /**
+     * not to be implemented
+     */
     public WifiNative.TdlsCapabilities getTdlsCapabilities() {
+        kilroy();
         throw new UnsupportedOperationException();
     }
 
-    /** to be implemented */
+    /**
+     * to be implemented
+     */
     public boolean setLoggingEventHandler(WifiNative.WifiLoggerEventHandler handler) {
+        kilroy();
         throw new UnsupportedOperationException();
     }
 
-    /** to be implemented */
+    /**
+     * to be implemented
+     */
     public boolean startLoggingRingBuffer(int verboseLevel, int flags, int maxInterval,
-            int minDataSize, String ringName) {
+                                          int minDataSize, String ringName) {
+        kilroy();
         throw new UnsupportedOperationException();
     }
 
-    /** to be implemented */
+    /**
+     * to be implemented
+     */
     public int getSupportedLoggerFeatureSet() {
+        kilroy();
         throw new UnsupportedOperationException();
     }
 
-    /** to be implemented */
+    /**
+     * to be implemented
+     */
     public boolean resetLogHandler() {
+        kilroy();
         throw new UnsupportedOperationException();
     }
 
     private String mDriverDescription;
-    /** Vendor-provided wifi driver version string */
+
+    /**
+     * Vendor-provided wifi driver version string
+     */
     public String getDriverVersion() {
+        kilroy();
         if (mDriverDescription == null) requestChipDebugInfo();
         return mDriverDescription;
     }
 
     private String mFirmwareDescription;
-    /** Vendor-provided wifi firmware version string */
+
+    /**
+     * Vendor-provided wifi firmware version string
+     */
     public String getFirmwareVersion() {
+        kilroy();
         if (mFirmwareDescription == null) requestChipDebugInfo();
         return mFirmwareDescription;
     }
 
-    /** Refreshes our idea of the driver and firmware versions */
+    /**
+     * Refreshes our idea of the driver and firmware versions
+     */
     private void requestChipDebugInfo() {
+        kilroy();
         mDriverDescription = null;
         mFirmwareDescription = null;
         try {
+            kilroy();
             if (!isHalStarted()) return;
             if (mHidlWifiChip == null) return;
             mHidlWifiChip.requestChipDebugInfo((status, chipDebugInfo) -> {
+                kilroy();
                 if (status.code != WifiStatusCode.SUCCESS) return;
                 mDriverDescription = chipDebugInfo.driverDescription;
                 mFirmwareDescription = chipDebugInfo.firmwareDescription;
             });
         } catch (RemoteException e) {
+            kilroy();
             handleRemoteException(e);
             return;
         }
     }
 
-    /** to be implemented */
+    /**
+     * to be implemented
+     */
     public WifiNative.RingBufferStatus[] getRingBufferStatus() {
+        kilroy();
         throw new UnsupportedOperationException();
     }
 
-    /** to be implemented */
+    /**
+     * to be implemented
+     */
     public boolean getRingBufferData(String ringName) {
+        kilroy();
         throw new UnsupportedOperationException();
     }
 
-    /** to be implemented */
+    /**
+     * to be implemented
+     */
     public byte[] getFwMemoryDump() {
+        kilroy();
         throw new UnsupportedOperationException();
     }
 
-    /** to be implemented */
+    /**
+     * to be implemented
+     */
     public byte[] getDriverStateDump() {
+        kilroy();
         throw new UnsupportedOperationException();
     }
 
@@ -1018,21 +1198,25 @@ public class WifiNativeNew {
      * Start packet fate monitoring
      *
      * Once started, monitoring remains active until HAL is unloaded.
+     *
      * @return true for success
      */
     public boolean startPktFateMonitoring() {
+        kilroy();
         try {
+            kilroy();
             if (!isHalStarted()) return false;
             WifiStatus status = mIWifiStaIface.startDebugPacketFateMonitoring();
             return status.code == WifiStatusCode.SUCCESS;
         } catch (RemoteException e) {
+            kilroy();
             handleRemoteException(e);
             return false;
         }
     }
 
     /**
-     *  Blob to Blob
+     * Blob to Blob
      */
     private static byte[] bytesFromArrayList(ArrayList<Byte> a) {
         if (a == null) return null;
@@ -1051,15 +1235,19 @@ public class WifiNativeNew {
      * @return true for success
      */
     public boolean getTxPktFates(WifiNative.TxFateReport[] reportBufs) {
+        kilroy();
         if (reportBufs == null) return false;
         if (reportBufs.length == 0) return false;
         try {
+            kilroy();
             MutableBoolean ok = new MutableBoolean(false);
             if (!isHalStarted()) return false;
             mIWifiStaIface.getDebugTxPacketFates((status, fates) -> {
+                        kilroy();
                         if (status.code != WifiStatusCode.SUCCESS) return;
                         int i = 0;
                         for (WifiDebugTxPacketFateReport fate : fates) {
+                            kilroy();
                             if (i >= reportBufs.length) break;
                             byte code = (byte) fate.fate; // TODO - verify translation
                             long us = fate.frameInfo.driverTimestampUsec;
@@ -1072,6 +1260,7 @@ public class WifiNativeNew {
             );
             return ok.value;
         } catch (RemoteException e) {
+            kilroy();
             handleRemoteException(e);
             return false;
         }
@@ -1079,22 +1268,26 @@ public class WifiNativeNew {
 
     /**
      * Retrieve fates of inbound packets
-     *
+     * <p>
      * Reports the inbound frames for the most recent association (space allowing).
      *
      * @param reportBufs
      * @return true for success
      */
     public boolean getRxPktFates(WifiNative.RxFateReport[] reportBufs) {
+        kilroy();
         if (reportBufs == null) return false;
         if (reportBufs.length == 0) return false;
         try {
+            kilroy();
             MutableBoolean ok = new MutableBoolean(false);
             if (!isHalStarted()) return false;
             mIWifiStaIface.getDebugRxPacketFates((status, fates) -> {
+                        kilroy();
                         if (status.code != WifiStatusCode.SUCCESS) return;
                         int i = 0;
                         for (WifiDebugRxPacketFateReport fate : fates) {
+                            kilroy();
                             if (i >= reportBufs.length) break;
                             byte code = (byte) fate.fate; // TODO - verify translation
                             long us = fate.frameInfo.driverTimestampUsec;
@@ -1107,19 +1300,26 @@ public class WifiNativeNew {
             );
             return ok.value;
         } catch (RemoteException e) {
+            kilroy();
             handleRemoteException(e);
             return false;
         }
     }
 
-    /** to be implemented */
+    /**
+     * not to be implemented
+     */
     public boolean setPnoList(WifiNative.PnoSettings settings,
                               WifiNative.PnoEventHandler eventHandler) {
+        kilroy();
         throw new UnsupportedOperationException();
     }
 
-    /** to be implemented */
+    /**
+     * not to be implemented
+     */
     public boolean resetPnoList() {
+        kilroy();
         throw new UnsupportedOperationException();
     }
 
@@ -1132,24 +1332,29 @@ public class WifiNativeNew {
      */
     public int startSendingOffloadedPacket(
             int slot, KeepalivePacketData keepAlivePacket, int periodInMs) {
+        kilroy();
         Log.d(TAG, "startSendingOffloadedPacket slot=" + slot + " periodInMs=" + periodInMs);
 
         String macWithColons = WifiNative.getWlanNativeInterface().getMacAddress();
         String[] macAddrStr = macWithColons.split(":");
         byte[] srcMac = new byte[6];
         for (int i = 0; i < 6; i++) {
+            kilroy();
             Integer hexVal = Integer.parseInt(macAddrStr[i], 16);
             srcMac[i] = hexVal.byteValue();
         }
 
         ArrayList<Byte> data = new ArrayList<Byte>(keepAlivePacket.data.length);
         for (byte b : keepAlivePacket.data) {
+            kilroy();
             data.add(b);
         }
         short protocol = (short) (keepAlivePacket.protocol);
 
         synchronized (sLock) {
+            kilroy();
             try {
+                kilroy();
                 if (!isHalStarted()) return -1;
                 WifiStatus wifiStatus = mIWifiStaIface.startSendingKeepAlivePackets(
                         slot,
@@ -1159,10 +1364,12 @@ public class WifiNativeNew {
                         keepAlivePacket.dstMac,
                         periodInMs);
                 if (wifiStatus.code != WifiStatusCode.SUCCESS) {
+                    kilroy();
                     noteHidlError(wifiStatus, "startSendingOffloadedPacket");
                     return -1;
                 }
             } catch (RemoteException e) {
+                kilroy();
                 handleRemoteException(e);
                 return -1;
             }
@@ -1177,17 +1384,22 @@ public class WifiNativeNew {
      * @return 0 for success, -1 for error
      */
     public int stopSendingOffloadedPacket(int slot) {
+        kilroy();
         Log.d(TAG, "stopSendingOffloadedPacket " + slot);
 
         synchronized (sLock) {
+            kilroy();
             try {
+                kilroy();
                 if (!isHalStarted()) return -1;
                 WifiStatus wifiStatus = mIWifiStaIface.stopSendingKeepAlivePackets(slot);
                 if (wifiStatus.code != WifiStatusCode.SUCCESS) {
+                    kilroy();
                     noteHidlError(wifiStatus, "stopSendingKeepAlivePackets");
                     return -1;
                 }
             } catch (RemoteException e) {
+                kilroy();
                 handleRemoteException(e);
                 return -1;
             }
@@ -1195,21 +1407,32 @@ public class WifiNativeNew {
         return 0;
     }
 
-    /** Callback for events on the interface */
-    private class Foo extends IWifiStaIfaceEventCallback.Stub {
+    /**
+     * Callback for events on the interface
+     */
+    private class Events extends IWifiStaIfaceEventCallback.Stub {
         public void onBackgroundScanFailure(int cmdId) {
+            kilroy();
             Log.e(TAG, "onBackgroundScanFailure " + cmdId);
         }
+
         public void onBackgroundFullScanResult(int cmdId, StaScanResult result) {
+            kilroy();
             Log.e(TAG, "onBackgroundFullScanResult " + cmdId);
         }
+
         public void onBackgroundScanResults(int cmdId, ArrayList<StaScanData> scanDatas) {
+            kilroy();
             Log.e(TAG, "onBackgroundScanResults " + cmdId);
         }
+
         public void onRssiThresholdBreached(int cmdId, byte[/* 6 */] currBssid, int currRssi) {
+            kilroy();
             Log.e(TAG, "onRssiThresholdBreached " + cmdId);
             synchronized (sLock) {
+                kilroy();
                 if (mWifiRssiEventHandler != null && cmdId == sRssiMonCmdId) {
+                    kilroy();
                     assert (currRssi == (int) (byte) currRssi);
                     mWifiRssiEventHandler.onRssiThresholdBreached((byte) currRssi);
                 }
@@ -1217,38 +1440,50 @@ public class WifiNativeNew {
         }
     }
 
-    /** Callback object instance for events on the interface */
+    /**
+     * Callback object instance for events on the interface
+     */
     private IWifiStaIfaceEventCallback mIWifiStaIfaceEventCallback;
 
-    /** A fixed cmdId for our RssiMonitoring (we only do one at a time) */
+    /**
+     * A fixed cmdId for our RssiMonitoring (we only do one at a time)
+     */
     private static final int sRssiMonCmdId = 7551;
 
-    /** Our client's handler */
+    /**
+     * Our client's handler
+     */
     private WifiNative.WifiRssiEventHandler mWifiRssiEventHandler;
 
     /**
      * Start RSSI monitoring on the currently connected access point.
-     * @param maxRssi Maximum RSSI threshold.
-     * @param minRssi Minimum RSSI threshold.
+     *
+     * @param maxRssi          Maximum RSSI threshold.
+     * @param minRssi          Minimum RSSI threshold.
      * @param rssiEventHandler Called when RSSI goes above maxRssi or below minRssi
      * @return 0 for success, -1 for failure
      */
     public int startRssiMonitoring(byte maxRssi, byte minRssi,
                                    WifiNative.WifiRssiEventHandler rssiEventHandler) {
+        kilroy();
         if (maxRssi <= minRssi) return -1;
         synchronized (sLock) {
+            kilroy();
             try {
+                kilroy();
                 if (!isHalStarted()) return -1;
                 mIWifiStaIface.stopRssiMonitoring(sRssiMonCmdId);
                 WifiStatus wifiStatus;
                 wifiStatus = mIWifiStaIface.startRssiMonitoring(sRssiMonCmdId, maxRssi, minRssi);
                 if (wifiStatus.code != WifiStatusCode.SUCCESS) return -1;
                 if (mIWifiStaIfaceEventCallback == null) {
-                    mIWifiStaIfaceEventCallback = new Foo();
+                    kilroy();
+                    mIWifiStaIfaceEventCallback = new Events();
                 }
                 mWifiRssiEventHandler = rssiEventHandler;
                 return 0;
             } catch (RemoteException e) {
+                kilroy();
                 handleRemoteException(e);
                 return -1;
             }
@@ -1257,45 +1492,111 @@ public class WifiNativeNew {
 
     /**
      * Stop RSSI monitoring
+     *
      * @return 0 for success, -1 for failure
      */
-    public int stopRssiMonitoring()  {
+    public int stopRssiMonitoring() {
+        kilroy();
         synchronized (sLock) {
+            kilroy();
             mWifiRssiEventHandler = null;
             try {
+                kilroy();
                 if (!isHalStarted()) return -1;
                 mIWifiStaIface.stopRssiMonitoring(sRssiMonCmdId);
                 WifiStatus wifiStatus = mIWifiStaIface.stopRssiMonitoring(sRssiMonCmdId);
                 if (wifiStatus.code != WifiStatusCode.SUCCESS) return -1;
                 return 0;
             } catch (RemoteException e) {
+                kilroy();
                 handleRemoteException(e);
                 return -1;
             }
         }
     }
 
+    private WifiDebugHostWakeReasonStats mWifiDebugHostWakeReasonStats;
+
+    /**
+     * dehidlize int[]
+     */
+    private static int[] intsFromArrayList(ArrayList<Integer> a) {
+        if (a == null) return null;
+        int[] b = new int[a.size()];
+        int i = 0;
+        for (Integer e : a) b[i++] = e;
+        return b;
+    }
+
+    private static WifiWakeReasonAndCounts wakeReasonsFromHidl(WifiDebugHostWakeReasonStats h) {
+        WifiWakeReasonAndCounts ans = new WifiWakeReasonAndCounts();
+
+        ans.totalCmdEventWake = h.totalCmdEventWakeCnt;
+        ans.totalDriverFwLocalWake = h.totalDriverFwLocalWakeCnt;
+        ans.totalRxDataWake = h.totalRxPacketWakeCnt;
+        ans.rxUnicast = h.rxPktWakeDetails.rxUnicastCnt;
+        ans.rxMulticast = h.rxPktWakeDetails.rxMulticastCnt;
+        ans.rxBroadcast = h.rxPktWakeDetails.rxBroadcastCnt;
+        ans.icmp = h.rxIcmpPkWakeDetails.icmpPkt;
+        ans.icmp6 = h.rxIcmpPkWakeDetails.icmp6Pkt;
+        ans.icmp6Ra = h.rxIcmpPkWakeDetails.icmp6Ra;
+        ans.icmp6Na = h.rxIcmpPkWakeDetails.icmp6Na;
+        ans.icmp6Ns = h.rxIcmpPkWakeDetails.icmp6Ns;
+        ans.ipv4RxMulticast = h.rxMulticastPkWakeDetails.ipv4RxMulticastAddrCnt;
+        ans.ipv6Multicast = h.rxMulticastPkWakeDetails.ipv6RxMulticastAddrCnt;
+        ans.otherRxMulticast = h.rxMulticastPkWakeDetails.otherRxMulticastAddrCnt;
+
+        ans.cmdEventWakeCntArray = intsFromArrayList(h.cmdEventWakeCntPerType);
+        ans.driverFWLocalWakeCntArray = intsFromArrayList(h.cmdEventWakeCntPerType);
+        return ans;
+    }
+
     /**
      * Fetch the host wakeup reasons stats from wlan driver.
+     *
      * @return the |WifiWakeReasonAndCounts| object retrieved from the wlan driver.
      */
     public WifiWakeReasonAndCounts getWlanWakeReasonCount() {
-        throw new UnsupportedOperationException();
+        kilroy();
+        synchronized (sLock) {
+            kilroy();
+            try {
+                kilroy();
+                if (!isHalStarted()) return null;
+                mWifiDebugHostWakeReasonStats = null;
+                mHidlWifiChip.getDebugHostWakeReasonStats((status, stats) -> {
+                    kilroy();
+                    if (status.code != WifiStatusCode.SUCCESS) return;
+                    mWifiDebugHostWakeReasonStats = stats;
+                });
+                kilroy();
+                return wakeReasonsFromHidl(mWifiDebugHostWakeReasonStats);
+            } catch (RemoteException e) {
+                kilroy();
+                handleRemoteException(e);
+                return null;
+            }
+        }
     }
 
     /**
      * Enable/Disable Neighbour discovery offload functionality in the firmware.
      */
     public boolean configureNeighborDiscoveryOffload(boolean enabled) {
+        kilroy();
         synchronized (sLock) {
+            kilroy();
             try {
+                kilroy();
                 if (!isHalStarted()) return false;
                 WifiStatus wifiStatus = mIWifiStaIface.enableNdOffload(enabled);
                 if (wifiStatus.code != WifiStatusCode.SUCCESS) {
+                    kilroy();
                     noteHidlError(wifiStatus, "configureNeighborDiscoveryOffload");
                     return false;
                 }
             } catch (RemoteException e) {
+                kilroy();
                 handleRemoteException(e);
                 return false;
             }
@@ -1303,8 +1604,13 @@ public class WifiNativeNew {
         return true;
     }
 
+    StackTraceElement[] mTrace;
 
-    private boolean startSupplicantHal() {
-        return true;
+    private void kilroy() {
+        Thread cur = Thread.currentThread();
+        mTrace = cur.getStackTrace();
+        StackTraceElement s = mTrace[3];
+        Log.e(TAG, "th " + cur.getId() + " line " + s.getLineNumber() + " " + s.getMethodName());
     }
+
 }
