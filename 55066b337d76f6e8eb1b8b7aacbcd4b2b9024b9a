@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "082efe90_a17a3cd0",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1060801
+      },
+      "writtenOn": "2017-01-20T22:39:15Z",
+      "side": 1,
+      "message": "Thanks, I understand what this param is used for but I don\u0027t see how it\u0027s relevant to this CL since I don\u0027t touch it.",
+      "parentUuid": "082efe90_6151f477",
+      "revId": "55066b337d76f6e8eb1b8b7aacbcd4b2b9024b9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_fd6466fc",
         "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
         "patchSetId": 1
