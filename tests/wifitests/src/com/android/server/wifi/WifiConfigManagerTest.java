@@ -2176,6 +2176,47 @@ public class WifiConfigManagerTest {
     }
 
     /**
+     * Verifies the foreground user unlock via {@link WifiConfigManager#handleUserSwitch(int)}
+     * is ignored if the legacy store migration is not complete.
+     */
+    @Test
+    public void testHandleSwitchUnlockAfterBootupBeforeLegacyStoreMigration() throws Exception {
+        int user1 = TEST_DEFAULT_USER;
+
+        when(mWifiConfigStoreLegacy.areStoresPresent()).thenReturn(true);
+        when(mWifiConfigStore.areStoresPresent()).thenReturn(false);
+
+        // Unlock the user1 (default user) for the first time and ensure that we don't read or
+        // write the store files.
+        when(mUserManager.isUserUnlockingOrUnlocked(user1)).thenReturn(true);
+        mWifiConfigManager.handleUserSwitch(user1);
+        mContextConfigStoreMockOrder.verify(mWifiConfigStore, never())
+                .switchUserStoreAndRead(any(WifiConfigStore.StoreFile.class));
+        mContextConfigStoreMockOrder.verify(mWifiConfigStore, never())
+                .write(anyBoolean(), any(WifiConfigStoreData.class));
+    }
+
+    /**
+     * Verifies the foreground user unlock via {@link WifiConfigManager#handleUserUnlock(int)}
+     * is ignored if the legacy store migration is not complete.
+     */
+    @Test
+    public void testHandleUserUnlockAfterBootupBeforeLegacyStoreMigration() throws Exception {
+        int user1 = TEST_DEFAULT_USER;
+
+        when(mWifiConfigStoreLegacy.areStoresPresent()).thenReturn(true);
+        when(mWifiConfigStore.areStoresPresent()).thenReturn(false);
+
+        // Unlock the user1 (default user) for the first time and ensure that we don't read or
+        // write the store files.
+        mWifiConfigManager.handleUserUnlock(user1);
+        mContextConfigStoreMockOrder.verify(mWifiConfigStore, never())
+                .switchUserStoreAndRead(any(WifiConfigStore.StoreFile.class));
+        mContextConfigStoreMockOrder.verify(mWifiConfigStore, never())
+                .write(anyBoolean(), any(WifiConfigStoreData.class));
+    }
+
+    /**
      * Verifies the private network addition using
      * {@link WifiConfigManager#addOrUpdateNetwork(WifiConfiguration, int)}
      * by a non foreground user is rejected.
@@ -2217,7 +2258,7 @@ public class WifiConfigManagerTest {
 
     /**
      * Verifies the loading of networks using {@link WifiConfigManager#loadFromStore()} attempts
-     * to migrate data from legacy stores when the new store files are absent.
+     * to migrate data from legacy stores when the legacy store files are present.
      */
     @Test
     public void testMigrationFromLegacyStore() throws Exception {
@@ -2232,15 +2273,13 @@ public class WifiConfigManagerTest {
                 new WifiConfigStoreDataLegacy(networks, deletedEphermalSSIDs);
 
         // New store files not present, so migrate from the old store.
-        when(mWifiConfigStore.areStoresPresent()).thenReturn(false);
         when(mWifiConfigStoreLegacy.areStoresPresent()).thenReturn(true);
         when(mWifiConfigStoreLegacy.read()).thenReturn(storeData);
 
         // Now trigger a load from store. This should populate the in memory list with all the
         // networks above from the legacy store.
-        mWifiConfigManager.loadFromStore();
+        mWifiConfigManager.migrateFromLegacyStore();
 
-        verify(mWifiConfigStore, never()).read();
         verify(mWifiConfigStoreLegacy).read();
         verify(mWifiConfigStoreLegacy).removeStores();
 
@@ -2249,6 +2288,23 @@ public class WifiConfigManagerTest {
         WifiConfigurationTestUtil.assertConfigurationsEqualForConfigManagerAddOrUpdate(
                 networks, retrievedNetworks);
         assertTrue(mWifiConfigManager.wasEphemeralNetworkDeleted(deletedEphemeralSSID));
+    }
+
+    /**
+     * Verifies the loading of networks using {@link WifiConfigManager#loadFromStore()} does not
+     * attempt to migrate data from legacy stores when the legacy store files are absent
+     * (i.e migration was already done once).
+     */
+    @Test
+    public void testNoDuplicateMigrationFromLegacyStore() throws Exception {
+        // New store files not present, so migrate from the old store.
+        when(mWifiConfigStoreLegacy.areStoresPresent()).thenReturn(false);
+
+        // Now trigger a load from store.
+        mWifiConfigManager.migrateFromLegacyStore();
+
+        verify(mWifiConfigStoreLegacy, never()).read();
+        verify(mWifiConfigStoreLegacy, never()).removeStores();
     }
 
     /**

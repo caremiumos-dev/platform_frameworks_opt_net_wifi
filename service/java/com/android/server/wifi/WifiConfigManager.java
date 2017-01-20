@@ -2293,6 +2293,12 @@ public class WifiConfigManager {
         if (mVerboseLoggingEnabled) {
             Log.v(TAG, "Loading from store after user switch/unlock for " + userId);
         }
+        // Don't handle user unlock or switch unless the migration from legacy stores is complete.
+        if (mWifiConfigStoreLegacy.areStoresPresent() && !mWifiConfigStore.areStoresPresent()) {
+            Log.d(TAG, "Legacy store files found. Ignore user switch/unlock until migration is "
+                    + "complete!");
+            return;
+        }
         // Switch out the user store file.
         if (loadFromUserStoreAfterUnlockOrSwitch(userId)) {
             saveToStore(true);
@@ -2488,18 +2494,20 @@ public class WifiConfigManager {
      *
      * @return true if migration was successful or not needed (fresh install), false if it failed.
      */
-    private boolean migrateFromLegacyStore() {
-        if (mWifiConfigStoreLegacy.areStoresPresent()) {
-            WifiConfigStoreDataLegacy storeData = mWifiConfigStoreLegacy.read();
-            Log.d(TAG, "Reading from legacy store completed");
-            loadInternalData(storeData.getConfigurations(), new ArrayList<WifiConfiguration>(),
-                    storeData.getDeletedEphemeralSSIDs());
-            if (!saveToStore(true)) {
-                return false;
-            }
-            mWifiConfigStoreLegacy.removeStores();
-            Log.d(TAG, "Migration from legacy store completed");
+    public boolean migrateFromLegacyStore() {
+        if (!mWifiConfigStoreLegacy.areStoresPresent()) {
+            Log.d(TAG, "Legacy store files not found. No migration needed!");
+            return true;
         }
+        WifiConfigStoreDataLegacy storeData = mWifiConfigStoreLegacy.read();
+        Log.d(TAG, "Reading from legacy store completed");
+        loadInternalData(storeData.getConfigurations(), new ArrayList<WifiConfiguration>(),
+                storeData.getDeletedEphemeralSSIDs());
+        if (!saveToStore(true)) {
+            return false;
+        }
+        mWifiConfigStoreLegacy.removeStores();
+        Log.d(TAG, "Migration from legacy store completed");
         return true;
     }
 
@@ -2516,7 +2524,8 @@ public class WifiConfigManager {
      */
     public boolean loadFromStore() {
         if (!mWifiConfigStore.areStoresPresent()) {
-            return migrateFromLegacyStore();
+            Log.d(TAG, "New store files not found. No saved networks loaded!");
+            return true;
         }
         WifiConfigStoreData storeData;
         try {
