@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "082efe90_3d278e1b",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-20T22:07:30Z",
+      "side": 1,
+      "message": "I\u0027m afraid I still don\u0027t understand the underlying concern. \n\nSuppose, e.g., that there is some nasty direct call to connect. What problems would that cause, and what should we do about it?\n\nI believe we\u0027ve dispensed with the thread-safety concern, so the next thought that comes to mind is that we\u0027re concerned about the correctness of the trace data.\n\nI certainly want the trace data to be as correct and useful as possible. But when I think about what we could do to improve the handling of possibly nasty connection code-paths, I can\u0027t think of any good options.\n\nThe two options that came to my mind were:\na) Modify the code, to remove the nasty direct calls. That risks making the connection process less reliable.\nb) Add some logic in LastMileLogger, to try to filter out such spurious events. This makes LML more complex (hence: more prone to implementation bugs), and risks false-positives in the spurious-event detection logic (due to an incomplete understanding of the connection code-paths).\n\nBut maybe you have a cleaner solution in mind?",
+      "parentUuid": "082efe90_3278ea8f",
+      "range": {
+        "startLine": 66,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 37
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_fe45a006",
         "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
         "patchSetId": 1
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "I agree with that.  is there a way to tell in the trace where a connection starts?",
       "parentUuid": "082efe90_7500a11f",
+      "range": {
+        "startLine": 68,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 32
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_820e23e9",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-20T22:07:30Z",
+      "side": 1,
+      "message": "For a \"normal\" connection, rdev_connect is pretty good hint of when a connection starts. There may, however, be some special cases. (Maybe driver-initiated roaming? Maybe WEP as well.)",
+      "parentUuid": "082efe90_d2bc061c",
       "range": {
         "startLine": 68,
         "startChar": 12,
@@ -262,6 +310,30 @@
     },
     {
       "key": {
+        "uuid": "082efe90_62da1759",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-20T22:07:30Z",
+      "side": 1,
+      "message": "I\u0027m not particular about whether we clear in this case or not. But I do want this feature to be simple to understand -- the less documentation someone needs to understand the trace data, the better.\n\nTo that end, I want to limit the number of special cases. I don\u0027t want, e.g., to say \"we clear the trace data, except when we don\u0027t.\" :-)\n\nHow about we just don\u0027t clear in either case?",
+      "parentUuid": "082efe90_32cd8ab3",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 62
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_5eab9478",
         "filename": "tests/wifitests/src/com/android/server/wifi/LastMileLoggerTest.java",
         "patchSetId": 1
@@ -333,6 +405,30 @@
     },
     {
       "key": {
+        "uuid": "082efe90_3d62eee9",
+        "filename": "tests/wifitests/src/com/android/server/wifi/LastMileLoggerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-20T22:07:30Z",
+      "side": 1,
+      "message": "WRT a user\u0027s manual... I think I have. :-)\n\nThese tests document the feature\u0027s behavior in a way that is automatically guaranteed to reflect what the code actually does.\n\nFor behaviors that can\u0027t be captured in these tests, it might make sense to have a user manual. But, at the same time, there are limits to how correct such a thing code be.\n\nSome behavior would depend on kernel code, which itself might change. So I think it would be more reliable to document that behavior with integration tests, than with a doc. (The doc would slowly diverge from actual system behavior.)\n\nThat said, given our current integration test story, a doc is the most reasonable choice at the moment. So, if you\u0027d like documentation on aspects of behavior that can\u0027t be captured in these unit tests, please let me know.",
+      "parentUuid": "082efe90_d20ac607",
+      "range": {
+        "startLine": 47,
+        "startChar": 13,
+        "endLine": 47,
+        "endChar": 31
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_be9b9860",
         "filename": "tests/wifitests/src/com/android/server/wifi/LastMileLoggerTest.java",
         "patchSetId": 1
@@ -344,6 +440,30 @@
       "writtenOn": "2017-01-19T07:42:06Z",
       "side": 1,
       "message": "maybe add a similar test for two dumps called in a row?  (with and without a failure trace)",
+      "range": {
+        "startLine": 167,
+        "startChar": 16,
+        "endLine": 167,
+        "endChar": 66
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_bd86deb3",
+        "filename": "tests/wifitests/src/com/android/server/wifi/LastMileLoggerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-20T22:07:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "082efe90_be9b9860",
       "range": {
         "startLine": 167,
         "startChar": 16,
