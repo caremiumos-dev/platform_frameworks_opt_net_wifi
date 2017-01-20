@@ -2286,12 +2286,20 @@ public class WifiConfigManager {
      *   to user store.
      * This method assumes the user store is visible (i.e CE storage is unlocked). So, the caller
      * should ensure that the stores are accessible before invocation.
+     * If the device has not yet migrated the config store data out of the legacy stores, then
+     * this unlock is ignored (since there is nothing to read from the new store).
      *
      * @param userId The identifier of the new foreground user, after the unlock or switch.
      */
     private void handleUserUnlockOrSwitch(int userId) {
         if (mVerboseLoggingEnabled) {
             Log.v(TAG, "Loading from store after user switch/unlock for " + userId);
+        }
+        // Don't handle user unlock or switch unless the migration from legacy stores is complete.
+        if (mWifiConfigStoreLegacy.areStoresPresent() && !mWifiConfigStore.areStoresPresent()) {
+            Log.d(TAG, "Legacy store files found. Ignore user switch/unlock until migration is "
+                    + "complete!");
+            return;
         }
         // Switch out the user store file.
         if (loadFromUserStoreAfterUnlockOrSwitch(userId)) {
@@ -2488,35 +2496,38 @@ public class WifiConfigManager {
      *
      * @return true if migration was successful or not needed (fresh install), false if it failed.
      */
-    private boolean migrateFromLegacyStore() {
-        if (mWifiConfigStoreLegacy.areStoresPresent()) {
-            WifiConfigStoreDataLegacy storeData = mWifiConfigStoreLegacy.read();
-            Log.d(TAG, "Reading from legacy store completed");
-            loadInternalData(storeData.getConfigurations(), new ArrayList<WifiConfiguration>(),
-                    storeData.getDeletedEphemeralSSIDs());
-            if (!saveToStore(true)) {
-                return false;
-            }
-            mWifiConfigStoreLegacy.removeStores();
-            Log.d(TAG, "Migration from legacy store completed");
+    public boolean migrateFromLegacyStore() {
+        if (!mWifiConfigStoreLegacy.areStoresPresent()) {
+            Log.d(TAG, "Legacy store files not found. No migration needed!");
+            return true;
         }
+        WifiConfigStoreDataLegacy storeData = mWifiConfigStoreLegacy.read();
+        Log.d(TAG, "Reading from legacy store completed");
+        loadInternalData(storeData.getConfigurations(), new ArrayList<WifiConfiguration>(),
+                storeData.getDeletedEphemeralSSIDs());
+        if (!saveToStore(true)) {
+            return false;
+        }
+        mWifiConfigStoreLegacy.removeStores();
+        Log.d(TAG, "Migration from legacy store completed");
         return true;
     }
 
     /**
      * Read the config store and load the in-memory lists from the store data retrieved and sends
-     * out the networks changed broadcast. This method first checks if there is any data to be
-     * migrated from legacy store files if the new store files aren't present on the device.
+     * out the networks changed broadcast.
      *
      * This reads all the network configurations from:
      * 1. Shared WifiConfigStore.xml
      * 2. User WifiConfigStore.xml
      *
-     * @return true on success, false otherwise.
+     * @return true on success or not needed (fresh install/pending legacy store migration),
+     * false otherwise.
      */
     public boolean loadFromStore() {
         if (!mWifiConfigStore.areStoresPresent()) {
-            return migrateFromLegacyStore();
+            Log.d(TAG, "New store files not found. No saved networks loaded!");
+            return true;
         }
         WifiConfigStoreData storeData;
         try {
