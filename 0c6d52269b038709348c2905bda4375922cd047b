@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "082efe90_6b11e2cc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-20T01:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "082efe90_39ea227c",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 14
+      },
+      "revId": "0c6d52269b038709348c2905bda4375922cd047b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_19ff663e",
         "filename": "service/java/com/android/server/wifi/WifiDiagnostics.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "082efe90_4b1626c7",
+        "filename": "service/java/com/android/server/wifi/WifiDiagnostics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-20T01:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "082efe90_19ff663e",
+      "range": {
+        "startLine": 108,
+        "startChar": 12,
+        "endLine": 108,
+        "endChar": 26
+      },
+      "revId": "0c6d52269b038709348c2905bda4375922cd047b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_b9f5f25b",
         "filename": "service/java/com/android/server/wifi/WifiInjector.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-01-19T08:00:49Z",
       "side": 1,
       "message": "can this just be up with the other objects that are automagically created instead of being on demand?",
+      "range": {
+        "startLine": 338,
+        "startChar": 31,
+        "endLine": 338,
+        "endChar": 50
+      },
+      "revId": "0c6d52269b038709348c2905bda4375922cd047b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_7fc1a082",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-20T01:51:38Z",
+      "side": 1,
+      "message": "If I understand what you have in mind, we\u0027d need to create the WifiDiagnostics instance using mWifiNative, rather than a caller-provided instance of WifiNative.\n\nThat might work, and it might be a worthwhile cleanup. But I don\u0027t believe we should bring the risks of that kind of change into this CL. (I could file a separate bug for that cleanup, if you\u0027d like.)",
+      "parentUuid": "082efe90_b9f5f25b",
       "range": {
         "startLine": 338,
         "startChar": 31,
