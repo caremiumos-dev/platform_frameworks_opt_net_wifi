@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "082efe90_1b4062f2",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2527,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-20T19:14:56Z",
+      "side": 1,
+      "message": "Returning \u0027true\u0027 here? It\u0027s quite confusing. Maybe add more details to the javadoc?",
+      "range": {
+        "startLine": 2527,
+        "startChar": 19,
+        "endLine": 2527,
+        "endChar": 23
+      },
+      "revId": "b3d63ba75da1371853bd2d017417e1a6ed9072b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
