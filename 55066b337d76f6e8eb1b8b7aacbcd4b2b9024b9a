@@ -1,0 +1,11 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+1: Amin Shaikh <ashaikh@google.com>
+Code-Review+1: Jeremy Joslin <jjoslin@google.com>
+Code-Review+2: Randy Pan <zpan@google.com>
+Verified+1: Jeremy Joslin <jjoslin@google.com>
+Autosubmit+1: Jeremy Joslin <jjoslin@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Sat, 21 Jan 2017 00:24:05 +0000
+Reviewed-on: https://android-review.googlesource.com/326102
+Project: platform/frameworks/opt/net/wifi
+Branch: refs/heads/master
