@@ -176,6 +176,24 @@
       "revId": "55066b337d76f6e8eb1b8b7aacbcd4b2b9024b9a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_aa20d118",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-21T00:23:58Z",
+      "side": 1,
+      "message": "After our discussion offline, now I have better understanding. I was confused by ConnectableConfigs and ConnectableNetworks.\n\nNow this CL LGTM. Let\u0027s address the ConnectableNetworks issue via another CL.",
+      "parentUuid": "082efe90_a7e5ac8a",
+      "revId": "55066b337d76f6e8eb1b8b7aacbcd4b2b9024b9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
