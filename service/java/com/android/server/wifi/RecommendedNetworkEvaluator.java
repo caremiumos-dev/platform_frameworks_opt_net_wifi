@@ -120,10 +120,10 @@ public class RecommendedNetworkEvaluator implements WifiNetworkSelector.NetworkE
     public WifiConfiguration evaluateNetworks(List<ScanDetail> scanDetails,
             WifiConfiguration currentNetwork, String currentBssid, boolean connected,
             boolean untrustedNetworkAllowed,
-            List<Pair<ScanDetail, WifiConfiguration>> connectableNetworks) {
+            List<Pair<ScanDetail, WifiConfiguration>> potentialConnectableNetworks) {
         if (!mNetworkRecommendationsEnabled) {
             return mExternalScoreEvaluator.evaluateNetworks(scanDetails, currentNetwork,
-                    currentBssid, connected, untrustedNetworkAllowed, connectableNetworks);
+                    currentBssid, connected, untrustedNetworkAllowed, potentialConnectableNetworks);
         }
         List<WifiConfiguration> availableConfiguredNetworks = new ArrayList<>();
         List<ScanResult> scanResults = new ArrayList<>();
@@ -149,6 +149,10 @@ public class RecommendedNetworkEvaluator implements WifiNetworkSelector.NetworkE
                 availableConfiguredNetworks.add(configuredNetwork);
             }
             scanResults.add(scanResult);
+            // Track potential connectable networks for the watchdog.
+            if (potentialConnectableNetworks != null) {
+                potentialConnectableNetworks.add(Pair.create(scanDetail, configuredNetwork));
+            }
         }
 
         if (scanResults.isEmpty()) {
