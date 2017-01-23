@@ -141,6 +141,30 @@
       "revId": "8207a35f67cdbf8c9eb5b1152d992d94014399c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_22c2b386",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3336,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-23T23:44:56Z",
+      "side": 1,
+      "message": "Did you check in to adding a call to this method from exit connect mode?  That would help you clean out any attempts while connectingING that we might not be aware of if we are switching modes or doing whatever.  That would keep you from continuing to trace (either nothing or get errors) when you won\u0027t be getting any events to stop the trace.",
+      "parentUuid": "082efe90_cbe336ea",
+      "range": {
+        "startLine": 3336,
+        "startChar": 17,
+        "endLine": 3336,
+        "endChar": 23
+      },
+      "revId": "8207a35f67cdbf8c9eb5b1152d992d94014399c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
