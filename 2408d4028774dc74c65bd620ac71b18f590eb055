@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "082efe90_2300826d",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2288,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-23T19:14:49Z",
+      "side": 1,
+      "message": "will they be loaded as normal if the migration hasn\u0027t happened?  Will migration happen if these are loaded?  (I guess I was thinking you might want to add a note wrt to the issue of delaying migration until supplicant is started.",
+      "parentUuid": "082efe90_d1cd1b6a",
+      "range": {
+        "startLine": 2287,
+        "startChar": 6,
+        "endLine": 2288,
+        "endChar": 70
+      },
+      "revId": "2408d4028774dc74c65bd620ac71b18f590eb055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_0e9ca257",
         "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
         "patchSetId": 4
