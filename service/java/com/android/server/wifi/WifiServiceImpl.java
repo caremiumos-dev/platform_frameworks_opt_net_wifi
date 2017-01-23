@@ -1063,6 +1063,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
      */
     @Override
     public void queryPasspointIcon(long bssid, String fileName) {
+        enforceAccessPermission();
         mWifiStateMachine.syncQueryPasspointIcon(mWifiStateMachineChannel, bssid, fileName);
     }
 
