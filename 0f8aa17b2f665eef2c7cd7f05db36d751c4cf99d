@@ -40,6 +40,24 @@
       "revId": "0f8aa17b2f665eef2c7cd7f05db36d751c4cf99d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_78b98d88",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-23T22:52:26Z",
+      "side": 1,
+      "message": "If you are referring to getFilteredScanDetails(), the name is there for legacy reasons. We didn\u0027t rename it because the API is used by other class. I can fix it.\n\nDo we really need to add \"potential\"? I feel \"connectable\" is sufficient. It means these are the networks that can potentially be used to establish a connection by the watchdog.",
+      "parentUuid": "082efe90_77e640bb",
+      "revId": "0f8aa17b2f665eef2c7cd7f05db36d751c4cf99d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
