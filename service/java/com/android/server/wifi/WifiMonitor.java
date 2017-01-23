@@ -37,8 +37,8 @@ import android.util.SparseArray;
 import com.android.internal.util.Protocol;
 import com.android.internal.util.StateMachine;
 import com.android.server.wifi.hotspot2.IconEvent;
-import com.android.server.wifi.hotspot2.WnmData;
 import com.android.server.wifi.hotspot2.Utils;
+import com.android.server.wifi.hotspot2.WnmData;
 import com.android.server.wifi.p2p.WifiP2pServiceImpl.P2pStatus;
 import com.android.server.wifi.util.TelephonyUtil.SimAuthRequestData;
 
@@ -851,8 +851,10 @@ public class WifiMonitor {
                 handleTargetBSSIDEvent(eventStr, iface);
             } else if (eventStr.startsWith(ASSOCIATED_WITH_STR)) {
                 handleAssociatedBSSIDEvent(eventStr, iface);
-            } else if (eventStr.startsWith(AUTH_EVENT_PREFIX_STR) &&
-                    eventStr.endsWith(AUTH_TIMEOUT_STR)) {
+            } else if ((eventStr.startsWith(AUTH_EVENT_PREFIX_STR)
+                    && eventStr.endsWith(AUTH_TIMEOUT_STR))
+                    || (eventStr.startsWith(WPA_EVENT_PREFIX_STR)
+                    && eventStr.endsWith(PASSWORD_MAY_BE_INCORRECT_STR))) {
                 sendMessage(iface, AUTHENTICATION_FAILURE_EVENT);
             } else {
                 if (mVerboseLoggingEnabled) {
