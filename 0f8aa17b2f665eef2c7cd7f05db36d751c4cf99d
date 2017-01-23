@@ -22,6 +22,24 @@
       "revId": "0f8aa17b2f665eef2c7cd7f05db36d751c4cf99d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_77e640bb",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1060801
+      },
+      "writtenOn": "2017-01-23T21:28:03Z",
+      "side": 1,
+      "message": "I defer to Randy on how to best document this, it\u0027s also referred to as FilteredScanDetails in the WifiNetworkSelector. I changed the name here to avoid confusion with the array of connectable networks that\u0027s added to the RecommendationRequest.",
+      "parentUuid": "082efe90_8cfe438a",
+      "revId": "0f8aa17b2f665eef2c7cd7f05db36d751c4cf99d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
