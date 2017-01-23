@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "082efe90_a3deb2ee",
+        "filename": "tests/wifitests/src/com/android/server/wifi/LastMileLoggerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-23T19:11:57Z",
+      "side": 1,
+      "message": "is this the one that will change by erring on the side of not clearing on a dump?",
+      "range": {
+        "startLine": 193,
+        "startChar": 16,
+        "endLine": 193,
+        "endChar": 50
+      },
+      "revId": "d489dd57c0b54d6864acfa84c49c8ebede9e3bd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_c3c65e20",
+        "filename": "tests/wifitests/src/com/android/server/wifi/LastMileLoggerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-23T19:11:57Z",
+      "side": 1,
+      "message": "do you think it is worth having start trace called twice in a row and stop called twice in a row tests to make sure nothing fails?\n\nGiven that those are distinct possibilities given our code, it might be a good idea.",
+      "revId": "d489dd57c0b54d6864acfa84c49c8ebede9e3bd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
