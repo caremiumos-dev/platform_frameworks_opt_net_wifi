@@ -413,6 +413,7 @@ public class HalDeviceManagerTest {
      *   - AP created
      * - STA creation refused
      * - When AP destroyed:
+     *   - Get sta/p2p available listener callback
      *   - Can create STA when requested
      */
     @Test
@@ -438,7 +439,8 @@ public class HalDeviceManagerTest {
 
         HalDeviceManager.InterfaceDestroyedListener p2pDestroyedListener = mock(
                 HalDeviceManager.InterfaceDestroyedListener.class);
-        HalDeviceManager.InterfaceAvailableForRequestListener p2pAvailListener = null;
+        HalDeviceManager.InterfaceAvailableForRequestListener p2pAvailListener = mock(
+                HalDeviceManager.InterfaceAvailableForRequestListener.class);
 
         // Request STA
         IWifiIface staIface = validateInterfaceSequence(chipMock, false, -1000, IfaceType.STA,
@@ -473,6 +475,7 @@ public class HalDeviceManagerTest {
 
         mTestLooper.dispatchAll();
         verify(apDestroyedListener).onDestroyed();
+        verify(staAvailListener).onAvailableForRequest();
 
         // Request STA: expect success now
         staIface = validateInterfaceSequence(chipMock, true, BaselineChip.AP_CHIP_MODE_ID,
@@ -492,6 +495,7 @@ public class HalDeviceManagerTest {
      *   - P2P created
      * - NAN creation refused
      * - When P2P destroyed:
+     *   - get nan available listener
      *   - Can create NAN when requested
      */
     @Test
@@ -544,6 +548,7 @@ public class HalDeviceManagerTest {
 
         mTestLooper.dispatchAll();
         verify(p2pDestroyedListener).onDestroyed();
+        verify(nanAvailListener).onAvailableForRequest();
 
         // Request NAN: expect success now
         nanIface = validateInterfaceSequence(chipMock, true,
