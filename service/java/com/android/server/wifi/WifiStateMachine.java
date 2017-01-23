@@ -4829,7 +4829,9 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     mWifiDiagnostics.captureBugReportData(
                             WifiDiagnostics.REPORT_REASON_AUTH_FAILURE);
                     mSupplicantStateTracker.sendMessage(WifiMonitor.AUTHENTICATION_FAILURE_EVENT);
-                    if (mTargetNetworkId != WifiConfiguration.INVALID_NETWORK_ID) {
+                    // In case of Wrong password, rely on SSID_TEMP_DISABLE event to update WCM
+                    if ((message.arg2 != WifiMonitor.AUTHENTICATION_FAILURE_REASON_WRONG_PSWD)
+                            && (mTargetNetworkId != WifiConfiguration.INVALID_NETWORK_ID)) {
                         mWifiConfigManager.updateNetworkSelectionStatus(mTargetNetworkId,
                                 WifiConfiguration.NetworkSelectionStatus
                                         .DISABLED_AUTHENTICATION_FAILURE);
