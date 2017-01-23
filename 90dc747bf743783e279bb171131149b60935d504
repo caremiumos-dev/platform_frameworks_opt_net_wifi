@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "082efe90_422edff7",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-23T23:40:58Z",
+      "side": 1,
+      "message": "Discussed out-of-band. I think we concluded that, since WifiDiagnostics serializes access to LastMileLogger, it\u0027s ok even if there are direct calls into WSM on other threads.",
+      "parentUuid": "082efe90_cfb0c2e7",
+      "range": {
+        "startLine": 66,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 37
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_fe45a006",
         "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
         "patchSetId": 1
@@ -370,6 +394,30 @@
       "side": 1,
       "message": "I think less clearing while dumping is best - also, if there is a hint of the start of a trace, then that gives the debugger something to work with.  It would be much harder to work across two bug reports (if you happen to even get them).  I would prefer to err on the side of a little too much data than to just be missing what you need in a trace.",
       "parentUuid": "082efe90_62da1759",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 62
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_42c37feb",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-23T23:40:58Z",
+      "side": 1,
+      "message": "Got it. Removed the code that cleared the kernel trace before.",
+      "parentUuid": "082efe90_c37f7e10",
       "range": {
         "startLine": 87,
         "startChar": 0,
