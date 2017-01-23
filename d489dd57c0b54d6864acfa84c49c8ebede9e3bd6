@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "082efe90_422b7f9e",
+        "filename": "tests/wifitests/src/com/android/server/wifi/LastMileLoggerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-23T23:40:58Z",
+      "side": 1,
+      "message": "I removed this test, as this is no longer the expected behavior.\n\nI opted not to add a replacement test, as the expected behavior for dump now depends on external inputs. (If we get two dump calls in a row, whether or not the first connection shows up depends on the number of events that the second connection has generated.)",
+      "range": {
+        "startLine": 131,
+        "startChar": 16,
+        "endLine": 131,
+        "endChar": 47
+      },
+      "revId": "d489dd57c0b54d6864acfa84c49c8ebede9e3bd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_a3deb2ee",
         "filename": "tests/wifitests/src/com/android/server/wifi/LastMileLoggerTest.java",
         "patchSetId": 3
@@ -25,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "082efe90_029457d1",
+        "filename": "tests/wifitests/src/com/android/server/wifi/LastMileLoggerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-23T23:40:58Z",
+      "side": 1,
+      "message": "Both this, and the test above.",
+      "parentUuid": "082efe90_a3deb2ee",
+      "range": {
+        "startLine": 193,
+        "startChar": 16,
+        "endLine": 193,
+        "endChar": 50
+      },
+      "revId": "d489dd57c0b54d6864acfa84c49c8ebede9e3bd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_c3c65e20",
         "filename": "tests/wifitests/src/com/android/server/wifi/LastMileLoggerTest.java",
         "patchSetId": 3
@@ -36,6 +83,24 @@
       "writtenOn": "2017-01-23T19:11:57Z",
       "side": 1,
       "message": "do you think it is worth having start trace called twice in a row and stop called twice in a row tests to make sure nothing fails?\n\nGiven that those are distinct possibilities given our code, it might be a good idea.",
+      "revId": "d489dd57c0b54d6864acfa84c49c8ebede9e3bd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_42481f8d",
+        "filename": "tests/wifitests/src/com/android/server/wifi/LastMileLoggerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-23T23:40:58Z",
+      "side": 1,
+      "message": "Agreed. Added the connectionEvent{Started,Succeeded,Failed}DoesNotCrashOnRepeatedCalls} tests, to verify this.",
+      "parentUuid": "082efe90_c3c65e20",
       "revId": "d489dd57c0b54d6864acfa84c49c8ebede9e3bd6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
