@@ -811,7 +811,7 @@ public class WifiMonitor {
         }
 
         if (!eventStr.startsWith(EVENT_PREFIX_STR)) {
-            if (eventStr.startsWith(WPS_SUCCESS_STR)) {
+	    if (eventStr.startsWith(WPS_SUCCESS_STR)) {
                 sendMessage(iface, WPS_SUCCESS_EVENT);
             } else if (eventStr.startsWith(WPS_FAIL_STR)) {
                 handleWpsFailEvent(eventStr, iface);
@@ -854,10 +854,11 @@ public class WifiMonitor {
             } else if (eventStr.startsWith(AUTH_EVENT_PREFIX_STR) &&
                     eventStr.endsWith(AUTH_TIMEOUT_STR)) {
                 sendMessage(iface, AUTHENTICATION_FAILURE_EVENT);
-            } else {
-                if (mVerboseLoggingEnabled) {
+            } else if (eventStr.startsWith(WPA_EVENT_PREFIX_STR) && 
+                    eventStr.endsWith(PASSWORD_MAY_BE_INCORRECT_STR)) {
+                sendMessage(iface, AUTHENTICATION_FAILURE_EVENT);
+            } else if (mVerboseLoggingEnabled) {
                     Log.w(TAG, "couldn't identify event type - " + eventStr);
-                }
             }
             eventLogCounter++;
             return false;
