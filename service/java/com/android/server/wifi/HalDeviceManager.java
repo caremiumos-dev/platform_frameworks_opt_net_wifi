@@ -211,12 +211,21 @@ public class HalDeviceManager {
     }
 
     /**
-     * Removes (releases/destroys) the input interface. Will trigger any registered
+     * Removes (releases/destroys) the given interface. Will trigger any registered
      * InterfaceDestroyedListeners and possibly some InterfaceAvailableForRequestListeners if we
      * can potentially create some other interfaces as a result of removing this interface.
      */
     public boolean removeIface(IWifiIface iface) {
-        return removeIfaceInternal(iface);
+        boolean success = removeIfaceInternal(iface);
+
+        IWifiChipInfo[] chipInfos = getAllChipInfo();
+        if (chipInfos == null) {
+            Log.e(TAG, "removeIface: not able to find any chip information!?");
+        } else {
+            dispatchAvailableForRequestListeners(chipInfos);
+        }
+
+        return success;
     }
 
     /**
@@ -240,9 +249,9 @@ public class HalDeviceManager {
     }
 
     /**
-     * Register an InterfadeDestroyedListener to the specified iface - returns true on success
+     * Register an InterfaceDestroyedListener to the specified iface - returns true on success
      * and false on failure. This listener is in addition to the one registered when the interface
-     * was created - allowing non creators to monitor interface status.
+     * was created - allowing non-creators to monitor interface status.
      *
      * Listener called-back on the specified looper - or on the current looper if a null is passed.
      */
@@ -295,7 +304,7 @@ public class HalDeviceManager {
          * going down.
          *
          * Can be registered when the interface is requested with createXxxIface() - will
-         * only be valid if the
+         * only be valid if the interface creation was successful - i.e. a non-null was returned.
          */
         void onDestroyed();
     }
@@ -309,7 +318,7 @@ public class HalDeviceManager {
          * denied - i.e. a null was returned by createXxxIface(). Will be called when there's a
          * chance that a new request will be granted.
          * - Only active if the original request was denied
-         * - Only called once (at most)
+         * - Called at most once
          */
         void onAvailableForRequest();
     }
@@ -378,6 +387,7 @@ public class HalDeviceManager {
         public int type;
         public Set<InterfaceDestroyedListenerProxy> destroyedListeners = new HashSet<>();
 
+        @Override
         public String toString() {
             StringBuilder sb = new StringBuilder();
             sb.append("{name=").append(name).append(", type=").append(type)
@@ -400,6 +410,7 @@ public class HalDeviceManager {
         public int currentModeId;
         public IWifiIfaceInfo[][] ifaces = new IWifiIfaceInfo[IFACE_TYPES_BY_PRIORITY.length][];
 
+        @Override
         public String toString() {
             StringBuilder sb = new StringBuilder();
             sb.append("{chipId=").append(chipId).append(", availableModes=").append(availableModes)
@@ -1115,10 +1126,22 @@ public class HalDeviceManager {
 
             IWifiIface iface = createIfaceIfPossible(chipInfos, ifaceType, destroyedListener,
                     looper);
-            if (iface == null && availableListener != null) {
-                mInterfaceAvailableForRequestListeners.get(ifaceType).add(
-                        new InterfaceAvailableForRequestListenerProxy(availableListener,
-                                looper == null ? Looper.myLooper() : looper));
+            if (iface == null) {
+                if (availableListener != null) {
+                    mInterfaceAvailableForRequestListeners.get(ifaceType).add(
+                            new InterfaceAvailableForRequestListenerProxy(availableListener,
+                                    looper == null ? Looper.myLooper() : looper));
+                }
+            } else {
+                // need to get again since we may have just modified it: TODO: optimize out?
+                chipInfos = getAllChipInfo();
+                if (chipInfos == null) {
+                    Log.e(TAG, "createIface: no chip info found");
+                    stopWifi(); // major error: shutting down
+                    return null;
+                }
+
+                dispatchAvailableForRequestListeners(chipInfos);
             }
 
             return iface;
@@ -1127,6 +1150,10 @@ public class HalDeviceManager {
 
     private IWifiIface createIfaceIfPossible(IWifiChipInfo[] chipInfos, int ifaceType,
             InterfaceDestroyedListener destroyedListener, Looper looper) {
+        if (DBG) {
+            Log.d(TAG, "createIfaceIfPossible: chipInfos=" + chipInfos + ", ifaceType="
+                    + ifaceType);
+        }
         synchronized (mLock) {
             IfaceCreationData bestIfaceCreationProposal = null;
             for (IWifiChipInfo chipInfo: chipInfos) {
@@ -1175,6 +1202,37 @@ public class HalDeviceManager {
         return null;
     }
 
+    // similar to createIfaceIfPossible - but simpler code: not looking for best option just
+    // for any option (so terminates on first one).
+    private boolean isItPossibleToCreateIface(IWifiChipInfo[] chipInfos, int ifaceType) {
+        if (DBG) {
+            Log.d(TAG, "isItPossibleToCreateIface: chipInfos=" + chipInfos + ", ifaceType="
+                    + ifaceType);
+        }
+
+        for (IWifiChipInfo chipInfo: chipInfos) {
+            for (IWifiChip.ChipMode chipMode: chipInfo.availableModes) {
+                for (IWifiChip.ChipIfaceCombination chipIfaceCombo : chipMode
+                        .availableCombinations) {
+                    int[][] expandedIfaceCombos = expandIfaceCombos(chipIfaceCombo);
+                    if (DBG) {
+                        Log.d(TAG, chipIfaceCombo + " expands to "
+                                + Arrays.deepToString(expandedIfaceCombos));
+                    }
+
+                    for (int[] expandedIfaceCombo: expandedIfaceCombos) {
+                        if (canIfaceComboSupportRequest(chipInfo, chipMode, expandedIfaceCombo,
+                                ifaceType) != null) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Expands (or provides an alternative representation) of the ChipIfaceCombination as all
      * possible combinations of interface.
@@ -1213,6 +1271,7 @@ public class HalDeviceManager {
         public int chipModeId;
         public List<IWifiIfaceInfo> interfacesToBeRemovedFirst;
 
+        @Override
         public String toString() {
             StringBuilder sb = new StringBuilder();
             sb.append("{chipInfo=").append(chipInfo).append(", chipModeId=").append(chipModeId)
@@ -1524,15 +1583,28 @@ public class HalDeviceManager {
 
     // dispatch all available for request listeners of the specified type AND clean-out the list:
     // listeners are called once at most!
-    // TODO: no one is calling this now
-    private void dispatchAvailableForRequestListeners(int ifaceType) {
-        if (DBG) Log.d(TAG, "dispatchAvailableForRequestListeners: ifaceType=" + ifaceType);
+    private void dispatchAvailableForRequestListeners(IWifiChipInfo[] chipInfos) {
+        if (DBG) Log.d(TAG, "dispatchAvailableForRequestListeners: chipInfos=" + chipInfos);
 
-        for (InterfaceAvailableForRequestListenerProxy listener:
-                mInterfaceAvailableForRequestListeners.get(ifaceType)) {
-            listener.trigger();
+        for (int ifaceType: IFACE_TYPES_BY_PRIORITY) {
+            Set<InterfaceAvailableForRequestListenerProxy> listeners =
+                    mInterfaceAvailableForRequestListeners.get(ifaceType);
+
+            if (listeners.size() == 0) {
+                continue;
+            }
+
+            if (!isItPossibleToCreateIface(chipInfos, ifaceType)) {
+                if (DBG) Log.d(TAG, "Creating interface type isn't possible: " + ifaceType);
+                continue;
+            }
+
+            if (DBG) Log.d(TAG, "It is possible to create the interface type: " + ifaceType);
+            for (InterfaceAvailableForRequestListenerProxy listener: listeners) {
+                listener.trigger();
+            }
+            listeners.clear();
         }
-        mInterfaceAvailableForRequestListeners.get(ifaceType).clear();
     }
 
     // dispatch all destroyed listeners registered for the specified interface AND remove the
