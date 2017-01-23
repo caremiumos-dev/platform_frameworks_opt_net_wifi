@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "082efe90_8cfe438a",
+        "filename": "service/java/com/android/server/wifi/RecommendedNetworkEvaluator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2017-01-23T21:20:51Z",
+      "side": 1,
+      "message": "If this is the correct meaning of the parameter - could you make this change in WifiNetworkSelector and update the javadoc there? Might be useful to add \"can be null\" to that javadoc too",
+      "range": {
+        "startLine": 123,
+        "startChar": 54,
+        "endLine": 123,
+        "endChar": 82
+      },
+      "revId": "0f8aa17b2f665eef2c7cd7f05db36d751c4cf99d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
