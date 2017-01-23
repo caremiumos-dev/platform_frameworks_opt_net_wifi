@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "082efe90_cfb0c2e7",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-23T19:11:57Z",
+      "side": 1,
+      "message": "Ah, sorry that wasn\u0027t clear.  There are some calls that come in on other threads.  If all calls to connect come in from the WSM handler thread, then that is good.  I just wanted to make sure there isn\u0027t a connect call from ConnectivityService or a broadcast handler.\n\nOne of the main motivations for my WSM refactor is to get rid of the direct calls.  That will be a bit further out.  :(\n\nI think everything is ok.  I just wanted to know if you had done a quick glance to make sure connect wasn\u0027t called directly.  I don\u0027t think it is, but there are some subtleties with scan result handling (those aren\u0027t always dropped off as an event in the state machine for the handler thread to deal with).",
+      "parentUuid": "082efe90_3d278e1b",
+      "range": {
+        "startLine": 66,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 37
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_fe45a006",
         "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
         "patchSetId": 1
@@ -322,6 +346,30 @@
       "side": 1,
       "message": "I\u0027m not particular about whether we clear in this case or not. But I do want this feature to be simple to understand -- the less documentation someone needs to understand the trace data, the better.\n\nTo that end, I want to limit the number of special cases. I don\u0027t want, e.g., to say \"we clear the trace data, except when we don\u0027t.\" :-)\n\nHow about we just don\u0027t clear in either case?",
       "parentUuid": "082efe90_32cd8ab3",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 62
+      },
+      "revId": "90dc747bf743783e279bb171131149b60935d504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "082efe90_c37f7e10",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-23T19:11:57Z",
+      "side": 1,
+      "message": "I think less clearing while dumping is best - also, if there is a hint of the start of a trace, then that gives the debugger something to work with.  It would be much harder to work across two bug reports (if you happen to even get them).  I would prefer to err on the side of a little too much data than to just be missing what you need in a trace.",
+      "parentUuid": "082efe90_62da1759",
       "range": {
         "startLine": 87,
         "startChar": 0,
