@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a035a11_e05c9fc2",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-24T19:41:37Z",
+      "side": 1,
+      "message": "Does it have to be \"endsWith\"? Previously we consider this to be true as long as the index is greater than 0.",
+      "range": {
+        "startLine": 857,
+        "startChar": 32,
+        "endLine": 857,
+        "endChar": 72
+      },
+      "revId": "1dcecbdefa778e785c617f077b7ac00aa7cbba15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
