@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f1a833a_bcd159bd",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-24T19:21:50Z",
+      "side": 1,
+      "message": "XXX is traditionally a synonym for TODO. I found it confusing.",
+      "range": {
+        "startLine": 145,
+        "startChar": 16,
+        "endLine": 145,
+        "endChar": 19
+      },
+      "revId": "b33f91a24c9a1fe3a83e8b16b13a0da1d0bfc935",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e55681b0_990869c9",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-24T19:21:50Z",
+      "side": 1,
+      "message": "the requested",
+      "range": {
+        "startLine": 151,
+        "startChar": 84,
+        "endLine": 151,
+        "endChar": 89
+      },
+      "revId": "b33f91a24c9a1fe3a83e8b16b13a0da1d0bfc935",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd1869e9_7e6538e1",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-24T19:21:50Z",
+      "side": 1,
+      "message": "used",
+      "range": {
+        "startLine": 152,
+        "startChar": 78,
+        "endLine": 152,
+        "endChar": 83
+      },
+      "revId": "b33f91a24c9a1fe3a83e8b16b13a0da1d0bfc935",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "996c77a7_b625603e",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-24T19:21:50Z",
+      "side": 1,
+      "message": "created",
+      "range": {
+        "startLine": 152,
+        "startChar": 61,
+        "endLine": 152,
+        "endChar": 70
+      },
+      "revId": "b33f91a24c9a1fe3a83e8b16b13a0da1d0bfc935",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb40ae0a_baf0c641",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-24T19:21:50Z",
+      "side": 1,
+      "message": "the interface.",
+      "range": {
+        "startLine": 153,
+        "startChar": 67,
+        "endLine": 154,
+        "endChar": 51
+      },
+      "revId": "b33f91a24c9a1fe3a83e8b16b13a0da1d0bfc935",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dffc2235_69c077bf",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-24T19:21:50Z",
+      "side": 1,
+      "message": "A newly created interface, or null if this was not possible.",
+      "range": {
+        "startLine": 157,
+        "startChar": 15,
+        "endLine": 157,
+        "endChar": 88
+      },
+      "revId": "b33f91a24c9a1fe3a83e8b16b13a0da1d0bfc935",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
