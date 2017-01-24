@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8ffea69_ac54df04",
+        "filename": "tests/wifitests/src/com/android/server/wifi/HalDeviceManagerTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-24T05:33:22Z",
+      "side": 1,
+      "message": "Why not use a mockito spy for this?\n@Spy HalDeviceManager mDut;\n...\ndoReturn(mWifiMock).when(mDut).getWifiServiceMockable();\n..etc",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 34
+      },
+      "revId": "39d9f2bb043590e572354895d581e3ee71b0e885",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8ffea69_2c310fc4",
+        "filename": "tests/wifitests/src/com/android/server/wifi/HalDeviceManagerTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-24T05:33:22Z",
+      "side": 1,
+      "message": "Does this work? I would have thought Mockito would preserve the kInterfaceName... assuming it\u0027s static",
+      "range": {
+        "startLine": 245,
+        "startChar": 19,
+        "endLine": 245,
+        "endChar": 21
+      },
+      "revId": "39d9f2bb043590e572354895d581e3ee71b0e885",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
