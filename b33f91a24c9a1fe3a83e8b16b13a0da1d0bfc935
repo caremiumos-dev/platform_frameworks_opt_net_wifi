@@ -137,6 +137,29 @@
       "revId": "b33f91a24c9a1fe3a83e8b16b13a0da1d0bfc935",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2cc39e07_962d1ede",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-01-24T19:38:17Z",
+      "side": 1,
+      "message": "This could be null for RTT controller (atleast in the HIDL interface it could). Do u want to enforce that the caller needs to specify a boundIface (maybe STA)?",
+      "range": {
+        "startLine": 307,
+        "startChar": 79,
+        "endLine": 307,
+        "endChar": 89
+      },
+      "revId": "b33f91a24c9a1fe3a83e8b16b13a0da1d0bfc935",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
