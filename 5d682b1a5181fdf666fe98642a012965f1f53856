@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8b252c3_ab26f582",
+        "filename": "service/Android.mk",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-24T01:20:36Z",
+      "side": 1,
+      "message": "I haven\u0027t seen this often in makefiles. Would it be better for this init script to be its own target and have it compiled with MODULE_TAGS :\u003d debug ?",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 5
+      },
+      "revId": "5d682b1a5181fdf666fe98642a012965f1f53856",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e828cac7_8d40059f",
+        "filename": "service/wifi-events.rc",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-24T01:20:36Z",
+      "side": 1,
+      "message": "Are there any ordering requirements between this init script and the wifi service? Seems that at least the mkdir and the chmod should run before wifi writes 1 to \"tracing_on\".\n\nDoes \"on post-fs\" provide reasonable guarantees of that happening most of the time? (Since this is just for debugging I assume that it\u0027s OK if race conditions in startup rarely cause this to fail.)",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 10
+      },
+      "revId": "5d682b1a5181fdf666fe98642a012965f1f53856",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8b252c3_2b5445bd",
+        "filename": "service/wifi-events.rc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-24T01:20:36Z",
+      "side": 1,
+      "message": "Have you looked to see if there\u0027s a way to store this in a local variable and avoid repeating it once for every setting?",
+      "range": {
+        "startLine": 29,
+        "startChar": 9,
+        "endLine": 29,
+        "endChar": 56
+      },
+      "revId": "5d682b1a5181fdf666fe98642a012965f1f53856",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08619e1f_59d7e3fa",
+        "filename": "service/wifi-events.rc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-24T01:20:36Z",
+      "side": 1,
+      "message": "Does this trace on every packet transmitted? If so, is there a performance impact?",
+      "range": {
+        "startLine": 45,
+        "startChar": 61,
+        "endLine": 45,
+        "endChar": 73
+      },
+      "revId": "5d682b1a5181fdf666fe98642a012965f1f53856",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e828cac7_8de76592",
+        "filename": "service/wifi-events.rc",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-24T01:20:36Z",
+      "side": 1,
+      "message": "Is this changed often at runtime (e.g., when wifi connects/disconnects), or is it set on boot/startup? If on boot/startup, then can it change before the directory is created, fail because the file does not yet exist, and then never be updated again?",
+      "range": {
+        "startLine": 58,
+        "startChar": 3,
+        "endLine": 58,
+        "endChar": 26
+      },
+      "revId": "5d682b1a5181fdf666fe98642a012965f1f53856",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
