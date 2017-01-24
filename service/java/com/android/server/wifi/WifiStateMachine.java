@@ -1275,20 +1275,16 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         if (!mWifiConfigManager.checkAndUpdateLastConnectUid(netId, uid)) {
             loge("connectToUserSelectNetwork uid " + uid
                     + " did not have the permissions to connect=" + netId);
-            // App does not have the permission to force a connection. But, we should still
-            // reconsider this newly enabled network for network selection.
-            mWifiConnectivityManager.forceConnectivityScan();
+        }
+        // Trigger an immediate connection to the specified network. We're also noting the user
+        // connect choice here, so that it will be considered in the next network selection.
+        mWifiConnectivityManager.setUserConnectChoice(netId);
+        if (mWifiInfo.getNetworkId() == netId) {
+            // We're already connected to the user specified network, don't trigger a
+            // reconnection.
+            logi("connectToUserSelectNetwork already connecting/connected=" + netId);
         } else {
-            // Trigger an immediate connection to the specified network. We're also noting the user
-            // connect choice here, so that it will be considered in the next network selection.
-            mWifiConnectivityManager.setUserConnectChoice(netId);
-            if (mWifiInfo.getNetworkId() == netId) {
-                // We're already connected to the user specified network, don't trigger a
-                // reconnection.
-                logi("connectToUserSelectNetwork already connecting/connected=" + netId);
-            } else {
-                startConnectToNetwork(netId, SUPPLICANT_BSSID_ANY);
-            }
+            startConnectToNetwork(netId, SUPPLICANT_BSSID_ANY);
         }
         return true;
     }
