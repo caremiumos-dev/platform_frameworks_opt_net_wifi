@@ -213,6 +213,29 @@
       "revId": "8207a35f67cdbf8c9eb5b1152d992d94014399c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "515385da_4685d690",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3336,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-24T20:48:41Z",
+      "side": 1,
+      "message": "Given the complexity of the state machine, I don\u0027t know that we have any good alternatives. Adding special cases for every situation where we might not realize that the connection was aborted seems more complex.\n\nFWIW, I wouldn\u0027t, e.g., emit logspam for the timeout case. (Granted, however, that any message to the state machine generates a state machine log record that shows up in dumpsys.)",
+      "range": {
+        "startLine": 3336,
+        "startChar": 17,
+        "endLine": 3336,
+        "endChar": 23
+      },
+      "revId": "8207a35f67cdbf8c9eb5b1152d992d94014399c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
