@@ -45,6 +45,29 @@
       "revId": "1dcecbdefa778e785c617f077b7ac00aa7cbba15",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff70a472_3f0dc0dc",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-24T20:54:43Z",
+      "side": 1,
+      "message": "Actually it\u0027s better to use \"endsWith\" if we know for sure the string is always like that. This way it\u0027s more readable and consistent with how the other strings are checked here.\n\nBTW, can you think of why ag/845276 removed this check?",
+      "range": {
+        "startLine": 857,
+        "startChar": 32,
+        "endLine": 857,
+        "endChar": 72
+      },
+      "revId": "1dcecbdefa778e785c617f077b7ac00aa7cbba15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
