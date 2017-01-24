@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "9e563c5d_b03648ea",
+        "filename": "tests/wifitests/src/com/android/server/wifi/HalDeviceManagerTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-24T17:22:15Z",
+      "side": 1,
+      "message": "Seems reasonable - but wasn\u0027t able to get any variation of that to work. \n\nAlways get a crash - which was caused by the function not getting mocked.",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 34
+      },
+      "revId": "39d9f2bb043590e572354895d581e3ee71b0e885",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8ffea69_2c310fc4",
         "filename": "tests/wifitests/src/com/android/server/wifi/HalDeviceManagerTest.java",
         "patchSetId": 6
