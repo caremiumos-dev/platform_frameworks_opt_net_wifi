@@ -236,6 +236,29 @@
       "revId": "8207a35f67cdbf8c9eb5b1152d992d94014399c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a13a8fd_a747fa0a",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3336,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-24T22:09:14Z",
+      "side": 1,
+      "message": "Discussed out-of-band. We want to have a reliable safety net here, since tracing might impact performance.\n\nWith the current WSM, we\u0027re not sure we have a good safety net. In the CL that adds the timeout, I\u0027ll add a TODO bug to switch from a timeout to a state transition.",
+      "range": {
+        "startLine": 3336,
+        "startChar": 17,
+        "endLine": 3336,
+        "endChar": 23
+      },
+      "revId": "8207a35f67cdbf8c9eb5b1152d992d94014399c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
