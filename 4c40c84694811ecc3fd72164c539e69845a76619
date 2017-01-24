@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8509249_62fae799",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-24T07:33:17Z",
+      "side": 1,
+      "message": "c",
+      "range": {
+        "startLine": 226,
+        "startChar": 26,
+        "endLine": 226,
+        "endChar": 27
+      },
+      "revId": "4c40c84694811ecc3fd72164c539e69845a76619",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4842b67f_b7b8b8d3",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-24T07:33:17Z",
+      "side": 1,
+      "message": "Is this API necessary? createIface registers listeners.",
+      "range": {
+        "startLine": 232,
+        "startChar": 4,
+        "endLine": 232,
+        "endChar": 10
+      },
+      "revId": "4c40c84694811ecc3fd72164c539e69845a76619",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88558e3b_31f0406f",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-24T07:33:17Z",
+      "side": 1,
+      "message": "incomplete javadoc",
+      "revId": "4c40c84694811ecc3fd72164c539e69845a76619",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8ffea69_6c54b7be",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-24T07:33:17Z",
+      "side": 1,
+      "message": "Move these to the top of them class?",
+      "range": {
+        "startLine": 341,
+        "startChar": 4,
+        "endLine": 341,
+        "endChar": 21
+      },
+      "revId": "4c40c84694811ecc3fd72164c539e69845a76619",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "883caef3_8e3643ba",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-24T07:33:17Z",
+      "side": 1,
+      "message": "Call this before getType, since it calls this in it\u0027s failure",
+      "range": {
+        "startLine": 699,
+        "startChar": 26,
+        "endLine": 699,
+        "endChar": 33
+      },
+      "revId": "4c40c84694811ecc3fd72164c539e69845a76619",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8d22618_c1768240",
+        "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareNativeManagerTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-24T07:33:17Z",
+      "side": 1,
+      "message": "device under test?",
+      "range": {
+        "startLine": 44,
+        "startChar": 35,
+        "endLine": 44,
+        "endChar": 39
+      },
+      "revId": "4c40c84694811ecc3fd72164c539e69845a76619",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
