@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a2df85a_230b499a",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-24T19:09:54Z",
+      "side": 1,
+      "message": "Maybe move this down after the public API?",
+      "range": {
+        "startLine": 65,
+        "startChar": 1,
+        "endLine": 71,
+        "endChar": 72
+      },
+      "revId": "3947eda6911b9bbe4f6e6e421e70cf47d8323c3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "35b9aaba_b195dc97",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-24T19:09:54Z",
+      "side": 1,
+      "message": "A chip is required for ops like startLoggingToDebugRingBuffer, etc. That\u0027s a legit reason to call this?",
+      "range": {
+        "startLine": 231,
+        "startChar": 7,
+        "endLine": 232,
+        "endChar": 29
+      },
+      "revId": "3947eda6911b9bbe4f6e6e421e70cf47d8323c3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6e749db_a7f2295d",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-24T19:09:54Z",
+      "side": 1,
+      "message": "Unneeded - the only caller already has the lock.",
+      "range": {
+        "startLine": 1154,
+        "startChar": 8,
+        "endLine": 1154,
+        "endChar": 28
+      },
+      "revId": "3947eda6911b9bbe4f6e6e421e70cf47d8323c3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "94355cd5_c1ad0fc7",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1622,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-24T19:09:54Z",
+      "side": 1,
+      "message": "It does not give me a happy feeling to awaken all these listeners in some random (hash) order. It seems likely that only one will win, and a deterministic order would be better. What order? I don\u0027t know.",
+      "range": {
+        "startLine": 1620,
+        "startChar": 0,
+        "endLine": 1622,
+        "endChar": 13
+      },
+      "revId": "3947eda6911b9bbe4f6e6e421e70cf47d8323c3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "185c60b2_f4f68b6c",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1642,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-24T19:09:54Z",
+      "side": 1,
+      "message": "Here the order is less critical, but predictable would be nice.",
+      "range": {
+        "startLine": 1640,
+        "startChar": 0,
+        "endLine": 1642,
+        "endChar": 13
+      },
+      "revId": "3947eda6911b9bbe4f6e6e421e70cf47d8323c3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
