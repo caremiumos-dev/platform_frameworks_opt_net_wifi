@@ -45,6 +45,30 @@
       "revId": "39d9f2bb043590e572354895d581e3ee71b0e885",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8ffea69_ac45ff07",
+        "filename": "tests/wifitests/src/com/android/server/wifi/HalDeviceManagerTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-24T05:37:12Z",
+      "side": 1,
+      "message": "There are 3 arguments to this function - kInterfaceName is the first one. This is the second one.",
+      "parentUuid": "e8ffea69_2c310fc4",
+      "range": {
+        "startLine": 245,
+        "startChar": 19,
+        "endLine": 245,
+        "endChar": 21
+      },
+      "revId": "39d9f2bb043590e572354895d581e3ee71b0e885",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
