@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e8ffea69_5bd7effa",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-24T02:06:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "082efe90_5d580368",
+      "range": {
+        "startLine": 214,
+        "startChar": 39,
+        "endLine": 214,
+        "endChar": 44
+      },
+      "revId": "fb898d3b510e9e36c3f4622b5b37daca5a85aff7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_f4959383",
         "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-01-24T01:05:43Z",
       "side": 1,
       "message": "InterfaceDestroyedListener",
+      "range": {
+        "startLine": 252,
+        "startChar": 19,
+        "endLine": 252,
+        "endChar": 45
+      },
+      "revId": "fb898d3b510e9e36c3f4622b5b37daca5a85aff7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8ffea69_bbbb7bcf",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-24T02:06:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "082efe90_f4959383",
       "range": {
         "startLine": 252,
         "startChar": 19,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e8ffea69_9bb837d4",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-24T02:06:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "082efe90_94dacf55",
+      "range": {
+        "startLine": 254,
+        "startChar": 30,
+        "endLine": 254,
+        "endChar": 42
+      },
+      "revId": "fb898d3b510e9e36c3f4622b5b37daca5a85aff7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082efe90_74f1a3ad",
         "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e8ffea69_3bb14bed",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-24T02:06:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "082efe90_74f1a3ad",
+      "range": {
+        "startLine": 307,
+        "startChar": 28,
+        "endLine": 307,
+        "endChar": 31
+      },
+      "revId": "fb898d3b510e9e36c3f4622b5b37daca5a85aff7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8ffea69_55d69ea7",
         "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-01-24T01:05:43Z",
       "side": 1,
       "message": "Called at most once",
+      "range": {
+        "startLine": 321,
+        "startChar": 13,
+        "endLine": 321,
+        "endChar": 39
+      },
+      "revId": "fb898d3b510e9e36c3f4622b5b37daca5a85aff7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8ffea69_7babd378",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-24T02:06:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8ffea69_55d69ea7",
       "range": {
         "startLine": 321,
         "startChar": 13,
