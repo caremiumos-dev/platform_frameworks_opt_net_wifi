@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "c5ca8cd2_a9c58140",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-25T21:20:39Z",
+      "side": 1,
+      "message": "I agree",
+      "range": {
+        "startLine": 393,
+        "startChar": 18,
+        "endLine": 393,
+        "endChar": 32
+      },
+      "revId": "a78e7cf8de28fd836f7a111e39e7d7e7005bf942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b7f9717_4ce5455b",
         "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
         "patchSetId": 8
@@ -36,6 +59,46 @@
       "writtenOn": "2017-01-25T18:08:21Z",
       "side": 1,
       "message": "Same here. Maybe WifiChipInfo?",
+      "revId": "a78e7cf8de28fd836f7a111e39e7d7e7005bf942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "699b5103_01191f6b",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-25T21:20:39Z",
+      "side": 1,
+      "message": "I agree",
+      "revId": "a78e7cf8de28fd836f7a111e39e7d7e7005bf942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b31cac7_6ff2094b",
+        "filename": "tests/wifitests/src/com/android/server/wifi/HalDeviceManagerTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-25T21:20:39Z",
+      "side": 1,
+      "message": "Can you split this up into multiple lines, and comment in the parameter names, for all calls to the method:\n\nvalidateInterfaceSequence(chipMock,\n        false,                          //chipModeValid\n        -1000,                          //chipModeId\n        IfaceType.STA,                  //ifaceTypeToCreate\n        name,                           //ifaceName\n        BaselineChip.STA_CHIP_MODE_ID,  //finalChipMode\n        null,                           //tearDownList\n        idl, iafrl);",
+      "range": {
+        "startLine": 268,
+        "startChar": 46,
+        "endLine": 270,
+        "endChar": 81
+      },
       "revId": "a78e7cf8de28fd836f7a111e39e7d7e7005bf942",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
