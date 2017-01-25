@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "44c93d6a_f6b4bf2a",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-25T16:34:45Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 145,
+        "startChar": 16,
+        "endLine": 145,
+        "endChar": 19
+      },
+      "revId": "b33f91a24c9a1fe3a83e8b16b13a0da1d0bfc935",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e55681b0_990869c9",
         "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
         "patchSetId": 9
@@ -36,6 +59,29 @@
       "writtenOn": "2017-01-24T19:21:50Z",
       "side": 1,
       "message": "the requested",
+      "range": {
+        "startLine": 151,
+        "startChar": 84,
+        "endLine": 151,
+        "endChar": 89
+      },
+      "revId": "b33f91a24c9a1fe3a83e8b16b13a0da1d0bfc935",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b93a7e5f_af08a92f",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-25T16:34:45Z",
+      "side": 1,
+      "message": "Rephrased",
       "range": {
         "startLine": 151,
         "startChar": 84,
@@ -94,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "13298337_d37971e7",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-25T16:34:45Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 152,
+        "startChar": 78,
+        "endLine": 152,
+        "endChar": 83
+      },
+      "revId": "b33f91a24c9a1fe3a83e8b16b13a0da1d0bfc935",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb40ae0a_baf0c641",
         "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
         "patchSetId": 9
@@ -105,6 +174,29 @@
       "writtenOn": "2017-01-24T19:21:50Z",
       "side": 1,
       "message": "the interface.",
+      "range": {
+        "startLine": 153,
+        "startChar": 67,
+        "endLine": 154,
+        "endChar": 51
+      },
+      "revId": "b33f91a24c9a1fe3a83e8b16b13a0da1d0bfc935",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09be2630_0eca954e",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-25T16:34:45Z",
+      "side": 1,
+      "message": "Done",
       "range": {
         "startLine": 153,
         "startChar": 67,
@@ -140,6 +232,29 @@
     },
     {
       "key": {
+        "uuid": "87b674e2_75163bfa",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-25T16:34:45Z",
+      "side": 1,
+      "message": "rephrased",
+      "range": {
+        "startLine": 157,
+        "startChar": 15,
+        "endLine": 157,
+        "endChar": 88
+      },
+      "revId": "b33f91a24c9a1fe3a83e8b16b13a0da1d0bfc935",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cc39e07_962d1ede",
         "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
         "patchSetId": 9
@@ -151,6 +266,29 @@
       "writtenOn": "2017-01-24T19:38:17Z",
       "side": 1,
       "message": "This could be null for RTT controller (atleast in the HIDL interface it could). Do u want to enforce that the caller needs to specify a boundIface (maybe STA)?",
+      "range": {
+        "startLine": 307,
+        "startChar": 79,
+        "endLine": 307,
+        "endChar": 89
+      },
+      "revId": "b33f91a24c9a1fe3a83e8b16b13a0da1d0bfc935",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6bd56dd_4e6c4169",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-25T16:34:45Z",
+      "side": 1,
+      "message": "Modified getName() to return \"\u003cnull\u003e\"",
       "range": {
         "startLine": 307,
         "startChar": 79,
