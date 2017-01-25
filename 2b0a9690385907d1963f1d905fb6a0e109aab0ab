@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4db8d9e1_37d6cd92",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-25T04:52:08Z",
+      "side": 1,
+      "message": "Is this message the updated one?  It is pretty confusing.  When reading a bugreport it would seem like there was a permissions failure, but then it seems to happen anyway.  This probably needs to be very clear - otherwise people other than the reviewers here won\u0027t know what is going on.",
+      "range": {
+        "startLine": 1274,
+        "startChar": 12,
+        "endLine": 1275,
+        "endChar": 75
+      },
+      "revId": "2b0a9690385907d1963f1d905fb6a0e109aab0ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
