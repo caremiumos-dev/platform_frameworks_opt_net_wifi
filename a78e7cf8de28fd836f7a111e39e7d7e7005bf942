@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "070ee7dc_859b8505",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-01-25T18:08:21Z",
+      "side": 1,
+      "message": "Can we not name this \"I\u003cSomething\u003e\". It makes it seem like a HIDL interface name which this is not.\n\nMaybe just |WifiIfaceInfo|?",
+      "range": {
+        "startLine": 393,
+        "startChar": 18,
+        "endLine": 393,
+        "endChar": 32
+      },
+      "revId": "a78e7cf8de28fd836f7a111e39e7d7e7005bf942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b7f9717_4ce5455b",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-01-25T18:08:21Z",
+      "side": 1,
+      "message": "Same here. Maybe WifiChipInfo?",
+      "revId": "a78e7cf8de28fd836f7a111e39e7d7e7005bf942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
