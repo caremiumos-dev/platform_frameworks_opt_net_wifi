@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "1a60af50_585439f0",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-25T16:36:23Z",
+      "side": 1,
+      "message": "Agreed - moved.\n\nOriginally thought that while not public, kind of part of the specification of the behavior of this class. That is no longer true since the actual prioritization happens in the indicated function.",
+      "range": {
+        "startLine": 65,
+        "startChar": 1,
+        "endLine": 71,
+        "endChar": 72
+      },
+      "revId": "3947eda6911b9bbe4f6e6e421e70cf47d8323c3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35b9aaba_b195dc97",
         "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
         "patchSetId": 2
@@ -36,6 +59,29 @@
       "writtenOn": "2017-01-24T19:09:54Z",
       "side": 1,
       "message": "A chip is required for ops like startLoggingToDebugRingBuffer, etc. That\u0027s a legit reason to call this?",
+      "range": {
+        "startLine": 231,
+        "startChar": 7,
+        "endLine": 232,
+        "endChar": 29
+      },
+      "revId": "3947eda6911b9bbe4f6e6e421e70cf47d8323c3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72cf95a2_f3610f82",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-25T16:36:23Z",
+      "side": 1,
+      "message": "Updated comment (on a parent CL).",
       "range": {
         "startLine": 231,
         "startChar": 7,
@@ -71,6 +117,29 @@
     },
     {
       "key": {
+        "uuid": "b594d86c_55a42b09",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-25T16:36:23Z",
+      "side": 1,
+      "message": "Only current caller. Don\u0027t want to take risk with any of these.\n\nThough the whole synchronization of this class is \u0027funny\u0027. I really synchronize everything. I could simply change all methods to \u0027synchronized\u0027 that will be a blunter instrument but probably won\u0027t change anything behaviorally.",
+      "range": {
+        "startLine": 1154,
+        "startChar": 8,
+        "endLine": 1154,
+        "endChar": 28
+      },
+      "revId": "3947eda6911b9bbe4f6e6e421e70cf47d8323c3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94355cd5_c1ad0fc7",
         "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
         "patchSetId": 2
@@ -94,6 +163,29 @@
     },
     {
       "key": {
+        "uuid": "2062a3e1_dee3ed9c",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1622,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-25T16:36:23Z",
+      "side": 1,
+      "message": "Order is (only if interface creation is possible):\n- AP, STA, P2P, NAN\n- random within\n\nAgree with comment about: \"all\" and \"random\". But that\u0027s a design question. What semantics do we want here?\n\nOne could consider changing the callback API to return a boolean indicating interest from the client (and if client returns true I stop calling others). The problem is the threading model - we\u0027re dispatching on a separate thread so can\u0027t wait for return value.",
+      "range": {
+        "startLine": 1620,
+        "startChar": 0,
+        "endLine": 1622,
+        "endChar": 13
+      },
+      "revId": "3947eda6911b9bbe4f6e6e421e70cf47d8323c3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "185c60b2_f4f68b6c",
         "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
         "patchSetId": 2
@@ -105,6 +197,29 @@
       "writtenOn": "2017-01-24T19:09:54Z",
       "side": 1,
       "message": "Here the order is less critical, but predictable would be nice.",
+      "range": {
+        "startLine": 1640,
+        "startChar": 0,
+        "endLine": 1642,
+        "endChar": 13
+      },
+      "revId": "3947eda6911b9bbe4f6e6e421e70cf47d8323c3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e2dfe50_e814f540",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1642,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-25T16:36:23Z",
+      "side": 1,
+      "message": "why?\n\nthe cost is that have to do more work to make sure duplicates don\u0027t exist.",
       "range": {
         "startLine": 1640,
         "startChar": 0,
