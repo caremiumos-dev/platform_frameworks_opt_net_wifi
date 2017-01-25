@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3809110b_16f9acc1",
+        "filename": "service/wifi-events.rc",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-25T03:08:34Z",
+      "side": 1,
+      "message": "Taking a closer look at dmesg output, I realized that I had the wrong name for this file.",
+      "range": {
+        "startLine": 23,
+        "startChar": 50,
+        "endLine": 23,
+        "endChar": 63
+      },
+      "revId": "6c7e21bf9d5d901a0b3f11679e48a75335eceb22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5eb54df6_d7109126",
+        "filename": "service/wifi-events.rc",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-25T03:08:34Z",
+      "side": 1,
+      "message": "This change is to deal with the possibility that |wifi.interface| is set before post-fs.",
+      "range": {
+        "startLine": 43,
+        "startChar": 74,
+        "endLine": 43,
+        "endChar": 98
+      },
+      "revId": "6c7e21bf9d5d901a0b3f11679e48a75335eceb22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71b425a6_dd761fe8",
+        "filename": "service/wifi-events.rc",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-25T03:08:34Z",
+      "side": 1,
+      "message": "Similar to line 23, looking closely at the dmesg output, I saw that I had the wrong syntax here. \u0027\u003d*\u0027 means what you\u0027d expect: run the following code whenever wifi.interface is set, regardless of the new value.",
+      "range": {
+        "startLine": 58,
+        "startChar": 26,
+        "endLine": 58,
+        "endChar": 28
+      },
+      "revId": "6c7e21bf9d5d901a0b3f11679e48a75335eceb22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
