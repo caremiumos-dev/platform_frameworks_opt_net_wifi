@@ -22,6 +22,29 @@
       "revId": "c7a75d8af9c8cedc834b6878c91cc7a3a1032bc3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57601e0e_4df1a774",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-25T16:34:53Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 896,
+        "startChar": 20,
+        "endLine": 896,
+        "endChar": 42
+      },
+      "revId": "c7a75d8af9c8cedc834b6878c91cc7a3a1032bc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
