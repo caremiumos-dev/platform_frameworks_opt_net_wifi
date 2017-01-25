@@ -22,6 +22,29 @@
       "revId": "4bdb5490d8f5ffdca0ba077cb114f2cf1482ce16",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34840fc2_eb1164c4",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-01-25T00:55:19Z",
+      "side": 1,
+      "message": "Isn\u0027t it better to have a log indicating that a non settings app did this?  Maybe downgrade the message to info and say that we\u0027re still letting this request thru?",
+      "range": {
+        "startLine": 1273,
+        "startChar": 0,
+        "endLine": 1276,
+        "endChar": 9
+      },
+      "revId": "4bdb5490d8f5ffdca0ba077cb114f2cf1482ce16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
