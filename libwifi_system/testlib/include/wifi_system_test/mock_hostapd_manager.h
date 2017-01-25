@@ -29,13 +29,14 @@ class MockHostapdManager : public HostapdManager {
   MOCK_METHOD0(StartHostapd, bool());
   MOCK_METHOD0(IsHostapdRunning, bool());
   MOCK_METHOD0(StopHostapd, bool());
-  MOCK_METHOD6(CreateHostapdConfig, std::string(
+  MOCK_METHOD7(CreateHostapdConfig, std::string(
       const std::string& interface_name,
       const std::vector<uint8_t> ssid,
       bool is_hidden,
       int channel,
       EncryptionType encryption,
-      const std::vector<uint8_t> passphrase));
+      const std::vector<uint8_t> passphrase,
+      int maxNumConnections));
   MOCK_METHOD1(WriteHostapdConfig, bool(const std::string& config_file));
 
 };  // class MockHostapdManager

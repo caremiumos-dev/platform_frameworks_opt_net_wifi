@@ -120,7 +120,8 @@ string HostapdManager::CreateHostapdConfig(
     bool is_hidden,
     int channel,
     EncryptionType encryption_type,
-    const vector<uint8_t> passphrase) {
+    const vector<uint8_t> passphrase,
+    int max_num_connections) {
   string result;
 
   if (channel < 0) {
@@ -163,6 +164,12 @@ string HostapdManager::CreateHostapdConfig(
     }
   }
 
+  string max_num_conn_config;
+  if (max_num_connections > 0) {
+    max_num_conn_config = StringPrintf("max_num_sta=%d\n",
+                                  max_num_connections);
+  }
+
   result = StringPrintf(
       "interface=%s\n"
       "driver=nl80211\n"
@@ -176,13 +183,15 @@ string HostapdManager::CreateHostapdConfig(
       "hw_mode=%c\n"
       "ignore_broadcast_ssid=%d\n"
       "wowlan_triggers=any\n"
+      "%s"
       "%s",
       interface_name.c_str(),
       ssid_as_string.c_str(),
       channel,
       (channel <= 14) ? 'g' : 'a',
       (is_hidden) ? 1 : 0,
-      encryption_config.c_str());
+      encryption_config.c_str(),
+      max_num_conn_config.c_str());
   return result;
 }
 

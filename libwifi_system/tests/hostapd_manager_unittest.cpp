@@ -33,6 +33,7 @@ const char kTestInterfaceName[] = "foobar0";
 const char kTestSsidStr[] = "helloisitme";
 const char kTestPassphraseStr[] = "yourelookingfor";
 const int kTestChannel = 2;
+const int maxNumConnections = 2;
 
 #define CONFIG_COMMON_PREFIX \
     "interface=foobar0\n" \
@@ -61,19 +62,22 @@ const int kTestChannel = 2;
 const char kExpectedOpenConfig[] =
   CONFIG_COMMON_PREFIX
   "ignore_broadcast_ssid=0\n"
-  "wowlan_triggers=any\n";
+  "wowlan_triggers=any\n"
+  "max_num_sta=2\n";
 
 const char kExpectedWpaConfig[] =
     CONFIG_COMMON_PREFIX
     "ignore_broadcast_ssid=0\n"
     "wowlan_triggers=any\n"
-    CONFIG_WPA_SUFFIX;
+    CONFIG_WPA_SUFFIX
+    "max_num_sta=2\n";
 
 const char kExpectedWpa2Config[] =
     CONFIG_COMMON_PREFIX
     "ignore_broadcast_ssid=0\n"
     "wowlan_triggers=any\n"
-    CONFIG_WPA2_SUFFIX;
+    CONFIG_WPA2_SUFFIX
+    "max_num_sta=2\n";
 
 class HostapdManagerTest : public ::testing::Test {
  protected:
@@ -85,7 +89,8 @@ class HostapdManagerTest : public ::testing::Test {
         false,  // not hidden
         kTestChannel,
         encryption_type,
-        cstr2vector(kTestPassphraseStr));
+        cstr2vector(kTestPassphraseStr),
+        maxNumConnections);
   }
 
   vector<uint8_t> cstr2vector(const char* data) {
@@ -123,7 +128,8 @@ TEST_F(HostapdManagerTest, RespectsHiddenSetting) {
         true,
         kTestChannel,
         HostapdManager::EncryptionType::kOpen,
-        vector<uint8_t>());
+        vector<uint8_t>(),
+        maxNumConnections);
   EXPECT_FALSE(config.find("ignore_broadcast_ssid=1\n") == string::npos);
   EXPECT_TRUE(config.find("ignore_broadcast_ssid=0\n") == string::npos);
 }
@@ -135,11 +141,23 @@ TEST_F(HostapdManagerTest, CorrectlyInfersHwMode) {
         true,
         44,
         HostapdManager::EncryptionType::kOpen,
-        vector<uint8_t>());
+        vector<uint8_t>(),
+        maxNumConnections);
   EXPECT_FALSE(config.find("hw_mode=a\n") == string::npos);
   EXPECT_TRUE(config.find("hw_mode=g\n") == string::npos);
 }
 
+TEST_F(HostapdManagerTest, CorrectDefaultMaxConnections) {
+  string config = HostapdManager().CreateHostapdConfig(
+        kTestInterfaceName,
+        cstr2vector(kTestSsidStr),
+        true,
+        44,
+        HostapdManager::EncryptionType::kOpen,
+        vector<uint8_t>(),
+        -1);
+  EXPECT_FALSE(config.find("max_num_sta") == string::npos);
+}
 
 }  // namespace wifi_system
 }  // namespace android

@@ -29,12 +29,14 @@ import android.os.INetworkManagementService;
 import android.os.Looper;
 import android.os.Message;
 import android.os.RemoteException;
+import android.telephony.CarrierConfigManager;
 import android.util.Log;
 
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
 import com.android.server.net.BaseNetworkObserver;
 import com.android.server.wifi.util.ApConfigUtil;
+import com.android.server.wifi.util.CarrierConfigUtil;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
@@ -58,6 +60,8 @@ public class SoftApManager implements ActiveModeManager {
 
     private final INetworkManagementService mNwService;
     private final WifiApConfigStore mWifiApConfigStore;
+    private final CarrierConfigUtil mCarrierConfigUtil;
+    private static final int UNSPECIFIED_MAX_NUM_CONNECTIONS = -1;
 
     /**
      * Listener for soft AP state changes.
@@ -78,7 +82,8 @@ public class SoftApManager implements ActiveModeManager {
                          IApInterface apInterface,
                          INetworkManagementService nms,
                          WifiApConfigStore wifiApConfigStore,
-                         WifiConfiguration config) {
+                         WifiConfiguration config,
+                         CarrierConfigUtil carrierConfigUtil) {
         mStateMachine = new SoftApStateMachine(looper);
 
         mWifiNative = wifiNative;
@@ -90,6 +95,7 @@ public class SoftApManager implements ActiveModeManager {
         if (config != null) {
             mWifiApConfigStore.setApConfiguration(config);
         }
+        mCarrierConfigUtil = carrierConfigUtil;
     }
 
     /**
@@ -116,6 +122,17 @@ public class SoftApManager implements ActiveModeManager {
         if (mListener != null) {
             mListener.onStateChanged(state, reason);
         }
+    }
+
+    /**
+     *  Get the max number of connections allowed from the Carrier Config.
+     *  @return integer max num connections. Returns DEFAULT_MAX_NUM_CONNECTIONS is the key is not
+     *  found in the Carrier Config.
+    */
+    public int getMaxNumConnections() {
+        Integer maxNumConnections = mCarrierConfigUtil.getCarrierConfigIntForKey(
+                CarrierConfigManager.KEY_MAX_NUMBER_TETHERED_CONNECTIONS_INT);
+        return (maxNumConnections != null) ? maxNumConnections : UNSPECIFIED_MAX_NUM_CONNECTIONS;
     }
 
     /**
@@ -163,7 +180,8 @@ public class SoftApManager implements ActiveModeManager {
                     localConfig.apChannel, encryptionType,
                     (localConfig.preSharedKey != null)
                             ? localConfig.preSharedKey.getBytes(StandardCharsets.UTF_8)
-                            : new byte[0]);
+                            : new byte[0],
+                    getMaxNumConnections());
             if (!success) {
                 Log.e(TAG, "Failed to write hostapd configuration");
                 return ERROR_GENERIC;

@@ -44,6 +44,7 @@ import com.android.server.net.IpConfigStore;
 import com.android.server.wifi.hotspot2.PasspointManager;
 import com.android.server.wifi.hotspot2.PasspointNetworkEvaluator;
 import com.android.server.wifi.hotspot2.PasspointObjectFactory;
+import com.android.server.wifi.util.CarrierConfigUtil;
 import com.android.server.wifi.util.WifiPermissionsUtil;
 import com.android.server.wifi.util.WifiPermissionsWrapper;
 
@@ -106,6 +107,7 @@ public class WifiInjector {
     private final SIMAccessor mSimAccessor;
     private HandlerThread mWifiAwareHandlerThread;
     private HalDeviceManager mHalDeviceManager;
+    private final CarrierConfigUtil mCarrierConfigUtil;
 
     private final boolean mUseRealLogger;
 
@@ -137,6 +139,7 @@ public class WifiInjector {
         mWifiStateMachineHandlerThread = new HandlerThread("WifiStateMachine");
         mWifiStateMachineHandlerThread.start();
         Looper wifiStateMachineLooper = mWifiStateMachineHandlerThread.getLooper();
+        mCarrierConfigUtil = new CarrierConfigUtil(mContext);
 
         // Now get instances of all the objects that depend on the HandlerThreads
         mTrafficPoller =  new WifiTrafficPoller(mContext, mWifiServiceHandlerThread.getLooper(),
@@ -343,7 +346,7 @@ public class WifiInjector {
         return new SoftApManager(mWifiServiceHandlerThread.getLooper(),
                                  mWifiNative, mCountryCode.getCountryCode(),
                                  listener, apInterface, nmService,
-                                 mWifiApConfigStore, config);
+                                 mWifiApConfigStore, config, mCarrierConfigUtil);
     }
 
     /**

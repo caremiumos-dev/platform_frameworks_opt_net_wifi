@@ -36,6 +36,7 @@ import android.os.test.TestLooper;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import com.android.server.net.BaseNetworkObserver;
+import com.android.server.wifi.util.CarrierConfigUtil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -68,6 +69,7 @@ public class SoftApManagerTest {
 
     TestLooper mLooper;
     @Mock WifiNative mWifiNative;
+    @Mock CarrierConfigUtil mCarrierConfigUtil;
     @Mock SoftApManager.Listener mListener;
     @Mock InterfaceConfiguration mInterfaceConfiguration;
     @Mock IBinder mApInterfaceBinder;
@@ -91,8 +93,9 @@ public class SoftApManagerTest {
         when(mApInterface.startHostapd()).thenReturn(true);
         when(mApInterface.stopHostapd()).thenReturn(true);
         when(mApInterface.writeHostapdConfig(
-                any(), anyBoolean(), anyInt(), anyInt(), any())).thenReturn(true);
+                any(), anyBoolean(), anyInt(), anyInt(), any(), anyInt())).thenReturn(true);
         when(mApInterface.getInterfaceName()).thenReturn(TEST_INTERFACE_NAME);
+        when(mCarrierConfigUtil.getCarrierConfigIntForKey(any())).thenReturn(null);
     }
 
     private WifiConfiguration createDefaultApConfig() {
@@ -112,7 +115,8 @@ public class SoftApManagerTest {
                                                            mApInterface,
                                                            mNmService,
                                                            mWifiApConfigStore,
-                                                           config);
+                                                           config,
+                                                           mCarrierConfigUtil);
         mLooper.dispatchAll();
         if (config != null) {
             verify(mWifiApConfigStore).setApConfiguration(config);
@@ -208,7 +212,7 @@ public class SoftApManagerTest {
         order.verify(mNmService).registerObserver(mNetworkObserverCaptor.capture());
         order.verify(mApInterface).writeHostapdConfig(
                 eq(expectedSSID.getBytes(StandardCharsets.UTF_8)), anyBoolean(),
-                anyInt(), anyInt(), any());
+                anyInt(), anyInt(), any(), anyInt());
         order.verify(mApInterface).startHostapd();
         mNetworkObserverCaptor.getValue().interfaceLinkStateChanged(TEST_INTERFACE_NAME, true);
         mLooper.dispatchAll();

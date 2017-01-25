@@ -51,6 +51,8 @@ class HostapdManager {
   // |channel| is the WiFi channel (e.g. 6) or <0 for a default value.
   // |encryption_type| defines the encryption of the configured network.
   // |passphrase| is ignored for kOpen networks.
+  // |max_num_connections| is the max number of allowed connections. <=0 for a
+  // default value.
   //
   // Returns an empty string on failure.
   virtual std::string CreateHostapdConfig(
@@ -59,7 +61,8 @@ class HostapdManager {
       bool is_hidden,
       int channel,
       EncryptionType encryption,
-      const std::vector<uint8_t> passphrase);
+      const std::vector<uint8_t> passphrase,
+      int max_num_connections);
 
   // Write out a hostapd configuration file created via CreateHostapdConfig().
   // Future instances of hostapd will use this new configuration.
