@@ -45,6 +45,29 @@
       "revId": "8231951d019d230a34adaa5af9b10937b4a9e523",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ceb01bf_c4917d22",
+        "filename": "tests/wifitests/src/com/android/server/wifi/HalDeviceManagerTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-25T07:16:14Z",
+      "side": 1,
+      "message": "Serious Business?",
+      "range": {
+        "startLine": 1139,
+        "startChar": 24,
+        "endLine": 1139,
+        "endChar": 26
+      },
+      "revId": "8231951d019d230a34adaa5af9b10937b4a9e523",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
