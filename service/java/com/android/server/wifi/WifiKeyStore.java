@@ -107,6 +107,18 @@ public class WifiKeyStore {
                 mKeyStore.delete(privKeyName, Process.WIFI_UID);
                 return ret;
             }
+
+            Certificate[] clientChain = config.getClientCertificateChain();
+            if (clientChain != null && clientChain.length != 0) {
+                ret = putClientChainInKeyStore(userCertName, clientChain);
+                if (!ret) {
+                    // Remove partially installed user certificate chain
+                    mKeyStore.delete(userCertName, Process.WIFI_UID);
+                    // Remove private key installed
+                    mKeyStore.delete(privKeyName, Process.WIFI_UID);
+                    return ret;
+                }
+            }
         }
 
         X509Certificate[] caCertificates = config.getCaCertificates();
@@ -166,8 +178,19 @@ public class WifiKeyStore {
      * @return true on success
      */
     public boolean putCertInKeyStore(String name, Certificate cert) {
+        return putClientChainInKeyStore(name, new Certificate[] {cert});
+    }
+
+    /**
+     * Install a client certificate chain into the keystore.
+     *
+     * @param name The alias name of the certificate to be installed
+     * @param certs The certificate chain to be installed
+     * @return true on success
+     */
+    public boolean putClientChainInKeyStore(String name, Certificate[] certs) {
         try {
-            byte[] certData = Credentials.convertToPem(cert);
+            byte[] certData = Credentials.convertToPem(certs);
             if (mVerboseLoggingEnabled) Log.d(TAG, "putting certificate " + name + " in keystore");
             return mKeyStore.put(name, certData, Process.WIFI_UID, KeyStore.FLAG_NONE);
         } catch (IOException e1) {
