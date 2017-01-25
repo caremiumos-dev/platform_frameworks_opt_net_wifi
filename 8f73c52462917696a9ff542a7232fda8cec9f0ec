@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33a0501e_60177417",
+        "filename": "service/java/com/android/server/wifi/WifiKeyStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-01-25T18:41:06Z",
+      "side": 1,
+      "message": "After tracing through the code in KeyStore, the put operation in KeyStore will actually overwrite the existing data with the same name/alias.  Reference: https://cs.corp.google.com/android/system/security/keystore/blob.cpp?sq\u003dpackage:android\u0026l\u003d90\n\nSo we probably we need to combine clientCertificate and clientCertificateChain before putting them in the keystore.",
+      "range": {
+        "startLine": 113,
+        "startChar": 46,
+        "endLine": 113,
+        "endChar": 59
+      },
+      "revId": "8f73c52462917696a9ff542a7232fda8cec9f0ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
