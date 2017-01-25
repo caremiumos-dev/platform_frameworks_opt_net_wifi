@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "157b9f82_5e93e284",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1188,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-25T05:39:09Z",
+      "side": 1,
+      "message": "I think this is factorial time, however N is very small, so I\u0027m ok with this approach.",
+      "range": {
+        "startLine": 1188,
+        "startChar": 20,
+        "endLine": 1188,
+        "endChar": 37
+      },
+      "revId": "8231951d019d230a34adaa5af9b10937b4a9e523",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3c5331e_efaddfe9",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1281,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-25T05:39:09Z",
+      "side": 1,
+      "message": "When was the last time you got to use a subtraction in wifi code?",
+      "range": {
+        "startLine": 1281,
+        "startChar": 65,
+        "endLine": 1281,
+        "endChar": 66
+      },
+      "revId": "8231951d019d230a34adaa5af9b10937b4a9e523",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
