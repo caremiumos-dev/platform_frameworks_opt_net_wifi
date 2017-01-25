@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "6759c073_d7d2b3c7",
+        "filename": "service/Android.mk",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-25T03:08:34Z",
+      "side": 1,
+      "message": "Agreed that this isn\u0027t common, but it\u0027s not totally rare, either (about 90 hits in codesearch, excluding the build/ tree).\n\nI did experiment with making this a separate target, but couldn\u0027t find an appropriate BUILD rule for just installing an init script. (As best as I can tell, all of the rules at https://android.googlesource.com/platform/build/+/master/core/config.mk#92 assume some other files are involved.)\n\nDo you know of an appropriate BUILD rule?",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 5
+      },
+      "revId": "5d682b1a5181fdf666fe98642a012965f1f53856",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e828cac7_8d40059f",
         "filename": "service/wifi-events.rc",
         "patchSetId": 7
@@ -36,6 +59,29 @@
       "writtenOn": "2017-01-24T01:20:36Z",
       "side": 1,
       "message": "Are there any ordering requirements between this init script and the wifi service? Seems that at least the mkdir and the chmod should run before wifi writes 1 to \"tracing_on\".\n\nDoes \"on post-fs\" provide reasonable guarantees of that happening most of the time? (Since this is just for debugging I assume that it\u0027s OK if race conditions in startup rarely cause this to fail.)",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 10
+      },
+      "revId": "5d682b1a5181fdf666fe98642a012965f1f53856",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f667b08c_ed96cd68",
+        "filename": "service/wifi-events.rc",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-25T03:08:34Z",
+      "side": 1,
+      "message": "Possible concerns about race conditions:\n\n- WifiService writes to \"tracing_on\" before init script runs\n  - Mostly not a problem. That particular connection won\u0027t be traced, but subsequent ones will.\n  - However, we do need to ensure that the fail-safe mechanism is initialized even if WifiService starts before this script. I\u0027ve filed b/34683800 for this.\n- WifiService writes to \"tracing_on\" as the init script is running: Since tracing_on is initially owned by root, WifiService won\u0027t be able to write to tracing_on until after the init script has configured things properly. So we don\u0027t, e.g., need to worry that WifiService will be tracing data-path events on the cellular interface.\n\nGiven that, I think the best option is to accept a small chance that the first connection after boot is untraced, rather than try to provide some explicit synchronization between this script and WifiService. (In addition to making the implementation more complex, adding synchronization would introduce the possibility of holding up the first Wifi connection.)",
       "range": {
         "startLine": 17,
         "startChar": 0,
@@ -71,6 +117,29 @@
     },
     {
       "key": {
+        "uuid": "c82c0bb3_0440168b",
+        "filename": "service/wifi-events.rc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-25T03:08:34Z",
+      "side": 1,
+      "message": "There is a way, but I\u0027m disinclined to rely on it.\n\n- Per system/core/init/README.md, there seem to be only a small number of situations where system properties are expanded to their values. E.g. the README calls out the |content| argument of a write command as a context where properties are expanded. But the README says nothing about expanding properties in the |path| argument.\n- README.md does not mention any way to expand environment variables.\n\nNow, examining the implementation of command execution (Command::InvokeFunc()) reveals that property expansion actually happens for every argument of every command. (expanded_args[0] \u003d args_[0], to preserve the command name. But elements 1..N are all  mapped through expand_args()).\n\nWe could take advantage of how things are implemented right now. But, I\u0027m disinclined to do so, for two reasons:\n- the feature isn\u0027t documented\n- none of the existing init files take advantage of the undocumented feature (\"file:rc$ write\\s+\\$\\{\" turns up no matches in codesearch. In contrast, \"file:rc$ write.+\\$\\{\", turns up many matches for property expansion in the |content| argument to write.)",
+      "range": {
+        "startLine": 29,
+        "startChar": 9,
+        "endLine": 29,
+        "endChar": 56
+      },
+      "revId": "5d682b1a5181fdf666fe98642a012965f1f53856",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08619e1f_59d7e3fa",
         "filename": "service/wifi-events.rc",
         "patchSetId": 7
@@ -94,6 +163,29 @@
     },
     {
       "key": {
+        "uuid": "13075b10_4857c34d",
+        "filename": "service/wifi-events.rc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-25T03:08:34Z",
+      "side": 1,
+      "message": "Indeed, this traces every TX packet on wlan0. To mitigate the performance impact, we\u0027ll stop tracing when we determine that the connection has succeeded or failed. (And, to deal with the cases where we lose track of a connection, we\u0027ll time out tracing on a connection attempt after a certain amount of time.)",
+      "range": {
+        "startLine": 45,
+        "startChar": 61,
+        "endLine": 45,
+        "endChar": 73
+      },
+      "revId": "5d682b1a5181fdf666fe98642a012965f1f53856",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e828cac7_8de76592",
         "filename": "service/wifi-events.rc",
         "patchSetId": 7
@@ -105,6 +197,29 @@
       "writtenOn": "2017-01-24T01:20:36Z",
       "side": 1,
       "message": "Is this changed often at runtime (e.g., when wifi connects/disconnects), or is it set on boot/startup? If on boot/startup, then can it change before the directory is created, fail because the file does not yet exist, and then never be updated again?",
+      "range": {
+        "startLine": 58,
+        "startChar": 3,
+        "endLine": 58,
+        "endChar": 26
+      },
+      "revId": "5d682b1a5181fdf666fe98642a012965f1f53856",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "793891f6_e96557a6",
+        "filename": "service/wifi-events.rc",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-01-25T03:08:34Z",
+      "side": 1,
+      "message": "There are two different ways that the property is set:\n\n- Via init: |on boot|, |on post-fs-data|, |on mmi|: all of these come after |post-fs|\n- Via compile-time parameters or files:\n  - PRODUCT_PROPERTY_OVERRIDES\n  - ADDITIONAL_DEFAULT_PROPERTIES\n  - system.prop\n\nTesting this out on my angler, the parameters/files also happen after post-fs. Just to be safe, though, I\u0027ve updated the post-fs event to use the \u0027wifi.interface\u0027 property if available.\n\n(The \"if available\" part is slightly risky, in the sense that it\u0027s also not mentioned in the README.md. However, the \"if available\" feature is used by logcatd.rc. So we\u0027re likely to notice if it\u0027s broken.)",
       "range": {
         "startLine": 58,
         "startChar": 3,
