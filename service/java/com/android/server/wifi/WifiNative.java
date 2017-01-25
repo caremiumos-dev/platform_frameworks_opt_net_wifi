@@ -77,7 +77,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TimeZone;
 
-
 /**
  * Native calls for bring up/shut down of the supplicant daemon and for
  * sending requests to the supplicant daemon
@@ -1483,6 +1482,7 @@ public class WifiNative {
     private static native byte[] readKernelLogNative();
 
     synchronized public String readKernelLog() {
+        //TODO - b/34360112
         byte[] bytes = readKernelLogNative();
         if (bytes != null) {
             CharsetDecoder decoder = StandardCharsets.UTF_8.newDecoder();
@@ -1524,6 +1524,8 @@ public class WifiNative {
         }
     }
 
+    private WifiVendorHal mWifiVendorHal;
+
     public boolean startHal() {
         String debugLog = "startHal stack: ";
         java.lang.StackTraceElement[] elements = Thread.currentThread().getStackTrace();
@@ -1534,6 +1536,14 @@ public class WifiNative {
         sLocalLog.log(debugLog);
 
         synchronized (sLock) {
+            // TODO(mplass) this needs some more work.
+            mWifiVendorHal = new WifiVendorHal();
+            try {
+                if (!mWifiVendorHal.startVendorHal()) mWifiVendorHal = null;
+            } catch (UnsupportedOperationException e) {
+                mWifiVendorHal = null;
+            }
+
             if (startHalNative()) {
                 int wlan0Index = queryInterfaceIndex(mInterfaceName);
                 if (wlan0Index == -1) {
@@ -1567,6 +1577,10 @@ public class WifiNative {
                 sWifiIfaceHandles = null;
                 sWlan0Index = -1;
             }
+        }
+        if (mWifiVendorHal != null) {
+            mWifiVendorHal.stopVendorHal();
+            mWifiVendorHal = null;
         }
     }
 
@@ -1613,6 +1627,13 @@ public class WifiNative {
     }
 
     public boolean getScanCapabilities(ScanCapabilities capabilities) {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.getScanCapabilities(capabilities);
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             return isHalStarted() && getScanCapabilitiesNative(sWlan0Index, capabilities);
         }
@@ -1892,6 +1913,13 @@ public class WifiNative {
     private static ScanSettings sScanSettings;
 
     public boolean startScan(ScanSettings settings, ScanEventHandler eventHandler) {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.startScan(settings, eventHandler);
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 if (sScanCmdId != 0) {
@@ -1920,6 +1948,14 @@ public class WifiNative {
     }
 
     public void stopScan() {
+        try {
+            if (mWifiVendorHal != null) {
+                mWifiVendorHal.stopScan();
+                return;
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 if (sScanCmdId != 0) {
@@ -1933,6 +1969,14 @@ public class WifiNative {
     }
 
     public void pauseScan() {
+        try {
+            if (mWifiVendorHal != null) {
+                mWifiVendorHal.pauseScan();
+                return;
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 if (sScanCmdId != 0 && sScanSettings != null && sScanEventHandler != null) {
@@ -1947,6 +1991,14 @@ public class WifiNative {
     }
 
     public void restartScan() {
+        try {
+            if (mWifiVendorHal != null) {
+                mWifiVendorHal.restartScan();
+                return;
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 if (sScanCmdId == 0 && sScanSettings != null && sScanEventHandler != null) {
@@ -1966,6 +2018,13 @@ public class WifiNative {
     }
 
     public WifiScanner.ScanData[] getScanResults(boolean flush) {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.getScanResults(flush);
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             WifiScanner.ScanData[] sd = null;
             if (isHalStarted()) {
@@ -2109,10 +2168,18 @@ public class WifiNative {
     }
 
     public WifiLinkLayerStats getWifiLinkLayerStats(String iface) {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.getWifiLinkLayerStats(iface);
+            }
+        } catch (UnsupportedOperationException e) { }
+        // legacyHalWarning();
+
         // TODO: use correct iface name to Index translation
         if (iface == null) return null;
         synchronized (sLock) {
             if (isHalStarted()) {
+                legacyHalWarning();
                 return getWifiLinkLayerStatsNative(sWlan0Index);
             } else {
                 return null;
@@ -2121,6 +2188,14 @@ public class WifiNative {
     }
 
     public void setWifiLinkLayerStats(String iface, int enable) {
+        try {
+            if (mWifiVendorHal != null) {
+                mWifiVendorHal.setWifiLinkLayerStats(iface, enable);
+                return;
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         if (iface == null) return;
         synchronized (sLock) {
             if (isHalStarted()) {
@@ -2129,8 +2204,15 @@ public class WifiNative {
         }
     }
 
-    public static native int getSupportedFeatureSetNative(int iface);
+    private static native int getSupportedFeatureSetNative(int iface);
     public int getSupportedFeatureSet() {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.getSupportedFeatureSet();
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 return getSupportedFeatureSetNative(sWlan0Index);
@@ -2169,6 +2251,13 @@ public class WifiNative {
 
     public boolean requestRtt(
             RttManager.RttParams[] params, RttEventHandler handler) {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.requestRtt(params, handler);
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 if (sRttCmdId != 0) {
@@ -2186,6 +2275,13 @@ public class WifiNative {
     }
 
     public boolean cancelRtt(RttManager.RttParams[] params) {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.cancelRtt(params);
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 if (sRttCmdId == 0) {
@@ -2217,6 +2313,13 @@ public class WifiNative {
      */
     @Nullable
     public ResponderConfig enableRttResponder(int timeoutSeconds) {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.enableRttResponder(timeoutSeconds);
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (!isHalStarted()) return null;
             if (sRttResponderCmdId != 0) {
@@ -2238,6 +2341,13 @@ public class WifiNative {
      * {@code false} otherwise.
      */
     public boolean disableRttResponder() {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.disableRttResponder();
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (!isHalStarted()) return false;
             if (sRttResponderCmdId == 0) {
@@ -2252,6 +2362,7 @@ public class WifiNative {
     private static native boolean setScanningMacOuiNative(int iface, byte[] oui);
 
     public boolean setScanningMacOui(byte[] oui) {
+        //TODO(mplass) needs hook
         synchronized (sLock) {
             if (isHalStarted()) {
                 return setScanningMacOuiNative(sWlan0Index, oui);
@@ -2265,6 +2376,7 @@ public class WifiNative {
             int iface, int band);
 
     public int [] getChannelsForBand(int band) {
+        //TODO(mplass) needs hook
         synchronized (sLock) {
             if (isHalStarted()) {
                 return getChannelsForBandNative(sWlan0Index, band);
@@ -2276,6 +2388,7 @@ public class WifiNative {
 
     private static native boolean isGetChannelsForBandSupportedNative();
     public boolean isGetChannelsForBandSupported(){
+        //TODO(mplass) needs hook
         synchronized (sLock) {
             if (isHalStarted()) {
                 return isGetChannelsForBandSupportedNative();
@@ -2287,6 +2400,7 @@ public class WifiNative {
 
     private static native boolean setDfsFlagNative(int iface, boolean dfsOn);
     public boolean setDfsFlag(boolean dfsOn) {
+        //TODO(mplass) needs hook
         synchronized (sLock) {
             if (isHalStarted()) {
                 return setDfsFlagNative(sWlan0Index, dfsOn);
@@ -2298,6 +2412,13 @@ public class WifiNative {
 
     private static native RttManager.RttCapabilities getRttCapabilitiesNative(int iface);
     public RttManager.RttCapabilities getRttCapabilities() {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.getRttCapabilities();
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 return getRttCapabilitiesNative(sWlan0Index);
@@ -2309,6 +2430,13 @@ public class WifiNative {
 
     private static native ApfCapabilities getApfCapabilitiesNative(int iface);
     public ApfCapabilities getApfCapabilities() {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.getApfCapabilities();
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 return getApfCapabilitiesNative(sWlan0Index);
@@ -2320,6 +2448,13 @@ public class WifiNative {
 
     private static native boolean installPacketFilterNative(int iface, byte[] filter);
     public boolean installPacketFilter(byte[] filter) {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.installPacketFilter(filter);
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 return installPacketFilterNative(sWlan0Index, filter);
@@ -2330,7 +2465,15 @@ public class WifiNative {
     }
 
     private static native boolean setCountryCodeHalNative(int iface, String CountryCode);
+
     public boolean setCountryCodeHal(String CountryCode) {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.setCountryCodeHal(CountryCode);
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 return setCountryCodeHalNative(sWlan0Index, CountryCode);
@@ -2350,6 +2493,13 @@ public class WifiNative {
     private static native boolean enableDisableTdlsNative(int iface, boolean enable,
             String macAddr);
     public boolean enableDisableTdls(boolean enable, String macAdd, TdlsEventHandler tdlsCallBack) {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.enableDisableTdls(enable, macAdd, tdlsCallBack);
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             sTdlsEventHandler = tdlsCallBack;
             return enableDisableTdlsNative(sWlan0Index, enable, macAdd);
@@ -2366,6 +2516,13 @@ public class WifiNative {
     }
     private static native TdlsStatus getTdlsStatusNative(int iface, String macAddr);
     public TdlsStatus getTdlsStatus(String macAdd) {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.getTdlsStatus(macAdd);
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 return getTdlsStatusNative(sWlan0Index, macAdd);
@@ -2389,6 +2546,13 @@ public class WifiNative {
 
     private static native TdlsCapabilities getTdlsCapabilitiesNative(int iface);
     public TdlsCapabilities getTdlsCapabilities () {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.getTdlsCapabilities();
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 return getTdlsCapabilitiesNative(sWlan0Index);
@@ -2436,6 +2600,13 @@ public class WifiNative {
     private static int sLogCmdId = -1;
     private static native boolean setLoggingEventHandlerNative(int iface, int id);
     public boolean setLoggingEventHandler(WifiLoggerEventHandler handler) {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.setLoggingEventHandler(handler);
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 int oldId =  sLogCmdId;
@@ -2456,6 +2627,14 @@ public class WifiNative {
             int flags, int minIntervalSec ,int minDataSize, String ringName);
     public boolean startLoggingRingBuffer(int verboseLevel, int flags, int maxInterval,
             int minDataSize, String ringName){
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.startLoggingRingBuffer(verboseLevel, flags, maxInterval,
+                        minDataSize, ringName);
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 return startLoggingRingBufferNative(sWlan0Index, verboseLevel, flags, maxInterval,
@@ -2468,6 +2647,13 @@ public class WifiNative {
 
     private static native int getSupportedLoggerFeatureSetNative(int iface);
     public int getSupportedLoggerFeatureSet() {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.getSupportedLoggerFeatureSet();
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 return getSupportedLoggerFeatureSetNative(sWlan0Index);
@@ -2479,6 +2665,13 @@ public class WifiNative {
 
     private static native boolean resetLogHandlerNative(int iface, int id);
     public boolean resetLogHandler() {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.resetLogHandler();
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 if (sLogCmdId == -1) {
@@ -2500,6 +2693,13 @@ public class WifiNative {
 
     private static native String getDriverVersionNative(int iface);
     public String getDriverVersion() {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.getDriverVersion();
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 return getDriverVersionNative(sWlan0Index);
@@ -2512,6 +2712,13 @@ public class WifiNative {
 
     private static native String getFirmwareVersionNative(int iface);
     public String getFirmwareVersion() {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.getFirmwareVersion();
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 return getFirmwareVersionNative(sWlan0Index);
@@ -2542,6 +2749,13 @@ public class WifiNative {
 
     private static native RingBufferStatus[] getRingBufferStatusNative(int iface);
     public RingBufferStatus[] getRingBufferStatus() {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.getRingBufferStatus();
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 return getRingBufferStatusNative(sWlan0Index);
@@ -2553,6 +2767,13 @@ public class WifiNative {
 
     private static native boolean getRingBufferDataNative(int iface, String ringName);
     public boolean getRingBufferData(String ringName) {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.getRingBufferData(ringName);
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 return getRingBufferDataNative(sWlan0Index, ringName);
@@ -2574,6 +2795,13 @@ public class WifiNative {
 
     private static native boolean getFwMemoryDumpNative(int iface);
     public byte[] getFwMemoryDump() {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.getFwMemoryDump();
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 if(getFwMemoryDumpNative(sWlan0Index)) {
@@ -2591,6 +2819,13 @@ public class WifiNative {
     private static native byte[] getDriverStateDumpNative(int iface);
     /** Fetch the driver state, for driver debugging. */
     public byte[] getDriverStateDump() {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.getDriverStateDump();
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 return getDriverStateDumpNative(sWlan0Index);
@@ -2806,6 +3041,13 @@ public class WifiNative {
      * Ask the HAL to enable packet fate monitoring. Fails unless HAL is started.
      */
     public boolean startPktFateMonitoring() {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.startPktFateMonitoring();
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 return startPktFateMonitoringNative(sWlan0Index) == WIFI_SUCCESS;
@@ -2820,6 +3062,13 @@ public class WifiNative {
      * Fetch the most recent TX packet fates from the HAL. Fails unless HAL is started.
      */
     public boolean getTxPktFates(TxFateReport[] reportBufs) {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.getTxPktFates(reportBufs);
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 int res = getTxPktFatesNative(sWlan0Index, reportBufs);
@@ -2840,6 +3089,13 @@ public class WifiNative {
      * Fetch the most recent RX packet fates from the HAL. Fails unless HAL is started.
      */
     public boolean getRxPktFates(RxFateReport[] reportBufs) {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.getRxPktFates(reportBufs);
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         synchronized (sLock) {
             if (isHalStarted()) {
                 int res = getRxPktFatesNative(sWlan0Index, reportBufs);
@@ -2869,6 +3125,8 @@ public class WifiNative {
      * @return true if success, false otherwise
      */
     public boolean setPnoList(PnoSettings settings, PnoEventHandler eventHandler) {
+        legacyHalWarning();
+
         Log.e(TAG, "setPnoList cmd " + sPnoCmdId);
 
         synchronized (sLock) {
@@ -2903,6 +3161,8 @@ public class WifiNative {
      * @return true if success, false otherwise
      */
     public boolean resetPnoList() {
+        legacyHalWarning();
+
         Log.e(TAG, "resetPnoList cmd " + sPnoCmdId);
 
         synchronized (sLock) {
@@ -2948,6 +3208,13 @@ public class WifiNative {
 
     public int
     startSendingOffloadedPacket(int slot, KeepalivePacketData keepAlivePacket, int period) {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.startSendingOffloadedPacket(slot, keepAlivePacket, period);
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         Log.d(TAG, "startSendingOffloadedPacket slot=" + slot + " period=" + period);
 
         String[] macAddrStr = getMacAddress().split(":");
@@ -2970,6 +3237,13 @@ public class WifiNative {
 
     public int
     stopSendingOffloadedPacket(int slot) {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.stopSendingOffloadedPacket(slot);
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         Log.d(TAG, "stopSendingOffloadedPacket " + slot);
         synchronized (sLock) {
             if (isHalStarted()) {
@@ -3001,6 +3275,13 @@ public class WifiNative {
 
     public int startRssiMonitoring(byte maxRssi, byte minRssi,
                                                 WifiRssiEventHandler rssiEventHandler) {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.startRssiMonitoring(maxRssi, minRssi, rssiEventHandler);
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         Log.d(TAG, "startRssiMonitoring: maxRssi=" + maxRssi + " minRssi=" + minRssi);
         synchronized (sLock) {
             sWifiRssiEventHandler = rssiEventHandler;
@@ -3026,6 +3307,13 @@ public class WifiNative {
     private native static int stopRssiMonitoringNative(int iface, int idx);
 
     public int stopRssiMonitoring() {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.stopRssiMonitoring();
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         Log.d(TAG, "stopRssiMonitoring, cmdId " + sRssiMonitorCmdId);
         synchronized (sLock) {
             if (isHalStarted()) {
@@ -3048,6 +3336,13 @@ public class WifiNative {
      * @return the |WifiWakeReasonAndCounts| object retrieved from the wlan driver.
      */
     public WifiWakeReasonAndCounts getWlanWakeReasonCount() {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.getWlanWakeReasonCount();
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         Log.d(TAG, "getWlanWakeReasonCount " + sWlan0Index);
         synchronized (sLock) {
             if (isHalStarted()) {
@@ -3061,6 +3356,13 @@ public class WifiNative {
     private static native int configureNeighborDiscoveryOffload(int iface, boolean enabled);
 
     public boolean configureNeighborDiscoveryOffload(boolean enabled) {
+        try {
+            if (mWifiVendorHal != null) {
+                return mWifiVendorHal.configureNeighborDiscoveryOffload(enabled);
+            }
+        } catch (UnsupportedOperationException e) { }
+        legacyHalWarning();
+
         final String logMsg =  "configureNeighborDiscoveryOffload(" + enabled + ")";
         Log.d(mTAG, logMsg);
         synchronized (sLock) {
@@ -3074,4 +3376,14 @@ public class WifiNative {
         }
         return false;
     }
+
+    StackTraceElement[] mTrace;
+    void legacyHalWarning() {
+        Thread cur = Thread.currentThread();
+        mTrace = cur.getStackTrace();
+        StackTraceElement s = mTrace[3];
+        Log.e(TAG, "LEGACY HAL th " + cur.getId()
+                + " line " + s.getLineNumber() + " " + s.getMethodName());
+    }
+
 }
