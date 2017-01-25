@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "009b53d9_aea8cdf6",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1188,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-25T16:34:53Z",
+      "side": 1,
+      "message": "Not quite. There are 2 factors:\n\nN: size of individual information entries\nM: number of information entries\n\nThis is more N^M then factorial",
+      "range": {
+        "startLine": 1188,
+        "startChar": 20,
+        "endLine": 1188,
+        "endChar": 37
+      },
+      "revId": "8231951d019d230a34adaa5af9b10937b4a9e523",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3c5331e_efaddfe9",
         "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
         "patchSetId": 6
@@ -48,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "796a588b_c14ad6c1",
+        "filename": "service/java/com/android/server/wifi/HalDeviceManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1281,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-25T16:34:53Z",
+      "side": 1,
+      "message": "please ... there are even divisions here!",
+      "range": {
+        "startLine": 1281,
+        "startChar": 65,
+        "endLine": 1281,
+        "endChar": 66
+      },
+      "revId": "8231951d019d230a34adaa5af9b10937b4a9e523",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ceb01bf_c4917d22",
         "filename": "tests/wifitests/src/com/android/server/wifi/HalDeviceManagerTest.java",
         "patchSetId": 6
@@ -59,6 +105,29 @@
       "writtenOn": "2017-01-25T07:16:14Z",
       "side": 1,
       "message": "Serious Business?",
+      "range": {
+        "startLine": 1139,
+        "startChar": 24,
+        "endLine": 1139,
+        "endChar": 26
+      },
+      "revId": "8231951d019d230a34adaa5af9b10937b4a9e523",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae354285_7c51904d",
+        "filename": "tests/wifitests/src/com/android/server/wifi/HalDeviceManagerTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-25T16:34:53Z",
+      "side": 1,
+      "message": "single band ... but that was wrong. Just removed.",
       "range": {
         "startLine": 1139,
         "startChar": 24,
