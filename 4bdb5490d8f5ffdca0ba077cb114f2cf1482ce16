@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88b51f9d_edc666f9",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-25T00:18:35Z",
+      "side": 1,
+      "message": "Do we still need this block of code here? The error message doesn\u0027t match with the new logic.",
+      "range": {
+        "startLine": 1273,
+        "startChar": 0,
+        "endLine": 1276,
+        "endChar": 9
+      },
+      "revId": "4bdb5490d8f5ffdca0ba077cb114f2cf1482ce16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
