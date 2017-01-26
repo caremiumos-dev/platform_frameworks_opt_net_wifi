@@ -503,6 +503,7 @@ public class HalDeviceManager {
                                         boolean preexisting) {
                                     Log.d(TAG, "IWifi registration notification: fqName=" + fqName
                                             + ", name=" + name + ", preexisting=" + preexisting);
+                                    stopWifi(); // just in case
                                     mWifi = null; // get rid of old copy!
                                     initIWifiIfNecessary();
                                 }
@@ -1120,8 +1121,8 @@ public class HalDeviceManager {
     private IWifiIface createIfaceIfPossible(WifiChipInfo[] chipInfos, int ifaceType,
             InterfaceDestroyedListener destroyedListener, Looper looper) {
         if (DBG) {
-            Log.d(TAG, "createIfaceIfPossible: chipInfos=" + chipInfos + ", ifaceType="
-                    + ifaceType);
+            Log.d(TAG, "createIfaceIfPossible: chipInfos=" + Arrays.deepToString(chipInfos)
+                    + ", ifaceType=" + ifaceType);
         }
         synchronized (mLock) {
             IfaceCreationData bestIfaceCreationProposal = null;
@@ -1176,8 +1177,8 @@ public class HalDeviceManager {
     // for any option (so terminates on first one).
     private boolean isItPossibleToCreateIface(WifiChipInfo[] chipInfos, int ifaceType) {
         if (DBG) {
-            Log.d(TAG, "isItPossibleToCreateIface: chipInfos=" + chipInfos + ", ifaceType="
-                    + ifaceType);
+            Log.d(TAG, "isItPossibleToCreateIface: chipInfos=" + Arrays.deepToString(chipInfos)
+                    + ", ifaceType=" + ifaceType);
         }
 
         for (WifiChipInfo chipInfo: chipInfos) {
@@ -1574,7 +1575,10 @@ public class HalDeviceManager {
     // dispatch all available for request listeners of the specified type AND clean-out the list:
     // listeners are called once at most!
     private void dispatchAvailableForRequestListeners(WifiChipInfo[] chipInfos) {
-        if (DBG) Log.d(TAG, "dispatchAvailableForRequestListeners: chipInfos=" + chipInfos);
+        if (DBG) {
+            Log.d(TAG, "dispatchAvailableForRequestListeners: chipInfos="
+                    + Arrays.deepToString(chipInfos));
+        }
 
         for (int ifaceType: IFACE_TYPES_BY_PRIORITY) {
             Set<InterfaceAvailableForRequestListenerProxy> listeners =
