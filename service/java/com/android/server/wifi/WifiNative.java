@@ -34,7 +34,6 @@ import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pGroup;
 import android.net.wifi.p2p.nsd.WifiP2pServiceInfo;
 import android.os.SystemClock;
-import android.os.SystemProperties;
 import android.text.TextUtils;
 import android.util.LocalLog;
 import android.util.Log;
@@ -114,23 +113,6 @@ public class WifiNative {
 
     private static native int registerNatives();
 
-    /*
-     * Singleton WifiNative instances
-     */
-    private static WifiNative wlanNativeInterface =
-            new WifiNative(SystemProperties.get("wifi.interface", "wlan0"), true);
-    public static WifiNative getWlanNativeInterface() {
-        return wlanNativeInterface;
-    }
-
-    private static WifiNative p2pNativeInterface =
-            // commands for p2p0 interface don't need prefix
-            new WifiNative(SystemProperties.get("wifi.direct.interface", "p2p0"), false);
-    public static WifiNative getP2pNativeInterface() {
-        return p2pNativeInterface;
-    }
-
-
     private final String mTAG;
     private final String mInterfaceName;
     private final String mInterfacePrefix;
@@ -144,34 +126,17 @@ public class WifiNative {
         }
     }
 
-    /**
-     * Explicitly sets the WifiSupplicantHal instance
-     * TODO(b/34722734): move this into the constructor of WifiNative when I clean up the awful
-     * double singleton pattern
-     */
-    /* package */ void setWifiSupplicantHal(WifiSupplicantHal wifiSupplicantHal) {
-        mWifiSupplicantHal = wifiSupplicantHal;
-    }
-
-    /**
-     * Explicitly sets the WifiVendorHal instance
-     * TODO(b/34722734): move this into the constructor of WifiNative when I clean up the awful
-     * double singleton pattern
-     */
-    /* package */ void setWifiVendorHal(WifiVendorHal wifiVendorHal) {
-        mWifiVendorHal = wifiVendorHal;
-    }
-
-    private WifiNative(String interfaceName,
-                       boolean requiresPrefix) {
+    public WifiNative(String interfaceName, boolean requiresPrefix, WifiVendorHal vendorHal,
+                      WifiSupplicantHal supplicantHal) {
         mInterfaceName = interfaceName;
         mTAG = "WifiNative-" + interfaceName;
-
         if (requiresPrefix) {
             mInterfacePrefix = "IFNAME=" + interfaceName + " ";
         } else {
             mInterfacePrefix = "";
         }
+        mWifiVendorHal = vendorHal;
+        mWifiSupplicantHal = supplicantHal;
     }
 
     /**
