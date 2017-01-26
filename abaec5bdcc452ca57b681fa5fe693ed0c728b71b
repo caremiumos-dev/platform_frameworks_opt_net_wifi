@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f705d31_c5c3ed09",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-01-26T18:06:34Z",
+      "side": 1,
+      "message": "Let\u0027s check-in with this taken off.",
+      "range": {
+        "startLine": 173,
+        "startChar": 15,
+        "endLine": 173,
+        "endChar": 33
+      },
+      "revId": "abaec5bdcc452ca57b681fa5fe693ed0c728b71b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
