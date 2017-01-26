@@ -44,6 +44,7 @@ public class WifiAwareNativeManagerTest {
     private WifiAwareNativeManager mDut;
     @Mock private WifiAwareStateManager mWifiAwareStateManagerMock;
     @Mock private HalDeviceManager mHalDeviceManager;
+    @Mock private WifiAwareNativeApi mWifiAwareNativeApi;
     @Mock private IWifiNanIface mWifiNanIfaceMock;
     private ArgumentCaptor<HalDeviceManager.ManagerStatusListener> mManagerStatusListenerCaptor =
             ArgumentCaptor.forClass(HalDeviceManager.ManagerStatusListener.class);
@@ -61,7 +62,7 @@ public class WifiAwareNativeManagerTest {
         MockitoAnnotations.initMocks(this);
 
         mDut = new WifiAwareNativeManager(mWifiAwareStateManagerMock,
-                mHalDeviceManager);
+                mHalDeviceManager, mWifiAwareNativeApi);
 
         mInOrder = inOrder(mWifiAwareStateManagerMock, mHalDeviceManager);
     }
