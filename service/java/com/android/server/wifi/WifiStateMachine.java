@@ -3470,52 +3470,6 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         mWifiNative.disconnect();
     }
 
-    private static IClientInterface setupDriverForClientMode(IWificond wificond) {
-        if (wificond == null) {
-            Log.e(TAG, "Failed to get reference to wificond");
-            return null;
-        }
-
-        IClientInterface clientInterface = null;
-        try {
-            clientInterface = wificond.createClientInterface();
-        } catch (RemoteException e1) { }
-
-        if (clientInterface == null) {
-            Log.e(TAG, "Could not get IClientInterface instance from wificond");
-            return null;
-        } else {
-            Binder.allowBlocking(clientInterface.asBinder());
-        }
-
-        return clientInterface;
-    }
-
-    private IApInterface setupDriverForSoftAp() {
-        if (mWificond == null) {
-            Log.e(TAG, "Failed to get reference to wificond");
-            return null;
-        }
-
-        IApInterface apInterface = null;
-        try {
-            apInterface = mWificond.createApInterface();
-        } catch (RemoteException e1) { }
-
-        if (apInterface == null) {
-            Log.e(TAG, "Could not get IApInterface instance from wificond");
-            return null;
-        } else {
-            Binder.allowBlocking(apInterface.asBinder());
-        }
-
-        if (!mWifiNative.startHal()) {
-            //  starting HAL is optional
-            Log.e(TAG, "Failed to start HAL for AP mode");
-        }
-        return apInterface;
-    }
-
     private byte[] macAddressFromString(String macString) {
         String[] macBytes = macString.split(":");
         if (macBytes.length != 6) {
@@ -4018,9 +3972,13 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                 case CMD_START_SUPPLICANT:
                     // Refresh our reference to wificond.  This allows us to tolerate restarts.
                     mWificond = mWifiInjector.makeWificond();
-                    mClientInterface = setupDriverForClientMode(mWificond);
-                    if (mClientInterface == null ||
-                            !mDeathRecipient.linkToDeath(mClientInterface.asBinder())) {
+                    if (mWificond != null) {
+                        mClientInterface = mWifiNative.setupDriverForClientMode(mWificond);
+                    } else {
+                        Log.e(TAG, "Failed to get reference to wificond");
+                    }
+                    if (mWificond == null || mClientInterface == null
+                            || !mDeathRecipient.linkToDeath(mClientInterface.asBinder())) {
                         setWifiState(WifiManager.WIFI_STATE_UNKNOWN);
                         cleanup();
                         break;
@@ -6692,8 +6650,13 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                 throw new RuntimeException("Illegal transition to SoftApState: " + message);
             }
 
-            IApInterface apInterface = setupDriverForSoftAp();
-            if (apInterface == null) {
+            IApInterface apInterface = null;
+            if (mWificond != null) {
+                apInterface = mWifiNative.setupDriverForSoftApMode(mWificond);
+            } else {
+                Log.e(TAG, "Failed to get reference to wificond for SoftApMode");
+            }
+            if (mWificond == null || apInterface == null) {
                 setWifiApState(WIFI_AP_STATE_FAILED,
                         WifiManager.SAP_START_FAILURE_GENERAL);
                 /**
