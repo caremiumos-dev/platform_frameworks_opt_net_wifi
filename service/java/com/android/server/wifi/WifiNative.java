@@ -20,6 +20,9 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.Context;
 import android.net.apf.ApfCapabilities;
+import android.net.wifi.IApInterface;
+import android.net.wifi.IClientInterface;
+import android.net.wifi.IWificond;
 import android.net.wifi.RttManager;
 import android.net.wifi.RttManager.ResponderConfig;
 import android.net.wifi.ScanResult;
@@ -136,6 +139,7 @@ public class WifiNative {
     private final String mInterfacePrefix;
     private WifiSupplicantHal mWifiSupplicantHal;
     private WifiVendorHal mWifiVendorHal;
+    private WificondControl mWificondControl;
 
     private Context mContext = null;
     public void initContext(Context context) {
@@ -151,6 +155,15 @@ public class WifiNative {
      */
     public void setWifiSupplicantHal(WifiSupplicantHal wifiSupplicantHal) {
         mWifiSupplicantHal = wifiSupplicantHal;
+    }
+
+    /**
+     * Explicitly sets the WificondControl instance
+     * TODO(b/34722734): move this into the constructor of WifiNative when I clean up the awful
+     * double singleton pattern
+     */
+    public void setWificondControl(WificondControl wificondControl) {
+        mWificondControl = wificondControl;
     }
 
     /**
@@ -207,7 +220,31 @@ public class WifiNative {
         if (sLocalLog != null) sLocalLog.log(mInterfaceName + ": " + s);
     }
 
+   /**
+    * Setup driver for client mode via wificond.
+    * @param wificond - Wificond binder handler.
+    * @return An IClientInterface as wificond client interface binder handler.
+    * Returns null on failure.
+    */
+    public IClientInterface setupDriverForClientMode(IWificond wificond) {
+        return mWificondControl.setupDriverForClientMode(wificond);
+    }
 
+    /**
+    * Setup driver for softAp mode via wificond.
+    * @param wificond - Wificond binder handler.
+    * @return An IApInterface as wificond Ap interface binder handler.
+    * Returns null on failure.
+    */
+    public IApInterface setupDriverForSoftApMode(IWificond wificond) {
+        IApInterface apInterface = mWificondControl.setupDriverForSoftApMode(wificond);
+
+        if (!startHal()) {
+            //  starting HAL is optional
+            Log.e(TAG, "Failed to start HAL for AP mode");
+        }
+        return apInterface;
+    }
 
     /*
      * Supplicant management
