@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "084c8e50_a4421d5e",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-26T19:44:34Z",
+      "side": 1,
+      "message": "This whole block will be done by WifiHalManager",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 35
+      },
+      "revId": "26ee8f61322aed8970f7c50566ddc72069f75bc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95bcf3ba_456cd4c7",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-26T19:44:34Z",
+      "side": 1,
+      "message": "Drop these",
+      "range": {
+        "startLine": 269,
+        "startChar": 0,
+        "endLine": 284,
+        "endChar": 7
+      },
+      "revId": "26ee8f61322aed8970f7c50566ddc72069f75bc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c61b7ed1_def8fff9",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-26T19:44:34Z",
+      "side": 1,
+      "message": "Who knows about secure rtt?",
+      "range": {
+        "startLine": 938,
+        "startChar": 16,
+        "endLine": 938,
+        "endChar": 63
+      },
+      "revId": "26ee8f61322aed8970f7c50566ddc72069f75bc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73b96856_d0809e18",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-26T19:44:34Z",
+      "side": 1,
+      "message": "This field has apparently never been used.",
+      "range": {
+        "startLine": 964,
+        "startChar": 27,
+        "endLine": 964,
+        "endChar": 87
+      },
+      "revId": "26ee8f61322aed8970f7c50566ddc72069f75bc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a589bab7_941bd195",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-26T19:44:34Z",
+      "side": 1,
+      "message": "This never had a native implementation.",
+      "range": {
+        "startLine": 1086,
+        "startChar": 15,
+        "endLine": 1086,
+        "endChar": 43
+      },
+      "revId": "26ee8f61322aed8970f7c50566ddc72069f75bc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
