@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "6976959c_c848e107",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-26T19:38:33Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 173,
+        "startChar": 15,
+        "endLine": 173,
+        "endChar": 33
+      },
+      "revId": "abaec5bdcc452ca57b681fa5fe693ed0c728b71b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c5fd29b_32e9ad6a",
         "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
         "patchSetId": 5
@@ -36,6 +59,29 @@
       "writtenOn": "2017-01-26T18:10:55Z",
       "side": 1,
       "message": "All of this logic will move to HalDeviceManager.",
+      "range": {
+        "startLine": 120,
+        "startChar": 29,
+        "endLine": 120,
+        "endChar": 47
+      },
+      "revId": "abaec5bdcc452ca57b681fa5fe693ed0c728b71b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d85db885_a985c450",
+        "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-26T19:38:33Z",
+      "side": 1,
+      "message": "ok. Ill leave it here for now.",
       "range": {
         "startLine": 120,
         "startChar": 29,
