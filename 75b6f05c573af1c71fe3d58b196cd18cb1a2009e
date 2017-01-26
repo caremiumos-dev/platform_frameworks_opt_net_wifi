@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "2d711fdf_90162203",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-26T23:15:35Z",
+      "side": 1,
+      "message": "missing a space",
+      "range": {
+        "startLine": 21,
+        "startChar": 36,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "75b6f05c573af1c71fe3d58b196cd18cb1a2009e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a19eca03_fa53de7f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-26T23:15:35Z",
+      "side": 1,
+      "message": "Consider rewriting - maybe something like \"A wtf was added to alert for out of order notifications.\"",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 11
+      },
+      "revId": "75b6f05c573af1c71fe3d58b196cd18cb1a2009e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7562a82b_243ff13d",
         "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
         "patchSetId": 3
@@ -13,6 +59,29 @@
       "writtenOn": "2017-01-26T22:49:57Z",
       "side": 1,
       "message": "wtf?",
+      "range": {
+        "startLine": 2336,
+        "startChar": 16,
+        "endLine": 2336,
+        "endChar": 19
+      },
+      "revId": "75b6f05c573af1c71fe3d58b196cd18cb1a2009e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7fa4388_fdfa0cb5",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2336,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-26T23:15:35Z",
+      "side": 1,
+      "message": "this is covered in the commit message",
       "range": {
         "startLine": 2336,
         "startChar": 16,
