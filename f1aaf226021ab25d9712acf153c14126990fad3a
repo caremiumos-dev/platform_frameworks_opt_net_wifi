@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27b1357b_5c8364a9",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-01-26T00:14:22Z",
+      "side": 1,
+      "message": "nit. mIWifi so that the name is consistent with the other objects in the class.",
+      "range": {
+        "startLine": 44,
+        "startChar": 19,
+        "endLine": 44,
+        "endChar": 23
+      },
+      "revId": "f1aaf226021ab25d9712acf153c14126990fad3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "41f0c412_17dda460",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-01-26T00:14:22Z",
+      "side": 1,
+      "message": "nit. Can we remove this \"hidl\" prefixes? All of the methods in this class is understood to be over HIDL.",
+      "range": {
+        "startLine": 63,
+        "startChar": 19,
+        "endLine": 63,
+        "endChar": 31
+      },
+      "revId": "f1aaf226021ab25d9712acf153c14126990fad3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
