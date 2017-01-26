@@ -23,6 +23,7 @@ import android.net.wifi.aware.SubscribeConfig;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.android.server.wifi.WifiInjector;
 import com.android.server.wifi.WifiNative;
 
 import libcore.util.HexEncoding;
@@ -96,7 +97,7 @@ public class WifiAwareNative {
 
     private boolean isAwareInit() {
         synchronized (WifiNative.sLock) {
-            if (!WifiNative.getWlanNativeInterface().isHalStarted()) {
+            if (!WifiInjector.getInstance().getWlanNativeInterface().isHalStarted()) {
                 /*
                  * We should never start the HAL - that's done at a higher level
                  * by the Wi-Fi state machine.

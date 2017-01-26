@@ -576,7 +576,7 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
         private UserAuthorizingJoinState mUserAuthorizingJoinState = new UserAuthorizingJoinState();
         private OngoingGroupRemovalState mOngoingGroupRemovalState = new OngoingGroupRemovalState();
 
-        private WifiNative mWifiNative = WifiNative.getP2pNativeInterface();
+        private WifiNative mWifiNative = WifiInjector.getInstance().getP2pNativeInterface();
         private WifiMonitor mWifiMonitor = WifiMonitor.getInstance();
         private final WifiP2pDeviceList mPeers = new WifiP2pDeviceList();
         // WifiInjector is lazy initialized in P2p Service
