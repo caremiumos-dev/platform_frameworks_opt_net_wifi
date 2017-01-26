@@ -57,7 +57,7 @@ import java.util.Set;
  */
 public class HalDeviceManager {
     private static final String TAG = "HalDeviceManager";
-    private static final boolean DBG = false;
+    private static final boolean DBG = true;
 
     // public API
     public HalDeviceManager() {
@@ -534,6 +534,7 @@ public class HalDeviceManager {
                                             + ", name=" + name + ", preexisting=" + preexisting);
                                     mWifi = null; // get rid of old copy!
                                     initIWifiIfNecessary();
+                                    stopWifi(); // just in case
                                 }
                             })) {
                         Log.wtf(TAG, "Failed to register a listener for IWifi service");
