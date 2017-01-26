@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8c84fb6_96173a0c",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-01-26T02:43:40Z",
+      "side": 1,
+      "message": "This should go into WifiNative. WifiNative should arbitrate between the seperate sub modules.",
+      "range": {
+        "startLine": 186,
+        "startChar": 70,
+        "endLine": 186,
+        "endChar": 88
+      },
+      "revId": "c5f0876449e3365acfedee4c885ae71c4cd4a11b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "331c0cbd_4e0cf958",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4022,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-01-26T02:43:40Z",
+      "side": 1,
+      "message": "Have a WifiNative.initiliazeSupplicant().",
+      "range": {
+        "startLine": 4022,
+        "startChar": 25,
+        "endLine": 4022,
+        "endChar": 43
+      },
+      "revId": "c5f0876449e3365acfedee4c885ae71c4cd4a11b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
