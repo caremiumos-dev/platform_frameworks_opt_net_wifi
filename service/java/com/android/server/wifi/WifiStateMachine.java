@@ -4148,6 +4148,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                 setWifiState(WIFI_STATE_DISABLED);
                 transitionTo(mScanModeState);
             } else if (mOperationalMode == CONNECT_MODE) {
+                mWifiConfigManager.tryEnablePermanentlyDisabledNetwork();
                 // Transitioning to Disconnected state will trigger a scan and subsequently AutoJoin
                 transitionTo(mDisconnectedState);
             } else if (mOperationalMode == DISABLED_MODE) {
@@ -4420,6 +4421,9 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             switch(message.what) {
                 case CMD_SET_OPERATIONAL_MODE:
                     if (message.arg1 == CONNECT_MODE) {
+                        if (mLastOperationMode == SCAN_ONLY_WITH_WIFI_OFF_MODE) {
+                            mWifiConfigManager.tryEnablePermanentlyDisabledNetwork();
+                        }
                         mOperationalMode = CONNECT_MODE;
                         transitionTo(mDisconnectedState);
                     } else if (message.arg1 == DISABLED_MODE) {

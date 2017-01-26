@@ -1201,7 +1201,9 @@ public class WifiConfigManager {
         if (reason == NetworkSelectionStatus.NETWORK_SELECTION_ENABLE) {
             setNetworkSelectionEnabled(networkStatus);
             setNetworkStatus(config, WifiConfiguration.Status.ENABLED);
-        } else if (reason < NetworkSelectionStatus.DISABLED_TLS_VERSION_MISMATCH) {
+        } else if (reason < NetworkSelectionStatus.DISABLED_TLS_VERSION_MISMATCH
+                && (!config.isEnterprise() || config.isPasspoint()
+                || reason != NetworkSelectionStatus.DISABLED_AUTHENTICATION_FAILURE)) {
             setNetworkSelectionTemporarilyDisabled(networkStatus, reason);
         } else {
             setNetworkSelectionPermanentlyDisabled(networkStatus, reason);
@@ -1334,6 +1336,21 @@ public class WifiConfigManager {
             return false;
         }
         return tryEnableNetwork(config);
+    }
+
+    /**
+     * Attempt to re-enable a network for network selection, if this network was
+     * permanently disabled and its reason is AUTHENTICATION_FAILURE.
+     */
+    public void tryEnablePermanentlyDisabledNetwork() {
+        for (WifiConfiguration config : getInternalConfiguredNetworks()) {
+            NetworkSelectionStatus netStat = config.getNetworkSelectionStatus();
+            if (netStat.isNetworkPermanentlyDisabled() && netStat.isDisabledByReason(
+                    NetworkSelectionStatus.DISABLED_AUTHENTICATION_FAILURE)) {
+                updateNetworkSelectionStatus(
+                        config, NetworkSelectionStatus.NETWORK_SELECTION_ENABLE);
+            }
+        }
     }
 
     /**
