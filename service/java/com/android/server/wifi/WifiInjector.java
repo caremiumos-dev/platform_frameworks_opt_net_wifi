@@ -102,6 +102,7 @@ public class WifiInjector {
     private final PasspointManager mPasspointManager;
     private final SIMAccessor mSimAccessor;
     private HandlerThread mWifiAwareHandlerThread;
+    private final HalDeviceManager mHalDeviceManager;
 
     private final boolean mUseRealLogger;
 
@@ -189,6 +190,8 @@ public class WifiInjector {
         mWifiLastResortWatchdog = new WifiLastResortWatchdog(mWifiController, mWifiMetrics);
         mWifiMulticastLockManager = new WifiMulticastLockManager(mWifiStateMachine,
                 BatteryStatsService.getService());
+        mHalDeviceManager = new HalDeviceManager();
+        mHalDeviceManager.initialize();
     }
 
     /**
@@ -403,5 +406,9 @@ public class WifiInjector {
             mWifiAwareHandlerThread.start();
         }
         return mWifiAwareHandlerThread;
+    }
+
+    public HalDeviceManager getHalDeviceManager() {
+        return mHalDeviceManager;
     }
 }
