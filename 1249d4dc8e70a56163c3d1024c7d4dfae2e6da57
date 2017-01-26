@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "e3f03c9f_3b963b32",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1736,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-26T23:15:31Z",
+      "side": 1,
+      "message": "I will add the above on top of your uploaded but not submitted WifiVendorHal CL.",
+      "range": {
+        "startLine": 1605,
+        "startChar": 0,
+        "endLine": 1736,
+        "endChar": 5
+      },
+      "revId": "1249d4dc8e70a56163c3d1024c7d4dfae2e6da57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a4423d8_d3cb5e33",
         "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
         "patchSetId": 2
@@ -59,6 +82,29 @@
       "writtenOn": "2017-01-26T21:07:59Z",
       "side": 1,
       "message": "Please make a separate CL that adds this to WifiVendorHal.java",
+      "range": {
+        "startLine": 1738,
+        "startChar": 0,
+        "endLine": 1750,
+        "endChar": 5
+      },
+      "revId": "1249d4dc8e70a56163c3d1024c7d4dfae2e6da57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd01f617_4d37e633",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1750,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-26T23:15:31Z",
+      "side": 1,
+      "message": "I will add this helper function to the submitted version of WifiVerdorHal.java.",
       "range": {
         "startLine": 1738,
         "startChar": 0,
