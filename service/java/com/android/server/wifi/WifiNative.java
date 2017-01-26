@@ -3371,4 +3371,72 @@ public class WifiNative {
                 + " line " + s.getLineNumber() + " " + s.getMethodName());
     }
 
+    // Firmware roaming control.
+
+    /**
+     * Class to retrieve firmware roaming capability parameters.
+     */
+    public static class RoamingCapabilities {
+        public int  maxBlacklistSize;
+        public int  maxWhitelistSize;
+    }
+
+    /**
+     * Query the firmware roaming capabilities.
+     */
+    public boolean getRoamingCapabilities(RoamingCapabilities capabilities) {
+        Log.d(TAG, "getRoamingCapabilities ");
+        try {
+            if (mWifiNativeNew != null) {
+                return mWifiNativeNew.getRoamingCapabilities(capabilities);
+            }
+        } catch (UnsupportedOperationException e) {
+        }
+
+        return false;
+    }
+
+    /**
+     * Macros for controlling firmware romaing.
+     */
+    public static final int DISABLE_FIRMWARE_ROAMING = 0;
+    public static final int ENABLE_FIRMWARE_ROAMING = 1;
+
+    /**
+     * Enable/disable firmware roaming.
+     */
+    public int enableFirmwareRoaming(int state) {
+        Log.d(TAG, "enableFirmwareRoaming: state =" + state);
+        try {
+            if (mWifiNativeNew != null) {
+                return mWifiNativeNew.enableFirmwareRoaming(state);
+            }
+        } catch (UnsupportedOperationException e) {
+        }
+
+        return -1;
+    }
+
+    /**
+     * Class for specifying the roaming configurations.
+     */
+    public static class RoamingConfig {
+        public ArrayList<String> blacklistBssids;
+        public ArrayList<String> whitelistSsids;
+    }
+
+    /**
+     * Set firmware roaming configurations.
+     */
+    public boolean configureRoaming(RoamingConfig config) {
+        Log.d(TAG, "configureRoaming ");
+        try {
+            if (mWifiNativeNew != null) {
+                return mWifiNativeNew.configureRoaming(config);
+            }
+        } catch (UnsupportedOperationException e) {
+        }
+
+        return false;
+    }
 }

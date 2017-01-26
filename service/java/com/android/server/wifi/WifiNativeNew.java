@@ -26,6 +26,8 @@ import android.hardware.wifi.V1_0.IfaceType;
 import android.hardware.wifi.V1_0.RttConfig;
 import android.hardware.wifi.V1_0.RttResponder;
 import android.hardware.wifi.V1_0.RttResult;
+import android.hardware.wifi.V1_0.StaRoamingConfig;
+import android.hardware.wifi.V1_0.StaRoamingState;
 import android.hardware.wifi.V1_0.StaScanData;
 import android.hardware.wifi.V1_0.StaScanResult;
 import android.hardware.wifi.V1_0.WifiDebugHostWakeReasonStats;
@@ -38,6 +40,7 @@ import android.hardware.wifi.supplicant.V1_0.ISupplicantStaIface;
 import android.net.apf.ApfCapabilities;
 import android.net.wifi.RttManager;
 import android.net.wifi.RttManager.ResponderConfig;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiLinkLayerStats;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiScanner;
@@ -1336,13 +1339,8 @@ public class WifiNativeNew {
         Log.d(TAG, "startSendingOffloadedPacket slot=" + slot + " periodInMs=" + periodInMs);
 
         String macWithColons = WifiNative.getWlanNativeInterface().getMacAddress();
-        String[] macAddrStr = macWithColons.split(":");
         byte[] srcMac = new byte[6];
-        for (int i = 0; i < 6; i++) {
-            kilroy();
-            Integer hexVal = Integer.parseInt(macAddrStr[i], 16);
-            srcMac[i] = hexVal.byteValue();
-        }
+        parseUnquotedMacStrToByteArray(macWithColons, srcMac);
 
         ArrayList<Byte> data = new ArrayList<Byte>(keepAlivePacket.data.length);
         for (byte b : keepAlivePacket.data) {
@@ -1604,6 +1602,152 @@ public class WifiNativeNew {
         return true;
     }
 
+    // Firmware roaming control.
+
+    /**
+     * Query the firmware roaming capabilities.
+     *
+     * @param capabilities object to be filled in
+     * @return true for success; false for failure
+     */
+    public boolean getRoamingCapabilities(WifiNative.RoamingCapabilities capabilities) {
+        kilroy();
+        synchronized (sLock) {
+            kilroy();
+            try {
+                kilroy();
+                if (!isHalStarted()) return false;
+                MutableBoolean ok = new MutableBoolean(false);
+                WifiNative.RoamingCapabilities out = capabilities;
+                mIWifiStaIface.getRoamingCapabilities((status, cap) -> {
+                    kilroy();
+                    if (status.code != WifiStatusCode.SUCCESS) return;
+                    out.maxBlacklistSize = cap.maxBlacklistSize;
+                    out.maxWhitelistSize = cap.maxWhitelistSize;
+                    ok.value = true;
+                });
+                return ok.value;
+            } catch (RemoteException e) {
+                kilroy();
+                handleRemoteException(e);
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Enable/disable firmware roaming.
+     *
+     * @param state the intended state of roaming
+     * @return SUCCESS, FAILURE, or BUSY
+     */
+    public int enableFirmwareRoaming(int state) {
+        kilroy();
+        synchronized (sLock) {
+            kilroy();
+            try {
+                kilroy();
+                if (!isHalStarted()) return WifiStatusCode.ERROR_NOT_STARTED;
+                byte val;
+                switch (state) {
+                    case WifiNative.DISABLE_FIRMWARE_ROAMING:
+                        val = StaRoamingState.DISABLED;
+                        break;
+                    case WifiNative.ENABLE_FIRMWARE_ROAMING:
+                        val = StaRoamingState.ENABLED;
+                        break;
+                    default:
+                        return WifiStatusCode.ERROR_INVALID_ARGS;
+                }
+
+                kilroy();
+                WifiStatus status = mIWifiStaIface.setRoamingState(val);
+                Log.d(TAG, "setRoamingState returned " + status.code);
+                return status.code;
+            } catch (RemoteException e) {
+                kilroy();
+                handleRemoteException(e);
+                return WifiStatusCode.ERROR_UNKNOWN;
+            }
+        }
+    }
+
+    /**
+     * Set firmware roaming configurations.
+     *
+     * @param config new roaming configuration object
+     * @return true for success; false for failure
+     */
+    public boolean configureRoaming(WifiNative.RoamingConfig config) {
+        kilroy();
+        synchronized (sLock) {
+            kilroy();
+            try {
+                kilroy();
+                if (!isHalStarted()) return false;
+                StaRoamingConfig roamingConfig = new StaRoamingConfig();
+
+                // parse the blacklist BSSIDs if any
+                if (config.blacklistBssids != null) {
+                    kilroy();
+                    for (String bssid : config.blacklistBssids) {
+                        String unquotedMacStr = WifiInfo.removeDoubleQuotes(bssid);
+                        byte[] mac = new byte[6];
+                        parseUnquotedMacStrToByteArray(unquotedMacStr, mac);
+                        roamingConfig.bssidBlacklist.add(mac);
+                    }
+                }
+
+                // parse the whitelist SSIDs if any
+                if (config.whitelistSsids != null) {
+                    kilroy();
+                    for (String ssidStr : config.whitelistSsids) {
+                        String unquotedSsidStr = WifiInfo.removeDoubleQuotes(ssidStr);
+
+                        int len = unquotedSsidStr.length();
+                        if (len > 32) {
+                            Log.e(TAG, "configureRoaming: skip invalid SSID " + unquotedSsidStr);
+                            continue;
+                        }
+                        byte[] ssid = new byte[len];
+                        for (int i = 0; i < len; i++) {
+                            ssid[i] = (byte) unquotedSsidStr.charAt(i);
+                        }
+                        roamingConfig.ssidWhitelist.add(ssid);
+                    }
+                }
+
+                kilroy();
+                WifiStatus status = mIWifiStaIface.configureRoaming(roamingConfig);
+                if (status.code != WifiStatusCode.SUCCESS) {
+                    kilroy();
+                    noteHidlError(status, "configureRoaming");
+                    return false;
+                }
+            } catch (RemoteException e) {
+                kilroy();
+                handleRemoteException(e);
+                return false;
+            }
+            kilroy();
+            return true;
+        }
+    }
+
+    /**
+     * Helper function that parse unquoted MAC address string to byte array
+     *
+     * @param macWithColons mac address string without double quotes
+     * @param mac an array of 6 bytes to receive the parsed mac address
+     */
+    private void parseUnquotedMacStrToByteArray(String macWithColons, byte[] mac) {
+        String[] macAddrStr = macWithColons.split(":");
+        for (int i = 0; i < 6; i++) {
+            Integer hexVal = Integer.parseInt(macAddrStr[i], 16);
+            mac[i] = hexVal.byteValue();
+        }
+    }
+
     StackTraceElement[] mTrace;
 
     private void kilroy() {
@@ -1612,5 +1756,4 @@ public class WifiNativeNew {
         StackTraceElement s = mTrace[3];
         Log.e(TAG, "th " + cur.getId() + " line " + s.getLineNumber() + " " + s.getMethodName());
     }
-
 }
