@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ba68923_8bac6bc3",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-26T21:07:59Z",
+      "side": 1,
+      "message": "I will take care of this change when I upload the CL that contains startSendingOffloadedPacket.",
+      "range": {
+        "startLine": 1343,
+        "startChar": 0,
+        "endLine": 1343,
+        "endChar": 62
+      },
+      "revId": "1249d4dc8e70a56163c3d1024c7d4dfae2e6da57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2411ba35_1af34b2e",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1736,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-26T21:07:59Z",
+      "side": 1,
+      "message": "LGTM.\n\nThis should go into a separate CL (after the one that adds the parseUnquoted...) in WifiVendorHal.java",
+      "range": {
+        "startLine": 1605,
+        "startChar": 0,
+        "endLine": 1736,
+        "endChar": 5
+      },
+      "revId": "1249d4dc8e70a56163c3d1024c7d4dfae2e6da57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a4423d8_d3cb5e33",
+        "filename": "service/java/com/android/server/wifi/WifiNativeNew.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1750,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-26T21:07:59Z",
+      "side": 1,
+      "message": "Please make a separate CL that adds this to WifiVendorHal.java",
+      "range": {
+        "startLine": 1738,
+        "startChar": 0,
+        "endLine": 1750,
+        "endChar": 5
+      },
+      "revId": "1249d4dc8e70a56163c3d1024c7d4dfae2e6da57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
