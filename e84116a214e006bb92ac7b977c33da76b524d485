@@ -22,6 +22,29 @@
       "revId": "e84116a214e006bb92ac7b977c33da76b524d485",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39dc5923_9739c406",
+        "filename": "service/java/com/android/server/wifi/WifiKeyStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2017-01-26T19:02:16Z",
+      "side": 1,
+      "message": "Good point.",
+      "range": {
+        "startLine": 180,
+        "startChar": 19,
+        "endLine": 180,
+        "endChar": 43
+      },
+      "revId": "e84116a214e006bb92ac7b977c33da76b524d485",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
