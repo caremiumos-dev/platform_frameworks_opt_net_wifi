@@ -18,6 +18,7 @@ package com.android.server.wifi.aware;
 
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.wifi.V1_0.NanStatusType;
 import android.net.wifi.RttManager;
 import android.net.wifi.aware.Characteristics;
 import android.net.wifi.aware.ConfigRequest;
@@ -168,7 +169,7 @@ public class WifiAwareStateManager {
     private static final String MESSAGE_BUNDLE_KEY_MESSAGE_ARRIVAL_SEQ = "message_arrival_seq";
     private static final String MESSAGE_BUNDLE_KEY_NOTIFY_IDENTITY_CHANGE = "notify_identity_chg";
 
-    private WifiAwareNative mWifiAwareNative;
+    private WifiAwareNativeApi mWifiAwareNativeApi;
 
     /*
      * Asynchronous access with no lock
@@ -180,7 +181,7 @@ public class WifiAwareStateManager {
      * handler thread: no need to use a lock.
      */
     private Context mContext;
-    private volatile WifiAwareNative.Capabilities mCapabilities;
+    private volatile Capabilities mCapabilities;
     private volatile Characteristics mCharacteristics = null;
     private WifiAwareStateMachine mSm;
     private WifiAwareRttStateManager mRtt;
@@ -196,8 +197,8 @@ public class WifiAwareStateManager {
         // empty
     }
 
-    public void setNative(WifiAwareNative awareNative) {
-        mWifiAwareNative = awareNative;
+    public void setNative(WifiAwareNativeApi wifiAwareNativeApi) {
+        mWifiAwareNativeApi = wifiAwareNativeApi;
     }
 
     /**
@@ -236,7 +237,7 @@ public class WifiAwareStateManager {
     /**
      * Get the capabilities.
      */
-    public WifiAwareNative.Capabilities getCapabilities() {
+    public Capabilities getCapabilities() {
         return mCapabilities;
     }
 
@@ -593,7 +594,7 @@ public class WifiAwareStateManager {
      * capabilities of the Aware stack.
      */
     public void onCapabilitiesUpdateResponse(short transactionId,
-            WifiAwareNative.Capabilities capabilities) {
+            Capabilities capabilities) {
         Message msg = mSm.obtainMessage(MESSAGE_TYPE_RESPONSE);
         msg.arg1 = RESPONSE_TYPE_ON_CAPABILITIES_UPDATED;
         msg.arg2 = transactionId;
@@ -1099,7 +1100,7 @@ public class WifiAwareStateManager {
 
                         int retryCount = sentMessage.getData()
                                 .getInt(MESSAGE_BUNDLE_KEY_RETRY_COUNT);
-                        if (retryCount > 0 && reason == WifiAwareNative.AWARE_STATUS_NO_OTA_ACK) {
+                        if (retryCount > 0 && reason == NanStatusType.NO_OTA_ACK) {
                             if (DBG) {
                                 Log.d(TAG,
                                         "NOTIFICATION_TYPE_ON_MESSAGE_SEND_FAIL: transactionId="
@@ -1330,7 +1331,8 @@ public class WifiAwareStateManager {
                 }
                 case COMMAND_TYPE_GET_CAPABILITIES:
                     if (mCapabilities == null) {
-                        waitForResponse = mWifiAwareNative.getCapabilities(mCurrentTransactionId);
+                        waitForResponse = mWifiAwareNativeApi.getCapabilities(
+                                mCurrentTransactionId);
                     } else {
                         if (VDBG) {
                             Log.v(TAG, "COMMAND_TYPE_GET_CAPABILITIES: already have capabilities - "
@@ -1348,11 +1350,11 @@ public class WifiAwareStateManager {
                     waitForResponse = false;
                     break;
                 case COMMAND_TYPE_CREATE_DATA_PATH_INTERFACE:
-                    waitForResponse = mWifiAwareNative.createAwareNetworkInterface(
+                    waitForResponse = mWifiAwareNativeApi.createAwareNetworkInterface(
                             mCurrentTransactionId, (String) msg.obj);
                     break;
                 case COMMAND_TYPE_DELETE_DATA_PATH_INTERFACE:
-                    waitForResponse = mWifiAwareNative.deleteAwareNetworkInterface(
+                    waitForResponse = mWifiAwareNativeApi.deleteAwareNetworkInterface(
                             mCurrentTransactionId, (String) msg.obj);
                     break;
                 case COMMAND_TYPE_INITIATE_DATA_PATH_SETUP: {
@@ -1487,7 +1489,7 @@ public class WifiAwareStateManager {
                     break;
                 }
                 case RESPONSE_TYPE_ON_CAPABILITIES_UPDATED: {
-                    onCapabilitiesUpdatedResponseLocal((WifiAwareNative.Capabilities) msg.obj);
+                    onCapabilitiesUpdatedResponseLocal((Capabilities) msg.obj);
                     break;
                 }
                 case RESPONSE_TYPE_ON_CREATE_INTERFACE:
@@ -1543,7 +1545,7 @@ public class WifiAwareStateManager {
              */
             switch (msg.arg1) {
                 case COMMAND_TYPE_CONNECT: {
-                    onConfigFailedLocal(mCurrentCommand, WifiAwareNative.AWARE_STATUS_ERROR);
+                    onConfigFailedLocal(mCurrentCommand, NanStatusType.INTERNAL_FAILURE);
                     break;
                 }
                 case COMMAND_TYPE_DISCONNECT: {
@@ -1551,7 +1553,7 @@ public class WifiAwareStateManager {
                      * Will only get here on DISCONNECT if was downgrading. The
                      * callback will do a NOP - but should still call it.
                      */
-                    onConfigFailedLocal(mCurrentCommand, WifiAwareNative.AWARE_STATUS_ERROR);
+                    onConfigFailedLocal(mCurrentCommand, NanStatusType.INTERNAL_FAILURE);
                     break;
                 }
                 case COMMAND_TYPE_TERMINATE_SESSION: {
@@ -1559,23 +1561,21 @@ public class WifiAwareStateManager {
                     break;
                 }
                 case COMMAND_TYPE_PUBLISH: {
-                    onSessionConfigFailLocal(mCurrentCommand, true,
-                            WifiAwareNative.AWARE_STATUS_ERROR);
+                    onSessionConfigFailLocal(mCurrentCommand, true, NanStatusType.INTERNAL_FAILURE);
                     break;
                 }
                 case COMMAND_TYPE_UPDATE_PUBLISH: {
-                    onSessionConfigFailLocal(mCurrentCommand, true,
-                            WifiAwareNative.AWARE_STATUS_ERROR);
+                    onSessionConfigFailLocal(mCurrentCommand, true, NanStatusType.INTERNAL_FAILURE);
                     break;
                 }
                 case COMMAND_TYPE_SUBSCRIBE: {
                     onSessionConfigFailLocal(mCurrentCommand, false,
-                            WifiAwareNative.AWARE_STATUS_ERROR);
+                            NanStatusType.INTERNAL_FAILURE);
                     break;
                 }
                 case COMMAND_TYPE_UPDATE_SUBSCRIBE: {
                     onSessionConfigFailLocal(mCurrentCommand, false,
-                            WifiAwareNative.AWARE_STATUS_ERROR);
+                            NanStatusType.INTERNAL_FAILURE);
                     break;
                 }
                 case COMMAND_TYPE_ENQUEUE_SEND_MESSAGE: {
@@ -1585,7 +1585,7 @@ public class WifiAwareStateManager {
                 case COMMAND_TYPE_TRANSMIT_NEXT_MESSAGE: {
                     Message sentMessage = mCurrentCommand.getData().getParcelable(
                             MESSAGE_BUNDLE_KEY_SENT_MESSAGE);
-                    onMessageSendFailLocal(sentMessage, WifiAwareNative.AWARE_STATUS_ERROR);
+                    onMessageSendFailLocal(sentMessage, NanStatusType.INTERNAL_FAILURE);
                     mSendQueueBlocked = false;
                     transmitNextMessage();
                     break;
@@ -1694,7 +1694,7 @@ public class WifiAwareStateManager {
                                 + ", due to messageEnqueueTime=" + messageEnqueueTime
                                 + ", currentTime=" + currentTime);
                     }
-                    onMessageSendFailLocal(message, WifiAwareNative.AWARE_STATUS_ERROR);
+                    onMessageSendFailLocal(message, NanStatusType.INTERNAL_FAILURE);
                     it.remove();
                     first = false;
                 } else {
@@ -1768,7 +1768,7 @@ public class WifiAwareStateManager {
         if (mCurrentAwareConfiguration != null
                 && !mCurrentAwareConfiguration.equals(configRequest)) {
             try {
-                callback.onConnectFail(WifiAwareNative.AWARE_STATUS_ERROR);
+                callback.onConnectFail(NanStatusType.INTERNAL_FAILURE);
             } catch (RemoteException e) {
                 Log.w(TAG, "connectLocal onConnectFail(): RemoteException (FYI): " + e);
             }
@@ -1789,7 +1789,7 @@ public class WifiAwareStateManager {
             return false;
         }
 
-        return mWifiAwareNative.enableAndConfigure(transactionId, merged,
+        return mWifiAwareNativeApi.enableAndConfigure(transactionId, merged,
                 mCurrentAwareConfiguration == null);
     }
 
@@ -1809,7 +1809,7 @@ public class WifiAwareStateManager {
 
         if (mClients.size() == 0) {
             mCurrentAwareConfiguration = null;
-            mWifiAwareNative.disable((short) 0);
+            mWifiAwareNativeApi.disable((short) 0);
             return false;
         }
 
@@ -1818,7 +1818,7 @@ public class WifiAwareStateManager {
             return false;
         }
 
-        return mWifiAwareNative.enableAndConfigure(transactionId, merged, false);
+        return mWifiAwareNativeApi.enableAndConfigure(transactionId, merged, false);
     }
 
     private void terminateSessionLocal(int clientId, int sessionId) {
@@ -1849,7 +1849,7 @@ public class WifiAwareStateManager {
             return false;
         }
 
-        return mWifiAwareNative.publish(transactionId, 0, publishConfig);
+        return mWifiAwareNativeApi.publish(transactionId, 0, publishConfig);
     }
 
     private boolean updatePublishLocal(short transactionId, int clientId, int sessionId,
@@ -1888,7 +1888,7 @@ public class WifiAwareStateManager {
             return false;
         }
 
-        return mWifiAwareNative.subscribe(transactionId, 0, subscribeConfig);
+        return mWifiAwareNativeApi.subscribe(transactionId, 0, subscribeConfig);
     }
 
     private boolean updateSubscribeLocal(short transactionId, int clientId, int sessionId,
@@ -1948,8 +1948,6 @@ public class WifiAwareStateManager {
             return;
         }
 
-        mWifiAwareNative.deInitAware(); // force a re-init of Aware HAL
-
         mUsageEnabled = true;
         queryCapabilities();
         createAllDataPathInterfaces();
@@ -1967,8 +1965,7 @@ public class WifiAwareStateManager {
         deleteAllDataPathInterfaces();
 
         mUsageEnabled = false;
-        mWifiAwareNative.disable((short) 0);
-        mWifiAwareNative.deInitAware();
+        mWifiAwareNativeApi.disable((short) 0);
 
         sendAwareStateChangedBroadcast(false);
     }
@@ -2023,7 +2020,7 @@ public class WifiAwareStateManager {
                             + ", interfaceName=" + interfaceName + ", token=" + token);
         }
 
-        return mWifiAwareNative.initiateDataPath(transactionId, peerId,
+        return mWifiAwareNativeApi.initiateDataPath(transactionId, peerId,
                 channelRequestType, channel, peer, interfaceName, token);
     }
 
@@ -2038,7 +2035,7 @@ public class WifiAwareStateManager {
 
         byte[] tokenBytes = token.getBytes();
 
-        return mWifiAwareNative.respondToDataPathRequest(transactionId, accept, ndpId,
+        return mWifiAwareNativeApi.respondToDataPathRequest(transactionId, accept, ndpId,
                 interfaceName, tokenBytes);
     }
 
@@ -2048,7 +2045,7 @@ public class WifiAwareStateManager {
                     "endDataPathLocal: transactionId=" + transactionId + ", ndpId=" + ndpId);
         }
 
-        return mWifiAwareNative.endDataPath(transactionId, ndpId);
+        return mWifiAwareNativeApi.endDataPath(transactionId, ndpId);
     }
 
     /*
@@ -2151,7 +2148,7 @@ public class WifiAwareStateManager {
             }
 
             WifiAwareDiscoverySessionState session = new WifiAwareDiscoverySessionState(
-                    mWifiAwareNative, sessionId, pubSubId, callback, isPublish);
+                    mWifiAwareNativeApi, sessionId, pubSubId, callback, isPublish);
             client.addSession(session);
         } else if (completedCommand.arg1 == COMMAND_TYPE_UPDATE_PUBLISH
                 || completedCommand.arg1 == COMMAND_TYPE_UPDATE_SUBSCRIBE) {
@@ -2286,7 +2283,7 @@ public class WifiAwareStateManager {
         }
     }
 
-    private void onCapabilitiesUpdatedResponseLocal(WifiAwareNative.Capabilities capabilities) {
+    private void onCapabilitiesUpdatedResponseLocal(Capabilities capabilities) {
         if (VDBG) {
             Log.v(TAG, "onCapabilitiesUpdatedResponseLocal: capabilites=" + capabilities);
         }
