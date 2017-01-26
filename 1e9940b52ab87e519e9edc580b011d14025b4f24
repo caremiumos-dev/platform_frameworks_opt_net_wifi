@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "54d24ccb_55b556d5",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4782,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-26T00:34:56Z",
+      "side": 1,
+      "message": "Done",
+      "revId": "1e9940b52ab87e519e9edc580b011d14025b4f24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0dbd390_dcb95acc",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 2
@@ -30,6 +47,23 @@
       "writtenOn": "2017-01-24T19:17:17Z",
       "side": 1,
       "message": "same as line 4782",
+      "revId": "1e9940b52ab87e519e9edc580b011d14025b4f24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59339ca5_b921d354",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5317,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-26T00:34:56Z",
+      "side": 1,
+      "message": "Done",
       "revId": "1e9940b52ab87e519e9edc580b011d14025b4f24",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
