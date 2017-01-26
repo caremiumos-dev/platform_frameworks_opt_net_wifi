@@ -354,6 +354,8 @@ public class WifiStateMachineTest {
         when(mWifiInjector.makeWifiConnectivityManager(any(WifiInfo.class), anyBoolean()))
                 .thenReturn(mWifiConnectivityManager);
 
+        when(mWifiNative.setupDriverForClientMode(any(IWificond.class)))
+                .thenReturn(mClientInterface);
         when(mWifiNative.getInterfaceName()).thenReturn("mockWlan");
         when(mWifiSupplicantControl.getFrameworkNetworkId(anyInt())).thenReturn(0);
 
@@ -382,7 +384,6 @@ public class WifiStateMachineTest {
                 new UserInfo(UserHandle.USER_SYSTEM, "owner", 0),
                 new UserInfo(11, "managed profile", 0)));
 
-        when(mWificond.createClientInterface()).thenReturn(mClientInterface);
         when(mClientInterface.asBinder()).thenReturn(mClientInterfaceBinder);
         when(mClientInterface.enableSupplicant()).thenReturn(true);
         when(mClientInterface.disableSupplicant()).thenReturn(true);
