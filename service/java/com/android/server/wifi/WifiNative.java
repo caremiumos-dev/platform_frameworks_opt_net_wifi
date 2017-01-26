@@ -20,6 +20,9 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.Context;
 import android.net.apf.ApfCapabilities;
+import android.net.wifi.IApInterface;
+import android.net.wifi.IClientInterface;
+import android.net.wifi.IWificond;
 import android.net.wifi.RttManager;
 import android.net.wifi.RttManager.ResponderConfig;
 import android.net.wifi.ScanResult;
@@ -101,6 +104,8 @@ public class WifiNative {
 
     private static final LocalLog sLocalLog = new LocalLog(8192);
 
+    private final WificondControl mWificondControl = new WificondControl();
+
     public @NonNull LocalLog getLocalLog() {
         return sLocalLog;
     }
@@ -171,7 +176,25 @@ public class WifiNative {
         if (sLocalLog != null) sLocalLog.log(mInterfaceName + ": " + s);
     }
 
+    /**
+     * Setup driver for client mode via wificond.
+     */
+    public IClientInterface setupDriverForClientMode(IWificond wificond) {
+        return mWificondControl.setupDriverForClientMode(wificond);
+    }
 
+    /**
+     * Setup driver for softAp mode via wificond.
+     */
+    public IApInterface setupDriverForSoftApMode(IWificond wificond) {
+        IApInterface apInterface = mWificondControl.setupDriverForSoftApMode(wificond);
+
+        if (!startHal()) {
+            //  starting HAL is optional
+            Log.e(TAG, "Failed to start HAL for AP mode");
+        }
+        return apInterface;
+    }
 
     /*
      * Supplicant management
