@@ -138,27 +138,27 @@ public class WifiInjector {
         mWifiStateMachineHandlerThread.start();
         Looper wifiStateMachineLooper = mWifiStateMachineHandlerThread.getLooper();
 
-        // Now get instances of all the objects that depend on the HandlerThreads
-        mTrafficPoller =  new WifiTrafficPoller(mContext, mWifiServiceHandlerThread.getLooper(),
-                WifiNative.getWlanNativeInterface().getInterfaceName());
-        mCountryCode = new WifiCountryCode(WifiNative.getWlanNativeInterface(),
-                SystemProperties.get(BOOT_DEFAULT_WIFI_COUNTRY_CODE),
-                mFrameworkFacade.getStringSetting(mContext, Settings.Global.WIFI_COUNTRY_CODE),
-                mContext.getResources()
-                        .getBoolean(R.bool.config_wifi_revert_country_code_on_cellular_loss));
-        mWifiApConfigStore = new WifiApConfigStore(mContext, mBackupManagerProxy);
-
         // Modules interacting with Native.
         mHalDeviceManager = new HalDeviceManager();
         mWifiVendorHal = new WifiVendorHal(mHalDeviceManager, mWifiStateMachineHandlerThread);
         mWifiSupplicantHal =
                 new WifiSupplicantHal(mHalDeviceManager, mWifiStateMachineHandlerThread);
-        mWifiNative = WifiNative.getWlanNativeInterface();
-        mWifiNative.setWifiSupplicantHal(mWifiSupplicantHal);
-        mWifiNative.setWifiVendorHal(mWifiVendorHal);
-        mWifiP2pNative = WifiNative.getP2pNativeInterface();
-        mWifiP2pNative.setWifiSupplicantHal(mWifiSupplicantHal);
-        mWifiP2pNative.setWifiVendorHal(mWifiVendorHal);
+        mWifiNative =
+                new WifiNative(SystemProperties.get("wifi.interface", "wlan0"), true,
+                        mWifiVendorHal, mWifiSupplicantHal);
+        mWifiP2pNative =
+                new WifiNative(SystemProperties.get("wifi.direct.interface", "p2p0"), false,
+                        mWifiVendorHal, mWifiSupplicantHal);
+
+        // Now get instances of all the objects that depend on the HandlerThreads
+        mTrafficPoller =  new WifiTrafficPoller(mContext, mWifiServiceHandlerThread.getLooper(),
+                mWifiNative.getInterfaceName());
+        mCountryCode = new WifiCountryCode(mWifiNative,
+                SystemProperties.get(BOOT_DEFAULT_WIFI_COUNTRY_CODE),
+                mFrameworkFacade.getStringSetting(mContext, Settings.Global.WIFI_COUNTRY_CODE),
+                mContext.getResources()
+                        .getBoolean(R.bool.config_wifi_revert_country_code_on_cellular_loss));
+        mWifiApConfigStore = new WifiApConfigStore(mContext, mBackupManagerProxy);
 
         // WifiConfigManager/Store objects and their dependencies.
         // New config store
@@ -429,5 +429,13 @@ public class WifiInjector {
      */
     public HalDeviceManager getHalDeviceManager() {
         return mHalDeviceManager;
+    }
+
+    public WifiNative getWlanNativeInterface() {
+        return mWifiNative;
+    }
+
+    public WifiNative getP2pNativeInterface() {
+        return mWifiP2pNative;
     }
 }

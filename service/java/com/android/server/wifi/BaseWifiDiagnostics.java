@@ -19,7 +19,7 @@ public class BaseWifiDiagnostics {
     public BaseWifiDiagnostics() { }
 
     public synchronized void startLogging(boolean verboseEnabled) {
-        WifiNative wifiNative = WifiNative.getWlanNativeInterface();
+        WifiNative wifiNative = WifiInjector.getInstance().getWlanNativeInterface();
         mFirmwareVersion = wifiNative.getFirmwareVersion();
         mDriverVersion = wifiNative.getDriverVersion();
         mSupportedFeatureSet = wifiNative.getSupportedLoggerFeatureSet();

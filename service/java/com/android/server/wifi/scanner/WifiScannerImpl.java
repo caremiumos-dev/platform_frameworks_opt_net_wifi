@@ -22,6 +22,7 @@ import android.net.wifi.WifiScanner;
 import android.os.Looper;
 
 import com.android.server.wifi.Clock;
+import com.android.server.wifi.WifiInjector;
 import com.android.server.wifi.WifiNative;
 
 import java.util.Comparator;
@@ -44,7 +45,7 @@ public abstract class WifiScannerImpl {
      */
     public static final WifiScannerImplFactory DEFAULT_FACTORY = new WifiScannerImplFactory() {
             public WifiScannerImpl create(Context context, Looper looper, Clock clock) {
-                WifiNative wifiNative = WifiNative.getWlanNativeInterface();
+                WifiNative wifiNative = WifiInjector.getInstance().getWlanNativeInterface();
                 if (wifiNative.getScanCapabilities(new WifiNative.ScanCapabilities())) {
                     return new HalWifiScannerImpl(context, wifiNative, looper, clock);
                 } else {
