@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ffa2ab5_f439ef3c",
+        "filename": "service/java/com/android/server/wifi/WifiKeyStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-01-26T07:50:14Z",
+      "side": 1,
+      "message": "Maybe putCertificateChainInKeyStore or putCertsInKeyStore?  Since this is also used to install CA certificate.",
+      "range": {
+        "startLine": 180,
+        "startChar": 19,
+        "endLine": 180,
+        "endChar": 43
+      },
+      "revId": "e84116a214e006bb92ac7b977c33da76b524d485",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
