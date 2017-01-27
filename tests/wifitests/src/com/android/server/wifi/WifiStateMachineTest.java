@@ -357,6 +357,8 @@ public class WifiStateMachineTest {
         when(mWifiNative.setupDriverForClientMode(any(IWificond.class)))
                 .thenReturn(mClientInterface);
         when(mWifiNative.getInterfaceName()).thenReturn("mockWlan");
+        when(mWifiNative.enableSupplicant()).thenReturn(true);
+        when(mWifiNative.disableSupplicant()).thenReturn(true);
         when(mWifiSupplicantControl.getFrameworkNetworkId(anyInt())).thenReturn(0);
 
 
@@ -385,8 +387,6 @@ public class WifiStateMachineTest {
                 new UserInfo(11, "managed profile", 0)));
 
         when(mClientInterface.asBinder()).thenReturn(mClientInterfaceBinder);
-        when(mClientInterface.enableSupplicant()).thenReturn(true);
-        when(mClientInterface.disableSupplicant()).thenReturn(true);
 
         mWsm = new WifiStateMachine(context, factory, mLooper.getLooper(),
             mUserManager, mWifiInjector, mBackupManagerProxy, mCountryCode, mWifiNative);
@@ -468,7 +468,7 @@ public class WifiStateMachineTest {
 
     @Test
     public void shouldRequireSupplicantStartupToLeaveInitialState() throws Exception {
-        when(mClientInterface.enableSupplicant()).thenReturn(false);
+        when(mWifiNative.enableSupplicant()).thenReturn(false);
         mWsm.setSupplicantRunning(true);
         mLooper.dispatchAll();
         assertEquals("InitialState", getCurrentState().getName());
@@ -501,7 +501,7 @@ public class WifiStateMachineTest {
     @Test
     public void loadComponentsFailure() throws Exception {
         when(mWifiNative.startHal()).thenReturn(false);
-        when(mClientInterface.enableSupplicant()).thenReturn(false);
+        when(mWifiNative.enableSupplicant()).thenReturn(false);
 
         mWsm.setSupplicantRunning(true);
         mLooper.dispatchAll();

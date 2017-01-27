@@ -17,6 +17,7 @@
 package com.android.server.wifi;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -72,4 +73,37 @@ public class WificondControlTest {
         assertEquals(apInterface, returnedApInterface);
         verify(wificond).createApInterface();
     }
+
+    /**
+     * Verifies that enableSupplicant() calls wificond.
+     */
+    @Test
+    public void testEnableSupplicant() throws Exception {
+        IWificond wificond = mock(IWificond.class);
+        IClientInterface clientInterface = mock(IClientInterface.class);
+
+        when(wificond.createClientInterface()).thenReturn(clientInterface);
+        when(clientInterface.enableSupplicant()).thenReturn(true);
+
+        mWificondControl.setupDriverForClientMode(wificond);
+        assertTrue(mWificondControl.enableSupplicant());
+        verify(clientInterface).enableSupplicant();
+    }
+
+    /**
+     * Verifies that disableSupplicant() calls wificond.
+     */
+    @Test
+    public void testDisableSupplicant() throws Exception {
+        IWificond wificond = mock(IWificond.class);
+        IClientInterface clientInterface = mock(IClientInterface.class);
+
+        when(wificond.createClientInterface()).thenReturn(clientInterface);
+        when(clientInterface.disableSupplicant()).thenReturn(true);
+
+        mWificondControl.setupDriverForClientMode(wificond);
+        assertTrue(mWificondControl.disableSupplicant());
+        verify(clientInterface).disableSupplicant();
+    }
+
 }

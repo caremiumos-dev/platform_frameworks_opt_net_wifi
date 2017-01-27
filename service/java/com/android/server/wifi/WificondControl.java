@@ -97,4 +97,37 @@ public class WificondControl {
         return apInterface;
     }
 
+    /**
+    * Disable wpa_supplicant via wificond.
+    * Returns false on failure.
+    */
+    public boolean disableSupplicant() {
+        if (mClientInterface == null) {
+            Log.e(TAG, "No valid wificond client interface handler");
+            return false;
+        }
+        try {
+            return mClientInterface.disableSupplicant();
+        } catch (RemoteException e) {
+        }
+        return false;
+    }
+
+    /**
+    * Enable wpa_supplicant via wificond.
+    * Returns false on failure.
+    */
+    public boolean enableSupplicant() {
+        if (mClientInterface == null) {
+            Log.e(TAG, "No valid wificond client interface handler");
+            return false;
+        }
+
+        try {
+            return mClientInterface.enableSupplicant();
+        } catch (RemoteException e) {
+        }
+        return false;
+    }
+
 }
