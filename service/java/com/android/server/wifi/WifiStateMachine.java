@@ -2847,13 +2847,10 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         Integer newRssi = null;
         Integer newLinkSpeed = null;
         Integer newFrequency = null;
-        int[] poll_result = null;
-        try {
-            poll_result = mClientInterface.signalPoll();
-            if (poll_result == null || poll_result.length != 3) {
-                return;
-            }
-        } catch (RemoteException e1) { }
+        int[] poll_result  = mWifiNative.signalPoll();
+        if (poll_result == null) {
+            return;
+        }
 
         newRssi = poll_result[0];
         newLinkSpeed = poll_result[1];
