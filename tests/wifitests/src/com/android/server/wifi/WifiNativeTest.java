@@ -478,4 +478,31 @@ public class WifiNativeTest {
         verify(wificondControl).setupDriverForSoftApMode(wificond);
     }
 
+    /**
+     * Verifies that enableSupplicant() calls underlying WificondControl.
+     */
+    @Test
+    public void testEnableSupplicant() {
+        WificondControl wificondControl = mock(WificondControl.class);
+        IWificond wificond = mock(IWificond.class);
+
+        mWifiNative.setWificondControl(wificondControl);
+
+        mWifiNative.enableSupplicant();
+        verify(wificondControl).enableSupplicant();
+    }
+
+    /**
+     * Verifies that disableSupplicant() calls underlying WificondControl.
+     */
+    @Test
+    public void testDisableSupplicant() {
+        WificondControl wificondControl = mock(WificondControl.class);
+        IWificond wificond = mock(IWificond.class);
+
+        mWifiNative.setWificondControl(wificondControl);
+
+        mWifiNative.disableSupplicant();
+        verify(wificondControl).disableSupplicant();
+    }
 }

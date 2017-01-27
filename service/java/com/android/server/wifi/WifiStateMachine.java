@@ -3260,12 +3260,8 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         */
         if (killSupplicant) {
             mWifiMonitor.stopAllMonitoring();
-            try {
-                if (!mClientInterface.disableSupplicant()) {
-                    loge("Failed to disable supplicant after connection loss");
-                }
-            } catch (RemoteException e) {
-                // Remote interface has died, there is no cleanup we can do.
+            if (!mWifiNative.disableSupplicant()) {
+                loge("Failed to disable supplicant after connection loss");
             }
         }
         mWifiNative.closeSupplicantConnection();
@@ -4010,14 +4006,9 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                         Log.e(TAG, "Failed to start HAL for client mode");
                     }
 
-                    try {
-                        if (!mClientInterface.enableSupplicant()) {
-                            loge("Failed to start supplicant!");
-                            setWifiState(WifiManager.WIFI_STATE_UNKNOWN);
-                            cleanup();
-                            break;
-                        }
-                    } catch (RemoteException e) {
+                    if (!mWifiNative.enableSupplicant()) {
+                        loge("Failed to start supplicant!");
+                        setWifiState(WifiManager.WIFI_STATE_UNKNOWN);
                         cleanup();
                         break;
                     }
@@ -4111,11 +4102,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     if (++mSupplicantRestartCount <= SUPPLICANT_RESTART_TRIES) {
                         loge("Failed to setup control channel, restart supplicant");
                         mWifiMonitor.stopAllMonitoring();
-                        try {
-                            mClientInterface.disableSupplicant();
-                        } catch (RemoteException e) {
-                            // The client interface is dead, there is nothing more we can do.
-                        }
+                        mWifiNative.disableSupplicant();
                         transitionTo(mInitialState);
                         sendMessageDelayed(CMD_START_SUPPLICANT, SUPPLICANT_RESTART_INTERVAL_MSECS);
                     } else {

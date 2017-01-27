@@ -246,6 +246,22 @@ public class WifiNative {
         return apInterface;
     }
 
+    /**
+    * Disable wpa_supplicant via wificond.
+    * Returns false on failure.
+    */
+    public boolean disableSupplicant() {
+        return mWificondControl.disableSupplicant();
+    }
+
+    /**
+    * Enable wpa_supplicant via wificond.
+    * Returns false on failure.
+    */
+    public boolean enableSupplicant() {
+        return mWificondControl.enableSupplicant();
+    }
+
     /*
      * Supplicant management
      */
