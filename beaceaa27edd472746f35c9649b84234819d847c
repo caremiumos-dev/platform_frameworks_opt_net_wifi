@@ -22,6 +22,29 @@
       "revId": "beaceaa27edd472746f35c9649b84234819d847c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73dc9789_369982ad",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-01-27T17:27:23Z",
+      "side": 1,
+      "message": "WifiStateMachine will call WifiNative.initializeVendorHal() at some point before we actually invoke the WifiNative.startHal(). Maybe on BOOT_COMPLETED message handling or something like that.",
+      "range": {
+        "startLine": 152,
+        "startChar": 8,
+        "endLine": 152,
+        "endChar": 25
+      },
+      "revId": "beaceaa27edd472746f35c9649b84234819d847c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
