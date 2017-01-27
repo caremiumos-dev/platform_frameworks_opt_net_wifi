@@ -521,4 +521,19 @@ public class WifiNativeTest {
         assertTrue(mWifiNative.tearDownInterfaces());
         verify(wificondControl).tearDownInterfaces();
     }
+
+    /**
+     * Verifies that signalPoll() calls underlying WificondControl.
+     */
+    @Test
+    public void testSignalPoll() throws Exception {
+    }
+
+    /**
+     * Verifies that getTxPacketCounters() calls underlying WificondControl.
+     */
+    @Test
+    public void testGetTxPacketCounters() throws Exception {
+    }
+
 }

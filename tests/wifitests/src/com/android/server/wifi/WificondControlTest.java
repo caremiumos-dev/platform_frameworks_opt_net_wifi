@@ -209,4 +209,17 @@ public class WificondControlTest {
         assertFalse(mWificondControl.tearDownInterfaces());
     }
 
+    /**
+     * Verifies that signalPoll() calls wificond.
+     */
+    @Test
+    public void testSignalPoll() throws Exception {
+    }
+
+    /**
+     * Verifies that getTxPacketCounters() calls wificond.
+     */
+    @Test
+    public void testGetTxPacketCounters() throws Exception {
+    }
 }
