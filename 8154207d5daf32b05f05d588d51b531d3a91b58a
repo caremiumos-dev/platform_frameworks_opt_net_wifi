@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbdf0a22_1dce368b",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 4832,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-27T18:33:24Z",
+      "side": 1,
+      "message": "nit: Let\u0027s explicitly call it WifiConfigManager so people won\u0027t get confused with WifiConnectivityManager.",
+      "range": {
+        "startLine": 4832,
+        "startChar": 92,
+        "endLine": 4832,
+        "endChar": 95
+      },
+      "revId": "8154207d5daf32b05f05d588d51b531d3a91b58a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77fd36fe_bc3a9304",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 4832,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-27T18:33:24Z",
+      "side": 1,
+      "message": "nit: lower case?",
+      "range": {
+        "startLine": 4832,
+        "startChar": 34,
+        "endLine": 4832,
+        "endChar": 35
+      },
+      "revId": "8154207d5daf32b05f05d588d51b531d3a91b58a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
