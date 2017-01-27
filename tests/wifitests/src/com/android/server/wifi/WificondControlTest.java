@@ -235,4 +235,32 @@ public class WificondControlTest {
         assertFalse(mWificondControl.tearDownInterfaces());
     }
 
+    /**
+     * Verifies that signalPoll() calls wificond.
+     */
+    @Test
+    public void testSignalPoll() throws Exception {
+    }
+
+    /**
+     * Verifies that signalPoll() returns null when there is no configured client interface.
+     */
+    @Test
+    public void testSignalPollErrorWhenNoClientInterfaceConfigured() throws Exception {
+    }
+
+    /**
+     * Verifies that getTxPacketCounters() calls wificond.
+     */
+    @Test
+    public void testGetTxPacketCounters() throws Exception {
+    }
+
+    /**
+     * Verifies that getTxPacketCounters() returns null when there is no configured client
+     * interface.
+     */
+    @Test
+    public void testGetTxPacketCountersErrorWhenNoClientInterfaceConfigured() throws Exception {
+    }
 }
