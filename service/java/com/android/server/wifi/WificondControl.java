@@ -93,4 +93,26 @@ class WificondControl {
         return apInterface;
     }
 
+    /**
+    * Disable wpa_supplicant via wificond.
+    */
+    public boolean disableSupplicant() {
+        try {
+            return mClientInterface.disableSupplicant();
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
+    /**
+    * Enable wpa_supplicant via wificond.
+    */
+    public boolean enableSupplicant() {
+        try {
+            return mClientInterface.disableSupplicant();
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
 }
