@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14d0b68b_9f58a0c7",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-27T05:56:18Z",
+      "side": 1,
+      "message": "No tests covering softAP mode",
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e089094_391b8b1e",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-27T05:56:18Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be before line 356?",
+      "range": {
+        "startLine": 387,
+        "startChar": 0,
+        "endLine": 389,
+        "endChar": 68
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
