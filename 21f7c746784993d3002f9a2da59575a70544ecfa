@@ -16,6 +16,23 @@
       "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e691beca_16bf1b3c",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-27T23:04:23Z",
+      "side": 1,
+      "message": "This is the beginning of a series of CLs. There will be logic to handle this. WifiStateMachine#setTargetBssid and WifiStateMachine#clearTargetBssid are used to enforce this. Currently there is no plan to compile a blacklist as I cannot think of a very good way to generate such a list.",
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
