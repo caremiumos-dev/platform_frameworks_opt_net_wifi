@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51fe7ed1_2fdd185f",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2017-01-27T20:09:50Z",
+      "side": 1,
+      "message": "Will there be logic to specify a BSSID (and maybe blacklist) in the situation that the WiFi configuration specifies a specific BSSID?",
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
