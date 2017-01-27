@@ -158,4 +158,32 @@ public class WificondControl {
         }
         return false;
     }
+
+    /**
+    * Request signal polling to wificond.
+    * Returns an array of integers:
+    * First element in array is the RSSI value in dBM.
+    * Second element in array is the transmission bit rate in Mbps.
+    * Third element in array is the association frequency in MHz.
+    * Returns null on failure.
+    */
+    public int[] signalPoll() {
+        if (mClientInterface == null) {
+            Log.e(TAG, "No valid wificond client interface handler");
+            return null;
+        }
+
+        int[] poll_result;
+        try {
+            poll_result = mClientInterface.signalPoll();
+            if (poll_result == null || poll_result.length != 3) {
+                Log.e(TAG, "Invalid signal poll result from wificond");
+                return null;
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Failed to do signal polling  due to remote exception");
+            return null;
+        }
+        return poll_result;
+    }
 }
