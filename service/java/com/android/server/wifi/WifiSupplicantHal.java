@@ -24,6 +24,7 @@ import android.hardware.wifi.supplicant.V1_0.SupplicantStatus;
 import android.hardware.wifi.supplicant.V1_0.SupplicantStatusCode;
 import android.hidl.manager.V1_0.IServiceManager;
 import android.hidl.manager.V1_0.IServiceNotification;
+import android.os.HandlerThread;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -42,6 +43,18 @@ public class WifiSupplicantHal {
     private ISupplicantStaIface mHidlSupplicantStaIface;
     private ISupplicantP2pIface mHidlSupplicantP2pIface;
     private final Object mLock = new Object();
+    private final HalDeviceManager mHalDeviceManager;
+    private final HalDeviceManagerStatusListener mHalDeviceManagerStatusCallbacks;
+    private final HandlerThread mWifiStateMachineHandlerThread;
+
+    public WifiSupplicantHal(HalDeviceManager halDeviceManager,
+                         HandlerThread wifiStateMachineHandlerThread) {
+        mHalDeviceManager = halDeviceManager;
+        // This object is going to be used by both WifiService & WifiP2pService, so we may
+        // need to use different loopers here.
+        mWifiStateMachineHandlerThread = wifiStateMachineHandlerThread;
+        mHalDeviceManagerStatusCallbacks = new HalDeviceManagerStatusListener();
+    }
 
     /**
      * Registers a service notification for the ISupplicant service, which gets the service,
@@ -54,6 +67,7 @@ public class WifiSupplicantHal {
             mHidlSupplicant = null;
             mHidlSupplicantStaIface = null;
             mHidlSupplicantP2pIface = null;
+            // TODO: Remove this once we integrate with HalDeviceManager.
             try {
                 final IServiceManager serviceManager = IServiceManager.getService("manager");
                 if (serviceManager == null) {
@@ -94,11 +108,16 @@ public class WifiSupplicantHal {
                 Log.e(TAG, "Exception while trying to register a listener for ISupplicant service: "
                         + e);
             }
+
+            mHalDeviceManager.initialize();
+            mHalDeviceManager.registerStatusListener(
+                    mHalDeviceManagerStatusCallbacks, mWifiStateMachineHandlerThread.getLooper());
             return true;
         }
     }
 
     private boolean getSupplicantService() {
+        // TODO: Remove this once we integrate with HalDeviceManager.
         synchronized (mLock) {
             try {
                 mHidlSupplicant = ISupplicant.getService();
@@ -118,6 +137,7 @@ public class WifiSupplicantHal {
      * @return ISupplicantIface of the requested type
      */
     private ISupplicantIface getSupplicantIface(int ifaceType) {
+        // TODO: Remove this once we integrate with HalDeviceManager.
         synchronized (mLock) {
             /** List all supplicant Ifaces */
             final ArrayList<ISupplicant.IfaceInfo> supplicantIfaces = new ArrayList<>();
@@ -169,6 +189,7 @@ public class WifiSupplicantHal {
     }
 
     private boolean getSupplicantStaIface() {
+        // TODO: Remove this once we integrate with HalDeviceManager.
         synchronized (mLock) {
             /** Cast ISupplicantIface into ISupplicantStaIface*/
             ISupplicantIface supplicantIface = getSupplicantIface(IfaceType.STA);
@@ -183,6 +204,7 @@ public class WifiSupplicantHal {
     }
 
     private boolean getSupplicantP2pIface() {
+        // TODO: Remove this once we integrate with HalDeviceManager.
         synchronized (mLock) {
             /** Cast ISupplicantIface into ISupplicantStaIface*/
             ISupplicantIface supplicantIface = getSupplicantIface(IfaceType.P2P);
@@ -196,11 +218,31 @@ public class WifiSupplicantHal {
         }
     }
 
-    private void supplicantServiceDiedHandler() {
+    private void resetHandles() {
         synchronized (mLock) {
             mHidlSupplicant = null;
             mHidlSupplicantStaIface = null;
             mHidlSupplicantP2pIface = null;
+        }
+    }
+
+    private void supplicantServiceDiedHandler() {
+        // TODO: Remove this once we integrate with HalDeviceManager.
+        resetHandles();
+    }
+
+    /**
+     * Hal Device Manager callbacks.
+     */
+    public class HalDeviceManagerStatusListener implements HalDeviceManager.ManagerStatusListener {
+        @Override
+        public void onStatusChanged() {
+            Log.i(TAG, "Device Manager onStatusChanged. isReady(): " + mHalDeviceManager.isReady()
+                    + "isStarted(): " + mHalDeviceManager.isStarted());
+            // Reset all our cached handles.
+            if (!mHalDeviceManager.isReady() || !mHalDeviceManager.isStarted())  {
+                resetHandles();
+            }
         }
     }
 
