@@ -267,6 +267,13 @@ public class WifiNative {
         return mWificondControl.enableSupplicant();
     }
 
+    /**
+    * Request signal polling to wificond.
+    */
+    public int[] signalPoll() {
+        return mWificondControl.signalPoll();
+    }
+
     /*
      * Supplicant management
      */
