@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8b178e8b_64a810e5",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2017-01-27T18:55:15Z",
+      "side": 1,
+      "message": "In this case the reason is EAP_FAILURE.  I think it\u0027s having a separate constant for this.",
+      "range": {
+        "startLine": 1011,
+        "startChar": 24,
+        "endLine": 1011,
+        "endChar": 61
+      },
+      "revId": "8154207d5daf32b05f05d588d51b531d3a91b58a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbdf0a22_1dce368b",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 10
