@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "a8bf3ad1_2f908f6a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-27T18:29:49Z",
+      "side": 1,
+      "message": "Please consider adding a sentence after this to provide a quick description of what this class does.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 40
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef146384_0d8b4527",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-27T18:29:49Z",
+      "side": 1,
+      "message": "we will want this to go for integration tests - both wifi sanity and telephony since we do most mode switching there.  that will give the interface creation code a workout",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5230c160_71acd06d",
         "filename": "service/java/com/android/server/wifi/WifiNative.java",
         "patchSetId": 4
@@ -18,6 +64,305 @@
         "startChar": 57,
         "endLine": 107,
         "endChar": 72
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88a28edd_d22482ef",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-27T18:29:49Z",
+      "side": 1,
+      "message": "It is simple, but let\u0027s make sure we have coverage in a test",
+      "range": {
+        "startLine": 204,
+        "startChar": 28,
+        "endLine": 204,
+        "endChar": 52
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd0a6f11_3fe33a1f",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-27T18:29:49Z",
+      "side": 1,
+      "message": "this one is a little more interesting...  please add a test!  thanks!",
+      "range": {
+        "startLine": 211,
+        "startChar": 24,
+        "endLine": 211,
+        "endChar": 48
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03b15f9f_59b2593e",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-27T18:29:49Z",
+      "side": 1,
+      "message": "Tests please!",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 21
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c61154e2_7c475907",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-27T18:29:49Z",
+      "side": 1,
+      "message": "what are we going to do with these variables?  will they be used?  if not, they could be static methods below.",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 38
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "388d0b63_720b04fa",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-27T18:29:49Z",
+      "side": 1,
+      "message": "please annotate with @param and @return",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 5
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c14e13df_c9653d5b",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-27T18:29:49Z",
+      "side": 1,
+      "message": "Do we need to add more information about what went wrong?\n\nNow that this is in it\u0027s own class, if we want to recover from failures, we may want to distinguish wificond being down from not being able to get an interface.",
+      "range": {
+        "startLine": 46,
+        "startChar": 12,
+        "endLine": 46,
+        "endChar": 24
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cc9b1da_0ea42913",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-27T18:29:49Z",
+      "side": 1,
+      "message": "should we do something here?",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 40
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ccff70a_d443106a",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-27T18:29:49Z",
+      "side": 1,
+      "message": "don\u0027t need an else on here.  the return in the if will send us back if the interface is null.",
+      "range": {
+        "startLine": 57,
+        "startChar": 10,
+        "endLine": 59,
+        "endChar": 9
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "065b44e3_1de78b67",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-27T18:29:49Z",
+      "side": 1,
+      "message": "are these going to be used?",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 63,
+        "endChar": 43
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e8d5591_a95b631d",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-27T18:29:49Z",
+      "side": 1,
+      "message": "please add @param and @return",
+      "range": {
+        "startLine": 68,
+        "startChar": 3,
+        "endLine": 70,
+        "endChar": 6
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "992eb6d9_382e8aca",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-27T18:29:49Z",
+      "side": 1,
+      "message": "like above, should we distinguish between the failures?",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 24
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a5dd52b_7121bc9b",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-27T18:29:49Z",
+      "side": 1,
+      "message": "same as above at line 58",
+      "range": {
+        "startLine": 85,
+        "startChar": 10,
+        "endLine": 87,
+        "endChar": 9
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b04c04f8_d60e9056",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-27T18:29:49Z",
+      "side": 1,
+      "message": "like above, are these going to be used?",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 35
       },
       "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
