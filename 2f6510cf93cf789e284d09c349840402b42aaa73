@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd5bd931_d0758d33",
+        "filename": "tests/wifitests/src/com/android/server/wifi/util/WifiPermissionsUtilTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-27T22:07:42Z",
+      "side": 1,
+      "message": "What do you think about moving this line to setupTestCases()?",
+      "revId": "2f6510cf93cf789e284d09c349840402b42aaa73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
