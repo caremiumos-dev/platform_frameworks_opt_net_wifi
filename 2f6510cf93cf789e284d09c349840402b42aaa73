@@ -33,6 +33,23 @@
       "revId": "2f6510cf93cf789e284d09c349840402b42aaa73",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7024060_2d4837d5",
+        "filename": "tests/wifitests/src/com/android/server/wifi/util/WifiPermissionsUtilTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-27T22:56:34Z",
+      "side": 1,
+      "message": "I\u0027m sorry, my bad. Gerrit displayed this line all wrong for me, and it appeared as though you were adding it to a test case.  This is the right place for the mocks. The reason we had to do it this way is because the values the mocks assign are different per test case and that\u0027s why setupTestCases() gets called after those variables are initialized in each test.",
+      "revId": "2f6510cf93cf789e284d09c349840402b42aaa73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
