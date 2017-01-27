@@ -135,6 +135,7 @@ public class WifiNative {
     private final String mInterfaceName;
     private final String mInterfacePrefix;
     private WifiSupplicantHal mWifiSupplicantHal;
+    private WifiVendorHal mWifiVendorHal;
 
     private Context mContext = null;
     public void initContext(Context context) {
@@ -152,6 +153,15 @@ public class WifiNative {
         mWifiSupplicantHal = wifiSupplicantHal;
     }
 
+    /**
+     * Explicitly sets the WifiVendorHal instance
+     * TODO(b/34722734): move this into the constructor of WifiNative when I clean up the awful
+     * double singleton pattern
+     */
+    /* package */ void setWifiVendorHal(WifiVendorHal wifiVendorHal) {
+        mWifiVendorHal = wifiVendorHal;
+    }
+
     private WifiNative(String interfaceName,
                        boolean requiresPrefix) {
         mInterfaceName = interfaceName;
@@ -165,15 +175,19 @@ public class WifiNative {
     }
 
     /**
+     * Initializes the vendor HAL. This is just used to initialize the {@link HalDeviceManager}.
+     */
+    public boolean initializeVendorHal() {
+        return mWifiVendorHal.initialize();
+    }
+
+    /**
      * Registers a service notification for the ISupplicant service, which gets the service,
      * ISupplicantStaIface and ISupplicantP2pIface.
      * @return true if the service notification was successfully registered
      */
     public boolean initializeSupplicantHal() {
-        /* Deactivated until HAL integration is ready
-           mWifiSupplicantHal.initialize();
-           */
-        return true;
+        return mWifiSupplicantHal.initialize();
     }
 
     public String getInterfaceName() {
