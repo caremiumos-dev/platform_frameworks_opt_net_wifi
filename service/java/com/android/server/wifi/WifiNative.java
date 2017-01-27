@@ -247,6 +247,13 @@ public class WifiNative {
     }
 
     /**
+    * Teardown all interfaces configured in wificond.
+    */
+    public boolean tearDownInterfaces() {
+        return mWificondControl.tearDownInterfaces();
+    }
+
+    /**
     * Disable wpa_supplicant via wificond.
     * Returns false on failure.
     */

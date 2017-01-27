@@ -1019,14 +1019,9 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
 
         // Clean up existing interfaces in wificond.
         // This ensures that wificond continue to work if java framework restarts.
-        try {
-            mWificond = mWifiInjector.makeWificond();
-            if (mWificond != null) {
-                mWificond.tearDownInterfaces();
-            }
-        } catch (RemoteException e) {
-            // There is very little we can do here
-            Log.e(TAG, "Failed to tear down interfaces via wificond");
+        mWificond = mWifiInjector.makeWificond();
+        if (mWificond != null) {
+            mWifiNative.tearDownInterfaces();
         }
 
         //start the state machine
@@ -3945,12 +3940,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
 
             mDeathRecipient.unlinkToDeath();
             if (mWificond != null) {
-                try {
-                    mWificond.tearDownInterfaces();
-                } catch (RemoteException e) {
-                    // There is very little we can do here
-                    Log.e(TAG, "Failed to tear down interfaces via wificond");
-                }
+                mWifiNative.tearDownInterfaces();
                 mWificond = null;
             }
             mWifiNative.stopHal();
