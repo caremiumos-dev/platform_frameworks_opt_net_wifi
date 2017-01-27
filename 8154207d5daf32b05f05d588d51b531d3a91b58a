@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "b8c5c721_127b3b7f",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-27T19:04:32Z",
+      "side": 1,
+      "message": "I saw EAP_FAILURE but it\u0027s numbering is in the event-space. Do you want to overload it? I could define an enum for reason code and add EAP failure to that.",
+      "range": {
+        "startLine": 1011,
+        "startChar": 24,
+        "endLine": 1011,
+        "endChar": 61
+      },
+      "revId": "8154207d5daf32b05f05d588d51b531d3a91b58a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbdf0a22_1dce368b",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 10
@@ -64,6 +87,52 @@
         "startChar": 34,
         "endLine": 4832,
         "endChar": 35
+      },
+      "revId": "8154207d5daf32b05f05d588d51b531d3a91b58a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79901260_519078f6",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 4832,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-27T19:04:32Z",
+      "side": 1,
+      "message": "will fix",
+      "range": {
+        "startLine": 4832,
+        "startChar": 34,
+        "endLine": 4832,
+        "endChar": 35
+      },
+      "revId": "8154207d5daf32b05f05d588d51b531d3a91b58a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29a47756_ea9d7c9f",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 4832,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-27T19:04:32Z",
+      "side": 1,
+      "message": "will fix",
+      "range": {
+        "startLine": 4832,
+        "startChar": 92,
+        "endLine": 4832,
+        "endChar": 95
       },
       "revId": "8154207d5daf32b05f05d588d51b531d3a91b58a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
