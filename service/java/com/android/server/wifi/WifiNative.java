@@ -135,6 +135,7 @@ public class WifiNative {
     private final String mInterfaceName;
     private final String mInterfacePrefix;
     private WifiSupplicantHal mWifiSupplicantHal;
+    private WifiVendorHal mWifiVendorHal;
 
     private Context mContext = null;
     public void initContext(Context context) {
@@ -150,6 +151,15 @@ public class WifiNative {
      */
     /* package */ void setWifiSupplicantHal(WifiSupplicantHal wifiSupplicantHal) {
         mWifiSupplicantHal = wifiSupplicantHal;
+    }
+
+    /**
+     * Explicitly sets the WifiVendorHal instance
+     * TODO(b/34722734): move this into the constructor of WifiNative when I clean up the awful
+     * double singleton pattern
+     */
+    /* package */ void setWifiVendorHal(WifiVendorHal wifiVendorHal) {
+        mWifiVendorHal = wifiVendorHal;
     }
 
     private WifiNative(String interfaceName,

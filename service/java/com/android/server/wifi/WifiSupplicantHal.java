@@ -42,6 +42,11 @@ public class WifiSupplicantHal {
     private ISupplicantStaIface mHidlSupplicantStaIface;
     private ISupplicantP2pIface mHidlSupplicantP2pIface;
     private final Object mLock = new Object();
+    private final HalDeviceManager mHalDeviceManager;
+
+    public WifiSupplicantHal(HalDeviceManager halDeviceManager) {
+        mHalDeviceManager = halDeviceManager;
+    }
 
     /**
      * Registers a service notification for the ISupplicant service, which gets the service,

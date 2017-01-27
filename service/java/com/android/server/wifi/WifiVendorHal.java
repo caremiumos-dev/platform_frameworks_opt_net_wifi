@@ -45,6 +45,11 @@ public class WifiVendorHal {
     private IWifiChip mIWifiChip;
     private IWifiStaIface mIWifiStaIface;
     private IWifiRttController mIWifiRttController;
+    private final HalDeviceManager mHalDeviceManager;
+
+    public WifiVendorHal(HalDeviceManager halDeviceManager) {
+        mHalDeviceManager = halDeviceManager;
+    }
 
     private void handleRemoteException(RemoteException e) {
         kilroy();
