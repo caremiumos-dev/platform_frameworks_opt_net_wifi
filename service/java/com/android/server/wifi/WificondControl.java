@@ -98,6 +98,24 @@ public class WificondControl {
     }
 
     /**
+    * Teardown all interfaces configured in wificond.
+    */
+    public boolean tearDownInterfaces() {
+        if (mWificond == null) {
+            Log.e(TAG, "No valid wificond handler");
+            return false;
+        }
+        try {
+            mWificond.tearDownInterfaces();
+        } catch (RemoteException e) {
+            // There is very little we can do here
+            Log.e(TAG, "Failed to tear down interfaces via wificond");
+            return false;
+        }
+        return true;
+    }
+
+    /**
     * Disable wpa_supplicant via wificond.
     * Returns false on failure.
     */
