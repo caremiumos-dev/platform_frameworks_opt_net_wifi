@@ -16,6 +16,23 @@
       "revId": "2f6510cf93cf789e284d09c349840402b42aaa73",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a20ff451_98b2a667",
+        "filename": "tests/wifitests/src/com/android/server/wifi/util/WifiPermissionsUtilTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-27T22:37:39Z",
+      "side": 1,
+      "message": "That was where I was originally going to put it, but then I found where the other mocks were set up so I put it with them.  It would be the only mock set up in the setupTestCase method.\n\nI will say that I found the multiple setup methods to be a bit confusing for this file.\n\nWherever you want it is fine, just let me know.",
+      "revId": "2f6510cf93cf789e284d09c349840402b42aaa73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
