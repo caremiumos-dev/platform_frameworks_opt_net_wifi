@@ -146,4 +146,25 @@ public class WificondControl {
         }
     }
 
+    /**
+    * Request signal polling to wificond.
+    */
+    public int[] signalPoll() {
+        if (mClientInterface == null) {
+            Log.e(TAG, "No valid wificond client interface handler");
+            return null;
+        }
+
+        int[] poll_result;
+        try {
+            poll_result = mClientInterface.signalPoll();
+            if (poll_result == null || poll_result.length != 3) {
+                return null;
+            }
+        } catch (RemoteException e1) {
+            return null;
+        }
+        return signalPoll();
+    }
+
 }
