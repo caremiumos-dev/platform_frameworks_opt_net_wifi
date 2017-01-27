@@ -280,6 +280,29 @@ public class WifiNative {
         return mWificondControl.enableSupplicant();
     }
 
+    /**
+    * Request signal polling to wificond.
+    * Returns an array of integers:
+    * First element in array is the RSSI value in dBM.
+    * Second element in array is the transmission bit rate in Mbps.
+    * Third element in array is the association frequency in MHz.
+    * Returns null on failure.
+    */
+    public int[] signalPoll() {
+        return mWificondControl.signalPoll();
+    }
+
+    /**
+     * Fetch TX packet counters on current connection from wificond.
+    * Returns an array of integers:
+    * First element in array is the number of successfully transmitted packets.
+    * Second element in array is the number of tramsmission failure.
+    * Returns null on failure.
+    */
+    public int[] getTxPacketCounters() {
+        return mWificondControl.getTxPacketCounters();
+    }
+
     /*
      * Supplicant management
      */
