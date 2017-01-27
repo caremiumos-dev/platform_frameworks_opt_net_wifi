@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6adad6_2d589a71",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-27T02:24:00Z",
+      "side": 1,
+      "message": "so who\u0027s calling initialize on it?",
+      "range": {
+        "startLine": 152,
+        "startChar": 8,
+        "endLine": 152,
+        "endChar": 25
+      },
+      "revId": "beaceaa27edd472746f35c9649b84234819d847c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
