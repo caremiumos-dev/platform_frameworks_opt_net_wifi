@@ -33,6 +33,29 @@
       "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b37ce21_f224def7",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-01-28T00:18:35Z",
+      "side": 1,
+      "message": "Just from layering perspective, I think we should stop using WifiStateMachine instance from WifiConnectivityManager. \n\nI would think of WifiStateMachine as the parent class and WifiConnectivityManager as a child class. It seems odd that WifiStateMachine and WifiConnectivityManager is calling each other. Maybe we can add some kind of callback mechanism which can be used by WificonnectivityManager to trigger connection requests to WifiStateMachine instead of passing the whole WifiStateMachine object to it?",
+      "range": {
+        "startLine": 637,
+        "startChar": 16,
+        "endLine": 637,
+        "endChar": 29
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
