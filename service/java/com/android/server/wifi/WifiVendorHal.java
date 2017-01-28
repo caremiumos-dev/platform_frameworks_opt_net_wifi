@@ -109,6 +109,12 @@ public class WifiVendorHal {
             Log.e(TAG, "Failed to get the chip created for the Iface");
             return false;
         }
+        mIWifiRttController = mHalDeviceManager.createRttController(iface);
+        if (mIWifiStaIface == null) {
+            Log.e(TAG, "Failed to create RTT controller");
+            return false;
+        }
+        Log.i(TAG, "Vendor Hal started successfully");
         return true;
     }
 
@@ -117,6 +123,7 @@ public class WifiVendorHal {
      */
     public void stopVendorHal() {
         mHalDeviceManager.stop();
+        Log.i(TAG, "Vendor Hal stopped");
     }
 
     /**
@@ -595,7 +602,7 @@ public class WifiVendorHal {
         @Override
         public void onStatusChanged() {
             Log.i(TAG, "Device Manager onStatusChanged. isReady(): " + mHalDeviceManager.isReady()
-                    + "isStarted(): " + mHalDeviceManager.isStarted());
+                    + ", isStarted(): " + mHalDeviceManager.isStarted());
             // Reset all our cached handles.
             if (!mHalDeviceManager.isReady() || !mHalDeviceManager.isStarted())  {
                 mIWifiChip = null;
