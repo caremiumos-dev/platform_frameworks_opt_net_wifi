@@ -462,6 +462,16 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
 
     /* The base for wifi message types */
     static final int BASE = Protocol.BASE_WIFI;
+    /**
+     * Initialize the WifiStateMachine. This is currently used to initialize the
+     * {@link HalDeviceManager} module.
+     */
+    static final int CMD_INITIALIZE                                     = BASE + 9;
+    /**
+     * Indicates the end of boot process, should be used to trigger load from config store,
+     * initiate connection attempt, etc.
+     * */
+    static final int CMD_BOOT_COMPLETED                                 = BASE + 10;
     /* Start the supplicant */
     static final int CMD_START_SUPPLICANT                               = BASE + 11;
     /* Stop the supplicant */
@@ -601,7 +611,6 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     public static final int CMD_DISABLE_P2P_REQ                         = BASE + 132;
     public static final int CMD_DISABLE_P2P_RSP                         = BASE + 133;
 
-    public static final int CMD_BOOT_COMPLETED                          = BASE + 134;
 
     /* We now have a valid IP configuration. */
     static final int CMD_IP_CONFIGURATION_SUCCESSFUL                    = BASE + 138;
@@ -3509,8 +3518,8 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             Binder.allowBlocking(apInterface.asBinder());
         }
 
-        if (!mWifiNative.startHal()) {
-            //  starting HAL is optional
+        if (!mWifiNative.startHal(false)) {
+            // TODO(b/34859006): Handle failures.
             Log.e(TAG, "Failed to start HAL for AP mode");
         }
         return apInterface;
@@ -3773,6 +3782,10 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     } else {
                         setSuspendOptimizations(SUSPEND_DUE_TO_HIGH_PERF, true);
                     }
+                    break;
+                case CMD_INITIALIZE:
+                    boolean ok = mWifiNative.initializeVendorHal();
+                    replyToMessage(message, message.what, ok ? SUCCESS : FAILURE);
                     break;
                 case CMD_BOOT_COMPLETED:
                     // get other services that we need to manage
@@ -4047,8 +4060,8 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                         loge("Unable to change interface settings: " + ie);
                     }
 
-                    if (!mWifiNative.startHal()) {
-                        // starting HAL is optional
+                    if (!mWifiNative.startHal(true)) {
+                        // TODO(b/34859006): Handle failures.
                         Log.e(TAG, "Failed to start HAL for client mode");
                     }
 
@@ -6996,5 +7009,17 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
      */
     public void setIpReachabilityDisconnectEnabled(boolean enabled) {
         mIpReachabilityDisconnectEnabled = enabled;
+    }
+
+    /**
+     * Sends a message to initialize the WifiStateMachine.
+     *
+     * @return true if succeeded, false otherwise.
+     */
+    public boolean syncInitialize(AsyncChannel channel) {
+        Message resultMsg = channel.sendMessageSynchronously(CMD_INITIALIZE);
+        boolean result = (resultMsg.arg1 != FAILURE);
+        resultMsg.recycle();
+        return result;
     }
 }
