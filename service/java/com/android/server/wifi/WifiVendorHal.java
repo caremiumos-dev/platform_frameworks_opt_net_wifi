@@ -99,25 +99,37 @@ public class WifiVendorHal {
             Log.e(TAG, "Failed to start the vendor HAL");
             return false;
         }
+        IWifiIface iface;
         if (isStaMode) {
             mIWifiStaIface = mHalDeviceManager.createStaIface(null, null);
             if (mIWifiStaIface == null) {
-                Log.e(TAG, "Failed to create STA Iface");
+                Log.e(TAG, "Failed to create STA Iface. Vendor Hal start failed");
+                mHalDeviceManager.stop();
+                return false;
+            }
+            iface = (IWifiIface) mIWifiStaIface;
+            mIWifiRttController = mHalDeviceManager.createRttController(iface);
+            if (mIWifiRttController == null) {
+                Log.e(TAG, "Failed to create RTT controller. Vendor Hal start failed");
+                stopVendorHal();
                 return false;
             }
         } else {
             mIWifiApIface = mHalDeviceManager.createApIface(null, null);
             if (mIWifiApIface == null) {
-                Log.e(TAG, "Failed to create AP Iface");
+                Log.e(TAG, "Failed to create AP Iface. Vendor Hal start failed");
+                stopVendorHal();
                 return false;
             }
+            iface = (IWifiIface) mIWifiApIface;
         }
-        IWifiIface iface = (IWifiIface) (mIWifiStaIface != null ? mIWifiStaIface : mIWifiApIface);
         mIWifiChip = mHalDeviceManager.getChip(iface);
-        if (mIWifiStaIface == null) {
-            Log.e(TAG, "Failed to get the chip created for the Iface");
+        if (mIWifiChip == null) {
+            Log.e(TAG, "Failed to get the chip created for the Iface. Vendor Hal start failed");
+            stopVendorHal();
             return false;
         }
+        Log.i(TAG, "Vendor Hal started successfully");
         return true;
     }
 
@@ -126,6 +138,7 @@ public class WifiVendorHal {
      */
     public void stopVendorHal() {
         mHalDeviceManager.stop();
+        Log.i(TAG, "Vendor Hal stopped");
     }
 
     /**
@@ -738,7 +751,7 @@ public class WifiVendorHal {
         @Override
         public void onStatusChanged() {
             Log.i(TAG, "Device Manager onStatusChanged. isReady(): " + mHalDeviceManager.isReady()
-                    + "isStarted(): " + mHalDeviceManager.isStarted());
+                    + ", isStarted(): " + mHalDeviceManager.isStarted());
             // Reset all our cached handles.
             if (!mHalDeviceManager.isReady() || !mHalDeviceManager.isStarted())  {
                 mIWifiChip = null;
