@@ -1538,7 +1538,12 @@ public class WifiNative {
         }
     }
 
-    public boolean startHal() {
+    /**
+     * Bring up the Vendor HAL and configure for STA mode or AP mode.
+     *
+     * @param isStaMode true to start HAL in STA mode, false to start in AP mode.
+     */
+    public boolean startHal(boolean isStaMode) {
         String debugLog = "startHal stack: ";
         java.lang.StackTraceElement[] elements = Thread.currentThread().getStackTrace();
         for (int i = 2; i < elements.length && i <= 7; i++ ) {
