@@ -397,6 +397,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         mInIdleMode = mPowerManager.isDeviceIdleMode();
 
         mWifiController.start();
+        mWifiStateMachine.initialize();
 
         // If we are already disabled (could be due to airplane mode), avoid changing persist
         // state here
