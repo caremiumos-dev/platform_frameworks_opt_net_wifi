@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 The Android Open Source Project
+ * Copyright (C) 2017 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@ package com.android.server.wifi;
 
 import android.hardware.wifi.supplicant.V1_0.ISupplicant;
 import android.hardware.wifi.supplicant.V1_0.ISupplicantIface;
-import android.hardware.wifi.supplicant.V1_0.ISupplicantP2pIface;
 import android.hardware.wifi.supplicant.V1_0.ISupplicantStaIface;
 import android.hardware.wifi.supplicant.V1_0.IfaceType;
 import android.hardware.wifi.supplicant.V1_0.SupplicantStatus;
@@ -35,40 +34,38 @@ import java.util.ArrayList;
  *
  * {@hide}
  */
-public class WifiSupplicantHal {
+public class SupplicantStaHal {
     private static final boolean DBG = false;
-    private static final String TAG = "WifiSupplicantHal";
-    // Supplicant HAL HIDL interface objects
-    private ISupplicant mHidlSupplicant;
-    private ISupplicantStaIface mHidlSupplicantStaIface;
-    private ISupplicantP2pIface mHidlSupplicantP2pIface;
+    private static final String TAG = "SupplicantStaHal";
+    // Supplicant HAL interface objects
+    private ISupplicant mISupplicantHal;
+    private ISupplicantStaIface mISupplicantStaIfaceHal;
     private final Object mLock = new Object();
     private final HalDeviceManager mHalDeviceManager;
     private final HalDeviceManagerStatusListener mHalDeviceManagerStatusCallbacks;
-    private final HandlerThread mWifiStateMachineHandlerThread;
-
-    public WifiSupplicantHal(HalDeviceManager halDeviceManager,
-                         HandlerThread wifiStateMachineHandlerThread) {
+    private final HandlerThread mHandlerThread;
+    private boolean mInitializationComplete;
+    public SupplicantStaHal(HalDeviceManager halDeviceManager, HandlerThread handlerThread) {
         mHalDeviceManager = halDeviceManager;
-        // This object is going to be used by both WifiService & WifiP2pService, so we may
+        // This object is going to be used by both WifiService, so we may
         // need to use different loopers here.
-        mWifiStateMachineHandlerThread = wifiStateMachineHandlerThread;
+        mHandlerThread = handlerThread;
         mHalDeviceManagerStatusCallbacks = new HalDeviceManagerStatusListener();
+        mInitializationComplete = false;
     }
 
     /**
-     * Registers a service notification for the ISupplicant service, which gets the service,
-     * ISupplicantStaIface and ISupplicantP2pIface.
+     * Registers a service notification for the ISupplicant service, which triggers intialization of
+     * the ISupplicantStaIface
      * @return true if the service notification was successfully registered
      */
     public boolean initialize() {
         Log.i(TAG, "Registering SupplicantHidl service ready callback.");
         synchronized (mLock) {
-            mHidlSupplicant = null;
-            mHidlSupplicantStaIface = null;
-            mHidlSupplicantP2pIface = null;
+            mISupplicantHal = null;
+            mISupplicantStaIfaceHal = null;
             try {
-                final IServiceManager serviceManager = IServiceManager.getService("manager");
+                final IServiceManager serviceManager = getServiceManagerMockable();
                 if (serviceManager == null) {
                     Log.e(TAG, "Failed to get HIDL Service Manager");
                     return false;
@@ -87,12 +84,13 @@ public class WifiSupplicantHal {
                     public void onRegistration(String fqName, String name, boolean preexisting) {
                         Log.i(TAG, "IServiceNotification.onRegistration for: " + fqName + ", "
                                 + name + " preexisting=" + preexisting);
-                        if (!getSupplicantService() || !getSupplicantStaIface()
-                                || !getSupplicantP2pIface()) {
+                        if (!initSupplicantService() || !initSupplicantStaIface()) {
                             Log.e(TAG, "initalizing ISupplicantIfaces failed.");
                             supplicantServiceDiedHandler();
+                        } else {
+                            Log.i(TAG, "Completed initialization of ISupplicant interfaces.");
+                            mInitializationComplete = true;
                         }
-                        Log.i(TAG, "Completed initialization of ISupplicant service and Ifaces!");
                     }
                 };
                 /* TODO(b/33639391) : Use the new ISupplicant.registerForNotifications() once it
@@ -106,24 +104,25 @@ public class WifiSupplicantHal {
             } catch (RemoteException e) {
                 Log.e(TAG, "Exception while trying to register a listener for ISupplicant service: "
                         + e);
+                supplicantServiceDiedHandler();
             }
 
             mHalDeviceManager.initialize();
             mHalDeviceManager.registerStatusListener(
-                    mHalDeviceManagerStatusCallbacks, mWifiStateMachineHandlerThread.getLooper());
+                    mHalDeviceManagerStatusCallbacks, mHandlerThread.getLooper());
             return true;
         }
     }
 
-    private boolean getSupplicantService() {
+    private boolean initSupplicantService() {
         synchronized (mLock) {
             try {
-                mHidlSupplicant = ISupplicant.getService();
+                mISupplicantHal = getSupplicantMockable();
             } catch (RemoteException e) {
                 Log.e(TAG, "ISupplicant.getService exception: " + e);
                 return false;
             }
-            if (mHidlSupplicant == null) {
+            if (mISupplicantHal == null) {
                 Log.e(TAG, "Got null ISupplicant service. Stopping supplicant HIDL startup");
                 return false;
             }
@@ -134,12 +133,12 @@ public class WifiSupplicantHal {
     /**
      * @return ISupplicantIface of the requested type
      */
-    private ISupplicantIface getSupplicantIface(int ifaceType) {
+    private ISupplicantIface getSupplicantStaIface(int ifaceType) {
         synchronized (mLock) {
             /** List all supplicant Ifaces */
             final ArrayList<ISupplicant.IfaceInfo> supplicantIfaces = new ArrayList<>();
             try {
-                mHidlSupplicant.listInterfaces((SupplicantStatus status,
+                mISupplicantHal.listInterfaces((SupplicantStatus status,
                         ArrayList<ISupplicant.IfaceInfo> ifaces) -> {
                     if (status.code != SupplicantStatusCode.SUCCESS) {
                         Log.e(TAG, "Getting Supplicant Interfaces failed: " + status.code);
@@ -155,14 +154,13 @@ public class WifiSupplicantHal {
                 Log.e(TAG, "Got zero HIDL supplicant ifaces. Stopping supplicant HIDL startup.");
                 return null;
             }
-            /** Get the STA iface */
-            boolean hasStaIface = false;
+            boolean hasIface = false;
             Mutable<ISupplicantIface> supplicantIface = new Mutable<>();
             for (ISupplicant.IfaceInfo ifaceInfo : supplicantIfaces) {
                 if (ifaceInfo.type == ifaceType) {
-                    hasStaIface = true;
+                    hasIface = true;
                     try {
-                        mHidlSupplicant.getInterface(ifaceInfo,
+                        mISupplicantHal.getInterface(ifaceInfo,
                                 (SupplicantStatus status, ISupplicantIface iface) -> {
                                 if (status.code != SupplicantStatusCode.SUCCESS) {
                                     Log.e(TAG, "Failed to get ISupplicantIface " + status.code);
@@ -177,7 +175,7 @@ public class WifiSupplicantHal {
                     break;
                 }
             }
-            if (!hasStaIface) {
+            if (!hasIface) {
                 Log.e(TAG, "No ISupplicantIface matching requested type: " + ifaceType + ", got "
                         + supplicantIfaces.size() + " ifaces.");
             }
@@ -185,44 +183,75 @@ public class WifiSupplicantHal {
         }
     }
 
-    private boolean getSupplicantStaIface() {
+    private boolean initSupplicantStaIface() {
         synchronized (mLock) {
-            /** Cast ISupplicantIface into ISupplicantStaIface*/
-            ISupplicantIface supplicantIface = getSupplicantIface(IfaceType.STA);
-            if (supplicantIface == null) {
-                Log.e(TAG, "getSupplicantStaIface failed");
+            /** List all supplicant Ifaces */
+            final ArrayList<ISupplicant.IfaceInfo> supplicantIfaces = new ArrayList<>();
+            try {
+                mISupplicantHal.listInterfaces((SupplicantStatus status,
+                        ArrayList<ISupplicant.IfaceInfo> ifaces) -> {
+                    if (status.code != SupplicantStatusCode.SUCCESS) {
+                        Log.e(TAG, "Getting Supplicant Interfaces failed: " + status.code);
+                        return;
+                    }
+                    supplicantIfaces.addAll(ifaces);
+                });
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicant.listInterfaces exception: " + e);
                 return false;
             }
-            mHidlSupplicantStaIface =
-                ISupplicantStaIface.asInterface(supplicantIface.asBinder());
-            return true;
-        }
-    }
-
-    private boolean getSupplicantP2pIface() {
-        synchronized (mLock) {
-            /** Cast ISupplicantIface into ISupplicantStaIface*/
-            ISupplicantIface supplicantIface = getSupplicantIface(IfaceType.P2P);
-            if (supplicantIface == null) {
-                Log.e(TAG, "getSupplicantP2pIface failed");
+            if (supplicantIfaces.size() == 0) {
+                Log.e(TAG, "Got zero HIDL supplicant ifaces. Stopping supplicant HIDL startup.");
                 return false;
             }
-            mHidlSupplicantP2pIface =
-                ISupplicantP2pIface.asInterface(supplicantIface.asBinder());
+            boolean hasIface = false;
+            Mutable<ISupplicantIface> supplicantIface = new Mutable<>();
+            for (ISupplicant.IfaceInfo ifaceInfo : supplicantIfaces) {
+                if (ifaceInfo.type == IfaceType.STA) {
+                    hasIface = true;
+                    try {
+                        mISupplicantHal.getInterface(ifaceInfo,
+                                (SupplicantStatus status, ISupplicantIface iface) -> {
+                                if (status.code != SupplicantStatusCode.SUCCESS) {
+                                    Log.e(TAG, "Failed to get ISupplicantIface " + status.code);
+                                    return;
+                                }
+                                supplicantIface.value = iface;
+                            });
+                    } catch (RemoteException e) {
+                        Log.e(TAG, "ISupplicant.getInterface exception: " + e);
+                        return false;
+                    }
+                    break;
+                }
+            }
+            if (!hasIface) {
+                Log.e(TAG, "No ISupplicantIface matching IfaceType.STA: " + ", got "
+                        + supplicantIfaces.size() + " ifaces.");
+            }
+            if (supplicantIface.value == null) {
+                Log.e(TAG, "initSupplicantStaIface got null iface");
+                return false;
+            }
+            mISupplicantStaIfaceHal = getStaIfaceMockable(supplicantIface.value);
             return true;
-        }
-    }
-
-    private void resetHandles() {
-        synchronized (mLock) {
-            mHidlSupplicant = null;
-            mHidlSupplicantStaIface = null;
-            mHidlSupplicantP2pIface = null;
         }
     }
 
     private void supplicantServiceDiedHandler() {
-        resetHandles();
+        synchronized (mLock) {
+            mISupplicantHal = null;
+            mISupplicantStaIfaceHal = null;
+            mInitializationComplete = false;
+        }
+    }
+
+    /**
+     * Signals whether Initialization completed successfully. Only necessary for testing, is not
+     * needed to guard calls etc.
+     */
+    public boolean isInitializationComplete() {
+        return mInitializationComplete;
     }
 
     /**
@@ -231,13 +260,32 @@ public class WifiSupplicantHal {
     public class HalDeviceManagerStatusListener implements HalDeviceManager.ManagerStatusListener {
         @Override
         public void onStatusChanged() {
-            Log.i(TAG, "Device Manager onStatusChanged. isReady(): " + mHalDeviceManager.isReady()
-                    + "isStarted(): " + mHalDeviceManager.isStarted());
+            boolean isReady = mHalDeviceManager.isReady();
+            boolean isStarted = mHalDeviceManager.isStarted();
+            if (DBG) {
+                Log.i(TAG, "Device Manager onStatusChanged. isReady(): " + isReady
+                        + "isStarted(): " + isStarted);
+            }
             // Reset all our cached handles.
-            if (!mHalDeviceManager.isReady() || !mHalDeviceManager.isStarted())  {
-                resetHandles();
+            if (!isReady || !isStarted)  {
+                supplicantServiceDiedHandler();
             }
         }
+    }
+
+    /**
+     * Wrapper functions to access static HAL methods, created to be mockable in unit tests
+     */
+    protected IServiceManager getServiceManagerMockable() throws RemoteException {
+        return IServiceManager.getService("manager");
+    }
+
+    protected ISupplicant getSupplicantMockable() throws RemoteException {
+        return ISupplicant.getService();
+    }
+
+    protected ISupplicantStaIface getStaIfaceMockable(ISupplicantIface iface) {
+        return ISupplicantStaIface.asInterface(iface.asBinder());
     }
 
     private static class Mutable<E> {

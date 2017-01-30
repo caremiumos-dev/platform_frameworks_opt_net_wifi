@@ -71,7 +71,7 @@ public class WifiInjector {
     private final WifiApConfigStore mWifiApConfigStore;
     private final WifiNative mWifiNative;
     private final WifiNative mWifiP2pNative;
-    private final WifiSupplicantHal mWifiSupplicantHal;
+    private final SupplicantStaHal mSupplicantStaHal;
     private final WifiVendorHal mWifiVendorHal;
     private final WifiStateMachine mWifiStateMachine;
     private final WifiSettingsStore mSettingsStore;
@@ -151,13 +151,13 @@ public class WifiInjector {
         // Modules interacting with Native.
         mHalDeviceManager = new HalDeviceManager();
         mWifiVendorHal = new WifiVendorHal(mHalDeviceManager, mWifiStateMachineHandlerThread);
-        mWifiSupplicantHal =
-                new WifiSupplicantHal(mHalDeviceManager, mWifiStateMachineHandlerThread);
+        mSupplicantStaHal =
+                new SupplicantStaHal(mHalDeviceManager, mWifiStateMachineHandlerThread);
         mWifiNative = WifiNative.getWlanNativeInterface();
-        mWifiNative.setWifiSupplicantHal(mWifiSupplicantHal);
+        mWifiNative.setSupplicantStaHal(mSupplicantStaHal);
         mWifiNative.setWifiVendorHal(mWifiVendorHal);
         mWifiP2pNative = WifiNative.getP2pNativeInterface();
-        mWifiP2pNative.setWifiSupplicantHal(mWifiSupplicantHal);
+        mWifiP2pNative.setSupplicantStaHal(mSupplicantStaHal);
         mWifiP2pNative.setWifiVendorHal(mWifiVendorHal);
 
         // WifiConfigManager/Store objects and their dependencies.
@@ -224,8 +224,8 @@ public class WifiInjector {
         return mWifiMetrics;
     }
 
-    public WifiSupplicantHal getWifiSupplicantHal() {
-        return mWifiSupplicantHal;
+    public SupplicantStaHal getSupplicantStaHal() {
+        return mSupplicantStaHal;
     }
 
     public BackupManagerProxy getBackupManagerProxy() {
