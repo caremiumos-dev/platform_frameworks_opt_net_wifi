@@ -201,18 +201,102 @@ public class WifiVendorHal {
      */
     public WifiLinkLayerStats getWifiLinkLayerStats(String iface) {
         kilroy();
-        throw new UnsupportedOperationException();
+        synchronized (sLock) {
+            try {
+                if (!linkLayerStatsEnabled()) return null;
+                if (iface == null) return null;
+                WifiLinkLayerStats out = new WifiLinkLayerStats();
+                MutableBoolean ok = new MutableBoolean(false);
+                kilroy();
+                mIWifiStaIface.getLinkLayerStats((status, stats) -> {
+                            kilroy();
+                            if (status.code != WifiStatusCode.SUCCESS) return;
+                            out.status = 0; // TODO
+                            out.SSID = null; // TODO
+                            out.BSSID = null; // TODO
+                            out.beacon_rx = stats.iface.beaconRx;
+                            out.rssi_mgmt = stats.iface.avgRssiMgmt;
+                        /* WME Best Effort Access Category */
+                            out.rxmpdu_be = stats.iface.wmeBePktStats.rxMpdu;
+                            out.txmpdu_be = stats.iface.wmeBePktStats.txMpdu;
+                            out.lostmpdu_be = stats.iface.wmeBePktStats.lostMpdu;
+                            out.retries_be = stats.iface.wmeBePktStats.retries;
+                        /* WME Background Access Category */
+                            out.rxmpdu_bk = stats.iface.wmeBkPktStats.rxMpdu;
+                            out.txmpdu_bk = stats.iface.wmeBkPktStats.txMpdu;
+                            out.lostmpdu_bk = stats.iface.wmeBkPktStats.lostMpdu;
+                            out.retries_bk = stats.iface.wmeBkPktStats.retries;
+                        /* WME Video Access Category */
+                            out.rxmpdu_vi = stats.iface.wmeViPktStats.rxMpdu;
+                            out.txmpdu_vi = stats.iface.wmeViPktStats.txMpdu;
+                            out.lostmpdu_vi = stats.iface.wmeViPktStats.lostMpdu;
+                            out.retries_vi = stats.iface.wmeViPktStats.retries;
+                        /* WME Voice Access Category */
+                            out.rxmpdu_vo = stats.iface.wmeVoPktStats.rxMpdu;
+                            out.txmpdu_vo = stats.iface.wmeVoPktStats.txMpdu;
+                            out.lostmpdu_vo = stats.iface.wmeVoPktStats.lostMpdu;
+                            out.retries_vo = stats.iface.wmeVoPktStats.retries;
+                            out.on_time = stats.radio.onTimeInMs;
+                            out.tx_time = stats.radio.txTimeInMs;
+                            out.tx_time_per_level = new int[stats.radio.txTimeInMsPerLevel.size()];
+                            for (int i = 0; i < out.tx_time_per_level.length; i++) {
+                                out.tx_time_per_level[i] = stats.radio.txTimeInMsPerLevel.get(i);
+                            }
+                            out.rx_time = stats.radio.rxTimeInMs;
+                            out.on_time_scan = stats.radio.onTimeInMsForScan;
+                            kilroy();
+                            ok.value = true;
+                        }
+                );
+                return ok.value ? out : null;
+            } catch (RemoteException e) {
+                kilroy();
+                handleRemoteException(e);
+                return null;
+            }
+        }
+    }
+
+    private boolean mLinkLayerStatsEnabled = false;         // Desired state
+    private boolean mLinkLayerStatsReallyEnabled = false;   // Actual state
+    //TestOnly
+    boolean mLinkLayerStatsDebug = false;
+
+    /** @return true if we should collect link layer stats */
+    private boolean linkLayerStatsEnabled() throws RemoteException {
+        if (!mLinkLayerStatsEnabled) return false;      // don't want it
+        if (mIWifiStaIface == null) return false;       // can't have it
+        if (mLinkLayerStatsReallyEnabled) return true;  // already have it
+        WifiStatus status = mIWifiStaIface.enableLinkLayerStatsCollection(mLinkLayerStatsDebug);
+        if (status.code != WifiStatusCode.SUCCESS) {
+            Log.e(TAG, "unable to enable link layer stats collection");
+            return false;                               // couldn't get it
+        }
+        kilroy();
+        mLinkLayerStatsReallyEnabled = true;            // got it!
+        return true;
     }
 
     /**
-     * Enable link layer stats collection
+     * Enable/disable link layer stats collection
+     *
+     * The HAL does not need to be up yet, this merely records the desired state.
      *
      * @param iface  is the name of the wifi interface (checked for null, otherwise ignored)
-     * @param enable must be 1
+     * @param enable must be 1 to enable or 0 to disable
      */
     public void setWifiLinkLayerStats(String iface, int enable) {
         kilroy();
-        throw new UnsupportedOperationException();
+        synchronized (sLock) {
+            kilroy();
+            if (iface == null) return;
+            kilroy();
+            if (enable == 0) {
+                mLinkLayerStatsEnabled = false;
+            } else if (enable == 1) {
+                mLinkLayerStatsEnabled = true;
+            } else throw new IndexOutOfBoundsException();
+        }
     }
 
     /**
