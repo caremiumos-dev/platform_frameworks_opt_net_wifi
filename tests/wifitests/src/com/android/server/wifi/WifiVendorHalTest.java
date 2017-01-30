@@ -22,6 +22,7 @@ import android.hardware.wifi.V1_0.IWifiChip;
 import android.hardware.wifi.V1_0.IWifiIface;
 import android.hardware.wifi.V1_0.IWifiRttController;
 import android.hardware.wifi.V1_0.IWifiStaIface;
+import android.hardware.wifi.V1_0.WifiStatus;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -43,6 +44,7 @@ import org.mockito.MockitoAnnotations;
 public class WifiVendorHalTest {
 
     WifiVendorHal mWifiVendorHal;
+    private WifiStatus mWifiStatusSuccess = new WifiStatus();
     @Mock private HalDeviceManager mHalDeviceManager;
     @Mock private HandlerThread mWifiStateMachineHandlerThread;
     @Mock private WifiVendorHal.HalDeviceManagerStatusListener mHalDeviceManagerStatusCallbacks;
@@ -290,4 +292,29 @@ public class WifiVendorHalTest {
         verify(mHalDeviceManager, never()).createStaIface(eq(null), eq(null));
         verify(mHalDeviceManager, never()).createRttController(any(IWifiIface.class));
     }
+
+    /**
+     * Test enablement of link layer stats after startup
+     */
+    @Test
+    public void testLinkLayerStatsEnableAfterStartup() throws Exception {
+        when(mIWifiStaIface.enableLinkLayerStatsCollection(true)).thenReturn(mWifiStatusSuccess);
+        doNothing().when(mIWifiStaIface).getLinkLayerStats(any());
+
+        assertTrue(mWifiVendorHal.startVendorHal(false));
+        assertTrue(mWifiVendorHal.isHalStarted());
+
+        assertFalse(mWifiVendorHal.mLinkLayerStatsEnabled);
+        assertFalse(mWifiVendorHal.mLinkLayerStatsReallyEnabled);
+        mWifiVendorHal.setWifiLinkLayerStats("wlan0", 1);
+        assertTrue(mWifiVendorHal.mLinkLayerStatsEnabled);
+        assertFalse(mWifiVendorHal.mLinkLayerStatsReallyEnabled);
+        mWifiVendorHal.getWifiLinkLayerStats("wlan0");
+        assertTrue(mWifiVendorHal.mLinkLayerStatsEnabled);
+        assertTrue(mWifiVendorHal.mLinkLayerStatsReallyEnabled);
+        verify(mHalDeviceManager).start();
+        verify(mIWifiStaIface).enableLinkLayerStatsCollection(true);
+        verify(mIWifiStaIface).getLinkLayerStats(any());
+    }
+
 }
