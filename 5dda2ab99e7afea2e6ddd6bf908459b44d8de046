@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "fae84873_1be67297",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-30T22:35:47Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 40
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef146384_0d8b4527",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -36,6 +59,29 @@
       "writtenOn": "2017-01-27T18:29:49Z",
       "side": 1,
       "message": "we will want this to go for integration tests - both wifi sanity and telephony since we do most mode switching there.  that will give the interface creation code a workout",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3a1e2b8_c276d179",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-30T22:35:47Z",
+      "side": 1,
+      "message": "We already have integration tests for the underlying call in wificond. I think after the driver/firmware reloading process is taken from wificond to HAL, this will be covered by VTS tests.",
       "range": {
         "startLine": 14,
         "startChar": 0,
@@ -71,6 +117,29 @@
     },
     {
       "key": {
+        "uuid": "669180d9_04a14781",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-30T22:35:47Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 107,
+        "startChar": 57,
+        "endLine": 107,
+        "endChar": 72
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88a28edd_d22482ef",
         "filename": "service/java/com/android/server/wifi/WifiNative.java",
         "patchSetId": 4
@@ -82,6 +151,29 @@
       "writtenOn": "2017-01-27T18:29:49Z",
       "side": 1,
       "message": "It is simple, but let\u0027s make sure we have coverage in a test",
+      "range": {
+        "startLine": 204,
+        "startChar": 28,
+        "endLine": 204,
+        "endChar": 52
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51ee977f_0994e290",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-30T22:35:47Z",
+      "side": 1,
+      "message": "Done",
       "range": {
         "startLine": 204,
         "startChar": 28,
@@ -117,6 +209,29 @@
     },
     {
       "key": {
+        "uuid": "464c8a0f_40ed23ae",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-30T22:35:47Z",
+      "side": 1,
+      "message": "Same as above.",
+      "range": {
+        "startLine": 211,
+        "startChar": 24,
+        "endLine": 211,
+        "endChar": 48
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03b15f9f_59b2593e",
         "filename": "service/java/com/android/server/wifi/WificondControl.java",
         "patchSetId": 4
@@ -128,6 +243,29 @@
       "writtenOn": "2017-01-27T18:29:49Z",
       "side": 1,
       "message": "Tests please!",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 21
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42ea3d85_54f85cd6",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-30T22:35:47Z",
+      "side": 1,
+      "message": "Done",
       "range": {
         "startLine": 30,
         "startChar": 6,
@@ -163,6 +301,29 @@
     },
     {
       "key": {
+        "uuid": "a89d3bce_c2c081f6",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-30T22:35:47Z",
+      "side": 1,
+      "message": "These are cached wificond handlers.\nIApInterface might not be used right way, but the other two should be used shortly any other methods which need to talk to wificond.\nSpeaking of IApInterface, as we discussed ealier, later we will moved the control of wificond entirely from WifiStateMachine and SoftApManager to this class.\nWith that being said, when we reach that point, we also need this cached IApInterface handler for softAp binder calls.",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 38
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "388d0b63_720b04fa",
         "filename": "service/java/com/android/server/wifi/WificondControl.java",
         "patchSetId": 4
@@ -174,6 +335,29 @@
       "writtenOn": "2017-01-27T18:29:49Z",
       "side": 1,
       "message": "please annotate with @param and @return",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 5
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0efcbb70_d3f9f222",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-30T22:35:47Z",
+      "side": 1,
+      "message": "Done",
       "range": {
         "startLine": 40,
         "startChar": 4,
@@ -209,6 +393,29 @@
     },
     {
       "key": {
+        "uuid": "9c636dec_0244bdf9",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-30T22:35:47Z",
+      "side": 1,
+      "message": "I think we don\u0027t expecet a null IWificond at any time.\nI will add handling code in WifiStateMachine and rephrase the logging here.\nIn terms of distinguish the error, for now we only return a null to WifiStateMachine. This will be handled in WificondControl internally when WificondControl() takes the full control of IWificond.",
+      "range": {
+        "startLine": 46,
+        "startChar": 12,
+        "endLine": 46,
+        "endChar": 24
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cc9b1da_0ea42913",
         "filename": "service/java/com/android/server/wifi/WificondControl.java",
         "patchSetId": 4
@@ -220,6 +427,29 @@
       "writtenOn": "2017-01-27T18:29:49Z",
       "side": 1,
       "message": "should we do something here?",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 40
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce64ec7c_64a64fe0",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-30T22:35:47Z",
+      "side": 1,
+      "message": "As a result of b/30159593, wificond doesn\u0027t return any error code. Even if wificond returns error code, that would trigger a RuntimeException instead of a RemoteException.\nWith that said, java side won\u0027t get any RemoteException triggered by wificond.\nIf it does happen, the only reason could be an internal error of binder object transaction.\nIn that case we don\u0027t have much to do here. I think binder itself will log the context.",
       "range": {
         "startLine": 52,
         "startChar": 0,
@@ -255,6 +485,29 @@
     },
     {
       "key": {
+        "uuid": "b4bbe910_8475eca5",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-30T22:35:47Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 57,
+        "startChar": 10,
+        "endLine": 59,
+        "endChar": 9
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "065b44e3_1de78b67",
         "filename": "service/java/com/android/server/wifi/WificondControl.java",
         "patchSetId": 4
@@ -266,6 +519,29 @@
       "writtenOn": "2017-01-27T18:29:49Z",
       "side": 1,
       "message": "are these going to be used?",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 63,
+        "endChar": 43
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cfe0f09_fc032e86",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-30T22:35:47Z",
+      "side": 1,
+      "message": "Same as reply of line 33-35.\nThese are going to be used.",
       "range": {
         "startLine": 61,
         "startChar": 8,
@@ -301,6 +577,29 @@
     },
     {
       "key": {
+        "uuid": "d6043af6_b690412f",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-30T22:35:47Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 68,
+        "startChar": 3,
+        "endLine": 70,
+        "endChar": 6
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "992eb6d9_382e8aca",
         "filename": "service/java/com/android/server/wifi/WificondControl.java",
         "patchSetId": 4
@@ -312,6 +611,29 @@
       "writtenOn": "2017-01-27T18:29:49Z",
       "side": 1,
       "message": "like above, should we distinguish between the failures?",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 24
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "521ea6eb_82ceff29",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-30T22:35:47Z",
+      "side": 1,
+      "message": "Same above.",
       "range": {
         "startLine": 74,
         "startChar": 0,
@@ -347,6 +669,29 @@
     },
     {
       "key": {
+        "uuid": "cdc238e9_0875c788",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-30T22:35:47Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 85,
+        "startChar": 10,
+        "endLine": 87,
+        "endChar": 9
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b04c04f8_d60e9056",
         "filename": "service/java/com/android/server/wifi/WificondControl.java",
         "patchSetId": 4
@@ -358,6 +703,29 @@
       "writtenOn": "2017-01-27T18:29:49Z",
       "side": 1,
       "message": "like above, are these going to be used?",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 35
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8899645_3536cdeb",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-30T22:35:47Z",
+      "side": 1,
+      "message": "Same as reply of line 33-35.\nThese are going to be used.",
       "range": {
         "startLine": 89,
         "startChar": 7,
@@ -387,6 +755,23 @@
     },
     {
       "key": {
+        "uuid": "8be2c936_7a2e7db3",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-30T22:35:47Z",
+      "side": 1,
+      "message": "SoftApMode is not currently being used in this unit test.\nSince there was no mock there for mWificond.creatApInterface(). I think it might be better to keep as it is until we have new unit tests?",
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e089094_391b8b1e",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
         "patchSetId": 4
@@ -398,6 +783,29 @@
       "writtenOn": "2017-01-27T05:56:18Z",
       "side": 1,
       "message": "Shouldn\u0027t this be before line 356?",
+      "range": {
+        "startLine": 387,
+        "startChar": 0,
+        "endLine": 389,
+        "endChar": 68
+      },
+      "revId": "5dda2ab99e7afea2e6ddd6bf908459b44d8de046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53378699_f3e0563a",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-01-30T22:35:47Z",
+      "side": 1,
+      "message": "I think the order doesn\u0027t matter here for adding mocking rules.\nIt seems that this file follows the convention of such an (top-down)order:\nwhen(A.doSomething()).thenRturn(B);\nwhen(B.doSomethingElse()).thenReturn(C);",
       "range": {
         "startLine": 387,
         "startChar": 0,
