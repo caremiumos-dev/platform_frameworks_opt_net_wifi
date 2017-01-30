@@ -15,25 +15,45 @@
  */
 package com.android.server.wifi;
 
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.hardware.wifi.V1_0.IWifiApIface;
 import android.hardware.wifi.V1_0.IWifiChip;
 import android.hardware.wifi.V1_0.IWifiIface;
 import android.hardware.wifi.V1_0.IWifiRttController;
+import android.hardware.wifi.V1_0.IWifiRttControllerEventCallback;
 import android.hardware.wifi.V1_0.IWifiStaIface;
+import android.hardware.wifi.V1_0.IWifiStaIfaceEventCallback;
+import android.hardware.wifi.V1_0.IfaceType;
+import android.hardware.wifi.V1_0.RttConfig;
+import android.hardware.wifi.V1_0.RttResponder;
+import android.hardware.wifi.V1_0.RttResult;
+import android.hardware.wifi.V1_0.StaScanData;
+import android.hardware.wifi.V1_0.StaScanResult;
 import android.hardware.wifi.V1_0.WifiDebugHostWakeReasonStats;
+import android.hardware.wifi.V1_0.WifiDebugRingBufferStatus;
+import android.hardware.wifi.V1_0.WifiDebugRxPacketFateReport;
+import android.hardware.wifi.V1_0.WifiDebugTxPacketFateReport;
 import android.hardware.wifi.V1_0.WifiStatus;
+import android.hardware.wifi.V1_0.WifiStatusCode;
 import android.net.apf.ApfCapabilities;
 import android.net.wifi.RttManager;
 import android.net.wifi.RttManager.ResponderConfig;
 import android.net.wifi.WifiLinkLayerStats;
+import android.net.wifi.WifiManager;
 import android.net.wifi.WifiScanner;
 import android.net.wifi.WifiWakeReasonAndCounts;
 import android.os.HandlerThread;
 import android.os.RemoteException;
 import android.util.Log;
+import android.util.MutableBoolean;
+import android.util.MutableInt;
 
 import com.android.server.connectivity.KeepalivePacketData;
+
+import libcore.util.HexEncoding;
+
+import java.util.ArrayList;
 
 /**
  * Vendor HAL via HIDL
@@ -47,6 +67,49 @@ public class WifiVendorHal {
     private IWifiStaIface mIWifiStaIface;
     private IWifiApIface mIWifiApIface;
     private IWifiRttController mIWifiRttController;
+
+    public WifiVendorHal() {
+        mHalDeviceManager = null;
+        mWifiStateMachineHandlerThread = null;
+        mHalDeviceManagerStatusCallbacks = null;
+    }
+
+    /**
+     * Initializes the vendor hal for a STA (station) interface
+     * @param chip
+     * @param sta
+     * @return true for success
+     */
+    public boolean initialize(IWifiChip chip, IWifiStaIface sta) {
+        // TODO - cleanup prev state, synchronize
+        kilroy();
+        if (chip == null || sta == null) return false;
+        kilroy();
+        if (mIWifiChip != null) return false;
+        kilroy();
+        mIWifiChip = chip;
+        mIWifiStaIface = sta;
+        mIWifiApIface = null;
+        mIWifiRttController = null;
+        return true;
+    }
+
+    /**
+     * Initializes the vendor hal for an AP (access point) inteface
+     * @param chip
+     * @param ap
+     * @return
+     */
+    public boolean initialize(IWifiChip chip, IWifiApIface ap) {
+        // TODO - cleanup prev state, synchronize
+        kilroy();
+        mIWifiChip = chip;
+        mIWifiStaIface = null;
+        mIWifiApIface = ap;
+        mIWifiRttController = null;
+        return true;
+    }
+
     private final HalDeviceManager mHalDeviceManager;
     private final HalDeviceManagerStatusListener mHalDeviceManagerStatusCallbacks;
     private final HandlerThread mWifiStateMachineHandlerThread;
@@ -73,7 +136,7 @@ public class WifiVendorHal {
      * Initialize the Hal device manager and register for status callbacks.
      * @return
      */
-    public boolean initialize() {
+    boolean initialize() {
         mHalDeviceManager.initialize();
         mHalDeviceManager.registerStatusListener(
                 mHalDeviceManagerStatusCallbacks, mWifiStateMachineHandlerThread.getLooper());
@@ -85,7 +148,7 @@ public class WifiVendorHal {
      *
      * @param isStaMode true to start HAL in STA mode, false to start in AP mode.
      */
-    public boolean startVendorHal(boolean isStaMode) {
+    boolean startVendorHal(boolean isStaMode) {
         if (!mHalDeviceManager.start()) {
             Log.e(TAG, "Failed to start the vendor HAL");
             return false;
@@ -115,7 +178,7 @@ public class WifiVendorHal {
     /**
      * Stops the HAL
      */
-    public void stopVendorHal() {
+    void stopVendorHal() {
         mHalDeviceManager.stop();
     }
 
@@ -123,6 +186,7 @@ public class WifiVendorHal {
      * Tests whether the HAL is running or not
      */
     public boolean isHalStarted() {
+        kilroy();
         return (mIWifiStaIface != null || mIWifiApIface != null);
     }
 
