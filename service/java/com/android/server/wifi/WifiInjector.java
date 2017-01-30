@@ -71,7 +71,9 @@ public class WifiInjector {
     private final WifiApConfigStore mWifiApConfigStore;
     private final WifiNative mWifiNative;
     private final WifiNative mWifiP2pNative;
+    private final Object mSupplicantHalLock;
     private final WifiSupplicantHal mWifiSupplicantHal;
+    private final SupplicantStaIfaceHal mSupplicantStaIfaceHal;
     private final WifiVendorHal mWifiVendorHal;
     private final WifiStateMachine mWifiStateMachine;
     private final WifiSettingsStore mSettingsStore;
@@ -151,8 +153,11 @@ public class WifiInjector {
         // Modules interacting with Native.
         mHalDeviceManager = new HalDeviceManager();
         mWifiVendorHal = new WifiVendorHal(mHalDeviceManager, mWifiStateMachineHandlerThread);
+        mSupplicantHalLock = new Object();
+        mSupplicantStaIfaceHal = new SupplicantStaIfaceHal(mSupplicantHalLock);
         mWifiSupplicantHal =
-                new WifiSupplicantHal(mHalDeviceManager, mWifiStateMachineHandlerThread);
+                new WifiSupplicantHal(mHalDeviceManager, mWifiStateMachineHandlerThread,
+                mSupplicantStaIfaceHal, mSupplicantHalLock);
         mWifiNative = WifiNative.getWlanNativeInterface();
         mWifiNative.setWifiSupplicantHal(mWifiSupplicantHal);
         mWifiNative.setWifiVendorHal(mWifiVendorHal);
