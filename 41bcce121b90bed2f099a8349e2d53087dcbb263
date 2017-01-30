@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86fc5fda_b0c2aacc",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-30T23:44:55Z",
+      "side": 1,
+      "message": "mIWifiChip",
+      "range": {
+        "startLine": 116,
+        "startChar": 12,
+        "endLine": 116,
+        "endChar": 26
+      },
+      "revId": "41bcce121b90bed2f099a8349e2d53087dcbb263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6aef89b3_5b800c5f",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-01-30T23:44:55Z",
+      "side": 1,
+      "message": "mIWifiRttController",
+      "range": {
+        "startLine": 121,
+        "startChar": 12,
+        "endLine": 121,
+        "endChar": 26
+      },
+      "revId": "41bcce121b90bed2f099a8349e2d53087dcbb263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
