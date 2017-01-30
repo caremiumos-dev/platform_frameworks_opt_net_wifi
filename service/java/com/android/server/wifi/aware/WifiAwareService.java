@@ -65,6 +65,9 @@ public final class WifiAwareService extends SystemService {
             mImpl.start(awareHandlerThread, wifiAwareStateManager);
         } else if (phase == SystemService.PHASE_BOOT_COMPLETED) {
             mImpl.startLate();
+
+            // DO NOT SUBMIT or MERGE: just for testing
+            WifiInjector.getInstance().getHalDeviceManager().start();
         }
     }
 }
