@@ -39,14 +39,15 @@ public class WifiSupplicantHal {
     private static final boolean DBG = false;
     private static final String TAG = "WifiSupplicantHal";
     // Supplicant HAL HIDL interface objects
-    private ISupplicant mHidlSupplicant;
-    private ISupplicantStaIface mHidlSupplicantStaIface;
-    private ISupplicantP2pIface mHidlSupplicantP2pIface;
+    private ISupplicant mISupplicantHal;
+    private ISupplicantStaIface mISupplicantStaIfaceHal;
+    private ISupplicantP2pIface mISupplicantP2pIfaceHal;
+    // Wrapper/caller of the mISupplicantStaIfaceHal
+    private SupplicantStaIfaceHal mSupplicantStaIfaceHal;
     private final Object mLock = new Object();
     private final HalDeviceManager mHalDeviceManager;
     private final HalDeviceManagerStatusListener mHalDeviceManagerStatusCallbacks;
     private final HandlerThread mWifiStateMachineHandlerThread;
-
     public WifiSupplicantHal(HalDeviceManager halDeviceManager,
                          HandlerThread wifiStateMachineHandlerThread) {
         mHalDeviceManager = halDeviceManager;
@@ -64,9 +65,10 @@ public class WifiSupplicantHal {
     public boolean initialize() {
         Log.i(TAG, "Registering SupplicantHidl service ready callback.");
         synchronized (mLock) {
-            mHidlSupplicant = null;
-            mHidlSupplicantStaIface = null;
-            mHidlSupplicantP2pIface = null;
+            mISupplicantHal = null;
+            mISupplicantStaIfaceHal = null;
+            mISupplicantP2pIfaceHal = null;
+            mSupplicantStaIfaceHal = null;
             try {
                 final IServiceManager serviceManager = IServiceManager.getService("manager");
                 if (serviceManager == null) {
@@ -118,12 +120,12 @@ public class WifiSupplicantHal {
     private boolean getSupplicantService() {
         synchronized (mLock) {
             try {
-                mHidlSupplicant = ISupplicant.getService();
+                mISupplicantHal = ISupplicant.getService();
             } catch (RemoteException e) {
                 Log.e(TAG, "ISupplicant.getService exception: " + e);
                 return false;
             }
-            if (mHidlSupplicant == null) {
+            if (mISupplicantHal == null) {
                 Log.e(TAG, "Got null ISupplicant service. Stopping supplicant HIDL startup");
                 return false;
             }
@@ -139,7 +141,7 @@ public class WifiSupplicantHal {
             /** List all supplicant Ifaces */
             final ArrayList<ISupplicant.IfaceInfo> supplicantIfaces = new ArrayList<>();
             try {
-                mHidlSupplicant.listInterfaces((SupplicantStatus status,
+                mISupplicantHal.listInterfaces((SupplicantStatus status,
                         ArrayList<ISupplicant.IfaceInfo> ifaces) -> {
                     if (status.code != SupplicantStatusCode.SUCCESS) {
                         Log.e(TAG, "Getting Supplicant Interfaces failed: " + status.code);
@@ -162,7 +164,7 @@ public class WifiSupplicantHal {
                 if (ifaceInfo.type == ifaceType) {
                     hasStaIface = true;
                     try {
-                        mHidlSupplicant.getInterface(ifaceInfo,
+                        mISupplicantHal.getInterface(ifaceInfo,
                                 (SupplicantStatus status, ISupplicantIface iface) -> {
                                 if (status.code != SupplicantStatusCode.SUCCESS) {
                                     Log.e(TAG, "Failed to get ISupplicantIface " + status.code);
@@ -193,8 +195,9 @@ public class WifiSupplicantHal {
                 Log.e(TAG, "getSupplicantStaIface failed");
                 return false;
             }
-            mHidlSupplicantStaIface =
-                ISupplicantStaIface.asInterface(supplicantIface.asBinder());
+            mISupplicantStaIfaceHal =
+                    ISupplicantStaIface.asInterface(supplicantIface.asBinder());
+            mSupplicantStaIfaceHal = new SupplicantStaIfaceHal(this, mISupplicantStaIfaceHal);
             return true;
         }
     }
@@ -207,7 +210,7 @@ public class WifiSupplicantHal {
                 Log.e(TAG, "getSupplicantP2pIface failed");
                 return false;
             }
-            mHidlSupplicantP2pIface =
+            mISupplicantP2pIfaceHal =
                 ISupplicantP2pIface.asInterface(supplicantIface.asBinder());
             return true;
         }
@@ -215,13 +218,14 @@ public class WifiSupplicantHal {
 
     private void resetHandles() {
         synchronized (mLock) {
-            mHidlSupplicant = null;
-            mHidlSupplicantStaIface = null;
-            mHidlSupplicantP2pIface = null;
+            mISupplicantHal = null;
+            mISupplicantStaIfaceHal = null;
+            mISupplicantP2pIfaceHal = null;
+            mSupplicantStaIfaceHal = null;
         }
     }
 
-    private void supplicantServiceDiedHandler() {
+    void supplicantServiceDiedHandler() {
         resetHandles();
     }
 
