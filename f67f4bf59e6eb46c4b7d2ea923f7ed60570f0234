@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ee5f0c0_dd4a4a87",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-30T18:16:42Z",
+      "side": 1,
+      "message": "WifiStateMachine",
+      "range": {
+        "startLine": 14,
+        "startChar": 39,
+        "endLine": 14,
+        "endChar": 54
+      },
+      "revId": "f67f4bf59e6eb46c4b7d2ea923f7ed60570f0234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4604f322_c829f1cf",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-30T18:16:42Z",
+      "side": 1,
+      "message": "I am not sure this order works.  If you start wifi controller and it decides to switch modes and tell WSM - you might not have called initialized yet.  I am not sure this order really works.  Also, it is adding yet another disjoint step in bringing up wifi.",
+      "range": {
+        "startLine": 399,
+        "startChar": 8,
+        "endLine": 400,
+        "endChar": 39
+      },
+      "revId": "f67f4bf59e6eb46c4b7d2ea923f7ed60570f0234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
