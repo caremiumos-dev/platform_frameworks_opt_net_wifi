@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65c7425f_5e801c48",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 6637,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-01-31T18:56:03Z",
+      "side": 1,
+      "message": "Is mWifiCond guaranteed to be non null here? Why didn\u0027t you do the check done in 3959",
+      "revId": "74cc98114caaa80f8862ec8c8d450e528a8622ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
