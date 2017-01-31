@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "453221a2_c10dc620",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-31T00:01:49Z",
+      "side": 1,
+      "message": "indent on this line looks off - same for other log lines below.",
+      "range": {
+        "startLine": 628,
+        "startChar": 17,
+        "endLine": 628,
+        "endChar": 28
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51fe7ed1_2fdd185f",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 1
@@ -75,6 +98,98 @@
         "startChar": 16,
         "endLine": 637,
         "endChar": 29
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f759d332_83a28ba7",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-31T00:01:49Z",
+      "side": 1,
+      "message": "the log message here looks a little confusing.  we set the target to any and then log that we are reconnecting.",
+      "range": {
+        "startLine": 638,
+        "startChar": 16,
+        "endLine": 640,
+        "endChar": 66
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bbb83cb2_62cbdd9c",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-31T00:01:49Z",
+      "side": 1,
+      "message": "I am a little confused as to why we do not call roam to network in the roaming supported case above, but do call connect to network here.",
+      "range": {
+        "startLine": 645,
+        "startChar": 0,
+        "endLine": 645,
+        "endChar": 82
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52a89a72_b9a1be13",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4027,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-31T00:01:49Z",
+      "side": 1,
+      "message": "when explicitly asked for the feature set (syncGetSupportedFeatureSet) we do not return a copy of the returned value.  Is there a reason we do not do that?  (In other words, is this ok to cache? Should this be retrieved each time?)",
+      "range": {
+        "startLine": 4027,
+        "startChar": 0,
+        "endLine": 4027,
+        "endChar": 84
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e16511e_b6417e9c",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-31T00:01:49Z",
+      "side": 1,
+      "message": "add a test for the thenReturn(false) case?",
+      "range": {
+        "startLine": 1015,
+        "startChar": 0,
+        "endLine": 1015,
+        "endChar": 77
       },
       "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
