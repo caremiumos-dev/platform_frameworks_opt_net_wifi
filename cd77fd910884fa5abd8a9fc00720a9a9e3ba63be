@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b74b5d1e_120f7a90",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-31T23:19:00Z",
+      "side": 1,
+      "message": "consider changing to WifiStateMachine  (might pop up better in debugging/grep",
+      "range": {
+        "startLine": 400,
+        "startChar": 47,
+        "endLine": 400,
+        "endChar": 65
+      },
+      "revId": "cd77fd910884fa5abd8a9fc00720a9a9e3ba63be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5f86934_7e71f702",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-31T23:19:00Z",
+      "side": 1,
+      "message": "indent to match below",
+      "range": {
+        "startLine": 469,
+        "startChar": 65,
+        "endLine": 469,
+        "endChar": 76
+      },
+      "revId": "cd77fd910884fa5abd8a9fc00720a9a9e3ba63be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad3c5b9b_7b5dd08e",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-31T23:19:00Z",
+      "side": 1,
+      "message": "indent to match below",
+      "range": {
+        "startLine": 474,
+        "startChar": 65,
+        "endLine": 474,
+        "endChar": 77
+      },
+      "revId": "cd77fd910884fa5abd8a9fc00720a9a9e3ba63be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6517115f_7b0a7d65",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3524,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-31T23:19:00Z",
+      "side": 1,
+      "message": "this is no longer \"optional\"\n\nan error path should be handled.  we can fail to start softap...  maybe use that path - that or it depends on the failure.  if it is just rtt that fails, that might not matter.",
+      "range": {
+        "startLine": 3521,
+        "startChar": 8,
+        "endLine": 3524,
+        "endChar": 9
+      },
+      "revId": "cd77fd910884fa5abd8a9fc00720a9a9e3ba63be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df515c57_39db5705",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4066,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-31T23:19:00Z",
+      "side": 1,
+      "message": "again, same as above.  this is not really \"optional\"",
+      "range": {
+        "startLine": 4063,
+        "startChar": 20,
+        "endLine": 4066,
+        "endChar": 21
+      },
+      "revId": "cd77fd910884fa5abd8a9fc00720a9a9e3ba63be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc0193db_25e86842",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7015,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-31T23:19:00Z",
+      "side": 1,
+      "message": "WifiStateMachine please! :)",
+      "range": {
+        "startLine": 7015,
+        "startChar": 41,
+        "endLine": 7015,
+        "endChar": 59
+      },
+      "revId": "cd77fd910884fa5abd8a9fc00720a9a9e3ba63be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cce0624c_ea2e885d",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7015,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-31T23:19:00Z",
+      "side": 1,
+      "message": "add @return",
+      "range": {
+        "startLine": 7015,
+        "startChar": 7,
+        "endLine": 7015,
+        "endChar": 22
+      },
+      "revId": "cd77fd910884fa5abd8a9fc00720a9a9e3ba63be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cad83308_97ef1047",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-31T23:19:00Z",
+      "side": 1,
+      "message": "we should log that we did not fully start the vendor hal.\n\nalso, what does it mean to fail?",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 25
+      },
+      "revId": "cd77fd910884fa5abd8a9fc00720a9a9e3ba63be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "439384ea_870553d5",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-31T23:19:00Z",
+      "side": 1,
+      "message": "also log that we aren\u0027t fully up..  and then what does this mean for our current state?  should we retry?  should we tear down the interface and stop the hal?",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 25
+      },
+      "revId": "cd77fd910884fa5abd8a9fc00720a9a9e3ba63be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffae97f1_893f2942",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-31T23:19:00Z",
+      "side": 1,
+      "message": "apply to softap mode?",
+      "range": {
+        "startLine": 120,
+        "startChar": 8,
+        "endLine": 124,
+        "endChar": 9
+      },
+      "revId": "cd77fd910884fa5abd8a9fc00720a9a9e3ba63be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da1308d1_c3585029",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-31T23:19:00Z",
+      "side": 1,
+      "message": "can we add one for softap?",
+      "revId": "cd77fd910884fa5abd8a9fc00720a9a9e3ba63be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
