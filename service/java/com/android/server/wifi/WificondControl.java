@@ -18,10 +18,19 @@ package com.android.server.wifi;
 
 import android.net.wifi.IApInterface;
 import android.net.wifi.IClientInterface;
+import android.net.wifi.IWifiScannerImpl;
 import android.net.wifi.IWificond;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiSsid;
 import android.os.Binder;
 import android.os.RemoteException;
 import android.util.Log;
+
+import com.android.server.wifi.hotspot2.NetworkDetail;
+import com.android.server.wifi.util.InformationElementUtil;
+import com.android.server.wifi.wificond.NativeScanResult;
+
+import java.util.ArrayList;
 
 /**
  * This class provides methods for WifiNative to send control commands to wificond.
@@ -33,6 +42,7 @@ public class WificondControl {
     private IWificond mWificond;
     private IClientInterface mClientInterface;
     private IApInterface mApInterface;
+    private IWifiScannerImpl mWificondScanner;
     private WifiInjector mWifiInjector;
 
     WificondControl(WifiInjector wifiInjector) {
@@ -67,6 +77,9 @@ public class WificondControl {
 
         // Refresh Handlers
         mClientInterface = clientInterface;
+        try {
+            mWificondScanner = mClientInterface.getWifiScannerImpl();
+        } catch (RemoteException e1) { }
 
         return clientInterface;
     }
@@ -99,6 +112,7 @@ public class WificondControl {
 
         // Refresh Handlers
         mApInterface = apInterface;
+        mWificondScanner = null;
 
         return apInterface;
     }
@@ -185,5 +199,54 @@ public class WificondControl {
             return null;
         }
         return poll_result;
+    }
+
+    private String parseMacToString(byte[] mac) {
+        if (mac.length != 6) {
+            Log.e(TAG, "Invalid MAC adddress size");
+            return "";
+        }
+        StringBuilder sb = new StringBuilder(18);
+        for (byte b : mac) {
+            if (sb.length() > 0) {
+                sb.append(':');
+            }
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
+    }
+
+    /**
+    * Fetch the latest scan result from kernel via wificond.
+    * Returns an ArrayList of ScanDetail.
+    * Returns an empty ArrayList on failure.
+    */
+    public ArrayList<ScanDetail> getScanResults() {
+        ArrayList<ScanDetail> results = new ArrayList<>();
+        if (mWificondScanner == null) {
+            Log.e(TAG, "No valid wificond scanner interface handler");
+            return results;
+        }
+        try {
+            NativeScanResult[] nativeResults = mWificondScanner.getScanResults();
+            for (NativeScanResult result : nativeResults) {
+                WifiSsid wifiSsid = WifiSsid.createFromAsciiEncoded(new String(result.ssid));
+                String bssid = parseMacToString(result.bssid);
+                ScanResult.InformationElement[] ies =
+                        InformationElementUtil.parseInformationElements(result.infoElement);
+                InformationElementUtil.Capabilities capabilities =
+                        new InformationElementUtil.Capabilities();
+                capabilities.from(ies, result.capability);
+                String flags = capabilities.generateCapabilitiesString();
+                NetworkDetail networkDetail =
+                        new NetworkDetail(bssid, ies, null, result.frequency);
+                ScanDetail scanDetail = new ScanDetail(networkDetail, wifiSsid, bssid, flags,
+                        result.signalMbm / 100, result.frequency, result.tsf, ies, null);
+                results.add(scanDetail);
+            }
+        } catch (RemoteException e1) {
+            Log.e(TAG, "Failed to create ScanDetail ArrayList");
+        }
+        return results;
     }
 }
