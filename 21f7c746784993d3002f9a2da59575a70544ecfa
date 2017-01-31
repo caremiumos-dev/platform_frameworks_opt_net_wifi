@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "fc3a9bdf_db493bd8",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-31T06:41:09Z",
+      "side": 1,
+      "message": "Hmm, I don\u0027t think so. Otherwise, the check style script would have caught it.",
+      "range": {
+        "startLine": 628,
+        "startChar": 17,
+        "endLine": 628,
+        "endChar": 28
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51fe7ed1_2fdd185f",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 1
@@ -128,6 +151,29 @@
     },
     {
       "key": {
+        "uuid": "afd127db_d976a4bc",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-31T06:41:09Z",
+      "side": 1,
+      "message": "It\u0027s only the BSSID set to ANY. The candidate SSID is different from the currently connected network. \n\nOr are you saying the word \"Reconnect\" is confusing here? That I can change it to something like \"Transition\" on both line 639 and 642.",
+      "range": {
+        "startLine": 638,
+        "startChar": 16,
+        "endLine": 640,
+        "endChar": 66
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbb83cb2_62cbdd9c",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 1
@@ -139,6 +185,29 @@
       "writtenOn": "2017-01-31T00:01:49Z",
       "side": 1,
       "message": "I am a little confused as to why we do not call roam to network in the roaming supported case above, but do call connect to network here.",
+      "range": {
+        "startLine": 645,
+        "startChar": 0,
+        "endLine": 645,
+        "endChar": 82
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d529dd37_07cf7be6",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-31T06:41:09Z",
+      "side": 1,
+      "message": "What\u0027s handled above is something like when roaming from BSSID A1 of network A to BSSID A2 of the same network A. We now completely rely on firmware to initiate this kind of switching if the feature is supported. \n\nThe case here is when we switch from network A to network B, different SSID. Firmware doesn\u0027t initiate this kind of transition. It\u0027s up to the framework to trigger it. In addition to SSID, we used to specify BSSID as well. Now only SSID is specified and we let firmware to choose which BSSID to connect to.",
       "range": {
         "startLine": 645,
         "startChar": 0,
@@ -174,6 +243,29 @@
     },
     {
       "key": {
+        "uuid": "13ee977b_ec1af18c",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4027,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-31T06:41:09Z",
+      "side": 1,
+      "message": "syncGetSupportedFeatures() masks out the RTT bits depending on the system property settings. Here all we care about is the WIFI_FEATURE_CONTROL_ROAMING bit. This feature is fixed with the version of SoC and firmware. It doesn\u0027t change on the fly. So it\u0027s okay to cache. We need to check this flag for every network switching, which can happen every 10 seconds in theory. Retrieving it every single time via HAL, driver and firmware can become very expensive. syncGetSupportedFeatures() is not called that often.",
+      "range": {
+        "startLine": 4027,
+        "startChar": 0,
+        "endLine": 4027,
+        "endChar": 84
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e16511e_b6417e9c",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
         "patchSetId": 1
@@ -185,6 +277,29 @@
       "writtenOn": "2017-01-31T00:01:49Z",
       "side": 1,
       "message": "add a test for the thenReturn(false) case?",
+      "range": {
+        "startLine": 1015,
+        "startChar": 0,
+        "endLine": 1015,
+        "endChar": 77
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7c375fc_58a11fd5",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-31T06:41:09Z",
+      "side": 1,
+      "message": "See line 213. By default we do thenReturn(false). So existing tests like enterWifiDisconnectedStateWhenScreenOn() already cover it.\n\nThere we do \n\nverify(mWifiStateMachine).startConnectToNetwork(\n                CANDIDATE_NETWORK_ID, CANDIDATE_BSSID);\n\nto make sure the target BSSID is CANDIDATE_BSSID, versus SUPPLICANT_BSSID_ANY here.",
       "range": {
         "startLine": 1015,
         "startChar": 0,
