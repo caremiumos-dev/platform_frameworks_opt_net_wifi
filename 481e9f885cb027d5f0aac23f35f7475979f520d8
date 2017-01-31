@@ -22,6 +22,29 @@
       "revId": "481e9f885cb027d5f0aac23f35f7475979f520d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb2fce59_5fc28be1",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-31T22:28:35Z",
+      "side": 1,
+      "message": "Is it a valid use-case for someone (or some corporation) to be provisioning devices with PasspointConfigurations before the SIM card is plugged in (using SIM credentials)? And do we want to support that?\n(Probably NO to both questions)\n\nThey can already invalidate the credential after the fact by changing SIM, since we check at discovery/connect time (right?)",
+      "range": {
+        "startLine": 179,
+        "startChar": 8,
+        "endLine": 179,
+        "endChar": 85
+      },
+      "revId": "481e9f885cb027d5f0aac23f35f7475979f520d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
