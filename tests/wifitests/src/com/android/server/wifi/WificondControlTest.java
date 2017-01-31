@@ -25,11 +25,17 @@ import static org.mockito.Mockito.when;
 
 import android.net.wifi.IApInterface;
 import android.net.wifi.IClientInterface;
+import android.net.wifi.IWifiScannerImpl;
 import android.net.wifi.IWificond;
 import android.test.suitebuilder.annotation.SmallTest;
 
+import com.android.server.wifi.wificond.NativeScanResult;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.BitSet;
 
 /**
  * Unit tests for {@link com.android.server.wifi.WificondControl}.
@@ -38,6 +44,52 @@ import org.junit.Test;
 public class WificondControlTest {
     private WifiInjector mWifiInjector;
     private WificondControl mWificondControl;
+    private static final byte[] TEST_SSID =
+            new byte[] {'G', 'o', 'o', 'g', 'l', 'e', 'G', 'u', 'e', 's', 't'};
+    private static final byte[] TEST_BSSID =
+            new byte[] {(byte) 0x12, (byte) 0xef, (byte) 0xa1,
+                        (byte) 0x2c, (byte) 0x97, (byte) 0x8b};
+    // This the IE buffer which is consistent with TEST_SSID.
+    private static final byte[] TEST_INFO_ELEMENT =
+            new byte[] {
+                    // Element ID for SSID.
+                    (byte) 0x00,
+                    // Length if the SSID: 0x0b or 11.
+                    (byte) 0x0b,
+                    // This is string "GoogleGuest"
+                    (byte) 0x47, (byte) 0x6f, (byte) 0x6f, (byte) 0x67, (byte) 0x6c, (byte) 0x65,
+                    (byte) 0x47, (byte) 0x75, (byte) 0x65, (byte) 0x73, (byte) 0x74};
+    // This the IE buffer which is inconsistent with TEST_SSID.
+    private static final byte[] TEST_INFO_ELEMENT_WITH_INCONSISTENT_SSID =
+            new byte[] {(byte) 0x00, (byte) 0x08, (byte) 0x46, (byte) 0x72, (byte) 0x65,
+                        (byte) 0x69, (byte) 0x68, (byte) 0x65, (byte) 0x69, (byte) 0x74};
+
+    private static final int TEST_FREQUENCY = 2456;
+    private static final int TEST_SIGNAL_MBM = -4500;
+    private static final long TEST_TSF = 34455441;
+    private static final BitSet TEST_CAPABILITY = new BitSet(16) {{ set(2); set(5); }};
+    private static final boolean TEST_ASSOCIATED = true;
+    private static final NativeScanResult MOCK_NATIVE_SCAN_RESULT =
+            new NativeScanResult() {{
+                ssid = TEST_SSID;
+                bssid = TEST_BSSID;
+                infoElement = TEST_INFO_ELEMENT;
+                frequency = TEST_FREQUENCY;
+                signalMbm = TEST_SIGNAL_MBM;
+                capability = TEST_CAPABILITY;
+                associated = TEST_ASSOCIATED;
+            }};
+
+    private static final NativeScanResult MOCK_NATIVE_SCAN_RESULT_WITH_INCOSISTENT_SSID =
+            new NativeScanResult() {{
+                ssid = TEST_SSID;
+                bssid = TEST_BSSID;
+                infoElement = TEST_INFO_ELEMENT_WITH_INCONSISTENT_SSID;
+                frequency = TEST_FREQUENCY;
+                signalMbm = TEST_SIGNAL_MBM;
+                capability = TEST_CAPABILITY;
+                associated = TEST_ASSOCIATED;
+            }};
 
     @Before
     public void setUp() throws Exception {
@@ -311,4 +363,80 @@ public class WificondControlTest {
         // Signal poll should fail.
         assertEquals(null, mWificondControl.getTxPacketCounters());
     }
+
+    /**
+     * Verifies that getScanResults() returns null when there is no configured client
+     * interface.
+     */
+    @Test
+    public void testGetScanResultsErrorWhenNoClientInterfaceConfigured() throws Exception {
+        IWificond wificond = mock(IWificond.class);
+        IClientInterface clientInterface = mock(IClientInterface.class);
+
+        when(mWifiInjector.makeWificond()).thenReturn(wificond);
+        when(wificond.createClientInterface()).thenReturn(clientInterface);
+
+        // Configure client interface.
+        IClientInterface returnedClientInterface = mWificondControl.setupDriverForClientMode();
+        assertEquals(clientInterface, returnedClientInterface);
+
+        // Tear down interfaces.
+        assertTrue(mWificondControl.tearDownInterfaces());
+
+        // getScanResults should fail.
+        assertEquals(0, mWificondControl.getScanResults().size());
+    }
+
+    /**
+     * Verifies that getScanResults() can parse NativeScanResult from wificond correctly,
+     */
+    @Test
+    public void testGetScanResults() throws Exception {
+        IWificond wificond = mock(IWificond.class);
+        IClientInterface clientInterface = mock(IClientInterface.class);
+        IWifiScannerImpl scanner = mock(IWifiScannerImpl.class);
+
+        when(mWifiInjector.makeWificond()).thenReturn(wificond);
+        when(wificond.createClientInterface()).thenReturn(clientInterface);
+        when(clientInterface.getWifiScannerImpl()).thenReturn(scanner);
+
+        // Mock the returned array of NativeScanResult.
+        NativeScanResult[] mockScanResults = {MOCK_NATIVE_SCAN_RESULT};
+        when(scanner.getScanResults()).thenReturn(mockScanResults);
+
+        // Configure client interface.
+        IClientInterface returnedClientInterface = mWificondControl.setupDriverForClientMode();
+        assertEquals(clientInterface, returnedClientInterface);
+        ArrayList<ScanDetail> returnedScanResults = mWificondControl.getScanResults();
+        assertEquals(mockScanResults.length, returnedScanResults.size());
+    }
+
+    /**
+     * Verifies that getScanResults() fails when NativeScanResult's ssid field is inconsistent
+     * with the ssid stored in Information Elements buffer.
+     */
+    @Test
+    public void testGetScanResultsSkipInconsistentSSID() throws Exception {
+        IWificond wificond = mock(IWificond.class);
+        IClientInterface clientInterface = mock(IClientInterface.class);
+        IWifiScannerImpl scanner = mock(IWifiScannerImpl.class);
+
+        when(mWifiInjector.makeWificond()).thenReturn(wificond);
+        when(wificond.createClientInterface()).thenReturn(clientInterface);
+        when(clientInterface.getWifiScannerImpl()).thenReturn(scanner);
+
+        // Mock the returned array of NativeScanResult.
+        NativeScanResult[] mockScanResults =
+                {MOCK_NATIVE_SCAN_RESULT, MOCK_NATIVE_SCAN_RESULT_WITH_INCOSISTENT_SSID};
+        when(scanner.getScanResults()).thenReturn(mockScanResults);
+
+        // Configure client interface.
+        IClientInterface returnedClientInterface = mWificondControl.setupDriverForClientMode();
+        assertEquals(clientInterface, returnedClientInterface);
+        ArrayList<ScanDetail> returnedScanResults = mWificondControl.getScanResults();
+
+        // Make sure |getScanResults| skips the BSS with inconsistent SSID.
+        assertEquals(mockScanResults.length - 1, returnedScanResults.size());
+    }
+
 }
