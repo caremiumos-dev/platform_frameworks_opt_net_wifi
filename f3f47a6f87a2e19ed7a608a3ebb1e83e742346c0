@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89dc3d62_a8e9f9a3",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3995,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-01-31T17:51:45Z",
+      "side": 1,
+      "message": "Once we have WifiVendorHal, WifiSupplicantHal \u0026 WifiCondControl hooked up to WifiNative, we can replace this entire block (and the block above the mNwService interactions) with a single call to WifiNative (maybe WifiNaive.setupForClientMode()).\n\nBut, that\u0027s for much later :)",
+      "range": {
+        "startLine": 3988,
+        "startChar": 0,
+        "endLine": 3995,
+        "endChar": 69
+      },
+      "revId": "f3f47a6f87a2e19ed7a608a3ebb1e83e742346c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
