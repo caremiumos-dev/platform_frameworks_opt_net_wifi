@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67112bbf_4dad196a",
+        "filename": "tests/wifitests/src/com/android/server/wifi/HalDeviceManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-01-31T01:01:41Z",
+      "side": 1,
+      "message": "Also add a \"verify(mWifiMock).stop();\" here.",
+      "revId": "a5dc1667f752dc2446e6de12279614a4fd9e2fe2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
