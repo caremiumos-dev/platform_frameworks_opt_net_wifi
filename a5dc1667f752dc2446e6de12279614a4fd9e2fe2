@@ -16,6 +16,23 @@
       "revId": "a5dc1667f752dc2446e6de12279614a4fd9e2fe2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d4d0296d_b79c5825",
+        "filename": "tests/wifitests/src/com/android/server/wifi/HalDeviceManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-31T01:53:20Z",
+      "side": 1,
+      "message": "Can\u0027t do that - the verification for stop() is rolled-up into the single verify at the caller.\n\nThe reason is (I believe) that all verification is a post-operation. So when you execute:\n\nverify(mWifi).stop();\nverify(mWifi).stop();\n\nThis actually is not the same as: \n\nverify(mWifi, times(2)).stop();\n\nAnd will fail.",
+      "revId": "a5dc1667f752dc2446e6de12279614a4fd9e2fe2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
