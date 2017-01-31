@@ -176,8 +176,8 @@ public class PasspointEventHandler {
     public void notifyANQPDone(long bssid, boolean success) {
         Map<Constants.ANQPElementType, ANQPElement> elements = null;
         if (success) {
-            String bssData =
-                    mSupplicantHook.scanResult(Utils.macToString(bssid));
+            // Get Bssid data.
+            String bssData = "";
             try {
                 elements = parseWPSData(bssData);
                 Log.d(Utils.hs2LogTag(getClass()),
