@@ -71,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "bb4fce61_fb2ffd69",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-01T20:26:12Z",
+      "side": 1,
+      "message": "Thanks for catching this. I\u0027ve cleaned up the indent for all the localLog messages in this file.",
+      "range": {
+        "startLine": 628,
+        "startChar": 17,
+        "endLine": 628,
+        "endChar": 28
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51fe7ed1_2fdd185f",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 1
@@ -99,6 +122,23 @@
       "writtenOn": "2017-01-27T23:04:23Z",
       "side": 1,
       "message": "This is the beginning of a series of CLs. There will be logic to handle this. WifiStateMachine#setTargetBssid and WifiStateMachine#clearTargetBssid are used to enforce this. Currently there is no plan to compile a blacklist as I cannot think of a very good way to generate such a list.",
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d61bfde1_a8e44e18",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-01T20:26:12Z",
+      "side": 1,
+      "message": "This is covered by go/aog/331165.",
       "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -139,6 +179,29 @@
       "writtenOn": "2017-01-28T00:53:16Z",
       "side": 1,
       "message": "Agreed. The situation today is definitely not ideal. It\u0027s the same issue as the rest of Wifi stack: the architecture is quite spaghetti mainly because of how WifiStateMachine is. \n\nBut I think doing it via a callback may not be ideal either. It seems hiding the problem to me. What if we have a layer that provides interfaces to execute commands like Connecting, Roaming, and etc? WifiConnectivityManager calls into this layer to issue the requests and let it deal with WifiStateMachine and figure out how the requests should be handled.\n\nI will file a bug to track this investigation.",
+      "range": {
+        "startLine": 637,
+        "startChar": 16,
+        "endLine": 637,
+        "endChar": 29
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2faccefc_38c1e1d2",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-01T20:26:12Z",
+      "side": 1,
+      "message": "Filed b/34819513 to track this.",
       "range": {
         "startLine": 637,
         "startChar": 16,
@@ -220,6 +283,29 @@
     },
     {
       "key": {
+        "uuid": "6578a780_479f0a11",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-01T20:26:12Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 638,
+        "startChar": 16,
+        "endLine": 640,
+        "endChar": 66
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df8b524a_f4f79cae",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 1
@@ -231,6 +317,29 @@
       "writtenOn": "2017-02-01T05:59:54Z",
       "side": 1,
       "message": "reconnect here might also suffer from the same confustion",
+      "range": {
+        "startLine": 642,
+        "startChar": 44,
+        "endLine": 642,
+        "endChar": 53
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4b2ecdaa_3fde14a2",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-01T20:26:12Z",
+      "side": 1,
+      "message": "Done",
       "range": {
         "startLine": 642,
         "startChar": 44,
@@ -381,6 +490,29 @@
     },
     {
       "key": {
+        "uuid": "80fe44d2_319ee22b",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4027,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-01T20:26:12Z",
+      "side": 1,
+      "message": "Since the feature set is tightly coupled with the firmware, it is much safer to grab it every time we load the client firmware. An extreme case would be that we have two versions of firmware on the device and may load different one based on the device configuration.",
+      "range": {
+        "startLine": 4027,
+        "startChar": 0,
+        "endLine": 4027,
+        "endChar": 84
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e16511e_b6417e9c",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
         "patchSetId": 1
@@ -438,6 +570,29 @@
       "writtenOn": "2017-02-01T05:59:54Z",
       "side": 1,
       "message": "ah, missed that. thanks\n\nin the code there were 4 options between this check and the other if/elses...  do we have another case we need to test here?",
+      "range": {
+        "startLine": 1015,
+        "startChar": 0,
+        "endLine": 1015,
+        "endChar": 77
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29d8fc68_b2c5c7c6",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-01T20:26:12Z",
+      "side": 1,
+      "message": "Added the framework initiated roaming test case.",
       "range": {
         "startLine": 1015,
         "startChar": 0,
