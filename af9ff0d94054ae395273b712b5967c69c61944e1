@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6edd1966_7d93f6f1",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConfigManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3552,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-01T23:55:49Z",
+      "side": 1,
+      "message": "Maybe also check that the key was not removed? verify(mWifiKeyStore, never()).removeKeys(any(WifiEnterpriseConfig.class));",
+      "revId": "af9ff0d94054ae395273b712b5967c69c61944e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
