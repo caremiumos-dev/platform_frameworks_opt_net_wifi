@@ -119,6 +119,7 @@ public class WifiConnectivityManagerTest {
     private static final int CANDIDATE_NETWORK_ID = 0;
     private static final String CANDIDATE_SSID = "\"AnSsid\"";
     private static final String CANDIDATE_BSSID = "6c:f3:7f:ae:8c:f3";
+    private static final String INVALID_SCAN_RESULT_BSSID = "6c:f3:7f:ae:8c:f4";
     private static final long CURRENT_SYSTEM_TIME_MS = 1000;
 
     Resources mockResource() {
@@ -230,7 +231,7 @@ public class WifiConnectivityManagerTest {
 
         WifiConfiguration candidate = generateWifiConfig(
                 0, CANDIDATE_NETWORK_ID, CANDIDATE_SSID, false, true, null, null);
-        candidate.BSSID = CANDIDATE_BSSID;
+        candidate.BSSID = WifiStateMachine.SUPPLICANT_BSSID_ANY;
         ScanResult candidateScanResult = new ScanResult();
         candidateScanResult.SSID = CANDIDATE_SSID;
         candidateScanResult.BSSID = CANDIDATE_BSSID;
@@ -1193,10 +1194,10 @@ public class WifiConnectivityManagerTest {
      * Expected behavior: WifiConnectivityManager calls
      * WifiStateMachine.startConnectToNetwork() with the
      * expected candidate network ID, and the BSSID value should be
-     * 'any' since firmware controls the roaming.
+     * the config specified one.
      */
     @Test
-    public void useAnyBssidToConnectWhenFirmwareRoamingOnAndConfigHasBssidSpecified() {
+    public void useConfigSpecifiedBssidToConnectWhenFirmwareRoamingOn() {
         // Firmware controls roaming
         when(mWifiConnectivityHelper.isFirmwareRoamingSupported()).thenReturn(true);
 
@@ -1220,7 +1221,7 @@ public class WifiConnectivityManagerTest {
                 WifiConnectivityManager.WIFI_STATE_DISCONNECTED);
 
         verify(mWifiStateMachine).startConnectToNetwork(
-                CANDIDATE_NETWORK_ID, WifiStateMachine.SUPPLICANT_BSSID_ANY);
+                CANDIDATE_NETWORK_ID, CANDIDATE_BSSID);
     }
 
     /*
@@ -1330,5 +1331,78 @@ public class WifiConnectivityManagerTest {
 
         verify(mWifiStateMachine, times(0)).startRoamToNetwork(
                 anyInt(), anyObject());
+    }
+
+    /*
+     * Wifi in disconnected state. Drop the connection attempt if the recommended
+     * network configuration has a BSSID specified but the scan result BSSID doesn't
+     * match it.
+     *
+     * Expected behavior: WifiConnectivityManager doesn't invoke
+     * WifiStateMachine.startConnectToNetwork().
+     */
+    @Test
+    public void dropConnectAttemptIfConfigSpecifiedBssidDifferentFromScanResultBssid() {
+        // Set up the candidate configuration such that it has a BSSID specified.
+        WifiConfiguration candidate = generateWifiConfig(
+                0, CANDIDATE_NETWORK_ID, CANDIDATE_SSID, false, true, null, null);
+        candidate.BSSID = CANDIDATE_BSSID; // config specified
+        ScanResult candidateScanResult = new ScanResult();
+        candidateScanResult.SSID = CANDIDATE_SSID;
+        // Set up the scan result BSSID to be different from the config specified one.
+        candidateScanResult.BSSID = INVALID_SCAN_RESULT_BSSID;
+        candidate.getNetworkSelectionStatus().setCandidate(candidateScanResult);
+
+        when(mWifiNS.selectNetwork(anyObject(), anyObject(), anyObject(), anyBoolean(),
+              anyBoolean(), anyBoolean())).thenReturn(candidate);
+
+        // Set screen to on
+        mWifiConnectivityManager.handleScreenStateChanged(true);
+
+        // Set WiFi to disconnected state
+        mWifiConnectivityManager.handleConnectionStateChanged(
+                WifiConnectivityManager.WIFI_STATE_DISCONNECTED);
+
+        verify(mWifiStateMachine, times(0)).startConnectToNetwork(
+                CANDIDATE_NETWORK_ID, CANDIDATE_BSSID);
+    }
+
+    /*
+     * Wifi in connected state. Drop the roaming attempt if the recommended
+     * network configuration has a BSSID specified but the scan result BSSID doesn't
+     * match it.
+     *
+     * Expected behavior: WifiConnectivityManager doesn't invoke
+     * WifiStateMachine.startRoamToNetwork().
+     */
+    @Test
+    public void dropRoamingAttemptIfConfigSpecifiedBssidDifferentFromScanResultBssid() {
+        // Mock the currently connected network which has the same networkID and
+        // SSID as the one to be selected.
+        WifiConfiguration currentNetwork = generateWifiConfig(
+                0, CANDIDATE_NETWORK_ID, CANDIDATE_SSID, false, true, null, null);
+        when(mWifiConfigManager.getConfiguredNetwork(anyInt())).thenReturn(currentNetwork);
+
+        // Set up the candidate configuration such that it has a BSSID specified.
+        WifiConfiguration candidate = generateWifiConfig(
+                0, CANDIDATE_NETWORK_ID, CANDIDATE_SSID, false, true, null, null);
+        candidate.BSSID = CANDIDATE_BSSID; // config specified
+        ScanResult candidateScanResult = new ScanResult();
+        candidateScanResult.SSID = CANDIDATE_SSID;
+        // Set up the scan result BSSID to be different from the config specified one.
+        candidateScanResult.BSSID = INVALID_SCAN_RESULT_BSSID;
+        candidate.getNetworkSelectionStatus().setCandidate(candidateScanResult);
+
+        when(mWifiNS.selectNetwork(anyObject(), anyObject(), anyObject(), anyBoolean(),
+              anyBoolean(), anyBoolean())).thenReturn(candidate);
+
+        // Set WiFi to connected state
+        mWifiConnectivityManager.handleConnectionStateChanged(
+                WifiConnectivityManager.WIFI_STATE_CONNECTED);
+
+        // Set screen to on
+        mWifiConnectivityManager.handleScreenStateChanged(true);
+
+        verify(mWifiStateMachine, times(0)).startRoamToNetwork(anyInt(), anyObject());
     }
 }
