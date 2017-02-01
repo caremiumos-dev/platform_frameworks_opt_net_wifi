@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "335649c1_70db3600",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-01T00:36:58Z",
+      "side": 1,
+      "message": "Unfortunately we now have WNS interact with WSM to send out some command/message. Will revisit once WifiStateMachinePrime is ready.",
+      "range": {
+        "startLine": 185,
+        "startChar": 65,
+        "endLine": 185,
+        "endChar": 82
+      },
+      "revId": "f2f97f5dfdef5ec3e748d6b77d2e33bc92678468",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86b4b119_3fee90ce",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-01T00:36:58Z",
+      "side": 1,
+      "message": "Instead of calling into WSM directly, I thought of having WifiConnectivityManager query WNS for the blacklist then send the command to WSM, which is pretty awkward.",
+      "range": {
+        "startLine": 497,
+        "startChar": 7,
+        "endLine": 497,
+        "endChar": 84
+      },
+      "revId": "f2f97f5dfdef5ec3e748d6b77d2e33bc92678468",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
