@@ -1019,8 +1019,8 @@ public class WifiConfigManager {
         if (mVerboseLoggingEnabled) {
             Log.v(TAG, "Removing network " + config.getPrintableSsid());
         }
-        // Remove any associated enterprise keys.
-        if (config.enterpriseConfig != null
+        // Remove any associated enterprise keys for non-Passpoint networks.
+        if (!config.isPasspoint() && config.enterpriseConfig != null
                 && config.enterpriseConfig.getEapMethod() != WifiEnterpriseConfig.Eap.NONE) {
             mWifiKeyStore.removeKeys(config.enterpriseConfig);
         }
@@ -1067,7 +1067,7 @@ public class WifiConfigManager {
         }
         sendConfiguredNetworkChangedBroadcast(config, WifiManager.CHANGE_REASON_REMOVED);
         // Unless the removed network is ephemeral, persist the network removal.
-        if (!config.ephemeral) {
+        if (!config.ephemeral && !config.isPasspoint()) {
             saveToStore(true);
         }
         return true;
