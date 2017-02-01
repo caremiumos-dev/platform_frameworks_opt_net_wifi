@@ -122,10 +122,24 @@ public class LastMileLoggerTest {
     }
 
     @Test
-    public void connectionEventFailedDisablesTracing() throws Exception {
+    public void connectionEventFailedDisablesTracingWhenPendingFails() throws Exception {
+        mLastMileLogger.reportConnectionEvent(
+                FAKE_CONNECTION_ID, BaseWifiDiagnostics.CONNECTION_EVENT_STARTED);
+        mLastMileLogger.reportConnectionEvent(
+                    FAKE_CONNECTION_ID, BaseWifiDiagnostics.CONNECTION_EVENT_FAILED);
+        assertEquals("0", IoUtils.readFileAsString(mTraceEnableFile.getPath()));
+    }
+
+    @Test
+    public void connectionEventFailedDoesNotDisableTracingOnFailureOfStaleConnection()
+            throws Exception {
+        mLastMileLogger.reportConnectionEvent(
+                FAKE_CONNECTION_ID, BaseWifiDiagnostics.CONNECTION_EVENT_STARTED);
+        mLastMileLogger.reportConnectionEvent(
+                FAKE_CONNECTION_ID + 1, BaseWifiDiagnostics.CONNECTION_EVENT_STARTED);
         mLastMileLogger.reportConnectionEvent(
                 FAKE_CONNECTION_ID, BaseWifiDiagnostics.CONNECTION_EVENT_FAILED);
-        assertEquals("0", IoUtils.readFileAsString(mTraceEnableFile.getPath()));
+        assertEquals("1", IoUtils.readFileAsString(mTraceEnableFile.getPath()));
     }
 
     @Test
