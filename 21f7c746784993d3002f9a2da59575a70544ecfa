@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "17ac8acb_1e193feb",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:59:54Z",
+      "side": 1,
+      "message": "checkstyle won\u0027t complain if it is indented extra.  usually we indent 8 for the second line or line up under the \" above.",
+      "range": {
+        "startLine": 628,
+        "startChar": 17,
+        "endLine": 628,
+        "endChar": 28
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51fe7ed1_2fdd185f",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 1
@@ -174,6 +197,52 @@
     },
     {
       "key": {
+        "uuid": "6d0a3be3_56320c61",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:59:54Z",
+      "side": 1,
+      "message": "yeah, reconnect is misleading",
+      "range": {
+        "startLine": 638,
+        "startChar": 16,
+        "endLine": 640,
+        "endChar": 66
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df8b524a_f4f79cae",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:59:54Z",
+      "side": 1,
+      "message": "reconnect here might also suffer from the same confustion",
+      "range": {
+        "startLine": 642,
+        "startChar": 44,
+        "endLine": 642,
+        "endChar": 53
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbb83cb2_62cbdd9c",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 1
@@ -208,6 +277,29 @@
       "writtenOn": "2017-01-31T06:41:09Z",
       "side": 1,
       "message": "What\u0027s handled above is something like when roaming from BSSID A1 of network A to BSSID A2 of the same network A. We now completely rely on firmware to initiate this kind of switching if the feature is supported. \n\nThe case here is when we switch from network A to network B, different SSID. Firmware doesn\u0027t initiate this kind of transition. It\u0027s up to the framework to trigger it. In addition to SSID, we used to specify BSSID as well. Now only SSID is specified and we let firmware to choose which BSSID to connect to.",
+      "range": {
+        "startLine": 645,
+        "startChar": 0,
+        "endLine": 645,
+        "endChar": 82
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e12c994e_db4d4247",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:59:54Z",
+      "side": 1,
+      "message": "i see, thanks",
       "range": {
         "startLine": 645,
         "startChar": 0,
@@ -266,6 +358,29 @@
     },
     {
       "key": {
+        "uuid": "5360164d_58098ff9",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4027,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:59:54Z",
+      "side": 1,
+      "message": "If it is only set once based on system properties, then do we need to grab it every time we reload firmware or can it be done once at boot?",
+      "range": {
+        "startLine": 4027,
+        "startChar": 0,
+        "endLine": 4027,
+        "endChar": 84
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e16511e_b6417e9c",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
         "patchSetId": 1
@@ -300,6 +415,29 @@
       "writtenOn": "2017-01-31T06:41:09Z",
       "side": 1,
       "message": "See line 213. By default we do thenReturn(false). So existing tests like enterWifiDisconnectedStateWhenScreenOn() already cover it.\n\nThere we do \n\nverify(mWifiStateMachine).startConnectToNetwork(\n                CANDIDATE_NETWORK_ID, CANDIDATE_BSSID);\n\nto make sure the target BSSID is CANDIDATE_BSSID, versus SUPPLICANT_BSSID_ANY here.",
+      "range": {
+        "startLine": 1015,
+        "startChar": 0,
+        "endLine": 1015,
+        "endChar": 77
+      },
+      "revId": "21f7c746784993d3002f9a2da59575a70544ecfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99c25205_01a92bcf",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:59:54Z",
+      "side": 1,
+      "message": "ah, missed that. thanks\n\nin the code there were 4 options between this check and the other if/elses...  do we have another case we need to test here?",
       "range": {
         "startLine": 1015,
         "startChar": 0,
