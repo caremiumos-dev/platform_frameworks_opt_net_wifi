@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a01f667_67adda67",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T23:55:44Z",
+      "side": 1,
+      "message": "is this needed now that it is empty?",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 5
+      },
+      "revId": "fc05b880b93262791aa77ba3513f3d45a6fb7940",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0e76ec7_62dc0542",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T23:55:44Z",
+      "side": 1,
+      "message": "why 2 times?",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 54
+      },
+      "revId": "fc05b880b93262791aa77ba3513f3d45a6fb7940",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
