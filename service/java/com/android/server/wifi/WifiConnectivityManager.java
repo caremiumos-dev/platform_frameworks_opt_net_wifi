@@ -658,9 +658,11 @@ public class WifiConnectivityManager {
                 mStateMachine.startRoamToNetwork(candidate.networkId, scanResultCandidate);
             }
         } else {
-            // Framework specifies the connection target BSSID only if firmware doesn't support
-            // {@link android.net.wifi.WifiManager#WIFI_FEATURE_CONTROL_ROAMING}.
-            if (mConnectivityHelper.isFirmwareRoamingSupported()) {
+            // Framework specifies the connection target BSSID if firmware doesn't support
+            // {@link android.net.wifi.WifiManager#WIFI_FEATURE_CONTROL_ROAMING} or the
+            // candidate configuration contains app specified BSSID.
+            if (mConnectivityHelper.isFirmwareRoamingSupported() && (candidate.BSSID == null
+                      || candidate.BSSID.equals(WifiStateMachine.SUPPLICANT_BSSID_ANY))) {
                 targetBssid = WifiStateMachine.SUPPLICANT_BSSID_ANY;
                 localLog("connectToNetwork: Connect to " + candidate.SSID + ":" + targetBssid
                         + " from " + currentAssociationId);
