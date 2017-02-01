@@ -22,6 +22,29 @@
       "revId": "581681a8420c7fd26272af46af9c9db85625d7f6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52071124_76d21962",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-01T01:05:18Z",
+      "side": 0,
+      "message": "It doesn\u0027t make any sense why this clubbed with P2P message handling. I just moved it up since they should be one of the first messages we recieve.",
+      "range": {
+        "startLine": 604,
+        "startChar": 0,
+        "endLine": 604,
+        "endChar": 85
+      },
+      "revId": "581681a8420c7fd26272af46af9c9db85625d7f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
