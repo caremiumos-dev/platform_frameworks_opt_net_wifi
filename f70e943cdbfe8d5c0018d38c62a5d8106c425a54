@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4daacf92_9f1ad4d7",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-01T01:51:58Z",
+      "side": 1,
+      "message": "Need to consider whether we should clear mPendingConnectionId in this case.",
+      "revId": "f70e943cdbfe8d5c0018d38c62a5d8106c425a54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
