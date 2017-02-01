@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5522271_7e2f4a74",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:38:38Z",
+      "side": 1,
+      "message": "unit tests?  ;)",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "ef85b2ed6d57ad27692811fd6fe430ab10771a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5043c71_70a3b153",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:38:38Z",
+      "side": 1,
+      "message": "i am a little confused as to why this is passed in...",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 47
+      },
+      "revId": "ef85b2ed6d57ad27692811fd6fe430ab10771a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ce10a72_2978cc1a",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:38:38Z",
+      "side": 1,
+      "message": "huh?  maybe a comment here to explain this?",
+      "range": {
+        "startLine": 260,
+        "startChar": 0,
+        "endLine": 261,
+        "endChar": 75
+      },
+      "revId": "ef85b2ed6d57ad27692811fd6fe430ab10771a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10929f71_d743eae3",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:38:38Z",
+      "side": 1,
+      "message": "does this have to be an int?",
+      "range": {
+        "startLine": 288,
+        "startChar": 52,
+        "endLine": 288,
+        "endChar": 62
+      },
+      "revId": "ef85b2ed6d57ad27692811fd6fe430ab10771a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0d48f8f_2a3e7296",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:38:38Z",
+      "side": 1,
+      "message": "I know there were a lot before, but are these supposed to be here or are they for debugging?",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 291,
+        "endChar": 21
+      },
+      "revId": "ef85b2ed6d57ad27692811fd6fe430ab10771a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93008ad4_a060b5f8",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:38:38Z",
+      "side": 1,
+      "message": "seems like an odd error to throw...",
+      "range": {
+        "startLine": 298,
+        "startChar": 29,
+        "endLine": 298,
+        "endChar": 54
+      },
+      "revId": "ef85b2ed6d57ad27692811fd6fe430ab10771a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
