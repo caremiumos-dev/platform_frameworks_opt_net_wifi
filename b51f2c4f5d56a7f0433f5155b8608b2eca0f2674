@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "d3830bc8_d0767784",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-01T16:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "revId": "b51f2c4f5d56a7f0433f5155b8608b2eca0f2674",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0908226_d7c30fa1",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 8
@@ -30,6 +47,29 @@
       "writtenOn": "2017-02-01T05:49:23Z",
       "side": 1,
       "message": "Will moving this to a new message ID mess up anything like the bug report tool or possibly other code?  I am also guessing this is now reusing an id (but it is also possible that it was never used).\n\nIt also seems odd to start at 9. ;)",
+      "range": {
+        "startLine": 474,
+        "startChar": 0,
+        "endLine": 474,
+        "endChar": 84
+      },
+      "revId": "b51f2c4f5d56a7f0433f5155b8608b2eca0f2674",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8a63ebd_17bf6c93",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-01T16:16:39Z",
+      "side": 1,
+      "message": "It shouldn\u0027t cause any side effects. But, i\u0027ve reverted this back to the original value. There isn\u0027t any value in this change other than satisfying my OCD.",
       "range": {
         "startLine": 474,
         "startChar": 0,
@@ -65,6 +105,29 @@
     },
     {
       "key": {
+        "uuid": "7cfde728_ab3ed9d7",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-01T16:16:39Z",
+      "side": 1,
+      "message": "Yes. stopping the hal invokes the onStatusChanged callback from HalDeviceManager, we clear up all the handles there. @line 757 in this file.",
+      "range": {
+        "startLine": 111,
+        "startChar": 12,
+        "endLine": 111,
+        "endChar": 31
+      },
+      "revId": "b51f2c4f5d56a7f0433f5155b8608b2eca0f2674",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0801b88_b14445c7",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
         "patchSetId": 8
@@ -82,6 +145,23 @@
     },
     {
       "key": {
+        "uuid": "40f45fcc_9e4579f8",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-01T16:16:39Z",
+      "side": 1,
+      "message": "This CL does not add the failure handling in WifiStateMachine. That is tracked by b/34859006.\nThis CL does not plumb thru the HIDL calls. So, for example we haven\u0027t started using the WifiVendorHal.startVendor() from WifiNative.startHal(). All of that will be handled in further CL\u0027s. This CL just plumbs thru the WifiVendorHal.initialize() which is used for HalDeviceMAnager initialization.",
+      "revId": "b51f2c4f5d56a7f0433f5155b8608b2eca0f2674",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "292a3d72_840c6169",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
         "patchSetId": 8
@@ -93,6 +173,29 @@
       "writtenOn": "2017-02-01T05:49:23Z",
       "side": 1,
       "message": "failure modes for this since we now call stop instead of marching ahead?",
+      "range": {
+        "startLine": 455,
+        "startChar": 16,
+        "endLine": 455,
+        "endChar": 39
+      },
+      "revId": "b51f2c4f5d56a7f0433f5155b8608b2eca0f2674",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72df921d_6657e8ab",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-01T16:16:39Z",
+      "side": 1,
+      "message": "Nope. We\u0027re still marching ahead as before. I have filed a bug to get to it a separate CL.",
       "range": {
         "startLine": 455,
         "startChar": 16,
