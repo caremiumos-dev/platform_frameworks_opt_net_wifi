@@ -45,6 +45,29 @@
       "revId": "481e9f885cb027d5f0aac23f35f7475979f520d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acaef6b_38ede462",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-02-01T00:15:44Z",
+      "side": 1,
+      "message": "Currently no for allowing provisioning of SIM credential without SIM card installed.\n\nYes, we will also validate the SIM credential and SIM during discovery/connect time.  So if the user switch to a SIM that\u0027s not compatible with the installed SIM credential, that SIM credential will not used.\n\nThis behavior is inherited from the previous implementation, we can always revisit if that\u0027s not the desired behavior.",
+      "range": {
+        "startLine": 179,
+        "startChar": 8,
+        "endLine": 179,
+        "endChar": 85
+      },
+      "revId": "481e9f885cb027d5f0aac23f35f7475979f520d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
