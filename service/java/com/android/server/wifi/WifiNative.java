@@ -132,7 +132,7 @@ public class WifiNative {
 
 
     // TODO(b/34884202): Set this to true to enable HIDL once we're fully ready.
-    private static final boolean HIDL_ENABLE = false;
+    private static final boolean HIDL_ENABLE = true;
     private final String mTAG;
     private final String mInterfaceName;
     private final String mInterfacePrefix;
@@ -1552,6 +1552,7 @@ public class WifiNative {
      * @param isStaMode true to start HAL in STA mode, false to start in AP mode.
      */
     public boolean startHal(boolean isStaMode) {
+        mWifiVendorHal.startVendorHal(isStaMode);
         String debugLog = "startHal stack: ";
         java.lang.StackTraceElement[] elements = Thread.currentThread().getStackTrace();
         for (int i = 2; i < elements.length && i <= 7; i++ ) {
@@ -1580,6 +1581,7 @@ public class WifiNative {
     }
 
     public void stopHal() {
+        mWifiVendorHal.stopVendorHal();
         synchronized (sLock) {
             if (isHalStarted()) {
                 stopHalNative();
