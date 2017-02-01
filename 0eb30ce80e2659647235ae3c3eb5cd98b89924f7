@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "6217fa57_6b00c379",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-01T20:17:31Z",
+      "side": 1,
+      "message": "Fixed. Set to false",
+      "range": {
+        "startLine": 29,
+        "startChar": 39,
+        "endLine": 29,
+        "endChar": 43
+      },
+      "revId": "0eb30ce80e2659647235ae3c3eb5cd98b89924f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9d9cb2e_60394c13",
         "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
         "patchSetId": 1
@@ -48,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "4658c6cb_65e3832e",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-01T20:17:31Z",
+      "side": 1,
+      "message": "Gone in refactor.",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 36,
+        "endChar": 13
+      },
+      "revId": "0eb30ce80e2659647235ae3c3eb5cd98b89924f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51dce7ab_c19baec8",
         "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
         "patchSetId": 1
@@ -59,6 +105,29 @@
       "writtenOn": "2017-02-01T18:37:34Z",
       "side": 1,
       "message": "Do you care that it is the WifiStateMachineHandler thread? Should it simply be the handler that this object is supposed to be executing on?\n\nAdditionally, if this is always where you\u0027re being called from then can simply use Looper.myLooper",
+      "range": {
+        "startLine": 53,
+        "startChar": 32,
+        "endLine": 53,
+        "endChar": 62
+      },
+      "revId": "0eb30ce80e2659647235ae3c3eb5cd98b89924f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7df753a5_2382f1cc",
+        "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-01T20:17:31Z",
+      "side": 1,
+      "message": "Required to post to the wifistatemachine handler when replacing WifiMonitor messages.",
       "range": {
         "startLine": 53,
         "startChar": 32,
@@ -117,6 +186,52 @@
     },
     {
       "key": {
+        "uuid": "986ef8db_1f1f4aac",
+        "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-01T20:17:31Z",
+      "side": 1,
+      "message": "Done. Private with getter",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 10
+      },
+      "revId": "0eb30ce80e2659647235ae3c3eb5cd98b89924f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a321a85d_823caf2e",
+        "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-01T20:17:31Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 10
+      },
+      "revId": "0eb30ce80e2659647235ae3c3eb5cd98b89924f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d68087a0_9e4732cf",
         "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
         "patchSetId": 1
@@ -128,6 +243,29 @@
       "writtenOn": "2017-02-01T18:37:34Z",
       "side": 1,
       "message": "Can be initialized where declared",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 54
+      },
+      "revId": "0eb30ce80e2659647235ae3c3eb5cd98b89924f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb5dd09e_62e8dfbf",
+        "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-01T20:17:31Z",
+      "side": 1,
+      "message": "Gone in refactor.",
       "range": {
         "startLine": 65,
         "startChar": 8,
@@ -163,6 +301,29 @@
     },
     {
       "key": {
+        "uuid": "6394ba18_2a65e2ff",
+        "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-01T20:17:31Z",
+      "side": 1,
+      "message": "Gone in refactor.",
+      "range": {
+        "startLine": 66,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 33
+      },
+      "revId": "0eb30ce80e2659647235ae3c3eb5cd98b89924f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ca95e1e_b1b14cc3",
         "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
         "patchSetId": 1
@@ -174,6 +335,29 @@
       "writtenOn": "2017-02-01T18:37:34Z",
       "side": 1,
       "message": "get is usually an accessor - not a function with side-effects, possibly call init.",
+      "range": {
+        "startLine": 102,
+        "startChar": 29,
+        "endLine": 102,
+        "endChar": 32
+      },
+      "revId": "0eb30ce80e2659647235ae3c3eb5cd98b89924f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "174d7bc6_32e67ad4",
+        "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-01T20:17:31Z",
+      "side": 1,
+      "message": "Done",
       "range": {
         "startLine": 102,
         "startChar": 29,
@@ -203,6 +387,23 @@
     },
     {
       "key": {
+        "uuid": "56382075_395272a4",
+        "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-01T20:17:31Z",
+      "side": 1,
+      "message": "Done",
+      "revId": "0eb30ce80e2659647235ae3c3eb5cd98b89924f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07378d56_80741a4b",
         "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
         "patchSetId": 1
@@ -226,6 +427,29 @@
     },
     {
       "key": {
+        "uuid": "5ea32202_b0ce14c5",
+        "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-01T20:17:31Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 172,
+        "startChar": 24,
+        "endLine": 172,
+        "endChar": 27
+      },
+      "revId": "0eb30ce80e2659647235ae3c3eb5cd98b89924f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c21ae87d_6c86603b",
         "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
         "patchSetId": 1
@@ -237,6 +461,29 @@
       "writtenOn": "2017-02-01T18:37:34Z",
       "side": 1,
       "message": "Why is this necessary if it simply calls the other function - why not call it directly?",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 5
+      },
+      "revId": "0eb30ce80e2659647235ae3c3eb5cd98b89924f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d37af35_34569601",
+        "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-01T20:17:31Z",
+      "side": 1,
+      "message": "Done. (because reviewers)",
       "range": {
         "startLine": 239,
         "startChar": 0,
@@ -295,6 +542,52 @@
     },
     {
       "key": {
+        "uuid": "8b20112d_f725faac",
+        "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-01T20:17:31Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 249,
+        "startChar": 16,
+        "endLine": 249,
+        "endChar": 17
+      },
+      "revId": "0eb30ce80e2659647235ae3c3eb5cd98b89924f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4dceacca_d8a41002",
+        "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-01T20:17:31Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 249,
+        "startChar": 71,
+        "endLine": 249,
+        "endChar": 98
+      },
+      "revId": "0eb30ce80e2659647235ae3c3eb5cd98b89924f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a611e991_86c49f09",
         "filename": "tests/wifitests/src/com/android/server/wifi/SupplicantStaIfaceHalTest.java",
         "patchSetId": 1
@@ -318,6 +611,29 @@
     },
     {
       "key": {
+        "uuid": "bba477de_9aeb9360",
+        "filename": "tests/wifitests/src/com/android/server/wifi/SupplicantStaIfaceHalTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-01T20:17:31Z",
+      "side": 1,
+      "message": "Gone in refactor",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 26
+      },
+      "revId": "0eb30ce80e2659647235ae3c3eb5cd98b89924f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d803693_9482c5df",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiSupplicantHalTest.java",
         "patchSetId": 1
@@ -329,6 +645,29 @@
       "writtenOn": "2017-02-01T18:37:34Z",
       "side": 1,
       "message": "Move to first line in setup.",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 114,
+        "endChar": 26
+      },
+      "revId": "0eb30ce80e2659647235ae3c3eb5cd98b89924f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cefddea4_44668f25",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiSupplicantHalTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-01T20:17:31Z",
+      "side": 1,
+      "message": "Done",
       "range": {
         "startLine": 114,
         "startChar": 8,
