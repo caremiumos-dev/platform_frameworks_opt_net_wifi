@@ -230,7 +230,7 @@ public class WifiConnectivityManagerTest {
 
         WifiConfiguration candidate = generateWifiConfig(
                 0, CANDIDATE_NETWORK_ID, CANDIDATE_SSID, false, true, null, null);
-        candidate.BSSID = CANDIDATE_BSSID;
+        candidate.BSSID = WifiStateMachine.SUPPLICANT_BSSID_ANY;
         ScanResult candidateScanResult = new ScanResult();
         candidateScanResult.SSID = CANDIDATE_SSID;
         candidateScanResult.BSSID = CANDIDATE_BSSID;
@@ -1193,10 +1193,10 @@ public class WifiConnectivityManagerTest {
      * Expected behavior: WifiConnectivityManager calls
      * WifiStateMachine.startConnectToNetwork() with the
      * expected candidate network ID, and the BSSID value should be
-     * 'any' since firmware controls the roaming.
+     * the config specified one.
      */
     @Test
-    public void useAnyBssidToConnectWhenFirmwareRoamingOnAndConfigHasBssidSpecified() {
+    public void useConfigSpecifiedBssidToConnectWhenFirmwareRoamingOn() {
         // Firmware controls roaming
         when(mWifiConnectivityHelper.isFirmwareRoamingSupported()).thenReturn(true);
 
@@ -1220,7 +1220,7 @@ public class WifiConnectivityManagerTest {
                 WifiConnectivityManager.WIFI_STATE_DISCONNECTED);
 
         verify(mWifiStateMachine).startConnectToNetwork(
-                CANDIDATE_NETWORK_ID, WifiStateMachine.SUPPLICANT_BSSID_ANY);
+                CANDIDATE_NETWORK_ID, CANDIDATE_BSSID);
     }
 
     /*
