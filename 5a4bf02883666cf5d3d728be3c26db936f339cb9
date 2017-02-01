@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "350728ec_8a76b311",
+        "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-01T22:22:37Z",
+      "side": 1,
+      "message": "nit. I\u0027 not a fan of this new suffix.",
+      "range": {
+        "startLine": 42,
+        "startChar": 36,
+        "endLine": 42,
+        "endChar": 39
+      },
+      "revId": "5a4bf02883666cf5d3d728be3c26db936f339cb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcd98c13_69b64c8f",
         "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
         "patchSetId": 7
