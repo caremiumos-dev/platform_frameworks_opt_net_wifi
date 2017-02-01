@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c92ae168_6aa1f5c9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:22:05Z",
+      "side": 1,
+      "message": "creates",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "13febe2522e2ae224f14601cb1866ebd5e4a4ce0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79d9cca3_1cc232b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:22:05Z",
+      "side": 1,
+      "message": "it would still be good to do integration tests - especially telephony since that will exercise mode switches.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 40
+      },
+      "revId": "13febe2522e2ae224f14601cb1866ebd5e4a4ce0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f21eeea_d1caccbb",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:22:05Z",
+      "side": 1,
+      "message": "why can\u0027t this be passed in as an argument?\n\nis there a reason that all of the objects are handed to WifiNative through setters instead of in the constructor/getWlanNativeInterface()?",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 57
+      },
+      "revId": "13febe2522e2ae224f14601cb1866ebd5e4a4ce0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "927e2f8e_82e90cd4",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 3974,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:22:05Z",
+      "side": 1,
+      "message": "this all seems pretty awkward (lots of ifs and elses).  Can\u0027t WifiNative just get wificond?  if we are pulling everything to wifinative anyway, that would be much more clean.",
+      "range": {
+        "startLine": 3974,
+        "startChar": 0,
+        "endLine": 3974,
+        "endChar": 61
+      },
+      "revId": "13febe2522e2ae224f14601cb1866ebd5e4a4ce0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cef8aa99_08bb7f41",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 3980,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:22:05Z",
+      "side": 1,
+      "message": "instead of adding a redundant check here, should the else above break out and report an error?\n\nThen the code in here can also log an error so we know we had a failure (but we can pinpoint it better).",
+      "range": {
+        "startLine": 3980,
+        "startChar": 24,
+        "endLine": 3980,
+        "endChar": 44
+      },
+      "revId": "13febe2522e2ae224f14601cb1866ebd5e4a4ce0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ccb95454_4c58bac1",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 6654,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:22:05Z",
+      "side": 1,
+      "message": "same comments as above for client mode",
+      "range": {
+        "startLine": 6654,
+        "startChar": 0,
+        "endLine": 6654,
+        "endChar": 36
+      },
+      "revId": "13febe2522e2ae224f14601cb1866ebd5e4a4ce0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b57dad72_f5fe52ab",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WificondControlTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:22:05Z",
+      "side": 1,
+      "message": "please also add tests for the error cases (interface is null, wificond is null, etc.)",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 34
+      },
+      "revId": "13febe2522e2ae224f14601cb1866ebd5e4a4ce0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
