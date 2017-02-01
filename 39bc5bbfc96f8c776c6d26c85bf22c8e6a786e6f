@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "ed9a1b7a_fa2bd0f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-01T20:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 39
+      },
+      "revId": "39bc5bbfc96f8c776c6d26c85bf22c8e6a786e6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7ca0c9c_c372edd1",
         "filename": "service/java/com/android/server/wifi/WificondControl.java",
         "patchSetId": 9
@@ -36,6 +59,29 @@
       "writtenOn": "2017-02-01T05:00:19Z",
       "side": 1,
       "message": "should we log something here?",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 37
+      },
+      "revId": "39bc5bbfc96f8c776c6d26c85bf22c8e6a786e6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac4942f6_de2d12af",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-01T20:54:23Z",
+      "side": 1,
+      "message": "Done",
       "range": {
         "startLine": 128,
         "startChar": 0,
@@ -71,6 +117,29 @@
     },
     {
       "key": {
+        "uuid": "cf73e5f2_5661fe8b",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WificondControlTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-01T20:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 55
+      },
+      "revId": "39bc5bbfc96f8c776c6d26c85bf22c8e6a786e6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1501cdb0_5cf1f2c0",
         "filename": "tests/wifitests/src/com/android/server/wifi/WificondControlTest.java",
         "patchSetId": 9
@@ -82,6 +151,29 @@
       "writtenOn": "2017-02-01T05:00:19Z",
       "side": 1,
       "message": "like above, negative cases should also be tested.",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 56
+      },
+      "revId": "39bc5bbfc96f8c776c6d26c85bf22c8e6a786e6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f4a7ac86_b3790534",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WificondControlTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-01T20:54:23Z",
+      "side": 1,
+      "message": "Done",
       "range": {
         "startLine": 94,
         "startChar": 0,
