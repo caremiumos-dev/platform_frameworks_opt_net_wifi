@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "e55e6214_da1acb27",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-01T18:07:23Z",
+      "side": 1,
+      "message": "Thanks, I knew you would ask!",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "ef85b2ed6d57ad27692811fd6fe430ab10771a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5043c71_70a3b153",
         "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
         "patchSetId": 1
@@ -41,6 +64,52 @@
         "startChar": 0,
         "endLine": 207,
         "endChar": 47
+      },
+      "revId": "ef85b2ed6d57ad27692811fd6fe430ab10771a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95cdb088_b8ee1715",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-01T18:07:23Z",
+      "side": 1,
+      "message": "I wrote this class with the methods mirroring those of WifiNative, so there would be a drop-in replacement. So, yeah, it is really pointless to pass it in here, but the removal belongs in another (cleanup) CL. New bug + TODO?",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 47
+      },
+      "revId": "ef85b2ed6d57ad27692811fd6fe430ab10771a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9203d916_452b1a29",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-01T18:07:23Z",
+      "side": 1,
+      "message": "this should be factored out - there might even be an appropriate method in one of my other CLs",
+      "range": {
+        "startLine": 241,
+        "startChar": 50,
+        "endLine": 244,
+        "endChar": 29
       },
       "revId": "ef85b2ed6d57ad27692811fd6fe430ab10771a27",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -71,6 +140,52 @@
     },
     {
       "key": {
+        "uuid": "91b92553_ed2c9f29",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-01T18:07:23Z",
+      "side": 1,
+      "message": "The two comments weren\u0027t enough? :-)\n\nActually, I agree that this reads badly. The explanation is in the block comments for setWifiLinkLayerStats, but these variables are ill-placed to find them.",
+      "range": {
+        "startLine": 260,
+        "startChar": 0,
+        "endLine": 261,
+        "endChar": 75
+      },
+      "revId": "ef85b2ed6d57ad27692811fd6fe430ab10771a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f81281a_404fbeed",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-01T18:07:23Z",
+      "side": 1,
+      "message": "The debug boolean is here because it is in the (new) HAL.\n@rpius, does it do anything yet?",
+      "range": {
+        "startLine": 263,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 41
+      },
+      "revId": "ef85b2ed6d57ad27692811fd6fe430ab10771a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10929f71_d743eae3",
         "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
         "patchSetId": 1
@@ -82,6 +197,52 @@
       "writtenOn": "2017-02-01T05:38:38Z",
       "side": 1,
       "message": "does this have to be an int?",
+      "range": {
+        "startLine": 288,
+        "startChar": 52,
+        "endLine": 288,
+        "endChar": 62
+      },
+      "revId": "ef85b2ed6d57ad27692811fd6fe430ab10771a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bd592e5_10333ca6",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-01T18:07:23Z",
+      "side": 1,
+      "message": "I would really like to see this go away at some point, I only kept it around to match what WifiNative does.",
+      "range": {
+        "startLine": 288,
+        "startChar": 38,
+        "endLine": 288,
+        "endChar": 50
+      },
+      "revId": "ef85b2ed6d57ad27692811fd6fe430ab10771a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4d0c2fd_ec45e1d9",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-01T18:07:23Z",
+      "side": 1,
+      "message": "If we really only ever want this to be enabled, this whole method can go away, and mLinkLayerStatsEnabled can just always be true.",
       "range": {
         "startLine": 288,
         "startChar": 52,
@@ -117,6 +278,29 @@
     },
     {
       "key": {
+        "uuid": "461cbc3d_e1ed8252",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-01T18:07:23Z",
+      "side": 1,
+      "message": "Yes and yes.\nWould you like them removed for the submit?",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 291,
+        "endChar": 21
+      },
+      "revId": "ef85b2ed6d57ad27692811fd6fe430ab10771a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93008ad4_a060b5f8",
         "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
         "patchSetId": 1
@@ -128,6 +312,29 @@
       "writtenOn": "2017-02-01T05:38:38Z",
       "side": 1,
       "message": "seems like an odd error to throw...",
+      "range": {
+        "startLine": 298,
+        "startChar": 29,
+        "endLine": 298,
+        "endChar": 54
+      },
+      "revId": "ef85b2ed6d57ad27692811fd6fe430ab10771a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d248009_67857b87",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-01T18:07:23Z",
+      "side": 1,
+      "message": "Maybe something like this instead?\n\nstatic final boolean[] sBoolForInt \u003d new boolean[]{false,true};\n\n...\n\nmLinkLayerStatsEnabled \u003d sBoolForInt[enabled];",
       "range": {
         "startLine": 298,
         "startChar": 29,
