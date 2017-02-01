@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7c94db9_073743eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:00:19Z",
+      "side": 1,
+      "message": "should do integration tests as well",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 39
+      },
+      "revId": "39bc5bbfc96f8c776c6d26c85bf22c8e6a786e6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7ca0c9c_c372edd1",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:00:19Z",
+      "side": 1,
+      "message": "should we log something here?",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 37
+      },
+      "revId": "39bc5bbfc96f8c776c6d26c85bf22c8e6a786e6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8fce2551_78617519",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WificondControlTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:00:19Z",
+      "side": 1,
+      "message": "tests should be added for the error cases where we do not have an interface or if the call fails.",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 55
+      },
+      "revId": "39bc5bbfc96f8c776c6d26c85bf22c8e6a786e6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1501cdb0_5cf1f2c0",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WificondControlTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:00:19Z",
+      "side": 1,
+      "message": "like above, negative cases should also be tested.",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 56
+      },
+      "revId": "39bc5bbfc96f8c776c6d26c85bf22c8e6a786e6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
