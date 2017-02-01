@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "9f31df66_b6756efd",
+        "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-01T22:37:08Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 42,
+        "startChar": 36,
+        "endLine": 42,
+        "endChar": 39
+      },
+      "revId": "5a4bf02883666cf5d3d728be3c26db936f339cb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcd98c13_69b64c8f",
         "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
         "patchSetId": 7
@@ -42,6 +65,23 @@
     },
     {
       "key": {
+        "uuid": "633ae71a_d5d2a84d",
+        "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-01T22:37:08Z",
+      "side": 1,
+      "message": "Done (Removed the flag, using reference !\u003d null)",
+      "revId": "5a4bf02883666cf5d3d728be3c26db936f339cb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92cff020_7a40f1dd",
         "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
         "patchSetId": 7
@@ -53,6 +93,29 @@
       "writtenOn": "2017-02-01T22:19:21Z",
       "side": 1,
       "message": "happens on another thread, modified 3 variables - synchronized?",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 25
+      },
+      "revId": "5a4bf02883666cf5d3d728be3c26db936f339cb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e97bfd6_02d003b0",
+        "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-01T22:37:08Z",
+      "side": 1,
+      "message": "Done",
       "range": {
         "startLine": 90,
         "startChar": 0,
