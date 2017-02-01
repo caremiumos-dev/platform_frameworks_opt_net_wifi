@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4487c6cb_3614233e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:49:23Z",
+      "side": 1,
+      "message": "might want to add that we do add extra failure handling and call stop - that should look a little different in the logs.",
+      "revId": "b51f2c4f5d56a7f0433f5155b8608b2eca0f2674",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0908226_d7c30fa1",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:49:23Z",
+      "side": 1,
+      "message": "Will moving this to a new message ID mess up anything like the bug report tool or possibly other code?  I am also guessing this is now reusing an id (but it is also possible that it was never used).\n\nIt also seems odd to start at 9. ;)",
+      "range": {
+        "startLine": 474,
+        "startChar": 0,
+        "endLine": 474,
+        "endChar": 84
+      },
+      "revId": "b51f2c4f5d56a7f0433f5155b8608b2eca0f2674",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c139f000_9fa62c1c",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:49:23Z",
+      "side": 1,
+      "message": "is this cleaned up on teardown?",
+      "range": {
+        "startLine": 111,
+        "startChar": 12,
+        "endLine": 111,
+        "endChar": 31
+      },
+      "revId": "b51f2c4f5d56a7f0433f5155b8608b2eca0f2674",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0801b88_b14445c7",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:49:23Z",
+      "side": 1,
+      "message": "now that we call stop on failures, do we have decent coverage on stop and cleanup paths?",
+      "revId": "b51f2c4f5d56a7f0433f5155b8608b2eca0f2674",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "292a3d72_840c6169",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-01T05:49:23Z",
+      "side": 1,
+      "message": "failure modes for this since we now call stop instead of marching ahead?",
+      "range": {
+        "startLine": 455,
+        "startChar": 16,
+        "endLine": 455,
+        "endChar": 39
+      },
+      "revId": "b51f2c4f5d56a7f0433f5155b8608b2eca0f2674",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
