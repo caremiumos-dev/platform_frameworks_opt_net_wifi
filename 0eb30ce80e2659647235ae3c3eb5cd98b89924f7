@@ -94,6 +94,29 @@
     },
     {
       "key": {
+        "uuid": "1a893cac_aba55e6d",
+        "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-01T18:54:29Z",
+      "side": 1,
+      "message": "Rather than exposing this variable for test purposes, i would much rather have a method exposed for it.",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 10
+      },
+      "revId": "0eb30ce80e2659647235ae3c3eb5cd98b89924f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d68087a0_9e4732cf",
         "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
         "patchSetId": 1
