@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcd98c13_69b64c8f",
+        "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-02-01T22:19:21Z",
+      "side": 1,
+      "message": "mInitializationComplete \u003d false?\n\n(since it seems to be a proxy for the other mISupplicant*Hal \u003d\u003d null).",
+      "revId": "5a4bf02883666cf5d3d728be3c26db936f339cb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92cff020_7a40f1dd",
+        "filename": "service/java/com/android/server/wifi/WifiSupplicantHal.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-02-01T22:19:21Z",
+      "side": 1,
+      "message": "happens on another thread, modified 3 variables - synchronized?",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 25
+      },
+      "revId": "5a4bf02883666cf5d3d728be3c26db936f339cb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
