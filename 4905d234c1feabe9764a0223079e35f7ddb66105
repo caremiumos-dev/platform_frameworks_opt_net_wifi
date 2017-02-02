@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef25ab08_e80b4931",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-02T07:48:28Z",
+      "side": 1,
+      "message": "don\u0027t we already have something to track the target network?",
+      "range": {
+        "startLine": 382,
+        "startChar": 0,
+        "endLine": 382,
+        "endChar": 76
+      },
+      "revId": "4905d234c1feabe9764a0223079e35f7ddb66105",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f3bcefe_4a42c78a",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5163,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-02T07:48:28Z",
+      "side": 1,
+      "message": "why do you need to save this?  can\u0027t you just check in an if?",
+      "range": {
+        "startLine": 5163,
+        "startChar": 27,
+        "endLine": 5163,
+        "endChar": 38
+      },
+      "revId": "4905d234c1feabe9764a0223079e35f7ddb66105",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6a84ba7_150dc5e4",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5193,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-02T07:48:28Z",
+      "side": 1,
+      "message": "why does this have to be a separate message?  it seems like you would just put it in the regular call.",
+      "range": {
+        "startLine": 5193,
+        "startChar": 21,
+        "endLine": 5193,
+        "endChar": 52
+      },
+      "revId": "4905d234c1feabe9764a0223079e35f7ddb66105",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ceb48057_22ba56fe",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6913,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-02T07:48:28Z",
+      "side": 1,
+      "message": "I really don\u0027t see why this is two separate messages.",
+      "range": {
+        "startLine": 6909,
+        "startChar": 16,
+        "endLine": 6913,
+        "endChar": 17
+      },
+      "revId": "4905d234c1feabe9764a0223079e35f7ddb66105",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
