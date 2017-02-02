@@ -57,7 +57,7 @@ import java.util.Set;
  */
 public class HalDeviceManager {
     private static final String TAG = "HalDeviceManager";
-    private static final boolean DBG = false;
+    private static final boolean DBG = true;
 
     // public API
     public HalDeviceManager() {
