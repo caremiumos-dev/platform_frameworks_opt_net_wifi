@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "41f0660e_81f70b54",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-02T18:38:25Z",
+      "side": 1,
+      "message": "mTargetNetworkId doesn\u0027t get cleared after we connect to the network. mConnectingNetworkId also serves the purpose of indicating whether there is a connection request pending. It gets cleared once that request is serviced.",
+      "range": {
+        "startLine": 382,
+        "startChar": 0,
+        "endLine": 382,
+        "endChar": 76
+      },
+      "revId": "4905d234c1feabe9764a0223079e35f7ddb66105",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f3bcefe_4a42c78a",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 4
@@ -36,6 +59,29 @@
       "writtenOn": "2017-02-02T07:48:28Z",
       "side": 1,
       "message": "why do you need to save this?  can\u0027t you just check in an if?",
+      "range": {
+        "startLine": 5163,
+        "startChar": 27,
+        "endLine": 5163,
+        "endChar": 38
+      },
+      "revId": "4905d234c1feabe9764a0223079e35f7ddb66105",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ffe0936_a0f504db",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5163,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-02T18:38:25Z",
+      "side": 1,
+      "message": "mWifiNative.enableFirmware() can return more than just SUCCESS or FAILURE. We would like to log the returned error code to help debugging, given this is still a new feature.",
       "range": {
         "startLine": 5163,
         "startChar": 27,
@@ -71,6 +117,29 @@
     },
     {
       "key": {
+        "uuid": "8b0a2f4f_ccdf41e9",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5193,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-02T18:38:25Z",
+      "side": 1,
+      "message": "First of all, we still have to handle devices that don\u0027t support this new roaming feature. There we send a CMD_START_CONNECT directly and drive supplicant to make the connection. Here for CMD_STOP_FW_ROAMING_AND_CONNECT we have to handle the case that stopping fw roaming returned ERROR_BUSY and we have to wait for the roaming completion notice then drive supplicant to make the connection.\n\nBasically I\u0027d like to keep CMD_START_CONNECT as is such that it always make the connection attempt and let CMD_STOP_FW_ROAMING_AND_CONNECT worry about wait, start watchdog, and etc. I think it is a cleaner design.",
+      "range": {
+        "startLine": 5193,
+        "startChar": 21,
+        "endLine": 5193,
+        "endChar": 52
+      },
+      "revId": "4905d234c1feabe9764a0223079e35f7ddb66105",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ceb48057_22ba56fe",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 4
@@ -82,6 +151,29 @@
       "writtenOn": "2017-02-02T07:48:28Z",
       "side": 1,
       "message": "I really don\u0027t see why this is two separate messages.",
+      "range": {
+        "startLine": 6909,
+        "startChar": 16,
+        "endLine": 6913,
+        "endChar": 17
+      },
+      "revId": "4905d234c1feabe9764a0223079e35f7ddb66105",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8254566_59d4b88a",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6913,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-02T18:38:25Z",
+      "side": 1,
+      "message": "See above.",
       "range": {
         "startLine": 6909,
         "startChar": 16,
