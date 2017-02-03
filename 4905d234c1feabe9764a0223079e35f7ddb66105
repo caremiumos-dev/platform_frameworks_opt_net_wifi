@@ -142,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "6aa9d9e9_4149e372",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5163,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-03T07:08:32Z",
+      "side": 1,
+      "message": "sorry, by \"want to continue\" i did not mean block.  I meant that if we are doing a firmware roam, will we have to rerun network selection again anyway since the network state will be different.  we might not decide to  switch networks afterwards.\n\nIf there is an error, we might also want to do something else as well (in other words, an error might mean we re-evaluate and decide what to do instead of continuing with a roam.)",
+      "parentUuid": "b9d7e007_3b7670c8",
+      "range": {
+        "startLine": 5163,
+        "startChar": 27,
+        "endLine": 5163,
+        "endChar": 38
+      },
+      "revId": "4905d234c1feabe9764a0223079e35f7ddb66105",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6a84ba7_150dc5e4",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 4
@@ -224,6 +248,30 @@
       "side": 1,
       "message": "When firmware roaming is supported, connecting to a new network can take up to 3 steps.\n\n1) Tell firmware to stop roaming, which is handled by CMD_STOP_FW_ROAMING_AND_CONNECT.\n2) If firmware is in the middle of roaming, it will reply an ERROR_BUSY. Then we have to wait for the firmware roaming completion notice, which is the CMD_ASSOCIATED_BSSID event. \n3) Upon the arrival of CMD_ASSOCIATED_BSSID event, we issue CMD_START_CONNECT to make the actual connection attempt.",
       "parentUuid": "ddd3488f_8a0c9b96",
+      "range": {
+        "startLine": 5193,
+        "startChar": 21,
+        "endLine": 5193,
+        "endChar": 52
+      },
+      "revId": "4905d234c1feabe9764a0223079e35f7ddb66105",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e21a77d_e89a3b82",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5193,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-03T07:08:32Z",
+      "side": 1,
+      "message": "I understand there are multiple steps, I am proposing a simplification.  You have handling for fw roam support in two places where I think it could be one.   If we can reduce redundant code we can reduce corner cases and ease maintenance.",
+      "parentUuid": "7770e4b6_adf9d478",
       "range": {
         "startLine": 5193,
         "startChar": 21,
