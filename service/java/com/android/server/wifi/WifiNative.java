@@ -412,7 +412,7 @@ public class WifiNative {
         if (encoded == null) {
             return false;
         }
-        return setNetworkVariable(netId, name, "\"" + encoded + "\"");
+        return setNetworkVariable(netId, name, encoded);
     }
 
     @VisibleForTesting
@@ -427,7 +427,7 @@ public class WifiNative {
             Log.e(TAG, "Unable to serialize networkExtra: " + e.toString());
             return null;
         }
-        return encoded;
+        return "\"" + encoded + "\"";
     }
 
     public boolean setNetworkVariable(int netId, String name, String value) {
