@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7225ce04_94007c9a",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-03T06:31:02Z",
+      "side": 1,
+      "message": "I am a little confused here...  is this the right order?  For the client interface, won\u0027t the hal be started then the interface created?  This seems backwards.  (I am also not confident on my understanding of how this all works though! :) )",
+      "range": {
+        "startLine": 245,
+        "startChar": 8,
+        "endLine": 247,
+        "endChar": 31
+      },
+      "revId": "0aa5948bdae2162480b3b4058d32c1fb6a4bbd5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "111f8ef8_a40692d6",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-03T06:31:02Z",
+      "side": 1,
+      "message": "I like this a lot better!  Thanks! :)  It really cleaned up WSM",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 49
+      },
+      "revId": "0aa5948bdae2162480b3b4058d32c1fb6a4bbd5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6fe08b84_063c042d",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-03T06:31:02Z",
+      "side": 1,
+      "message": "can delete this one - I mainly wanted the javadoc line :)",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 31
+      },
+      "revId": "0aa5948bdae2162480b3b4058d32c1fb6a4bbd5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
