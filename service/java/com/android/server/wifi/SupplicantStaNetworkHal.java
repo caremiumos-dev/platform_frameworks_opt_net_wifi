@@ -19,11 +19,23 @@ import android.hardware.wifi.supplicant.V1_0.ISupplicantStaNetwork;
 import android.hardware.wifi.supplicant.V1_0.ISupplicantStaNetworkCallback;
 import android.hardware.wifi.supplicant.V1_0.SupplicantStatus;
 import android.hardware.wifi.supplicant.V1_0.SupplicantStatusCode;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiEnterpriseConfig;
 import android.os.RemoteException;
 import android.util.Log;
 import android.util.MutableBoolean;
 
+import libcore.util.HexEncoding;
+
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.HashMap;
+import java.util.Map;
 /**
  * Wrapper class for ISupplicantStaNetwork HAL calls. Gets and sets supplicant sta network variables
  * and interacts with networks.
@@ -33,6 +45,12 @@ import java.util.ArrayList;
 public class SupplicantStaNetworkHal {
     private static final String TAG = "SupplicantStaNetworkHal";
     private static final boolean DBG = false;
+    private static final String ANY_BSSID_STR = "any";
+    private static final byte[] ANY_BSSID_BYTES = {0, 0, 0, 0, 0, 0};
+    private static final int BSSID_LENGTH = 6;
+    private static final String ID_STRING_KEY_FQDN = "fqdn";
+    private static final String ID_STRING_KEY_CREATOR_UID = "creatorUid";
+    private static final String ID_STRING_KEY_CONFIG_KEY = "configKey";
 
     private final Object mLock = new Object();
     private ISupplicantStaNetwork mISupplicantStaNetwork = null;
@@ -70,6 +88,526 @@ public class SupplicantStaNetworkHal {
     SupplicantStaNetworkHal(ISupplicantStaNetwork iSupplicantStaNetwork) {
         mISupplicantStaNetwork = iSupplicantStaNetwork;
     }
+
+    /**
+     * Read network variables from wpa_supplicant into the
+     */
+    public boolean readNetworkVariables(WifiConfiguration config) {
+        /** SSID */
+        config.SSID = null;
+        if (getSsid()) {
+            if (mApSsid != null && !mApSsid.isEmpty()) {
+                config.SSID = decodeSsid(mApSsid);
+            }
+        }
+
+        /** BSSID */
+        config.getNetworkSelectionStatus().setNetworkSelectionBSSID(null);
+        if (getBssid()) {
+            try {
+                config.getNetworkSelectionStatus()
+                        .setNetworkSelectionBSSID(macAddressFromByteArray(mApBssid));
+            } catch (IllegalArgumentException e) {
+                Log.e(TAG, "Failed to get BSSID: " + e.toString());
+            }
+        }
+
+        /** Scan SSID (Is Hidden Network?) */
+        config.hiddenSSID = false;
+        if (getScanSsid()) {
+            config.hiddenSSID = mScanSsid;
+        }
+
+        /** Require PMF*/
+        config.requirePMF = false;
+        if (getRequirePmf()) {
+            config.requirePMF = mRequirePmf;
+        }
+
+        /** WEP keys **/
+        config.wepTxKeyIndex = -1;
+        if (getWepTxKeyIdx()) {
+            config.wepTxKeyIndex = mWepTxKeyIdx;
+        }
+        for (int i = 0; i < 4; i++) {
+            config.wepKeys[i] = null;
+            if (getWepKey(i)) {
+                config.wepKeys[i] = stringFromByteArrayList(mWepKey);
+            }
+        }
+
+        /** PSK pass phrase*/
+        config.preSharedKey = null;
+        if (getPskPassphrase()) {
+            config.preSharedKey = mPskPassphrase;
+        }
+
+        /** allowedProtocols */
+        if (getProto()) {
+            maskToBitSetProtoMask(mProtoMask, config.allowedProtocols);
+        }
+        /** allowedKeyManagement */
+        if (getKeyMgmt()) {
+            maskToBitSetKeyMgmtMask(mKeyMgmtMask, config.allowedKeyManagement);
+        }
+        /** allowedAuthAlgorithms */
+        if (getAuthAlg()) {
+            maskToBitSetAuthAlgMask(mAuthAlgMask, config.allowedAuthAlgorithms);
+        }
+        /** allowedPairwiseCiphers */
+        if (getPairwiseCipher()) {
+            maskToBitSetPairwiseCipherMask(mPairwiseCipherMask, config.allowedPairwiseCiphers);
+        }
+        /** allowedGroupCiphers */
+        if (getGroupCipher()) {
+            maskToBitSetGroupCipherMask(mGroupCipherMask, config.allowedGroupCiphers);
+        }
+
+        /** metadata: idstr */
+        if (!getIdStr()) {
+            Log.e(TAG, "getIdStr failed");
+            return false;
+        }
+        /** TODO, parse mIdStr and get config values */
+
+        //TODO: MORE VARS
+        return true;
+    }
+
+    /**
+     * Save an entire WifiConfiguration to wpa_supplicant via HIDL
+     */
+    public boolean saveFromWifiConfiguration(WifiConfiguration config) {
+        if (config == null) return false;
+
+        /** SSID */
+        if (config.SSID != null) {
+            if (!setSsid(encodeSsid(config.SSID))) {
+                Log.e(TAG, "Failed to set SSID: " + config.SSID);
+                return false;
+            }
+        }
+
+        /** metadata: FQDN + ConfigKey + CreatorUid */
+        final Map<String, String> metadata = new HashMap<String, String>();
+        if (config.isPasspoint()) {
+            metadata.put(ID_STRING_KEY_FQDN, config.FQDN);
+        }
+        metadata.put(ID_STRING_KEY_CONFIG_KEY, config.configKey());
+        metadata.put(ID_STRING_KEY_CREATOR_UID, Integer.toString(config.creatorUid));
+        final String idString;
+        try {
+            idString = URLEncoder.encode(new JSONObject(metadata).toString(), "UTF-8");
+        } catch (NullPointerException e) {
+            Log.e(TAG, "Unable to serialize networkExtra: " + e.toString());
+            return false;
+        } catch (UnsupportedEncodingException e) {
+            Log.e(TAG, "Unable to serialize networkExtra: " + e.toString());
+            return false;
+        }
+        if (!setIdStr(idString)) {
+            Log.e(TAG, "Failed to set idString");
+            return false;
+        }
+
+        /** BSSID */
+        String bssidStr = config.getNetworkSelectionStatus().getNetworkSelectionBSSID();
+        if (bssidStr != null) {
+            byte[] bssid;
+            try {
+                bssid = macAddressToByteArray(bssidStr);
+            } catch (IllegalArgumentException e) {
+                Log.e(TAG, "Invalid BSSID: " + bssidStr);
+                return false;
+            }
+            if (!setBssid(bssid)) {
+                Log.e(TAG, "Failed to set BSSID: " + bssidStr);
+                return false;
+            }
+        }
+
+        /** Key Management Scheme */
+        if (config.allowedKeyManagement.cardinality() != 0
+                && !setKeyMgmt(createSupplicantKeyMgmtMask(config.allowedKeyManagement))) {
+            Log.e(TAG, "Failed to set Key Management");
+            return false;
+        }
+
+        /** Security Protocol */
+        if (config.allowedProtocols.cardinality() != 0
+                && !setProto(createSupplicantProtoMask(config.allowedProtocols))) {
+            Log.e(TAG, "Failed to set Security Protocol");
+            return false;
+        }
+        /** Auth Algorithm */
+        if (config.allowedAuthAlgorithms.cardinality() != 0
+                && !setAuthAlg(createSupplicantAuthAlgMask(config.allowedAuthAlgorithms))) {
+            Log.e(TAG, "Failed to set AuthAlgorithm");
+            return false;
+        }
+        /** Pairwise Cipher*/
+        if (config.allowedPairwiseCiphers.cardinality() != 0
+                && !setPairwiseCipher(createSupplicantPairwiseCipherMask(
+                        config.allowedPairwiseCiphers))) {
+            Log.e(TAG, "Failed to set PairwiseCipher");
+            return false;
+        }
+        /** Group Cipher */
+        if (config.allowedGroupCiphers.cardinality() != 0
+                && !setGroupCipher(createSupplicantGroupCipherMask(config.allowedGroupCiphers))) {
+            Log.e(TAG, "Failed to set Group Cipher");
+            return false;
+        }
+
+        /** Pre Shared Key */
+        // Prevent client screw-up by passing in a WifiConfiguration we gave it
+        // by preventing "*" as a key.
+        if (config.preSharedKey != null && !config.preSharedKey.equals("*")
+                && !setPskPassphrase(config.preSharedKey)) {
+            Log.e(TAG, "failed to set psk");
+            return false;
+        }
+        /** Wep Keys */
+        boolean hasSetKey = false;
+        if (config.wepKeys != null) {
+            for (int i = 0; i < config.wepKeys.length; i++) {
+                // Prevent client screw-up by passing in a WifiConfiguration we gave it
+                // by preventing "*" as a key.
+                if (config.wepKeys[i] != null && !config.wepKeys[i].equals("*")) {
+                    if (!setWepKey(i, stringToByteArrayList(config.wepKeys[i]))) {
+                        Log.e(TAG, "failed to set wep_key" + i + ": " + config.wepKeys[i]);
+                        return false;
+                    }
+                    hasSetKey = true;
+                }
+            }
+        }
+        /** Wep Tx Key Idx */
+        if (hasSetKey) {
+            if (!setWepTxKeyIdx(config.wepTxKeyIndex)) {
+                Log.e(TAG, "failed to set wep_tx_keyidx: " + config.wepTxKeyIndex);
+                return false;
+            }
+        }
+        /** Priority */
+        // TODO(b/34454675): Missing from hal, might not be supported anymore
+
+        /** HiddenSSID */
+        if (!setScanSsid(config.hiddenSSID)) {
+            Log.e(TAG, config.SSID + ": failed to set hiddenSSID: " + config.hiddenSSID);
+            return false;
+        }
+        /** RequirePMF */
+        if (!setRequirePmf(config.requirePMF)) {
+            Log.e(TAG, config.SSID + ": failed to set requirePMF: " + config.requirePMF);
+            return false;
+        }
+        /** UpdateIdentifier */
+        /** TODO(b/34454675): Add setter for this when it exists */
+
+        // Finish here if no EAP config to set
+        if (config.enterpriseConfig.getEapMethod() == WifiEnterpriseConfig.Eap.NONE) {
+            return true;
+        } else {
+            return saveEapNetworkVariables(config.enterpriseConfig);
+        }
+    }
+
+    /**
+     * Save EAP specific parameters to supplicant via HIDL
+     */
+    private boolean saveEapNetworkVariables(WifiEnterpriseConfig eapConfig) {
+        // TBD
+        return true;
+    }
+
+    /**
+     * Maps WifiConfiguration Key Management BitSet to Supplicant HIDL bitmask int
+     * TODO(b/32571829): Update mapping when fast transition keys are added
+     * @return bitmask int describing the allowed Key Management schemes, readable by the Supplicant
+     *         HIDL hal
+     */
+    private static int createSupplicantKeyMgmtMask(BitSet keyMgmt) {
+        int mask = 0;
+        for (int bit = keyMgmt.nextSetBit(0); bit != -1; bit = keyMgmt.nextSetBit(bit + 1)) {
+            switch (bit) {
+                case WifiConfiguration.KeyMgmt.NONE:
+                    mask |= ISupplicantStaNetwork.KeyMgmtMask.NONE;
+                    break;
+                case WifiConfiguration.KeyMgmt.WPA_PSK:
+                    mask |= ISupplicantStaNetwork.KeyMgmtMask.WPA_PSK;
+                    break;
+                case WifiConfiguration.KeyMgmt.WPA_EAP:
+                    mask |= ISupplicantStaNetwork.KeyMgmtMask.WPA_EAP;
+                    break;
+                case WifiConfiguration.KeyMgmt.IEEE8021X:
+                    mask |= ISupplicantStaNetwork.KeyMgmtMask.IEEE8021X;
+                    break;
+                case WifiConfiguration.KeyMgmt.OSEN:
+                    mask |= ISupplicantStaNetwork.KeyMgmtMask.OSEN;
+                    break;
+                case WifiConfiguration.KeyMgmt.FT_PSK:
+                    mask |= ISupplicantStaNetwork.KeyMgmtMask.FT_PSK;
+                    break;
+                case WifiConfiguration.KeyMgmt.FT_EAP:
+                    mask |= ISupplicantStaNetwork.KeyMgmtMask.FT_EAP;
+                    break;
+                case WifiConfiguration.KeyMgmt.WPA2_PSK: // This should never happen
+                default:
+                    throw new IllegalArgumentException(
+                            "Invalid protoMask bit in keyMgmt: " + bit);
+            }
+        }
+        return mask;
+    }
+
+    private static int createSupplicantProtoMask(BitSet protoMask) {
+        int mask = 0;
+        for (int bit = protoMask.nextSetBit(0); bit != -1; bit = protoMask.nextSetBit(bit + 1)) {
+            switch (bit) {
+                case WifiConfiguration.Protocol.WPA:
+                    mask |= ISupplicantStaNetwork.ProtoMask.WPA;
+                    break;
+                case WifiConfiguration.Protocol.RSN:
+                    mask |= ISupplicantStaNetwork.ProtoMask.RSN;
+                    break;
+                case WifiConfiguration.Protocol.OSEN:
+                    mask |= ISupplicantStaNetwork.ProtoMask.OSEN;
+                    break;
+                default:
+                    throw new IllegalArgumentException(
+                            "Invalid protoMask bit in wificonfig: " + bit);
+            }
+        }
+        return mask;
+    };
+
+    private static int createSupplicantAuthAlgMask(BitSet authAlgMask) {
+        int mask = 0;
+        for (int bit = authAlgMask.nextSetBit(0); bit != -1;
+                bit = authAlgMask.nextSetBit(bit + 1)) {
+            switch (bit) {
+                case WifiConfiguration.AuthAlgorithm.OPEN:
+                    mask |= ISupplicantStaNetwork.AuthAlgMask.OPEN;
+                    break;
+                case WifiConfiguration.AuthAlgorithm.SHARED:
+                    mask |= ISupplicantStaNetwork.AuthAlgMask.SHARED;
+                    break;
+                case WifiConfiguration.AuthAlgorithm.LEAP:
+                    mask |= ISupplicantStaNetwork.AuthAlgMask.LEAP;
+                    break;
+                default:
+                    throw new IllegalArgumentException(
+                            "Invalid authAlgMask bit in wificonfig: " + bit);
+            }
+        }
+        return mask;
+    };
+
+    private static int createSupplicantGroupCipherMask(BitSet groupCipherMask) {
+        int mask = 0;
+        for (int bit = groupCipherMask.nextSetBit(0); bit != -1; bit =
+                groupCipherMask.nextSetBit(bit + 1)) {
+            switch (bit) {
+                case WifiConfiguration.GroupCipher.WEP40:
+                    mask |= ISupplicantStaNetwork.GroupCipherMask.WEP40;
+                    break;
+                case WifiConfiguration.GroupCipher.WEP104:
+                    mask |= ISupplicantStaNetwork.GroupCipherMask.WEP104;
+                    break;
+                case WifiConfiguration.GroupCipher.TKIP:
+                    mask |= ISupplicantStaNetwork.GroupCipherMask.TKIP;
+                    break;
+                case WifiConfiguration.GroupCipher.CCMP:
+                    mask |= ISupplicantStaNetwork.GroupCipherMask.CCMP;
+                    break;
+                case WifiConfiguration.GroupCipher.GTK_NOT_USED:
+                    mask |= ISupplicantStaNetwork.GroupCipherMask.GTK_NOT_USED;
+                    break;
+                default:
+                    throw new IllegalArgumentException(
+                            "Invalid GroupCipherMask bit in wificonfig: " + bit);
+            }
+        }
+        return mask;
+    };
+
+    private static int createSupplicantPairwiseCipherMask(BitSet pairwiseCipherMask) {
+        int mask = 0;
+        for (int bit = pairwiseCipherMask.nextSetBit(0); bit != -1;
+                bit = pairwiseCipherMask.nextSetBit(bit + 1)) {
+            switch (bit) {
+                case WifiConfiguration.PairwiseCipher.NONE:
+                    mask |= ISupplicantStaNetwork.PairwiseCipherMask.NONE;
+                    break;
+                case WifiConfiguration.PairwiseCipher.TKIP:
+                    mask |= ISupplicantStaNetwork.PairwiseCipherMask.TKIP;
+                    break;
+                case WifiConfiguration.PairwiseCipher.CCMP:
+                    mask |= ISupplicantStaNetwork.PairwiseCipherMask.CCMP;
+                    break;
+                default:
+                    throw new IllegalArgumentException(
+                            "Invalid pairwiseCipherMask bit in wificonfig: " + bit);
+            }
+        }
+        return mask;
+    };
+
+    private static int supplicantToWifiConfigurationEapMethod(int value) {
+        switch (value) {
+            case ISupplicantStaNetwork.EapMethod.PEAP:
+                return WifiEnterpriseConfig.Eap.PEAP;
+            case ISupplicantStaNetwork.EapMethod.TLS:
+                return WifiEnterpriseConfig.Eap.TLS;
+            case ISupplicantStaNetwork.EapMethod.TTLS:
+                return WifiEnterpriseConfig.Eap.TTLS;
+            case ISupplicantStaNetwork.EapMethod.PWD:
+                return WifiEnterpriseConfig.Eap.PWD;
+            case ISupplicantStaNetwork.EapMethod.SIM:
+                return WifiEnterpriseConfig.Eap.SIM;
+            case ISupplicantStaNetwork.EapMethod.AKA:
+                return WifiEnterpriseConfig.Eap.AKA;
+            case ISupplicantStaNetwork.EapMethod.AKA_PRIME:
+                return WifiEnterpriseConfig.Eap.AKA_PRIME;
+            case ISupplicantStaNetwork.EapMethod.WFA_UNAUTH_TLS:
+                return WifiEnterpriseConfig.Eap.UNAUTH_TLS;
+            // WifiEnterpriseConfig.Eap.NONE:
+            default:
+                Log.e(TAG, "invalid eap method value from supplicant: " + value);
+                return -1;
+        }
+    };
+
+    private static int supplicantToWifiConfigurationEapPhase2Method(int value) {
+        switch (value) {
+            case ISupplicantStaNetwork.EapPhase2Method.NONE:
+                return WifiEnterpriseConfig.Phase2.NONE;
+            case ISupplicantStaNetwork.EapPhase2Method.PAP:
+                return WifiEnterpriseConfig.Phase2.PAP;
+            case ISupplicantStaNetwork.EapPhase2Method.MSPAP:
+                return WifiEnterpriseConfig.Phase2.MSCHAP;
+            case ISupplicantStaNetwork.EapPhase2Method.MSPAPV2:
+                return WifiEnterpriseConfig.Phase2.MSCHAPV2;
+            case ISupplicantStaNetwork.EapPhase2Method.GTC:
+                return WifiEnterpriseConfig.Phase2.GTC;
+            default:
+                Log.e(TAG, "invalid eap phase2 method value from supplicant: " + value);
+                return -1;
+        }
+    };
+
+    private static void maskToBitSetKeyMgmtMask(int mask, BitSet bitset) {
+        bitset.set(WifiConfiguration.KeyMgmt.NONE,
+                mask & ISupplicantStaNetwork.KeyMgmtMask.NONE);
+        bitset.set(WifiConfiguration.KeyMgmt.WPA_PSK,
+                mask & ISupplicantStaNetwork.KeyMgmtMask.WPA_PSK);
+        bitset.set(WifiConfiguration.KeyMgmt.WPA_EAP,
+                mask & ISupplicantStaNetwork.KeyMgmtMask.WPA_EAP);
+        bitset.set(WifiConfiguration.KeyMgmt.IEEE8021X,
+                mask & ISupplicantStaNetwork.KeyMgmtMask.IEEE8021X);
+        bitset.set(WifiConfiguration.KeyMgmt.OSEN,
+                mask & ISupplicantStaNetwork.KeyMgmtMask.OSEN);
+        bitset.set(WifiConfiguration.KeyMgmt.FT_PSK,
+                mask & ISupplicantStaNetwork.KeyMgmtMask.FT_PSK);
+        bitset.set(WifiConfiguration.KeyMgmt.FT_EAP,
+                mask & ISupplicantStaNetwork.KeyMgmtMask.FT_EAP);
+        // WifiConfiguration.KeyMgmt.WPA2_PSK
+
+        // Remove all valid bits from mask, and throw exception if anything is left
+        mask = ~mask;
+        mask |= ISupplicantStaNetwork.KeyMgmtMask.NONE;
+        mask |= ISupplicantStaNetwork.KeyMgmtMask.WPA_PSK;
+        mask |= ISupplicantStaNetwork.KeyMgmtMask.WPA_EAP;
+        mask |= ISupplicantStaNetwork.KeyMgmtMask.IEEE8021X;
+        mask |= ISupplicantStaNetwork.KeyMgmtMask.OSEN;
+        mask |= ISupplicantStaNetwork.KeyMgmtMask.FT_PSK;
+        mask |= ISupplicantStaNetwork.KeyMgmtMask.FT_EAP;
+        mask = ~mask;
+        if (mask != 0) {
+            throw new IllegalArgumentException("invalid bits set in keyMgmtMask: " + mask);
+        }
+    }
+
+    private static void maskToBitSetProtoMask(int mask, BitSet bitset) {
+        bitset.set(WifiConfiguration.Protocol.WPA, mask & ISupplicantStaNetwork.ProtoMask.WPA);
+        bitset.set(WifiConfiguration.Protocol.RSN, mask & ISupplicantStaNetwork.ProtoMask.RSN);
+        bitset.set(WifiConfiguration.Protocol.OSEN, mask & ISupplicantStaNetwork.ProtoMask.OSEN);
+    };
+
+    private static void maskToBitSetAuthAlgMask(int mask, BitSet bitset) {
+        bitset.set(WifiConfiguration.AuthAlgorithm.OPEN,
+                mask & ISupplicantStaNetwork.AuthAlgMask.OPEN);
+        bitset.set(WifiConfiguration.AuthAlgorithm.SHARED,
+                mask & ISupplicantStaNetwork.AuthAlgMask.SHARED);
+        bitset.set(WifiConfiguration.AuthAlgorithm.LEAP,
+                mask & ISupplicantStaNetwork.AuthAlgMask.LEAP);
+    };
+
+    private static void maskToBitSetGroupCipherMask(int mask, BitSet bitset) {
+        bitset.set(WifiConfiguration.GroupCipher.WEP40,
+                mask & ISupplicantStaNetwork.GroupCipherMask.WEP40);
+        bitset.set(WifiConfiguration.GroupCipher.WEP104,
+                mask & ISupplicantStaNetwork.GroupCipherMask.WEP104);
+        bitset.set(WifiConfiguration.GroupCipher.TKIP,
+                mask & ISupplicantStaNetwork.GroupCipherMask.TKIP);
+        bitset.set(WifiConfiguration.GroupCipher.CCMP,
+                mask & ISupplicantStaNetwork.GroupCipherMask.CCMP);
+        bitset.set(WifiConfiguration.GroupCipher.GTK_NOT_USED,
+                mask & ISupplicantStaNetwork.GroupCipherMask.GTK_NOT_USED);
+    };
+
+    private static void maskToBitSetPairwiseCipherMask(int mask, BitSet bitset) {
+        bitset.set(WifiConfiguration.PairwiseCipher.NONE,
+                mask & ISupplicantStaNetwork.PairwiseCipherMask.NONE);
+        bitset.set(WifiConfiguration.PairwiseCipher.TKIP,
+                mask & ISupplicantStaNetwork.PairwiseCipherMask.TKIP);
+        bitset.set(WifiConfiguration.PairwiseCipher.CCMP,
+                mask & ISupplicantStaNetwork.PairwiseCipherMask.CCMP);
+    };
+
+    private static int wifiConfigurationToSupplicantEapMethod(int value) {
+        switch (value) {
+            case WifiEnterpriseConfig.Eap.PEAP:
+                return ISupplicantStaNetwork.EapMethod.PEAP;
+            case WifiEnterpriseConfig.Eap.TLS:
+                return ISupplicantStaNetwork.EapMethod.TLS;
+            case WifiEnterpriseConfig.Eap.TTLS:
+                return ISupplicantStaNetwork.EapMethod.TTLS;
+            case WifiEnterpriseConfig.Eap.PWD:
+                return ISupplicantStaNetwork.EapMethod.PWD;
+            case WifiEnterpriseConfig.Eap.SIM:
+                return ISupplicantStaNetwork.EapMethod.SIM;
+            case WifiEnterpriseConfig.Eap.AKA:
+                return ISupplicantStaNetwork.EapMethod.AKA;
+            case WifiEnterpriseConfig.Eap.AKA_PRIME:
+                return ISupplicantStaNetwork.EapMethod.AKA_PRIME;
+            case WifiEnterpriseConfig.Eap.UNAUTH_TLS:
+                return ISupplicantStaNetwork.EapMethod.WFA_UNAUTH_TLS;
+            // WifiEnterpriseConfig.Eap.NONE:
+            default:
+                Log.e(TAG, "invalid eap method value from WifiConfiguration: " + value);
+                return -1;
+        }
+    };
+
+    private static int wifiConfigurationToSupplicantEapPhase2Method(int value) {
+        switch (value) {
+            case WifiEnterpriseConfig.Phase2.NONE:
+                return ISupplicantStaNetwork.EapPhase2Method.NONE;
+            case WifiEnterpriseConfig.Phase2.PAP:
+                return ISupplicantStaNetwork.EapPhase2Method.PAP;
+            case WifiEnterpriseConfig.Phase2.MSCHAP:
+                return ISupplicantStaNetwork.EapPhase2Method.MSPAP;
+            case WifiEnterpriseConfig.Phase2.MSCHAPV2:
+                return ISupplicantStaNetwork.EapPhase2Method.MSPAPV2;
+            case WifiEnterpriseConfig.Phase2.GTC:
+                return ISupplicantStaNetwork.EapPhase2Method.GTC;
+            default:
+                Log.e(TAG, "invalid eap phase2 method value from WifiConfiguration: " + value);
+                return -1;
+        }
+    };
 
     /** See ISupplicantNetwork.hal for documentation */
     private boolean getId() {
@@ -743,7 +1281,7 @@ public class SupplicantStaNetworkHal {
         }
     }
     /** See ISupplicantStaNetwork.hal for documentation */
-    private boolean getWepKeyCallback(int keyIdx) {
+    private boolean getWepKey(int keyIdx) {
         synchronized (mLock) {
             final String methodStr = "keyIdx";
             if (!checkISupplicantStaNetworkAndLogFailure(methodStr)) return false;
@@ -1318,5 +1856,98 @@ public class SupplicantStaNetworkHal {
 
     private void logFailureStatus(SupplicantStatus status, String methodStr) {
         Log.e(TAG, methodStr + " failed: " + status.debugMessage);
+    }
+
+    /**
+     * @return the UTF_8 char byte values of str, as an ArrayList
+     */
+    private static ArrayList<Byte> stringToByteArrayList(String str) {
+        ArrayList<Byte> byteArrayList = new ArrayList<Byte>();
+        for (byte b : str.getBytes(StandardCharsets.UTF_8)) {
+            byteArrayList.add(new Byte(b));
+        }
+        return byteArrayList;
+    }
+
+    /**
+     * @return the string decoded from UTF_8 byte values in byteArrayList
+     *         returns null for null input
+     */
+    private static String stringFromByteArrayList(ArrayList<Byte> byteArrayList) {
+        if (byteArrayList == null) return null;
+        byte[] byteArray = new byte[byteArrayList.size()];
+        int i = 0;
+        for (Byte b : byteArrayList) {
+            byteArray[i] = b;
+            i++;
+        }
+        return new String(byteArray, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Converts a mac address string to an array of Byes
+     * @param bssidStr string of format: "XX:XX:XX:XX:XX:XX", where X is any hexadecimal digit.
+     *        Passing "any" is the same as 00:00:00:00:00:00
+     * @throws IllegalArgumentException for various malformed inputs
+     */
+    private static byte[] macAddressToByteArray(String bssidStr) {
+        if (bssidStr == null) {
+            throw new IllegalArgumentException("null bssid String");
+        }
+        if (ANY_BSSID_STR.equals(bssidStr)) return ANY_BSSID_BYTES;
+        String cleanBssid = bssidStr.replace(":", "");
+        if (cleanBssid.length() != 12) {
+            throw new IllegalArgumentException("invalid bssid String length: " + cleanBssid);
+        }
+        return HexEncoding.decode(cleanBssid.toCharArray(), false);
+    }
+
+    /**
+     * Converts an array of 6 bytes to a HexEncoded String with format: "XX:XX:XX:XX:XX:XX", where X
+     * is any hexadecimal digit.
+     * @param macArray byte array of bssid values, must have length 6
+     * @throws IllegalArgumentException for malformed inputs
+     */
+    private static String macAddressFromByteArray(byte[] macArray) {
+        if (macArray == null) {
+            throw new IllegalArgumentException("null macArray");
+        }
+        if (macArray.length != 6) {
+            throw new IllegalArgumentException("invalid macArray length: " + macArray.length);
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < macArray.length; i++) {
+            sb.append(new String(HexEncoding.encode(macArray, i, 1))).append(":");
+        }
+        String mac = sb.toString();
+        return mac.substring(0, mac.length() - 1); //remove trailing ':'
+    }
+
+    /**
+     * Converts an ssid string to an arraylist of UTF_8 byte values.
+     * Removes encapsulating quotation marks if they exist
+     */
+    private static ArrayList<Byte> encodeSsid(String ssid) {
+        int length = ssid.length();
+        if ((length > 1) && (ssid.charAt(0) == '"') && (ssid.charAt(length - 1) == '"')) {
+            ssid = ssid.substring(1, ssid.length() - 1);
+        }
+        return stringToByteArrayList(ssid);
+    }
+
+    /**
+     * Converts an ArrayList<Byte> of UTF_8 byte values to an SSID String, encapsulated in quotes
+     * Will return null given null ssidBytes
+     */
+    private static String decodeSsid(ArrayList<Byte> ssidBytes) {
+        if (ssidBytes == null) return null;
+        if (ssidBytes.size() == 0) return "\"\"";
+        byte[] ssidArray = new byte[ssidBytes.size()];
+        int i = 0;
+        for (Byte b : ssidBytes) {
+            ssidArray[i] = b;
+            i++;
+        }
+        return "\"" + (new String(ssidArray, StandardCharsets.UTF_8)) + "\"";
     }
 }
