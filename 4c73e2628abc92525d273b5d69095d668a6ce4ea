@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c875b3dc_abbb352d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-03T01:23:18Z",
+      "side": 1,
+      "message": "Alright, still no integration test. But I managed to test this out more by manually inserting a BSSID entry in WifiConfigStore.xml.",
+      "parentUuid": "4314ac04_7168fcaf",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 33
+      },
+      "revId": "4c73e2628abc92525d273b5d69095d668a6ce4ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "155889ed_c96d8777",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
         "patchSetId": 1
