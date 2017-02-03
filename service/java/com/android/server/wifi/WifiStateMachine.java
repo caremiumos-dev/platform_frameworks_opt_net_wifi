@@ -199,7 +199,6 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     private WifiConfigManager mWifiConfigManager;
     private WifiSupplicantControl mWifiSupplicantControl;
     private WifiConnectivityManager mWifiConnectivityManager;
-    private WifiNetworkSelector mWifiNetworkSelector;
     private INetworkManagementService mNwService;
     private IClientInterface mClientInterface;
     private ConnectivityManager mCm;
@@ -897,7 +896,6 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         mWifiDiagnostics = mWifiInjector.makeWifiDiagnostics(mWifiNative);
 
         mWifiInfo = new WifiInfo();
-        mWifiNetworkSelector = mWifiInjector.getWifiNetworkSelector();
         mSupplicantStateTracker =
                 mFacade.makeSupplicantStateTracker(context, mWifiConfigManager, getHandler());
 
@@ -2125,7 +2123,11 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         mWifiDiagnostics.captureBugReportData(WifiDiagnostics.REPORT_REASON_USER_ACTION);
         mWifiDiagnostics.dump(fd, pw, args);
         dumpIpManager(fd, pw, args);
-        mWifiNetworkSelector.dump(fd, pw, args);
+        if (mWifiConnectivityManager != null) {
+            mWifiConnectivityManager.dump(fd, pw, args);
+        } else {
+            pw.println("mWifiConnectivityManager is not initialized");
+        }
     }
 
     public void handleUserSwitch(int userId) {
