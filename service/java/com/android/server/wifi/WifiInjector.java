@@ -384,13 +384,6 @@ public class WifiInjector {
     }
 
     /**
-     * Obtain an instance of WifiNetworkSelector.
-     */
-    public WifiNetworkSelector getWifiNetworkSelector() {
-        return mWifiNetworkSelector;
-    }
-
-    /**
      * Obtain a new instance of WifiConnectivityManager.
      *
      * Create and return a new WifiConnectivityManager.
