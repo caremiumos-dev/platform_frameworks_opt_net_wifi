@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "ac228804_9a11465f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-03T06:52:55Z",
+      "side": 1,
+      "message": "A note for myself. We should use WifiStateMachine.SUPPLICANT_ANY_BSSID.",
+      "range": {
+        "startLine": 991,
+        "startChar": 81,
+        "endLine": 991,
+        "endChar": 86
+      },
+      "revId": "2495038b6eec3aa318f392ba557ffa1e24ca706b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9da879ec_716ae74e",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
         "patchSetId": 7
@@ -90,6 +113,23 @@
         "endLine": 1004,
         "endChar": 33
       },
+      "revId": "2495038b6eec3aa318f392ba557ffa1e24ca706b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ea8f9b7_e84e4c07",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-03T06:52:55Z",
+      "side": 1,
+      "message": "Ah, this line should be removed. We already have that at line 1006.",
       "revId": "2495038b6eec3aa318f392ba557ffa1e24ca706b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
