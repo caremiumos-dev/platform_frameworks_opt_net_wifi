@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "daf1d51f_3996ee26",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5163,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-03T05:46:27Z",
+      "side": 1,
+      "message": "If it returns anything but success, do you actually want to continue?  If it is busy roaming, won\u0027t you have to re-run the selection anyway in case the new network is better than what you picked?  Given that the new network will have different stats, you don\u0027t know what you will do if it does connect.  If it is an error, then maybe you need to reload or clear all state.",
+      "parentUuid": "7ffe0936_a0f504db",
+      "range": {
+        "startLine": 5163,
+        "startChar": 27,
+        "endLine": 5163,
+        "endChar": 38
+      },
+      "revId": "4905d234c1feabe9764a0223079e35f7ddb66105",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6a84ba7_150dc5e4",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 4
@@ -133,6 +157,76 @@
         "startChar": 21,
         "endLine": 5193,
         "endChar": 52
+      },
+      "revId": "4905d234c1feabe9764a0223079e35f7ddb66105",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ddd3488f_8a0c9b96",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5193,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-03T05:46:27Z",
+      "side": 1,
+      "message": "As I understand the code, a device will either have firmware roaming supported or not, it isn\u0027t going to change settings while running on an interface.  If that assumption is correct, then you are either going to be doing CMD_START_CONNECT calls or you will be doing CMD_STOP_FW_ROAMING_AND_CONNECT messages.  You do not need support in both.\nIf both types of messages can be sent for a single running instance of WifiStateMachine, then please explain how that can happen (other than the calls you added in this CL).",
+      "parentUuid": "8b0a2f4f_ccdf41e9",
+      "range": {
+        "startLine": 5193,
+        "startChar": 21,
+        "endLine": 5193,
+        "endChar": 52
+      },
+      "revId": "4905d234c1feabe9764a0223079e35f7ddb66105",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec7507f1_417e660d",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5362,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-03T05:46:27Z",
+      "side": 1,
+      "message": "to be consistent, it seems like you should use the method to send the connect message - otherwise you are intermingling the functionality in the code that handles the two message types and have to have redundant code.",
+      "range": {
+        "startLine": 5362,
+        "startChar": 24,
+        "endLine": 5362,
+        "endChar": 53
+      },
+      "revId": "4905d234c1feabe9764a0223079e35f7ddb66105",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6da58c8_62250410",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5856,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-03T05:46:27Z",
+      "side": 1,
+      "message": "same as message for 5362",
+      "range": {
+        "startLine": 5856,
+        "startChar": 24,
+        "endLine": 5856,
+        "endChar": 53
       },
       "revId": "4905d234c1feabe9764a0223079e35f7ddb66105",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
