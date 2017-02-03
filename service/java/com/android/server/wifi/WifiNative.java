@@ -132,7 +132,7 @@ public class WifiNative {
 
 
     // TODO(b/34884202): Set this to true to enable HIDL once we're fully ready.
-    private static final boolean HIDL_ENABLE = false;
+    public static final boolean HIDL_ENABLE = false;
     private final String mTAG;
     private final String mInterfaceName;
     private final String mInterfacePrefix;
