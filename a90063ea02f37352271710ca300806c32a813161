@@ -123,6 +123,24 @@
       "revId": "a90063ea02f37352271710ca300806c32a813161",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53838c57_93a1e041",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNativeTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-03T18:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a65cd3bd_91072444",
+      "revId": "a90063ea02f37352271710ca300806c32a813161",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
