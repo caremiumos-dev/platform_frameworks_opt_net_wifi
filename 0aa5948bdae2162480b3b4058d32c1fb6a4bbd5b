@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7ec5bff0_92529946",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-03T18:22:34Z",
+      "side": 1,
+      "message": "This is the old startHal() which calls the jni code. We will soon replace it with HIDL stuff. I think the old HAL is not in charge of loading driver/firmware/bringup interface, so it makes sense to be called after setupApMode().",
+      "parentUuid": "7225ce04_94007c9a",
+      "range": {
+        "startLine": 245,
+        "startChar": 8,
+        "endLine": 247,
+        "endChar": 31
+      },
+      "revId": "0aa5948bdae2162480b3b4058d32c1fb6a4bbd5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "111f8ef8_a40692d6",
         "filename": "service/java/com/android/server/wifi/WificondControl.java",
         "patchSetId": 17
@@ -59,6 +83,30 @@
       "writtenOn": "2017-02-03T06:31:02Z",
       "side": 1,
       "message": "can delete this one - I mainly wanted the javadoc line :)",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 31
+      },
+      "revId": "0aa5948bdae2162480b3b4058d32c1fb6a4bbd5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4737017e_a707fe53",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-03T18:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fe08b84_063c042d",
       "range": {
         "startLine": 109,
         "startChar": 0,
