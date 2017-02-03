@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8394f896_beca2344",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-03T19:30:43Z",
+      "side": 1,
+      "message": "These TODOs should have a bugid, but I don\u0027t know what the bug should stay.",
+      "range": {
+        "startLine": 243,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 53
+      },
+      "revId": "4f2049a015722cae0f0169379d499d5d4fc98e30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6d18a42_d56f6a5a",
         "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
         "patchSetId": 5
@@ -13,6 +36,30 @@
       "writtenOn": "2017-02-03T19:19:59Z",
       "side": 1,
       "message": "Formatting seems off here.",
+      "range": {
+        "startLine": 241,
+        "startChar": 26,
+        "endLine": 277,
+        "endChar": 30
+      },
+      "revId": "4f2049a015722cae0f0169379d499d5d4fc98e30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1afda4be_a31bb787",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-03T19:30:43Z",
+      "side": 1,
+      "message": "I\u0027ll see what Android Studio thinks.",
+      "parentUuid": "e6d18a42_d56f6a5a",
       "range": {
         "startLine": 241,
         "startChar": 26,
@@ -48,6 +95,29 @@
     },
     {
       "key": {
+        "uuid": "8f852968_15010d66",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-03T19:30:43Z",
+      "side": 1,
+      "message": "*",
+      "range": {
+        "startLine": 318,
+        "startChar": 32,
+        "endLine": 318,
+        "endChar": 42
+      },
+      "revId": "4f2049a015722cae0f0169379d499d5d4fc98e30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8a13ced_fbcc4129",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
         "patchSetId": 5
@@ -59,6 +129,30 @@
       "writtenOn": "2017-02-03T19:19:59Z",
       "side": 1,
       "message": "Typo?",
+      "range": {
+        "startLine": 332,
+        "startChar": 0,
+        "endLine": 332,
+        "endChar": 47
+      },
+      "revId": "4f2049a015722cae0f0169379d499d5d4fc98e30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0aaf009_1216bbc1",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-03T19:30:43Z",
+      "side": 1,
+      "message": "No, see line 318.",
+      "parentUuid": "a8a13ced_fbcc4129",
       "range": {
         "startLine": 332,
         "startChar": 0,
