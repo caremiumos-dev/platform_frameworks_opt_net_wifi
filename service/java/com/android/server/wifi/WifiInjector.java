@@ -16,6 +16,7 @@
 
 package com.android.server.wifi;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.net.NetworkScoreManager;
 import android.net.wifi.IApInterface;
@@ -98,6 +99,7 @@ public class WifiInjector {
     private final WifiConfigStoreLegacy mWifiConfigStoreLegacy;
     private final WifiConfigManager mWifiConfigManager;
     private final WifiConnectivityHelper mWifiConnectivityHelper;
+    private final LocalLog mConnectivityLocalLog;
     private final WifiNetworkSelector mWifiNetworkSelector;
     private final SavedNetworkEvaluator mSavedNetworkEvaluator;
     private final PasspointNetworkEvaluator mPasspointNetworkEvaluator;
@@ -189,18 +191,20 @@ public class WifiInjector {
                 mWifiPermissionsWrapper, new NetworkListStoreData(),
                 new DeletedEphemeralSsidsStoreData());
         mWifiConnectivityHelper = new WifiConnectivityHelper(mWifiNative);
-        mWifiNetworkSelector = new WifiNetworkSelector(mContext, mWifiConfigManager, mClock);
-        LocalLog localLog = mWifiNetworkSelector.getLocalLog();
+        mConnectivityLocalLog = new LocalLog(ActivityManager.isLowRamDeviceStatic() ? 256 : 512);
+        mWifiNetworkSelector = new WifiNetworkSelector(mContext, mWifiConfigManager, mClock,
+                mConnectivityLocalLog);
         mSavedNetworkEvaluator = new SavedNetworkEvaluator(mContext,
-                mWifiConfigManager, mClock, localLog, wifiStateMachineLooper, mFrameworkFacade);
+                mWifiConfigManager, mClock, mConnectivityLocalLog, wifiStateMachineLooper,
+                mFrameworkFacade);
         mRecommendedNetworkEvaluator = new RecommendedNetworkEvaluator(context,
                 context.getContentResolver(), wifiStateMachineLooper, mFrameworkFacade,
-                mNetworkScoreManager, mWifiConfigManager, localLog);
+                mNetworkScoreManager, mWifiConfigManager, mConnectivityLocalLog);
         mSimAccessor = new SIMAccessor(mContext);
         mPasspointManager = new PasspointManager(mContext, mWifiNative, mWifiKeyStore, mClock,
                 mSimAccessor, new PasspointObjectFactory(), mWifiConfigManager, mWifiConfigStore);
         mPasspointNetworkEvaluator = new PasspointNetworkEvaluator(
-                mPasspointManager, mWifiConfigManager, localLog);
+                mPasspointManager, mWifiConfigManager, mConnectivityLocalLog);
         // mWifiStateMachine has an implicit dependency on mJavaRuntime due to WifiDiagnostics.
         mJavaRuntime = Runtime.getRuntime();
         mWifiStateMachine = new WifiStateMachine(mContext, mFrameworkFacade,
@@ -389,13 +393,6 @@ public class WifiInjector {
     }
 
     /**
-     * Obtain an instance of WifiNetworkSelector.
-     */
-    public WifiNetworkSelector getWifiNetworkSelector() {
-        return mWifiNetworkSelector;
-    }
-
-    /**
      * Obtain a new instance of WifiConnectivityManager.
      *
      * Create and return a new WifiConnectivityManager.
@@ -408,8 +405,8 @@ public class WifiInjector {
         return new WifiConnectivityManager(mContext, mWifiStateMachine, getWifiScanner(),
                 mWifiConfigManager, wifiInfo, mWifiNetworkSelector, mWifiConnectivityHelper,
                 mWifiLastResortWatchdog, mWifiMetrics, mWifiStateMachineHandlerThread.getLooper(),
-                mClock, hasConnectionRequests, mFrameworkFacade, mSavedNetworkEvaluator,
-                mRecommendedNetworkEvaluator, mPasspointNetworkEvaluator);
+                mClock, mConnectivityLocalLog, hasConnectionRequests, mFrameworkFacade,
+                mSavedNetworkEvaluator, mRecommendedNetworkEvaluator, mPasspointNetworkEvaluator);
     }
 
     public WifiPermissionsUtil getWifiPermissionsUtil() {
