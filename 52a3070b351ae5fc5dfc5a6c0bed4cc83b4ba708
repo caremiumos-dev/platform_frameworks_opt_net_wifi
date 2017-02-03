@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b6d84b33_fef618bf",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-03T16:42:03Z",
+      "side": 1,
+      "message": "There\u0027s no default; startVendorHal only has the one signature.\n\nI added these constants because I used the wrong one in my tests.\n\nI think startVendorHal should be made private, but that\u0027s a refactoring that does not belong in this CL.",
+      "parentUuid": "d4b23298_cbc94f5c",
+      "range": {
+        "startLine": 109,
+        "startChar": 32,
+        "endLine": 109,
+        "endChar": 47
+      },
+      "revId": "52a3070b351ae5fc5dfc5a6c0bed4cc83b4ba708",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3a5beb6_da6498d7",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-03T06:36:59Z",
       "side": 1,
       "message": "Do we have a test to check what happens if this is called when in AP mode?",
+      "range": {
+        "startLine": 323,
+        "startChar": 8,
+        "endLine": 323,
+        "endChar": 47
+      },
+      "revId": "52a3070b351ae5fc5dfc5a6c0bed4cc83b4ba708",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2fe46acd_6a4f2faa",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-03T16:42:03Z",
+      "side": 1,
+      "message": "No. I will add that.",
+      "parentUuid": "a3a5beb6_da6498d7",
       "range": {
         "startLine": 323,
         "startChar": 8,
