@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f30ccc7_27dff21f",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-03T00:19:56Z",
+      "side": 1,
+      "message": "add @return above - might want to include the failure cases that will return false.",
+      "range": {
+        "startLine": 109,
+        "startChar": 11,
+        "endLine": 109,
+        "endChar": 18
+      },
+      "revId": "a90063ea02f37352271710ca300806c32a813161",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb29b317_ec4015ff",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNativeTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-03T00:19:56Z",
+      "side": 1,
+      "message": "It would be good to test error cases for these as well.  Make sure we return false if there was an exception or the call itself returns false.\n\nYou can also make sure that we don\u0027t crash on the failure cases.",
+      "revId": "a90063ea02f37352271710ca300806c32a813161",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
