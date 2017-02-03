@@ -416,6 +416,30 @@
       "revId": "ef85b2ed6d57ad27692811fd6fe430ab10771a27",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "258d4fa8_4c04f2ea",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-03T06:30:42Z",
+      "side": 1,
+      "message": "Yeah, that sounds like a good choice, but it\u0027s a moot point since this whole method is removed in patch set 4 :)",
+      "parentUuid": "3e4e8eeb_b3d03810",
+      "range": {
+        "startLine": 298,
+        "startChar": 29,
+        "endLine": 298,
+        "endChar": 54
+      },
+      "revId": "ef85b2ed6d57ad27692811fd6fe430ab10771a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
