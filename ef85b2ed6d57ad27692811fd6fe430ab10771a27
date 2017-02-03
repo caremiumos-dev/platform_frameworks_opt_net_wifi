@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "58a20ede_ae4244b8",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-03T06:08:49Z",
+      "side": 1,
+      "message": "sounds like a plan",
+      "parentUuid": "95cdb088_b8ee1715",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 47
+      },
+      "revId": "ef85b2ed6d57ad27692811fd6fe430ab10771a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9203d916_452b1a29",
         "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
         "patchSetId": 1
@@ -301,6 +325,30 @@
     },
     {
       "key": {
+        "uuid": "62b287f3_a067e6ec",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-03T06:08:49Z",
+      "side": 1,
+      "message": "i\u0027ll leave that up to you and rpius, i am not sure of the deployment/enable plan so I am not sure of the overhead.  It seems to be here a lot already.",
+      "parentUuid": "461cbc3d_e1ed8252",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 291,
+        "endChar": 21
+      },
+      "revId": "ef85b2ed6d57ad27692811fd6fe430ab10771a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93008ad4_a060b5f8",
         "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
         "patchSetId": 1
@@ -335,6 +383,30 @@
       "writtenOn": "2017-02-01T18:07:23Z",
       "side": 1,
       "message": "Maybe something like this instead?\n\nstatic final boolean[] sBoolForInt \u003d new boolean[]{false,true};\n\n...\n\nmLinkLayerStatsEnabled \u003d sBoolForInt[enabled];",
+      "range": {
+        "startLine": 298,
+        "startChar": 29,
+        "endLine": 298,
+        "endChar": 54
+      },
+      "revId": "ef85b2ed6d57ad27692811fd6fe430ab10771a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e4e8eeb_b3d03810",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-03T06:08:49Z",
+      "side": 1,
+      "message": "what about an illegal argument exception.  it shouldn\u0027t happen...  but this code should all be in our control.",
+      "parentUuid": "7d248009_67857b87",
       "range": {
         "startLine": 298,
         "startChar": 29,
