@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "364e1890_12300c21",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-03T05:46:27Z",
+      "side": 1,
+      "message": "instead of sending the message directly, please consider calling the method that other classes would/should use: startConnectToNetwork",
+      "range": {
+        "startLine": 991,
+        "startChar": 8,
+        "endLine": 991,
+        "endChar": 88
+      },
+      "revId": "2495038b6eec3aa318f392ba557ffa1e24ca706b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9da879ec_716ae74e",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-03T05:46:27Z",
+      "side": 1,
+      "message": "given that there is state maintained to continue the connect process after the fw roam is done, the test looks like it covers the initial part of the behavior.  It would be good to have a test covering all of the feature for this class.  Along with negative tests (fw roam could fail, etc).",
+      "range": {
+        "startLine": 1004,
+        "startChar": 16,
+        "endLine": 1004,
+        "endChar": 33
+      },
+      "revId": "2495038b6eec3aa318f392ba557ffa1e24ca706b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
