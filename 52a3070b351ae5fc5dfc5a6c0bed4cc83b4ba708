@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5bcde18a_371f7b9c",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-03T19:30:43Z",
+      "side": 1,
+      "message": "Thanks! I aspire to add such test in a later CL.",
+      "parentUuid": "f7893873_67805d1e",
+      "range": {
+        "startLine": 238,
+        "startChar": 16,
+        "endLine": 238,
+        "endChar": 64
+      },
+      "revId": "52a3070b351ae5fc5dfc5a6c0bed4cc83b4ba708",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3a5beb6_da6498d7",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
         "patchSetId": 4
