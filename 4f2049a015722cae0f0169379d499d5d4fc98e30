@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6f3a108_232df01c",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-03T19:15:06Z",
+      "side": 1,
+      "message": "The line breaks are just because I did a reformat.",
+      "range": {
+        "startLine": 50,
+        "startChar": 1,
+        "endLine": 51,
+        "endChar": 47
+      },
+      "revId": "4f2049a015722cae0f0169379d499d5d4fc98e30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed2778ae_a14511f2",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-03T19:15:06Z",
+      "side": 1,
+      "message": "Thanks for asking for this, Rebecca; it uncovered a bug!!",
+      "range": {
+        "startLine": 346,
+        "startChar": 16,
+        "endLine": 346,
+        "endChar": 63
+      },
+      "revId": "4f2049a015722cae0f0169379d499d5d4fc98e30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
