@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5a9b1ddc_e468faec",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-03T06:31:02Z",
+      "side": 1,
+      "message": "that\u0027s fair - i was just thinking of the case where we fail to do the call itself vs failed to get wificond...  but yeah, those are logged.",
+      "parentUuid": "b81a2e37_6ad2ab4e",
+      "range": {
+        "startLine": 109,
+        "startChar": 11,
+        "endLine": 109,
+        "endChar": 18
+      },
+      "revId": "a90063ea02f37352271710ca300806c32a813161",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb29b317_ec4015ff",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiNativeTest.java",
         "patchSetId": 16
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "I think those unit tests in WificondControlTest are able to test exception and failure cases.\nThese are unit tests for WifiNative methods.\nGiven the fact that these WifiNative methods are just one line \"pass through\" calls where no logic is involved. Do we still want to add more unit tests?",
       "parentUuid": "bb29b317_ec4015ff",
+      "revId": "a90063ea02f37352271710ca300806c32a813161",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a65cd3bd_91072444",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNativeTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-03T06:31:02Z",
+      "side": 1,
+      "message": "the softap mode has a little more code there, maybe that one could use a test to make sure we don\u0027t crash (it is simple stuff now, but the code could get more complicated with failure handling)",
+      "parentUuid": "36d95e13_f00e789f",
       "revId": "a90063ea02f37352271710ca300806c32a813161",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
