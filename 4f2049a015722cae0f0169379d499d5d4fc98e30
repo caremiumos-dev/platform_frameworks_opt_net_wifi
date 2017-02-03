@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e6d18a42_d56f6a5a",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-03T19:19:59Z",
+      "side": 1,
+      "message": "Formatting seems off here.",
+      "range": {
+        "startLine": 241,
+        "startChar": 26,
+        "endLine": 277,
+        "endChar": 30
+      },
+      "revId": "4f2049a015722cae0f0169379d499d5d4fc98e30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6f3a108_232df01c",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
         "patchSetId": 5
@@ -17,6 +40,29 @@
         "startLine": 50,
         "startChar": 1,
         "endLine": 51,
+        "endChar": 47
+      },
+      "revId": "4f2049a015722cae0f0169379d499d5d4fc98e30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8a13ced_fbcc4129",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-03T19:19:59Z",
+      "side": 1,
+      "message": "Typo?",
+      "range": {
+        "startLine": 332,
+        "startChar": 0,
+        "endLine": 332,
         "endChar": 47
       },
       "revId": "4f2049a015722cae0f0169379d499d5d4fc98e30",
