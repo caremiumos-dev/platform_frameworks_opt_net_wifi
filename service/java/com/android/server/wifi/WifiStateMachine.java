@@ -3679,6 +3679,14 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         }
     }
 
+    private void informWifiStateBatteryStats(int state) {
+        try {
+            mBatteryStats.noteWifiState(state, null);
+	    Log.v(TAG, "Battery stats notify = " + state);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Battery stats unreachable " + e.getMessage());
+        }
+    }
     /**
      * WifiStateMachine needs to enable/disable other services when wifi is in client mode.  This
      * method allows WifiStateMachine to get these additional system services.
@@ -4245,9 +4253,10 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                 mWifiNative.disconnect();
                 if (mOperationalMode == SCAN_ONLY_WITH_WIFI_OFF_MODE) {
                     setWifiState(WIFI_STATE_DISABLED);
+		    informWifiStateBatteryStats(BatteryStats.WIFI_STATE_OFF_SCANNING);
                 }
                 transitionTo(mScanModeState);
-            } else if (mOperationalMode == CONNECT_MODE){
+            } else if (mOperationalMode == CONNECT_MODE) {
 
                 // Status pulls in the current supplicant state and network connection state
                 // events over the monitor connection. This helps framework sync up with
@@ -4578,6 +4587,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         @Override
         public void enter() {
             mLastOperationMode = mOperationalMode;
+	    informWifiStateBatteryStats(BatteryStats.WIFI_STATE_OFF_SCANNING);
         }
         @Override
         public boolean processMessage(Message message) {
@@ -4835,6 +4845,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             mWifiMetrics.setWifiState(WifiMetricsProto.WifiLog.WIFI_DISCONNECTED);
             // Inform p2p service that wifi is up and ready when applicable
             p2pSendMessage(WifiStateMachine.CMD_ENABLE_P2P);
+	    informWifiStateBatteryStats(BatteryStats.WIFI_STATE_ON_CONNECTED_STA);
         }
 
         @Override
@@ -6373,6 +6384,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             logd("Start Disconnecting Watchdog " + disconnectingWatchdogCount);
             sendMessageDelayed(obtainMessage(CMD_DISCONNECTING_WATCHDOG_TIMER,
                     disconnectingWatchdogCount, 0), DISCONNECTING_GUARD_TIMER_MSEC);
+	    informWifiStateBatteryStats(BatteryStats.WIFI_STATE_ON_NO_NETWORKS);
         }
 
         @Override
@@ -6446,6 +6458,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             }
 
             mDisconnectedTimeStamp = mClock.getWallClockMillis();
+	    informWifiStateBatteryStats(BatteryStats.WIFI_STATE_ON_DISCONNECTED);
         }
         @Override
         public boolean processMessage(Message message) {
@@ -6518,6 +6531,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                 case WifiP2pServiceImpl.P2P_CONNECTION_CHANGED:
                     NetworkInfo info = (NetworkInfo) message.obj;
                     mP2pConnected.set(info.isConnected());
+		    informWifiStateBatteryStats(BatteryStats.WIFI_STATE_ON_CONNECTED_P2P);
                     if (mP2pConnected.get()) {
                         int defaultInterval = mContext.getResources().getInteger(
                                 R.integer.config_wifi_scan_interval_p2p_connected);
@@ -6712,6 +6726,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                                                              apInterface,
                                                              config);
             mSoftApManager.start();
+	    informWifiStateBatteryStats(BatteryStats.WIFI_STATE_SOFT_AP);
         }
 
         @Override
@@ -6725,6 +6740,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
 
             switch(message.what) {
                 case CMD_START_AP:
+                    informWifiStateBatteryStats(BatteryStats.WIFI_STATE_SOFT_AP);
                     /* Ignore start command when it is starting/started. */
                     break;
                 case CMD_STOP_AP:
