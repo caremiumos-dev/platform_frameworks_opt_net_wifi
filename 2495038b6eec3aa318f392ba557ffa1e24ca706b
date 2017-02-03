@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4e4f64ca_4ff3c5cc",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-03T06:41:18Z",
+      "side": 1,
+      "message": "In order to call startConnectToNetwork(), we need to get hasConnectionRequests() return true, which we have to mock NetworkFactory. Please let me know if you have an easy way to do that.",
+      "parentUuid": "364e1890_12300c21",
+      "range": {
+        "startLine": 991,
+        "startChar": 8,
+        "endLine": 991,
+        "endChar": 88
+      },
+      "revId": "2495038b6eec3aa318f392ba557ffa1e24ca706b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9da879ec_716ae74e",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-03T05:46:27Z",
       "side": 1,
       "message": "given that there is state maintained to continue the connect process after the fw roam is done, the test looks like it covers the initial part of the behavior.  It would be good to have a test covering all of the feature for this class.  Along with negative tests (fw roam could fail, etc).",
+      "range": {
+        "startLine": 1004,
+        "startChar": 16,
+        "endLine": 1004,
+        "endChar": 33
+      },
+      "revId": "2495038b6eec3aa318f392ba557ffa1e24ca706b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "899530a3_ea77e30f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-03T06:41:18Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "9da879ec_716ae74e",
       "range": {
         "startLine": 1004,
         "startChar": 16,
