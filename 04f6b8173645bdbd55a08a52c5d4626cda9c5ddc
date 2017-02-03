@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a64f32d1_71dbeeb8",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1566,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-03T21:07:07Z",
+      "side": 1,
+      "message": "I know this is still a WIP, but do get rid of these null checks when we make the actual change. All the checks to see if hal is enabled or not should be in WifiVendorHal itself. WifiNative should just be a passthru.",
+      "range": {
+        "startLine": 1566,
+        "startChar": 20,
+        "endLine": 1566,
+        "endChar": 34
+      },
+      "revId": "04f6b8173645bdbd55a08a52c5d4626cda9c5ddc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
