@@ -259,7 +259,7 @@ public class WifiConnectivityManagerTest {
     WifiConnectivityManager createConnectivityManager() {
         return new WifiConnectivityManager(mContext, mWifiStateMachine, mWifiScanner,
                 mWifiConfigManager, mWifiInfo, mWifiNS,
-                mWifiLastResortWatchdog, mWifiMetrics, mLooper.getLooper(), mClock, true,
+                mWifiLastResortWatchdog, mWifiMetrics, mLooper.getLooper(), mClock, null, true,
                 mFrameworkFacade, null, null, null);
     }
 

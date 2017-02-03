@@ -57,7 +57,7 @@ public class WifiNetworkSelectorTest {
         mWifiInfo = getWifiInfo();
 
         mWifiNetworkSelector = new WifiNetworkSelector(mContext, mWifiStateMachine,
-                mWifiConfigManager, mClock);
+                mWifiConfigManager, mClock, null);
         mWifiNetworkSelector.registerNetworkEvaluator(mDummyEvaluator, 1);
         when(mClock.getElapsedSinceBootMillis()).thenReturn(SystemClock.elapsedRealtime());
 
