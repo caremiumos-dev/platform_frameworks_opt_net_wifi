@@ -118,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "b9d7e007_3b7670c8",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5163,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-03T06:41:18Z",
+      "side": 1,
+      "message": "We had a discussion with QCOM on this. Firmware roaming duration is well-bounded, it should take less than 100ms.  Framework\u0027s minimum interval for network selection is 10s. Unfortunately we cannot sit there poll the firmware roaming completion event, which comes in as the CMD_ASSOCIATED_BSSID message. Otherwise there would be a deadlock.",
+      "parentUuid": "daf1d51f_3996ee26",
+      "range": {
+        "startLine": 5163,
+        "startChar": 27,
+        "endLine": 5163,
+        "endChar": 38
+      },
+      "revId": "4905d234c1feabe9764a0223079e35f7ddb66105",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6a84ba7_150dc5e4",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 4
@@ -188,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "7770e4b6_adf9d478",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5193,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-03T06:41:18Z",
+      "side": 1,
+      "message": "When firmware roaming is supported, connecting to a new network can take up to 3 steps.\n\n1) Tell firmware to stop roaming, which is handled by CMD_STOP_FW_ROAMING_AND_CONNECT.\n2) If firmware is in the middle of roaming, it will reply an ERROR_BUSY. Then we have to wait for the firmware roaming completion notice, which is the CMD_ASSOCIATED_BSSID event. \n3) Upon the arrival of CMD_ASSOCIATED_BSSID event, we issue CMD_START_CONNECT to make the actual connection attempt.",
+      "parentUuid": "ddd3488f_8a0c9b96",
+      "range": {
+        "startLine": 5193,
+        "startChar": 21,
+        "endLine": 5193,
+        "endChar": 52
+      },
+      "revId": "4905d234c1feabe9764a0223079e35f7ddb66105",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec7507f1_417e660d",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 4
@@ -199,6 +247,30 @@
       "writtenOn": "2017-02-03T05:46:27Z",
       "side": 1,
       "message": "to be consistent, it seems like you should use the method to send the connect message - otherwise you are intermingling the functionality in the code that handles the two message types and have to have redundant code.",
+      "range": {
+        "startLine": 5362,
+        "startChar": 24,
+        "endLine": 5362,
+        "endChar": 53
+      },
+      "revId": "4905d234c1feabe9764a0223079e35f7ddb66105",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c23abc70_f4846aee",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5362,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-03T06:41:18Z",
+      "side": 1,
+      "message": "Hopefully my reply above answers your question. If not, let\u0027s meet up tomorrow.",
+      "parentUuid": "ec7507f1_417e660d",
       "range": {
         "startLine": 5362,
         "startChar": 24,
