@@ -848,7 +848,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     private static int sScanAlarmIntentCount = 0;
 
     private FrameworkFacade mFacade;
-
+    private WifiStateTracker mWifiStateTracker;
     private final BackupManagerProxy mBackupManagerProxy;
 
     public WifiStateMachine(Context context, FrameworkFacade facade, Looper looper,
@@ -872,7 +872,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         mNetworkInfo = new NetworkInfo(ConnectivityManager.TYPE_WIFI, 0, NETWORKTYPE, "");
         mBatteryStats = IBatteryStats.Stub.asInterface(mFacade.getService(
                 BatteryStats.SERVICE_NAME));
-
+        mWifiStateTracker = new WifiStateTracker(mBatteryStats);
         IBinder b = mFacade.getService(Context.NETWORKMANAGEMENT_SERVICE);
         mNwService = INetworkManagementService.Stub.asInterface(b);
 
@@ -4015,6 +4015,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
 
         @Override
         public void enter() {
+            mWifiStateTracker.updateState(WifiStateTracker.INVALID);
             cleanup();
         }
 
@@ -4252,7 +4253,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     setWifiState(WIFI_STATE_DISABLED);
                 }
                 transitionTo(mScanModeState);
-            } else if (mOperationalMode == CONNECT_MODE){
+            } else if (mOperationalMode == CONNECT_MODE) {
 
                 // Status pulls in the current supplicant state and network connection state
                 // events over the monitor connection. This helps framework sync up with
@@ -4554,6 +4555,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         @Override
         public void enter() {
             mLastOperationMode = mOperationalMode;
+            mWifiStateTracker.updateState(WifiStateTracker.SCAN_MODE);
         }
         @Override
         public boolean processMessage(Message message) {
@@ -4811,6 +4813,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             mWifiMetrics.setWifiState(WifiMetricsProto.WifiLog.WIFI_DISCONNECTED);
             // Inform p2p service that wifi is up and ready when applicable
             p2pSendMessage(WifiStateMachine.CMD_ENABLE_P2P);
+            mWifiStateTracker.updateState(WifiStateTracker.CONNECT_MODE);
         }
 
         @Override
@@ -6129,6 +6132,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             mLastDriverRoamAttempt = 0;
             mTargetNetworkId = WifiConfiguration.INVALID_NETWORK_ID;
             mWifiInjector.getWifiLastResortWatchdog().connectedStateTransition(true);
+            mWifiStateTracker.updateState(WifiStateTracker.CONNECTED);
         }
         @Override
         public boolean processMessage(Message message) {
@@ -6349,6 +6353,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             logd("Start Disconnecting Watchdog " + disconnectingWatchdogCount);
             sendMessageDelayed(obtainMessage(CMD_DISCONNECTING_WATCHDOG_TIMER,
                     disconnectingWatchdogCount, 0), DISCONNECTING_GUARD_TIMER_MSEC);
+            mWifiStateTracker.updateState(WifiStateTracker.DISCONNECTING);
         }
 
         @Override
@@ -6422,6 +6427,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             }
 
             mDisconnectedTimeStamp = mClock.getWallClockMillis();
+            mWifiStateTracker.updateState(WifiStateTracker.DISCONNECTED);
         }
         @Override
         public boolean processMessage(Message message) {
@@ -6688,6 +6694,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                                                              apInterface,
                                                              config);
             mSoftApManager.start();
+            mWifiStateTracker.updateState(WifiStateTracker.SOFT_AP);
         }
 
         @Override
