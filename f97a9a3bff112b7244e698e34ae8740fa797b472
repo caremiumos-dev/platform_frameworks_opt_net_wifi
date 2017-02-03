@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e305431_4bde84b1",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2847,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-03T23:09:47Z",
+      "side": 0,
+      "message": "Don\u0027t we still want this array? We can make WifiNative to return a struct, that might be cleaner.",
+      "range": {
+        "startLine": 2847,
+        "startChar": 35,
+        "endLine": 2847,
+        "endChar": 62
+      },
+      "revId": "f97a9a3bff112b7244e698e34ae8740fa797b472",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

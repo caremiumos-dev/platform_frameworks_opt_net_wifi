@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a505fe9_25e25f47",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 5634,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-03T23:09:47Z",
+      "side": 1,
+      "message": "Same here. We could return a struct here instead of passing an array here.",
+      "range": {
+        "startLine": 5634,
+        "startChar": 49,
+        "endLine": 5634,
+        "endChar": 68
+      },
+      "revId": "6adb08a35ed9db11b5814ec1620e05c5b036d98d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
