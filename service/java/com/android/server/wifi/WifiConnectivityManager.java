@@ -470,7 +470,8 @@ public class WifiConnectivityManager {
             WifiScanner scanner, WifiConfigManager configManager, WifiInfo wifiInfo,
             WifiNetworkSelector networkSelector,
             WifiLastResortWatchdog wifiLastResortWatchdog, WifiMetrics wifiMetrics,
-            Looper looper, Clock clock, boolean enable, FrameworkFacade frameworkFacade,
+            Looper looper, Clock clock, LocalLog localLog, boolean enable,
+            FrameworkFacade frameworkFacade,
             SavedNetworkEvaluator savedNetworkEvaluator,
             RecommendedNetworkEvaluator recommendedNetworkEvaluator,
             PasspointNetworkEvaluator passpointNetworkEvaluator) {
@@ -479,7 +480,7 @@ public class WifiConnectivityManager {
         mConfigManager = configManager;
         mWifiInfo = wifiInfo;
         mNetworkSelector = networkSelector;
-        mLocalLog = networkSelector.getLocalLog();
+        mLocalLog = localLog;
         mWifiLastResortWatchdog = wifiLastResortWatchdog;
         mWifiMetrics = wifiMetrics;
         mAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -1067,11 +1068,11 @@ public class WifiConnectivityManager {
 
     /**
      * Dump the local logs.
-     *
-     * Note: this call temporarily calls in to NetworkSelector to dump the LocalLog.  This should be
-     * refactored to dump from WifiConnectivityManager instead.
      */
     public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
-        mNetworkSelector.dump(fd, pw, args);
+        pw.println("Dump of WifiConnectivityManager");
+        pw.println("WifiConnectivityManager - Log Begin ----");
+        mLocalLog.dump(fd, pw, args);
+        pw.println("WifiConnectivityManager - Log End ----");
     }
 }
