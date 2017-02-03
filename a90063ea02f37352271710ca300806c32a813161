@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b81a2e37_6ad2ab4e",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-03T01:38:11Z",
+      "side": 1,
+      "message": "@return added.\nI prefer to just say \"returns false on failure\" here.\nI think adding detail failure cases into method document kind of exposes implementation details. Moreover, logging below is sufficient to show detail failure cases.",
+      "parentUuid": "6f30ccc7_27dff21f",
+      "range": {
+        "startLine": 109,
+        "startChar": 11,
+        "endLine": 109,
+        "endChar": 18
+      },
+      "revId": "a90063ea02f37352271710ca300806c32a813161",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb29b317_ec4015ff",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiNativeTest.java",
         "patchSetId": 16
@@ -36,6 +60,24 @@
       "writtenOn": "2017-02-03T00:19:56Z",
       "side": 1,
       "message": "It would be good to test error cases for these as well.  Make sure we return false if there was an exception or the call itself returns false.\n\nYou can also make sure that we don\u0027t crash on the failure cases.",
+      "revId": "a90063ea02f37352271710ca300806c32a813161",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36d95e13_f00e789f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNativeTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-03T01:38:11Z",
+      "side": 1,
+      "message": "I think those unit tests in WificondControlTest are able to test exception and failure cases.\nThese are unit tests for WifiNative methods.\nGiven the fact that these WifiNative methods are just one line \"pass through\" calls where no logic is involved. Do we still want to add more unit tests?",
+      "parentUuid": "bb29b317_ec4015ff",
       "revId": "a90063ea02f37352271710ca300806c32a813161",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
