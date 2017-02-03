@@ -2291,8 +2291,7 @@ public class WifiConfigManager {
         if (mVerboseLoggingEnabled) localLog("resetSimNetworks");
         for (WifiConfiguration config : getInternalConfiguredNetworks()) {
             if (TelephonyUtil.isSimConfig(config)) {
-                String currentIdentity = TelephonyUtil.getSimIdentity(mTelephonyManager,
-                        config.enterpriseConfig.getEapMethod());
+                String currentIdentity = TelephonyUtil.getSimIdentity(mTelephonyManager, config);
                 // Update the loaded config
                 config.enterpriseConfig.setIdentity(currentIdentity);
                 config.enterpriseConfig.setAnonymousIdentity("");

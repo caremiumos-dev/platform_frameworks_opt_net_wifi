@@ -19,6 +19,7 @@ package com.android.server.wifi.util;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiEnterpriseConfig;
 import android.telephony.TelephonyManager;
 import android.test.suitebuilder.annotation.SmallTest;
@@ -35,6 +36,15 @@ import org.junit.Test;
 @SmallTest
 public class TelephonyUtilTest {
 
+    private WifiConfiguration getEnterpriseConfig(int eapMethod, int phase2Method) {
+        WifiEnterpriseConfig enterpriseConfig = new WifiEnterpriseConfig();
+        enterpriseConfig.setEapMethod(eapMethod);
+        enterpriseConfig.setPhase2Method(phase2Method);
+        WifiConfiguration config = new WifiConfiguration();
+        config.enterpriseConfig = enterpriseConfig;
+        return config;
+    }
+
     @Test
     public void getSimIdentityEapSim() {
         TelephonyManager tm = mock(TelephonyManager.class);
@@ -42,7 +52,11 @@ public class TelephonyUtilTest {
         when(tm.getSimState()).thenReturn(TelephonyManager.SIM_STATE_READY);
         when(tm.getSimOperator()).thenReturn("321456");
         assertEquals("13214561234567890@wlan.mnc456.mcc321.3gppnetwork.org",
-                TelephonyUtil.getSimIdentity(tm, WifiEnterpriseConfig.Eap.SIM));
+                TelephonyUtil.getSimIdentity(tm, getEnterpriseConfig(
+                        WifiEnterpriseConfig.Eap.SIM, WifiEnterpriseConfig.Phase2.NONE)));
+        assertEquals("13214561234567890@wlan.mnc456.mcc321.3gppnetwork.org",
+                TelephonyUtil.getSimIdentity(tm, getEnterpriseConfig(
+                        WifiEnterpriseConfig.Eap.PEAP, WifiEnterpriseConfig.Phase2.SIM)));
     }
 
     @Test
@@ -52,7 +66,11 @@ public class TelephonyUtilTest {
         when(tm.getSimState()).thenReturn(TelephonyManager.SIM_STATE_READY);
         when(tm.getSimOperator()).thenReturn("321456");
         assertEquals("03214561234567890@wlan.mnc456.mcc321.3gppnetwork.org",
-                TelephonyUtil.getSimIdentity(tm, WifiEnterpriseConfig.Eap.AKA));
+                TelephonyUtil.getSimIdentity(tm, getEnterpriseConfig(
+                        WifiEnterpriseConfig.Eap.AKA, WifiEnterpriseConfig.Phase2.NONE)));
+        assertEquals("03214561234567890@wlan.mnc456.mcc321.3gppnetwork.org",
+                TelephonyUtil.getSimIdentity(tm, getEnterpriseConfig(
+                        WifiEnterpriseConfig.Eap.PEAP, WifiEnterpriseConfig.Phase2.AKA)));
     }
 
     @Test
@@ -62,7 +80,11 @@ public class TelephonyUtilTest {
         when(tm.getSimState()).thenReturn(TelephonyManager.SIM_STATE_READY);
         when(tm.getSimOperator()).thenReturn("321456");
         assertEquals("63214561234567890@wlan.mnc456.mcc321.3gppnetwork.org",
-                TelephonyUtil.getSimIdentity(tm, WifiEnterpriseConfig.Eap.AKA_PRIME));
+                TelephonyUtil.getSimIdentity(tm, getEnterpriseConfig(
+                        WifiEnterpriseConfig.Eap.AKA_PRIME, WifiEnterpriseConfig.Phase2.NONE)));
+        assertEquals("63214561234567890@wlan.mnc456.mcc321.3gppnetwork.org",
+                TelephonyUtil.getSimIdentity(tm, getEnterpriseConfig(
+                        WifiEnterpriseConfig.Eap.PEAP, WifiEnterpriseConfig.Phase2.AKA_PRIME)));
     }
 
     @Test
@@ -72,7 +94,8 @@ public class TelephonyUtilTest {
         when(tm.getSimState()).thenReturn(TelephonyManager.SIM_STATE_READY);
         when(tm.getSimOperator()).thenReturn("32156");
         assertEquals("1321560123456789@wlan.mnc056.mcc321.3gppnetwork.org",
-                TelephonyUtil.getSimIdentity(tm, WifiEnterpriseConfig.Eap.SIM));
+                TelephonyUtil.getSimIdentity(tm, getEnterpriseConfig(
+                        WifiEnterpriseConfig.Eap.SIM, WifiEnterpriseConfig.Phase2.NONE)));
     }
 
     @Test
@@ -82,11 +105,54 @@ public class TelephonyUtilTest {
         when(tm.getSimState()).thenReturn(TelephonyManager.SIM_STATE_UNKNOWN);
         when(tm.getSimOperator()).thenReturn(null);
         assertEquals("13214560123456789@wlan.mnc456.mcc321.3gppnetwork.org",
-                TelephonyUtil.getSimIdentity(tm, WifiEnterpriseConfig.Eap.SIM));
+                TelephonyUtil.getSimIdentity(tm, getEnterpriseConfig(
+                        WifiEnterpriseConfig.Eap.SIM, WifiEnterpriseConfig.Phase2.NONE)));
     }
 
+    @Test
+    public void getSimIdentityWithNoTelephonyManager() {
+        assertEquals(null, TelephonyUtil.getSimIdentity(null, getEnterpriseConfig(
+                        WifiEnterpriseConfig.Eap.SIM, WifiEnterpriseConfig.Phase2.NONE)));
+    }
 
+    @Test
+    public void getSimIdentityNonTelephonyConfig() {
+        TelephonyManager tm = mock(TelephonyManager.class);
+        when(tm.getSubscriberId()).thenReturn("321560123456789");
+        when(tm.getSimState()).thenReturn(TelephonyManager.SIM_STATE_READY);
+        when(tm.getSimOperator()).thenReturn("32156");
+        assertEquals(null, TelephonyUtil.getSimIdentity(tm, getEnterpriseConfig(
+                WifiEnterpriseConfig.Eap.TTLS, WifiEnterpriseConfig.Phase2.SIM)));
+        assertEquals(null, TelephonyUtil.getSimIdentity(tm, getEnterpriseConfig(
+                WifiEnterpriseConfig.Eap.PEAP, WifiEnterpriseConfig.Phase2.MSCHAPV2)));
+        assertEquals(null, TelephonyUtil.getSimIdentity(tm, getEnterpriseConfig(
+                WifiEnterpriseConfig.Eap.TLS, WifiEnterpriseConfig.Phase2.NONE)));
+        assertEquals(null, TelephonyUtil.getSimIdentity(tm, new WifiConfiguration()));
+    }
 
+    @Test
+    public void isSimConfig() {
+        assertFalse(TelephonyUtil.isSimConfig(null));
+        assertFalse(TelephonyUtil.isSimConfig(new WifiConfiguration()));
+        assertFalse(TelephonyUtil.isSimConfig(getEnterpriseConfig(
+                WifiEnterpriseConfig.Eap.TTLS, WifiEnterpriseConfig.Phase2.SIM)));
+        assertFalse(TelephonyUtil.isSimConfig(getEnterpriseConfig(
+                WifiEnterpriseConfig.Eap.TLS, WifiEnterpriseConfig.Phase2.NONE)));
+        assertFalse(TelephonyUtil.isSimConfig(getEnterpriseConfig(
+                WifiEnterpriseConfig.Eap.PEAP, WifiEnterpriseConfig.Phase2.MSCHAPV2)));
+        assertTrue(TelephonyUtil.isSimConfig(getEnterpriseConfig(
+                WifiEnterpriseConfig.Eap.SIM, WifiEnterpriseConfig.Phase2.NONE)));
+        assertTrue(TelephonyUtil.isSimConfig(getEnterpriseConfig(
+                WifiEnterpriseConfig.Eap.AKA, WifiEnterpriseConfig.Phase2.NONE)));
+        assertTrue(TelephonyUtil.isSimConfig(getEnterpriseConfig(
+                WifiEnterpriseConfig.Eap.AKA_PRIME, WifiEnterpriseConfig.Phase2.NONE)));
+        assertTrue(TelephonyUtil.isSimConfig(getEnterpriseConfig(
+                WifiEnterpriseConfig.Eap.PEAP, WifiEnterpriseConfig.Phase2.SIM)));
+        assertTrue(TelephonyUtil.isSimConfig(getEnterpriseConfig(
+                WifiEnterpriseConfig.Eap.PEAP, WifiEnterpriseConfig.Phase2.AKA)));
+        assertTrue(TelephonyUtil.isSimConfig(getEnterpriseConfig(
+                WifiEnterpriseConfig.Eap.PEAP, WifiEnterpriseConfig.Phase2.AKA_PRIME)));
+    }
 
     /**
      * Produce a base64 encoded length byte + data.
