@@ -324,6 +324,7 @@ public class WifiStateMachineTest {
     @Mock WifiSupplicantControl mWifiSupplicantControl;
     @Mock WifiConnectivityManager mWifiConnectivityManager;
     @Mock SoftApManager mSoftApManager;
+    @Mock WifiStateTracker mWifiStateTracker;
 
     public WifiStateMachineTest() throws Exception {
     }
@@ -361,7 +362,7 @@ public class WifiStateMachineTest {
                 any(SoftApManager.Listener.class), any(IApInterface.class),
                 any(WifiConfiguration.class)))
                 .thenReturn(mSoftApManager);
-
+        when(mWifiInjector.getWifiStateTracker()).thenReturn(mWifiStateTracker);
         when(mWifiNative.getInterfaceName()).thenReturn("mockWlan");
         when(mWifiSupplicantControl.getFrameworkNetworkId(anyInt())).thenReturn(0);
 
