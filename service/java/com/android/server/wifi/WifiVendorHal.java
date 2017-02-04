@@ -177,18 +177,48 @@ public class WifiVendorHal {
     }
 
     /**
-     * Gets the scan capabilities
+     * Gets the scan capabilities TODO(b/34899890)
      *
      * @param capabilities object to be filled in
      * @return true for success. false for failure
      */
     public boolean getScanCapabilities(WifiNative.ScanCapabilities capabilities) {
         kilroy();
-        throw new UnsupportedOperationException();
+        try {
+            kilroy();
+            MutableBoolean ok = new MutableBoolean(false);
+            WifiNative.ScanCapabilities out = capabilities;
+            if (!isHalStarted()) {
+                kilroy();
+                return false;
+            }
+            mIWifiStaIface.getBackgroundScanCapabilities((status, cap) -> {
+                        kilroy();
+                        if (status.code != WifiStatusCode.SUCCESS) return;
+                        out.max_scan_cache_size = cap.maxCacheSize;
+                        out.max_ap_cache_per_scan = cap.maxApCachePerScan;
+                        out.max_scan_buckets = cap.maxBuckets;
+                        out.max_rssi_sample_size = 0;
+                        out.max_scan_reporting_threshold = cap.maxReportingThreshold;
+                        out.max_hotlist_bssids = 0;
+                        out.max_significant_wifi_change_aps = 0;
+                        out.max_bssid_history_entries = 0;
+                        out.max_number_epno_networks = 0;
+                        out.max_number_epno_networks_by_ssid = 0;
+                        out.max_number_of_white_listed_ssid = 0;
+                        ok.value = true;
+                    }
+            );
+            return ok.value;
+        } catch (RemoteException e) {
+            kilroy();
+            handleRemoteException(e);
+            return false;
+        }
     }
 
     /**
-     * to be implemented
+     * to be implemented TODO(b/34899890)
      */
     public boolean startScan(WifiNative.ScanSettings settings,
                              WifiNative.ScanEventHandler eventHandler) {
@@ -197,7 +227,7 @@ public class WifiVendorHal {
     }
 
     /**
-     * to be implemented
+     * to be implemented TODO(b/34899890)
      */
     public void stopScan() {
         kilroy();
@@ -205,7 +235,7 @@ public class WifiVendorHal {
     }
 
     /**
-     * to be implemented
+     * to be implemented TODO(b/34899890)
      */
     public void pauseScan() {
         kilroy();
@@ -213,7 +243,7 @@ public class WifiVendorHal {
     }
 
     /**
-     * to be implemented
+     * to be implemented TODO(b/34899890)
      */
     public void restartScan() {
         kilroy();
@@ -221,7 +251,7 @@ public class WifiVendorHal {
     }
 
     /**
-     * to be implemented
+     * to be implemented TODO(b/34899890)
      */
     public WifiScanner.ScanData[] getScanResults(boolean flush) {
         kilroy();
@@ -502,7 +532,8 @@ public class WifiVendorHal {
     }
 
     /**
-     * not supported
+     * TODO(b/34899890)
+     * mIWifiStaIface.getValidFrequenciesForBackgroundScan
      */
     public int[] getChannelsForBand(int band) {
         kilroy();
