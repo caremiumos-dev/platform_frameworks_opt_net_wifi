@@ -170,7 +170,7 @@ public class WifiVendorHal {
     }
 
     /**
-     * Gets the scan capabilities
+     * Gets the scan capabilities TODO(b/34899890)
      *
      * @param capabilities object to be filled in
      * @return true for success. false for failure
@@ -181,7 +181,7 @@ public class WifiVendorHal {
     }
 
     /**
-     * to be implemented
+     * to be implemented TODO(b/34899890)
      */
     public boolean startScan(WifiNative.ScanSettings settings,
                              WifiNative.ScanEventHandler eventHandler) {
@@ -190,7 +190,7 @@ public class WifiVendorHal {
     }
 
     /**
-     * to be implemented
+     * to be implemented TODO(b/34899890)
      */
     public void stopScan() {
         kilroy();
@@ -198,7 +198,7 @@ public class WifiVendorHal {
     }
 
     /**
-     * to be implemented
+     * to be implemented TODO(b/34899890)
      */
     public void pauseScan() {
         kilroy();
@@ -206,7 +206,7 @@ public class WifiVendorHal {
     }
 
     /**
-     * to be implemented
+     * to be implemented TODO(b/34899890)
      */
     public void restartScan() {
         kilroy();
@@ -214,7 +214,7 @@ public class WifiVendorHal {
     }
 
     /**
-     * to be implemented
+     * to be implemented TODO(b/34899890)
      */
     public WifiScanner.ScanData[] getScanResults(boolean flush) {
         kilroy();
