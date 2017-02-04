@@ -22,6 +22,9 @@ import android.hardware.wifi.V1_0.IWifiIface;
 import android.hardware.wifi.V1_0.IWifiRttController;
 import android.hardware.wifi.V1_0.IWifiStaIface;
 import android.hardware.wifi.V1_0.IfaceType;
+import android.hardware.wifi.V1_0.StaBackgroundScanBand;
+import android.hardware.wifi.V1_0.StaBackgroundScanBucketParameters;
+import android.hardware.wifi.V1_0.StaBackgroundScanParameters;
 import android.hardware.wifi.V1_0.StaRoamingConfig;
 import android.hardware.wifi.V1_0.StaRoamingState;
 import android.hardware.wifi.V1_0.WifiDebugHostWakeReasonStats;
@@ -177,27 +180,121 @@ public class WifiVendorHal {
     }
 
     /**
-     * Gets the scan capabilities
+     * Gets the scan capabilities TODO(b/34899890)
      *
      * @param capabilities object to be filled in
      * @return true for success. false for failure
      */
     public boolean getScanCapabilities(WifiNative.ScanCapabilities capabilities) {
         kilroy();
-        throw new UnsupportedOperationException();
+        try {
+            kilroy();
+            MutableBoolean ok = new MutableBoolean(false);
+            WifiNative.ScanCapabilities out = capabilities;
+            if (!isHalStarted()) {
+                kilroy();
+                return false;
+            }
+            mIWifiStaIface.getBackgroundScanCapabilities((status, cap) -> {
+                        kilroy();
+                        if (status.code != WifiStatusCode.SUCCESS) return;
+                        out.max_scan_cache_size = cap.maxCacheSize;
+                        out.max_ap_cache_per_scan = cap.maxApCachePerScan;
+                        out.max_scan_buckets = cap.maxBuckets;
+                        out.max_rssi_sample_size = 0;
+                        out.max_scan_reporting_threshold = cap.maxReportingThreshold;
+                        out.max_hotlist_bssids = 0;
+                        out.max_significant_wifi_change_aps = 0;
+                        out.max_bssid_history_entries = 0;
+                        out.max_number_epno_networks = 0;
+                        out.max_number_epno_networks_by_ssid = 0;
+                        out.max_number_of_white_listed_ssid = 0;
+                        ok.value = true;
+                    }
+            );
+            return ok.value;
+        } catch (RemoteException e) {
+            kilroy();
+            handleRemoteException(e);
+            return false;
+        }
     }
 
+    private WifiNative.ScanEventHandler mScanEventHandler = null;
+
     /**
-     * to be implemented
+     * to be implemented TODO(b/34899890)
      */
     public boolean startScan(WifiNative.ScanSettings settings,
                              WifiNative.ScanEventHandler eventHandler) {
         kilroy();
-        throw new UnsupportedOperationException();
+        synchronized (sLock) {
+            try {
+                if (mIWifiStaIface == null) return false;
+                if (mScanEventHandler != null) return false;
+                if (eventHandler == null) return false;
+                StaBackgroundScanParameters param = new StaBackgroundScanParameters();
+                param.basePeriodInMs = settings.base_period_ms;
+                param.maxApPerScan = settings.max_ap_per_scan;
+                param.reportThresholdPercent = settings.report_threshold_percent;
+                param.reportThresholdNumScans = settings.report_threshold_num_scans;
+                for (WifiNative.BucketSettings bs : settings.buckets) {
+                    param.buckets.add(sbbsbpFromWnbs(bs));
+                }
+                WifiStatus status = mIWifiStaIface.startBackgroundScan(1, param);
+                if (status.code != WifiStatusCode.SUCCESS) return false;
+                kilroy();
+                mScanEventHandler = eventHandler;
+                return true;
+            } catch (RemoteException e) {
+                handleRemoteException(e);
+                return false;
+            }
+        }
+    }
+
+    //TODO need better name
+    private StaBackgroundScanBucketParameters sbbsbpFromWnbs(WifiNative.BucketSettings bs) {
+        StaBackgroundScanBucketParameters pa = new StaBackgroundScanBucketParameters();
+        pa.band = bandFromBand(bs.band);
+        if (bs.channels != null) {
+            for (WifiNative.ChannelSettings cs : bs.channels) {
+                pa.frequencies.add(cs.frequency);
+            }
+        }
+        pa.periodInMs = bs.period_ms;
+        pa.eventReportScheme = eventReportSchemeFromFrobbie(bs.report_events);
+        pa.exponentialMaxPeriodInMs = bs.max_period_ms;
+        // Although HAL API allows configurable base value for the truncated
+        // exponential back off scan. Native API and above support only
+        // truncated binary exponential back off scan.
+        // Hard code value of base to 2 here.
+        pa.exponentialBase = 2;
+        pa.exponentialStepCount = bs.step_count;
+        return pa;
+    }
+
+    //TODO - are there any corresponding framework defs?
+    private int bandFromBand(int frameworkBand) {
+        switch (frameworkBand) {
+            case 0: return StaBackgroundScanBand.BAND_UNSPECIFIED;
+            case 1: return StaBackgroundScanBand.BAND_24GHZ;
+            case 2: return StaBackgroundScanBand.BAND_5GHZ;
+            case 4: return StaBackgroundScanBand.BAND_5GHZ_DFS;
+            case 6: return StaBackgroundScanBand.BAND_5GHZ_WITH_DFS;
+            case 3: return StaBackgroundScanBand.BAND_24GHZ_5GHZ;
+            case 7: return StaBackgroundScanBand.BAND_24GHZ_5GHZ_WITH_DFS;
+            default:
+                throw new IllegalArgumentException("bad " + frameworkBand);
+        }
+    }
+
+    private int eventReportSchemeFromFrobbie(int reportUnderscoreEvents) {
+        return reportUnderscoreEvents; //TODO add hair here
     }
 
     /**
-     * to be implemented
+     * to be implemented TODO(b/34899890)
      */
     public void stopScan() {
         kilroy();
@@ -205,7 +302,7 @@ public class WifiVendorHal {
     }
 
     /**
-     * to be implemented
+     * to be implemented TODO(b/34899890)
      */
     public void pauseScan() {
         kilroy();
@@ -213,7 +310,7 @@ public class WifiVendorHal {
     }
 
     /**
-     * to be implemented
+     * to be implemented TODO(b/34899890)
      */
     public void restartScan() {
         kilroy();
@@ -221,7 +318,7 @@ public class WifiVendorHal {
     }
 
     /**
-     * to be implemented
+     * to be implemented TODO(b/34899890)
      */
     public WifiScanner.ScanData[] getScanResults(boolean flush) {
         kilroy();
@@ -502,7 +599,8 @@ public class WifiVendorHal {
     }
 
     /**
-     * not supported
+     * TODO(b/34899890)
+     * mIWifiStaIface.getValidFrequenciesForBackgroundScan
      */
     public int[] getChannelsForBand(int band) {
         kilroy();
