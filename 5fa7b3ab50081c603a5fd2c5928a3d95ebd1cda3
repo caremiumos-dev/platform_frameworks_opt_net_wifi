@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "000cf569_f95fc3c6",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-05T21:12:16Z",
+      "side": 1,
+      "message": "We need to get the localLog buffer from WifiNetworkSelector and pass it to all the evaluators.",
+      "parentUuid": "375fc044_bdd05069",
+      "range": {
+        "startLine": 393,
+        "startChar": 46,
+        "endLine": 393,
+        "endChar": 66
+      },
+      "revId": "5fa7b3ab50081c603a5fd2c5928a3d95ebd1cda3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8702648e_89d1386c",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-04T06:46:56Z",
       "side": 1,
       "message": "Couldn\u0027t this be done in the boot complete message handling (like we do for P2P service)?  Then you could remove the null checks.",
+      "range": {
+        "startLine": 4229,
+        "startChar": 20,
+        "endLine": 4230,
+        "endChar": 69
+      },
+      "revId": "5fa7b3ab50081c603a5fd2c5928a3d95ebd1cda3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a55c8aae_1063b430",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4230,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-05T21:12:16Z",
+      "side": 1,
+      "message": "WifiConnectivityManager depends on WifiScanner, which is lazily instantiated here as well because of Wifi Scanning service.",
+      "parentUuid": "8702648e_89d1386c",
       "range": {
         "startLine": 4229,
         "startChar": 20,
