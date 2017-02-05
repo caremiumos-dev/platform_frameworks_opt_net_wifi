@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "55f6d284_1aa56842",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-05T22:32:23Z",
+      "side": 1,
+      "message": "Currently each network evaluator constructor takes the localLog buffer as an input parameter. If we still want to keep the initialization of the evaluators in WifiInjector, we probably have to remain as is. Let me know if I somehow miss something here.",
+      "parentUuid": "054815f4_894195ab",
+      "range": {
+        "startLine": 393,
+        "startChar": 46,
+        "endLine": 393,
+        "endChar": 66
+      },
+      "revId": "5fa7b3ab50081c603a5fd2c5928a3d95ebd1cda3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8702648e_89d1386c",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 2
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "With the services reordered, we now know that they are already up when the boot complete message comes in.  So we don\u0027t have to do the lazy initialization anymore.  (you can look at p2p service in WSM as an example)",
       "parentUuid": "a55c8aae_1063b430",
+      "range": {
+        "startLine": 4229,
+        "startChar": 20,
+        "endLine": 4230,
+        "endChar": 69
+      },
+      "revId": "5fa7b3ab50081c603a5fd2c5928a3d95ebd1cda3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "079dae1c_977c09fe",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4230,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-05T22:32:23Z",
+      "side": 1,
+      "message": "So are you suggesting the WifiScanner can be initialized when the boot complete message arrives as well? Let me go through how P2P is handled now. Anyway, that change should be done vis another CL.",
+      "parentUuid": "94170500_05a5edef",
       "range": {
         "startLine": 4229,
         "startChar": 20,
