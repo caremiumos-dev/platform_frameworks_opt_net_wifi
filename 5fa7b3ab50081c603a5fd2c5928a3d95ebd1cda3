@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "054815f4_894195ab",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-05T21:22:44Z",
+      "side": 1,
+      "message": "Maybe the local log buffer needs to be moved to match up with the dump call.  Would that clean it up?",
+      "parentUuid": "000cf569_f95fc3c6",
+      "range": {
+        "startLine": 393,
+        "startChar": 46,
+        "endLine": 393,
+        "endChar": 66
+      },
+      "revId": "5fa7b3ab50081c603a5fd2c5928a3d95ebd1cda3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8702648e_89d1386c",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "WifiConnectivityManager depends on WifiScanner, which is lazily instantiated here as well because of Wifi Scanning service.",
       "parentUuid": "8702648e_89d1386c",
+      "range": {
+        "startLine": 4229,
+        "startChar": 20,
+        "endLine": 4230,
+        "endChar": 69
+      },
+      "revId": "5fa7b3ab50081c603a5fd2c5928a3d95ebd1cda3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "94170500_05a5edef",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4230,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-05T21:22:44Z",
+      "side": 1,
+      "message": "With the services reordered, we now know that they are already up when the boot complete message comes in.  So we don\u0027t have to do the lazy initialization anymore.  (you can look at p2p service in WSM as an example)",
+      "parentUuid": "a55c8aae_1063b430",
       "range": {
         "startLine": 4229,
         "startChar": 20,
