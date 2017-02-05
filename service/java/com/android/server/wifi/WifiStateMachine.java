@@ -1394,7 +1394,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
 
     WifiLinkLayerStats getWifiLinkLayerStats() {
         WifiLinkLayerStats stats = null;
-        if (mWifiLinkLayerStatsSupported > 0) {
+        if (mClientInterface != null && mWifiLinkLayerStatsSupported > 0) {
             String name = "wlan0";
             stats = mWifiNative.getWifiLinkLayerStats(name);
             if (name != null && stats == null && mWifiLinkLayerStatsSupported > 0) {
@@ -3926,6 +3926,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             mWifiNative.tearDownInterfaces();
 
             mWifiNative.stopHal();
+            mClientInterface = null;
         }
 
         @Override
