@@ -48,6 +48,7 @@ import android.hidl.manager.V1_0.IServiceNotification;
 import android.net.IpConfiguration;
 import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiManager;
 import android.net.wifi.WifiSsid;
 import android.os.IHwBinder;
 import android.os.RemoteException;
@@ -910,7 +911,7 @@ public class SupplicantStaIfaceHalTest {
         mISupplicantStaIfaceCallback.onAuthenticationTimeout(
                 NativeUtil.macAddressToByteArray(BSSID));
         verify(mWifiMonitor).broadcastAuthenticationFailureEvent(eq(WLAN_IFACE_NAME),
-                eq(WifiMonitor.AUTHENTICATION_FAILURE_REASON_TIMEOUT));
+                eq(WifiManager.ERROR_AUTH_FAILURE_TIMEOUT));
     }
 
     /**
@@ -923,7 +924,7 @@ public class SupplicantStaIfaceHalTest {
 
         mISupplicantStaIfaceCallback.onEapFailure();
         verify(mWifiMonitor).broadcastAuthenticationFailureEvent(eq(WLAN_IFACE_NAME),
-                eq(WifiMonitor.AUTHENTICATION_FAILURE_REASON_EAP_FAILURE));
+                eq(WifiManager.ERROR_AUTH_FAILURE_EAP_FAILURE));
     }
 
     /**
