@@ -521,15 +521,6 @@ public class WifiMonitor {
      */
     private static final int MAX_RECV_ERRORS    = 10;
 
-    /**
-     * Authentication Failure reasonCode, used internally by WifiStateMachine
-     * @hide
-     */
-    public static final int AUTHENTICATION_FAILURE_REASON_DEFAULT = 0;
-    public static final int AUTHENTICATION_FAILURE_REASON_TIMEOUT = 1;
-    public static final int AUTHENTICATION_FAILURE_REASON_WRONG_PSWD = 2;
-    public static final int AUTHENTICATION_FAILURE_REASON_EAP_FAILURE = 3;
-
     // Singleton instance
     private static WifiMonitor sWifiMonitor = new WifiMonitor();
     public static WifiMonitor getInstance() {
@@ -862,11 +853,11 @@ public class WifiMonitor {
             } else if (eventStr.startsWith(AUTH_EVENT_PREFIX_STR)
                     && eventStr.endsWith(AUTH_TIMEOUT_STR)) {
                 sendMessage(iface, AUTHENTICATION_FAILURE_EVENT, eventLogCounter,
-                        AUTHENTICATION_FAILURE_REASON_TIMEOUT);
+                        WifiManager.ERROR_AUTH_FAILURE_TIMEOUT);
             } else if (eventStr.startsWith(WPA_EVENT_PREFIX_STR)
                     && eventStr.endsWith(PASSWORD_MAY_BE_INCORRECT_STR)) {
                 sendMessage(iface, AUTHENTICATION_FAILURE_EVENT, eventLogCounter,
-                        AUTHENTICATION_FAILURE_REASON_WRONG_PSWD);
+                        WifiManager.ERROR_AUTH_FAILURE_WRONG_PSWD);
             } else {
                 if (mVerboseLoggingEnabled) {
                     Log.w(TAG, "couldn't identify event type - " + eventStr);
@@ -1009,7 +1000,7 @@ public class WifiMonitor {
         } else if (event == EAP_FAILURE) {
             if (eventData.startsWith(EAP_AUTH_FAILURE_STR)) {
                 sendMessage(iface, AUTHENTICATION_FAILURE_EVENT, eventLogCounter,
-                        AUTHENTICATION_FAILURE_REASON_EAP_FAILURE);
+                        WifiManager.ERROR_AUTH_FAILURE_EAP_FAILURE);
             }
         } else if (event == ASSOC_REJECT) {
             Matcher match = mAssocRejectEventPattern.matcher(eventData);
