@@ -31,12 +31,15 @@ import com.android.server.wifi.ScanDetail;
 import com.android.server.wifi.WifiMonitor;
 import com.android.server.wifi.WifiNative;
 import com.android.server.wifi.scanner.ChannelHelper.ChannelCollection;
+import com.android.server.wifi.wificond.ChannelSettings;
+import com.android.server.wifi.wificond.HiddenNetwork;
+import com.android.server.wifi.wificond.SingleScanSettings;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -343,7 +346,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
             }
 
             ChannelCollection allFreqs = mChannelHelper.createChannelCollection();
-            Set<String> hiddenNetworkSSIDSet = new HashSet<>();
+            ArrayList<HiddenNetwork> hiddenNetworks = new ArrayList<>();
             final LastScanSettings newScanSettings =
                     new LastScanSettings(mClock.getElapsedSinceBootMillis());
 
@@ -412,13 +415,14 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
                 newScanSettings.setSingleScan(reportFullResults, singleScanFreqs,
                         mPendingSingleScanEventHandler);
 
-                WifiNative.HiddenNetwork[] hiddenNetworks =
-                        mPendingSingleScanSettings.hiddenNetworks;
-                if (hiddenNetworks != null) {
-                    int numHiddenNetworks =
-                            Math.min(hiddenNetworks.length, MAX_HIDDEN_NETWORK_IDS_PER_SCAN);
-                    for (int i = 0; i < numHiddenNetworks; i++) {
-                        hiddenNetworkSSIDSet.add(hiddenNetworks[i].ssid);
+                if (mPendingSingleScanSettings.hiddenNetworks != null) {
+                    for (int i = 0; i < mPendingSingleScanSettings.hiddenNetworks.length; i++) {
+                        HiddenNetwork network = new HiddenNetwork();
+                        Log.d(TAG, "wificond debug, ssid: "
+                                + mPendingSingleScanSettings.hiddenNetworks[i].ssid);
+                        network.ssid = mPendingSingleScanSettings.hiddenNetworks[i].ssid
+                                .getBytes(StandardCharsets.UTF_8);
+                        hiddenNetworks.add(network);
                     }
                 }
 
@@ -429,8 +433,21 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
             if ((newScanSettings.backgroundScanActive || newScanSettings.singleScanActive)
                     && !allFreqs.isEmpty()) {
                 pauseHwPnoScan();
+
+                SingleScanSettings settings = new SingleScanSettings();
+                settings.hiddenNetworks = hiddenNetworks;
+                ArrayList<ChannelSettings> channels = new ArrayList<>();
+                settings.channelSettings = channels;
+
                 Set<Integer> freqs = allFreqs.getSupplicantScanFreqs();
-                boolean success = mWifiNative.scan(freqs, hiddenNetworkSSIDSet);
+                if (freqs != null) {
+                    for (Integer i : freqs) {
+                        ChannelSettings channel = new ChannelSettings();
+                        channel.frequency = i;
+                        settings.channelSettings.add(channel);
+                    }
+                }
+                boolean success = mWifiNative.scan(settings);
                 if (success) {
                     // TODO handle scan timeout
                     if (DBG) {
@@ -483,6 +500,10 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
                 }
             }
         }
+    }
+
+    private SingleScanSettings createSettingsForSingleShotScan() {
+        return null;
     }
 
     @Override

@@ -48,6 +48,7 @@ import com.android.server.connectivity.KeepalivePacketData;
 import com.android.server.wifi.hotspot2.Utils;
 import com.android.server.wifi.util.FrameParser;
 import com.android.server.wifi.util.InformationElementUtil;
+import com.android.server.wifi.wificond.SingleScanSettings;
 
 import libcore.util.HexEncoding;
 
@@ -74,7 +75,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.TimeZone;
 
 
@@ -447,36 +447,11 @@ public class WifiNative {
     }
 
     /**
-     * Start a scan using wpa_supplicant for the given frequencies.
-     * @param freqs list of frequencies to scan for, if null scan all supported channels.
-     * @param hiddenNetworkSSIDs List of hidden networks to be scanned for.
+     * Start a single shot scan using wificond.
+     * @param settings is the configuration of this single shot scan.
      */
-    public boolean scan(Set<Integer> freqs, Set<String> hiddenNetworkSSIDs) {
-        String freqList = null;
-        String hiddenNetworkSSIDList = null;
-        if (freqs != null && freqs.size() != 0) {
-            freqList = TextUtils.join(",", freqs);
-        }
-        if (hiddenNetworkSSIDs != null && hiddenNetworkSSIDs.size() != 0) {
-            StringBuilder ssidList = new StringBuilder();
-            for (String ssid : hiddenNetworkSSIDs) {
-                ssidList.append(encodeSSID(ssid)).append(" ");
-            }
-            hiddenNetworkSSIDList = ssidList.toString();
-        }
-        return scanWithParams(freqList, hiddenNetworkSSIDList);
-    }
-
-    private boolean scanWithParams(String freqList, String hiddenNetworkSSIDList) {
-        StringBuilder scanCommand = new StringBuilder();
-        scanCommand.append("SCAN TYPE=ONLY");
-        if (freqList != null) {
-            scanCommand.append(" freq=" + freqList);
-        }
-        if (hiddenNetworkSSIDList != null) {
-            scanCommand.append(" ssid " + hiddenNetworkSSIDList);
-        }
-        return doBooleanCommand(scanCommand.toString());
+    public boolean scan(SingleScanSettings settings) {
+        return mWificondControl.scan(settings);
     }
 
     /* Does a graceful shutdown of supplicant. Is a common stop function for both p2p and sta.
@@ -686,6 +661,7 @@ public class WifiNative {
     * Returns an empty ArrayList on failure.
     */
     public ArrayList<ScanDetail> getScanResults() {
+        Log.d(TAG, "wificond debug: get scan result called");
         return mWificondControl.getScanResults();
     }
 
