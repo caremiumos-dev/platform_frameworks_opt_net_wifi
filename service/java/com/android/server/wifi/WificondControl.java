@@ -29,6 +29,7 @@ import android.util.Log;
 import com.android.server.wifi.hotspot2.NetworkDetail;
 import com.android.server.wifi.util.InformationElementUtil;
 import com.android.server.wifi.wificond.NativeScanResult;
+import com.android.server.wifi.wificond.SingleScanSettings;
 
 import java.util.ArrayList;
 
@@ -281,4 +282,22 @@ public class WificondControl {
         }
         return results;
     }
+
+    /**
+    * Request wificond to scan.
+    * @return Returns true on success.
+    */
+    public boolean scan(SingleScanSettings settings) {
+        if (mWificondScanner == null) {
+            Log.e(TAG, "No valid wificond scanner interface handler");
+            return false;
+        }
+        try {
+            return mWificondScanner.scan(settings);
+        } catch (RemoteException e1) {
+            Log.e(TAG, "Failed to request a scan");
+        }
+        return false;
+    }
+
 }
