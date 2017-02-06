@@ -22,6 +22,30 @@
       "revId": "15e655438ecf8657c5dc520d4aadcb5048a0bba6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cab5c27a_bf6b8707",
+        "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-02-06T22:28:45Z",
+      "side": 1,
+      "message": "I thought about this. In WifiManager.java, all valid values seem to start with 1. None of the 0 values are explicitly defined. I chose to not define it to maintain consistency. Let me know if you prefer to add a static variable for default reason code whose value is 0.",
+      "parentUuid": "a46230f5_e5832088",
+      "range": {
+        "startLine": 241,
+        "startChar": 41,
+        "endLine": 241,
+        "endChar": 42
+      },
+      "revId": "15e655438ecf8657c5dc520d4aadcb5048a0bba6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
