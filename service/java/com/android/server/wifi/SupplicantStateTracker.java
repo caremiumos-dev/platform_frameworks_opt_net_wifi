@@ -55,6 +55,9 @@ public class SupplicantStateTracker extends StateMachine {
      * for all type of failures: EAP, WPS & WPA networks */
     private boolean mAuthFailureInSupplicantBroadcast = false;
 
+    /* Authentication failure reason see WifiManager.java */
+    private int mAuthFailureReason;
+
     /* Maximum retries on a authentication failure notification */
     private static final int MAX_RETRIES_ON_AUTHENTICATION_FAILURE = 2;
 
@@ -168,7 +171,8 @@ public class SupplicantStateTracker extends StateMachine {
         }
     }
 
-    private void sendSupplicantStateChangedBroadcast(SupplicantState state, boolean failedAuth) {
+    private void sendSupplicantStateChangedBroadcast(SupplicantState state, boolean failedAuth,
+            int reasonCode) {
         int supplState;
         switch (state) {
             case DISCONNECTED: supplState = BatteryStats.WIFI_SUPPL_STATE_DISCONNECTED; break;
@@ -204,6 +208,9 @@ public class SupplicantStateTracker extends StateMachine {
             intent.putExtra(
                 WifiManager.EXTRA_SUPPLICANT_ERROR,
                 WifiManager.ERROR_AUTHENTICATING);
+            intent.putExtra(
+                         WifiManager.EXTRA_SUPPLICANT_ERROR_REASON,
+                         reasonCode);
         }
         mContext.sendStickyBroadcastAsUser(intent, UserHandle.ALL);
     }
@@ -223,12 +230,15 @@ public class SupplicantStateTracker extends StateMachine {
             switch (message.what) {
                 case WifiMonitor.AUTHENTICATION_FAILURE_EVENT:
                     mAuthFailureInSupplicantBroadcast = true;
+                    mAuthFailureReason = message.arg2;
                     break;
                 case WifiMonitor.SUPPLICANT_STATE_CHANGE_EVENT:
                     StateChangeResult stateChangeResult = (StateChangeResult) message.obj;
                     SupplicantState state = stateChangeResult.state;
-                    sendSupplicantStateChangedBroadcast(state, mAuthFailureInSupplicantBroadcast);
+                    sendSupplicantStateChangedBroadcast(state, mAuthFailureInSupplicantBroadcast,
+                            mAuthFailureReason);
                     mAuthFailureInSupplicantBroadcast = false;
+                    mAuthFailureReason = 0;
                     transitionOnSupplicantStateChange(stateChangeResult);
                     break;
                 case WifiStateMachine.CMD_RESET_SUPPLICANT_STATE:
@@ -287,7 +297,7 @@ public class SupplicantStateTracker extends StateMachine {
         @Override
         public boolean processMessage(Message message) {
             if (message.what == WifiStateMachine.CMD_RESET_SUPPLICANT_STATE) {
-                sendSupplicantStateChangedBroadcast(SupplicantState.DISCONNECTED, false);
+                sendSupplicantStateChangedBroadcast(SupplicantState.DISCONNECTED, false, 0);
             }
 
             /* Let parent states handle the state possible transition. */
@@ -330,7 +340,7 @@ public class SupplicantStateTracker extends StateMachine {
                         }
                         mLoopDetectIndex = state.ordinal();
                         sendSupplicantStateChangedBroadcast(state,
-                                mAuthFailureInSupplicantBroadcast);
+                                mAuthFailureInSupplicantBroadcast, mAuthFailureReason);
                     } else {
                         //Have the DefaultState handle the transition
                         return NOT_HANDLED;
@@ -359,7 +369,8 @@ public class SupplicantStateTracker extends StateMachine {
                 case WifiMonitor.SUPPLICANT_STATE_CHANGE_EVENT:
                     StateChangeResult stateChangeResult = (StateChangeResult) message.obj;
                     SupplicantState state = stateChangeResult.state;
-                    sendSupplicantStateChangedBroadcast(state, mAuthFailureInSupplicantBroadcast);
+                    sendSupplicantStateChangedBroadcast(state, mAuthFailureInSupplicantBroadcast,
+                            mAuthFailureReason);
                     /* Ignore any connecting state in completed state. Group re-keying
                      * events and other auth events that do not affect connectivity are
                      * ignored
@@ -388,6 +399,7 @@ public class SupplicantStateTracker extends StateMachine {
     public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         super.dump(fd, pw, args);
         pw.println("mAuthFailureInSupplicantBroadcast " + mAuthFailureInSupplicantBroadcast);
+        pw.println("mAuthFailureReason " + mAuthFailureReason);
         pw.println("mNetworksDisabledDuringConnect " + mNetworksDisabledDuringConnect);
         pw.println();
     }
