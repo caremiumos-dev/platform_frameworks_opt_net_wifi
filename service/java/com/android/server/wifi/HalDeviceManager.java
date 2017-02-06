@@ -592,6 +592,17 @@ public class HalDeviceManager {
                     return;
                 }
                 managerStatusListenerDispatch();
+
+                String src = "Hello";
+                IWifi.StringWrapper w = new IWifi.StringWrapper();
+                w.s = src;
+                mWifi.tryStringPassing(w, (String s, int l) -> {
+                    Log.e(TAG, "tryStringPassing: src='" + src + "'");
+                    Log.e(TAG, "tryStringPassing: src.length()=" + src.length());
+                    Log.e(TAG, "tryStringPassing: s='" + s + "'");
+                    Log.e(TAG, "tryStringPassing: s.length()=" + s.length());
+                    Log.e(TAG, "tryStringPassing: l=" + l);
+                });
             } catch (RemoteException e) {
                 Log.e(TAG, "Exception while operating on IWifi: " + e);
             }
