@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "121ad4e2_a6ecfc57",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-02-06T23:24:27Z",
+      "side": 1,
+      "message": "may be clearer as 0xFFFFFFFF\n\nbut not sure about it - so up to you",
+      "range": {
+        "startLine": 321,
+        "startChar": 45,
+        "endLine": 321,
+        "endChar": 47
+      },
+      "revId": "68116bd591556bf1cc0c8c186a6406f54905990d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "593ac7b3_08011f0e",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-02-06T23:24:27Z",
+      "side": 1,
+      "message": "any reason to comment these out? Nothing wrong about having them in - that would match the older code. Whether or not the firmware ever returns them is a separate matter.",
+      "range": {
+        "startLine": 328,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 2
+      },
+      "revId": "68116bd591556bf1cc0c8c186a6406f54905990d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d4d0535_417003e4",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-02-06T23:24:27Z",
+      "side": 1,
+      "message": "initialized to 0 - what\u0027s the point of |?",
+      "range": {
+        "startLine": 430,
+        "startChar": 35,
+        "endLine": 430,
+        "endChar": 36
+      },
+      "revId": "68116bd591556bf1cc0c8c186a6406f54905990d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
