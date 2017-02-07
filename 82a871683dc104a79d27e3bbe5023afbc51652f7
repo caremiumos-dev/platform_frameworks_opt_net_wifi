@@ -22,6 +22,30 @@
       "revId": "82a871683dc104a79d27e3bbe5023afbc51652f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79cb0a15_398fb3a2",
+        "filename": "tests/wifitests/src/com/android/server/wifi/wificond/NativeScanResultTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-07T23:16:30Z",
+      "side": 1,
+      "message": "Done.\nAlso add docs for other wificond parcelable tests.",
+      "parentUuid": "77b22b60_3b30bb04",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 44
+      },
+      "revId": "82a871683dc104a79d27e3bbe5023afbc51652f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
