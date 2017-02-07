@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b97cd79_86d4c1be",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareDiscoverySessionState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-07T23:59:51Z",
+      "side": 1,
+      "message": "In case of synchronous failures, the failure callback is invoked synchronously. That\u0027s logical enough, but I\u0027m wondering if the callers are aware of this possibility.\n\nI know the synchronous-failure-callback behavior isn\u0027t introduced by this CL, since the same already exists at line 125. But this CL got me thinking about whether or not this is documented.\n\nIf this isn\u0027t already documented, you might want to file a bug to call this out in the API docs.\n\n(Or does Binder serializes things so that this doesn\u0027t really happen?)",
+      "revId": "cb05ed596472863695a8b9b10978b11c2b91ac7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47991b5e_3258178f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareDataPathStateManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-07T23:59:51Z",
+      "side": 1,
+      "message": "Could we return early in the failure case? Apart from verifyNoMoreInteractions(), I think the rest of this method is conditional on |immediateHalFailure|.\n\nIf returning early wouldn\u0027t change the semantics of this method, then we could reduce nesting (as well as the size of the diff. :-)).",
+      "range": {
+        "startLine": 517,
+        "startChar": 12,
+        "endLine": 517,
+        "endChar": 32
+      },
+      "revId": "cb05ed596472863695a8b9b10978b11c2b91ac7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
