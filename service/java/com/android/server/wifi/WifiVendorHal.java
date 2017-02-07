@@ -15,15 +15,23 @@
  */
 package com.android.server.wifi;
 
-import android.annotation.Nullable;
 import android.hardware.wifi.V1_0.IWifiApIface;
 import android.hardware.wifi.V1_0.IWifiChip;
 import android.hardware.wifi.V1_0.IWifiIface;
 import android.hardware.wifi.V1_0.IWifiRttController;
+import android.hardware.wifi.V1_0.IWifiRttControllerEventCallback;
 import android.hardware.wifi.V1_0.IWifiStaIface;
 import android.hardware.wifi.V1_0.IfaceType;
+import android.hardware.wifi.V1_0.RttBw;
+import android.hardware.wifi.V1_0.RttConfig;
+import android.hardware.wifi.V1_0.RttPeerType;
+import android.hardware.wifi.V1_0.RttPreamble;
+import android.hardware.wifi.V1_0.RttResponder;
+import android.hardware.wifi.V1_0.RttResult;
+import android.hardware.wifi.V1_0.RttType;
 import android.hardware.wifi.V1_0.StaRoamingConfig;
 import android.hardware.wifi.V1_0.StaRoamingState;
+import android.hardware.wifi.V1_0.WifiChannelWidthInMhz;
 import android.hardware.wifi.V1_0.WifiDebugHostWakeReasonStats;
 import android.hardware.wifi.V1_0.WifiDebugPacketFateFrameType;
 import android.hardware.wifi.V1_0.WifiDebugRingBufferFlags;
@@ -37,6 +45,7 @@ import android.hardware.wifi.V1_0.WifiStatusCode;
 import android.net.apf.ApfCapabilities;
 import android.net.wifi.RttManager;
 import android.net.wifi.RttManager.ResponderConfig;
+import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiLinkLayerStats;
 import android.net.wifi.WifiManager;
@@ -436,6 +445,353 @@ public class WifiVendorHal {
     /* RTT related commands/events */
 
     /**
+     * RTT (Round Trip Time) measurement capabilities of the device.
+     */
+    public RttManager.RttCapabilities getRttCapabilities() {
+        kilroy();
+        class AnswerBox {
+            public RttManager.RttCapabilities value = null;
+        }
+        synchronized (sLock) {
+            if (mIWifiRttController == null) return null;
+            try {
+                AnswerBox box = new AnswerBox();
+                mIWifiRttController.getCapabilities((status, capabilities) -> {
+                    if (status.code != WifiStatusCode.SUCCESS) return;
+                    RttManager.RttCapabilities ans = new RttManager.RttCapabilities();
+                    ans.oneSidedRttSupported = capabilities.rttOneSidedSupported;
+                    ans.twoSided11McRttSupported = capabilities.rttFtmSupported;
+                    ans.lciSupported = capabilities.lciSupported;
+                    ans.lcrSupported = capabilities.lcrSupported;
+                    ans.preambleSupported = frameworkPreambleFromHalPreamble(
+                            capabilities.preambleSupport);
+                    ans.bwSupported = frameworkBwFromHalBw(capabilities.bwSupport);
+                    ans.responderSupported = capabilities.responderSupported;
+                    ans.secureRttSupported = false;
+                    ans.mcVersion = ((int) capabilities.mcVersion) & 0xff;
+                    kilroy();
+                    box.value = ans;
+                });
+                return box.value;
+            } catch (RemoteException e) {
+                handleRemoteException(e);
+                return null;
+            }
+        }
+    }
+
+    private int mRttCmdIdNext = 1;              // used to generate new command ids
+    private int mRttCmdId;                      // id of currently active request
+    private RttEventCallback mRttEventCallback; // currently active RTT callback
+
+    /**
+     * Receives a callback from the Hal and passes it along to our client using RttEventHandler
+     */
+    private class RttEventCallback extends IWifiRttControllerEventCallback.Stub {
+        WifiNative.RttEventHandler mRttEventHandler;
+        int mRttCmdId;
+
+        RttEventCallback(int cmdId, WifiNative.RttEventHandler rttEventHandler) {
+            kilroy();
+            mRttCmdId = cmdId;
+            mRttEventHandler = rttEventHandler;
+        }
+
+        @Override
+        public void onResults(int cmdId, java.util.ArrayList<RttResult> results) {
+            kilroy();
+            synchronized (sLock) {
+                kilroy();
+                if (cmdId != mRttCmdId || mRttEventHandler == null) return;
+                RttManager.RttResult[] rtt = new RttManager.RttResult[results.size()];
+                for (int i = 0; i < rtt.length; i++) {
+                    kilroy();
+                    rtt[i] = rttManagerRttResultFromHidl(results.get(i));
+                }
+                mRttEventHandler.onRttResults(rtt);
+            }
+        }
+    }
+
+    /**
+     * Converts a Hal RttResult to a RttManager.RttResult
+     */
+    private RttManager.RttResult rttManagerRttResultFromHidl(RttResult result) {
+        kilroy();
+        RttManager.RttResult ans = new RttManager.RttResult();
+        ans.bssid = NativeUtil.macAddressFromByteArray(result.addr);
+        ans.burstNumber = result.burstNum;
+        ans.measurementFrameNumber = result.measurementNumber;
+        ans.successMeasurementFrameNumber = result.successNumber;
+        ans.frameNumberPerBurstPeer = result.numberPerBurstPeer;
+        ans.status = result.status; //TODO(b/34901744) - don't assume identity translation
+        ans.retryAfterDuration = result.retryAfterDuration;
+        ans.measurementType = result.type;
+        ans.rssi = result.rssi;
+        ans.rssiSpread = result.rssiSpread;
+        //TODO(b/35138520) Fix HAL and framework to use the same units
+        ans.txRate = result.txRate.bitRateInKbps;
+        ans.rxRate = result.rxRate.bitRateInKbps;
+        ans.rtt = result.rtt;
+        ans.rttStandardDeviation = result.rttSd;
+        ans.rttSpread = result.rttSpread;
+        //TODO(b/35138520) These divide-by-10s were in the legacy Hal
+        ans.distance = result.distanceInMm / 10; // Convert cm to mm
+        ans.distanceStandardDeviation = result.distanceSdInMm / 10; // Convert cm to mm
+        ans.distanceSpread = result.distanceSpreadInMm / 10;
+
+        ans.ts = result.timeStampInUs;
+        ans.burstDuration = result.burstDurationInMs;
+        ans.negotiatedBurstNum = result.negotiatedBurstNum;
+        ans.LCI = ieFromHal(result.lci);
+        ans.LCR = ieFromHal(result.lcr);
+        ans.secure = false; // Not present in HIDL HAL
+        return ans;
+    }
+
+    /**
+     * Convert a Hal WifiInformationElement to its RttManager equivalent
+     */
+    private static RttManager.WifiInformationElement ieFromHal(
+            android.hardware.wifi.V1_0.WifiInformationElement ie) {
+        if (ie == null) return null;
+        RttManager.WifiInformationElement ans = new RttManager.WifiInformationElement();
+        ans.id = ie.id;
+        ans.data = NativeUtil.byteArrayFromArrayList(ie.data);
+        return ans;
+    }
+
+    @VisibleForTesting
+    RttConfig rttConfigFromRttParams(RttManager.RttParams params) {
+        RttConfig rttConfig = new RttConfig();
+        if (params.bssid != null) {
+            byte[] addr = NativeUtil.macAddressToByteArray(params.bssid);
+            for (int i = 0; i < rttConfig.addr.length; i++) {
+                rttConfig.addr[i] = addr[i];
+            }
+        }
+        rttConfig.type = halRttTypeFromFrameworkRttType(params.requestType);
+        rttConfig.peer = halPeerFromFrameworkPeer(params.deviceType);
+        rttConfig.channel.width = halChannelWidthFromFrameworkChannelWidth(params.channelWidth);
+        rttConfig.channel.centerFreq = params.frequency;
+        rttConfig.channel.centerFreq0 = params.centerFreq0;
+        rttConfig.channel.centerFreq1 = params.centerFreq1;
+        rttConfig.burstPeriod = params.interval; // In 100ms units, 0 means no specific
+        rttConfig.numBurst = params.numberBurst;
+        rttConfig.numFramesPerBurst = params.numSamplesPerBurst;
+        rttConfig.numRetriesPerRttFrame = params.numRetriesPerMeasurementFrame;
+        rttConfig.numRetriesPerFtmr = params.numRetriesPerFTMR;
+        rttConfig.mustRequestLci = params.LCIRequest;
+        rttConfig.mustRequestLcr = params.LCRRequest;
+        rttConfig.burstDuration = params.burstTimeout;
+        rttConfig.preamble = halPreambleFromFrameworkPreamble(params.preamble);
+        rttConfig.bw = halBwFromFrameworkBw(params.bandwidth);
+        return rttConfig;
+    }
+
+    @VisibleForTesting
+    int halRttTypeFromFrameworkRttType(int frameworkRttType) {
+        switch (frameworkRttType) {
+            case RttManager.RTT_TYPE_ONE_SIDED:
+                return RttType.ONE_SIDED;
+            case RttManager.RTT_TYPE_TWO_SIDED:
+                return RttType.TWO_SIDED;
+            default:
+                throw new IllegalArgumentException("bad " + frameworkRttType);
+        }
+    }
+
+    @VisibleForTesting
+    int frameworkRttTypeFromHalRttType(int halType) {
+        switch (halType) {
+            case RttType.ONE_SIDED:
+                return RttManager.RTT_TYPE_ONE_SIDED;
+            case RttType.TWO_SIDED:
+                return RttManager.RTT_TYPE_TWO_SIDED;
+            default:
+                throw new IllegalArgumentException("bad " + halType);
+        }
+    }
+
+    @VisibleForTesting
+    int halPeerFromFrameworkPeer(int frameworkPeer) {
+        switch (frameworkPeer) {
+            case RttManager.RTT_PEER_TYPE_AP:
+                return RttPeerType.AP;
+            case RttManager.RTT_PEER_TYPE_STA:
+                return RttPeerType.STA;
+            case RttManager.RTT_PEER_P2P_GO:
+                return RttPeerType.P2P_GO;
+            case RttManager.RTT_PEER_P2P_CLIENT:
+                return RttPeerType.P2P_CLIENT;
+            case RttManager.RTT_PEER_NAN:
+                return RttPeerType.NAN;
+            default:
+                throw new IllegalArgumentException("bad " + frameworkPeer);
+        }
+    }
+
+    @VisibleForTesting
+    int frameworkPeerFromHalPeer(int halPeer) {
+        switch (halPeer) {
+            case RttPeerType.AP:
+                return RttManager.RTT_PEER_TYPE_AP;
+            case RttPeerType.STA:
+                return RttManager.RTT_PEER_TYPE_STA;
+            case RttPeerType.P2P_GO:
+                return RttManager.RTT_PEER_P2P_GO;
+            case RttPeerType.P2P_CLIENT:
+                return RttManager.RTT_PEER_P2P_CLIENT;
+            case RttPeerType.NAN:
+                return RttManager.RTT_PEER_NAN;
+            default:
+                throw new IllegalArgumentException("bad " + halPeer);
+
+        }
+    }
+
+    @VisibleForTesting
+    int halChannelWidthFromFrameworkChannelWidth(int frameworkChannelWidth) {
+        switch (frameworkChannelWidth) {
+            case ScanResult.CHANNEL_WIDTH_20MHZ:
+                return WifiChannelWidthInMhz.WIDTH_20;
+            case ScanResult.CHANNEL_WIDTH_40MHZ:
+                return WifiChannelWidthInMhz.WIDTH_40;
+            case ScanResult.CHANNEL_WIDTH_80MHZ:
+                return WifiChannelWidthInMhz.WIDTH_80;
+            case ScanResult.CHANNEL_WIDTH_160MHZ:
+                return WifiChannelWidthInMhz.WIDTH_160;
+            case ScanResult.CHANNEL_WIDTH_80MHZ_PLUS_MHZ:
+                return WifiChannelWidthInMhz.WIDTH_80P80;
+            default:
+                throw new IllegalArgumentException("bad " + frameworkChannelWidth);
+        }
+    }
+
+    @VisibleForTesting
+    int frameworkChannelWidthFromHalChannelWidth(int halChannelWidth) {
+        switch (halChannelWidth) {
+            case WifiChannelWidthInMhz.WIDTH_20:
+                return ScanResult.CHANNEL_WIDTH_20MHZ;
+            case WifiChannelWidthInMhz.WIDTH_40:
+                return ScanResult.CHANNEL_WIDTH_40MHZ;
+            case WifiChannelWidthInMhz.WIDTH_80:
+                return ScanResult.CHANNEL_WIDTH_80MHZ;
+            case WifiChannelWidthInMhz.WIDTH_160:
+                return ScanResult.CHANNEL_WIDTH_160MHZ;
+            case WifiChannelWidthInMhz.WIDTH_80P80:
+                return ScanResult.CHANNEL_WIDTH_80MHZ_PLUS_MHZ;
+            default:
+                throw new IllegalArgumentException("bad " + halChannelWidth);
+        }
+    }
+
+    @VisibleForTesting
+    int halPreambleFromFrameworkPreamble(int rttManagerPreamble) {
+        BitMask checkoff = new BitMask(rttManagerPreamble);
+        int flags = 0;
+        if (checkoff.testAndClear(RttManager.PREAMBLE_LEGACY)) {
+            flags |= RttPreamble.LEGACY;
+        }
+        if (checkoff.testAndClear(RttManager.PREAMBLE_HT)) {
+            flags |= RttPreamble.HT;
+        }
+        if (checkoff.testAndClear(RttManager.PREAMBLE_VHT)) {
+            flags |= RttPreamble.VHT;
+        }
+        if (checkoff.value != 0) {
+            throw new IllegalArgumentException("bad " + rttManagerPreamble);
+        }
+        return flags;
+    }
+
+    @VisibleForTesting
+    int frameworkPreambleFromHalPreamble(int halPreamble) {
+        BitMask checkoff = new BitMask(halPreamble);
+        int flags = 0;
+        if (checkoff.testAndClear(RttPreamble.LEGACY)) {
+            flags |= RttManager.PREAMBLE_LEGACY;
+        }
+        if (checkoff.testAndClear(RttPreamble.HT)) {
+            flags |= RttManager.PREAMBLE_HT;
+        }
+        if (checkoff.testAndClear(RttPreamble.VHT)) {
+            flags |= RttManager.PREAMBLE_VHT;
+        }
+        if (checkoff.value != 0) {
+            throw new IllegalArgumentException("bad " + halPreamble);
+        }
+        return flags;
+    }
+
+    @VisibleForTesting
+    int halBwFromFrameworkBw(int rttManagerBandwidth) {
+        BitMask checkoff = new BitMask(rttManagerBandwidth);
+        int flags = 0;
+        if (checkoff.testAndClear(RttManager.RTT_BW_5_SUPPORT)) {
+            flags |= RttBw.BW_5MHZ;
+        }
+        if (checkoff.testAndClear(RttManager.RTT_BW_10_SUPPORT)) {
+            flags |= RttBw.BW_10MHZ;
+        }
+        if (checkoff.testAndClear(RttManager.RTT_BW_20_SUPPORT)) {
+            flags |= RttBw.BW_20MHZ;
+        }
+        if (checkoff.testAndClear(RttManager.RTT_BW_40_SUPPORT)) {
+            flags |= RttBw.BW_40MHZ;
+        }
+        if (checkoff.testAndClear(RttManager.RTT_BW_80_SUPPORT)) {
+            flags |= RttBw.BW_80MHZ;
+        }
+        if (checkoff.testAndClear(RttManager.RTT_BW_160_SUPPORT)) {
+            flags |= RttBw.BW_160MHZ;
+        }
+        if (checkoff.value != 0) {
+            throw new IllegalArgumentException("bad " + rttManagerBandwidth);
+        }
+        return flags;
+    }
+
+    @VisibleForTesting
+    int frameworkBwFromHalBw(int rttBw) {
+        BitMask checkoff = new BitMask(rttBw);
+        int flags = 0;
+        if (checkoff.testAndClear(RttBw.BW_5MHZ)) {
+            flags |= RttManager.RTT_BW_5_SUPPORT;
+        }
+        if (checkoff.testAndClear(RttBw.BW_10MHZ)) {
+            flags |= RttManager.RTT_BW_10_SUPPORT;
+        }
+        if (checkoff.testAndClear(RttBw.BW_20MHZ)) {
+            flags |= RttManager.RTT_BW_20_SUPPORT;
+        }
+        if (checkoff.testAndClear(RttBw.BW_40MHZ)) {
+            flags |= RttManager.RTT_BW_40_SUPPORT;
+        }
+        if (checkoff.testAndClear(RttBw.BW_80MHZ)) {
+            flags |= RttManager.RTT_BW_80_SUPPORT;
+        }
+        if (checkoff.testAndClear(RttBw.BW_160MHZ)) {
+            flags |= RttManager.RTT_BW_160_SUPPORT;
+        }
+        if (checkoff.value != 0) {
+            throw new IllegalArgumentException("bad " + rttBw);
+        }
+        return flags;
+    }
+
+    private ArrayList<RttConfig> rttConfigsFromRttParams(RttManager.RttParams[] params) {
+        kilroy();
+        final int length = params.length;
+        ArrayList<RttConfig> config = new ArrayList<RttConfig>(length);
+        for (int i = 0; i < length; i++) {
+            kilroy();
+            config.add(rttConfigFromRttParams(params[i]));
+        }
+        return config;
+    }
+
+    /**
      * Starts a new rtt request
      *
      * @param params
@@ -444,7 +800,31 @@ public class WifiVendorHal {
      */
     public boolean requestRtt(RttManager.RttParams[] params, WifiNative.RttEventHandler handler) {
         kilroy();
-        throw new UnsupportedOperationException();
+        ArrayList<RttConfig> rttConfigs = rttConfigsFromRttParams(params);
+        synchronized (sLock) {
+            if (mIWifiRttController == null) return false;
+            if (mRttCmdId != 0) return false;
+            mRttCmdId = mRttCmdIdNext++;
+            if (mRttCmdIdNext <= 0) mRttCmdIdNext = 1;
+            try {
+                mRttEventCallback = new RttEventCallback(mRttCmdId, handler);
+                WifiStatus status = mIWifiRttController.rangeRequest(mRttCmdId, rttConfigs);
+                if (status.code == WifiStatusCode.SUCCESS) {
+                    kilroy();
+                    status = mIWifiRttController.registerEventCallback(mRttEventCallback);
+                }
+                if (status.code == WifiStatusCode.SUCCESS) {
+                    kilroy();
+                    return true;
+                }
+                noteHidlError(status, "requestRtt");
+                mRttCmdId = 0;
+                return false;
+            } catch (RemoteException e) {
+                handleRemoteException(e);
+                return false;
+            }
+        }
     }
 
     /**
@@ -455,7 +835,66 @@ public class WifiVendorHal {
      */
     public boolean cancelRtt(RttManager.RttParams[] params) {
         kilroy();
-        throw new UnsupportedOperationException();
+        ArrayList<RttConfig> rttConfigs = rttConfigsFromRttParams(params);
+        synchronized (sLock) {
+            if (mIWifiRttController == null) return false;
+            if (mRttCmdId == 0) return false;
+            ArrayList<byte[/* 6 */]> addrs = new ArrayList<byte[]>(rttConfigs.size());
+            for (RttConfig x : rttConfigs) addrs.add(x.addr);
+            try {
+                WifiStatus status = mIWifiRttController.rangeCancel(mRttCmdId, addrs);
+                mRttCmdId = 0;
+                if (status.code != WifiStatusCode.SUCCESS) return false;
+                kilroy();
+                return true;
+            } catch (RemoteException e) {
+                handleRemoteException(e);
+                return false;
+            }
+        }
+    }
+
+    private int mRttResponderCmdId = 0;
+
+    /**
+     * Get RTT responder information e.g. WiFi channel to enable responder on.
+     * @return info Instance of |RttResponder|, or null for error.
+     */
+    private RttResponder getRttResponder() {
+        kilroy();
+        class AnswerBox {
+            public RttResponder value = null;
+        }
+        synchronized (sLock) {
+            if (mIWifiRttController == null) return null;
+            AnswerBox answer = new AnswerBox();
+            try {
+                mIWifiRttController.getResponderInfo((status, info) -> {
+                    if (status.code != WifiStatusCode.SUCCESS) return;
+                    kilroy();
+                    answer.value = info;
+                });
+                return answer.value;
+            } catch (RemoteException e) {
+                handleRemoteException(e);
+                return null;
+            }
+        }
+    }
+
+    /**
+     * Convert Hal RttResponder to a framework ResponderConfig
+     * @param info Instance of |RttResponder|
+     * @return framework version of same
+     */
+    private ResponderConfig makeResponderConfigFromRttResponder(RttResponder info) {
+        ResponderConfig config = new ResponderConfig();
+        config.frequency = info.channel.centerFreq;
+        config.centerFreq0 = info.channel.centerFreq0;
+        config.centerFreq1 = info.channel.centerFreq1;
+        config.channelWidth = frameworkChannelWidthFromHalChannelWidth(info.channel.width);
+        config.preamble = frameworkPreambleFromHalPreamble(info.preamble);
+        return config;
     }
 
     /**
@@ -464,10 +903,36 @@ public class WifiVendorHal {
      * @return {@link ResponderConfig} if the responder role is successfully enabled,
      * {@code null} otherwise.
      */
-    @Nullable
     public ResponderConfig enableRttResponder(int timeoutSeconds) {
         kilroy();
-        throw new UnsupportedOperationException();
+        RttResponder info = getRttResponder();
+        synchronized (sLock) {
+            if (mIWifiRttController == null) return null;
+            if (mRttResponderCmdId != 0) {
+                Log.e(TAG, "responder mode already enabled - this shouldn't happen");
+                return null;
+            }
+            ResponderConfig config = null;
+            int id = mRttCmdIdNext++;
+            if (mRttCmdIdNext <= 0) mRttCmdIdNext = 1;
+            try {
+                WifiStatus status = mIWifiRttController.enableResponder(
+                        /* cmdId */id,
+                        /* WifiChannelInfo channelHint */null,
+                        timeoutSeconds, info);
+                if (status.code == WifiStatusCode.SUCCESS) {
+                    mRttResponderCmdId = id;
+                    config = makeResponderConfigFromRttResponder(info);
+                    Log.d(TAG, "enabling rtt " + mRttResponderCmdId);
+                } else {
+                    noteHidlError(status, "enableRttResponder");
+                }
+                return config;
+            } catch (RemoteException e) {
+                handleRemoteException(e);
+                return null;
+            }
+        }
     }
 
     /**
@@ -478,7 +943,20 @@ public class WifiVendorHal {
      */
     public boolean disableRttResponder() {
         kilroy();
-        throw new UnsupportedOperationException();
+        synchronized (sLock) {
+            if (mIWifiRttController == null) return false;
+            if (mRttResponderCmdId == 0) return false;
+            try {
+                WifiStatus status = mIWifiRttController.disableResponder(mRttResponderCmdId);
+                mRttResponderCmdId = 0;
+                if (status.code != WifiStatusCode.SUCCESS) return false;
+                kilroy();
+                return true;
+            } catch (RemoteException e) {
+                handleRemoteException(e);
+                return false;
+            }
+        }
     }
 
     /**
@@ -533,14 +1011,6 @@ public class WifiVendorHal {
      * @return success indication
      */
     public boolean setDfsFlag(boolean dfsOn) {
-        kilroy();
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * RTT (Round Trip Time) measurement capabilities of the device.
-     */
-    public RttManager.RttCapabilities getRttCapabilities() {
         kilroy();
         throw new UnsupportedOperationException();
     }
