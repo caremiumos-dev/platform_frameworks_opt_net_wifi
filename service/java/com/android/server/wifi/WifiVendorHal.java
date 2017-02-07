@@ -20,7 +20,11 @@ import android.hardware.wifi.V1_0.IWifiApIface;
 import android.hardware.wifi.V1_0.IWifiChip;
 import android.hardware.wifi.V1_0.IWifiIface;
 import android.hardware.wifi.V1_0.IWifiRttController;
+import android.hardware.wifi.V1_0.IWifiRttControllerEventCallback;
 import android.hardware.wifi.V1_0.IWifiStaIface;
+import android.hardware.wifi.V1_0.RttConfig;
+import android.hardware.wifi.V1_0.RttResponder;
+import android.hardware.wifi.V1_0.RttResult;
 import android.hardware.wifi.V1_0.StaRoamingConfig;
 import android.hardware.wifi.V1_0.StaRoamingState;
 import android.hardware.wifi.V1_0.WifiDebugHostWakeReasonStats;
@@ -40,6 +44,10 @@ import android.util.MutableBoolean;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.server.connectivity.KeepalivePacketData;
+
+import libcore.util.HexEncoding;
+
+import java.util.ArrayList;
 
 /**
  * Vendor HAL via HIDL
@@ -322,7 +330,137 @@ public class WifiVendorHal {
         throw new UnsupportedOperationException();
     }
 
-    /* RTT related commands/events */
+/* RTT related commands/events */
+
+    private int mRttCmdIdNext = 1;              // used to generate new command ids
+    private int mRttCmdId;                      // id of currently active request
+    private RttEventCallback mRttEventCallback; // currently active RTT callback
+
+    /**
+     * Receives a callback from the Hal and passes it along to our client using RttEventHandler
+     */
+    private class RttEventCallback extends IWifiRttControllerEventCallback.Stub {
+        WifiNative.RttEventHandler mRttEventHandler;
+        int mRttCmdId;
+
+        RttEventCallback(int cmdId, WifiNative.RttEventHandler rttEventHandler) {
+            kilroy();
+            mRttCmdId = cmdId;
+            mRttEventHandler = rttEventHandler;
+        }
+
+        public void onResults(int cmdId, java.util.ArrayList<RttResult> results) {
+            kilroy();
+            synchronized (sLock) {
+                kilroy();
+                if (cmdId != mRttCmdId || mRttEventHandler == null) return;
+                RttManager.RttResult[] rtt = new RttManager.RttResult[results.size()];
+                for (int i = 0; i < rtt.length; i++) {
+                    kilroy();
+                    rtt[i] = rttManagerRttResultFromHidl(results.get(i));
+                }
+                mRttEventHandler.onRttResults(rtt);
+            }
+        }
+    }
+
+    /**
+     * Converts a Hidl RttResult to a RttManager.RttResult
+     */
+    private RttManager.RttResult rttManagerRttResultFromHidl(RttResult result) {
+        kilroy();
+        RttManager.RttResult ans = new RttManager.RttResult();
+        ans.bssid = String.valueOf(HexEncoding.encode(result.addr)); //TODO - colons?
+        ans.burstNumber = result.burstNum;
+        ans.measurementFrameNumber = result.measurementNumber;
+        ans.successMeasurementFrameNumber = result.successNumber;
+        ans.frameNumberPerBurstPeer = result.numberPerBurstPeer;
+        ans.status = result.status; //TODO(b/34901744) - don't assume identity translation
+        ans.retryAfterDuration = result.retryAfterDuration;
+        ans.measurementType = result.type;
+        ans.rssi = result.rssi;
+        ans.rssiSpread = result.rssiSpread;
+        ans.txRate = (result.txRate.bitRateInKbps + 99) / 100;
+        ans.rxRate = (result.rxRate.bitRateInKbps + 99) / 100;
+        ans.rtt = result.rtt / 100; // Convert picoseconds to .1 ns
+        ans.rttStandardDeviation = result.rttSd / 100; // Convert picoseconds to .1 ns
+        ans.rttSpread = result.rttSpread / 100; // Convert picoseconds to .1 ns
+        ans.distance = result.distanceInMm / 10; // Convert cm to mm
+        ans.distanceStandardDeviation = result.distanceSdInMm / 10; // Convert cm to mm
+        ans.distanceSpread = result.distanceSpreadInMm / 10;
+        ans.ts = result.timeStampInUs;
+        ans.burstDuration = result.burstDurationInMs;
+        ans.negotiatedBurstNum = result.negotiatedBurstNum;
+        ans.LCI = ieFromHidl(result.lci);
+        ans.LCR = ieFromHidl(result.lcr);
+        ans.secure = false; // Not present in HIDL HAL
+        return ans;
+    }
+
+    /**
+     * Convert a Hal WifiInformationElement to its RttManager equivalent
+     */
+    private static RttManager.WifiInformationElement ieFromHidl(
+            android.hardware.wifi.V1_0.WifiInformationElement ie) {
+        if (ie == null) return null;
+        byte[] data = new byte[ie.data.size()];
+        for (int i = 0; i < data.length; i++) {
+            data[i] = ie.data.get(i);
+        }
+        RttManager.WifiInformationElement ans = new RttManager.WifiInformationElement();
+        ans.id = ie.id;
+        ans.data = data;
+        return ans;
+    }
+
+    private int mSpam = 0; // don't spam the log too much
+
+    private RttConfig rttConfigFromRttParams(RttManager.RttParams params) {
+        kilroy();
+        RttConfig rttConfig = new RttConfig();
+        try {
+            kilroy();
+            byte[] addr = HexEncoding.decode(params.bssid.toCharArray(), false);
+            for (int i = 0; i < rttConfig.addr.length; i++) {
+                kilroy();
+                rttConfig.addr[i] = addr[i];
+            }
+        } catch (RuntimeException e) {
+            kilroy();
+            if (mSpam++ < 10) {
+                kilroy();
+                Log.e(TAG, "Error decoding params.bssid", e);
+            }
+        }
+        rttConfig.type = params.requestType; //TODO(b/34901744) - don't assume identity translation
+        rttConfig.peer = params.deviceType;  //TODO(b/34901744) - don't assume identity translation
+        rttConfig.channel.width = params.channelWidth; //TODO(b/34901744) - ditto
+        rttConfig.channel.centerFreq = params.frequency;
+        rttConfig.channel.centerFreq0 = params.centerFreq0;
+        rttConfig.channel.centerFreq1 = params.centerFreq1;
+        rttConfig.burstPeriod = params.interval; // In 100ms units, 0 means no specific
+        rttConfig.numBurst = params.numberBurst;
+        rttConfig.numFramesPerBurst = params.numSamplesPerBurst;
+        rttConfig.numRetriesPerRttFrame = params.numRetriesPerMeasurementFrame;
+        rttConfig.numRetriesPerFtmr = params.numRetriesPerFTMR;
+        rttConfig.mustRequestLci = params.LCIRequest;
+        rttConfig.mustRequestLcr = params.LCRRequest;
+        rttConfig.burstDuration = params.burstTimeout;
+        rttConfig.preamble = params.preamble; //TODO(b/34901744) - don't assume identity translation
+        rttConfig.bw = params.bandwidth; //TODO(b/34901744) - don't assume identity translation
+        return rttConfig;
+    }
+
+    private ArrayList<RttConfig> rttConfigsFromRttParams(RttManager.RttParams[] params) {
+        kilroy();
+        final int length = params.length;
+        ArrayList<RttConfig> config = new ArrayList<RttConfig>(length);
+        for (int i = 0; i < length; i++) {
+            kilroy();
+            config.add(rttConfigFromRttParams(params[i]));
+        }
+        return config;
+    }
 
     /**
      * Starts a new rtt request
@@ -333,7 +471,37 @@ public class WifiVendorHal {
      */
     public boolean requestRtt(RttManager.RttParams[] params, WifiNative.RttEventHandler handler) {
         kilroy();
-        throw new UnsupportedOperationException();
+        ArrayList<RttConfig> rttConfigs = rttConfigsFromRttParams(params);
+        synchronized (sLock) {
+            kilroy();
+            try {
+                kilroy();
+                if (isHalStarted()) {
+                    kilroy();
+                    if (mRttCmdId != 0) {
+                        kilroy();
+                        Log.w(TAG, "Last one is still under measurement!");
+                        return false;
+                    }
+                    mRttCmdId = mRttCmdIdNext++;
+                    if (mRttCmdIdNext <= 0) mRttCmdIdNext = 1;
+                    mRttEventCallback = new RttEventCallback(mRttCmdId, handler);
+                    WifiStatus status = mIWifiRttController.rangeRequest(mRttCmdId, rttConfigs);
+                    if (status.code == WifiStatusCode.SUCCESS) {
+                        kilroy();
+                        status = mIWifiRttController.registerEventCallback(mRttEventCallback);
+                    }
+                    if (status.code == WifiStatusCode.SUCCESS) return true;
+                    noteHidlError(status, "requestRtt");
+                    mRttCmdId = 0;
+                }
+                return false;
+            } catch (RemoteException e) {
+                kilroy();
+                handleRemoteException(e);
+                return false;
+            }
+        }
     }
 
     /**
@@ -344,8 +512,34 @@ public class WifiVendorHal {
      */
     public boolean cancelRtt(RttManager.RttParams[] params) {
         kilroy();
-        throw new UnsupportedOperationException();
+        ArrayList<RttConfig> rttConfigs = rttConfigsFromRttParams(params);
+        synchronized (sLock) {
+            kilroy();
+            try {
+                kilroy();
+                if (isHalStarted()) {
+                    kilroy();
+                    if (mRttCmdId == 0) return false;
+                    ArrayList<byte[/* 6 */]> addrs = new ArrayList<byte[]>(rttConfigs.size());
+                    for (RttConfig x : rttConfigs) {
+                        kilroy();
+                        addrs.add(x.addr);
+                    }
+                    WifiStatus status = mIWifiRttController.rangeCancel(mRttCmdId, addrs);
+                    mRttCmdId = 0;
+                    if (status.code == WifiStatusCode.SUCCESS) return true;
+                    noteHidlError(status, "cancelRtt");
+                }
+                return false;
+            } catch (RemoteException e) {
+                kilroy();
+                handleRemoteException(e);
+                return false;
+            }
+        }
     }
+
+    private int mRttResponderCmdId = 0;
 
     /**
      * Enables RTT responder role on the device.
@@ -356,7 +550,42 @@ public class WifiVendorHal {
     @Nullable
     public ResponderConfig enableRttResponder(int timeoutSeconds) {
         kilroy();
-        throw new UnsupportedOperationException();
+        synchronized (sLock) {
+            kilroy();
+            try {
+                kilroy();
+                if (!isHalStarted()) return null;
+                if (mIWifiRttController == null) return null;
+                if (mRttResponderCmdId != 0) {
+                    kilroy();
+                    Log.e(TAG, "responder mode already enabled - this shouldn't happen");
+                    return null;
+                }
+                ResponderConfig config = null;
+                int id = mRttCmdIdNext++;
+                if (mRttCmdIdNext <= 0) mRttCmdIdNext = 1;
+                RttResponder info = new RttResponder();
+                WifiStatus status = mIWifiRttController.enableResponder(
+                    /* cmdId */id,
+                    /* WifiChannelInfo channelHint */null,
+                        timeoutSeconds, info);
+                if (status.code == WifiStatusCode.SUCCESS) {
+                    kilroy();
+                    mRttResponderCmdId = id;
+                    config = new ResponderConfig(); //TODO(b/34901744): populate this
+                    //                                note - nobody looks at the return, anyway.
+                    Log.d(TAG, "enabling rtt " + mRttResponderCmdId);
+                } else {
+                    kilroy();
+                    noteHidlError(status, "enableRttResponder");
+                }
+                return config;
+            } catch (RemoteException e) {
+                kilroy();
+                handleRemoteException(e);
+                return null;
+            }
+        }
     }
 
     /**
@@ -367,7 +596,27 @@ public class WifiVendorHal {
      */
     public boolean disableRttResponder() {
         kilroy();
-        throw new UnsupportedOperationException();
+        synchronized (sLock) {
+            kilroy();
+            try {
+                kilroy();
+                if (!isHalStarted()) return false;
+                if (mRttResponderCmdId == 0) {
+                    kilroy();
+                    Log.e(TAG, "responder role not enabled yet");
+                    return true; // TODO(mplass) - should this be false?
+                }
+                WifiStatus status = mIWifiRttController.disableResponder(mRttResponderCmdId);
+                mRttResponderCmdId = 0;
+                if (status.code == WifiStatusCode.SUCCESS) return true;
+                noteHidlError(status, "disableRttResponder");
+                return false;
+            } catch (RemoteException e) {
+                kilroy();
+                handleRemoteException(e);
+                return false;
+            }
+        }
     }
 
     /**
