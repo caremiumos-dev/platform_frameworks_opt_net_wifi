@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f13b69c6_93577992",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-07T23:11:44Z",
+      "side": 1,
+      "message": "@Override here please.",
+      "revId": "bed47ea157d39d084596491cc4805a62020566f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baf9d06c_c643b330",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-07T23:11:44Z",
+      "side": 1,
+      "message": "U should use this for mac/bssid translation: https://cs.corp.google.com/android/frameworks/opt/net/wifi/service/java/com/android/server/wifi/WifiVendorHal.java?rcl\u003d7d4da9d42703c519a7401f6ef0ed9166c5685895\u0026l\u003d807",
+      "range": {
+        "startLine": 373,
+        "startChar": 54,
+        "endLine": 373,
+        "endChar": 65
+      },
+      "revId": "bed47ea157d39d084596491cc4805a62020566f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9fbc63_b2133faa",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-07T23:11:44Z",
+      "side": 1,
+      "message": "Don\u0027t need this. The conversions needed are specified here: https://cs.corp.google.com/android/frameworks/opt/net/wifi/service/jni/com_android_server_wifi_WifiNative.cpp?rcl\u003d7d4da9d42703c519a7401f6ef0ed9166c5685895\u0026l\u003d1070",
+      "range": {
+        "startLine": 385,
+        "startChar": 31,
+        "endLine": 385,
+        "endChar": 34
+      },
+      "revId": "bed47ea157d39d084596491cc4805a62020566f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
