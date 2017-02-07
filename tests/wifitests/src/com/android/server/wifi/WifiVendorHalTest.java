@@ -22,6 +22,8 @@ import android.hardware.wifi.V1_0.IWifiChip;
 import android.hardware.wifi.V1_0.IWifiIface;
 import android.hardware.wifi.V1_0.IWifiRttController;
 import android.hardware.wifi.V1_0.IWifiStaIface;
+import android.hardware.wifi.V1_0.RttCapabilities;
+import android.hardware.wifi.V1_0.RttConfig;
 import android.hardware.wifi.V1_0.StaApfPacketFilterCapabilities;
 import android.hardware.wifi.V1_0.WifiDebugRingBufferFlags;
 import android.hardware.wifi.V1_0.WifiDebugRingBufferStatus;
@@ -29,6 +31,7 @@ import android.hardware.wifi.V1_0.WifiDebugRingBufferVerboseLevel;
 import android.hardware.wifi.V1_0.WifiStatus;
 import android.hardware.wifi.V1_0.WifiStatusCode;
 import android.net.apf.ApfCapabilities;
+import android.net.wifi.RttManager;
 import android.net.wifi.WifiManager;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -402,6 +405,63 @@ public class WifiVendorHalTest {
 
         assertEquals(firmwareVersion, mWifiVendorHal.getFirmwareVersion());
         assertEquals(driverVersion, mWifiVendorHal.getDriverVersion());
+    }
+
+    /**
+     * For checkRoundTripIntTranslation lambdas
+     */
+    interface IntForInt {
+        int translate(int value);
+    }
+
+    /**
+     * Checks that translation from x to y and back again is the identity function
+     * @param xFromY reverse translator
+     * @param yFromX forward translator
+     * @param xLimit non-inclusive upper bound on x (lower bound is zero)
+     */
+    private void checkRoundTripIntTranslation(
+            IntForInt xFromY, IntForInt yFromX, int xLimit) throws Exception {
+        for (int i = 0; i < xLimit; i++) {
+            assertEquals(i, xFromY.translate(yFromX.translate(i)));
+        }
+    }
+
+    /**
+     * Test translations of bandwidth mask
+     */
+    @Test
+    public void testBandwidthTranslations() throws Exception {
+        checkRoundTripIntTranslation(
+                (y) -> mWifiVendorHal.halBwFromFrameworkBw(y),
+                (x) -> mWifiVendorHal.frameworkBwFromHalBw(x),
+                32);
+    }
+
+    @Test
+    public void testGetRttStuff() throws Exception {
+        RttManager.RttParams params = new RttManager.RttParams();
+        RttConfig config = mWifiVendorHal.rttConfigFromRttParams(params);
+    }
+
+    @Test
+    public void testGetRttCapabilities() throws Exception {
+        RttCapabilities capabilities = new RttCapabilities();
+
+        doAnswer(new AnswerWithArguments() {
+            public void answer(IWifiRttController.getCapabilitiesCallback cb)
+                    throws RemoteException {
+                cb.onValues(mWifiStatusSuccess, capabilities);
+            }
+        }).when(mIWifiRttController).getCapabilities(any(
+                IWifiRttController.getCapabilitiesCallback.class));
+
+        assertNull(mWifiVendorHal.getRttCapabilities());
+
+        assertTrue(mWifiVendorHal.startVendorHalSta());
+
+        RttManager.RttCapabilities actual = mWifiVendorHal.getRttCapabilities();
+
     }
 
     /**
