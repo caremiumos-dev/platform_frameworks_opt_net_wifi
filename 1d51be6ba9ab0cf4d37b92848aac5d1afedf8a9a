@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1c35836_c147e9c6",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-07T21:31:22Z",
+      "side": 1,
+      "message": "The if/else-s here and below make the code a little hard to read.  Should the if here just log and then return?",
+      "range": {
+        "startLine": 624,
+        "startChar": 12,
+        "endLine": 624,
+        "endChar": 60
+      },
+      "revId": "1d51be6ba9ab0cf4d37b92848aac5d1afedf8a9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "813a23fd_e2b03538",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-07T21:31:22Z",
+      "side": 1,
+      "message": "to make sure I understand this if:\n\nIf we are not connected already AND if firmware roaming is supported AND we either do not have a candidate bssid or the bssid is any, then we set the targetBssid to ANY?\n\nSince nothing is done if we do not support firmware roaming, then it seems like targetBssid can already be null or set to ANY (or explicitly set).  Is that correct?  Do we need to do something if targetBssid is null?\n\nalso...  does it really matter if we explicitly say to connect to a starting bssid?  We won\u0027t be controlling roaming after we connect.  Seems ok to give a starting point.",
+      "range": {
+        "startLine": 637,
+        "startChar": 13,
+        "endLine": 638,
+        "endChar": 90
+      },
+      "revId": "1d51be6ba9ab0cf4d37b92848aac5d1afedf8a9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8663698_1afd964f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1099,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-07T21:31:22Z",
+      "side": 1,
+      "message": "I think I am confused by the code...  I thought that if firmware roaming was supported, the candidate bssid would be replaced with ANY",
+      "range": {
+        "startLine": 1099,
+        "startChar": 37,
+        "endLine": 1099,
+        "endChar": 53
+      },
+      "revId": "1d51be6ba9ab0cf4d37b92848aac5d1afedf8a9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
