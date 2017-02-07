@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6508dcb4_a17148b5",
+        "filename": "service/java/com/android/server/wifi/WifiStateTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-07T00:37:00Z",
+      "side": 1,
+      "message": "This is not necessarily true. Just because we are disconnecting doesn\u0027t mean that we have no networks.",
+      "range": {
+        "startLine": 73,
+        "startChar": 47,
+        "endLine": 73,
+        "endChar": 72
+      },
+      "revId": "09375af68e23ba7686299170630e7ff11c44fdf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
