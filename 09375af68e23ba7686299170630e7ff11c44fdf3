@@ -22,6 +22,30 @@
       "revId": "09375af68e23ba7686299170630e7ff11c44fdf3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "786dbb25_ff524f8d",
+        "filename": "service/java/com/android/server/wifi/WifiStateTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-02-08T01:46:34Z",
+      "side": 1,
+      "message": "will remove line 72-74",
+      "parentUuid": "6508dcb4_a17148b5",
+      "range": {
+        "startLine": 73,
+        "startChar": 47,
+        "endLine": 73,
+        "endChar": 72
+      },
+      "revId": "09375af68e23ba7686299170630e7ff11c44fdf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
