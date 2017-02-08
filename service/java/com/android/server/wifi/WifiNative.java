@@ -19,6 +19,7 @@ package com.android.server.wifi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.Context;
+import android.hardware.wifi.supplicant.V1_0.ISupplicantP2pIfaceCallback;
 import android.net.apf.ApfCapabilities;
 import android.net.wifi.IApInterface;
 import android.net.wifi.IClientInterface;
@@ -134,7 +135,7 @@ public class WifiNative {
 
 
     // TODO(b/34884202): Set this to true to enable HIDL once we're fully ready.
-    private static final boolean HIDL_ENABLE = false;
+    private static final boolean HIDL_ENABLE = true;
     private final String mTAG;
     private final String mInterfaceName;
     private final String mInterfacePrefix;
@@ -168,7 +169,7 @@ public class WifiNative {
         mWificondControl = wificondControl;
     }
 
-     * Explicitly sets the SupplicantP2pIfaceHal instance
+    /** Explicitly sets the SupplicantP2pIfaceHal instance
      * TODO(b/34722734): move this into the constructor of WifiNative when I clean up the awful
      * double singleton pattern
      */
@@ -225,6 +226,23 @@ public class WifiNative {
         }
 
         return mSupplicantStaIfaceHal.initialize();
+    }
+
+
+    /**
+     * Registers a service callback for the ISupplicantP2pIface.
+     * @return true if the service notification was successfully registered
+     */
+    public boolean registerP2pHalCallbackReceiver(ISupplicantP2pIfaceCallback receiver) {
+        if (!HIDL_ENABLE) {
+            return true;
+        }
+
+        if (mSupplicantP2pIfaceHal != null) {
+            return mSupplicantP2pIfaceHal.registerCallback(receiver);
+        }
+
+        return true;
     }
 
     public String getInterfaceName() {
