@@ -70,6 +70,30 @@
       "revId": "15e655438ecf8657c5dc520d4aadcb5048a0bba6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7e1e630_8d5ff910",
+        "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-02-08T01:44:35Z",
+      "side": 1,
+      "message": "You are right. I was browsing a lot of code yesterday, maybe I was mistaken or generalized ERROR_AUTHENTICATING to all others.",
+      "parentUuid": "21b771e8_ea956680",
+      "range": {
+        "startLine": 241,
+        "startChar": 41,
+        "endLine": 241,
+        "endChar": 42
+      },
+      "revId": "15e655438ecf8657c5dc520d4aadcb5048a0bba6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
