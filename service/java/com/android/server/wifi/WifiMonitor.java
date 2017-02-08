@@ -16,6 +16,7 @@
 
 package com.android.server.wifi;
 
+import android.hardware.wifi.supplicant.V1_0.ISupplicantP2pIfaceCallback;
 import android.net.NetworkInfo;
 import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiEnterpriseConfig;
@@ -43,6 +44,7 @@ import com.android.server.wifi.p2p.WifiP2pServiceImpl.P2pStatus;
 import com.android.server.wifi.util.TelephonyUtil.SimAuthRequestData;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -537,8 +539,10 @@ public class WifiMonitor {
     }
 
     private final WifiNative mWifiNative;
+    private final SupplicantP2pIfaceCallback mSupplicantP2pCallback;
     private WifiMonitor() {
         mWifiNative = WifiNative.getWlanNativeInterface();
+        mSupplicantP2pCallback = new SupplicantP2pIfaceCallback();
     }
 
     private int mRecvErrors = 0;
@@ -592,15 +596,17 @@ public class WifiMonitor {
     }
 
 
-    private boolean ensureConnectedLocked() {
+    private boolean ensureConnectedLocked(String iface) {
         if (mConnected) {
             return true;
         }
 
         if (mVerboseLoggingEnabled) Log.d(TAG, "connecting to supplicant");
         int connectTries = 0;
+        mWifiNative.initializeSupplicantHal();
         while (true) {
             if (mWifiNative.connectToSupplicant()) {
+                mWifiNative.registerP2pHalCallbackReceiver(mSupplicantP2pCallback);
                 mConnected = true;
                 new MonitorThread(mWifiNative.getLocalLog()).start();
                 return true;
@@ -619,7 +625,7 @@ public class WifiMonitor {
     public synchronized void startMonitoring(String iface) {
         Log.d(TAG, "startMonitoring(" + iface + ") with mConnected = " + mConnected);
 
-        if (ensureConnectedLocked()) {
+        if (ensureConnectedLocked(iface)) {
             setMonitoring(iface, true);
             sendMessage(iface, SUP_CONNECTION_EVENT);
         }
@@ -1475,5 +1481,234 @@ public class WifiMonitor {
             }
             sendMessage(iface, NETWORK_DISCONNECTION_EVENT, local, reason, BSSID);
         }
+    }
+
+
+    private class SupplicantP2pIfaceCallback extends ISupplicantP2pIfaceCallback.Stub {
+        private final String mInterface;
+
+
+        public SupplicantP2pIfaceCallback() {
+            mInterface = "iface";
+        }
+
+
+        /**
+         * Used to indicate that a new network has been added.
+         *
+         * @param id Network ID allocated to the corresponding network.
+         */
+        public void onNetworkAdded(int networkId) {}
+
+
+        /**
+         * Used to indicate that a network has been removed.
+         *
+         * @param id Network ID allocated to the corresponding network.
+         */
+        public void onNetworkRemoved(int networkId) {}
+
+
+        /**
+         * Used to indicate that a P2P device has been found.
+         *
+         * @param srcAddress MAC address of the device found. This must either
+         *        be the P2P device address or the P2P interface address.
+         * @param p2pDeviceAddress P2P device address.
+         * @param primaryDeviceType Type of device. Refer to section B.1 of Wifi P2P
+         *        Technical specification v1.2.
+         * @param deviceName Name of the device.
+         * @param configMethods Mask of WPS configuration methods supported by the
+         *        device.
+         * @param deviceCapabilities Refer to section 4.1.4 of Wifi P2P Technical
+         *        specification v1.2.
+         * @param groupCapabilites Refer to section 4.1.4 of Wifi P2P Technical
+         *        specification v1.2.
+         * @param wfdDeviceInfo WFD device info as described in section 5.1.2 of WFD
+         *        technical specification v1.0.0.
+         */
+        public void onDeviceFound(byte[] srcAddress, byte[] p2pDeviceAddress, byte[] primaryDeviceType,
+                String deviceName, short configMethods, byte deviceCapabilities, int groupCapabilities,
+                byte[] wfdDeviceInfo) {
+            Log.e(TAG, "FOUND NEW DEVICE: " + deviceName);
+        }
+
+
+        /**
+         * Used to indicate that a P2P device has been lost.
+         *
+         * @param p2pDeviceAddress P2P device address.
+         */
+        public void onDeviceLost(byte[] p2pDeviceAddress) {}
+
+
+        /**
+         * Used to indicate the termination of P2P find operation.
+         */
+        public void onFindStopped() {}
+
+
+        /**
+         * Used to indicate the reception of a P2P Group Owner negotiation request.
+         *
+         * @param srcAddress MAC address of the device that initiated the GO
+         *        negotiation request.
+         * @param passwordId Type of password.
+         */
+        public void onGoNegotiationRequest(byte[] srcAddress, short passwordId) {}
+
+
+        /**
+         * Used to indicate the completion of a P2P Group Owner negotiation request.
+         *
+         * @param status Status of the GO negotiation.
+         */
+        public void onGoNegotiationCompleted(int status) {}
+
+
+        /**
+         * Used to indicate a successful formation of a P2P group.
+         */
+        public void onGroupFormationSuccess() {}
+
+
+        /**
+         * Used to indicate a failure to form a P2P group.
+         *
+         * @param failureReason Failure reason string for debug purposes.
+         */
+        public void onGroupFormationFailure(String failureReason) {}
+
+
+        /**
+         * Used to indicate the start of a P2P group.
+         *
+         * @param groupIfName Interface name of the group. (For ex: p2p-p2p0-1)
+         * @param isGo Whether this device is owner of the group.
+         * @param ssid SSID of the group.
+         * @param frequency Frequency on which this group is created.
+         * @param psk PSK used to secure the group.
+         * @param passphrase PSK passphrase used to secure the group.
+         * @param goDeviceAddress MAC Address of the owner of this group.
+         * @param isPersistent Whether this group is persisted or not.
+         */
+        public void onGroupStarted(String groupIfName, boolean isGo, ArrayList<Byte> ssid,
+                int frequency, byte[] psk, String passphrase, byte[] goDeviceAddress,
+                boolean isPersistent) {}
+
+
+        /**
+         * Used to indicate the removal of a P2P group.
+         *
+         * @param groupIfName Interface name of the group. (For ex: p2p-p2p0-1)
+         * @param isGo Whether this device is owner of the group.
+         */
+        public void onGroupRemoved(String groupIfName, boolean isGo) {}
+
+
+        /**
+         * Used to indicate the reception of a P2P invitation.
+         *
+         * @param srcAddress MAC address of the device that sent the invitation.
+         * @param goDeviceAddress MAC Address of the owner of this group.
+         * @param Bssid Bssid of the group.
+         * @param persistentNetworkId Persistent network Id of the group.
+         * @param operatingFrequency Frequency on which the invitation was received.
+         */
+        public void onInvitationReceived(byte[] srcAddress, byte[] goDeviceAddress,
+                byte[] bssid, int persistentNetworkId, int operatingFrequency) {}
+
+
+        /**
+         * Used to indicate the result of the P2P invitation request.
+         *
+         * @param Bssid Bssid of the group.
+         * @param status Status of the invitation.
+         */
+        public void onInvitationResult(byte[] bssid, int status) {}
+
+
+        /**
+         * Used to indicate a push-button request generated during provision discovery.
+         *
+         * @param p2pDeviceAddress P2P device address.
+         */
+        public void onProvisionDiscoveryPbcRequest(byte[] p2pDeviceAddress) {}
+
+
+        /**
+         * Used to indicate a push-button response generated during provision discovery.
+         *
+         * @param p2pDeviceAddress P2P device address.
+         */
+        public void onProvisionDiscoveryPbcResponse(byte[] p2pDeviceAddress) {}
+
+
+        /**
+         * Used to indicate the pin generated during provision discovery.
+         *
+         * @param p2pDeviceAddress P2P device address.
+         * @param generatedPin 8 digit pin generated.
+         */
+        public void onProvisionDiscoveryShowPin(byte[] p2pDeviceAddress, String generatedPin) {}
+
+
+        /**
+         * Used to indicate that a pin needs to be entered during provision discovery.
+         *
+         * @param p2pDeviceAddress P2P device address.
+         */
+        public void onProvisionDiscoveryEnterPin(byte[] p2pDeviceAddress) {}
+
+
+        /**
+         * Used to indicate a provision discovery failure.
+         *
+         * @param p2pDeviceAddress P2P device address.
+         */
+        public void onProvisionDiscoveryFailure(byte[] p2pDeviceAddress) {}
+
+
+        /**
+         * Used to indicate the completion of a P2P provision discovery request.
+         *
+         * @param p2pDeviceAddress P2P device address.
+         * @param isRequest Whether we received or sent the provision discovery.
+         * @param status Status of the provision discovery.
+         * @param configMethods Mask of WPS configuration methods supported.
+         * @param generatedPin 8 digit pin generated.
+         */
+        public void onProvisionDiscoveryCompleted(byte[] p2pDeviceAddress, boolean isRequest,
+                byte status, short configMethods, String generatedPin) {}
+
+
+        /**
+         * Used to indicate the reception of a P2P service discovery response.
+         *
+         * @param srcAddress MAC address of the device that sent the service discovery.
+         * @param updateIndicator Service update indicator. Refer to section 3.1.3 of
+         *        Wifi P2P Technical specification v1.2.
+         * @param tlvs Refer to section 3.1.3.1 of Wifi P2P Technical specification v1.2.
+         */
+        public void onServiceDiscoveryResponse(byte[] srcAddress, short updateIndicator,
+                ArrayList<Byte> tlvs) {}
+
+
+        /**
+         * Used to indicate when a STA device is connected to this device.
+         *
+         * @param srcAddress MAC address of the device that was authorized.
+         * @param p2pDeviceAddress P2P device address.
+         */
+        public void onStaAuthorized(byte[] srcAddress, byte[] p2pDeviceAddress) {}
+
+
+        /**
+         * Used to indicate when a STA device is disconnected from this device.
+         *
+         * @param srcAddress MAC address of the device that was deauthorized.
+         * @param p2pDeviceAddress P2P device address.
+         */
+        public void onStaDeauthorized(byte[] srcAddress, byte[] p2pDeviceAddress) {}
     }
 }
