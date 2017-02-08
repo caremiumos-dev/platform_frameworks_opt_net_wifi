@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8a0841df_bdadd038",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaNetworkHal.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-08T19:11:30Z",
+      "side": 1,
+      "message": "There is a bug here. Fixed that now and added unit test.",
+      "parentUuid": "9cff102b_e0ce757b",
+      "range": {
+        "startLine": 171,
+        "startChar": 39,
+        "endLine": 171,
+        "endChar": 56
+      },
+      "revId": "5fa57e21ee1f4670e77306f857e688a2d4867465",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b31a149_d193f9b4",
         "filename": "service/java/com/android/server/wifi/SupplicantStaNetworkHal.java",
         "patchSetId": 3
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "979ca5bc_d24b04c0",
+        "filename": "tests/wifitests/src/com/android/server/wifi/SupplicantStaNetworkHalTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-08T19:11:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f4c5746_f8a70347",
+      "range": {
+        "startLine": 130,
+        "startChar": 16,
+        "endLine": 130,
+        "endChar": 49
+      },
+      "revId": "5fa57e21ee1f4670e77306f857e688a2d4867465",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e189b74c_b0285547",
         "filename": "tests/wifitests/src/com/android/server/wifi/SupplicantStaNetworkHalTest.java",
         "patchSetId": 3
@@ -82,6 +130,30 @@
       "writtenOn": "2017-02-08T03:34:04Z",
       "side": 1,
       "message": "Please state why it\u0027s invalid",
+      "range": {
+        "startLine": 139,
+        "startChar": 33,
+        "endLine": 139,
+        "endChar": 49
+      },
+      "revId": "5fa57e21ee1f4670e77306f857e688a2d4867465",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f5dcb30_c7c2566b",
+        "filename": "tests/wifitests/src/com/android/server/wifi/SupplicantStaNetworkHalTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-08T19:11:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e189b74c_b0285547",
       "range": {
         "startLine": 139,
         "startChar": 33,
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "a3beafe0_9db97a8f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/SupplicantStaNetworkHalTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-08T19:11:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c8b959b_51a98af0",
+      "range": {
+        "startLine": 154,
+        "startChar": 33,
+        "endLine": 154,
+        "endChar": 49
+      },
+      "revId": "5fa57e21ee1f4670e77306f857e688a2d4867465",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b87da4d_e35cee7b",
         "filename": "tests/wifitests/src/com/android/server/wifi/SupplicantStaNetworkHalTest.java",
         "patchSetId": 3
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "8fe41b7b_2693acbf",
+        "filename": "tests/wifitests/src/com/android/server/wifi/SupplicantStaNetworkHalTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-08T19:11:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b87da4d_e35cee7b",
+      "range": {
+        "startLine": 174,
+        "startChar": 33,
+        "endLine": 174,
+        "endChar": 40
+      },
+      "revId": "5fa57e21ee1f4670e77306f857e688a2d4867465",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c4b0bec_adeec9cb",
         "filename": "tests/wifitests/src/com/android/server/wifi/SupplicantStaNetworkHalTest.java",
         "patchSetId": 3
@@ -151,6 +271,30 @@
       "writtenOn": "2017-02-08T03:34:04Z",
       "side": 1,
       "message": "why is it invalid?",
+      "range": {
+        "startLine": 188,
+        "startChar": 33,
+        "endLine": 188,
+        "endChar": 40
+      },
+      "revId": "5fa57e21ee1f4670e77306f857e688a2d4867465",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f12c43ca_69fa2979",
+        "filename": "tests/wifitests/src/com/android/server/wifi/SupplicantStaNetworkHalTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-08T19:11:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c4b0bec_adeec9cb",
       "range": {
         "startLine": 188,
         "startChar": 33,
