@@ -77,6 +77,7 @@ import com.android.internal.util.AsyncChannel;
 import com.android.internal.util.Protocol;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
+import com.android.server.wifi.SupplicantP2pIfaceCallback;
 import com.android.server.wifi.WifiInjector;
 import com.android.server.wifi.WifiMonitor;
 import com.android.server.wifi.WifiNative;
@@ -578,6 +579,9 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
 
         private WifiNative mWifiNative = WifiNative.getP2pNativeInterface();
         private WifiMonitor mWifiMonitor = WifiMonitor.getInstance();
+        private SupplicantP2pIfaceCallback mWifiCallback =
+                new SupplicantP2pIfaceCallback(mWifiNative.getInterfaceName(), mWifiMonitor);
+
         private final WifiP2pDeviceList mPeers = new WifiP2pDeviceList();
         // WifiInjector is lazy initialized in P2p Service
         private WifiInjector mWifiInjector;
@@ -2889,6 +2893,7 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
         private void initializeP2pSettings() {
             mWifiNative.initializeSupplicantHal();
             mWifiNative.setPersistentReconnect(true);
+            mWifiNative.registerP2pHalCallbackReceiver(mWifiCallback);
             mThisDevice.deviceName = getPersistedDeviceName();
             mWifiNative.setDeviceName(mThisDevice.deviceName);
             // DIRECT-XY-DEVICENAME (XY is randomly generated)
