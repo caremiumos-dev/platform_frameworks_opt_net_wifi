@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7375e8c5_73c701ec",
+        "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareStateManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1745,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-08T02:36:15Z",
+      "side": 1,
+      "message": "Maybe \"have one\" go OTA?\n\nI read \"have it\" to mean that the new message goes OTA. But I believe what\u0027s actually happening is that the new sendMessage() call causes an already-queued message to go OTA.",
+      "range": {
+        "startLine": 1745,
+        "startChar": 58,
+        "endLine": 1745,
+        "endChar": 65
+      },
+      "revId": "670fb26a4e5d38cee0ad3e557d962237554a13fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6fba5467_31dff0ab",
+        "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareStateManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-08T02:36:15Z",
+      "side": 1,
+      "message": "I must be missing something, but I don\u0027t understand how queueDepth\u003d6 is sufficient, with numberOfMessages\u003d300.\n\n- AIUI, we\u0027ll make 300 consecutive calls to sendMessage(), at line 1878. That will cause 300 consecutive calls to answerObj.answer(). I believe these calls happen without any intervening calls to answerObj.process().\n\n- This means that, at the end of the for loop (line 1882), we would need to have 150 packets queued, just for the success case (in expectation).\n\n- But, with queueDepth\u003d6, many of the sendMessage() calls for intended-to-be-successful packets will be answered with FOLLOWUP_TX_QUEUE_FULL, instead.\n\nWhere does my analysis goes wrong?",
+      "range": {
+        "startLine": 1872,
+        "startChar": 80,
+        "endLine": 1872,
+        "endChar": 90
+      },
+      "revId": "670fb26a4e5d38cee0ad3e557d962237554a13fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1bbfedfd_0e96dc06",
+        "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareStateManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1889,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-08T02:36:15Z",
+      "side": 1,
+      "message": "Maybe make this more specific? i.e., separate verify() calls for each of the INTERNAL_FAILURE, FOLLOWUP_TX_QUEUE_FULL, and NO_OTA_ACK cases?",
+      "range": {
+        "startLine": 1889,
+        "startChar": 86,
+        "endLine": 1889,
+        "endChar": 94
+      },
+      "revId": "670fb26a4e5d38cee0ad3e557d962237554a13fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21b59a28_297796c6",
+        "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareStateManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2017,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-08T02:36:15Z",
+      "side": 1,
+      "message": "Maybe |mRetryLimit|?\n\n(As is, it\u0027s ambiguous, from the name alone, whether this contains the number of tries used, or the number allowed.)",
+      "range": {
+        "startLine": 2017,
+        "startChar": 44,
+        "endLine": 2017,
+        "endChar": 60
+      },
+      "revId": "670fb26a4e5d38cee0ad3e557d962237554a13fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31feed88_238ec97d",
+        "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareStateManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2021,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-08T02:36:15Z",
+      "side": 1,
+      "message": "Maybe |mTriesUsedByMid|?\n\n(Similar rationale as at line 2017.)",
+      "range": {
+        "startLine": 2021,
+        "startChar": 44,
+        "endLine": 2021,
+        "endChar": 57
+      },
+      "revId": "670fb26a4e5d38cee0ad3e557d962237554a13fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51434359_d9228f18",
+        "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareStateManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2048,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-08T02:36:15Z",
+      "side": 1,
+      "message": "Please use addLast() instead. Given that mQueue is a LinkedList, there\u0027s no reason for the addition to fail. (And we don\u0027t check the return value, anyway.)",
+      "range": {
+        "startLine": 2048,
+        "startChar": 27,
+        "endLine": 2048,
+        "endChar": 32
+      },
+      "revId": "670fb26a4e5d38cee0ad3e557d962237554a13fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0641ca74_58fe8567",
+        "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareStateManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2061,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-08T02:36:15Z",
+      "side": 1,
+      "message": "Maybe \"a message from the queue\", or \"the first message in the queue\"?\n\nI read the current phrasing to mean either |mQueue.size()| messages, or some caller-specified number of messages. But neither of those reflect the current behavior of process().",
+      "range": {
+        "startLine": 2061,
+        "startChar": 21,
+        "endLine": 2061,
+        "endChar": 56
+      },
+      "revId": "670fb26a4e5d38cee0ad3e557d962237554a13fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad07437b_de7d1d4f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareStateManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2082,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-08T02:36:15Z",
+      "side": 1,
+      "message": "Do we need to add |tid| back to |mQueue| in this case? Otherwise, I don\u0027t understand how we get past 1 retry.",
+      "revId": "670fb26a4e5d38cee0ad3e557d962237554a13fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
