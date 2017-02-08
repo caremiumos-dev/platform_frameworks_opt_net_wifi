@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "52993f14_59aadfd9",
+        "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-08T18:15:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5990d4a_76f128a5",
+      "range": {
+        "startLine": 973,
+        "startChar": 76,
+        "endLine": 973,
+        "endChar": 78
+      },
+      "revId": "2513b5337be3fc3e5147dcc0dd0a4f60802fcf1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b935cb4e_5bf3fdd3",
+        "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-08T18:15:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "139e47e7_5fa32f2e",
+      "range": {
+        "startLine": 973,
+        "startChar": 7,
+        "endLine": 973,
+        "endChar": 18
+      },
+      "revId": "2513b5337be3fc3e5147dcc0dd0a4f60802fcf1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47a41990_dcaca6ff",
         "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-02-08T05:31:37Z",
       "side": 1,
       "message": "This is out of place. Add a comment to wifi.proto stating that \u0027GENERAL_ERROR\u0027 is a catch all, don\u0027t explain it here.",
+      "range": {
+        "startLine": 974,
+        "startChar": 0,
+        "endLine": 977,
+        "endChar": 44
+      },
+      "revId": "2513b5337be3fc3e5147dcc0dd0a4f60802fcf1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a9c632a_0f3fb291",
+        "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-08T18:15:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47a41990_dcaca6ff",
       "range": {
         "startLine": 974,
         "startChar": 0,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "3a0c8999_7cec841e",
+        "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-08T18:15:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a814ee4_8c5fc2b2",
+      "range": {
+        "startLine": 980,
+        "startChar": 0,
+        "endLine": 1001,
+        "endChar": 9
+      },
+      "revId": "2513b5337be3fc3e5147dcc0dd0a4f60802fcf1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4482128_cfc3ec6b",
         "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-02-08T05:31:37Z",
       "side": 1,
       "message": "sApCodes",
+      "range": {
+        "startLine": 1209,
+        "startChar": 53,
+        "endLine": 1209,
+        "endChar": 61
+      },
+      "revId": "2513b5337be3fc3e5147dcc0dd0a4f60802fcf1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ebdf5108_69336e54",
+        "filename": "service/java/com/android/server/wifi/WifiMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1209,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-08T18:15:46Z",
+      "side": 1,
+      "message": "This appears to be unused...  removed it.",
+      "parentUuid": "b4482128_cfc3ec6b",
       "range": {
         "startLine": 1209,
         "startChar": 53,
