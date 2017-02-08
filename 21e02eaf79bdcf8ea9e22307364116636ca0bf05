@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9238e22e_5e1208be",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-08T20:31:22Z",
+      "side": 1,
+      "message": "The idea is to be consistent with WifiConnectivityManager. That is, WCM and WNS make decisions but let WSM to execute the commands. This is the pattern of how WCM handles connection and roaming. There it calls into mWifiStateMachine.startConnectToNetwork() and startRoamToNetwork().",
+      "parentUuid": "1827fe9a_dda54e82",
+      "range": {
+        "startLine": 497,
+        "startChar": 0,
+        "endLine": 497,
+        "endChar": 84
+      },
+      "revId": "21e02eaf79bdcf8ea9e22307364116636ca0bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24f92df3_ee9bceb2",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-08T00:17:34Z",
       "side": 1,
       "message": "This mentions that it is queried if firmware roaming is supported.  But the check is really outside this function.  I would actually think it would make more sense to have it in this method.",
+      "range": {
+        "startLine": 7014,
+        "startChar": 7,
+        "endLine": 7014,
+        "endChar": 77
+      },
+      "revId": "21e02eaf79bdcf8ea9e22307364116636ca0bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ad1b4fa_541f029b",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7014,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-08T20:31:22Z",
+      "side": 1,
+      "message": "Sure. Will move the check inside this method. Will do the same for resetFirmwareRoamingConfiguration().",
+      "parentUuid": "24f92df3_ee9bceb2",
       "range": {
         "startLine": 7014,
         "startChar": 7,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "84a2674d_310d5219",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7021,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-08T20:31:22Z",
+      "side": 1,
+      "message": "Agreed.",
+      "parentUuid": "603ee308_3aea5dd8",
+      "range": {
+        "startLine": 7020,
+        "startChar": 12,
+        "endLine": 7021,
+        "endChar": 63
+      },
+      "revId": "21e02eaf79bdcf8ea9e22307364116636ca0bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f73117a4_c4c2acc3",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 7
@@ -105,6 +177,30 @@
       "writtenOn": "2017-02-08T00:17:34Z",
       "side": 1,
       "message": "It seems like this could be done as a call to WifiNative.resetFirmwareRoamingConfig() - you are resetting with an object made in WifiNative and done with a call to WifiNative.",
+      "range": {
+        "startLine": 7037,
+        "startChar": 13,
+        "endLine": 7037,
+        "endChar": 53
+      },
+      "revId": "21e02eaf79bdcf8ea9e22307364116636ca0bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f278f32_6d58dd8c",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7037,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-08T20:31:22Z",
+      "side": 1,
+      "message": "This is because HAL and HIDL don\u0027t have a reset() function. WifiNative currently maintains a 1:1 mapping with HIDL. Do you have strong preference with adding a new API in WifiNative? I am okay with either way.",
+      "parentUuid": "f73117a4_c4c2acc3",
       "range": {
         "startLine": 7037,
         "startChar": 13,
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "63f122e2_ee5ab6ee",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7055,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-08T20:31:22Z",
+      "side": 1,
+      "message": "I thought about this. The challenge here is how to enable Wifi network selector to obtain this information. I prefer not to have network selector to call WifiNative to get these values by itself. Also I try to avoid passing them around as input parameters. \n\nFor device configuration parameters we can access them from context.getResources(). Seems like we are lack of ways to access the configurations generated on the fly. \n\nAn alternative I thought of is to add two APIs in WifiStateMachine for network selector to get this max blacklist and whitelist sizes. Just like how network selector checks if firmware roaming is supported.",
+      "parentUuid": "8b193853_88b9fe01",
+      "range": {
+        "startLine": 7055,
+        "startChar": 12,
+        "endLine": 7055,
+        "endChar": 33
+      },
+      "revId": "21e02eaf79bdcf8ea9e22307364116636ca0bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f0cf8c8_93ed7c2b",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 7
@@ -151,6 +271,30 @@
       "writtenOn": "2017-02-08T00:17:34Z",
       "side": 1,
       "message": "This looks like it has a potential for race conditions with resets since this is sending a separate message.",
+      "range": {
+        "startLine": 7079,
+        "startChar": 8,
+        "endLine": 7079,
+        "endChar": 44
+      },
+      "revId": "21e02eaf79bdcf8ea9e22307364116636ca0bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bec9b781_62c2fa3d",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7079,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-08T20:31:22Z",
+      "side": 1,
+      "message": "Do you mean resetFirmwareRoamingConfigurations() by \u0027reset\u0027 here? That\u0027s invoked in the CMD_START_CONNECT message. Can you elaborate more why you think sending a separate CONFIGURE_FW_ROAMING message would have race condition?\n\nActually while going through the code again, I think there is a bug with the configuration reset logic in CL. If a blacklist is created because of association rejection, it will be cleared by the very next CMD_START_CONNECT attempt even if the target network has the same SSID as the previous failed attempt, which defeats the purpose of this blacklist. The reset should be moved to the network disconnection handling. But this is not a race condition.",
+      "parentUuid": "9f0cf8c8_93ed7c2b",
       "range": {
         "startLine": 7079,
         "startChar": 8,
