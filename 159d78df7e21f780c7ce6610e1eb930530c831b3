@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9bd1591c_3cddf627",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-08T22:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d36cd874_850c379a",
+      "range": {
+        "startLine": 9,
+        "startChar": 47,
+        "endLine": 9,
+        "endChar": 54
+      },
+      "revId": "159d78df7e21f780c7ce6610e1eb930530c831b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24ff79c5_41e2c92e",
         "filename": "service/java/com/android/server/wifi/WificondControl.java",
         "patchSetId": 16
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "09abb007_dd0197a7",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-08T22:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24ff79c5_41e2c92e",
+      "revId": "159d78df7e21f780c7ce6610e1eb930530c831b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "578afcf2_aab96513",
         "filename": "service/java/com/android/server/wifi/WificondControl.java",
         "patchSetId": 16
@@ -53,6 +95,30 @@
       "writtenOn": "2017-02-07T05:29:38Z",
       "side": 1,
       "message": "define a constant for it.",
+      "range": {
+        "startLine": 237,
+        "startChar": 26,
+        "endLine": 237,
+        "endChar": 27
+      },
+      "revId": "159d78df7e21f780c7ce6610e1eb930530c831b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0422df0_ae68709d",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-08T22:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "578afcf2_aab96513",
       "range": {
         "startLine": 237,
         "startChar": 26,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "8aa0fd55_5745483e",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-08T22:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f83192fd_c123c9d7",
+      "range": {
+        "startLine": 241,
+        "startChar": 0,
+        "endLine": 248,
+        "endChar": 29
+      },
+      "revId": "159d78df7e21f780c7ce6610e1eb930530c831b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e60c59e0_b14cbaef",
         "filename": "service/java/com/android/server/wifi/WificondControl.java",
         "patchSetId": 16
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "3c95d74f_d53d2952",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-08T22:39:24Z",
+      "side": 1,
+      "message": "NL80211 message stored SSID in information elements array.\nWificond/supplicant extract this SSID from IEs.\nI think it only figures out that we parsed the IEs in a wrong way. I put this check here because we had this in WifiNative.scan().\nI don\u0027t think this check is super helpful. I am OK on either keeping or removing it. Had a short discussion with roshan. Delete it for now.",
+      "parentUuid": "e60c59e0_b14cbaef",
+      "revId": "159d78df7e21f780c7ce6610e1eb930530c831b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30a37879_c9203d7b",
         "filename": "tests/wifitests/src/com/android/server/wifi/WificondControlTest.java",
         "patchSetId": 16
@@ -116,6 +224,30 @@
       "writtenOn": "2017-02-07T05:29:38Z",
       "side": 1,
       "message": "of",
+      "range": {
+        "startLine": 57,
+        "startChar": 30,
+        "endLine": 57,
+        "endChar": 32
+      },
+      "revId": "159d78df7e21f780c7ce6610e1eb930530c831b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "270138b3_4cd0086b",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WificondControlTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-08T22:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30a37879_c9203d7b",
       "range": {
         "startLine": 57,
         "startChar": 30,
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "987fa0f9_b599254e",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WificondControlTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-08T22:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fe291e9_9ed0e0bb",
+      "range": {
+        "startLine": 60,
+        "startChar": 27,
+        "endLine": 60,
+        "endChar": 31
+      },
+      "revId": "159d78df7e21f780c7ce6610e1eb930530c831b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ed4e4e5_292e1cf9",
         "filename": "tests/wifitests/src/com/android/server/wifi/WificondControlTest.java",
         "patchSetId": 16
@@ -162,6 +318,24 @@
       "writtenOn": "2017-02-07T05:29:38Z",
       "side": 1,
       "message": "Might also want to verify the returnedScanResults contain the correct scan result.",
+      "revId": "159d78df7e21f780c7ce6610e1eb930530c831b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d62fe930_2f1aabc8",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WificondControlTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-08T22:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ed4e4e5_292e1cf9",
       "revId": "159d78df7e21f780c7ce6610e1eb930530c831b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
