@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1244d52f_d3d918f5",
+        "filename": "service/proto/wifi.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-08T05:34:40Z",
+      "side": 1,
+      "message": "// Catch all for failures with no specific failure reason",
+      "range": {
+        "startLine": 447,
+        "startChar": 4,
+        "endLine": 447,
+        "endChar": 50
+      },
+      "revId": "472f8ec01e66bbe639a7c60c5523db93989e260d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
