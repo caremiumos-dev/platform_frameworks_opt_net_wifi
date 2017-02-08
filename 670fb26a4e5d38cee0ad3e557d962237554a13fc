@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8d59bf9f_60dd80d4",
+        "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareStateManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1745,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-02-08T15:28:27Z",
+      "side": 1,
+      "message": "correct assessment, updated comment",
+      "parentUuid": "7375e8c5_73c701ec",
+      "range": {
+        "startLine": 1745,
+        "startChar": 58,
+        "endLine": 1745,
+        "endChar": 65
+      },
+      "revId": "670fb26a4e5d38cee0ad3e557d962237554a13fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fba5467_31dff0ab",
         "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareStateManagerTest.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-08T02:36:15Z",
       "side": 1,
       "message": "I must be missing something, but I don\u0027t understand how queueDepth\u003d6 is sufficient, with numberOfMessages\u003d300.\n\n- AIUI, we\u0027ll make 300 consecutive calls to sendMessage(), at line 1878. That will cause 300 consecutive calls to answerObj.answer(). I believe these calls happen without any intervening calls to answerObj.process().\n\n- This means that, at the end of the for loop (line 1882), we would need to have 150 packets queued, just for the success case (in expectation).\n\n- But, with queueDepth\u003d6, many of the sendMessage() calls for intended-to-be-successful packets will be answered with FOLLOWUP_TX_QUEUE_FULL, instead.\n\nWhere does my analysis goes wrong?",
+      "range": {
+        "startLine": 1872,
+        "startChar": 80,
+        "endLine": 1872,
+        "endChar": 90
+      },
+      "revId": "670fb26a4e5d38cee0ad3e557d962237554a13fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c2ef8b1_61d4adba",
+        "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareStateManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-02-08T15:28:27Z",
+      "side": 1,
+      "message": "There are actually 2 queues in the system:\n- The firmware queue is a limited depth queue\n- Once that gets filled up (TX_QUEUE_FULL) we queue in the framework (\u0027unlimited\u0027 length - BTW just filed b/35133538 about that)\n\nWhat\u0027s we\u0027re simulating/mocking here is the limited firmware queue (since the framework queue is unlimited and it what we\u0027re testing)",
+      "parentUuid": "6fba5467_31dff0ab",
       "range": {
         "startLine": 1872,
         "startChar": 80,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9e02497b_3184f828",
+        "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareStateManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1889,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-02-08T15:28:27Z",
+      "side": 1,
+      "message": "Good idea - done. Except that only client-visible codes will be NO_OTA_ACK and INTERNAL_FAILURE. The TX_QUEUE_FULL will always be handled correctly internally - it\u0027s an internal signal.",
+      "parentUuid": "1bbfedfd_0e96dc06",
+      "range": {
+        "startLine": 1889,
+        "startChar": 86,
+        "endLine": 1889,
+        "endChar": 94
+      },
+      "revId": "670fb26a4e5d38cee0ad3e557d962237554a13fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21b59a28_297796c6",
         "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareStateManagerTest.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-02-08T02:36:15Z",
       "side": 1,
       "message": "Maybe |mRetryLimit|?\n\n(As is, it\u0027s ambiguous, from the name alone, whether this contains the number of tries used, or the number allowed.)",
+      "range": {
+        "startLine": 2017,
+        "startChar": 44,
+        "endLine": 2017,
+        "endChar": 60
+      },
+      "revId": "670fb26a4e5d38cee0ad3e557d962237554a13fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "abdf2802_14081041",
+        "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareStateManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2017,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-02-08T15:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21b59a28_297796c6",
       "range": {
         "startLine": 2017,
         "startChar": 44,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "123fc831_86229f0e",
+        "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareStateManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2021,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-02-08T15:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31feed88_238ec97d",
+      "range": {
+        "startLine": 2021,
+        "startChar": 44,
+        "endLine": 2021,
+        "endChar": 57
+      },
+      "revId": "670fb26a4e5d38cee0ad3e557d962237554a13fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51434359_d9228f18",
         "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareStateManagerTest.java",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2017-02-08T02:36:15Z",
       "side": 1,
       "message": "Please use addLast() instead. Given that mQueue is a LinkedList, there\u0027s no reason for the addition to fail. (And we don\u0027t check the return value, anyway.)",
+      "range": {
+        "startLine": 2048,
+        "startChar": 27,
+        "endLine": 2048,
+        "endChar": 32
+      },
+      "revId": "670fb26a4e5d38cee0ad3e557d962237554a13fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36610378_e454a5a8",
+        "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareStateManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2048,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-02-08T15:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51434359_d9228f18",
       "range": {
         "startLine": 2048,
         "startChar": 27,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "780302d5_b78189c4",
+        "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareStateManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2061,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-02-08T15:28:27Z",
+      "side": 1,
+      "message": "Agreed. That was a remnant from an initial implementation of the function which took a numOfMessages to process argument.",
+      "parentUuid": "0641ca74_58fe8567",
+      "range": {
+        "startLine": 2061,
+        "startChar": 21,
+        "endLine": 2061,
+        "endChar": 56
+      },
+      "revId": "670fb26a4e5d38cee0ad3e557d962237554a13fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad07437b_de7d1d4f",
         "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareStateManagerTest.java",
         "patchSetId": 2
@@ -174,6 +342,24 @@
       "writtenOn": "2017-02-08T02:36:15Z",
       "side": 1,
       "message": "Do we need to add |tid| back to |mQueue| in this case? Otherwise, I don\u0027t understand how we get past 1 retry.",
+      "revId": "670fb26a4e5d38cee0ad3e557d962237554a13fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60ee9b3e_0a23db42",
+        "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareStateManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2082,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-02-08T15:28:27Z",
+      "side": 1,
+      "message": "We don\u0027t need to - that the DUT which does it. I.e. state machine is:\n\n- send message to firmware\n   - if get back a QUEUE_FULL then queue in DUT\n\n- firmware sends back to DUT\n   - Sent OK: done, forward to client\n   - Sent FAIL no-ACK: re-queue with firmware if there\u0027s retransmit left (back to top command)\n   - Sent FAIL other: done, forward failure to client",
+      "parentUuid": "ad07437b_de7d1d4f",
       "revId": "670fb26a4e5d38cee0ad3e557d962237554a13fc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
