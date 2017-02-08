@@ -19,6 +19,7 @@ package com.android.server.wifi;
 import android.hardware.wifi.supplicant.V1_0.ISupplicant;
 import android.hardware.wifi.supplicant.V1_0.ISupplicantIface;
 import android.hardware.wifi.supplicant.V1_0.ISupplicantP2pIface;
+import android.hardware.wifi.supplicant.V1_0.ISupplicantP2pIfaceCallback;
 import android.hardware.wifi.supplicant.V1_0.IfaceType;
 import android.hardware.wifi.supplicant.V1_0.SupplicantStatus;
 import android.hardware.wifi.supplicant.V1_0.SupplicantStatusCode;
@@ -54,6 +55,7 @@ public class SupplicantP2pIfaceHal {
     private ISupplicantIface mHidlSupplicantIface = null;
     private ISupplicantP2pIface mISupplicantP2pIface = null;
     private Object mLock = new Object();
+    private boolean mServiceCallbackInstalled = false;
 
     /**
      * Registers a service notification for the ISupplicant service, which triggers intialization of
@@ -255,6 +257,57 @@ public class SupplicantP2pIfaceHal {
                 return RESULT_NOT_VALID;
         }
     }
+
+    /**
+     * Retrieves the name of the network interface.
+     *
+     * @return name Name of the network interface, e.g., wlan0
+     */
+    public String getName() {
+        synchronized (mLock) {
+            if (!checkSupplicantP2pIfaceAndLogFailure("getName")) return null;
+            SupplicantResult<String> result = new SupplicantResult("getName()");
+
+            try {
+                mISupplicantP2pIface.getName(
+                        (SupplicantStatus status, String name) -> {
+                            result.setResult(status, name);
+                        });
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantP2pIface exception: " + e);
+                supplicantServiceDiedHandler();
+            }
+            return result.getResult();
+        }
+    }
+
+
+    /**
+     * Register for callbacks from this interface.
+     *
+     * These callbacks are invoked for events that are specific to this interface.
+     * Registration of multiple callback objects is supported. These objects must
+     * be automatically deleted when the corresponding client process is dead or
+     * if this interface is removed.
+     *
+     * @param callback An instance of the |ISupplicantP2pIfaceCallback| HIDL
+     *        interface object.
+     * @return boolean value indicating whether operation was successful.
+     */
+    public boolean registerCallback(ISupplicantP2pIfaceCallback receiver) {
+        synchronized (mLock) {
+            if (!checkSupplicantP2pIfaceAndLogFailure("registerCallback")) return false;
+            SupplicantResult<Void> result = new SupplicantResult("registerCallback()");
+            try {
+                result.setResult(mISupplicantP2pIface.registerCallback(receiver));
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantP2pIface exception: " + e);
+                supplicantServiceDiedHandler();
+            }
+            return result.isSuccess();
+        }
+    }
+
 
     /**
      * Initiate a P2P service discovery with a (optional) timeout.
@@ -1304,6 +1357,9 @@ public class SupplicantP2pIfaceHal {
     }
 
 
+
+
+
     /** Container class allowing propagation of status and/or value
      * from callbacks.
      *
@@ -1324,7 +1380,7 @@ public class SupplicantP2pIfaceHal {
 
         public void setResult(SupplicantStatus status, E value) {
             logCompletion(mMethodName, status);
-            logd("leaving " + mMethodName);
+            logd("leaving " + mMethodName + " with result = " + value);
             mStatus = status;
             mValue = value;
         }
