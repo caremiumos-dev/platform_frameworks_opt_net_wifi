@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b421e725_1f0b2b94",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1106048
+      },
+      "writtenOn": "2017-02-08T11:37:52Z",
+      "side": 1,
+      "message": "Sorry, I haven\u0027t understand your question.\nCould you explain the details after you checked the following comment and you still have the same question?\n\nPlease see the comment of the frame format around line 237 - 247.\nIn the case of 3GPP TS 11.11 2G authentication, the element of length is nothing and it\u0027s fixed by 12 byte(SRES and Kc).\nThe other cases (3GPP TS 31.102 3G/2G authentication), the element of length is exist for each element.\nTherefore, we have added \"needLength\" argument in parseHex() to distinguish above authentication cases.",
+      "parentUuid": "17c7fe66_b4153905",
+      "revId": "515caff2b014933cb7412ede895cd98b1aa2128c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17c7fe66_146b4d9a",
         "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-01-04T21:38:23Z",
       "side": 1,
       "message": "Are you ensuring the result is at least 12 bytes?",
+      "revId": "515caff2b014933cb7412ede895cd98b1aa2128c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d2443f4_ee4ccddf",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1106048
+      },
+      "writtenOn": "2017-02-08T11:37:52Z",
+      "side": 1,
+      "message": "As I commented above, the length is fixed by 12 byte in this case.",
+      "parentUuid": "17c7fe66_146b4d9a",
       "revId": "515caff2b014933cb7412ede895cd98b1aa2128c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
