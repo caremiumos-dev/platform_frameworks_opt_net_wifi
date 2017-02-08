@@ -1200,7 +1200,7 @@ public class WifiMonitor {
             if (device != null) sendMessage(iface, P2P_DEVICE_FOUND_EVENT, device);
         } else if (dataString.startsWith(P2P_DEVICE_LOST_STR)) {
             WifiP2pDevice device = getWifiP2pDevice(dataString);
-            if (device != null) sendMessage(iface, P2P_DEVICE_LOST_EVENT, device);
+             if (device != null) sendMessage(iface, P2P_DEVICE_LOST_EVENT, device);
         } else if (dataString.startsWith(P2P_FIND_STOPPED_STR)) {
             sendMessage(iface, P2P_FIND_STOPPED_EVENT);
         } else if (dataString.startsWith(P2P_GO_NEG_REQUEST_STR)) {
@@ -1475,5 +1475,77 @@ public class WifiMonitor {
             }
             sendMessage(iface, NETWORK_DISCONNECTION_EVENT, local, reason, BSSID);
         }
+    }
+
+    public void handleDeviceFound(String iface, WifiP2pDevice device) {
+        sendMessage(iface, P2P_DEVICE_FOUND_EVENT, device);
+    }
+
+    public void handleDeviceLost(String iface, WifiP2pDevice device) {
+        sendMessage(iface, P2P_DEVICE_LOST_EVENT, device);
+    }
+
+    public void handleFindStopped(String iface) {
+        sendMessage(iface, P2P_FIND_STOPPED_EVENT);
+    }
+
+    public void handleGoNegotiationRequest(String iface, WifiP2pConfig config) {
+        sendMessage(iface, P2P_GO_NEGOTIATION_REQUEST_EVENT, config);
+    }
+
+    public void handleGoNegotiationSuccess(String iface) {
+        sendMessage(iface, P2P_GO_NEGOTIATION_SUCCESS_EVENT);
+    }
+
+    public void handleGoNegotiationFailure(String iface, P2pStatus reason) {
+        sendMessage(iface, P2P_GO_NEGOTIATION_FAILURE_EVENT, reason);
+    }
+
+    public void handleGroupFormationSuccess(String iface) {
+        sendMessage(iface, P2P_GROUP_FORMATION_SUCCESS_EVENT);
+    }
+
+    public void handleGroupFormationFailure(String iface, String reason) {
+        sendMessage(iface, P2P_GROUP_FORMATION_FAILURE_EVENT, p2pError(reason));
+    }
+
+    public void handleGroupStarted(String iface, WifiP2pGroup group) {
+        sendMessage(iface, P2P_GROUP_STARTED_EVENT, group);
+    }
+
+    public void handleGroupRemoved(String iface, WifiP2pGroup group) {
+        sendMessage(iface, P2P_GROUP_REMOVED_EVENT, group);
+    }
+
+    public void handleInvitationReceived(String iface, WifiP2pGroup group) {
+        sendMessage(iface, P2P_INVITATION_RECEIVED_EVENT, group);
+    }
+
+    public void handleInvitationResult(String iface, P2pStatus result) {
+        sendMessage(iface, P2P_INVITATION_RESULT_EVENT, result);
+    }
+
+    public void handleProvisionDiscoveryPbcRequest(String iface, WifiP2pProvDiscEvent event) {
+        sendMessage(iface, P2P_PROV_DISC_PBC_REQ_EVENT, event);
+    }
+
+    public void handleProvisionDiscoveryPbcResponse(String iface, WifiP2pProvDiscEvent event) {
+        sendMessage(iface, P2P_PROV_DISC_PBC_RSP_EVENT, event);
+    }
+
+    public void handleProvisionDiscoveryEnterPin(String iface, WifiP2pProvDiscEvent event) {
+        sendMessage(iface, P2P_PROV_DISC_ENTER_PIN_EVENT, event);
+    }
+
+    public void handleProvisionDiscoveryShowPin(String iface, WifiP2pProvDiscEvent event) {
+        sendMessage(iface, P2P_PROV_DISC_SHOW_PIN_EVENT, event);
+    }
+
+    public void handleProvisionDiscoveryFailure(String iface, WifiP2pProvDiscEvent event) {
+        sendMessage(iface, P2P_PROV_DISC_FAILURE_EVENT);
+    }
+
+    public void handleServiceDiscoveryResponse(String iface, List<WifiP2pServiceResponse> services) {
+        sendMessage(iface, P2P_SERV_DISC_RESP_EVENT, services);
     }
 }
