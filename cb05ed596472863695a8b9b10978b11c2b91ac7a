@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a3c7742_f71e59bc",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareDiscoverySessionState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-02-08T00:19:21Z",
+      "side": 1,
+      "message": "Not quite synchronously:\n\n- Manager -\u003e service call over AIDL:\n   - Blocking (non-one-way AIDL): goes to the dispatch thread pool\n   - Gets placed on the handler and executed \u0027later\u0027 (asynchrnously vis-a-vis the original call) on that thread\n- Service -\u003e Manager:\n   - You are correct that this is now handled synchronously with the failure: but it isn\u0027t synchronous with the original call.\n\nSo from a caller perspective it is still asynchronous.",
+      "parentUuid": "8b97cd79_86d4c1be",
+      "revId": "cb05ed596472863695a8b9b10978b11c2b91ac7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47991b5e_3258178f",
         "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareDataPathStateManagerTest.java",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-02-07T23:59:51Z",
       "side": 1,
       "message": "Could we return early in the failure case? Apart from verifyNoMoreInteractions(), I think the rest of this method is conditional on |immediateHalFailure|.\n\nIf returning early wouldn\u0027t change the semantics of this method, then we could reduce nesting (as well as the size of the diff. :-)).",
+      "range": {
+        "startLine": 517,
+        "startChar": 12,
+        "endLine": 517,
+        "endChar": 32
+      },
+      "revId": "cb05ed596472863695a8b9b10978b11c2b91ac7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eddc7e6a_8c10b816",
+        "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareDataPathStateManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-02-08T00:19:21Z",
+      "side": 1,
+      "message": "Agreed. Done.",
+      "parentUuid": "47991b5e_3258178f",
       "range": {
         "startLine": 517,
         "startChar": 12,
