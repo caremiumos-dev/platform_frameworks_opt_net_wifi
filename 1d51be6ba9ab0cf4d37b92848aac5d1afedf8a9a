@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7b2e1080_4bf499fb",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-08T19:26:41Z",
+      "side": 1,
+      "message": "Hmm, I kind of prefer to leave it as is given the size of this if-else block (line 619 to 647) is not that big and most of them are comments and logs. If we add a return after line 627, then a return should be added after line 631 and 646 to make the code more symmetric. I feel that\u0027s a bit over-kill. \n\nLet me know if you have strong preference.",
+      "parentUuid": "d1c35836_c147e9c6",
+      "range": {
+        "startLine": 624,
+        "startChar": 12,
+        "endLine": 624,
+        "endChar": 60
+      },
+      "revId": "1d51be6ba9ab0cf4d37b92848aac5d1afedf8a9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "813a23fd_e2b03538",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9047beb0_f6a2ca6f",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-08T19:26:41Z",
+      "side": 1,
+      "message": "\u0027candidate\u0027 is the WifiConfiguration of the recommended network. targetBssid is initially assigned from the BSSID field of the ScanResult which leads to the recommendation of this network. So it cannot start as null or ANY. We then overwrite this targetBssid variable to ANY only if firmware supports roaming and app didn\u0027t specify a particular BSSID for connection to this network (i.e. the BSSID field of this WifiConfiguration is either null or ANY).\n\nRegarding whether to give a BSSID to start with, I think it is better not to. Given we don\u0027t control the firmware behavior, the starting BSSID we choose may not match what firmware picks. That would cause an extra firmware roaming. Why not just let firmware decide which one to connect to?",
+      "parentUuid": "813a23fd_e2b03538",
+      "range": {
+        "startLine": 637,
+        "startChar": 13,
+        "endLine": 638,
+        "endChar": 90
+      },
+      "revId": "1d51be6ba9ab0cf4d37b92848aac5d1afedf8a9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8663698_1afd964f",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-02-07T21:31:22Z",
       "side": 1,
       "message": "I think I am confused by the code...  I thought that if firmware roaming was supported, the candidate bssid would be replaced with ANY",
+      "range": {
+        "startLine": 1099,
+        "startChar": 37,
+        "endLine": 1099,
+        "endChar": 53
+      },
+      "revId": "1d51be6ba9ab0cf4d37b92848aac5d1afedf8a9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2664e892_8fe06563",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1099,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-08T19:26:41Z",
+      "side": 1,
+      "message": "That\u0027s true only if there is no app specified BSSID for this network (WifiConfiguration). If app specified a particular BSSID of this network to connect to, we can only connect to that one no matter firmware roaming is supported or not. That\u0027s all what this CL is trying to achieve.",
+      "parentUuid": "f8663698_1afd964f",
       "range": {
         "startLine": 1099,
         "startChar": 37,
