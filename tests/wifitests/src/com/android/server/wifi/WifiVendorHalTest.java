@@ -30,6 +30,7 @@ import static org.mockito.Mockito.*;
 
 import android.os.HandlerThread;
 import android.os.Looper;
+import android.os.RemoteException;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -37,7 +38,6 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
 
 /**
  * Unit tests for {@link com.android.server.wifi.WifiVendorHal}.
@@ -358,4 +358,31 @@ public class WifiVendorHalTest {
 
     // TODO(b/34900534) add test for correct MOVE CORRESPONDING of fields
 
+    /**
+     * Test that getFirmwareVersion() and getDriverVersion() work
+     *
+     * Calls before the STA is started are expected to return null.
+     */
+    @Test
+    public void testVersionGetters() throws Exception {
+        String firmwareVersion = "fuzzy";
+        String driverVersion = "dizzy";
+        IWifiChip.ChipDebugInfo chipDebugInfo = new IWifiChip.ChipDebugInfo();
+        chipDebugInfo.firmwareDescription = firmwareVersion;
+        chipDebugInfo.driverDescription = driverVersion;
+
+        doAnswer(new AnswerWithArguments() {
+            public void answer(IWifiChip.requestChipDebugInfoCallback cb) throws RemoteException {
+                cb.onValues(mWifiStatusSuccess, chipDebugInfo);
+            }
+        }).when(mIWifiChip).requestChipDebugInfo(any(IWifiChip.requestChipDebugInfoCallback.class));
+
+        assertNull(mWifiVendorHal.getFirmwareVersion());
+        assertNull(mWifiVendorHal.getDriverVersion());
+
+        assertTrue(mWifiVendorHal.startVendorHalSta());
+
+        assertEquals(firmwareVersion, mWifiVendorHal.getFirmwareVersion());
+        assertEquals(driverVersion, mWifiVendorHal.getDriverVersion());
+    }
 }
