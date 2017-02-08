@@ -16,6 +16,7 @@
 
 package com.android.server.wifi;
 
+import android.net.wifi.WifiScanner;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -206,6 +207,34 @@ public class WifiCountryCode {
         if (mWifiNative.setCountryCode(country)) {
             Log.d(TAG, "Succeeded to set country code to: " + country);
             mCurrentCountryCode = country;
+            int[] channels24G = mWifiNative.getChannelsForBand(WifiScanner.WIFI_BAND_24_GHZ);
+            int[] channels5G = mWifiNative.getChannelsForBand(WifiScanner.WIFI_BAND_5_GHZ);
+            int[] channelsDfs = mWifiNative.getChannelsForBand(
+                    WifiScanner.WIFI_BAND_5_GHZ_DFS_ONLY);
+            if (channels24G != null && channels24G.length > 0) {
+                StringBuilder sb24G = new StringBuilder();
+                sb24G.append("Channels in 2.4Ghz band");
+                for (int i = 0; i < channels24G.length; i++) {
+                    sb24G.append(" " + channels24G[i]);
+                }
+                Log.d(TAG, sb24G.toString());
+            }
+            if (channels5G != null && channels5G.length > 0) {
+                StringBuilder sb5G = new StringBuilder();
+                sb5G.append("Channels in 5Ghz band");
+                for (int i = 0; i < channels5G.length; i++) {
+                    sb5G.append(" " + channels5G[i]);
+                }
+                Log.d(TAG, sb5G.toString());
+            }
+            if (channelsDfs != null && channelsDfs.length > 0) {
+                StringBuilder sbDfs = new StringBuilder();
+                sbDfs.append("DFS Channels");
+                for (int i = 0; i < channelsDfs.length; i++) {
+                    sbDfs.append(" " + channelsDfs[i]);
+                }
+                Log.d(TAG, sbDfs.toString());
+            }
             return true;
         }
         Log.d(TAG, "Failed to set country code to: " + country);

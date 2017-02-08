@@ -16,9 +16,11 @@
 
 package com.android.server.wifi;
 
+import android.net.wifi.WifiScanner;
+
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -52,7 +54,10 @@ public class WifiCountryCodeTest {
         MockitoAnnotations.initMocks(this);
 
         when(mWifiNative.setCountryCode(anyString())).thenReturn(true);
-
+        setupMockChannels(mWifiNative,
+                new int[]{2400, 2450},
+                new int[]{5150, 5175},
+                new int[]{5600, 5650});
         mWifiCountryCode = new WifiCountryCode(
                 mWifiNative,
                 mDefaultCountryCode,
@@ -124,6 +129,9 @@ public class WifiCountryCodeTest {
         mWifiCountryCode.setReadyForChange(true);
         // Telephony coutry is applied after supplicant is ready.
         verify(mWifiNative, times(2)).setCountryCode(anyString());
+        // Each call into setCountryCode when readyForChange=true will invoke the method
+        // getChannelsForBand three times
+        verify(mWifiNative, times(6)).getChannelsForBand(anyInt());
         assertEquals(mTelephonyCountryCode, mWifiCountryCode.getCountryCodeSentToDriver());
     }
 
@@ -146,6 +154,9 @@ public class WifiCountryCodeTest {
         mWifiCountryCode.setReadyForChange(true);
         // Country code restting is applied when supplicant is ready.
         verify(mWifiNative, times(2)).setCountryCode(anyString());
+        // Each call into setCountryCode when readyForChange=true will invoke the method
+        // getChannelsForBand three times
+        verify(mWifiNative, times(6)).getChannelsForBand(anyInt());
         assertEquals(mDefaultCountryCode, mWifiCountryCode.getCountryCodeSentToDriver());
     }
 
@@ -168,6 +179,9 @@ public class WifiCountryCodeTest {
         mWifiCountryCode.setReadyForChange(true);
         // Country code restting is applied when supplicant is ready.
         verify(mWifiNative, times(2)).setCountryCode(anyString());
+        // Each call into setCountryCode when readyForChange=true will invoke the method
+        // getChannelsForBand three times
+        verify(mWifiNative, times(6)).getChannelsForBand(anyInt());
         assertEquals(mDefaultCountryCode, mWifiCountryCode.getCountryCodeSentToDriver());
     }
 
@@ -189,5 +203,15 @@ public class WifiCountryCodeTest {
         mWifiCountryCode.setReadyForChange(false);
         verify(mWifiNative).setCountryCode(anyString());
         assertEquals(persistentCountryCode, mWifiCountryCode.getCountryCodeSentToDriver());
+    }
+
+    private void setupMockChannels(WifiNative wifiNative, int[] channels24, int[] channels5,
+            int[] channelsDfs) {
+        when(wifiNative.getChannelsForBand(WifiScanner.WIFI_BAND_24_GHZ))
+                .thenReturn(channels24);
+        when(wifiNative.getChannelsForBand(WifiScanner.WIFI_BAND_5_GHZ))
+                .thenReturn(channels5);
+        when(wifiNative.getChannelsForBand(WifiScanner.WIFI_BAND_5_GHZ_DFS_ONLY))
+                .thenReturn(channelsDfs);
     }
 }
