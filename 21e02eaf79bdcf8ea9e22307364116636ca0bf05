@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1827fe9a_dda54e82",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-08T00:17:34Z",
+      "side": 1,
+      "message": "does this really have to go to WifiStateMachine?  Couldn\u0027t this just call WifiNative directly?",
+      "range": {
+        "startLine": 497,
+        "startChar": 0,
+        "endLine": 497,
+        "endChar": 84
+      },
+      "revId": "21e02eaf79bdcf8ea9e22307364116636ca0bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24f92df3_ee9bceb2",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7014,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-08T00:17:34Z",
+      "side": 1,
+      "message": "This mentions that it is queried if firmware roaming is supported.  But the check is really outside this function.  I would actually think it would make more sense to have it in this method.",
+      "range": {
+        "startLine": 7014,
+        "startChar": 7,
+        "endLine": 7014,
+        "endChar": 77
+      },
+      "revId": "21e02eaf79bdcf8ea9e22307364116636ca0bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a649e3f8_aae5cf91",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7017,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-08T00:17:34Z",
+      "side": 1,
+      "message": "Should this be in WifiNative in the get capabilities?",
+      "range": {
+        "startLine": 7017,
+        "startChar": 17,
+        "endLine": 7017,
+        "endChar": 47
+      },
+      "revId": "21e02eaf79bdcf8ea9e22307364116636ca0bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "603ee308_3aea5dd8",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7021,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-08T00:17:34Z",
+      "side": 1,
+      "message": "It seems very odd to me to set local variables here in the getFirmwareRoamingCapabilities.",
+      "range": {
+        "startLine": 7020,
+        "startChar": 12,
+        "endLine": 7021,
+        "endChar": 63
+      },
+      "revId": "21e02eaf79bdcf8ea9e22307364116636ca0bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f73117a4_c4c2acc3",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7037,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-08T00:17:34Z",
+      "side": 1,
+      "message": "It seems like this could be done as a call to WifiNative.resetFirmwareRoamingConfig() - you are resetting with an object made in WifiNative and done with a call to WifiNative.",
+      "range": {
+        "startLine": 7037,
+        "startChar": 13,
+        "endLine": 7037,
+        "endChar": 53
+      },
+      "revId": "21e02eaf79bdcf8ea9e22307364116636ca0bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b193853_88b9fe01",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7055,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-08T00:17:34Z",
+      "side": 1,
+      "message": "Is there an overall design for blacklist management?  The fact that it is maintained here and used in network selector, this is feeling really convoluted.  do we have a plan of attack to fix this?  Is there an alternate way to deal with this here so we don\u0027t have to go back and forth between instances?",
+      "range": {
+        "startLine": 7055,
+        "startChar": 12,
+        "endLine": 7055,
+        "endChar": 33
+      },
+      "revId": "21e02eaf79bdcf8ea9e22307364116636ca0bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f0cf8c8_93ed7c2b",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7079,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-08T00:17:34Z",
+      "side": 1,
+      "message": "This looks like it has a potential for race conditions with resets since this is sending a separate message.",
+      "range": {
+        "startLine": 7079,
+        "startChar": 8,
+        "endLine": 7079,
+        "endChar": 44
+      },
+      "revId": "21e02eaf79bdcf8ea9e22307364116636ca0bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
