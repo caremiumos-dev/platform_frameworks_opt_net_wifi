@@ -58,6 +58,13 @@ public class SupplicantP2pIfaceHal {
     private Object mLock = new Object();
     private boolean mServiceCallbackInstalled = false;
 
+    private final WifiMonitor mMonitor;
+    private SupplicantP2pIfaceCallback mCallback = null;
+
+    public SupplicantP2pIfaceHal(WifiMonitor monitor) {
+        mMonitor = monitor;
+    }
+
     /**
      * Registers a service notification for the ISupplicant service, which triggers intialization of
      * the ISupplicantP2pIface
@@ -117,12 +124,15 @@ public class SupplicantP2pIfaceHal {
                     mIServiceManager = null; // Will need to register a new ServiceNotification
                     return false;
                 }
+
+                // Successful completion here.
+                return true;
             } catch (RemoteException e) {
                 Log.e(TAG, "Exception while trying to register a listener for ISupplicant service: "
                         + e);
                 supplicantServiceDiedHandler();
             }
-            return true;
+            return false;
         }
     }
 
@@ -190,6 +200,14 @@ public class SupplicantP2pIfaceHal {
             }
             mISupplicantP2pIface = getP2pIfaceMockable(supplicantIface.getResult());
 
+            if (mISupplicantP2pIface != null) {
+                // TODO(ender): Get rid of hard-coded interface name, which is
+                // assumed to be the group interface name in several other classes
+                // ("p2p0" should probably become getName()).
+                mCallback = new SupplicantP2pIfaceCallback("p2p0", mMonitor);
+                registerCallback(mCallback);
+            }
+
             return true;
         }
     }
@@ -245,7 +263,7 @@ public class SupplicantP2pIfaceHal {
      */
     private boolean checkSupplicantP2pIfaceAndLogFailure(String method) {
         if (mISupplicantP2pIface == null) {
-            Log.e(TAG, "Can't call " + method + ": ISupplicantP2pIface is null");
+            Log.e(TAG, "Can't cal l " + method + ": ISupplicantP2pIface is null");
             return false;
         }
         return true;
