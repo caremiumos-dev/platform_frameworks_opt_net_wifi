@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "765ca347_84439a45",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-08T04:55:51Z",
+      "side": 1,
+      "message": "OK, will do.",
+      "parentUuid": "f13b69c6_93577992",
+      "revId": "bed47ea157d39d084596491cc4805a62020566f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baf9d06c_c643b330",
         "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "e12f076a_fd782ab4",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-08T04:55:51Z",
+      "side": 1,
+      "message": "That goes the other way, doesn\u0027t it?",
+      "parentUuid": "baf9d06c_c643b330",
+      "range": {
+        "startLine": 373,
+        "startChar": 54,
+        "endLine": 373,
+        "endChar": 65
+      },
+      "revId": "bed47ea157d39d084596491cc4805a62020566f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a9fbc63_b2133faa",
         "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
         "patchSetId": 1
@@ -53,6 +95,30 @@
       "writtenOn": "2017-02-07T23:11:44Z",
       "side": 1,
       "message": "Don\u0027t need this. The conversions needed are specified here: https://cs.corp.google.com/android/frameworks/opt/net/wifi/service/jni/com_android_server_wifi_WifiNative.cpp?rcl\u003d7d4da9d42703c519a7401f6ef0ed9166c5685895\u0026l\u003d1070",
+      "range": {
+        "startLine": 385,
+        "startChar": 31,
+        "endLine": 385,
+        "endChar": 34
+      },
+      "revId": "bed47ea157d39d084596491cc4805a62020566f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50e4879f_ac44d356",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-08T04:55:51Z",
+      "side": 1,
+      "message": "OK, but that means that one of these 2 comments is wrong:\n\nhttps://cs.corp.google.com/android/frameworks/base/wifi/java/android/net/wifi/RttManager.java?rcl\u003def4d6f378771ec6cc45e6eeb6753dcc30438d8f3\u0026l\u003d676\n\nhttps://cs.corp.google.com/android/hardware/interfaces/wifi/1.0/types.hal?rcl\u003d43bce98b6e3c43e3022581ed5fe1a64a8edcd907\u0026l\u003d1739",
+      "parentUuid": "1a9fbc63_b2133faa",
       "range": {
         "startLine": 385,
         "startChar": 31,
