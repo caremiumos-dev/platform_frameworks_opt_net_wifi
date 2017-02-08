@@ -133,7 +133,8 @@ public class WifiNative {
 
 
     // TODO(b/34884202): Set this to true to enable HIDL once we're fully ready.
-    private static final boolean HIDL_ENABLE = false;
+    private static final boolean HIDL_ENABLE =
+            SystemProperties.getBoolean("persist.wifi.hidl", false);
     public static final boolean HIDL_SUP_ENABLE = false;
     private static final boolean HIDL_P2P_ENABLE = false;
     private final String mTAG;
