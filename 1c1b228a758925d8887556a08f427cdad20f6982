@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c69b4ee_52aa5104",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-08T04:19:25Z",
+      "side": 1,
+      "message": "Move everything below this to a new CL",
+      "revId": "1c1b228a758925d8887556a08f427cdad20f6982",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb5b857c_e28733da",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-08T04:19:25Z",
+      "side": 1,
+      "message": "Move everything below this to a new CL",
+      "revId": "1c1b228a758925d8887556a08f427cdad20f6982",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
