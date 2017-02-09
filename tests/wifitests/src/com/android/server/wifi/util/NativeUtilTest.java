@@ -112,12 +112,12 @@ public class NativeUtilTest {
     }
 
     /**
-     * Test that conversion of byte array to hex string works.
+     * Test that conversion of byte array to hex string works when the byte array contains 0.
      */
     @Test
     public void testNullCharInAsciiSsidEncode() throws Exception {
         assertEquals(
-                "00",
+                "007369645F74657374313233",
                 NativeUtil.encodeSsid(new ArrayList<>(
                         Arrays.asList((byte) 0x00, (byte) 's', (byte) 'i', (byte) 'd', (byte) '_',
                                 (byte) 't', (byte) 'e', (byte) 's', (byte) 't', (byte) '1',

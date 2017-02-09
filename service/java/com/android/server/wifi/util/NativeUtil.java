@@ -193,8 +193,8 @@ public class NativeUtil {
             throw new IllegalArgumentException("null ssid bytes");
         }
         byte[] ssidArray = byteArrayFromArrayList(ssidBytes);
-        // Check for nulls in the byte stream in which case we cannot convert this into a string.
-        if (!ssidBytes.contains(0)) {
+        // Check for 0's in the byte stream in which case we cannot convert this into a string.
+        if (!ssidBytes.contains(Byte.valueOf((byte) 0))) {
             CharsetDecoder decoder = StandardCharsets.US_ASCII.newDecoder();
             try {
                 CharBuffer decoded = decoder.decode(ByteBuffer.wrap(ssidArray));
