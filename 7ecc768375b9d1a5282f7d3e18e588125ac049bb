@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d45089b_65ff479b",
+        "filename": "tests/wifitests/src/com/android/server/wifi/NetworkListStoreDataTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-09T23:02:59Z",
+      "side": 1,
+      "message": "This needs to false.",
+      "range": {
+        "startLine": 328,
+        "startChar": 68,
+        "endLine": 328,
+        "endChar": 72
+      },
+      "revId": "7ecc768375b9d1a5282f7d3e18e588125ac049bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06c65e4b_29572173",
+        "filename": "tests/wifitests/src/com/android/server/wifi/NetworkListStoreDataTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-09T23:02:59Z",
+      "side": 1,
+      "message": "Same. needs to be false.",
+      "range": {
+        "startLine": 331,
+        "startChar": 54,
+        "endLine": 331,
+        "endChar": 58
+      },
+      "revId": "7ecc768375b9d1a5282f7d3e18e588125ac049bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
