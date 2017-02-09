@@ -22,6 +22,30 @@
       "revId": "ea120e54d5dbb2b0c391d36ed34c15ec8a9d17bd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e8dba21_1f3b44f9",
+        "filename": "service/java/com/android/server/wifi/WifiCountryCode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-02-09T19:24:53Z",
+      "side": 1,
+      "message": "I can surely move it to DebugFrequencyLog() method, but how does it change functionality? Why would I need to update unit tests?",
+      "parentUuid": "ba85add7_4ca839a1",
+      "range": {
+        "startLine": 210,
+        "startChar": 0,
+        "endLine": 237,
+        "endChar": 13
+      },
+      "revId": "ea120e54d5dbb2b0c391d36ed34c15ec8a9d17bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
