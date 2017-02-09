@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "29038713_b31e9fd1",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-09T00:41:36Z",
+      "side": 1,
+      "message": "I\u0027ve uploaded a CL with utility functions for all of these here: go/aog/335416",
+      "parentUuid": "e12f076a_fd782ab4",
+      "range": {
+        "startLine": 373,
+        "startChar": 54,
+        "endLine": 373,
+        "endChar": 65
+      },
+      "revId": "bed47ea157d39d084596491cc4805a62020566f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a9fbc63_b2133faa",
         "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
         "patchSetId": 1
@@ -119,6 +143,30 @@
       "side": 1,
       "message": "OK, but that means that one of these 2 comments is wrong:\n\nhttps://cs.corp.google.com/android/frameworks/base/wifi/java/android/net/wifi/RttManager.java?rcl\u003def4d6f378771ec6cc45e6eeb6753dcc30438d8f3\u0026l\u003d676\n\nhttps://cs.corp.google.com/android/hardware/interfaces/wifi/1.0/types.hal?rcl\u003d43bce98b6e3c43e3022581ed5fe1a64a8edcd907\u0026l\u003d1739",
       "parentUuid": "1a9fbc63_b2133faa",
+      "range": {
+        "startLine": 385,
+        "startChar": 31,
+        "endLine": 385,
+        "endChar": 34
+      },
+      "revId": "bed47ea157d39d084596491cc4805a62020566f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45089771_4f715e80",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-09T00:41:36Z",
+      "side": 1,
+      "message": "Yep. it is. Filed b/35138520 to look at these. For now, let\u0027s follow what\u0027s being done in the JNI layer.",
+      "parentUuid": "50e4879f_ac44d356",
       "range": {
         "startLine": 385,
         "startChar": 31,
