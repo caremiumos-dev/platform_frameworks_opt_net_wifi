@@ -22,6 +22,30 @@
       "revId": "bfae912de44ef7e6a69fe541cd2399609f53c82a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7cccc22_a0cf3eb2",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-09T16:44:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15a897e1_7b1cb799",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 5
+      },
+      "revId": "bfae912de44ef7e6a69fe541cd2399609f53c82a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
