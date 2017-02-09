@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc02fa1d_ee73fc3c",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-09T18:34:42Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9faac8b3_bc08af12",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-09T18:34:42Z",
+      "side": 1,
+      "message": "indent",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 15
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "622f39bb_0752bf63",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-09T18:34:42Z",
+      "side": 1,
+      "message": "Personally I prefer the following way:\nfor (int i \u003d 0; i \u003c macArray.length; i++) {\n  if (i !\u003d 0) sb.append(\":\");\n  sb.append(new String(HexEncoding.encode(macArray, i, 1)));\n}\n\nWith this you don\u0027t need to remove trailing \u0027:\u0027.\nIt up to you, I am OK either way.",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 9
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b33b370_bbf556b7",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-09T18:34:42Z",
+      "side": 1,
+      "message": "Could you also add @throws for all the method below ?",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 105,
+        "endChar": 7
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4576b6b9_ef5b0e68",
+        "filename": "tests/wifitests/src/com/android/server/wifi/util/NativeUtilTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-09T18:34:42Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 2,
+        "startChar": 16,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15d8fba6_a865434a",
+        "filename": "tests/wifitests/src/com/android/server/wifi/util/NativeUtilTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-09T18:34:42Z",
+      "side": 1,
+      "message": "You can use the character value instead of hex for better readability.",
+      "range": {
+        "startLine": 74,
+        "startChar": 38,
+        "endLine": 76,
+        "endChar": 53
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e5efcc3_9f9c9dbe",
+        "filename": "tests/wifitests/src/com/android/server/wifi/util/NativeUtilTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-09T18:34:42Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 88,
+        "startChar": 38,
+        "endLine": 90,
+        "endChar": 52
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
