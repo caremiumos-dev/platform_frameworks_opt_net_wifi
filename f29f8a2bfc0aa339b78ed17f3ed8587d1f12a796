@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32243a94_3850c709",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-09T18:01:50Z",
+      "side": 1,
+      "message": "I\u0027m adding a utility for all of these conversions. go/aog/335416",
+      "range": {
+        "startLine": 239,
+        "startChar": 19,
+        "endLine": 239,
+        "endChar": 34
+      },
+      "revId": "f29f8a2bfc0aa339b78ed17f3ed8587d1f12a796",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
