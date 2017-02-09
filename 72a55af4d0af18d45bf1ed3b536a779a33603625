@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e0673d7_4ad0a8aa",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-09T23:49:08Z",
+      "side": 1,
+      "message": "Might want to to wait for NativeUtil (go/aog/335416)",
+      "range": {
+        "startLine": 901,
+        "startChar": 24,
+        "endLine": 901,
+        "endChar": 67
+      },
+      "revId": "72a55af4d0af18d45bf1ed3b536a779a33603625",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
