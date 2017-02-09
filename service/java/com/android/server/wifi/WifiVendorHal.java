@@ -897,9 +897,8 @@ public class WifiVendorHal {
                 if (config.blacklistBssids != null) {
                     kilroy();
                     for (String bssid : config.blacklistBssids) {
-                        String unquotedMacStr = WifiInfo.removeDoubleQuotes(bssid);
                         byte[] mac = new byte[6];
-                        parseUnquotedMacStrToByteArray(unquotedMacStr, mac);
+                        parseUnquotedMacStrToByteArray(bssid, mac);
                         roamingConfig.bssidBlacklist.add(mac);
                     }
                 }
