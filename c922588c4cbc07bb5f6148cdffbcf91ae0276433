@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3728e6a3_9ea02ae5",
+        "filename": "tests/wifitests/src/com/android/server/wifi/util/NativeUtilTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-09T17:24:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "839e3545_337251e9",
+      "range": {
+        "startLine": 31,
+        "startChar": 55,
+        "endLine": 31,
+        "endChar": 63
+      },
+      "revId": "c922588c4cbc07bb5f6148cdffbcf91ae0276433",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cf2d9be_da9e18f0",
         "filename": "tests/wifitests/src/com/android/server/wifi/util/NativeUtilTest.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-09T17:08:03Z",
       "side": 1,
       "message": "address",
+      "range": {
+        "startLine": 40,
+        "startChar": 88,
+        "endLine": 40,
+        "endChar": 96
+      },
+      "revId": "c922588c4cbc07bb5f6148cdffbcf91ae0276433",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b70bf03_d113786e",
+        "filename": "tests/wifitests/src/com/android/server/wifi/util/NativeUtilTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-09T17:24:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cf2d9be_da9e18f0",
       "range": {
         "startLine": 40,
         "startChar": 88,
