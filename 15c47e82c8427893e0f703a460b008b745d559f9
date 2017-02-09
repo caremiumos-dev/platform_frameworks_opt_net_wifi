@@ -45,6 +45,30 @@
       "revId": "15c47e82c8427893e0f703a460b008b745d559f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3249213c_3b9559ab",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-09T00:37:22Z",
+      "side": 1,
+      "message": "not, if i attach the SupplicantP2p to all interfaces, including wlan0.\n\ni suspect i will have to do this anyway (WifiMonitor is using only primary wlan interface currently for all purposes), so i should be fine dropping this.",
+      "parentUuid": "baceb938_190ec6a5",
+      "range": {
+        "startLine": 210,
+        "startChar": 12,
+        "endLine": 210,
+        "endChar": 34
+      },
+      "revId": "15c47e82c8427893e0f703a460b008b745d559f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
