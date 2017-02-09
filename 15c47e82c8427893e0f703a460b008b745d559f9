@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae8215ab_3698cdf7",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-09T00:15:12Z",
+      "side": 1,
+      "message": "just realized, that these two lines will cause wifi to cease working; second call to initialize() would, instead of simply leaving, mark isupplicant and invalid. and it would remain in that state.",
+      "range": {
+        "startLine": 64,
+        "startChar": 1,
+        "endLine": 65,
+        "endChar": 40
+      },
+      "revId": "15c47e82c8427893e0f703a460b008b745d559f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
