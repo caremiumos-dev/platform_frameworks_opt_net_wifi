@@ -22,6 +22,29 @@
       "revId": "15c47e82c8427893e0f703a460b008b745d559f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baceb938_190ec6a5",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-09T00:34:43Z",
+      "side": 1,
+      "message": "Do we need this null check here? mSupplicantP2pIfaceHal should already be created in WifiInjector when we beging using WifiNative.",
+      "range": {
+        "startLine": 210,
+        "startChar": 12,
+        "endLine": 210,
+        "endChar": 34
+      },
+      "revId": "15c47e82c8427893e0f703a460b008b745d559f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
