@@ -96,6 +96,98 @@
     },
     {
       "key": {
+        "uuid": "1582ef77_df6c8f7a",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-09T19:30:15Z",
+      "side": 1,
+      "message": "Bytes",
+      "range": {
+        "startLine": 64,
+        "startChar": 52,
+        "endLine": 64,
+        "endChar": 56
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80cae04b_8067d015",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-09T19:30:15Z",
+      "side": 1,
+      "message": "Very liberal; do we want to pickier? Or document that the colons are optional?",
+      "range": {
+        "startLine": 74,
+        "startChar": 25,
+        "endLine": 74,
+        "endChar": 50
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3324f1c3_2b3e98af",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-09T19:30:15Z",
+      "side": 1,
+      "message": "We will also need a 3-byte version for OUIs. Maybe code the general version, and make a thin wrapper that does the length check?",
+      "range": {
+        "startLine": 75,
+        "startChar": 33,
+        "endLine": 75,
+        "endChar": 43
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e258a6e_1ca563ec",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-09T19:30:15Z",
+      "side": 1,
+      "message": "Should supply a buffer length; the default of 16 is sure to be too small.",
+      "range": {
+        "startLine": 94,
+        "startChar": 31,
+        "endLine": 94,
+        "endChar": 47
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "622f39bb_0752bf63",
         "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
         "patchSetId": 6
@@ -143,6 +235,29 @@
     },
     {
       "key": {
+        "uuid": "af03b2fc_d28d5e2c",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-09T19:30:15Z",
+      "side": 1,
+      "message": "better to use sb.delete before toString; or even better, don\u0027t add the trailing \":\".\n\nI like the idiom:\n\nString dlm \u003d \"\";\nfor (...) {\n   sb.append(dlm).append(...);\n   dlm \u003d \";\";\n}",
+      "range": {
+        "startLine": 99,
+        "startChar": 15,
+        "endLine": 99,
+        "endChar": 72
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b33b370_bbf556b7",
         "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
         "patchSetId": 6
@@ -183,6 +298,75 @@
         "startChar": 6,
         "endLine": 105,
         "endChar": 7
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "007ad21e_90be7a5f",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-09T19:30:15Z",
+      "side": 1,
+      "message": "@param\n@return",
+      "range": {
+        "startLine": 105,
+        "startChar": 3,
+        "endLine": 105,
+        "endChar": 7
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c450f241_bf943b13",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-09T19:30:15Z",
+      "side": 1,
+      "message": "In cases where the byte values are not a legal UTF-8 encoding, what should happen?\n\nhexStringToByteArray(\"C0C1FEFF\") for example?",
+      "range": {
+        "startLine": 120,
+        "startChar": 5,
+        "endLine": 120,
+        "endChar": 7
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "248eea28_0237b037",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-09T19:30:15Z",
+      "side": 1,
+      "message": "I think the general case works here, so this line can go away.",
+      "range": {
+        "startLine": 125,
+        "startChar": 8,
+        "endLine": 125,
+        "endChar": 49
       },
       "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
