@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba85add7_4ca839a1",
+        "filename": "service/java/com/android/server/wifi/WifiCountryCode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-09T18:50:52Z",
+      "side": 1,
+      "message": "I think you can move it to own method.\nMight call it \"DebugFrequencyLog()\".\nAlso you need to change unit test accordingly.",
+      "range": {
+        "startLine": 210,
+        "startChar": 0,
+        "endLine": 237,
+        "endChar": 13
+      },
+      "revId": "ea120e54d5dbb2b0c391d36ed34c15ec8a9d17bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
