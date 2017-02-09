@@ -1,0 +1,9 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Lorenzo Colitti <lorenzo@google.com>
+Verified+1: Michael Plass <mplass@google.com>
+Autosubmit+1: Michael Plass <mplass@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Thu, 09 Feb 2017 18:07:03 +0000
+Reviewed-on: https://android-review.googlesource.com/335485
+Project: platform/frameworks/opt/net/wifi
+Branch: refs/heads/master
