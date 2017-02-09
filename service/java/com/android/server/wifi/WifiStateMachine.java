@@ -1270,7 +1270,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         // Trigger an immediate connection to the specified network. We're also noting the user
         // connect choice here, so that it will be considered in the next network selection.
         mWifiConnectivityManager.setUserConnectChoice(netId);
-        if (mWifiInfo.getNetworkId() == netId) {
+        if (mWifiInfo.getNetworkId() == netId && !isEapMethod(getCurrentWifiConfiguration())) {
             // We're already connected to the user specified network, don't trigger a
             // reconnection.
             logi("connectToUserSelectNetwork already connecting/connected=" + netId);
@@ -4668,6 +4668,14 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         return mLastBssid;
     }
 
+    private boolean isEapMethod(WifiConfiguration config) {
+        return config.enterpriseConfig.getEapMethod() != WifiEnterpriseConfig.Eap.NONE;
+    }
+
+    private boolean isSameEapMethod(WifiConfiguration config1, WifiConfiguration config2) {
+        return config1.enterpriseConfig.getEapMethod() == config2.enterpriseConfig.getEapMethod();
+    }
+
     class ConnectModeState extends State {
 
         @Override
@@ -5064,6 +5072,8 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     break;
                 case WifiManager.SAVE_NETWORK:
                     config = (WifiConfiguration) message.obj;
+                    // Get current connection configuration before updating configuration
+                    final WifiConfiguration currentConfig = getCurrentWifiConfiguration();
                     mWifiConnectionStatistics.numWifiManagerJoinAttempt++;
                     if (config == null) {
                         loge("SAVE_NETWORK with null configuration"
@@ -5083,7 +5093,8 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                         break;
                     }
                     netId = result.getNetworkId();
-                    if (mWifiInfo.getNetworkId() == netId) {
+                    if (mWifiInfo.getNetworkId() == netId
+                            && (!isEapMethod(config) || isSameEapMethod(config, currentConfig))) {
                         if (result.hasIpChanged()) {
                             // The currently connection configuration was changed
                             // We switched from DHCP to static or from static to DHCP, or the
