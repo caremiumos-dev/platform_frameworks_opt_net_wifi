@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fab0516_cbfed285",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-09T00:55:51Z",
+      "side": 1,
+      "message": "You can replace this later with the utils in go/aog/335416",
+      "range": {
+        "startLine": 237,
+        "startChar": 26,
+        "endLine": 237,
+        "endChar": 42
+      },
+      "revId": "8631700c2c81784d8fb02d38a304cf6609f67c14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
