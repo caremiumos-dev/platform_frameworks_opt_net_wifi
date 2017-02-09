@@ -22,6 +22,30 @@
       "revId": "ccac1c69ee6559b567e34b9b19e368efaa600174",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a44641c_2a907368",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-09T18:06:59Z",
+      "side": 1,
+      "message": "That seems like it would work, but maybe kind of heavyweight?\n\nEtan has used his own Mutable\u003cT\u003e; I prefer the non-template version.\n\n(BTW, the \"public\" is just to appease checkstyle).\n\nThanks, now I know a little about AtomicReference!",
+      "parentUuid": "5c275cec_e198bf90",
+      "range": {
+        "startLine": 502,
+        "startChar": 8,
+        "endLine": 502,
+        "endChar": 25
+      },
+      "revId": "ccac1c69ee6559b567e34b9b19e368efaa600174",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
