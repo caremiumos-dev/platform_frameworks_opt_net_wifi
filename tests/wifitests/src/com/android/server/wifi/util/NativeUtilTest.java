@@ -1,0 +1,101 @@
+/*
+ * Copyright (C) 2016 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.android.server.wifi.util;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+/**
+ * Unit tests for {@link com.android.server.wifi.util.NativeUtil}.
+ */
+public class NativeUtilTest {
+    /**
+     * Test that parsing a typical colon-delimited MAC adddress works.
+     */
+    @Test
+    public void testMacAddressToByteArray() throws Exception {
+        assertArrayEquals(new byte[]{0x61, 0x52, 0x43, 0x34, 0x25, 0x16},
+                NativeUtil.macAddressToByteArray("61:52:43:34:25:16"));
+    }
+
+    /**
+     * Test that conversion of byte array of mac address to typical colon-delimited MAC adddress
+     * works.
+     */
+    @Test
+    public void testByteArrayToMacAddress() throws Exception {
+        assertEquals("61:52:43:34:25:16",
+                NativeUtil.macAddressFromByteArray(new byte[]{0x61, 0x52, 0x43, 0x34, 0x25, 0x16}));
+    }
+
+    /**
+     * Test that parsing a hex string to byte array works.
+     */
+    @Test
+    public void testHexStringToByteArray() throws Exception {
+        assertArrayEquals(new byte[]{0x45, 0x12, 0x23, 0x34},
+                NativeUtil.hexStringToByteArray("45122334"));
+    }
+
+    /**
+     * Test that conversion of byte array to hexstring works.
+     */
+    @Test
+    public void testHexStringFromByteArray() throws Exception {
+        assertEquals("45122334",
+                NativeUtil.hexStringFromByteArray(new byte[]{0x45, 0x12, 0x23, 0x34}));
+    }
+
+    /**
+     * Test that parsing of quoted SSID to byte array works.
+     */
+    @Test
+    public void testSsidDecode() throws Exception {
+        assertEquals(
+                new ArrayList<>(
+                        Arrays.asList((byte) 115, (byte) 115, (byte) 105, (byte) 100, (byte) 95,
+                                (byte) 116, (byte) 101, (byte) 115, (byte) 116, (byte) 49,
+                                (byte) 50, (byte) 51)),
+                NativeUtil.decodeSsid("\"ssid_test123\""));
+    }
+
+    /**
+     * Test that conversion of byte array to quoted SSID works.
+     */
+    @Test
+    public void testSsidEncode() throws Exception {
+        assertEquals(
+                "\"ssid_test123\"",
+                NativeUtil.encodeSsid(new ArrayList<>(
+                        Arrays.asList((byte) 115, (byte) 115, (byte) 105, (byte) 100, (byte) 95,
+                                (byte) 116, (byte) 101, (byte) 115, (byte) 116, (byte) 49,
+                                (byte) 50, (byte) 51))));
+    }
+
+    /**
+     * Test that parsing of quoted SSID to byte array and vice versa works.
+     */
+    @Test
+    public void testSsidEncodeDecode() throws Exception {
+        String ssid = "\"ssid_test123\"";
+        assertEquals(ssid, NativeUtil.encodeSsid(NativeUtil.decodeSsid(ssid)));
+    }
+}
