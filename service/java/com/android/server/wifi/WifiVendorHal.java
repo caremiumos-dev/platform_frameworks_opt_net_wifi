@@ -553,11 +553,29 @@ public class WifiVendorHal {
     }
 
     /**
-     * to be implemented
+     * Set country code for this AP iface.
+     *
+     * @param countryCode - two-letter country code (as ISO 3166)
+     * @return true for success
      */
     public boolean setCountryCodeHal(String countryCode) {
         kilroy();
-        throw new UnsupportedOperationException();
+        if (countryCode == null) return false;
+        if (countryCode.length() != 2) return false;
+        byte[] code = new byte[]{(byte) countryCode.charAt(0), (byte) countryCode.charAt(1)};
+        synchronized (sLock) {
+            try {
+                if (mIWifiApIface == null) return false;
+                kilroy();
+                WifiStatus status = mIWifiApIface.setCountryCode(code);
+                if (status.code != WifiStatusCode.SUCCESS) return false;
+                kilroy();
+                return true;
+            } catch (RemoteException e) {
+                handleRemoteException(e);
+                return false;
+            }
+        }
     }
 
     /**
