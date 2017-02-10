@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc70a6c9_c58c3456",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-10T15:41:04Z",
+      "side": 1,
+      "message": "U can use the NAtiveUtil.stringToByteArray() method here.",
+      "revId": "fb4061e60425d997461454d0ec9dcb3854177873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
