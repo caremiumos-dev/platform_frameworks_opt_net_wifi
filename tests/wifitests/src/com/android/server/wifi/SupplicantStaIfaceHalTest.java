@@ -15,8 +15,9 @@
  */
 package com.android.server.wifi;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
@@ -34,10 +35,13 @@ import android.hardware.wifi.supplicant.V1_0.SupplicantStatus;
 import android.hardware.wifi.supplicant.V1_0.SupplicantStatusCode;
 import android.hidl.manager.V1_0.IServiceManager;
 import android.hidl.manager.V1_0.IServiceNotification;
+import android.net.IpConfiguration;
+import android.net.wifi.WifiConfiguration;
 import android.os.HandlerThread;
 import android.os.IHwBinder;
 import android.os.RemoteException;
 import android.os.test.TestLooper;
+import android.util.SparseArray;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -47,6 +51,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Unit tests for SupplicantStaIfaceHal
@@ -59,6 +66,13 @@ public class SupplicantStaIfaceHalTest {
     @Mock ISupplicantIface mISupplicantIfaceMock;
     @Mock ISupplicantStaIface mISupplicantStaIfaceMock;
     @Mock HandlerThread mHandlerThread;
+    private static final ArrayList<Integer> NETWORK_IDS =
+            new ArrayList<>(Arrays.asList(1, 2, 3));
+    private static final ArrayList<String> NETWORK_SSIDS =
+            new ArrayList<>(Arrays.asList("ssid1", "ssid2", "ssid3"));
+    @Mock SupplicantStaNetworkHal mSupplicantStaNetworkMock1;
+    @Mock SupplicantStaNetworkHal mSupplicantStaNetworkMock2;
+    @Mock SupplicantStaNetworkHal mSupplicantStaNetworkMock3;
 
     SupplicantStatus mStatusSuccess;
     ISupplicant.IfaceInfo mStaIface;
@@ -89,6 +103,19 @@ public class SupplicantStaIfaceHalTest {
         @Override
         protected ISupplicantStaIface getStaIfaceMockable(ISupplicantIface iface) {
             return mISupplicantStaIfaceMock;
+        }
+
+        @Override
+        protected SupplicantStaNetworkHal getNetworkMockable(int id) {
+            if (id == 1) {
+                return mSupplicantStaNetworkMock1;
+            } else if (id == 2) {
+                return mSupplicantStaNetworkMock2;
+            } else if (id == 3) {
+                return mSupplicantStaNetworkMock3;
+            } else {
+                return null;
+            }
         }
     }
 
@@ -148,6 +175,180 @@ public class SupplicantStaIfaceHalTest {
         executeAndValidateInitializationSequence(false, false, true);
     }
 
+    /**
+     * Tests the loading of networks using {@link SupplicantStaNetworkHal}.
+     * Fills up only the SSID field of configs and uses it as a configKey as well.
+     */
+    @Test
+    public void testLoadNetworks() throws Exception {
+        executeAndValidateInitializationSequence(false, false, false);
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public void answer(ISupplicantStaIface.listNetworksCallback cb) {
+                cb.onValues(mStatusSuccess, NETWORK_IDS);
+            }
+        }).when(mISupplicantStaIfaceMock)
+                .listNetworks(any(ISupplicantStaIface.listNetworksCallback.class));
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public boolean answer(WifiConfiguration config, Map<String, String> networkExtra) {
+                config.SSID = NETWORK_SSIDS.get(0);
+                config.networkId = 1;
+                networkExtra.put(SupplicantStaNetworkHal.ID_STRING_KEY_CONFIG_KEY, config.SSID);
+                return true;
+            }
+        }).when(mSupplicantStaNetworkMock1)
+                .loadWifiConfiguration(any(WifiConfiguration.class), any(Map.class));
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public boolean answer(WifiConfiguration config, Map<String, String> networkExtra) {
+                config.SSID = NETWORK_SSIDS.get(1);
+                config.networkId = 2;
+                networkExtra.put(SupplicantStaNetworkHal.ID_STRING_KEY_CONFIG_KEY, config.SSID);
+                return true;
+            }
+        }).when(mSupplicantStaNetworkMock2)
+                .loadWifiConfiguration(any(WifiConfiguration.class), any(Map.class));
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public boolean answer(WifiConfiguration config, Map<String, String> networkExtra) {
+                config.SSID = NETWORK_SSIDS.get(2);
+                config.networkId = 3;
+                networkExtra.put(SupplicantStaNetworkHal.ID_STRING_KEY_CONFIG_KEY, config.SSID);
+                return true;
+            }
+        }).when(mSupplicantStaNetworkMock3)
+                .loadWifiConfiguration(any(WifiConfiguration.class), any(Map.class));
+
+        Map<String, WifiConfiguration> configs = new HashMap<>();
+        SparseArray<Map<String, String>> extras = new SparseArray<>();
+        assertTrue(mDut.loadNetworks(configs, extras));
+
+        assertEquals(3, configs.size());
+        assertEquals(3, extras.size());
+        WifiConfiguration config1 = configs.get(NETWORK_SSIDS.get(0));
+        WifiConfiguration config2 = configs.get(NETWORK_SSIDS.get(1));
+        WifiConfiguration config3 = configs.get(NETWORK_SSIDS.get(2));
+        assertEquals(NETWORK_SSIDS.get(0), config1.SSID);
+        assertEquals(NETWORK_SSIDS.get(1), config2.SSID);
+        assertEquals(NETWORK_SSIDS.get(2), config3.SSID);
+        assertEquals(IpConfiguration.IpAssignment.DHCP, config1.getIpAssignment());
+        assertEquals(IpConfiguration.IpAssignment.DHCP, config2.getIpAssignment());
+        assertEquals(IpConfiguration.IpAssignment.DHCP, config3.getIpAssignment());
+        assertEquals(IpConfiguration.ProxySettings.NONE, config1.getProxySettings());
+        assertEquals(IpConfiguration.ProxySettings.NONE, config2.getProxySettings());
+        assertEquals(IpConfiguration.ProxySettings.NONE, config3.getProxySettings());
+    }
+
+    /**
+     * Tests the loading of networks using {@link SupplicantStaNetworkHal}.
+     * Fills up only the SSID field of configs and uses it as a configKey as well.
+     */
+    @Test
+    public void testLoadNetworksRemovesDuplicates() throws Exception {
+        executeAndValidateInitializationSequence(false, false, false);
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public void answer(ISupplicantStaIface.listNetworksCallback cb) {
+                cb.onValues(mStatusSuccess, NETWORK_IDS);
+            }
+        }).when(mISupplicantStaIfaceMock)
+                .listNetworks(any(ISupplicantStaIface.listNetworksCallback.class));
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public SupplicantStatus answer(int id) {
+                return  mStatusSuccess;
+            }
+        }).when(mISupplicantStaIfaceMock).removeNetwork(anyInt());
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public boolean answer(WifiConfiguration config, Map<String, String> networkExtra) {
+                config.SSID = NETWORK_SSIDS.get(0);
+                config.networkId = 1;
+                networkExtra.put(SupplicantStaNetworkHal.ID_STRING_KEY_CONFIG_KEY, config.SSID);
+                return true;
+            }
+        }).when(mSupplicantStaNetworkMock1)
+                .loadWifiConfiguration(any(WifiConfiguration.class), any(Map.class));
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public boolean answer(WifiConfiguration config, Map<String, String> networkExtra) {
+                config.SSID = NETWORK_SSIDS.get(1);
+                config.networkId = 2;
+                networkExtra.put(SupplicantStaNetworkHal.ID_STRING_KEY_CONFIG_KEY, config.SSID);
+                return true;
+            }
+        }).when(mSupplicantStaNetworkMock2)
+                .loadWifiConfiguration(any(WifiConfiguration.class), any(Map.class));
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public boolean answer(WifiConfiguration config, Map<String, String> networkExtra) {
+                config.SSID = NETWORK_SSIDS.get(1);
+                config.networkId = 2;
+                networkExtra.put(SupplicantStaNetworkHal.ID_STRING_KEY_CONFIG_KEY,
+                        NETWORK_SSIDS.get(1));
+                return true;
+            }
+        }).when(mSupplicantStaNetworkMock3)
+                .loadWifiConfiguration(any(WifiConfiguration.class), any(Map.class));
+
+        Map<String, WifiConfiguration> configs = new HashMap<>();
+        SparseArray<Map<String, String>> extras = new SparseArray<>();
+        assertTrue(mDut.loadNetworks(configs, extras));
+
+        assertEquals(2, configs.size());
+        assertEquals(2, extras.size());
+        WifiConfiguration config1 = configs.get(NETWORK_SSIDS.get(0));
+        WifiConfiguration config2 = configs.get(NETWORK_SSIDS.get(1));
+        assertEquals(NETWORK_SSIDS.get(0), config1.SSID);
+        assertEquals(NETWORK_SSIDS.get(1), config2.SSID);
+        assertEquals(IpConfiguration.IpAssignment.DHCP, config1.getIpAssignment());
+        assertEquals(IpConfiguration.IpAssignment.DHCP, config2.getIpAssignment());
+        assertEquals(IpConfiguration.ProxySettings.NONE, config1.getProxySettings());
+        assertEquals(IpConfiguration.ProxySettings.NONE, config2.getProxySettings());
+    }
+
+    /**
+     * Tests the failure to load networks because of listNetworks failure.
+     */
+    @Test
+    public void testLoadNetworksFailedDueToListNetworks() throws Exception {
+        executeAndValidateInitializationSequence(false, false, false);
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public void answer(ISupplicantStaIface.listNetworksCallback cb) {
+                cb.onValues(mStatusSuccess, null);
+            }
+        }).when(mISupplicantStaIfaceMock)
+                .listNetworks(any(ISupplicantStaIface.listNetworksCallback.class));
+
+        Map<String, WifiConfiguration> configs = new HashMap<>();
+        SparseArray<Map<String, String>> extras = new SparseArray<>();
+        assertFalse(mDut.loadNetworks(configs, extras));
+    }
+
+    /**
+     * Tests the failure to load networks because of loadWifiConfiguration failure.
+     */
+    @Test
+    public void testLoadNetworksFailedDueToLoadWifiConfiguration() throws Exception {
+        executeAndValidateInitializationSequence(false, false, false);
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public void answer(ISupplicantStaIface.listNetworksCallback cb) {
+                cb.onValues(mStatusSuccess, NETWORK_IDS);
+            }
+        }).when(mISupplicantStaIfaceMock)
+                .listNetworks(any(ISupplicantStaIface.listNetworksCallback.class));
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public boolean answer(WifiConfiguration config, Map<String, String> networkExtra) {
+                config.SSID = NETWORK_SSIDS.get(0);
+                config.networkId = 1;
+                networkExtra.put(SupplicantStaNetworkHal.ID_STRING_KEY_CONFIG_KEY, config.SSID);
+                return true;
+            }
+        }).when(mSupplicantStaNetworkMock1)
+                .loadWifiConfiguration(any(WifiConfiguration.class), any(Map.class));
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public boolean answer(WifiConfiguration config, Map<String, String> networkExtra) {
+                return false;
+            }
+        }).when(mSupplicantStaNetworkMock2)
+                .loadWifiConfiguration(any(WifiConfiguration.class), any(Map.class));
+
+        Map<String, WifiConfiguration> configs = new HashMap<>();
+        SparseArray<Map<String, String>> extras = new SparseArray<>();
+        assertFalse(mDut.loadNetworks(configs, extras));
+    }
     /**
      * Calls.initialize(), mocking various call back answers and verifying flow, asserting for the
      * expected result. Verifies if ISupplicantStaIface manager is initialized or reset.
