@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "12bf8486_ed1d7c8b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-10T22:27:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f285ead_569dc1eb",
+      "range": {
+        "startLine": 9,
+        "startChar": 11,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "10e339aaea9b4f8c2244b535b4673e25ae999f08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70a444ee_cb42b64b",
         "filename": "/COMMIT_MSG",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-10T19:07:56Z",
       "side": 1,
       "message": "represents an",
+      "range": {
+        "startLine": 13,
+        "startChar": 56,
+        "endLine": 13,
+        "endChar": 68
+      },
+      "revId": "10e339aaea9b4f8c2244b535b4673e25ae999f08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "debd124b_5b615032",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-10T22:27:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70a444ee_cb42b64b",
       "range": {
         "startLine": 13,
         "startChar": 56,
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "e80125b4_cf1582c5",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-10T22:27:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40494726_bb613750",
+      "range": {
+        "startLine": 160,
+        "startChar": 80,
+        "endLine": 160,
+        "endChar": 94
+      },
+      "revId": "10e339aaea9b4f8c2244b535b4673e25ae999f08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb24936d_ed201467",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-10T22:27:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3891e303_a91a7151",
+      "range": {
+        "startLine": 160,
+        "startChar": 68,
+        "endLine": 160,
+        "endChar": 69
+      },
+      "revId": "10e339aaea9b4f8c2244b535b4673e25ae999f08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "281f1b4f_ad447588",
         "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
         "patchSetId": 11
@@ -105,6 +201,30 @@
       "writtenOn": "2017-02-10T19:07:56Z",
       "side": 1,
       "message": "Hex string without delimiters.",
+      "range": {
+        "startLine": 162,
+        "startChar": 10,
+        "endLine": 162,
+        "endChar": 21
+      },
+      "revId": "10e339aaea9b4f8c2244b535b4673e25ae999f08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87581791_e77795e9",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-10T22:27:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "281f1b4f_ad447588",
       "range": {
         "startLine": 162,
         "startChar": 10,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "88afa953_a19c6581",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-10T22:27:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43fc0454_001f4cd5",
+      "range": {
+        "startLine": 183,
+        "startChar": 10,
+        "endLine": 183,
+        "endChar": 21
+      },
+      "revId": "10e339aaea9b4f8c2244b535b4673e25ae999f08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "995ee029_0b3de9c9",
         "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
         "patchSetId": 11
@@ -151,6 +295,30 @@
       "writtenOn": "2017-02-10T19:07:56Z",
       "side": 1,
       "message": "I would feel better about using an even more restricted set. Let\u0027s chat about it.",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 9
+      },
+      "revId": "10e339aaea9b4f8c2244b535b4673e25ae999f08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6cc32cd7_46744e15",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-10T22:27:02Z",
+      "side": 1,
+      "message": "As discussed offline and I had another chat with Paul, when we see 0\u0027s in the byte stream. We\u0027ll convert it into hex string.",
+      "parentUuid": "995ee029_0b3de9c9",
       "range": {
         "startLine": 193,
         "startChar": 0,
