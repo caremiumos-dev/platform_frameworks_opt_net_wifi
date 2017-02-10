@@ -22,6 +22,30 @@
       "revId": "c0813be3b11eec7d79cce5e0044e2816b1e30b8b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49653cae_f664307e",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-10T21:18:00Z",
+      "side": 1,
+      "message": "1. I\u0027m worried that the exact meaning of CMD_BOOT_COMPLETED isn\u0027t very well defined, and that it might change over time. \n\nNote that wifi-events.rc itself is triggered by sys.boot_completed\u003d1, in order to make sure that last-mile logging does not slow down the boot process. So, depending on the exact meaning of CMD_BOOT_COMPLETED (which depends on WSM and UserController), CMD_BOOT_COMPLETED might not be sufficient.\n\nGiven that, I think we should minimize coupling between CMD_BOOT_COMPLETED and last-mile logging.\n\nThis is partly driven by the difficulty of adding integration tests. But note that I wouldn\u0027t expect an integration test to reliably catch a regression here anyway (since the regression could be due to a race condition).\n\n2. We could get around #1 by having wifi-events.rc explicitly triggering a property change of its own. Then we might do something like have WifiDiagnostics.reportConnectionEvent() check the value of the system property, before calling over to LastMileLogger.reportConnectionEvent(). But I don\u0027t think that has any significant advantage over this approach.",
+      "parentUuid": "41f93334_0288a697",
+      "range": {
+        "startLine": 33,
+        "startChar": 11,
+        "endLine": 33,
+        "endChar": 25
+      },
+      "revId": "c0813be3b11eec7d79cce5e0044e2816b1e30b8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
