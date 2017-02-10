@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7547e044_c8d184fc",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointXmlUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-02-10T04:30:30Z",
+      "side": 1,
+      "message": "This way of parsing fields will not work well when we need to add/remove fields in the future. \n\nWill investigate a more flexible way of parsing fields.",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 90
+      },
+      "revId": "f18b36667d77be8b0c2bc890920c8926451bfa86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
