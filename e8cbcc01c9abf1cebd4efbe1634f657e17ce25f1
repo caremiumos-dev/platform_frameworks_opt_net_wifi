@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "470c6b17_3fe80512",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-02-10T23:38:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ee5f917_471f26d2",
+      "range": {
+        "startLine": 373,
+        "startChar": 8,
+        "endLine": 373,
+        "endChar": 11
+      },
+      "revId": "e8cbcc01c9abf1cebd4efbe1634f657e17ce25f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00af9f5c_93dc3513",
         "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-02-10T23:14:07Z",
       "side": 1,
       "message": "if (supportedIfaceTypes.contains(IfaceType.STA)) {\n            featureSet |\u003d WifiManager.WIFI_FEATURE_INFRA;\n        }",
+      "revId": "e8cbcc01c9abf1cebd4efbe1634f657e17ce25f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2d6fb90_276ca088",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-02-10T23:38:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00af9f5c_93dc3513",
       "revId": "e8cbcc01c9abf1cebd4efbe1634f657e17ce25f1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
