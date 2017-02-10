@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f285ead_569dc1eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-10T19:07:56Z",
+      "side": 1,
+      "message": "contains",
+      "range": {
+        "startLine": 9,
+        "startChar": 11,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "10e339aaea9b4f8c2244b535b4673e25ae999f08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70a444ee_cb42b64b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-10T19:07:56Z",
+      "side": 1,
+      "message": "represents an",
+      "range": {
+        "startLine": 13,
+        "startChar": 56,
+        "endLine": 13,
+        "endChar": 68
+      },
+      "revId": "10e339aaea9b4f8c2244b535b4673e25ae999f08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40494726_bb613750",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-10T19:07:56Z",
+      "side": 1,
+      "message": "These forms are acceptable",
+      "range": {
+        "startLine": 160,
+        "startChar": 80,
+        "endLine": 160,
+        "endChar": 94
+      },
+      "revId": "10e339aaea9b4f8c2244b535b4673e25ae999f08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3891e303_a91a7151",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-10T19:07:56Z",
+      "side": 1,
+      "message": "Insert a blank line here.",
+      "range": {
+        "startLine": 160,
+        "startChar": 68,
+        "endLine": 160,
+        "endChar": 69
+      },
+      "revId": "10e339aaea9b4f8c2244b535b4673e25ae999f08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "281f1b4f_ad447588",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-10T19:07:56Z",
+      "side": 1,
+      "message": "Hex string without delimiters.",
+      "range": {
+        "startLine": 162,
+        "startChar": 10,
+        "endLine": 162,
+        "endChar": 21
+      },
+      "revId": "10e339aaea9b4f8c2244b535b4673e25ae999f08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43fc0454_001f4cd5",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-10T19:07:56Z",
+      "side": 1,
+      "message": "Hex string without delimiters.",
+      "range": {
+        "startLine": 183,
+        "startChar": 10,
+        "endLine": 183,
+        "endChar": 21
+      },
+      "revId": "10e339aaea9b4f8c2244b535b4673e25ae999f08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "995ee029_0b3de9c9",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-10T19:07:56Z",
+      "side": 1,
+      "message": "I would feel better about using an even more restricted set. Let\u0027s chat about it.",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 9
+      },
+      "revId": "10e339aaea9b4f8c2244b535b4673e25ae999f08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
