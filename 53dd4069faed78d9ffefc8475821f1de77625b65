@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fb205044_f211fb0f",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-10T23:30:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62e6eff7_94d5e130",
+      "range": {
+        "startLine": 693,
+        "startChar": 54,
+        "endLine": 693,
+        "endChar": 68
+      },
+      "revId": "53dd4069faed78d9ffefc8475821f1de77625b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "480b7363_70632f13",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2b1f1074_541ad99e",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3918,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-10T23:30:24Z",
+      "side": 1,
+      "message": "mWifiDiagnostics is initialized in the ctor, and never modified thereafter. Assuming that WifiStateMachine exists in AP mode, we should be fine. And if WSM does not exist, then I believe that this code is unreachable.",
+      "parentUuid": "480b7363_70632f13",
+      "range": {
+        "startLine": 3918,
+        "startChar": 20,
+        "endLine": 3918,
+        "endChar": 37
+      },
+      "revId": "53dd4069faed78d9ffefc8475821f1de77625b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e5067ba_51027281",
         "filename": "tests/wifitests/src/com/android/server/wifi/LastMileLoggerTest.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-02-10T04:22:35Z",
       "side": 1,
       "message": "what happens if you get a timestamp/id for a future id?  (just in case!)",
+      "range": {
+        "startLine": 134,
+        "startChar": 69,
+        "endLine": 134,
+        "endChar": 84
+      },
+      "revId": "53dd4069faed78d9ffefc8475821f1de77625b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce406381_7fa0edef",
+        "filename": "tests/wifitests/src/com/android/server/wifi/LastMileLoggerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-10T23:30:24Z",
+      "side": 1,
+      "message": "I think this depends on what semantics we want to require for the connectionId. The naming of this test was a bit presumptuous, since the documentation only requirde the connectionId to be \"non-negative\". So the name really ought to have been ...FailureOfMismatchedConnection(), or something of that ilk.\n\nIf we\u0027re willing to require that connectionId be strictly increasing, then I think it makes sense to add a test for \"future id\". Otherwise, the right thing to do is to rename this test.\n\nStrictly increasing doesn\u0027t seem like a great burden for the caller to meet, so I\u0027ve taken that approach. Let me know if you disagree.",
+      "parentUuid": "1e5067ba_51027281",
       "range": {
         "startLine": 134,
         "startChar": 69,
