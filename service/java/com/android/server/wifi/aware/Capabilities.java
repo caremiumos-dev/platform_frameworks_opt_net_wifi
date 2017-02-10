@@ -32,7 +32,6 @@ public class Capabilities {
     public int maxTotalMatchFilterLen;
     public int maxServiceSpecificInfoLen;
     public int maxExtendedServiceSpecificInfoLen;
-    public int maxVsaDataLen;
     public int maxNdiInterfaces;
     public int maxNdpSessions;
     public int maxAppInfoLen;
@@ -61,7 +60,6 @@ public class Capabilities {
                 + maxMatchFilterLen + ", maxTotalMatchFilterLen=" + maxTotalMatchFilterLen
                 + ", maxServiceSpecificInfoLen=" + maxServiceSpecificInfoLen
                 + ", maxExtendedServiceSpecificInfoLen=" + maxExtendedServiceSpecificInfoLen
-                + ", maxVsaDataLen=" + maxVsaDataLen
                 + ", maxNdiInterfaces=" + maxNdiInterfaces + ", maxNdpSessions="
                 + maxNdpSessions + ", maxAppInfoLen=" + maxAppInfoLen
                 + ", maxQueuedTransmitMessages=" + maxQueuedTransmitMessages
