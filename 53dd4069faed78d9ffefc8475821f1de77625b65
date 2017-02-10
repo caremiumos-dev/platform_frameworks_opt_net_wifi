@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62e6eff7_94d5e130",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-10T04:22:35Z",
+      "side": 1,
+      "message": "i missed it above, but i think the message ID should be aligned with the ones above - makes them easier to find/skim",
+      "range": {
+        "startLine": 693,
+        "startChar": 54,
+        "endLine": 693,
+        "endChar": 68
+      },
+      "revId": "53dd4069faed78d9ffefc8475821f1de77625b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "480b7363_70632f13",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3918,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-10T04:22:35Z",
+      "side": 1,
+      "message": "is this always around?  What if we are in ap mode or something?  we don\u0027t clear this, right?",
+      "range": {
+        "startLine": 3918,
+        "startChar": 20,
+        "endLine": 3918,
+        "endChar": 37
+      },
+      "revId": "53dd4069faed78d9ffefc8475821f1de77625b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e5067ba_51027281",
+        "filename": "tests/wifitests/src/com/android/server/wifi/LastMileLoggerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-10T04:22:35Z",
+      "side": 1,
+      "message": "what happens if you get a timestamp/id for a future id?  (just in case!)",
+      "range": {
+        "startLine": 134,
+        "startChar": 69,
+        "endLine": 134,
+        "endChar": 84
+      },
+      "revId": "53dd4069faed78d9ffefc8475821f1de77625b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
