@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41f93334_0288a697",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-10T04:38:23Z",
+      "side": 1,
+      "message": "would it be worth looking in to the boot_complete message in WIfiStateMachine?  Then you will know the services are up.",
+      "range": {
+        "startLine": 33,
+        "startChar": 11,
+        "endLine": 33,
+        "endChar": 25
+      },
+      "revId": "c0813be3b11eec7d79cce5e0044e2816b1e30b8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
