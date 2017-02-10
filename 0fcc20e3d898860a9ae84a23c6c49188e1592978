@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d32c668_1b3da3ac",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-10T23:28:21Z",
+      "side": 1,
+      "message": "The next CL revises the comment, to disallow -1.",
+      "parentUuid": "a004a43a_d681551a",
+      "range": {
+        "startLine": 64,
+        "startChar": 68,
+        "endLine": 64,
+        "endChar": 90
+      },
+      "revId": "0fcc20e3d898860a9ae84a23c6c49188e1592978",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4139149_cc0589df",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-10T04:42:34Z",
       "side": 1,
       "message": "is this -1 now bc you are going to populate it with the millis in the next CL?\n\n(reviewing out of order confused me.  Whoops!)",
+      "range": {
+        "startLine": 3308,
+        "startChar": 47,
+        "endLine": 3308,
+        "endChar": 49
+      },
+      "revId": "0fcc20e3d898860a9ae84a23c6c49188e1592978",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88f15712_4557b29f",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3308,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-10T23:28:21Z",
+      "side": 1,
+      "message": "Yep, this will be populated with a real value in the next CL.",
+      "parentUuid": "c4139149_cc0589df",
       "range": {
         "startLine": 3308,
         "startChar": 47,
