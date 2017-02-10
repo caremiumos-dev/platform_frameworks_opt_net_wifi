@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e2edc811_89eb4b3a",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-10T01:24:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1582ef77_df6c8f7a",
+      "range": {
+        "startLine": 64,
+        "startChar": 52,
+        "endLine": 64,
+        "endChar": 56
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80cae04b_8067d015",
         "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
         "patchSetId": 6
@@ -130,6 +154,30 @@
       "writtenOn": "2017-02-09T19:30:15Z",
       "side": 1,
       "message": "Very liberal; do we want to pickier? Or document that the colons are optional?",
+      "range": {
+        "startLine": 74,
+        "startChar": 25,
+        "endLine": 74,
+        "endChar": 50
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a20e965e_d5ed105e",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-10T01:24:45Z",
+      "side": 1,
+      "message": "Changed the documentation.",
+      "parentUuid": "80cae04b_8067d015",
       "range": {
         "startLine": 74,
         "startChar": 25,
@@ -165,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "25df75db_a8717ebc",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-10T01:24:45Z",
+      "side": 1,
+      "message": "Added a new method. Don\u0027t see to much commonality to share between the 2 methods (especially the use of \"any\").",
+      "parentUuid": "3324f1c3_2b3e98af",
+      "range": {
+        "startLine": 75,
+        "startChar": 33,
+        "endLine": 75,
+        "endChar": 43
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e258a6e_1ca563ec",
         "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
         "patchSetId": 6
@@ -176,6 +248,30 @@
       "writtenOn": "2017-02-09T19:30:15Z",
       "side": 1,
       "message": "Should supply a buffer length; the default of 16 is sure to be too small.",
+      "range": {
+        "startLine": 94,
+        "startChar": 31,
+        "endLine": 94,
+        "endChar": 47
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93308a1c_8a613925",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-10T01:24:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e258a6e_1ca563ec",
       "range": {
         "startLine": 94,
         "startChar": 31,
@@ -258,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "aa542997_0080b89a",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-10T01:24:45Z",
+      "side": 1,
+      "message": "This is already fixed in the prev revision.",
+      "parentUuid": "af03b2fc_d28d5e2c",
+      "range": {
+        "startLine": 99,
+        "startChar": 15,
+        "endLine": 99,
+        "endChar": 72
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b33b370_bbf556b7",
         "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
         "patchSetId": 6
@@ -328,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "1d607139_4993831c",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-10T01:24:45Z",
+      "side": 1,
+      "message": "Fixed in prev revision.",
+      "parentUuid": "007ad21e_90be7a5f",
+      "range": {
+        "startLine": 105,
+        "startChar": 3,
+        "endLine": 105,
+        "endChar": 7
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c450f241_bf943b13",
         "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
         "patchSetId": 6
@@ -351,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "c3f61b81_ae1f8c6f",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-10T01:24:45Z",
+      "side": 1,
+      "message": "As discussed offline, we\u0027ll convert it into a hex string instead.",
+      "parentUuid": "c450f241_bf943b13",
+      "range": {
+        "startLine": 120,
+        "startChar": 5,
+        "endLine": 120,
+        "endChar": 7
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "248eea28_0237b037",
         "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
         "patchSetId": 6
@@ -362,6 +530,30 @@
       "writtenOn": "2017-02-09T19:30:15Z",
       "side": 1,
       "message": "I think the general case works here, so this line can go away.",
+      "range": {
+        "startLine": 125,
+        "startChar": 8,
+        "endLine": 125,
+        "endChar": 49
+      },
+      "revId": "3b30628562ca5fd9dd87c194e763f12a9f60ba92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d294459_c1568f34",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-10T01:24:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "248eea28_0237b037",
       "range": {
         "startLine": 125,
         "startChar": 8,
