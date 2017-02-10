@@ -5609,6 +5609,11 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                             mWifiScoreReport.calculateAndReportScore(
                                     mWifiInfo, mNetworkAgent, mAggressiveHandover,
                                     mWifiMetrics);
+                            try {
+                                mBatteryStats.noteNetworkStatsEnabled();
+                            } catch (RemoteException e) {
+                                Log.e(TAG, "Unable to update network stats " + e.getMessage());
+                            }
                         }
                         sendMessageDelayed(obtainMessage(CMD_RSSI_POLL,
                                 mRssiPollToken, 0), POLL_RSSI_INTERVAL_MSECS);
