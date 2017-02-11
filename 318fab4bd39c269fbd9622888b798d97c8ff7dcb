@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0097ac3a_33434f29",
+        "filename": "tests/wifitests/src/com/android/server/wifi/SupplicantStaIfaceHalTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-11T03:37:20Z",
+      "side": 1,
+      "message": ", with a triggered disconnect (?)",
+      "range": {
+        "startLine": 387,
+        "startChar": 47,
+        "endLine": 387,
+        "endChar": 77
+      },
+      "revId": "318fab4bd39c269fbd9622888b798d97c8ff7dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b395f59_bf8551ed",
+        "filename": "tests/wifitests/src/com/android/server/wifi/SupplicantStaIfaceHalTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-11T03:37:20Z",
+      "side": 1,
+      "message": "Since this is a test util, parameterize these or make em constants.",
+      "range": {
+        "startLine": 682,
+        "startChar": 0,
+        "endLine": 683,
+        "endChar": 47
+      },
+      "revId": "318fab4bd39c269fbd9622888b798d97c8ff7dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9886de43_a548aac8",
+        "filename": "tests/wifitests/src/com/android/server/wifi/SupplicantStaIfaceHalTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-11T03:37:20Z",
+      "side": 1,
+      "message": "this one too",
+      "range": {
+        "startLine": 688,
+        "startChar": 28,
+        "endLine": 688,
+        "endChar": 29
+      },
+      "revId": "318fab4bd39c269fbd9622888b798d97c8ff7dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
