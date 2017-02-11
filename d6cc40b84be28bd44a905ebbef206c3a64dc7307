@@ -22,6 +22,30 @@
       "revId": "d6cc40b84be28bd44a905ebbef206c3a64dc7307",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e70cc45a_ba819323",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-11T07:04:44Z",
+      "side": 1,
+      "message": "But WifiNative uses byte[], so changing it will cause churn up into WifiStateMachine. For a method that is really only useful for old devices.",
+      "parentUuid": "a82b7d14_3fad2e20",
+      "range": {
+        "startLine": 464,
+        "startChar": 19,
+        "endLine": 464,
+        "endChar": 36
+      },
+      "revId": "d6cc40b84be28bd44a905ebbef206c3a64dc7307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
