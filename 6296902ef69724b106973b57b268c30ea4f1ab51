@@ -70,6 +70,30 @@
       "revId": "6296902ef69724b106973b57b268c30ea4f1ab51",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c00923b_51ac475f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-11T00:03:22Z",
+      "side": 1,
+      "message": "Temporarily disabled is enabled.",
+      "parentUuid": "51fd40c7_5f5864bd",
+      "range": {
+        "startLine": 12,
+        "startChar": 3,
+        "endLine": 12,
+        "endChar": 76
+      },
+      "revId": "6296902ef69724b106973b57b268c30ea4f1ab51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
