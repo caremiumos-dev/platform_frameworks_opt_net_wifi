@@ -46,6 +46,30 @@
       "revId": "c0813be3b11eec7d79cce5e0044e2816b1e30b8b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b6e0978_b2596170",
+        "filename": "service/java/com/android/server/wifi/LastMileLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-11T09:26:20Z",
+      "side": 1,
+      "message": "That is fair.  I was hoping to help with removing the second call to injector so you wouldn\u0027t need it.",
+      "parentUuid": "49653cae_f664307e",
+      "range": {
+        "startLine": 33,
+        "startChar": 11,
+        "endLine": 33,
+        "endChar": 25
+      },
+      "revId": "c0813be3b11eec7d79cce5e0044e2816b1e30b8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
