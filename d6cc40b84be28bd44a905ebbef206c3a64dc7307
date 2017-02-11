@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a82b7d14_3fad2e20",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-11T01:28:47Z",
+      "side": 1,
+      "message": "U should expose an API with the string input and then perform the conversion internally. That\u0027s the pattern we\u0027re using for supplicant interactions: https://android-review.googlesource.com/#/c/336166/",
+      "range": {
+        "startLine": 464,
+        "startChar": 19,
+        "endLine": 464,
+        "endChar": 36
+      },
+      "revId": "d6cc40b84be28bd44a905ebbef206c3a64dc7307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
