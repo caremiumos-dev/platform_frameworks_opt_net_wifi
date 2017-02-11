@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19dbe215_9ccf4e72",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-11T08:07:10Z",
+      "side": 1,
+      "message": "This can throw exceptions, so either add @throws documentation or catch the exceptions and return false.",
+      "range": {
+        "startLine": 883,
+        "startChar": 41,
+        "endLine": 883,
+        "endChar": 58
+      },
+      "revId": "d95fa596d07855b70ff18a50a48e773155a919f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
