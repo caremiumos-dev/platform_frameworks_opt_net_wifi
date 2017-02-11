@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "94a74bc1_07c9d483",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-11T07:19:00Z",
+      "side": 1,
+      "message": "Cannot",
+      "range": {
+        "startLine": 307,
+        "startChar": 24,
+        "endLine": 307,
+        "endChar": 28
+      },
+      "revId": "318fab4bd39c269fbd9622888b798d97c8ff7dcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0097ac3a_33434f29",
         "filename": "tests/wifitests/src/com/android/server/wifi/SupplicantStaIfaceHalTest.java",
         "patchSetId": 2
