@@ -4858,15 +4858,17 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     replyToMessage(message, message.what, result.getNetworkId());
                     break;
                 case CMD_REMOVE_NETWORK:
-                    netId = message.arg1;
-                    ok = mWifiConfigManager.removeNetwork(message.arg1, message.sendingUid);
-                    if (!ok) {
+                    if (!deleteConfigAndSendReply(message, false)) {
+                        // failed to remove the config and caller was notified
                         messageHandlingStatus = MESSAGE_HANDLING_STATUS_FAIL;
-                    } else if (netId == mTargetNetworkId || netId == mLastNetworkId) {
+                        break;
+                    }
+                    //  we successfully deleted the network config
+                    netId = message.arg1;
+                    if (netId == mTargetNetworkId || netId == mLastNetworkId) {
                         // Disconnect and let autojoin reselect a new network
                         sendMessage(CMD_DISCONNECT);
                     }
-                    replyToMessage(message, message.what, ok ? SUCCESS : FAILURE);
                     break;
                 case CMD_ENABLE_NETWORK:
                     boolean disableOthers = message.arg2 == 1;
@@ -5126,19 +5128,15 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     replyToMessage(message, WifiManager.SAVE_NETWORK_SUCCEEDED);
                     break;
                 case WifiManager.FORGET_NETWORK:
+                    if (!deleteConfigAndSendReply(message, true)) {
+                        // Caller was notified of failure, nothing else to do
+                        break;
+                    }
+                    // the network was deleted
                     netId = message.arg1;
-                    if (mWifiConfigManager.removeNetwork(netId, message.sendingUid)) {
-                        replyToMessage(message, WifiManager.FORGET_NETWORK_SUCCEEDED);
-                        broadcastWifiCredentialChanged(WifiManager.WIFI_CREDENTIAL_FORGOT,
-                                (WifiConfiguration) message.obj);
-                        if (netId == mTargetNetworkId || netId == mLastNetworkId) {
-                            // Disconnect and let autojoin reselect a new network
-                            sendMessage(CMD_DISCONNECT);
-                        }
-                    } else {
-                        loge("Failed to forget network");
-                        replyToMessage(message, WifiManager.FORGET_NETWORK_FAILED,
-                                WifiManager.ERROR);
+                    if (netId == mTargetNetworkId || netId == mLastNetworkId) {
+                        // Disconnect and let autojoin reselect a new network
+                        sendMessage(CMD_DISCONNECT);
                     }
                     break;
                 case WifiManager.START_WPS:
@@ -6659,8 +6657,12 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     }
 
     /**
+     * Notify interested parties if a wifi config has been changed.
+     *
      * @param wifiCredentialEventType WIFI_CREDENTIAL_SAVED or WIFI_CREDENTIAL_FORGOT
      * @param config Must have a WifiConfiguration object to succeed
+     * TODO: b/35258354 investigate if this can be removed.  Is the broadcast sent by
+     * WifiConfigManager sufficient?
      */
     private void broadcastWifiCredentialChanged(int wifiCredentialEventType,
             WifiConfiguration config) {
@@ -6805,6 +6807,39 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         mWifiMetrics.setNumNetworksAddedByApps(numNetworksAddedByApps);
         mWifiMetrics.setNumHiddenNetworks(numHiddenNetworks);
         mWifiMetrics.setNumPasspointNetworks(numPasspoint);
+    }
+
+    /**
+     * Private method to handle calling WifiConfigManager to forget/remove network configs and reply
+     * to the message from the sender of the outcome.
+     *
+     * The current implementation requires that forget and remove be handled in different ways
+     * (responses are handled differently).  In the interests of organization, the handling is all
+     * now in this helper method.  TODO: b/35257965 is filed to track the possibility of merging
+     * the two call paths.
+     */
+    private boolean deleteConfigAndSendReply(Message message, boolean calledFromForget) {
+        if (calledFromForget) {
+            if (mWifiConfigManager.removeNetwork(message.arg1, message.sendingUid)) {
+                replyToMessage(message, WifiManager.FORGET_NETWORK_SUCCEEDED);
+                broadcastWifiCredentialChanged(WifiManager.WIFI_CREDENTIAL_FORGOT,
+                                               (WifiConfiguration) message.obj);
+                return true;
+            }
+            // failed to remove the config
+            loge("Failed to forget network");
+            replyToMessage(message, WifiManager.FORGET_NETWORK_FAILED, WifiManager.ERROR);
+            return false;
+        }
+        // Remaining calles are from the removeNetwork path
+        if (mWifiConfigManager.removeNetwork(message.arg1, message.sendingUid)) {
+            replyToMessage(message, message.what, SUCCESS);
+            return true;
+        }
+        // failed to remove the config
+        messageHandlingStatus = MESSAGE_HANDLING_STATUS_FAIL;
+        replyToMessage(message, message.what, FAILURE);
+        return false;
     }
 
     private static String getLinkPropertiesSummary(LinkProperties lp) {
