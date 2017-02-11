@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d198cfa3_7d187df9",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-11T09:49:49Z",
+      "side": 1,
+      "message": "given that this is the first attempt to connect to a network (as opposed to the firmware roam) it would be good to confirm that the bssid selection would be the same as if it were a roam.  If not, then we might actually want to keep the bssid we picked in here.",
+      "range": {
+        "startLine": 637,
+        "startChar": 16,
+        "endLine": 637,
+        "endChar": 68
+      },
+      "revId": "c7683ab80db0970e6422d9405c99b5f67d951fc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "646545c3_2f21dd80",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3945,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-11T09:49:49Z",
+      "side": 1,
+      "message": "this seems like something we should get/set in WifiNative and then ask if it is supported (and then hold that value or keep asking.  It knows best when the features should be updated/checked",
+      "range": {
+        "startLine": 3945,
+        "startChar": 20,
+        "endLine": 3945,
+        "endChar": 80
+      },
+      "revId": "c7683ab80db0970e6422d9405c99b5f67d951fc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
