@@ -140,6 +140,30 @@
       "revId": "53dd4069faed78d9ffefc8475821f1de77625b65",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "342b1f35_d2e0f462",
+        "filename": "tests/wifitests/src/com/android/server/wifi/LastMileLoggerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-11T09:23:14Z",
+      "side": 1,
+      "message": "Sounds good!",
+      "parentUuid": "ce406381_7fa0edef",
+      "range": {
+        "startLine": 134,
+        "startChar": 69,
+        "endLine": 134,
+        "endChar": 84
+      },
+      "revId": "53dd4069faed78d9ffefc8475821f1de77625b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
