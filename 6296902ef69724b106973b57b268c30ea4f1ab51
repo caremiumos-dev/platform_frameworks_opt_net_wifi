@@ -94,6 +94,30 @@
       "revId": "6296902ef69724b106973b57b268c30ea4f1ab51",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7684a02f_95c86002",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-11T00:14:35Z",
+      "side": 1,
+      "message": "Okay, so you are going to do the translation.",
+      "parentUuid": "9c00923b_51ac475f",
+      "range": {
+        "startLine": 12,
+        "startChar": 3,
+        "endLine": 12,
+        "endChar": 76
+      },
+      "revId": "6296902ef69724b106973b57b268c30ea4f1ab51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
