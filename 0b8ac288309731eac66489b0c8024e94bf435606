@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90f30743_9e0f7b63",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-11T05:35:10Z",
+      "side": 1,
+      "message": "I don\u0027t think this is necessary, default constructor should do",
+      "range": {
+        "startLine": 249,
+        "startChar": 49,
+        "endLine": 249,
+        "endChar": 58
+      },
+      "revId": "0b8ac288309731eac66489b0c8024e94bf435606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
