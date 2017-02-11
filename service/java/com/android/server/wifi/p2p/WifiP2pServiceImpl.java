@@ -712,6 +712,7 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                         } else {
                             loge("Full connection failure, error = " + message.arg1);
                             mWifiChannel = null;
+                            transitionTo(mP2pDisabledState);
                         }
                         break;
 
@@ -722,6 +723,7 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                             loge("Client connection lost with reason: " + message.arg1);
                         }
                         mWifiChannel = null;
+                        transitionTo(mP2pDisabledState);
                         break;
 
                     case AsyncChannel.CMD_CHANNEL_FULL_CONNECTION:
@@ -2350,8 +2352,12 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
             intent.putExtra(WifiP2pManager.EXTRA_NETWORK_INFO, new NetworkInfo(mNetworkInfo));
             intent.putExtra(WifiP2pManager.EXTRA_WIFI_P2P_GROUP, new WifiP2pGroup(mGroup));
             mContext.sendStickyBroadcastAsUser(intent, UserHandle.ALL);
-            mWifiChannel.sendMessage(WifiP2pServiceImpl.P2P_CONNECTION_CHANGED,
-                    new NetworkInfo(mNetworkInfo));
+            if (mWifiChannel != null) {
+                mWifiChannel.sendMessage(WifiP2pServiceImpl.P2P_CONNECTION_CHANGED,
+                        new NetworkInfo(mNetworkInfo));
+            } else {
+                Log.e(TAG, "WifiChannel with WifiStateMachine is not setup yet");
+            }
         }
 
         private void sendP2pPersistentGroupsChangedBroadcast() {
