@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "1d00020e_3c6dcf62",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-12T06:27:26Z",
+      "side": 1,
+      "message": "The idea is to have a common local log buffer shared by all network selection related objects: WifiNetworkSelector, WifiConnectivityManager and 3 evaluators. It\u0027s created in WNS because WCM has dependency on WNS. It used to be dumped via WNS. Now it is dumped via WCM because we moved the creation of these objects out from WSM to WifiInjector and WSM no longer contains the WNS object.\n\nThe current implementation follows the WifiNative local log buffer model. It\u0027s created in WifiNative, then gets passed along and used in WifiNetworkHistory and WifiSupplicantControl. It eventually gets dumped via WifiDiagnostics.\n\nIf we all agree that creating the shared local log buffer in WifiInjector and passing it around is what we want going forward, I can file a bug and change WifiNetworkSelector and WifiNative local log buffer. A WNS local log buffer and a WifiNative local log buffer will be created in WifiInjector, and dumped via WifiInjector as well.",
+      "parentUuid": "9db255ef_67744a77",
+      "range": {
+        "startLine": 393,
+        "startChar": 46,
+        "endLine": 393,
+        "endChar": 66
+      },
+      "revId": "5fa7b3ab50081c603a5fd2c5928a3d95ebd1cda3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8702648e_89d1386c",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 2
