@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54f86268_f01d39f6",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-13T23:16:38Z",
+      "side": 1,
+      "message": "Don\u0027t need to allocate - macAddressToByteArray does that.",
+      "range": {
+        "startLine": 941,
+        "startChar": 37,
+        "endLine": 942,
+        "endChar": 27
+      },
+      "revId": "fcabf57b9950eae0325c4426ab5c57c2fee9f82f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
