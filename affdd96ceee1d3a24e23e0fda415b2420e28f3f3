@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c777be4b_a07a3618",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4861,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-13T16:17:55Z",
+      "side": 1,
+      "message": "Maybe deleteNetwork or deleteNetworkConfig? Both the messages talk about network (REMOVE_NETWORK \u0026 FORGET_NETWORK)",
+      "range": {
+        "startLine": 4861,
+        "startChar": 25,
+        "endLine": 4861,
+        "endChar": 37
+      },
+      "revId": "affdd96ceee1d3a24e23e0fda415b2420e28f3f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69888f38_cfd45a78",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6842,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-13T16:17:55Z",
+      "side": 1,
+      "message": "Put this under an else block {}. The 2 branches are handling the message differently. Also, can we invoke  the mWifiConfigManager.removeNetwork() only once.\n\nboolean status \u003d mWifiConfigManager.removeNetwork(....)\nif (calledFromForgot) {\n....\n} else {\n....\n}",
+      "range": {
+        "startLine": 6834,
+        "startChar": 7,
+        "endLine": 6842,
+        "endChar": 21
+      },
+      "revId": "affdd96ceee1d3a24e23e0fda415b2420e28f3f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
