@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "3560eef4_93f51a7f",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-02-13T19:43:57Z",
+      "side": 1,
+      "message": "Yes , will cover them both.",
+      "parentUuid": "693f17e7_0c81b263",
+      "range": {
+        "startLine": 888,
+        "startChar": 24,
+        "endLine": 888,
+        "endChar": 87
+      },
+      "revId": "31636df2f6902140493622f92b563093a60c45af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f683c18_1ce2493d",
         "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
         "patchSetId": 2
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "2a3e28c2_aa40ee94",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1969,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-02-13T19:43:57Z",
+      "side": 1,
+      "message": "I checked for all of them. The ones I found unlikely, I added a comment instead of a null check. But doesn\u0027t hurt to check anyway.",
+      "parentUuid": "8f683c18_1ce2493d",
+      "range": {
+        "startLine": 1969,
+        "startChar": 24,
+        "endLine": 1969,
+        "endChar": 49
+      },
+      "revId": "31636df2f6902140493622f92b563093a60c45af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36126520_68251598",
         "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
         "patchSetId": 2
@@ -105,6 +153,30 @@
       "writtenOn": "2017-02-11T06:09:36Z",
       "side": 1,
       "message": "can this one pop up in the race?  It seems odd that we would be that far into p2p and then hit the null.  (This could just be default handling for some reason too.  you never know with this class...)",
+      "range": {
+        "startLine": 2977,
+        "startChar": 16,
+        "endLine": 2977,
+        "endChar": 43
+      },
+      "revId": "31636df2f6902140493622f92b563093a60c45af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c529d8c7_b1e0a2e7",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2977,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-02-13T19:43:57Z",
+      "side": 1,
+      "message": "It seems to me that the source of race condition is two different sources of triggers to the state machine: one is the async channel, WifiNative events/supplicant events and the async channel with the service itself. This function, handleGroupRemoved is invoked from different sources and that\u0027s why I thought to check for null. It\u0027s on the same lines of being extra safe.",
+      "parentUuid": "36126520_68251598",
       "range": {
         "startLine": 2977,
         "startChar": 16,
