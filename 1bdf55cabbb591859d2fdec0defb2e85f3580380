@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6fa2e722_ac9e6f07",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-13T20:42:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8927643c_0738026c",
+      "range": {
+        "startLine": 458,
+        "startChar": 12,
+        "endLine": 458,
+        "endChar": 47
+      },
+      "revId": "1bdf55cabbb591859d2fdec0defb2e85f3580380",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5434357a_a0f5d9c4",
         "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-11T05:35:10Z",
       "side": 1,
       "message": "error log this",
+      "range": {
+        "startLine": 484,
+        "startChar": 12,
+        "endLine": 484,
+        "endChar": 46
+      },
+      "revId": "1bdf55cabbb591859d2fdec0defb2e85f3580380",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69c4506b_097e8c01",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-13T20:42:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5434357a_a0f5d9c4",
       "range": {
         "startLine": 484,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "00c74dda_59cef0fc",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-13T20:42:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c6d5c64_82666be3",
+      "range": {
+        "startLine": 533,
+        "startChar": 62,
+        "endLine": 533,
+        "endChar": 66
+      },
+      "revId": "1bdf55cabbb591859d2fdec0defb2e85f3580380",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f76a56b0_67c225dc",
         "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
         "patchSetId": 8
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e348cf5b_d45d7114",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-13T20:42:51Z",
+      "side": 1,
+      "message": "result.setResult() logs error the very mometh these are reported.\nthe SupplicantResult class is crafted so that it only returns reported result if the status is SUCCESS, otherwise falls back to null (line 1390)",
+      "parentUuid": "f76a56b0_67c225dc",
+      "range": {
+        "startLine": 562,
+        "startChar": 12,
+        "endLine": 562,
+        "endChar": 37
+      },
+      "revId": "1bdf55cabbb591859d2fdec0defb2e85f3580380",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ada75956_a5d6f847",
         "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
         "patchSetId": 8
@@ -105,6 +201,30 @@
       "writtenOn": "2017-02-11T05:35:10Z",
       "side": 1,
       "message": "Check for success first, log error on failure",
+      "range": {
+        "startLine": 728,
+        "startChar": 12,
+        "endLine": 728,
+        "endChar": 55
+      },
+      "revId": "1bdf55cabbb591859d2fdec0defb2e85f3580380",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d24d7749_7a9d605e",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-13T20:42:51Z",
+      "side": 1,
+      "message": "result.setResult() logs errors the very moment these are reported",
+      "parentUuid": "ada75956_a5d6f847",
       "range": {
         "startLine": 728,
         "startChar": 12,
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "abf0503f_f04f7ebd",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-13T20:42:51Z",
+      "side": 1,
+      "message": "great catch, thanks!",
+      "parentUuid": "a3478f71_c267d9d7",
+      "range": {
+        "startLine": 864,
+        "startChar": 84,
+        "endLine": 864,
+        "endChar": 85
+      },
+      "revId": "1bdf55cabbb591859d2fdec0defb2e85f3580380",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a12364cc_03c64d99",
         "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
         "patchSetId": 8
@@ -174,6 +318,30 @@
       "writtenOn": "2017-02-11T05:35:10Z",
       "side": 1,
       "message": "Log error",
+      "range": {
+        "startLine": 920,
+        "startChar": 11,
+        "endLine": 920,
+        "endChar": 73
+      },
+      "revId": "1bdf55cabbb591859d2fdec0defb2e85f3580380",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a60091b_24e2682c",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 920,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-13T20:42:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a12364cc_03c64d99",
       "range": {
         "startLine": 920,
         "startChar": 11,
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "b0654d33_2c0bf18d",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-13T20:42:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "275d724e_50b2bf18",
+      "range": {
+        "startLine": 956,
+        "startChar": 0,
+        "endLine": 956,
+        "endChar": 64
+      },
+      "revId": "1bdf55cabbb591859d2fdec0defb2e85f3580380",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8396871_4aee0647",
         "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
         "patchSetId": 8
@@ -232,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "c6d02251_a8a51a85",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-13T20:42:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8396871_4aee0647",
+      "range": {
+        "startLine": 1063,
+        "startChar": 24,
+        "endLine": 1063,
+        "endChar": 37
+      },
+      "revId": "1bdf55cabbb591859d2fdec0defb2e85f3580380",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e87353dc_f141ef30",
         "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
         "patchSetId": 8
@@ -243,6 +459,30 @@
       "writtenOn": "2017-02-11T05:35:10Z",
       "side": 1,
       "message": "On failures, log an error message in here. MethodName + supplicantStatus debug string. This will address a lot of my comments above.",
+      "range": {
+        "startLine": 1385,
+        "startChar": 0,
+        "endLine": 1385,
+        "endChar": 36
+      },
+      "revId": "1bdf55cabbb591859d2fdec0defb2e85f3580380",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ac0adf5_2ec9c9f9",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1385,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-13T20:42:51Z",
+      "side": 1,
+      "message": "Logging is actually happening in line 1380, when an error actually is reported (not when it is checked for). Once status is not SUCCESS, this class will only report null values (that should address lots of other concerns).\nI figured that would be generally better, because unless the code using this class has its own error checking, these errors would have gone unnoticed (if i checked for error here).\n\nSo there\u0027s few ways to proceed:\n1) i could leave things as is, having errors reported the moment setResult() method is called,\n2) i could report errors whenever anyone checks for success using isSuccess() method. this would likely cause duplicate reports in some cases (getResult() uses isSuccess() etc), and no reports in other (fire \u0026 forget cases)\n3) i could report errors everywhere.\n\nlet me know if you think (1) is insufficient; if that makes things better, I am willing to rename methods to something more explicit, say, \u0027setResultAndLogFailures\u0027 or \u0027getResultIfSuccess\u0027",
+      "parentUuid": "e87353dc_f141ef30",
       "range": {
         "startLine": 1385,
         "startChar": 0,
