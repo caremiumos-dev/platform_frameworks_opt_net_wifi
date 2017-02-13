@@ -257,7 +257,7 @@ public class WificondControl {
         try {
             NativeScanResult[] nativeResults = mWificondScanner.getScanResults();
             for (NativeScanResult result : nativeResults) {
-                WifiSsid wifiSsid = WifiSsid.createFromAsciiEncoded(new String(result.ssid));
+                WifiSsid wifiSsid = WifiSsid.createFromByteArray(result.ssid);
                 String bssid = parseMacToString(result.bssid);
                 ScanResult.InformationElement[] ies =
                         InformationElementUtil.parseInformationElements(result.infoElement);
