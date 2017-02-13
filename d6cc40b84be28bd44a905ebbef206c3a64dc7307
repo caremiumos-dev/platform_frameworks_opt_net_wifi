@@ -46,6 +46,30 @@
       "revId": "d6cc40b84be28bd44a905ebbef206c3a64dc7307",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "383e91bf_a6b4843d",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-13T02:29:38Z",
+      "side": 1,
+      "message": "Oh ok. Then it\u0027s fine. Most WifiNative methods take in strings currently, I guess this was an exception.",
+      "parentUuid": "e70cc45a_ba819323",
+      "range": {
+        "startLine": 464,
+        "startChar": 19,
+        "endLine": 464,
+        "endChar": 36
+      },
+      "revId": "d6cc40b84be28bd44a905ebbef206c3a64dc7307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
