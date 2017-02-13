@@ -22,6 +22,30 @@
       "revId": "fc105fd1fe3d5e67480b70dc3a8e9595e8e65035",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e441bdb4_4dc133f7",
+        "filename": "service/java/com/android/server/wifi/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-13T23:02:41Z",
+      "side": 1,
+      "message": "Done. (I grouped it together with the wificond subdirectory, and moved the group to the end of the file.)",
+      "parentUuid": "35417d51_a779b7fe",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 13
+      },
+      "revId": "fc105fd1fe3d5e67480b70dc3a8e9595e8e65035",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
