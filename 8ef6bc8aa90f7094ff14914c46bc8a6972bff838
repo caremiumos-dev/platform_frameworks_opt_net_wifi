@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db7eb100_978ca448",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-14T23:52:02Z",
+      "side": 1,
+      "message": "Refactor the existing calls to use the new helper functions.\n\nhandleP2pDeviceFound()",
+      "range": {
+        "startLine": 1200,
+        "startChar": 12,
+        "endLine": 1200,
+        "endChar": 83
+      },
+      "revId": "8ef6bc8aa90f7094ff14914c46bc8a6972bff838",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9d1af78_95c48c83",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1480,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-14T23:52:02Z",
+      "side": 1,
+      "message": "Prefix \"P2P\" for all P2P related events. handleP2pDeviceFound()",
+      "revId": "8ef6bc8aa90f7094ff14914c46bc8a6972bff838",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
