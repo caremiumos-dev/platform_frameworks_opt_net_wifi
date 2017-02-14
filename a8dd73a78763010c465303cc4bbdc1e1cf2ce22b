@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "d87de1eb_a4173370",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-14T22:19:14Z",
+      "side": 1,
+      "message": "To make sure we have a test, you can do a similar approach as the WifiDiagnostics test:\n\npublic void dumpIncludesContentOfWifiNativeLocalLog()",
+      "parentUuid": "ab8429df_8dfae58c",
+      "range": {
+        "startLine": 262,
+        "startChar": 83,
+        "endLine": 262,
+        "endChar": 89
+      },
+      "revId": "a8dd73a78763010c465303cc4bbdc1e1cf2ce22b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a45502f1_e236bca5",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
         "patchSetId": 9
