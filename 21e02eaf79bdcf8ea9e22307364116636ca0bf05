@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1a3be513_785a25a6",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7021,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-14T18:08:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84a2674d_310d5219",
+      "range": {
+        "startLine": 7020,
+        "startChar": 12,
+        "endLine": 7021,
+        "endChar": 63
+      },
+      "revId": "21e02eaf79bdcf8ea9e22307364116636ca0bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f73117a4_c4c2acc3",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 7
@@ -201,6 +225,30 @@
       "side": 1,
       "message": "This is because HAL and HIDL don\u0027t have a reset() function. WifiNative currently maintains a 1:1 mapping with HIDL. Do you have strong preference with adding a new API in WifiNative? I am okay with either way.",
       "parentUuid": "f73117a4_c4c2acc3",
+      "range": {
+        "startLine": 7037,
+        "startChar": 13,
+        "endLine": 7037,
+        "endChar": 53
+      },
+      "revId": "21e02eaf79bdcf8ea9e22307364116636ca0bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae7c0660_b59c768e",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7037,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-14T18:08:58Z",
+      "side": 1,
+      "message": "Pushed the reset into WifiNative.",
+      "parentUuid": "8f278f32_6d58dd8c",
       "range": {
         "startLine": 7037,
         "startChar": 13,
