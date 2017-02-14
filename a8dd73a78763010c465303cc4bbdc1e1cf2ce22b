@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de9cd3a2_6d7db83d",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-14T18:37:45Z",
+      "side": 1,
+      "message": "It would be really nice if we didn\u0027t need to pass in these variables - then we could move WifiConnectivityManager creation up with the other objects and would also not need to store a copy of the local log in WifiInjector at all.",
+      "range": {
+        "startLine": 403,
+        "startChar": 63,
+        "endLine": 404,
+        "endChar": 92
+      },
+      "revId": "a8dd73a78763010c465303cc4bbdc1e1cf2ce22b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54de4960_ec525def",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-14T18:37:45Z",
+      "side": 1,
+      "message": "This should be a mock LocalLog and you can add a test to make sure WifiConnectivityManager.dump calls mLocalLog.dump.",
+      "range": {
+        "startLine": 262,
+        "startChar": 83,
+        "endLine": 262,
+        "endChar": 89
+      },
+      "revId": "a8dd73a78763010c465303cc4bbdc1e1cf2ce22b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a45502f1_e236bca5",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-14T18:37:45Z",
+      "side": 1,
+      "message": "mock local log",
+      "range": {
+        "startLine": 60,
+        "startChar": 42,
+        "endLine": 60,
+        "endChar": 48
+      },
+      "revId": "a8dd73a78763010c465303cc4bbdc1e1cf2ce22b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
