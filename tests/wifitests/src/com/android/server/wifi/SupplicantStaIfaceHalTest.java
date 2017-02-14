@@ -19,6 +19,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyShort;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doAnswer;
@@ -535,7 +536,7 @@ public class SupplicantStaIfaceHalTest {
     }
 
     /**
-     * Tests the retrieval of WPS NFC token.
+     * Tests the setting of BSSID.
      */
     @Test
     public void testSetCurrentNetworkBssid() throws Exception {
@@ -550,6 +551,50 @@ public class SupplicantStaIfaceHalTest {
         executeAndValidateConnectSequence(4, false, false);
 
         assertTrue(mDut.setCurrentNetworkBssid(bssidStr));
+     }
+
+    /**
+     * Tests the setting of WPS device type.
+     */
+    @Test
+    public void testSetWpsDeviceType() throws Exception {
+        String validDeviceType = "10-0050F204-5";
+        String invalidDeviceType1 = "10-02050F204-5";
+        String invalidDeviceType2 = "102-0050F204-5";
+        when(mISupplicantStaIfaceMock.setWpsDeviceType(any(byte[].class)))
+                .thenReturn(mStatusSuccess);
+
+        executeAndValidateInitializationSequence(false, false, false);
+
+        // This should work.
+        assertTrue(mDut.setWpsDeviceType(validDeviceType));
+        // This should not work
+        assertFalse(mDut.setWpsDeviceType(invalidDeviceType1));
+        // This should not work
+        assertFalse(mDut.setWpsDeviceType(invalidDeviceType2));
+    }
+
+    /**
+     * Tests the setting of WPS config methods.
+     */
+    @Test
+    public void testSetWpsConfigMethods() throws Exception {
+        String validConfigMethods = "physical_display virtual_push_button";
+        String invalidConfigMethods = "physical_display virtual_push_button test";
+        when(mISupplicantStaIfaceMock.setWpsConfigMethods(anyShort())).thenReturn(mStatusSuccess);
+
+        executeAndValidateInitializationSequence(false, false, false);
+
+        // This should work.
+        assertTrue(mDut.setWpsConfigMethods(validConfigMethods));
+
+        // This should throw an illegal argument exception.
+        try {
+            assertFalse(mDut.setWpsConfigMethods(invalidConfigMethods));
+        } catch (IllegalArgumentException e) {
+            return;
+        }
+        assertTrue(false);
     }
 
     /**
