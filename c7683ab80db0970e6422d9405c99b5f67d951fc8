@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "1a7e88ab_fc5ef1fa",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-14T22:28:57Z",
+      "side": 1,
+      "message": "This can always be checked by looking at the logs. WifiNetworkSelector still tells which BSSId the framework picks and WifiStateMachine\u0026Supplicant logs tell us which BSSID the firmware actually connects to. This is the same as the case of roaming.",
+      "parentUuid": "fdd3b010_197ac259",
+      "range": {
+        "startLine": 637,
+        "startChar": 16,
+        "endLine": 637,
+        "endChar": 68
+      },
+      "revId": "c7683ab80db0970e6422d9405c99b5f67d951fc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "646545c3_2f21dd80",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 11
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "I was thinking something more like this:\n public RttManager.RttCapabilities getRttCapabilities() {\n\nso you could do something similar with firmwareRoaming - like the method you already have, but then it would be in WifiNative.  This would allow us 2 benefits:\n1 - wifiNative can control the implementation - the first pass could be getting the supported features on demand, like you have it here.  it can be optimized later in WifiNative, but WifiStateMachine won\u0027t care.\n2 - if this is an expensive operation, then it would be better for wifiNative to control it and allow more than just getting info for firmwareRoaming info, it can get other info.",
       "parentUuid": "e30fc9c9_08f65462",
+      "range": {
+        "startLine": 3945,
+        "startChar": 20,
+        "endLine": 3945,
+        "endChar": 80
+      },
+      "revId": "c7683ab80db0970e6422d9405c99b5f67d951fc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81bd1b13_388ed578",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3945,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-14T22:28:57Z",
+      "side": 1,
+      "message": "getRttCapabilities() is different. It has a 1:1 mapping with getRttCapabilitiesNative() and its correspondent HAL API. We have its equivalent tWifiNative.getRoamingCapabilities() for roaming.\n\nAll we are doing here is to take the existing WifiNative.getSupportedFeatureSet() API and get what features the firmware supports. And it\u0027s done only once after firmware gets (re)loaded. From there we figure out whether the firmware supports controlled roaming. Current implementation has a couple of benefits:\n\n1) Again, keep WifiNative as simple as possible. And it is consistent with what we do today with other HAL APIs.\n\n2) Instead of just getting if the firmware supports this particular feature, we now have the complete picture of what features this firmware supports. Later if needed, we can check if the firmware supports MAC randomization without extra cost, for example. Again, I don\u0027t think it makes sense for WifiNative to figure out when it should query HAL to get the feature set value and maintain a copy of it. That breaks the current model.",
+      "parentUuid": "f9469158_71c085d3",
       "range": {
         "startLine": 3945,
         "startChar": 20,
