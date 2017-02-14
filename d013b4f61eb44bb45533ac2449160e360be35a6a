@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18e07494_9791906b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-14T18:43:51Z",
+      "side": 1,
+      "message": "than",
+      "range": {
+        "startLine": 13,
+        "startChar": 8,
+        "endLine": 13,
+        "endChar": 12
+      },
+      "revId": "d013b4f61eb44bb45533ac2449160e360be35a6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bde844a7_6ba3a06d",
+        "filename": "tests/wifitests/src/com/android/server/wifi/HalDeviceManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-14T18:43:51Z",
+      "side": 1,
+      "message": "one \u0027that\u0027 is enough in this sentence",
+      "range": {
+        "startLine": 992,
+        "startChar": 48,
+        "endLine": 992,
+        "endChar": 52
+      },
+      "revId": "d013b4f61eb44bb45533ac2449160e360be35a6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
