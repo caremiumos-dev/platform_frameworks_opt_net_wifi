@@ -110,7 +110,6 @@ import com.android.server.wifi.hotspot2.AnqpEvent;
 import com.android.server.wifi.hotspot2.IconEvent;
 import com.android.server.wifi.hotspot2.NetworkDetail;
 import com.android.server.wifi.hotspot2.PasspointManager;
-import com.android.server.wifi.hotspot2.Utils;
 import com.android.server.wifi.hotspot2.WnmData;
 import com.android.server.wifi.p2p.WifiP2pServiceImpl;
 import com.android.server.wifi.util.NativeUtil;
@@ -216,15 +215,6 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     // Object holding most recent wifi score report and bad Linkspeed count
     private final WifiScoreReport mWifiScoreReport;
     private final PasspointManager mPasspointManager;
-
-    /* Scan results handling */
-    private List<ScanDetail> mScanResults = new ArrayList<>();
-    private final Object mScanResultsLock = new Object();
-
-    // For debug, number of known scan results that were found as part of last scan result event,
-    // as well the number of scans results returned by the supplicant with that message
-    private int mNumScanResultsKnown;
-    private int mNumScanResultsReturned;
 
     private boolean mScreenOn = false;
 
@@ -1715,19 +1705,6 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         return mOperationalMode;
     }
 
-    /**
-     * TODO: doc
-     */
-    public List<ScanResult> syncGetScanResultsList() {
-        synchronized (mScanResultsLock) {
-            List<ScanResult> scanList = new ArrayList<>();
-            for (ScanDetail result : mScanResults) {
-                scanList.add(new ScanResult(result.getScanResult()));
-            }
-            return scanList;
-        }
-    }
-
     public boolean syncQueryPasspointIcon(AsyncChannel channel, long bssid, String fileName) {
         Bundle bundle = new Bundle();
         bundle.putLong(EXTRA_OSU_ICON_QUERY_BSSID, bssid);
@@ -2295,12 +2272,6 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                 sb.append(Integer.toString(msg.arg1));
                 sb.append(" ");
                 sb.append(Integer.toString(msg.arg2));
-                if (mScanResults != null) {
-                    sb.append(" found=");
-                    sb.append(mScanResults.size());
-                }
-                sb.append(" known=").append(mNumScanResultsKnown);
-                sb.append(" got=").append(mNumScanResultsReturned);
                 sb.append(String.format(" bcn=%d", mRunningBeaconCount));
                 sb.append(String.format(" con=%d", mConnectionReqCount));
                 sb.append(String.format(" untrustedcn=%d", mUntrustedReqCount));
@@ -2791,44 +2762,6 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         }
 
         mContext.sendStickyBroadcastAsUser(intent, UserHandle.ALL);
-    }
-
-    private void setScanResults() {
-        mNumScanResultsKnown = 0;
-        mNumScanResultsReturned = 0;
-
-        ArrayList<ScanDetail> scanResults = mWifiNative.getScanResults();
-
-        if (scanResults.isEmpty()) {
-            mScanResults = new ArrayList<>();
-            return;
-        }
-
-        // TODO(b/31065385): mWifiConfigManager.trimANQPCache(false);
-
-        boolean connected = mLastBssid != null;
-        long activeBssid = 0L;
-        if (connected) {
-            try {
-                activeBssid = Utils.parseMac(mLastBssid);
-            } catch (IllegalArgumentException iae) {
-                connected = false;
-            }
-        }
-
-        synchronized (mScanResultsLock) {
-            mScanResults = scanResults;
-            mNumScanResultsReturned = mScanResults.size();
-        }
-
-        if (isLinkDebouncing()) {
-            // If debouncing, we dont re-select a SSID or BSSID hence
-            // there is no need to call the network selection code
-            // in WifiAutoJoinController, instead,
-            // just try to reconnect to the same SSID by triggering a roam
-            // The third parameter 1 means roam not from network selection but debouncing
-            sendMessage(CMD_START_ROAM, mLastNetworkId, 1, null);
-        }
     }
 
     /*
@@ -4206,7 +4139,15 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     // TODO: remove handing of SCAN_RESULTS_EVENT and SCAN_FAILED_EVENT when scan
                     // results are retrieved from WifiScanner (b/31444878)
                     maybeRegisterNetworkFactory(); // Make sure our NetworkFactory is registered
-                    setScanResults();
+                    if (isLinkDebouncing()) {
+                        // If debouncing, we dont re-select a SSID or BSSID hence
+                        // there is no need to call the network selection code
+                        // in WifiAutoJoinController, instead,
+                        // just try to reconnect to the same SSID by triggering a roam
+                        // The third parameter 1 means roam not from network selection but
+                        // debouncing
+                        sendMessage(CMD_START_ROAM, mLastNetworkId, 1, null);
+                    }
                     mIsScanOngoing = false;
                     mIsFullScanOngoing = false;
                     if (mBufferedScanMsg.size() > 0)
@@ -4319,7 +4260,6 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
 
             mIsRunning = false;
             updateBatteryWorkSource(null);
-            mScanResults = new ArrayList<>();
 
             final Intent intent = new Intent(WifiManager.WIFI_SCAN_AVAILABLE);
             intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT);

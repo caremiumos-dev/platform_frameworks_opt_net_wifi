@@ -35,7 +35,6 @@ import android.net.ip.IpManager;
 import android.net.wifi.IApInterface;
 import android.net.wifi.IClientInterface;
 import android.net.wifi.IWificond;
-import android.net.wifi.ScanResult;
 import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
@@ -72,7 +71,6 @@ import com.android.internal.app.IBatteryStats;
 import com.android.internal.util.AsyncChannel;
 import com.android.internal.util.IState;
 import com.android.internal.util.StateMachine;
-import com.android.server.wifi.hotspot2.NetworkDetail;
 import com.android.server.wifi.p2p.WifiP2pServiceImpl;
 
 import org.junit.After;
@@ -267,31 +265,9 @@ public class WifiStateMachineTest {
         Log.d(TAG, "WifiStateMachine state -" + stream.toString());
     }
 
-    private static ScanDetail getGoogleGuestScanDetail(int rssi) {
-        ScanResult.InformationElement ie[] = new ScanResult.InformationElement[1];
-        ie[0] = ScanResults.generateSsidIe(sSSID);
-        NetworkDetail nd = new NetworkDetail(sBSSID, ie, new ArrayList<String>(), sFreq);
-        ScanDetail detail = new ScanDetail(nd, sWifiSsid, sBSSID, "", rssi, sFreq,
-                Long.MAX_VALUE, /* needed so that scan results aren't rejected because
-                                   there older than scan start */
-                ie, new ArrayList<String>());
-        return detail;
-    }
-
-    private ArrayList<ScanDetail> getMockScanResults() {
-        ScanResults sr = ScanResults.create(0, 2412, 2437, 2462, 5180, 5220, 5745, 5825);
-        ArrayList<ScanDetail> list = sr.getScanDetailArrayList();
-
-        int rssi = -65;
-        list.add(getGoogleGuestScanDetail(rssi));
-        return list;
-    }
-
     static final String   sSSID = "\"GoogleGuest\"";
     static final WifiSsid sWifiSsid = WifiSsid.createFromAsciiEncoded(sSSID);
-    static final String   sHexSSID = sWifiSsid.getHexString().replace("0x", "").replace("22", "");
     static final String   sBSSID = "01:02:03:04:05:06";
-    static final int      sFreq = 2437;
 
     WifiStateMachine mWsm;
     HandlerThread mWsmThread;
@@ -722,12 +698,8 @@ public class WifiStateMachineTest {
         assertEquals("hidden networks", hiddenNetworkSSIDSet, actualHiddenNetworkSSIDSet);
 
         when(mWifiNative.getScanResults()).thenReturn(getMockScanResults());
-        mWsm.sendMessage(WifiMonitor.SCAN_RESULTS_EVENT);
 
         mLooper.dispatchAll();
-
-        List<ScanResult> reportedResults = mWsm.syncGetScanResultsList();
-        assertEquals(8, reportedResults.size());
     }
 
     @Test
