@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5665025_45ac022c",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6837,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-14T23:48:39Z",
+      "side": 1,
+      "message": "Pull this common bit above the if condition.",
+      "range": {
+        "startLine": 6837,
+        "startChar": 16,
+        "endLine": 6837,
+        "endChar": 82
+      },
+      "revId": "0fa49fe81e7b452b3376ec2b7301986210616a46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
