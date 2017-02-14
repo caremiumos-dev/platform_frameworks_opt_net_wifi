@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b7d49bf_78f2c237",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-14T22:59:48Z",
+      "side": 1,
+      "message": "Based on the logic here: https://cs.corp.google.com/android/external/wpa_supplicant_8/wpa_supplicant/ctrl_iface.c?rcl\u003d2cccdfa9cc5854c9e681a367a38855dfebeddf7c\u0026l\u003d5266.\n\nI think the WpsInfo.LABEL should map to ISupplicantP2pIface.WpsProvisionMethod.KEYPAD",
+      "revId": "852926ea85979106180243359eef6040ae61d3f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
