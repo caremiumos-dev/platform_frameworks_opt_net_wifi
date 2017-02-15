@@ -138,7 +138,10 @@ public class WifiAwareNativeApi {
                 config24.rssiCloseProximity = 60;
                 config24.dwellTimeMs = (byte) 200;
                 config24.scanPeriodSec = 20;
-                config24.validDiscoveryWindowIntervalVal = false;
+                config24.validDiscoveryWindowIntervalVal =
+                        configRequest.mDiscoveryWindowInterval[ConfigRequest.NAN_BAND_24GHZ] != 0;
+                config24.discoveryWindowIntervalVal =
+                        (byte) configRequest.mDiscoveryWindowInterval[ConfigRequest.NAN_BAND_24GHZ];
                 req.configParams.bandSpecificConfig[NanBandIndex.NAN_BAND_24GHZ] = config24;
 
                 NanBandSpecificConfig config5 = new NanBandSpecificConfig();
@@ -147,7 +150,10 @@ public class WifiAwareNativeApi {
                 config5.rssiCloseProximity = 60;
                 config5.dwellTimeMs = (byte) 200;
                 config5.scanPeriodSec = 20;
-                config5.validDiscoveryWindowIntervalVal = false;
+                config5.validDiscoveryWindowIntervalVal =
+                        configRequest.mDiscoveryWindowInterval[ConfigRequest.NAN_BAND_5GHZ] != 0;
+                config5.discoveryWindowIntervalVal =
+                        (byte) configRequest.mDiscoveryWindowInterval[ConfigRequest.NAN_BAND_5GHZ];
                 req.configParams.bandSpecificConfig[NanBandIndex.NAN_BAND_5GHZ] = config5;
 
                 req.debugConfigs.validClusterIdVals = true;
@@ -191,7 +197,10 @@ public class WifiAwareNativeApi {
                 config24.rssiCloseProximity = 60;
                 config24.dwellTimeMs = (byte) 200;
                 config24.scanPeriodSec = 20;
-                config24.validDiscoveryWindowIntervalVal = false;
+                config24.validDiscoveryWindowIntervalVal =
+                        configRequest.mDiscoveryWindowInterval[ConfigRequest.NAN_BAND_24GHZ] != 0;
+                config24.discoveryWindowIntervalVal =
+                        (byte) configRequest.mDiscoveryWindowInterval[ConfigRequest.NAN_BAND_24GHZ];
                 req.bandSpecificConfig[NanBandIndex.NAN_BAND_24GHZ] = config24;
 
                 NanBandSpecificConfig config5 = new NanBandSpecificConfig();
@@ -200,7 +209,10 @@ public class WifiAwareNativeApi {
                 config5.rssiCloseProximity = 60;
                 config5.dwellTimeMs = (byte) 200;
                 config5.scanPeriodSec = 20;
-                config5.validDiscoveryWindowIntervalVal = false;
+                config5.validDiscoveryWindowIntervalVal =
+                        configRequest.mDiscoveryWindowInterval[ConfigRequest.NAN_BAND_5GHZ] != 0;
+                config5.discoveryWindowIntervalVal =
+                        (byte) configRequest.mDiscoveryWindowInterval[ConfigRequest.NAN_BAND_5GHZ];
                 req.bandSpecificConfig[NanBandIndex.NAN_BAND_5GHZ] = config5;
 
                 status = iface.configRequest(transactionId, req);

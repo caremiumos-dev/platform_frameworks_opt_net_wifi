@@ -2567,12 +2567,14 @@ public class WifiAwareStateManager {
         boolean clusterIdValid = false;
         int clusterLow = 0;
         int clusterHigh = ConfigRequest.CLUSTER_ID_MAX;
+        int[] discoveryWindowInterval = {0, 0};
         if (configRequest != null) {
             support5gBand = configRequest.mSupport5gBand;
             masterPreference = configRequest.mMasterPreference;
             clusterIdValid = true;
             clusterLow = configRequest.mClusterLow;
             clusterHigh = configRequest.mClusterHigh;
+            discoveryWindowInterval = configRequest.mDiscoveryWindowInterval;
         }
         for (int i = 0; i < mClients.size(); ++i) {
             ConfigRequest cr = mClients.valueAt(i).getConfigRequest();
@@ -2593,10 +2595,26 @@ public class WifiAwareStateManager {
                 }
                 clusterIdValid = true;
             }
+
+            for (int band = ConfigRequest.NAN_BAND_24GHZ; band <= ConfigRequest.NAN_BAND_5GHZ;
+                    ++band) {
+                if (discoveryWindowInterval[band] == 0) {
+                    discoveryWindowInterval[band] = cr.mDiscoveryWindowInterval[band];
+                } else {
+                    discoveryWindowInterval[band] = Math.min(discoveryWindowInterval[band],
+                            cr.mDiscoveryWindowInterval[band]);
+                }
+            }
         }
-        return new ConfigRequest.Builder().setSupport5gBand(support5gBand)
+        ConfigRequest.Builder builder = new ConfigRequest.Builder().setSupport5gBand(support5gBand)
                 .setMasterPreference(masterPreference).setClusterLow(clusterLow)
-                .setClusterHigh(clusterHigh).build();
+                .setClusterHigh(clusterHigh);
+        for (int band = ConfigRequest.NAN_BAND_24GHZ; band <= ConfigRequest.NAN_BAND_5GHZ; ++band) {
+            if (discoveryWindowInterval[band] != 0) {
+                builder.setDiscoveryWindowInterval(band, discoveryWindowInterval[band]);
+            }
+        }
+        return builder.build();
     }
 
     private boolean doesAnyClientNeedIdentityChangeNotifications() {
