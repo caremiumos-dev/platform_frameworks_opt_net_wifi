@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb0d4279_f2ad19c2",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 4726,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-15T07:13:24Z",
+      "side": 1,
+      "message": "I like that this is now in WifiNative, but it really should be the same method as actually setting a config - just an empty one.  Having a general method to do both is better than two very similar calls.",
+      "range": {
+        "startLine": 4726,
+        "startChar": 45,
+        "endLine": 4726,
+        "endChar": 84
+      },
+      "revId": "1c29c61b1c0dadb6d37a2edddc60452f03a4af39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
