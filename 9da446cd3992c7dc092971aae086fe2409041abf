@@ -22,6 +22,54 @@
       "revId": "9da446cd3992c7dc092971aae086fe2409041abf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8113df_62f6d11e",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-15T20:57:07Z",
+      "side": 1,
+      "message": "I changed to an exception too.",
+      "parentUuid": "7c4dfa96_336f103b",
+      "range": {
+        "startLine": 790,
+        "startChar": 33,
+        "endLine": 790,
+        "endChar": 38
+      },
+      "revId": "9da446cd3992c7dc092971aae086fe2409041abf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f54e89e2_fb92e485",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-15T20:57:07Z",
+      "side": 1,
+      "message": "I\u0027ll crash too, now, for consistency.",
+      "parentUuid": "7c4dfa96_336f103b",
+      "range": {
+        "startLine": 790,
+        "startChar": 33,
+        "endLine": 790,
+        "endChar": 38
+      },
+      "revId": "9da446cd3992c7dc092971aae086fe2409041abf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
