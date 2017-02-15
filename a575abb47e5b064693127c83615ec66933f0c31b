@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a701173_2753797a",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-15T23:35:29Z",
+      "side": 1,
+      "message": "Both methods are called handleWpsFailEvent. This looks kind of confusing. In previous case the subject of handle is \"WifiMonitor\", in the later case the subject of handle implies those modules who registered events with WifiMonitor. Perhaps change the later one to \"broadcastWpsFailEvent\" ?",
+      "range": {
+        "startLine": 1140,
+        "startChar": 8,
+        "endLine": 1140,
+        "endChar": 26
+      },
+      "revId": "a575abb47e5b064693127c83615ec66933f0c31b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b12161c0_a23ff4ad",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1468,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-15T23:35:29Z",
+      "side": 1,
+      "message": "occurred",
+      "range": {
+        "startLine": 1468,
+        "startChar": 48,
+        "endLine": 1468,
+        "endChar": 55
+      },
+      "revId": "a575abb47e5b064693127c83615ec66933f0c31b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc1f2c95_8dfaf5af",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-15T23:35:29Z",
+      "side": 1,
+      "message": "Can we write:\nmHanlder \u003d spy(new Handler(mLooper.getLooper()))\ninstead ?",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 36
+      },
+      "revId": "a575abb47e5b064693127c83615ec66933f0c31b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
