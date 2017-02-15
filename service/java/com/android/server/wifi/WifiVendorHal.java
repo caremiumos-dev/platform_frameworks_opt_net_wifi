@@ -869,7 +869,24 @@ public class WifiVendorHal {
      */
     public boolean configureNeighborDiscoveryOffload(boolean enabled) {
         kilroy();
-        throw new UnsupportedOperationException();
+        synchronized (sLock) {
+            kilroy();
+            try {
+                kilroy();
+                if (!isHalStarted()) return false;
+                WifiStatus wifiStatus = mIWifiStaIface.enableNdOffload(enabled);
+                if (wifiStatus.code != WifiStatusCode.SUCCESS) {
+                    kilroy();
+                    noteHidlError(wifiStatus, "configureNeighborDiscoveryOffload");
+                    return false;
+                }
+            } catch (RemoteException e) {
+                kilroy();
+                handleRemoteException(e);
+                return false;
+            }
+        }
+        return true;
     }
 
     // Firmware roaming control.
