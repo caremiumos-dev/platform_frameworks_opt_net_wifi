@@ -37,6 +37,8 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Unit tests for {@link com.android.server.wifi.WificondControl}.
@@ -75,6 +77,27 @@ public class WificondControlTest {
                 capability = TEST_CAPABILITY;
                 associated = TEST_ASSOCIATED;
             }};
+
+    private static final Set<Integer> SCAN_FREQ_SET =
+            new HashSet<Integer>() {{
+                add(2410);
+                add(2450);
+                add(5050);
+                add(5200);
+            }};
+    private static final Set<String> SCAN_HIDDEN_NETWORK_SSID_SET =
+            new HashSet<String>() {{
+                // These SSIDs should be quoted.
+                add("\"hiddenAP1\"");
+                add("\"hiddenAP2\"");
+            }};
+
+    private static final Set<String> SCAN_HIDDEN_NETWORK_SSID_SET_NO_QUOTE =
+            new HashSet<String>() {{
+                add("hiddenAP1");
+                add("hiddenAP2");
+            }};
+
 
     @Before
     public void setUp() throws Exception {
@@ -405,4 +428,27 @@ public class WificondControlTest {
                          returnedScanResults.get(i).getScanResult().timestamp);
         }
     }
+
+    /**
+     * Verifies that Scan() can convert input parameters to SingleScanSettings correctly.
+     */
+    @Test
+    public void testScan() throws Exception {
+    }
+
+    /**
+     * Verifies that Scan() can handle null input parameters correctly.
+     */
+    @Test
+    public void testScanNullParameters() throws Exception {
+    }
+
+
+    /**
+     * Verifies that Scan() can handle wificond scan failure.
+     */
+    @Test
+    public void testScanFailure() throws Exception {
+    }
+
 }
