@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "73be1f4f_94190411",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-15T07:13:24Z",
+      "side": 1,
+      "message": "I recommend taking a step back to check the high level design.  \n\nWifiStateMachine makes calls to WifiConnectivityManager.  \n\nWIfiConnectivityManager makes calls to WifiNetworkSelector.\n\nThis CL now has WifiNetworkSelector call back in to WifiStateMachine. \n\nThis triangle of control is difficult to follow.",
+      "parentUuid": "9238e22e_5e1208be",
+      "range": {
+        "startLine": 497,
+        "startChar": 0,
+        "endLine": 497,
+        "endChar": 84
+      },
+      "revId": "21e02eaf79bdcf8ea9e22307364116636ca0bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24f92df3_ee9bceb2",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 7
@@ -183,6 +207,29 @@
         "startChar": 12,
         "endLine": 7021,
         "endChar": 63
+      },
+      "revId": "21e02eaf79bdcf8ea9e22307364116636ca0bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "139bb835_ef3266b9",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7033,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-15T07:13:24Z",
+      "side": 1,
+      "message": "can\u0027t the reset just be a call to configureFirmwareRoaming with empty lists?",
+      "range": {
+        "startLine": 7033,
+        "startChar": 17,
+        "endLine": 7033,
+        "endChar": 50
       },
       "revId": "21e02eaf79bdcf8ea9e22307364116636ca0bf05",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -343,6 +390,30 @@
       "side": 1,
       "message": "Do you mean resetFirmwareRoamingConfigurations() by \u0027reset\u0027 here? That\u0027s invoked in the CMD_START_CONNECT message. Can you elaborate more why you think sending a separate CONFIGURE_FW_ROAMING message would have race condition?\n\nActually while going through the code again, I think there is a bug with the configuration reset logic in CL. If a blacklist is created because of association rejection, it will be cleared by the very next CMD_START_CONNECT attempt even if the target network has the same SSID as the previous failed attempt, which defeats the purpose of this blacklist. The reset should be moved to the network disconnection handling. But this is not a race condition.",
       "parentUuid": "9f0cf8c8_93ed7c2b",
+      "range": {
+        "startLine": 7079,
+        "startChar": 8,
+        "endLine": 7079,
+        "endChar": 44
+      },
+      "revId": "21e02eaf79bdcf8ea9e22307364116636ca0bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eefb8030_5f795c87",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7079,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-15T07:13:24Z",
+      "side": 1,
+      "message": "I am saying that since this method in WSM is sending itself a message, you may have another/multiple message between the call that triggered this call path and handling the configure_fw_roaming.  The blacklist may not be relevant anymore.\n\nIs the above issue you mention addressed?",
+      "parentUuid": "bec9b781_62c2fa3d",
       "range": {
         "startLine": 7079,
         "startChar": 8,
