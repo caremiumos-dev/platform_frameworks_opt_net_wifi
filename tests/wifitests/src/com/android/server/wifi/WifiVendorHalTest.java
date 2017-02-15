@@ -128,7 +128,7 @@ public class WifiVendorHalTest {
         when(mIWifiChip.registerEventCallback(any(IWifiChipEventCallback.class)))
                 .thenReturn(mWifiStatusSuccess);
         when(mIWifiStaIface.registerEventCallback(any(IWifiStaIfaceEventCallback.class)))
-                .thenReturn(mWifiStatusSuccess);
+                .thenReturn(mWifiStatusSuccess); //TODO - capture the handler so we can cause events
         // Create the vendor HAL object under test.
         mWifiVendorHal = new WifiVendorHal(mHalDeviceManager, mWifiStateMachineHandlerThread);
 
@@ -523,6 +523,36 @@ public class WifiVendorHalTest {
         assertTrue(0 == mWifiVendorHal.stopSendingOffloadedPacket(slot));
 
         verify(mIWifiStaIface).stopSendingKeepAlivePackets(eq(slot));
+    }
+
+    /**
+     * Test the setup and removal of a RSSI event handler
+     * @throws Exception
+     */
+    @Test
+    public void testRssiMonitoring() throws Exception {
+        when(mIWifiStaIface.startRssiMonitoring(anyInt(), anyInt(), anyInt()))
+                .thenReturn(mWifiStatusSuccess);
+        when(mIWifiStaIface.stopRssiMonitoring(anyInt()))
+                .thenReturn(mWifiStatusSuccess);
+        ArrayList<Byte> breach = new ArrayList<>(10);
+        byte hi = -21;
+        byte med = -42;
+        byte lo = -84;
+        WifiNative.WifiRssiEventHandler handler;
+        handler = ((cur) -> {
+            breach.add(cur);
+        });
+        assertEquals(-1, mWifiVendorHal.startRssiMonitoring(hi, lo, handler)); // not started
+        assertEquals(-1, mWifiVendorHal.stopRssiMonitoring()); // not started
+        assertTrue(mWifiVendorHal.startVendorHalSta());
+        assertEquals(0, mWifiVendorHal.startRssiMonitoring(hi, lo, handler));
+        assertEquals(0, mWifiVendorHal.stopRssiMonitoring());
+        assertEquals(0, mWifiVendorHal.startRssiMonitoring(hi, lo, handler));
+        assertEquals(0, mWifiVendorHal.startRssiMonitoring(med, lo, handler)); // replacing works
+        assertEquals(-1, mWifiVendorHal.startRssiMonitoring(hi, lo, null)); // null handler fails
+        assertEquals(0, mWifiVendorHal.startRssiMonitoring(hi, lo, handler));
+        assertEquals(-1, mWifiVendorHal.startRssiMonitoring(lo, hi, handler)); // empty range
     }
 
     /**
