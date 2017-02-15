@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c4dfa96_336f103b",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-15T19:37:14Z",
+      "side": 1,
+      "message": "Btw, I\u0027ve been throwing illegal arg exceptions in supplicant for these. These should never happen. But, I\u0027m not sure if it\u0027s worth crashing the device for.\n\nhttps://cs.corp.google.com/android/frameworks/opt/net/wifi/service/java/com/android/server/wifi/SupplicantStaNetworkHal.java?rcl\u003df192e56ae2b5dbb6f3a24806527f357af7f9d365\u0026l\u003d742",
+      "range": {
+        "startLine": 790,
+        "startChar": 33,
+        "endLine": 790,
+        "endChar": 38
+      },
+      "revId": "9da446cd3992c7dc092971aae086fe2409041abf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
