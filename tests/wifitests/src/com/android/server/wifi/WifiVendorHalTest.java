@@ -851,4 +851,22 @@ public class WifiVendorHalTest {
         verify(mIWifiStaIface, never())
                 .getDebugRxPacketFates(any(IWifiStaIface.getDebugRxPacketFatesCallback.class));
     }
+
+    /**
+     * Tests the nd offload enable/disable.
+     */
+    @Test
+    public void testEnableDisableNdOffload() throws Exception {
+        when(mIWifiStaIface.enableNdOffload(anyBoolean())).thenReturn(mWifiStatusSuccess);
+
+        assertFalse(mWifiVendorHal.configureNeighborDiscoveryOffload(true));
+        verify(mIWifiStaIface, never()).enableNdOffload(anyBoolean());
+
+        assertTrue(mWifiVendorHal.startVendorHalSta());
+
+        assertTrue(mWifiVendorHal.configureNeighborDiscoveryOffload(true));
+        verify(mIWifiStaIface).enableNdOffload(eq(true));
+        assertTrue(mWifiVendorHal.configureNeighborDiscoveryOffload(false));
+        verify(mIWifiStaIface).enableNdOffload(eq(false));
+    }
 }
