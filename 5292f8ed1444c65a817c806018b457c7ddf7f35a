@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9de5eb5_6675763c",
+        "filename": "tests/wifitests/src/com/android/server/wifi/NetworkListStoreDataTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-02-15T19:50:09Z",
+      "side": 1,
+      "message": "Even though internally String#getBytes() uses UTF-8 as default charset, we should explicitly specify it here to be more clear.",
+      "revId": "5292f8ed1444c65a817c806018b457c7ddf7f35a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86b6e808_6ebaffb7",
+        "filename": "tests/wifitests/src/com/android/server/wifi/util/XmlUtilTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-02-15T19:50:09Z",
+      "side": 1,
+      "message": "Even though internally String#getBytes() uses UTF-8 as default charset, we should explicitly specify it here to be more clear.",
+      "revId": "5292f8ed1444c65a817c806018b457c7ddf7f35a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
