@@ -46,6 +46,30 @@
       "revId": "c6b5e70ae341d53bd20caf47f0f3f9e56bdb9e79",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ebb814b_0f386f01",
+        "filename": "service/java/com/android/server/wifi/util/Checkoff.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-15T19:32:51Z",
+      "side": 1,
+      "message": "BitMaskUtil? I know it doesn\u0027t do anything other than testAndClear now, but we could expand this later to do more bit manipulations.\n\nPS: I\u0027m not good with coming up with good names either :).",
+      "parentUuid": "c6f4a914_dcca4e11",
+      "range": {
+        "startLine": 22,
+        "startChar": 13,
+        "endLine": 22,
+        "endChar": 21
+      },
+      "revId": "c6b5e70ae341d53bd20caf47f0f3f9e56bdb9e79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
