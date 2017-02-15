@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1af7b4a3_313ca1ae",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-15T23:37:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9704c45a_cf17884e",
+      "range": {
+        "startLine": 321,
+        "startChar": 32,
+        "endLine": 321,
+        "endChar": 60
+      },
+      "revId": "4531de22ab55d87bb4bfd5ee125290df35099cb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "759c333b_23413320",
         "filename": "tests/wifitests/src/com/android/server/wifi/WificondControlTest.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-15T19:46:35Z",
       "side": 1,
       "message": "Let\u0027s not have 2 constants. Use NativeUtil for conversion in the matcher.",
+      "range": {
+        "startLine": 103,
+        "startChar": 1,
+        "endLine": 107,
+        "endChar": 15
+      },
+      "revId": "4531de22ab55d87bb4bfd5ee125290df35099cb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "584de543_3099af8f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WificondControlTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-15T23:37:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "759c333b_23413320",
       "range": {
         "startLine": 103,
         "startChar": 1,
