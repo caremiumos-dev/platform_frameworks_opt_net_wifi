@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9e327cc_e0f92ccc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-15T23:35:47Z",
+      "side": 1,
+      "message": "remaining",
+      "range": {
+        "startLine": 7,
+        "startChar": 20,
+        "endLine": 7,
+        "endChar": 27
+      },
+      "revId": "1142990649d15b293eccc230ef666e928a22f22c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e556895a_8d1fa615",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-15T23:35:47Z",
+      "side": 1,
+      "message": "Same concern here.\nPerhaps we can find a better name ?",
+      "range": {
+        "startLine": 831,
+        "startChar": 16,
+        "endLine": 831,
+        "endChar": 36
+      },
+      "revId": "1142990649d15b293eccc230ef666e928a22f22c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8a88d53_29712422",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1505,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-15T23:35:47Z",
+      "side": 1,
+      "message": "occurred",
+      "range": {
+        "startLine": 1505,
+        "startChar": 47,
+        "endLine": 1505,
+        "endChar": 54
+      },
+      "revId": "1142990649d15b293eccc230ef666e928a22f22c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efad8468_dfe67609",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1514,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-15T23:35:47Z",
+      "side": 1,
+      "message": "occurred",
+      "range": {
+        "startLine": 1514,
+        "startChar": 48,
+        "endLine": 1514,
+        "endChar": 55
+      },
+      "revId": "1142990649d15b293eccc230ef666e928a22f22c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c77cace_396addff",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1523,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-15T23:35:47Z",
+      "side": 1,
+      "message": "occurred",
+      "range": {
+        "startLine": 1523,
+        "startChar": 48,
+        "endLine": 1523,
+        "endChar": 55
+      },
+      "revId": "1142990649d15b293eccc230ef666e928a22f22c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
