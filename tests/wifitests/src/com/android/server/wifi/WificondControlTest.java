@@ -19,7 +19,9 @@ package com.android.server.wifi;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -31,12 +33,15 @@ import android.net.wifi.IWificond;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import com.android.server.wifi.wificond.NativeScanResult;
+import com.android.server.wifi.wificond.SingleScanSettings;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Unit tests for {@link com.android.server.wifi.WificondControl}.
@@ -75,6 +80,27 @@ public class WificondControlTest {
                 capability = TEST_CAPABILITY;
                 associated = TEST_ASSOCIATED;
             }};
+
+    private static final Set<Integer> SCAN_FREQ_SET =
+            new HashSet<Integer>() {{
+                add(2410);
+                add(2450);
+                add(5050);
+                add(5200);
+            }};
+    private static final Set<String> SCAN_HIDDEN_NETWORK_SSID_SET =
+            new HashSet<String>() {{
+                // These SSIDs should be quoted.
+                add("\"hiddenAP1\"");
+                add("\"hiddenAP2\"");
+            }};
+
+    private static final Set<String> SCAN_HIDDEN_NETWORK_SSID_SET_NO_QUOTE =
+            new HashSet<String>() {{
+                add("hiddenAP1");
+                add("hiddenAP2");
+            }};
+
 
     @Before
     public void setUp() throws Exception {
@@ -377,21 +403,13 @@ public class WificondControlTest {
      */
     @Test
     public void testGetScanResults() throws Exception {
-        IWificond wificond = mock(IWificond.class);
-        IClientInterface clientInterface = mock(IClientInterface.class);
-        IWifiScannerImpl scanner = mock(IWifiScannerImpl.class);
-
-        when(mWifiInjector.makeWificond()).thenReturn(wificond);
-        when(wificond.createClientInterface()).thenReturn(clientInterface);
-        when(clientInterface.getWifiScannerImpl()).thenReturn(scanner);
+        IWifiScannerImpl scanner = setupClientInterfaceAndCreateMockWificondScanner();
+        assertNotNull(scanner);
 
         // Mock the returned array of NativeScanResult.
         NativeScanResult[] mockScanResults = {MOCK_NATIVE_SCAN_RESULT};
         when(scanner.getScanResults()).thenReturn(mockScanResults);
 
-        // Configure client interface.
-        IClientInterface returnedClientInterface = mWificondControl.setupDriverForClientMode();
-        assertEquals(clientInterface, returnedClientInterface);
         ArrayList<ScanDetail> returnedScanResults = mWificondControl.getScanResults();
         assertEquals(mockScanResults.length, returnedScanResults.size());
         // Since NativeScanResult is organized differently from ScanResult, this only checks
@@ -404,5 +422,60 @@ public class WificondControlTest {
             assertEquals(mockScanResults[i].tsf,
                          returnedScanResults.get(i).getScanResult().timestamp);
         }
+    }
+
+    /**
+     * Verifies that Scan() can convert input parameters to SingleScanSettings correctly.
+     */
+    @Test
+    public void testScan() throws Exception {
+        IWifiScannerImpl scanner = setupClientInterfaceAndCreateMockWificondScanner();
+
+        when(scanner.scan(any(SingleScanSettings.class))).thenReturn(true);
+        assertTrue(mWificondControl.scan(SCAN_FREQ_SET, SCAN_HIDDEN_NETWORK_SSID_SET));
+        verify(scanner).scan(any(SingleScanSettings.class));
+    }
+
+    /**
+     * Verifies that Scan() can handle null input parameters correctly.
+     */
+    @Test
+    public void testScanNullParameters() throws Exception {
+        IWifiScannerImpl scanner = setupClientInterfaceAndCreateMockWificondScanner();
+
+        when(scanner.scan(any(SingleScanSettings.class))).thenReturn(true);
+
+        assertTrue(mWificondControl.scan(null, null));
+        verify(scanner).scan(any(SingleScanSettings.class));
+    }
+
+    /**
+     * Verifies that Scan() can handle wificond scan failure.
+     */
+    @Test
+    public void testScanFailure() throws Exception {
+        IWifiScannerImpl scanner = setupClientInterfaceAndCreateMockWificondScanner();
+
+        when(scanner.scan(any(SingleScanSettings.class))).thenReturn(false);
+        assertFalse(mWificondControl.scan(SCAN_FREQ_SET, SCAN_HIDDEN_NETWORK_SSID_SET));
+        verify(scanner).scan(any(SingleScanSettings.class));
+    }
+
+    /**
+     * Helper method: Setup interface to client mode for mWificondControl.
+     * Returns a mock IWifiScannerImpl.
+     */
+    private IWifiScannerImpl setupClientInterfaceAndCreateMockWificondScanner() throws Exception {
+        IWificond wificond = mock(IWificond.class);
+        IClientInterface clientInterface = mock(IClientInterface.class);
+        IWifiScannerImpl scanner = mock(IWifiScannerImpl.class);
+
+        when(mWifiInjector.makeWificond()).thenReturn(wificond);
+        when(wificond.createClientInterface()).thenReturn(clientInterface);
+        when(clientInterface.getWifiScannerImpl()).thenReturn(scanner);
+
+        assertEquals(clientInterface, mWificondControl.setupDriverForClientMode());
+
+        return scanner;
     }
 }
