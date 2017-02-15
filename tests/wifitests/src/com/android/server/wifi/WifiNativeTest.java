@@ -38,7 +38,9 @@ import org.junit.Test;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
@@ -129,6 +131,19 @@ public class WifiNativeTest {
                 txFailed = 120;
             }};
 
+    private static final Set<Integer> SCAN_FREQ_SET =
+            new HashSet<Integer>() {{
+                add(2410);
+                add(2450);
+                add(5050);
+                add(5200);
+            }};
+    private static final Set<String> SCAN_HIDDEN_NETWORK_SSID_SET =
+            new HashSet<String>() {{
+                // These SSIDs should be quoted.
+                add("\"hiddenAP1\"");
+                add("\"hiddenAP2\"");
+            }};
 
     private WifiNative mWifiNative;
 
@@ -595,6 +610,19 @@ public class WifiNativeTest {
 
         assertEquals(PACKET_COUNTERS_RESULT, mWifiNative.getTxPacketCounters());
         verify(wificondControl).getTxPacketCounters();
+    }
+
+    /**
+     * Verifies that scan() calls underlying WificondControl.
+     */
+    @Test
+    public void testScan() throws Exception {
+        WificondControl wificondControl = mock(WificondControl.class);
+
+        mWifiNative.setWificondControl(wificondControl);
+
+        mWifiNative.scan(SCAN_FREQ_SET, SCAN_HIDDEN_NETWORK_SSID_SET);
+        verify(wificondControl).scan(SCAN_FREQ_SET, SCAN_HIDDEN_NETWORK_SSID_SET);
     }
 
 }
