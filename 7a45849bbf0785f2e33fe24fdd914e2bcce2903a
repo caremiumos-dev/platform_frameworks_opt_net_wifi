@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "522828ad_dc70f1ef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-15T05:24:25Z",
+      "side": 1,
+      "message": "Did you run the unit tests?",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 5
+      },
+      "revId": "7a45849bbf0785f2e33fe24fdd914e2bcce2903a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6a2f160_7dcd80b2",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-15T05:24:25Z",
+      "side": 1,
+      "message": "since this was passed in to the constructor, this should never be null",
+      "range": {
+        "startLine": 148,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 32
+      },
+      "revId": "7a45849bbf0785f2e33fe24fdd914e2bcce2903a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "803ffcf3_30f88a66",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-15T05:24:25Z",
+      "side": 1,
+      "message": "Since we do not ever expect to see a null LocalLog passed in, I would rather pass in a real local log.\n\nA second motivation: If this were to get null as a param, we would want to have the tests catch the error.",
+      "range": {
+        "startLine": 60,
+        "startChar": 43,
+        "endLine": 60,
+        "endChar": 48
+      },
+      "revId": "7a45849bbf0785f2e33fe24fdd914e2bcce2903a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

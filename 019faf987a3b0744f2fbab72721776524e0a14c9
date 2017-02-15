@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3400143c_858728a0",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-15T05:24:25Z",
+      "side": 0,
+      "message": "since the new message is logged as WifiConnectivityManager - Log Begin, will there be any debugging or log tools impacted by the change?",
+      "range": {
+        "startLine": 637,
+        "startChar": 20,
+        "endLine": 637,
+        "endChar": 50
+      },
+      "revId": "019faf987a3b0744f2fbab72721776524e0a14c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
