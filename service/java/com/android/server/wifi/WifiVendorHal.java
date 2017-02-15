@@ -21,9 +21,12 @@ import android.hardware.wifi.V1_0.IWifiChip;
 import android.hardware.wifi.V1_0.IWifiIface;
 import android.hardware.wifi.V1_0.IWifiRttController;
 import android.hardware.wifi.V1_0.IWifiStaIface;
+import android.hardware.wifi.V1_0.IWifiStaIfaceEventCallback;
 import android.hardware.wifi.V1_0.IfaceType;
 import android.hardware.wifi.V1_0.StaRoamingConfig;
 import android.hardware.wifi.V1_0.StaRoamingState;
+import android.hardware.wifi.V1_0.StaScanData;
+import android.hardware.wifi.V1_0.StaScanResult;
 import android.hardware.wifi.V1_0.WifiDebugHostWakeReasonStats;
 import android.hardware.wifi.V1_0.WifiStatus;
 import android.hardware.wifi.V1_0.WifiStatusCode;
@@ -829,6 +832,53 @@ public class WifiVendorHal {
     }
 
     /**
+     * Callback for events on the interface
+     */
+    private class Events extends IWifiStaIfaceEventCallback.Stub {
+        public void onBackgroundScanFailure(int cmdId) {
+            kilroy();
+            Log.e(TAG, "onBackgroundScanFailure " + cmdId);
+        }
+
+        public void onBackgroundFullScanResult(int cmdId, StaScanResult result) {
+            kilroy();
+            Log.e(TAG, "onBackgroundFullScanResult " + cmdId);
+        }
+
+        public void onBackgroundScanResults(int cmdId, ArrayList<StaScanData> scanDatas) {
+            kilroy();
+            Log.e(TAG, "onBackgroundScanResults " + cmdId);
+        }
+
+        public void onRssiThresholdBreached(int cmdId, byte[/* 6 */] currBssid, int currRssi) {
+            kilroy();
+            Log.e(TAG, "onRssiThresholdBreached " + cmdId + "currRssi " + sRssiMonCmdId);
+            synchronized (sLock) {
+                kilroy();
+                if (mWifiRssiEventHandler != null && cmdId == sRssiMonCmdId) {
+                    kilroy();
+                    mWifiRssiEventHandler.onRssiThresholdBreached((byte) currRssi);
+                }
+            }
+        }
+    }
+
+    /**
+     * Callback object instance for events on the interface
+     */
+    private IWifiStaIfaceEventCallback mIWifiStaIfaceEventCallback;
+
+    /**
+     * A fixed cmdId for our RssiMonitoring (we only do one at a time)
+     */
+    private static final int sRssiMonCmdId = 7551;
+
+    /**
+     * Our client's handler
+     */
+    private WifiNative.WifiRssiEventHandler mWifiRssiEventHandler;
+
+    /**
      * Start RSSI monitoring on the currently connected access point.
      *
      * @param maxRssi          Maximum RSSI threshold.
@@ -839,7 +889,28 @@ public class WifiVendorHal {
     public int startRssiMonitoring(byte maxRssi, byte minRssi,
                                    WifiNative.WifiRssiEventHandler rssiEventHandler) {
         kilroy();
-        throw new UnsupportedOperationException();
+        if (maxRssi <= minRssi) return -1;
+        synchronized (sLock) {
+            kilroy();
+            try {
+                kilroy();
+                if (!isHalStarted()) return -1;
+                mIWifiStaIface.stopRssiMonitoring(sRssiMonCmdId);
+                WifiStatus wifiStatus;
+                wifiStatus = mIWifiStaIface.startRssiMonitoring(sRssiMonCmdId, maxRssi, minRssi);
+                if (wifiStatus.code != WifiStatusCode.SUCCESS) return -1;
+                if (mIWifiStaIfaceEventCallback == null) {
+                    kilroy();
+                    mIWifiStaIfaceEventCallback = new Events();
+                }
+                mWifiRssiEventHandler = rssiEventHandler;
+                return 0;
+            } catch (RemoteException e) {
+                kilroy();
+                handleRemoteException(e);
+                return -1;
+            }
+        }
     }
 
     /**
@@ -849,7 +920,22 @@ public class WifiVendorHal {
      */
     public int stopRssiMonitoring() {
         kilroy();
-        throw new UnsupportedOperationException();
+        synchronized (sLock) {
+            kilroy();
+            mWifiRssiEventHandler = null;
+            try {
+                kilroy();
+                if (!isHalStarted()) return -1;
+                mIWifiStaIface.stopRssiMonitoring(sRssiMonCmdId);
+                WifiStatus wifiStatus = mIWifiStaIface.stopRssiMonitoring(sRssiMonCmdId);
+                if (wifiStatus.code != WifiStatusCode.SUCCESS) return -1;
+                return 0;
+            } catch (RemoteException e) {
+                kilroy();
+                handleRemoteException(e);
+                return -1;
+            }
+        }
     }
 
     private WifiDebugHostWakeReasonStats mWifiDebugHostWakeReasonStats;
