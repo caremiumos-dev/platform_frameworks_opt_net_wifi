@@ -104,6 +104,7 @@ public class WifiVendorHal {
 
     /**
      * Initialize the Hal device manager and register for status callbacks.
+     *
      * @return
      */
     public boolean initialize() {
@@ -115,14 +116,16 @@ public class WifiVendorHal {
 
     /**
      * Bring up the HIDL Vendor HAL and configure for AP (Access Point) mode
+     *
      * @return true for success
      */
     public boolean startVendorHalAp() {
         return startVendorHal(AP_MODE);
     }
 
-     /**
+    /**
      * Bring up the HIDL Vendor HAL and configure for STA (Station) mode
+     *
      * @return true for success
      */
     public boolean startVendorHalSta() {
@@ -294,7 +297,7 @@ public class WifiVendorHal {
 
     /**
      * Get the link layer statistics
-     *
+     * <p>
      * Note - we always enable link layer stats on a STA interface.
      *
      * @return the statistics, or null if unable to do so
@@ -362,9 +365,8 @@ public class WifiVendorHal {
 
     /**
      * Enables the linkLayerStats in the Hal.
-     *
+     * <p>
      * This is called unconditionally whenever we create a STA interface.
-     *
      */
     private void enableLinkLayerStats() {
         synchronized (sLock) {
@@ -538,7 +540,7 @@ public class WifiVendorHal {
 
     /**
      * Set the MAC OUI during scanning.
-     *
+     * <p>
      * An OUI {Organizationally Unique Identifier} is a 24-bit number that
      * uniquely identifies a vendor or manufacturer.
      *
@@ -946,7 +948,7 @@ public class WifiVendorHal {
 
     /**
      * Start packet fate monitoring
-     *
+     * <p>
      * Once started, monitoring remains active until HAL is unloaded.
      *
      * @return true for success
@@ -1038,7 +1040,7 @@ public class WifiVendorHal {
 
     /**
      * Retrieve fates of outbound packets
-     *
+     * <p>
      * Reports the outbound frames for the most recent association (space allowing).
      *
      * @param reportBufs
@@ -1083,7 +1085,7 @@ public class WifiVendorHal {
 
     /**
      * Retrieve fates of inbound packets
-     *
+     * <p>
      * Reports the inbound frames for the most recent association (space allowing).
      *
      * @param reportBufs
@@ -1128,6 +1130,7 @@ public class WifiVendorHal {
 
     /**
      * Start sending the specified keep alive packets periodically.
+     *
      * @param slot
      * @param srcMac
      * @param keepAlivePacket
@@ -1185,6 +1188,16 @@ public class WifiVendorHal {
     }
 
     /**
+     * A fixed cmdId for our RssiMonitoring (we only do one at a time)
+     */
+    private static final int sRssiMonCmdId = 7551;
+
+    /**
+     * Our client's handler
+     */
+    private WifiNative.WifiRssiEventHandler mWifiRssiEventHandler;
+
+    /**
      * Start RSSI monitoring on the currently connected access point.
      *
      * @param maxRssi          Maximum RSSI threshold.
@@ -1195,7 +1208,23 @@ public class WifiVendorHal {
     public int startRssiMonitoring(byte maxRssi, byte minRssi,
                                    WifiNative.WifiRssiEventHandler rssiEventHandler) {
         kilroy();
-        throw new UnsupportedOperationException();
+        if (maxRssi <= minRssi) return -1;
+        if (rssiEventHandler == null) return -1;
+        synchronized (sLock) {
+            if (mIWifiStaIface == null) return -1;
+            try {
+                mIWifiStaIface.stopRssiMonitoring(sRssiMonCmdId);
+                WifiStatus status;
+                status = mIWifiStaIface.startRssiMonitoring(sRssiMonCmdId, maxRssi, minRssi);
+                if (status.code != WifiStatusCode.SUCCESS) return -1;
+                mWifiRssiEventHandler = rssiEventHandler;
+                kilroy();
+                return 0;
+            } catch (RemoteException e) {
+                handleRemoteException(e);
+                return -1;
+            }
+        }
     }
 
     /**
@@ -1205,7 +1234,20 @@ public class WifiVendorHal {
      */
     public int stopRssiMonitoring() {
         kilroy();
-        throw new UnsupportedOperationException();
+        synchronized (sLock) {
+            mWifiRssiEventHandler = null;
+            if (mIWifiStaIface == null) return -1;
+            try {
+                mIWifiStaIface.stopRssiMonitoring(sRssiMonCmdId);
+                WifiStatus status = mIWifiStaIface.stopRssiMonitoring(sRssiMonCmdId);
+                if (status.code != WifiStatusCode.SUCCESS) return -1;
+                kilroy();
+                return 0;
+            } catch (RemoteException e) {
+                handleRemoteException(e);
+                return -1;
+            }
+        }
     }
 
     //TODO - belongs in NativeUtil
@@ -1481,8 +1523,15 @@ public class WifiVendorHal {
 
         @Override
         public void onRssiThresholdBreached(int cmdId, byte[/* 6 */] currBssid, int currRssi) {
-            kilroy();
             Log.d(TAG, "onRssiThresholdBreached " + cmdId + "currRssi " + currRssi);
+            WifiNative.WifiRssiEventHandler handler;
+            synchronized (sLock) {
+                handler = mWifiRssiEventHandler;
+                if (mWifiRssiEventHandler == null) return;
+                if (cmdId != sRssiMonCmdId) return;
+                kilroy();
+            }
+            handler.onRssiThresholdBreached((byte) currRssi);
         }
     }
 
@@ -1539,7 +1588,7 @@ public class WifiVendorHal {
             Log.i(TAG, "Device Manager onStatusChanged. isReady(): " + isReady
                     + ", isStarted(): " + isStarted);
             // Reset all our cached handles.
-            if (!isReady || !isStarted)  {
+            if (!isReady || !isStarted) {
                 kilroy();
                 mIWifiChip = null;
                 mIWifiStaIface = null;
