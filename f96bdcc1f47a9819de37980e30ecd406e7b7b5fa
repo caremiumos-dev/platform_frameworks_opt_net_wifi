@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b84e97b9_c96da1f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-16T04:58:54Z",
+      "side": 1,
+      "message": "the",
+      "range": {
+        "startLine": 10,
+        "startChar": 26,
+        "endLine": 10,
+        "endChar": 30
+      },
+      "revId": "f96bdcc1f47a9819de37980e30ecd406e7b7b5fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f586003b_d34405ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-16T04:58:54Z",
+      "side": 1,
+      "message": "the",
+      "range": {
+        "startLine": 10,
+        "startChar": 26,
+        "endLine": 10,
+        "endChar": 30
+      },
+      "revId": "f96bdcc1f47a9819de37980e30ecd406e7b7b5fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7478f8c_6798cb41",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaNetworkHal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2213,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-16T04:58:54Z",
+      "side": 1,
+      "message": ", or null for failure.",
+      "range": {
+        "startLine": 2213,
+        "startChar": 56,
+        "endLine": 2213,
+        "endChar": 57
+      },
+      "revId": "f96bdcc1f47a9819de37980e30ecd406e7b7b5fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cf56626_4918b033",
+        "filename": "service/java/com/android/server/wifi/util/NativeUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-16T04:58:54Z",
+      "side": 1,
+      "message": "Oh, good I need that, too.",
+      "range": {
+        "startLine": 222,
+        "startChar": 4,
+        "endLine": 222,
+        "endChar": 10
+      },
+      "revId": "f96bdcc1f47a9819de37980e30ecd406e7b7b5fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
