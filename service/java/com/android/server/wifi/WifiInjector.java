@@ -41,6 +41,7 @@ import com.android.internal.R;
 import com.android.server.am.BatteryStatsService;
 import com.android.server.net.DelayedDiskWrite;
 import com.android.server.net.IpConfigStore;
+import com.android.server.wifi.hotspot2.LegacyPasspointConfigParser;
 import com.android.server.wifi.hotspot2.PasspointManager;
 import com.android.server.wifi.hotspot2.PasspointNetworkEvaluator;
 import com.android.server.wifi.hotspot2.PasspointObjectFactory;
@@ -180,7 +181,8 @@ public class WifiInjector {
                 TelephonyManager.from(mContext), mWifiNative, mWifiNative.getLocalLog());
         mIpConfigStore = new IpConfigStore(writer);
         mWifiConfigStoreLegacy = new WifiConfigStoreLegacy(
-                mWifiNetworkHistory, mWifiSupplicantControl, mIpConfigStore);
+                mWifiNetworkHistory, mWifiSupplicantControl, mIpConfigStore,
+                new LegacyPasspointConfigParser());
         // Config Manager
         mWifiConfigManager = new WifiConfigManager(mContext, mFrameworkFacade, mClock,
                 UserManager.get(mContext), TelephonyManager.from(mContext),

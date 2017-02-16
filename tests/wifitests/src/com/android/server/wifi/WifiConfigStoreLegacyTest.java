@@ -28,6 +28,8 @@ import android.text.TextUtils;
 import android.util.SparseArray;
 
 import com.android.server.net.IpConfigStore;
+import com.android.server.wifi.hotspot2.LegacyPasspointConfig;
+import com.android.server.wifi.hotspot2.LegacyPasspointConfigParser;
 
 import org.junit.After;
 import org.junit.Before;
@@ -51,6 +53,7 @@ public class WifiConfigStoreLegacyTest {
     @Mock private WifiSupplicantControl mWifiSupplicantControl;
     @Mock private WifiNetworkHistory mWifiNetworkHistory;
     @Mock private IpConfigStore mIpconfigStore;
+    @Mock private LegacyPasspointConfigParser mPasspointConfigParser;
 
     /**
      * Test instance of WifiConfigStore.
@@ -65,9 +68,8 @@ public class WifiConfigStoreLegacyTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        mWifiConfigStore =
-                new WifiConfigStoreLegacy(
-                        mWifiNetworkHistory, mWifiSupplicantControl, mIpconfigStore);
+        mWifiConfigStore = new WifiConfigStoreLegacy(mWifiNetworkHistory, mWifiSupplicantControl,
+                mIpconfigStore, mPasspointConfigParser);
     }
 
     /**
@@ -83,16 +85,35 @@ public class WifiConfigStoreLegacyTest {
      * of the masked wpa_supplicant fields using wpa_supplicant.conf file.
      */
     @Test
-    public void testLoadFromStores() {
+    public void testLoadFromStores() throws Exception {
         WifiConfiguration pskNetwork = WifiConfigurationTestUtil.createPskNetwork();
         WifiConfiguration wepNetwork = WifiConfigurationTestUtil.createWepNetwork();
         WifiConfiguration eapNetwork = WifiConfigurationTestUtil.createEapNetwork();
+        WifiConfiguration passpointNetwork = WifiConfigurationTestUtil.createPasspointNetwork();
         eapNetwork.enterpriseConfig.setPassword("EapPassword");
+
+        // Setup additional configuration for Passpoint.
+        passpointNetwork.networkId = 1234;
+        passpointNetwork.enterpriseConfig.setPassword("PaspointPassword");
+        passpointNetwork.roamingConsortiumIds = new long[] {0x1234, 0x5678};
+        passpointNetwork.enterpriseConfig.setRealm("test.com");
+        passpointNetwork.enterpriseConfig.setPlmn("214321");
 
         final List<WifiConfiguration> networks = new ArrayList<>();
         networks.add(pskNetwork);
         networks.add(wepNetwork);
         networks.add(eapNetwork);
+        networks.add(passpointNetwork);
+
+        // Setup legacy Passpoint configuration data.
+        Map<String, LegacyPasspointConfig> passpointConfigs = new HashMap<>();
+        LegacyPasspointConfig passpointConfig = new LegacyPasspointConfig();
+        passpointConfig.mFqdn = passpointNetwork.FQDN;
+        passpointConfig.mFriendlyName = passpointNetwork.providerFriendlyName;
+        passpointConfig.mRoamingConsortiumOis = passpointNetwork.roamingConsortiumIds;
+        passpointConfig.mRealm = passpointNetwork.enterpriseConfig.getRealm();
+        passpointConfig.mImsi = passpointNetwork.enterpriseConfig.getPlmn();
+        passpointConfigs.put(passpointNetwork.FQDN, passpointConfig);
 
         // Return the config data with passwords masked from wpa_supplicant control interface.
         doAnswer(new AnswerWithArguments() {
@@ -101,6 +122,11 @@ public class WifiConfigStoreLegacyTest {
                 for (Map.Entry<String, WifiConfiguration> entry:
                         createWpaSupplicantLoadData(networks).entrySet()) {
                     configs.put(entry.getKey(), entry.getValue());
+                    // Setup networkExtras for Passpoint configuration.
+                    if (entry.getValue().FQDN != null) {
+                        networkExtras.put(entry.getValue().networkId,
+                                createNetworkExtrasForPasspointConfig(entry.getValue()));
+                    }
                 }
                 return 0;
             }
@@ -126,6 +152,7 @@ public class WifiConfigStoreLegacyTest {
             }
         }).when(mWifiSupplicantControl).readNetworkVariablesFromSupplicantFile(anyString());
 
+        when(mPasspointConfigParser.parseConfig(anyString())).thenReturn(passpointConfigs);
         WifiConfigStoreLegacy.WifiConfigStoreDataLegacy storeData = mWifiConfigStore.read();
 
         WifiConfigurationTestUtil.assertConfigurationsEqualForConfigStore(
@@ -245,4 +272,9 @@ public class WifiConfigStoreLegacyTest {
         return newConfig;
     }
 
+    private Map<String, String> createNetworkExtrasForPasspointConfig(WifiConfiguration config) {
+        Map<String, String> extras = new HashMap<>();
+        extras.put(WifiSupplicantControl.ID_STRING_KEY_FQDN, config.FQDN);
+        return extras;
+    }
 }
