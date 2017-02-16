@@ -27,6 +27,8 @@ import android.hardware.wifi.V1_0.StaRoamingState;
 import android.hardware.wifi.V1_0.WifiDebugHostWakeReasonStats;
 import android.hardware.wifi.V1_0.WifiDebugRingBufferFlags;
 import android.hardware.wifi.V1_0.WifiDebugRingBufferStatus;
+import android.hardware.wifi.V1_0.WifiDebugRxPacketFateReport;
+import android.hardware.wifi.V1_0.WifiDebugTxPacketFateReport;
 import android.hardware.wifi.V1_0.WifiStatus;
 import android.hardware.wifi.V1_0.WifiStatusCode;
 import android.net.apf.ApfCapabilities;
@@ -844,20 +846,41 @@ public class WifiVendorHal {
     }
 
     /**
+     * TODO - get this from NativeUtil
+     */
+    private static byte[] byteArrayFromArrayList(ArrayList<Byte> bytes) {
+        byte[] byteArray = new byte[bytes.size()];
+        int i = 0;
+        for (Byte b : bytes) {
+            byteArray[i++] = b;
+        }
+        return byteArray;
+    }
+
+    /**
      * Start packet fate monitoring
-     * <p>
+     *
      * Once started, monitoring remains active until HAL is unloaded.
      *
      * @return true for success
      */
     public boolean startPktFateMonitoring() {
         kilroy();
-        throw new UnsupportedOperationException();
+        try {
+            kilroy();
+            if (mIWifiStaIface == null) return false;
+            WifiStatus status = mIWifiStaIface.startDebugPacketFateMonitoring();
+            return status.code == WifiStatusCode.SUCCESS;
+        } catch (RemoteException e) {
+            kilroy();
+            handleRemoteException(e);
+            return false;
+        }
     }
 
     /**
      * Retrieve fates of outbound packets
-     * <p>
+     *
      * Reports the outbound frames for the most recent association (space allowing).
      *
      * @param reportBufs
@@ -865,12 +888,39 @@ public class WifiVendorHal {
      */
     public boolean getTxPktFates(WifiNative.TxFateReport[] reportBufs) {
         kilroy();
-        throw new UnsupportedOperationException();
+        if (reportBufs == null) return false;
+        if (reportBufs.length == 0) return false;
+        try {
+            kilroy();
+            MutableBoolean ok = new MutableBoolean(false);
+            if (mIWifiStaIface == null) return false;
+            mIWifiStaIface.getDebugTxPacketFates((status, fates) -> {
+                        kilroy();
+                        if (status.code != WifiStatusCode.SUCCESS) return;
+                        int i = 0;
+                        for (WifiDebugTxPacketFateReport fate : fates) {
+                            kilroy();
+                            if (i >= reportBufs.length) break;
+                            byte code = (byte) fate.fate; // TODO - verify translation
+                            long us = fate.frameInfo.driverTimestampUsec;
+                            byte type = (byte) fate.frameInfo.frameType;
+                            byte[] frame = byteArrayFromArrayList(fate.frameInfo.frameContent);
+                            reportBufs[i++] = new WifiNative.TxFateReport(code, us, type, frame);
+                        }
+                        ok.value = true;
+                    }
+            );
+            return ok.value;
+        } catch (RemoteException e) {
+            kilroy();
+            handleRemoteException(e);
+            return false;
+        }
     }
 
     /**
      * Retrieve fates of inbound packets
-     * <p>
+     *
      * Reports the inbound frames for the most recent association (space allowing).
      *
      * @param reportBufs
@@ -878,7 +928,34 @@ public class WifiVendorHal {
      */
     public boolean getRxPktFates(WifiNative.RxFateReport[] reportBufs) {
         kilroy();
-        throw new UnsupportedOperationException();
+        if (reportBufs == null) return false;
+        if (reportBufs.length == 0) return false;
+        try {
+            kilroy();
+            MutableBoolean ok = new MutableBoolean(false);
+            if (mIWifiStaIface == null) return false;
+            mIWifiStaIface.getDebugRxPacketFates((status, fates) -> {
+                        kilroy();
+                        if (status.code != WifiStatusCode.SUCCESS) return;
+                        int i = 0;
+                        for (WifiDebugRxPacketFateReport fate : fates) {
+                            kilroy();
+                            if (i >= reportBufs.length) break;
+                            byte code = (byte) fate.fate; // TODO - verify translation
+                            long us = fate.frameInfo.driverTimestampUsec;
+                            byte type = (byte) fate.frameInfo.frameType;
+                            byte[] frame = byteArrayFromArrayList(fate.frameInfo.frameContent);
+                            reportBufs[i++] = new WifiNative.RxFateReport(code, us, type, frame);
+                        }
+                        ok.value = true;
+                    }
+            );
+            return ok.value;
+        } catch (RemoteException e) {
+            kilroy();
+            handleRemoteException(e);
+            return false;
+        }
     }
 
     /**
