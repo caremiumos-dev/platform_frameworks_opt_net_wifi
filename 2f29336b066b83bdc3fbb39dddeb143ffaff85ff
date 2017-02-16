@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "6264d32f_15f5e261",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1650,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T19:33:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43892ae3_d1993e2f",
+      "range": {
+        "startLine": 1646,
+        "startChar": 1,
+        "endLine": 1650,
+        "endChar": 29
+      },
+      "revId": "2f29336b066b83bdc3fbb39dddeb143ffaff85ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f36239c1_a722e8e5",
         "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
         "patchSetId": 3
@@ -59,6 +83,30 @@
       "writtenOn": "2017-02-16T19:09:42Z",
       "side": 1,
       "message": "same here.",
+      "range": {
+        "startLine": 1665,
+        "startChar": 8,
+        "endLine": 1669,
+        "endChar": 29
+      },
+      "revId": "2f29336b066b83bdc3fbb39dddeb143ffaff85ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c5eaa01_639b8a07",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T19:33:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f36239c1_a722e8e5",
       "range": {
         "startLine": 1665,
         "startChar": 8,
@@ -105,6 +153,30 @@
       "writtenOn": "2017-02-16T19:09:42Z",
       "side": 1,
       "message": "Take a look at here:\nhttp://cs/android/frameworks/opt/net/wifi/service/java/com/android/server/wifi/util/TelephonyUtil.java?l\u003d269\u0026rcl\u003db2e6cc549450b4260dc6dfc490ca5c8af86f1788\nLet\u0027s make it more real using 3 strings.",
+      "range": {
+        "startLine": 250,
+        "startChar": 36,
+        "endLine": 250,
+        "endChar": 59
+      },
+      "revId": "2f29336b066b83bdc3fbb39dddeb143ffaff85ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "152afc05_54442ab9",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T19:33:23Z",
+      "side": 1,
+      "message": "Actually, that comment is wrong. It can either be 2 or 3: https://cs.corp.google.com/android/frameworks/opt/net/wifi/service/java/com/android/server/wifi/WifiMonitor.java?rcl\u003db2e6cc549450b4260dc6dfc490ca5c8af86f1788\u0026l\u003d291.\n\nI have anyway added one more string.",
+      "parentUuid": "88256e5e_c7b4e101",
       "range": {
         "startLine": 250,
         "startChar": 36,
