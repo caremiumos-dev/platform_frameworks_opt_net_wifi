@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "0b8d2126_957f94d7",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointXmlUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-02-16T17:07:28Z",
+      "side": 1,
+      "message": "I don\u0027t think it is going to be a trivial change, the key is assumed to be the \"name\" attribute of each value element in the map element.\n\nWill leave it as is.  Can look into more in the future if we have more similar use cases.",
+      "parentUuid": "56b59e8f_7ce02aed",
+      "range": {
+        "startLine": 444,
+        "startChar": 0,
+        "endLine": 449,
+        "endChar": 9
+      },
+      "revId": "e05de2edffc019473e044970c7da703000db2cb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f35a226_2497df91",
         "filename": "tests/wifitests/src/com/android/server/wifi/hotspot2/PasspointXmlUtilsTest.java",
         "patchSetId": 3
