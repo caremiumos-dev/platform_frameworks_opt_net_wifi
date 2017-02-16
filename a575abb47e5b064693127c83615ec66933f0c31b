@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2e76cf7c_8699789a",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T00:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a701173_2753797a",
+      "range": {
+        "startLine": 1140,
+        "startChar": 8,
+        "endLine": 1140,
+        "endChar": 26
+      },
+      "revId": "a575abb47e5b064693127c83615ec66933f0c31b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b12161c0_a23ff4ad",
         "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "26cc1fc9_f45b2f16",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1468,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T00:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b12161c0_a23ff4ad",
+      "range": {
+        "startLine": 1468,
+        "startChar": 48,
+        "endLine": 1468,
+        "endChar": 55
+      },
+      "revId": "a575abb47e5b064693127c83615ec66933f0c31b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc1f2c95_8dfaf5af",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiMonitorTest.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-02-15T23:35:29Z",
       "side": 1,
       "message": "Can we write:\nmHanlder \u003d spy(new Handler(mLooper.getLooper()))\ninstead ?",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 36
+      },
+      "revId": "a575abb47e5b064693127c83615ec66933f0c31b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3dd4705_fcbaeca8",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T00:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc1f2c95_8dfaf5af",
       "range": {
         "startLine": 55,
         "startChar": 8,
