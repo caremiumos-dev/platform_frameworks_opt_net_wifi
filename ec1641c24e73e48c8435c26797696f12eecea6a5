@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fb8adc1_b898815e",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-16T00:29:03Z",
+      "side": 1,
+      "message": "If this document is precise, we can replace the |reasonInt| with a more informative name, like |vendorErrorCode| or what you used below |errorInd|.",
+      "range": {
+        "startLine": 1470,
+        "startChar": 14,
+        "endLine": 1470,
+        "endChar": 61
+      },
+      "revId": "ec1641c24e73e48c8435c26797696f12eecea6a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
