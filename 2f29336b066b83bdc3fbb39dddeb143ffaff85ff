@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55f2aa78_32bbf0ba",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-16T19:09:42Z",
+      "side": 1,
+      "message": "String[] data \u003d {matchUmts.group(2), matchUmts.group(3)};  should look better.",
+      "range": {
+        "startLine": 1405,
+        "startChar": 15,
+        "endLine": 1408,
+        "endChar": 45
+      },
+      "revId": "2f29336b066b83bdc3fbb39dddeb143ffaff85ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43892ae3_d1993e2f",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1650,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-16T19:09:42Z",
+      "side": 1,
+      "message": "It seems that SimAuthRequestData has a nice constructor for you: http://cs/android/frameworks/opt/net/wifi/service/java/com/android/server/wifi/util/TelephonyUtil.java?l\u003d259\u0026rcl\u003db2e6cc549450b4260dc6dfc490ca5c8af86f1788",
+      "range": {
+        "startLine": 1646,
+        "startChar": 1,
+        "endLine": 1650,
+        "endChar": 29
+      },
+      "revId": "2f29336b066b83bdc3fbb39dddeb143ffaff85ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f36239c1_a722e8e5",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-16T19:09:42Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 1665,
+        "startChar": 8,
+        "endLine": 1669,
+        "endChar": 29
+      },
+      "revId": "2f29336b066b83bdc3fbb39dddeb143ffaff85ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17a066e2_c8666273",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-16T19:09:42Z",
+      "side": 1,
+      "message": "Let\u0027s keep using constants for unit tests.",
+      "range": {
+        "startLine": 249,
+        "startChar": 6,
+        "endLine": 250,
+        "endChar": 59
+      },
+      "revId": "2f29336b066b83bdc3fbb39dddeb143ffaff85ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88256e5e_c7b4e101",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-16T19:09:42Z",
+      "side": 1,
+      "message": "Take a look at here:\nhttp://cs/android/frameworks/opt/net/wifi/service/java/com/android/server/wifi/util/TelephonyUtil.java?l\u003d269\u0026rcl\u003db2e6cc549450b4260dc6dfc490ca5c8af86f1788\nLet\u0027s make it more real using 3 strings.",
+      "range": {
+        "startLine": 250,
+        "startChar": 36,
+        "endLine": 250,
+        "endChar": 59
+      },
+      "revId": "2f29336b066b83bdc3fbb39dddeb143ffaff85ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "918acc46_859d142c",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-16T19:09:42Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 273,
+        "startChar": 8,
+        "endLine": 274,
+        "endChar": 59
+      },
+      "revId": "2f29336b066b83bdc3fbb39dddeb143ffaff85ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
