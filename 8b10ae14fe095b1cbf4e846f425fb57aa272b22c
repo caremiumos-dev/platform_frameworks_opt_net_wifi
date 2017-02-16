@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36a19847_defe29bf",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T17:57:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c61bd123_7b9b3c0b",
+      "range": {
+        "startLine": 1277,
+        "startChar": 8,
+        "endLine": 1277,
+        "endChar": 35
+      },
+      "revId": "8b10ae14fe095b1cbf4e846f425fb57aa272b22c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4f1a04d_770a795d",
         "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c9d04836_c675b084",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T17:57:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4f1a04d_770a795d",
+      "range": {
+        "startLine": 1553,
+        "startChar": 44,
+        "endLine": 1553,
+        "endChar": 50
+      },
+      "revId": "8b10ae14fe095b1cbf4e846f425fb57aa272b22c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9bfc17a_851417e2",
         "filename": "service/java/com/android/server/wifi/hotspot2/PasspointEventHandler.java",
         "patchSetId": 7
@@ -59,6 +107,30 @@
       "writtenOn": "2017-02-16T17:26:52Z",
       "side": 1,
       "message": "Per my comment on in WifiMonitor, I don\u0027t think this is needed anymore.  The anqp elements contained in |anqpEvent| can be used as the result indication.",
+      "range": {
+        "startLine": 118,
+        "startChar": 31,
+        "endLine": 118,
+        "endChar": 47
+      },
+      "revId": "8b10ae14fe095b1cbf4e846f425fb57aa272b22c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8ec68e3_0d726a4a",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointEventHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T17:57:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9bfc17a_851417e2",
       "range": {
         "startLine": 118,
         "startChar": 31,
@@ -106,6 +178,30 @@
       "side": 1,
       "message": "Never mind about this one. We should leave the null check as is.",
       "parentUuid": "2591e700_eae95ab1",
+      "range": {
+        "startLine": 119,
+        "startChar": 8,
+        "endLine": 119,
+        "endChar": 38
+      },
+      "revId": "8b10ae14fe095b1cbf4e846f425fb57aa272b22c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2d8c93c_6c9b8bea",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointEventHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T17:57:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0808632_41342683",
       "range": {
         "startLine": 119,
         "startChar": 8,
