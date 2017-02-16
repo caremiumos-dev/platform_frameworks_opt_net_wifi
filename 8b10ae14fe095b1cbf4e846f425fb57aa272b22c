@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c61bd123_7b9b3c0b",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-02-16T17:26:52Z",
+      "side": 1,
+      "message": "I think we want |anqpEvent| to be populated regardless of the result, containing at least the bssid.  Since the bssid is what the caller used to identify the corresponding request.",
+      "range": {
+        "startLine": 1277,
+        "startChar": 8,
+        "endLine": 1277,
+        "endChar": 35
+      },
+      "revId": "8b10ae14fe095b1cbf4e846f425fb57aa272b22c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4f1a04d_770a795d",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-02-16T17:26:52Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed anymore.  The presence of ANQP elements in the anqpEvent can be used as the indication of the operation result.",
+      "range": {
+        "startLine": 1553,
+        "startChar": 44,
+        "endLine": 1553,
+        "endChar": 50
+      },
+      "revId": "8b10ae14fe095b1cbf4e846f425fb57aa272b22c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c9bfc17a_851417e2",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointEventHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-02-16T17:26:52Z",
+      "side": 1,
+      "message": "Per my comment on in WifiMonitor, I don\u0027t think this is needed anymore.  The anqp elements contained in |anqpEvent| can be used as the result indication.",
+      "range": {
+        "startLine": 118,
+        "startChar": 31,
+        "endLine": 118,
+        "endChar": 47
+      },
+      "revId": "8b10ae14fe095b1cbf4e846f425fb57aa272b22c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2591e700_eae95ab1",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointEventHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-02-16T17:26:52Z",
+      "side": 1,
+      "message": "We need to invoke the callback regardless of the result.  |onANQPRepsonse| will do a null check on ANQP elements to determine the status of the response.",
+      "range": {
+        "startLine": 119,
+        "startChar": 8,
+        "endLine": 119,
+        "endChar": 38
+      },
+      "revId": "8b10ae14fe095b1cbf4e846f425fb57aa272b22c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
