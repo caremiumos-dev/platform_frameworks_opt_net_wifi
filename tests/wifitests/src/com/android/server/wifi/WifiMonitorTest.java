@@ -286,4 +286,35 @@ public class WifiMonitorTest {
         assertEquals(WifiEnterpriseConfig.Eap.AKA, authData.protocol);
         assertArrayEquals(data, authData.data);
     }
+
+    /**
+     * Broadcast Scan results event test.
+     */
+    @Test
+    public void testBroadcastScanResultsEvent() {
+        mWifiMonitor.registerHandler(
+                WLAN_IFACE_NAME, WifiMonitor.SCAN_RESULTS_EVENT, mHandlerSpy);
+        mWifiMonitor.broadcastScanResultEvent(WLAN_IFACE_NAME);
+        mLooper.dispatchAll();
+
+        ArgumentCaptor<Message> messageCaptor = ArgumentCaptor.forClass(Message.class);
+        verify(mHandlerSpy).handleMessage(messageCaptor.capture());
+        assertEquals(WifiMonitor.SCAN_RESULTS_EVENT, messageCaptor.getValue().what);
+    }
+
+    /**
+     * Broadcast Scan failed event test.
+     */
+    @Test
+    public void testBroadcastScanFailedEvent() {
+        mWifiMonitor.registerHandler(
+                WLAN_IFACE_NAME, WifiMonitor.SCAN_FAILED_EVENT, mHandlerSpy);
+        mWifiMonitor.broadcastScanFailedEvent(WLAN_IFACE_NAME);
+        mLooper.dispatchAll();
+
+        ArgumentCaptor<Message> messageCaptor = ArgumentCaptor.forClass(Message.class);
+        verify(mHandlerSpy).handleMessage(messageCaptor.capture());
+        assertEquals(WifiMonitor.SCAN_FAILED_EVENT, messageCaptor.getValue().what);
+    }
+
 }
