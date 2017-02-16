@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad27c2ea_7ecd99b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-16T18:30:29Z",
+      "side": 1,
+      "message": "were?",
+      "range": {
+        "startLine": 15,
+        "startChar": 60,
+        "endLine": 15,
+        "endChar": 63
+      },
+      "revId": "42ec1a58630c515b6906c40e89d7bbf4560cb1db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9868c573_9c74f49c",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3145,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-16T18:30:29Z",
+      "side": 1,
+      "message": "Can we make this method name more explicit so we know it is loading from supplicant?",
+      "range": {
+        "startLine": 3145,
+        "startChar": 15,
+        "endLine": 3145,
+        "endChar": 27
+      },
+      "revId": "42ec1a58630c515b6906c40e89d7bbf4560cb1db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb8baf00_fb71e185",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3220,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-16T18:30:29Z",
+      "side": 1,
+      "message": "1) Can the method name be more explicit so we know it is saving to supplicant?\n2) Can WifiConfigManager be extended to manage both the configuration stored in our config store and supplicant? That is, WifiConfigManager is the interface for all configuration management/access.",
+      "range": {
+        "startLine": 3220,
+        "startChar": 19,
+        "endLine": 3220,
+        "endChar": 29
+      },
+      "revId": "42ec1a58630c515b6906c40e89d7bbf4560cb1db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4f5f9b1_2a84c306",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3258,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-16T18:30:29Z",
+      "side": 1,
+      "message": "Can we return a more WifiNative style error code? In this case what about just a boolean?",
+      "range": {
+        "startLine": 3258,
+        "startChar": 11,
+        "endLine": 3258,
+        "endChar": 20
+      },
+      "revId": "42ec1a58630c515b6906c40e89d7bbf4560cb1db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ab02b8d_c6f6a7b6",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3276,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-16T18:30:29Z",
+      "side": 1,
+      "message": "Same as above.",
+      "range": {
+        "startLine": 3276,
+        "startChar": 11,
+        "endLine": 3276,
+        "endChar": 20
+      },
+      "revId": "42ec1a58630c515b6906c40e89d7bbf4560cb1db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
