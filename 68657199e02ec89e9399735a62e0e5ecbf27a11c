@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9df982e5_33ad14e5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-16T05:00:15Z",
+      "side": 1,
+      "message": "perform",
+      "range": {
+        "startLine": 10,
+        "startChar": 40,
+        "endLine": 10,
+        "endChar": 46
+      },
+      "revId": "68657199e02ec89e9399735a62e0e5ecbf27a11c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5237120_37470b04",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-16T05:00:15Z",
+      "side": 1,
+      "message": "Wouldn\u0027t an OUI be 6 hexits?",
+      "range": {
+        "startLine": 60,
+        "startChar": 53,
+        "endLine": 60,
+        "endChar": 56
+      },
+      "revId": "68657199e02ec89e9399735a62e0e5ecbf27a11c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
