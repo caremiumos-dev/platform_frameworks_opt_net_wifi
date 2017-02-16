@@ -219,7 +219,7 @@ public class NativeUtil {
     /**
      * Convert from an array list of Byte to an array of primitive bytes.
      */
-    private static byte[] byteArrayFromArrayList(ArrayList<Byte> bytes) {
+    public static byte[] byteArrayFromArrayList(ArrayList<Byte> bytes) {
         byte[] byteArray = new byte[bytes.size()];
         int i = 0;
         for (Byte b : bytes) {
