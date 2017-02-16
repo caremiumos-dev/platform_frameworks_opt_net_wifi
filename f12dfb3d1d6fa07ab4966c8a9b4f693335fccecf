@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "432592ac_cdc890ef",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1503,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-16T00:21:41Z",
+      "side": 1,
+      "message": "More informative document like:\nBroadcast WPS success event to all handlers registered for |iface|.",
+      "range": {
+        "startLine": 1503,
+        "startChar": 6,
+        "endLine": 1503,
+        "endChar": 35
+      },
+      "revId": "f12dfb3d1d6fa07ab4966c8a9b4f693335fccecf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0dcf12af_55c7c721",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-16T00:21:41Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 1512,
+        "startChar": 6,
+        "endLine": 1512,
+        "endChar": 35
+      },
+      "revId": "f12dfb3d1d6fa07ab4966c8a9b4f693335fccecf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15abb457_339a8494",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1521,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-16T00:21:41Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 1521,
+        "startChar": 7,
+        "endLine": 1521,
+        "endChar": 35
+      },
+      "revId": "f12dfb3d1d6fa07ab4966c8a9b4f693335fccecf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
