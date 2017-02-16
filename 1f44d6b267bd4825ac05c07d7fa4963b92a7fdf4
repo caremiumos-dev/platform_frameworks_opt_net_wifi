@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5857d9f4_ed0a4143",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T18:27:31Z",
+      "side": 1,
+      "message": "Hey. I just noticed this. This should be handled by StaIface. They\u0027re not used by p2p service.",
+      "range": {
+        "startLine": 889,
+        "startChar": 0,
+        "endLine": 898,
+        "endChar": 5
+      },
+      "revId": "1f44d6b267bd4825ac05c07d7fa4963b92a7fdf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7971946f_de1dd177",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T18:27:31Z",
+      "side": 1,
+      "message": "similarly",
+      "range": {
+        "startLine": 915,
+        "startChar": 1,
+        "endLine": 921,
+        "endChar": 9
+      },
+      "revId": "1f44d6b267bd4825ac05c07d7fa4963b92a7fdf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8942923_c69e84f3",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T18:27:31Z",
+      "side": 1,
+      "message": "Similarly",
+      "range": {
+        "startLine": 938,
+        "startChar": 2,
+        "endLine": 946,
+        "endChar": 8
+      },
+      "revId": "1f44d6b267bd4825ac05c07d7fa4963b92a7fdf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "149101dd_b04acb31",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T18:27:31Z",
+      "side": 1,
+      "message": "Similarly",
+      "range": {
+        "startLine": 995,
+        "startChar": 8,
+        "endLine": 999,
+        "endChar": 9
+      },
+      "revId": "1f44d6b267bd4825ac05c07d7fa4963b92a7fdf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
