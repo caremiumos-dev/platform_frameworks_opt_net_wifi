@@ -16,6 +16,7 @@
 
 package com.android.server.wifi;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.spy;
@@ -23,6 +24,7 @@ import static org.mockito.Mockito.verify;
 
 import android.hardware.wifi.supplicant.V1_0.ISupplicantStaIfaceCallback.WpsConfigError;
 import android.hardware.wifi.supplicant.V1_0.ISupplicantStaIfaceCallback.WpsErrorIndication;
+import android.net.wifi.WifiEnterpriseConfig;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Message;
@@ -31,6 +33,7 @@ import android.test.suitebuilder.annotation.SmallTest;
 
 import com.android.server.wifi.hotspot2.AnqpEvent;
 import com.android.server.wifi.hotspot2.IconEvent;
+import com.android.server.wifi.util.TelephonyUtil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -44,6 +47,8 @@ import java.lang.reflect.Constructor;
 @SmallTest
 public class WifiMonitorTest {
     private static final String WLAN_IFACE_NAME = "wlan0";
+    private static final String[] GSM_AUTH_DATA = { "45adbc", "fead45", "0x3452"};
+    private static final String[] UMTS_AUTH_DATA = { "fead45", "0x3452"};
     private WifiMonitor mWifiMonitor;
     private TestLooper mLooper;
     private Handler mHandlerSpy;
@@ -234,5 +239,53 @@ public class WifiMonitorTest {
         assertEquals(fileName, ((IconEvent) messageCaptor.getValue().obj).getFileName());
         assertEquals(fileSize, ((IconEvent) messageCaptor.getValue().obj).getSize());
         assertNull(((IconEvent) messageCaptor.getValue().obj).getData());
+    }
+
+    /**
+     * Broadcast network Gsm auth request test.
+     */
+    @Test
+    public void testBroadcastNetworkGsmAuthRequestEvent() {
+        mWifiMonitor.registerHandler(
+                WLAN_IFACE_NAME, WifiMonitor.SUP_REQUEST_SIM_AUTH, mHandlerSpy);
+        int networkId = 45;
+        String ssid = "\"test124\"";
+        String[] data = GSM_AUTH_DATA;
+        mWifiMonitor.broadcastNetworkGsmAuthRequestEvent(WLAN_IFACE_NAME, networkId, ssid, data);
+        mLooper.dispatchAll();
+
+        ArgumentCaptor<Message> messageCaptor = ArgumentCaptor.forClass(Message.class);
+        verify(mHandlerSpy).handleMessage(messageCaptor.capture());
+        assertEquals(WifiMonitor.SUP_REQUEST_SIM_AUTH, messageCaptor.getValue().what);
+        TelephonyUtil.SimAuthRequestData authData =
+                (TelephonyUtil.SimAuthRequestData) messageCaptor.getValue().obj;
+        assertEquals(networkId, authData.networkId);
+        assertEquals(ssid, authData.ssid);
+        assertEquals(WifiEnterpriseConfig.Eap.SIM, authData.protocol);
+        assertArrayEquals(data, authData.data);
+    }
+
+    /**
+     * Broadcast network Umts auth request test.
+     */
+    @Test
+    public void testBroadcastNetworkUmtsAuthRequestEvent() {
+        mWifiMonitor.registerHandler(
+                WLAN_IFACE_NAME, WifiMonitor.SUP_REQUEST_SIM_AUTH, mHandlerSpy);
+        int networkId = 45;
+        String ssid = "\"test124\"";
+        String[] data = UMTS_AUTH_DATA;
+        mWifiMonitor.broadcastNetworkUmtsAuthRequestEvent(WLAN_IFACE_NAME, networkId, ssid, data);
+        mLooper.dispatchAll();
+
+        ArgumentCaptor<Message> messageCaptor = ArgumentCaptor.forClass(Message.class);
+        verify(mHandlerSpy).handleMessage(messageCaptor.capture());
+        assertEquals(WifiMonitor.SUP_REQUEST_SIM_AUTH, messageCaptor.getValue().what);
+        TelephonyUtil.SimAuthRequestData authData =
+                (TelephonyUtil.SimAuthRequestData) messageCaptor.getValue().obj;
+        assertEquals(networkId, authData.networkId);
+        assertEquals(ssid, authData.ssid);
+        assertEquals(WifiEnterpriseConfig.Eap.AKA, authData.protocol);
+        assertArrayEquals(data, authData.data);
     }
 }
