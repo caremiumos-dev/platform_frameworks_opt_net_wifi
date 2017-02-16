@@ -814,7 +814,48 @@ public class WifiVendorHal {
     public int startSendingOffloadedPacket(
             int slot, KeepalivePacketData keepAlivePacket, int periodInMs) {
         kilroy();
-        throw new UnsupportedOperationException();
+        Log.d(TAG, "startSendingOffloadedPacket slot=" + slot + " periodInMs=" + periodInMs);
+
+        String macWithColons = WifiNative.getWlanNativeInterface().getMacAddress();
+        String[] macAddrStr = macWithColons.split(":");
+        byte[] srcMac = new byte[6];
+        for (int i = 0; i < 6; i++) {
+            kilroy();
+            Integer hexVal = Integer.parseInt(macAddrStr[i], 16);
+            srcMac[i] = hexVal.byteValue();
+        }
+
+        ArrayList<Byte> data = new ArrayList<Byte>(keepAlivePacket.data.length);
+        for (byte b : keepAlivePacket.data) {
+            kilroy();
+            data.add(b);
+        }
+        short protocol = (short) (keepAlivePacket.protocol);
+
+        synchronized (sLock) {
+            kilroy();
+            try {
+                kilroy();
+                if (!isHalStarted()) return -1;
+                WifiStatus wifiStatus = mIWifiStaIface.startSendingKeepAlivePackets(
+                        slot,
+                        data,
+                        protocol,
+                        srcMac,
+                        keepAlivePacket.dstMac,
+                        periodInMs);
+                if (wifiStatus.code != WifiStatusCode.SUCCESS) {
+                    kilroy();
+                    noteHidlError(wifiStatus, "startSendingOffloadedPacket");
+                    return -1;
+                }
+            } catch (RemoteException e) {
+                kilroy();
+                handleRemoteException(e);
+                return -1;
+            }
+        }
+        return 0;
     }
 
     /**
@@ -825,7 +866,26 @@ public class WifiVendorHal {
      */
     public int stopSendingOffloadedPacket(int slot) {
         kilroy();
-        throw new UnsupportedOperationException();
+        Log.d(TAG, "stopSendingOffloadedPacket " + slot);
+
+        synchronized (sLock) {
+            kilroy();
+            try {
+                kilroy();
+                if (!isHalStarted()) return -1;
+                WifiStatus wifiStatus = mIWifiStaIface.stopSendingKeepAlivePackets(slot);
+                if (wifiStatus.code != WifiStatusCode.SUCCESS) {
+                    kilroy();
+                    noteHidlError(wifiStatus, "stopSendingKeepAlivePackets");
+                    return -1;
+                }
+            } catch (RemoteException e) {
+                kilroy();
+                handleRemoteException(e);
+                return -1;
+            }
+        }
+        return 0;
     }
 
     /**
