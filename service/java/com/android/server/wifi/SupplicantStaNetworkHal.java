@@ -76,14 +76,15 @@ public class SupplicantStaNetworkHal {
             Pattern.compile("^:([0-9a-fA-F]+)$");
 
     private final Object mLock = new Object();
-    private ISupplicantStaNetwork mISupplicantStaNetwork = null;
+    private final String mIfaceName;
     private final WifiMonitor mWifiMonitor;
+    private ISupplicantStaNetwork mISupplicantStaNetwork;
+
     // Indicates whether the system is capable of 802.11r fast BSS transition.
     private boolean mSystemSupportsFastBssTransition = false;
 
     // Network variables read from wpa_supplicant.
     private int mNetworkId;
-    private String mIfaceName;
     private ArrayList<Byte> mSsid;
     private byte[/* 6 */] mBssid;
     private boolean mScanSsid;
@@ -112,9 +113,10 @@ public class SupplicantStaNetworkHal {
     private String mEapEngineID;
     private String mEapDomainSuffixMatch;
 
-    SupplicantStaNetworkHal(ISupplicantStaNetwork iSupplicantStaNetwork,
+    SupplicantStaNetworkHal(ISupplicantStaNetwork iSupplicantStaNetwork, String ifaceName,
                             Context context, WifiMonitor monitor) {
         mISupplicantStaNetwork = iSupplicantStaNetwork;
+        mIfaceName = ifaceName;
         mWifiMonitor = monitor;
         mSystemSupportsFastBssTransition =
                 context.getResources().getBoolean(R.bool.config_wifi_fast_bss_transition_enabled);

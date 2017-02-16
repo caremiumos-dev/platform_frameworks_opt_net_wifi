@@ -63,6 +63,7 @@ public class SupplicantStaIfaceHal {
     // Supplicant HAL interface objects
     private ISupplicant mISupplicant;
     private ISupplicantStaIface mISupplicantStaIface;
+    private String mIfaceName;
     // Currently configured network in wpa_supplicant
     private SupplicantStaNetworkHal mCurrentNetwork;
     // Currently configured network's framework network Id.
@@ -181,6 +182,7 @@ public class SupplicantStaIfaceHal {
                 return false;
             }
             Mutable<ISupplicantIface> supplicantIface = new Mutable<>();
+            Mutable<String> ifaceName = new Mutable<>();
             for (ISupplicant.IfaceInfo ifaceInfo : supplicantIfaces) {
                 if (ifaceInfo.type == IfaceType.STA) {
                     try {
@@ -196,6 +198,7 @@ public class SupplicantStaIfaceHal {
                         Log.e(TAG, "ISupplicant.getInterface exception: " + e);
                         return false;
                     }
+                    ifaceName.value = ifaceInfo.name;
                     break;
                 }
             }
@@ -204,6 +207,7 @@ public class SupplicantStaIfaceHal {
                 return false;
             }
             mISupplicantStaIface = getStaIfaceMockable(supplicantIface.value);
+            mIfaceName = ifaceName.value;
             return true;
         }
     }
@@ -505,7 +509,8 @@ public class SupplicantStaIfaceHal {
      */
     protected SupplicantStaNetworkHal getStaNetworkMockable(
             ISupplicantStaNetwork iSupplicantStaNetwork) {
-        return new SupplicantStaNetworkHal(iSupplicantStaNetwork, mContext, mWifiMonitor);
+        return new SupplicantStaNetworkHal(
+                iSupplicantStaNetwork, mIfaceName, mContext, mWifiMonitor);
     }
 
     /**
