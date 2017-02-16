@@ -117,8 +117,6 @@ import java.util.List;
  */
 public class WifiServiceImpl extends IWifiManager.Stub {
     private static final String TAG = "WifiService";
-    private static final boolean DBG = true;
-    private static final boolean VDBG = false;
 
     // Dumpsys argument to enable/disable disconnect on IP reachability failures.
     private static final String DUMP_ARG_SET_IPREACH_DISCONNECT = "set-ipreach-disconnect";
@@ -164,6 +162,8 @@ public class WifiServiceImpl extends IWifiManager.Stub {
     private final PasspointManager mPasspointManager;
     private final FrameworkFacade mFrameworkFacade;
 
+    private boolean mVerboseLoggingEnabled = false;
+
     /**
      * Handles client connections
      */
@@ -179,7 +179,9 @@ public class WifiServiceImpl extends IWifiManager.Stub {
             switch (msg.what) {
                 case AsyncChannel.CMD_CHANNEL_HALF_CONNECTED: {
                     if (msg.arg1 == AsyncChannel.STATUS_SUCCESSFUL) {
-                        if (DBG) Slog.d(TAG, "New client listening to asynchronous messages");
+                        if (mVerboseLoggingEnabled) {
+                            Slog.d(TAG, "New client listening to asynchronous messages");
+                        }
                         // We track the clients by the Messenger
                         // since it is expected to be always available
                         mTrafficPoller.addClient(msg.replyTo);
@@ -189,10 +191,12 @@ public class WifiServiceImpl extends IWifiManager.Stub {
                     break;
                 }
                 case AsyncChannel.CMD_CHANNEL_DISCONNECTED: {
-                    if (msg.arg1 == AsyncChannel.STATUS_SEND_UNSUCCESSFUL) {
-                        if (DBG) Slog.d(TAG, "Send failed, client connection lost");
-                    } else {
-                        if (DBG) Slog.d(TAG, "Client connection lost with reason: " + msg.arg1);
+                    if (mVerboseLoggingEnabled) {
+                        if (msg.arg1 == AsyncChannel.STATUS_SEND_UNSUCCESSFUL) {
+                            Slog.d(TAG, "Send failed, client connection lost");
+                        } else {
+                            Slog.d(TAG, "Client connection lost with reason: " + msg.arg1);
+                        }
                     }
                     mTrafficPoller.removeClient(msg.replyTo);
                     break;
@@ -223,11 +227,15 @@ public class WifiServiceImpl extends IWifiManager.Stub {
                     }
 
                     if (config != null && isValid(config)) {
-                        if (DBG) Slog.d(TAG, "Connect with config" + config);
+                        if (mVerboseLoggingEnabled) {
+                            Slog.d(TAG, "Connect with config" + config);
+                        }
                         mWifiStateMachine.sendMessage(Message.obtain(msg));
                     } else if (config == null
                             && networkId != WifiConfiguration.INVALID_NETWORK_ID) {
-                        if (DBG) Slog.d(TAG, "Connect with networkId" + networkId);
+                        if (mVerboseLoggingEnabled) {
+                            Slog.d(TAG, "Connect with networkId" + networkId);
+                        }
                         mWifiStateMachine.sendMessage(Message.obtain(msg));
                     } else {
                         Slog.e(TAG, "ClientHandler.handleMessage ignoring invalid msg=" + msg);
@@ -817,8 +825,8 @@ public class WifiServiceImpl extends IWifiManager.Stub {
                 final long energyUsed = (long)((stats.tx_time * txCurrent +
                         stats.rx_time * rxCurrent +
                         rxIdleTime * rxIdleCurrent) * voltage);
-                if (VDBG || rxIdleTime < 0 || stats.on_time < 0 || stats.tx_time < 0 ||
-                        stats.rx_time < 0 || energyUsed < 0) {
+                if (mVerboseLoggingEnabled || rxIdleTime < 0 || stats.on_time < 0
+                        || stats.tx_time < 0 || stats.rx_time < 0 || energyUsed < 0) {
                     StringBuilder sb = new StringBuilder();
                     sb.append(" rxIdleCur=" + rxIdleCurrent);
                     sb.append(" rxCur=" + rxCurrent);
@@ -1623,6 +1631,8 @@ public class WifiServiceImpl extends IWifiManager.Stub {
     }
 
     void enableVerboseLoggingInternal(int verbose) {
+        mVerboseLoggingEnabled = verbose > 0;
+
         mWifiStateMachine.enableVerboseLogging(verbose);
         mWifiLockManager.enableVerboseLogging(verbose);
         mWifiMulticastLockManager.enableVerboseLogging(verbose);
