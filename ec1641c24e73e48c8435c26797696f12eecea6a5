@@ -22,6 +22,30 @@
       "revId": "ec1641c24e73e48c8435c26797696f12eecea6a5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b02fa686_3f2b232a",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T00:33:12Z",
+      "side": 1,
+      "message": "Done.\n\nThe values for this enum in wpa_supplicant is here: https://cs.corp.google.com/android/external/wpa_supplicant_8/src/wps/wps_defs.h?rcl\u003d2cccdfa9cc5854c9e681a367a38855dfebeddf7c\u0026l\u003d233.\n\nI don\u0027t know why the comment and the enum names are so different.",
+      "parentUuid": "3fb8adc1_b898815e",
+      "range": {
+        "startLine": 1470,
+        "startChar": 14,
+        "endLine": 1470,
+        "endChar": 61
+      },
+      "revId": "ec1641c24e73e48c8435c26797696f12eecea6a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
