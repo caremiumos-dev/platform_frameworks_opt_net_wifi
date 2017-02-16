@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "104802b6_e25bc386",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T15:43:10Z",
+      "side": 1,
+      "message": "Move this to the bottom of this file. We have to delete most of this file very soon. It\u0027ll be hard to find the new stuff in between the old methods.",
+      "range": {
+        "startLine": 1070,
+        "startChar": 1,
+        "endLine": 1084,
+        "endChar": 5
+      },
+      "revId": "f8247c2a34ac6f0437919cd9f3d3d80d3b661037",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db7939f3_ad906673",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T15:43:10Z",
+      "side": 1,
+      "message": "mClientInterfaceName?",
+      "range": {
+        "startLine": 65,
+        "startChar": 51,
+        "endLine": 65,
+        "endChar": 56
+      },
+      "revId": "f8247c2a34ac6f0437919cd9f3d3d80d3b661037",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f67a95e5_22a69a8d",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T15:43:10Z",
+      "side": 1,
+      "message": "mClientInterfaceName?",
+      "range": {
+        "startLine": 71,
+        "startChar": 51,
+        "endLine": 71,
+        "endChar": 56
+      },
+      "revId": "f8247c2a34ac6f0437919cd9f3d3d80d3b661037",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "836058d5_a13f15d1",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WificondControlTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T15:43:10Z",
+      "side": 1,
+      "message": "NEed 1 more test here to verify if we\u0027re invoking the WifiMonitor broadcast methods correctly.\nYou can use the mock scanner impl to capture the IScanEvent callback being registered by WifiCondControl. You should use that to invoke the scan results callback and ensure that WifiCondControl invokes WifiMonitor.broadcastScanResults.",
+      "revId": "f8247c2a34ac6f0437919cd9f3d3d80d3b661037",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
