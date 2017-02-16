@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "844dd925_d41700a0",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-16T19:15:48Z",
+      "side": 1,
+      "message": "Thanks, Roshan.\n\nthe calls here would have failed to execute because of missing group iface. i was puzzled when i saw these calls in P2pHal. what you said makes  a lot of sense..",
+      "parentUuid": "5857d9f4_ed0a4143",
+      "range": {
+        "startLine": 889,
+        "startChar": 0,
+        "endLine": 898,
+        "endChar": 5
+      },
+      "revId": "1f44d6b267bd4825ac05c07d7fa4963b92a7fdf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7971946f_de1dd177",
         "filename": "service/java/com/android/server/wifi/WifiNative.java",
         "patchSetId": 14
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-16T18:27:31Z",
       "side": 1,
       "message": "similarly",
+      "range": {
+        "startLine": 915,
+        "startChar": 1,
+        "endLine": 921,
+        "endChar": 9
+      },
+      "revId": "1f44d6b267bd4825ac05c07d7fa4963b92a7fdf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36f7fec2_f30de67e",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-16T19:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7971946f_de1dd177",
       "range": {
         "startLine": 915,
         "startChar": 1,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "994a3e72_741369cd",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-16T19:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8942923_c69e84f3",
+      "range": {
+        "startLine": 938,
+        "startChar": 2,
+        "endLine": 946,
+        "endChar": 8
+      },
+      "revId": "1f44d6b267bd4825ac05c07d7fa4963b92a7fdf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "149101dd_b04acb31",
         "filename": "service/java/com/android/server/wifi/WifiNative.java",
         "patchSetId": 14
@@ -82,6 +154,30 @@
       "writtenOn": "2017-02-16T18:27:31Z",
       "side": 1,
       "message": "Similarly",
+      "range": {
+        "startLine": 995,
+        "startChar": 8,
+        "endLine": 999,
+        "endChar": 9
+      },
+      "revId": "1f44d6b267bd4825ac05c07d7fa4963b92a7fdf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "963ba050_9f4dbe64",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-16T19:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "149101dd_b04acb31",
       "range": {
         "startLine": 995,
         "startChar": 8,
