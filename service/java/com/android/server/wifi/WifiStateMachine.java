@@ -197,7 +197,6 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     private WifiMonitor mWifiMonitor;
     private WifiNative mWifiNative;
     private WifiConfigManager mWifiConfigManager;
-    private WifiSupplicantControl mWifiSupplicantControl;
     private WifiConnectivityManager mWifiConnectivityManager;
     private WifiNetworkSelector mWifiNetworkSelector;
     private INetworkManagementService mNwService;
@@ -395,7 +394,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             logd(dbg + " clearTargetBssid " + bssid + " key=" + config.configKey());
         }
         mTargetRoamBSSID = bssid;
-        return mWifiSupplicantControl.setConfiguredNetworkBSSID(bssid);
+        return mWifiNative.setConfiguredNetworkBSSID(bssid);
     }
 
     /**
@@ -881,8 +880,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
 
         mWifiConfigManager = mWifiInjector.getWifiConfigManager();
         mWifiApConfigStore = mWifiInjector.getWifiApConfigStore();
-        mWifiSupplicantControl = mWifiInjector.getWifiSupplicantControl();
-        mWifiSupplicantControl.setSystemSupportsFastBssTransition(
+        mWifiNative.setSystemSupportsFastBssTransition(
                 mContext.getResources().getBoolean(R.bool.config_wifi_fast_bss_transition_enabled));
 
         mPasspointManager = mWifiInjector.getPasspointManager();
@@ -1249,7 +1247,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
      * be handled once we move all of this connection logic to wificond.
      */
     private int lookupFrameworkNetworkId(int supplicantNetworkId) {
-        return mWifiSupplicantControl.getFrameworkNetworkId(supplicantNetworkId);
+        return mWifiNative.getFrameworkNetworkId(supplicantNetworkId);
     }
 
     /**
@@ -2086,7 +2084,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         pw.println("mUserWantsSuspendOpt " + mUserWantsSuspendOpt);
         pw.println("mSuspendOptNeedsDisabled " + mSuspendOptNeedsDisabled);
         pw.println("mSystemSupportsFastBssTransition "
-                + mWifiSupplicantControl.getSystemSupportsFastBssTransition());
+                + mWifiNative.getSystemSupportsFastBssTransition());
         if (mCountryCode.getCountryCodeSentToDriver() != null) {
             pw.println("CountryCode sent to driver " + mCountryCode.getCountryCodeSentToDriver());
         } else {
@@ -5012,7 +5010,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     reportConnectionAttemptStart(config, mTargetRoamBSSID,
                             WifiMetricsProto.ConnectionEvent.ROAM_UNRELATED);
                     boolean shouldDisconnect = (getCurrentState() != mDisconnectedState);
-                    if (mWifiSupplicantControl.connectToNetwork(config, shouldDisconnect)) {
+                    if (mWifiNative.connectToNetwork(config, shouldDisconnect)) {
                         lastConnectAttemptTimestamp = mClock.getWallClockMillis();
                         targetWificonfiguration = config;
                         mAutoRoaming = false;
@@ -5150,14 +5148,13 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     WpsResult wpsResult;
                     switch (wpsInfo.setup) {
                         case WpsInfo.PBC:
-                            wpsResult = mWifiSupplicantControl.startWpsPbc(wpsInfo);
+                            wpsResult = mWifiNative.startWpsPbc(wpsInfo);
                             break;
                         case WpsInfo.KEYPAD:
-                            wpsResult =
-                                    mWifiSupplicantControl.startWpsWithPinFromAccessPoint(wpsInfo);
+                            wpsResult = mWifiNative.startWpsWithPinFromAccessPoint(wpsInfo);
                             break;
                         case WpsInfo.DISPLAY:
-                            wpsResult = mWifiSupplicantControl.startWpsWithPinFromDevice(wpsInfo);
+                            wpsResult = mWifiNative.startWpsWithPinFromDevice(wpsInfo);
                             break;
                         default:
                             wpsResult = new WpsResult(Status.FAILURE);
@@ -6183,7 +6180,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
 
                     reportConnectionAttemptStart(config, mTargetRoamBSSID,
                             WifiMetricsProto.ConnectionEvent.ROAM_ENTERPRISE);
-                    if (mWifiSupplicantControl.roamToNetwork(config)) {
+                    if (mWifiNative.roamToNetwork(config)) {
                         lastConnectAttemptTimestamp = mClock.getWallClockMillis();
                         targetWificonfiguration = config;
                         mAutoRoaming = true;
