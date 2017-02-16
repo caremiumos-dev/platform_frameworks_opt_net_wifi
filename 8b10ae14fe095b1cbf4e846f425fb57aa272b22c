@@ -91,6 +91,30 @@
       "revId": "8b10ae14fe095b1cbf4e846f425fb57aa272b22c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0808632_41342683",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointEventHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-02-16T17:33:41Z",
+      "side": 1,
+      "message": "Never mind about this one. We should leave the null check as is.",
+      "parentUuid": "2591e700_eae95ab1",
+      "range": {
+        "startLine": 119,
+        "startChar": 8,
+        "endLine": 119,
+        "endChar": 38
+      },
+      "revId": "8b10ae14fe095b1cbf4e846f425fb57aa272b22c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
