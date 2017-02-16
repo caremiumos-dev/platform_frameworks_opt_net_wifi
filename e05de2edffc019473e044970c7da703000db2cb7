@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "56b59e8f_7ce02aed",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointXmlUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T15:46:02Z",
+      "side": 1,
+      "message": "Oh. That\u0027s bad. We can try to modify that if u want, I had made a change in that file sometime back. But, it\u0027s upto u since u arleady have everything implemented here.",
+      "parentUuid": "15987749_c8301cdd",
+      "range": {
+        "startLine": 444,
+        "startChar": 0,
+        "endLine": 449,
+        "endChar": 9
+      },
+      "revId": "e05de2edffc019473e044970c7da703000db2cb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f35a226_2497df91",
         "filename": "tests/wifitests/src/com/android/server/wifi/hotspot2/PasspointXmlUtilsTest.java",
         "patchSetId": 3
