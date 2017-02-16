@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7122edd8_300332df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T05:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9df982e5_33ad14e5",
+      "range": {
+        "startLine": 10,
+        "startChar": 40,
+        "endLine": 10,
+        "endChar": 46
+      },
+      "revId": "68657199e02ec89e9399735a62e0e5ecbf27a11c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5237120_37470b04",
         "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-16T05:00:15Z",
       "side": 1,
       "message": "Wouldn\u0027t an OUI be 6 hexits?",
+      "range": {
+        "startLine": 60,
+        "startChar": 53,
+        "endLine": 60,
+        "endChar": 56
+      },
+      "revId": "68657199e02ec89e9399735a62e0e5ecbf27a11c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17858584_4007ed2b",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-16T05:17:45Z",
+      "side": 1,
+      "message": "I don\u0027t know why, but this 4 bytes.\n\nSample values are here: https://cs.corp.google.com/android/external/wpa_supplicant_8/hostapd/README-WPS?rcl\u003d2cccdfa9cc5854c9e681a367a38855dfebeddf7c\u0026l\u003d108\n\nwpa_supplicant\u0027s internal conversion method is here: https://cs.corp.google.com/piper///depot/google3/third_party/hostapd/src/src/wps/wps_common.c?rcl\u003d116894254\u0026l\u003d465",
+      "parentUuid": "d5237120_37470b04",
       "range": {
         "startLine": 60,
         "startChar": 53,
