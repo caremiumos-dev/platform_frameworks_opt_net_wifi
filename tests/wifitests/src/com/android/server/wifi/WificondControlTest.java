@@ -54,6 +54,7 @@ import java.util.Set;
 @SmallTest
 public class WificondControlTest {
     private WifiInjector mWifiInjector;
+    private WifiMonitor mWifiMonitor;
     private WificondControl mWificondControl;
     private static final byte[] TEST_SSID =
             new byte[] {'G', 'o', 'o', 'g', 'l', 'e', 'G', 'u', 'e', 's', 't'};
@@ -103,7 +104,8 @@ public class WificondControlTest {
     @Before
     public void setUp() throws Exception {
         mWifiInjector = mock(WifiInjector.class);
-        mWificondControl = new WificondControl(mWifiInjector);
+        mWifiMonitor = mock(WifiMonitor.class);
+        mWificondControl = new WificondControl(mWifiInjector, mWifiMonitor);
     }
 
     /**
@@ -112,7 +114,7 @@ public class WificondControlTest {
     @Test
     public void testSetupDriverForClientMode() throws Exception {
         IWificond wificond = mock(IWificond.class);
-        IClientInterface clientInterface = mock(IClientInterface.class);
+        IClientInterface clientInterface = getMockClientInterface();
 
         when(mWifiInjector.makeWificond()).thenReturn(wificond);
         when(wificond.createClientInterface()).thenReturn(clientInterface);
@@ -199,7 +201,7 @@ public class WificondControlTest {
     @Test
     public void testEnableSupplicant() throws Exception {
         IWificond wificond = mock(IWificond.class);
-        IClientInterface clientInterface = mock(IClientInterface.class);
+        IClientInterface clientInterface = getMockClientInterface();
 
         when(mWifiInjector.makeWificond()).thenReturn(wificond);
         when(wificond.createClientInterface()).thenReturn(clientInterface);
@@ -217,7 +219,7 @@ public class WificondControlTest {
     @Test
     public void testEnableSupplicantErrorWhenNoClientInterfaceConfigured() throws Exception {
         IWificond wificond = mock(IWificond.class);
-        IClientInterface clientInterface = mock(IClientInterface.class);
+        IClientInterface clientInterface = getMockClientInterface();
 
         when(mWifiInjector.makeWificond()).thenReturn(wificond);
         when(wificond.createClientInterface()).thenReturn(clientInterface);
@@ -239,7 +241,7 @@ public class WificondControlTest {
     @Test
     public void testDisableSupplicant() throws Exception {
         IWificond wificond = mock(IWificond.class);
-        IClientInterface clientInterface = mock(IClientInterface.class);
+        IClientInterface clientInterface = getMockClientInterface();
 
         when(mWifiInjector.makeWificond()).thenReturn(wificond);
         when(wificond.createClientInterface()).thenReturn(clientInterface);
@@ -257,7 +259,7 @@ public class WificondControlTest {
     @Test
     public void testDisableSupplicantErrorWhenNoClientInterfaceConfigured() throws Exception {
         IWificond wificond = mock(IWificond.class);
-        IClientInterface clientInterface = mock(IClientInterface.class);
+        IClientInterface clientInterface = getMockClientInterface();
 
         when(mWifiInjector.makeWificond()).thenReturn(wificond);
         when(wificond.createClientInterface()).thenReturn(clientInterface);
@@ -302,7 +304,7 @@ public class WificondControlTest {
     @Test
     public void testSignalPoll() throws Exception {
         IWificond wificond = mock(IWificond.class);
-        IClientInterface clientInterface = mock(IClientInterface.class);
+        IClientInterface clientInterface = getMockClientInterface();
 
         when(mWifiInjector.makeWificond()).thenReturn(wificond);
         when(wificond.createClientInterface()).thenReturn(clientInterface);
@@ -318,7 +320,7 @@ public class WificondControlTest {
     @Test
     public void testSignalPollErrorWhenNoClientInterfaceConfigured() throws Exception {
         IWificond wificond = mock(IWificond.class);
-        IClientInterface clientInterface = mock(IClientInterface.class);
+        IClientInterface clientInterface = getMockClientInterface();
 
         when(mWifiInjector.makeWificond()).thenReturn(wificond);
         when(wificond.createClientInterface()).thenReturn(clientInterface);
@@ -340,7 +342,7 @@ public class WificondControlTest {
     @Test
     public void testGetTxPacketCounters() throws Exception {
         IWificond wificond = mock(IWificond.class);
-        IClientInterface clientInterface = mock(IClientInterface.class);
+        IClientInterface clientInterface = getMockClientInterface();
 
         when(mWifiInjector.makeWificond()).thenReturn(wificond);
         when(wificond.createClientInterface()).thenReturn(clientInterface);
@@ -357,7 +359,7 @@ public class WificondControlTest {
     @Test
     public void testGetTxPacketCountersErrorWhenNoClientInterfaceConfigured() throws Exception {
         IWificond wificond = mock(IWificond.class);
-        IClientInterface clientInterface = mock(IClientInterface.class);
+        IClientInterface clientInterface = getMockClientInterface();
 
         when(mWifiInjector.makeWificond()).thenReturn(wificond);
         when(wificond.createClientInterface()).thenReturn(clientInterface);
@@ -380,7 +382,7 @@ public class WificondControlTest {
     @Test
     public void testGetScanResultsErrorWhenNoClientInterfaceConfigured() throws Exception {
         IWificond wificond = mock(IWificond.class);
-        IClientInterface clientInterface = mock(IClientInterface.class);
+        IClientInterface clientInterface = getMockClientInterface();
 
         when(mWifiInjector.makeWificond()).thenReturn(wificond);
         when(wificond.createClientInterface()).thenReturn(clientInterface);
@@ -459,6 +461,19 @@ public class WificondControlTest {
         when(scanner.scan(any(SingleScanSettings.class))).thenReturn(false);
         assertFalse(mWificondControl.scan(SCAN_FREQ_SET, SCAN_HIDDEN_NETWORK_SSID_SET));
         verify(scanner).scan(any(SingleScanSettings.class));
+    }
+
+    /**
+     * Helper method: create a mock IClientInterface which mocks all neccessary operations.
+     * Returns a mock IClientInterface.
+     */
+    private IClientInterface getMockClientInterface() throws Exception {
+        IClientInterface clientInterface = mock(IClientInterface.class);
+        IWifiScannerImpl scanner = mock(IWifiScannerImpl.class);
+
+        when(clientInterface.getWifiScannerImpl()).thenReturn(scanner);
+
+        return clientInterface;
     }
 
     /**
