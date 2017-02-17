@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5d44e0f1_b6fb5cf1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-02-17T17:04:45Z",
+      "side": 1,
+      "message": "Yes, that will be done in a separate CL.  Will update to comment to be more clear about it.",
+      "parentUuid": "23611f06_ed043d84",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 67
+      },
+      "revId": "98cf97822c82e5518839b886a55122b02de52422",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8a3f4a7_56ce9538",
         "filename": "service/java/com/android/server/wifi/WifiConfigStoreLegacy.java",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "42440878_f2b57a1b",
+        "filename": "service/java/com/android/server/wifi/WifiConfigStoreLegacy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-02-17T17:04:45Z",
+      "side": 1,
+      "message": "I guess in theory it could be set to null after the creation. Will add check for EAP method as well.",
+      "parentUuid": "c8a3f4a7_56ce9538",
+      "revId": "98cf97822c82e5518839b886a55122b02de52422",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0165768c_6b296632",
         "filename": "service/java/com/android/server/wifi/WifiConfigStoreLegacy.java",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2017-02-17T15:49:12Z",
       "side": 1,
       "message": "What about FQDN? i don\u0027t think that is being populated in wificonfig in the other methods.",
+      "revId": "98cf97822c82e5518839b886a55122b02de52422",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f49b661e_e2296f6e",
+        "filename": "service/java/com/android/server/wifi/WifiConfigStoreLegacy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-02-17T17:04:45Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right, missed it.  Will update.",
+      "parentUuid": "0165768c_6b296632",
       "revId": "98cf97822c82e5518839b886a55122b02de52422",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
