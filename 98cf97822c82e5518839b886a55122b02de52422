@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "23611f06_ed043d84",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-17T15:52:16Z",
+      "side": 1,
+      "message": "Also, I don\u0027t see this part in this CL. Is that going to come in a separate CL?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 67
+      },
+      "revId": "98cf97822c82e5518839b886a55122b02de52422",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8a3f4a7_56ce9538",
         "filename": "service/java/com/android/server/wifi/WifiConfigStoreLegacy.java",
         "patchSetId": 1
