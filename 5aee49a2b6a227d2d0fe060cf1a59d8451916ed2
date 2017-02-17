@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac2569cf_14fcef0f",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1555,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-17T22:39:52Z",
+      "side": 1,
+      "message": "Delete extra empty lines",
+      "range": {
+        "startLine": 1553,
+        "startChar": 0,
+        "endLine": 1555,
+        "endChar": 0
+      },
+      "revId": "5aee49a2b6a227d2d0fe060cf1a59d8451916ed2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
