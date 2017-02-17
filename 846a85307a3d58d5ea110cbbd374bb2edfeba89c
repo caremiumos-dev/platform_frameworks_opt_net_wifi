@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbb5df2b_c92975b2",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4462,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-17T21:49:25Z",
+      "side": 1,
+      "message": "checked with roshan, this should be removed",
+      "range": {
+        "startLine": 4462,
+        "startChar": 24,
+        "endLine": 4462,
+        "endChar": 59
+      },
+      "revId": "846a85307a3d58d5ea110cbbd374bb2edfeba89c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8adcd162_5b28c4a7",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4463,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-17T21:49:25Z",
+      "side": 1,
+      "message": "actually, as it turns out, this can all be removed...",
+      "range": {
+        "startLine": 4459,
+        "startChar": 24,
+        "endLine": 4463,
+        "endChar": 55
+      },
+      "revId": "846a85307a3d58d5ea110cbbd374bb2edfeba89c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
