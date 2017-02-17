@@ -900,6 +900,17 @@ public class SupplicantStaIfaceHalTest {
         verify(mWifiMonitor).broadcastWpsOverlapEvent(eq(WLAN_IFACE_NAME));
     }
 
+    /**
+     * Tests the handling of supplicant death notification.
+     */
+    @Test
+    public void testSupplicantDeathCallback() throws Exception {
+        executeAndValidateInitializationSequence();
+        assertNotNull(mDeathRecipientCaptor.getValue());
+
+        mDeathRecipientCaptor.getValue().serviceDied(5L);
+        verify(mWifiMonitor).broadcastSupplicantDisconnectionEvent(eq(WLAN_IFACE_NAME));
+    }
 
     private void executeAndValidateHs20DeauthImminentCallback(boolean isEss) throws Exception {
         executeAndValidateInitializationSequence();
@@ -1015,11 +1026,12 @@ public class SupplicantStaIfaceHalTest {
                     .registerCallback(any(ISupplicantStaIfaceCallback.class));
         }
 
-        mInOrder = inOrder(mServiceManagerMock, mISupplicantMock, mISupplicantStaIfaceMock);
+        mInOrder = inOrder(mServiceManagerMock, mISupplicantMock, mISupplicantStaIfaceMock,
+                mWifiMonitor);
         // Initialize SupplicantStaIfaceHal, should call serviceManager.registerForNotifications
         assertTrue(mDut.initialize());
         // verify: service manager initialization sequence
-        mInOrder.verify(mServiceManagerMock).linkToDeath(any(IHwBinder.DeathRecipient.class),
+        mInOrder.verify(mServiceManagerMock).linkToDeath(mDeathRecipientCaptor.capture(),
                 anyLong());
         mInOrder.verify(mServiceManagerMock).registerForNotifications(
                 eq(ISupplicant.kInterfaceName), eq(""), mServiceNotificationCaptor.capture());
@@ -1035,9 +1047,15 @@ public class SupplicantStaIfaceHalTest {
                     .getInterface(any(ISupplicant.IfaceInfo.class),
                             any(ISupplicant.getInterfaceCallback.class));
         }
+        if (causeRemoteException) {
+            mInOrder.verify(mWifiMonitor).broadcastSupplicantDisconnectionEvent(eq(null));
+        }
         if (!causeRemoteException && !getZeroInterfaces && !getNullInterface) {
             mInOrder.verify(mISupplicantStaIfaceMock)
                     .registerCallback(any(ISupplicantStaIfaceCallback.class));
+        }
+        if (shouldSucceed) {
+            mInOrder.verify(mWifiMonitor).broadcastSupplicantConnectionEvent(eq(WLAN_IFACE_NAME));
         }
     }
 

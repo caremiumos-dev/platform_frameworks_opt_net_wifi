@@ -233,6 +233,7 @@ public class SupplicantStaIfaceHal {
             if (!registerCallback(new SupplicantStaIfaceHalCallback())) {
                 return false;
             }
+            mWifiMonitor.broadcastSupplicantConnectionEvent(mIfaceName);
             return true;
         }
     }
@@ -241,6 +242,7 @@ public class SupplicantStaIfaceHal {
         synchronized (mLock) {
             mISupplicant = null;
             mISupplicantStaIface = null;
+            mWifiMonitor.broadcastSupplicantDisconnectionEvent(mIfaceName);
         }
     }
 
