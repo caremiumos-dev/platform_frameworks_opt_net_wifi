@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "38fe9208_1ccb1f67",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-17T21:58:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd7ceafa_2305e94c",
+      "range": {
+        "startLine": 797,
+        "startChar": 49,
+        "endLine": 797,
+        "endChar": 70
+      },
+      "revId": "bcd7eb9549ca5dd99a14325ed2b3b6cae7ee6596",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c140881_c9174d71",
         "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Yes, I know, but I felt the private class was clearer.",
       "parentUuid": "3c140881_c9174d71",
+      "range": {
+        "startLine": 815,
+        "startChar": 8,
+        "endLine": 815,
+        "endChar": 39
+      },
+      "revId": "bcd7eb9549ca5dd99a14325ed2b3b6cae7ee6596",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a276a04d_a5de82f4",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-17T21:58:32Z",
+      "side": 1,
+      "message": "I left this for now. There is at least one other in WifiVendorHal, and I would rather change them in a clean-up pass.",
+      "parentUuid": "2ad3d30b_ec1d78fa",
       "range": {
         "startLine": 815,
         "startChar": 8,
