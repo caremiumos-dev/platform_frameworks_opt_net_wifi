@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8a3f4a7_56ce9538",
+        "filename": "service/java/com/android/server/wifi/WifiConfigStoreLegacy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-17T15:49:12Z",
+      "side": 1,
+      "message": "|| wificonfig.enterpriseConfig.getEapMethod \u003d\u003d NONE.\n\n.enterpriseConfig will ideally never be null, it\u0027s created in WifiConfiguration constructor.",
+      "revId": "98cf97822c82e5518839b886a55122b02de52422",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0165768c_6b296632",
+        "filename": "service/java/com/android/server/wifi/WifiConfigStoreLegacy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-17T15:49:12Z",
+      "side": 1,
+      "message": "What about FQDN? i don\u0027t think that is being populated in wificonfig in the other methods.",
+      "revId": "98cf97822c82e5518839b886a55122b02de52422",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
