@@ -29,13 +29,23 @@ import android.hardware.wifi.supplicant.V1_0.WpsConfigMethods;
 import android.hidl.manager.V1_0.IServiceManager;
 import android.hidl.manager.V1_0.IServiceNotification;
 import android.net.IpConfiguration;
+import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiSsid;
 import android.os.RemoteException;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.android.server.wifi.hotspot2.AnqpEvent;
+import com.android.server.wifi.hotspot2.IconEvent;
+import com.android.server.wifi.hotspot2.WnmData;
+import com.android.server.wifi.hotspot2.anqp.ANQPElement;
+import com.android.server.wifi.hotspot2.anqp.ANQPParser;
+import com.android.server.wifi.hotspot2.anqp.Constants;
 import com.android.server.wifi.util.NativeUtil;
 
+import java.io.IOException;
+import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
@@ -44,6 +54,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.android.server.wifi.hotspot2.anqp.Constants.ANQPElementType.ANQPRoamingConsortium;
+import static com.android.server.wifi.hotspot2.anqp.Constants.ANQPElementType.ANQPVenueName;
+import static com.android.server.wifi.hotspot2.anqp.Constants.ANQPElementType.HSFriendlyName;
+import static com.android.server.wifi.hotspot2.anqp.Constants.ANQPElementType.HSOSUProviders;
 
 /**
  * Hal calls for bring up/shut down of the supplicant daemon and for
@@ -1533,53 +1548,125 @@ public class SupplicantStaIfaceHal {
         @Override
         public void onStateChanged(int newState, byte[/* 6 */] bssid, int id,
                                    ArrayList<Byte> ssid) {
+            SupplicantState newSupplicantState = SupplicantState.INVALID;
+            for (SupplicantState state : SupplicantState.values()) {
+                if (state.ordinal() == newState) {
+                    newSupplicantState = state;
+                    break;
+                }
+            }
+            WifiSsid wifiSsid =
+                    WifiSsid.createFromByteArray(NativeUtil.byteArrayFromArrayList(ssid));
+            String bssidStr = NativeUtil.macAddressFromByteArray(bssid);
+            mWifiMonitor.broadcastSupplicantStateChangeEvent(
+                    mIfaceName, id, wifiSsid, bssidStr, newSupplicantState);
+            if (newSupplicantState == SupplicantState.ASSOCIATED) {
+                mWifiMonitor.broadcastAssociationSuccesfulEvent(mIfaceName, bssidStr);
+            } else if (newSupplicantState == SupplicantState.COMPLETED) {
+                mWifiMonitor.broadcastNetworkConnectionEvent(mIfaceName, id, bssidStr);
+            }
         }
 
         @Override
-        public void onAnqpQueryDone(byte[/* 6 */] macAddress,
+        public void onAnqpQueryDone(byte[/* 6 */] bssid,
                                     ISupplicantStaIfaceCallback.AnqpData data,
                                     ISupplicantStaIfaceCallback.Hs20AnqpData hs20Data) {
+            Map<Constants.ANQPElementType, ANQPElement> elements = new HashMap<>();
+            try {
+                ANQPElement venueName =
+                        ANQPParser.parseElement(ANQPVenueName, ByteBuffer.wrap(
+                                NativeUtil.byteArrayFromArrayList(data.venueName)));
+                if (venueName != null) {
+                    elements.put(ANQPVenueName, venueName);
+                }
+                ANQPElement friendlyName =
+                        ANQPParser.parseHS20Element(HSFriendlyName, ByteBuffer.wrap(
+                                NativeUtil.byteArrayFromArrayList(hs20Data.operatorFriendlyName)));
+                if (friendlyName != null) {
+                    elements.put(HSFriendlyName, friendlyName);
+                }
+                ANQPElement osuProviders =
+                        ANQPParser.parseHS20Element(HSOSUProviders, ByteBuffer.wrap(
+                                NativeUtil.byteArrayFromArrayList(hs20Data.osuProvidersList)));
+                if (osuProviders != null) {
+                    elements.put(HSOSUProviders, osuProviders);
+                }
+                // TODO: There are other elements. But, don't see them being used for now.
+            } catch (IOException | BufferUnderflowException e) {
+                Log.e(TAG, "Failed parsing ANQP query done callback", e);
+                elements = null;
+            }
+            mWifiMonitor.broadcastAnqpDoneEvent(
+                    mIfaceName, new AnqpEvent(ByteBuffer.wrap(bssid).getLong(), elements));
         }
 
         @Override
-        public void onHs20IconQueryDone(byte[/* 6 */] macAddress, String fileName,
+        public void onHs20IconQueryDone(byte[/* 6 */] bssid, String fileName,
                                         ArrayList<Byte> data) {
+            mWifiMonitor.broadcastIconDoneEvent(
+                    mIfaceName, new IconEvent(ByteBuffer.wrap(bssid).getLong(),
+                            fileName, data.size(), NativeUtil.byteArrayFromArrayList(data)));
         }
 
         @Override
-        public void onHs20SubscriptionRemediation(byte osuMethod, String url) {
+        public void onHs20SubscriptionRemediation(byte[/* 6 */] bssid, byte osuMethod, String url) {
+            mWifiMonitor.broadcastWnmEvent(
+                    mIfaceName, new WnmData(ByteBuffer.wrap(bssid).getLong(), osuMethod, url));
         }
 
         @Override
-        public void onHs20DeauthImminentNotice(int reasonCode, int reAuthDelayInSec, String url) {
+        public void onHs20DeauthImminentNotice(byte[/* 6 */] bssid, int reasonCode,
+                                               int reAuthDelayInSec, String url) {
+            mWifiMonitor.broadcastWnmEvent(
+                    mIfaceName, new WnmData(ByteBuffer.wrap(bssid).getLong(), url,
+                            reasonCode == WnmData.ESS, reAuthDelayInSec));
         }
 
         @Override
         public void onDisconnected(byte[/* 6 */] bssid, boolean locallyGenerated, int reasonCode) {
+            mWifiMonitor.broadcastNetworkDisConnectionEvent(
+                    mIfaceName, locallyGenerated ? 1 : 0, reasonCode,
+                    NativeUtil.macAddressFromByteArray(bssid));
         }
 
         @Override
         public void onAssociationRejected(byte[/* 6 */] bssid, int statusCode) {
+            // TODO: Need to figure out when to trigger
+            // |WifiMonitor.AUTHENTICATION_FAILURE_REASON_WRONG_PSWD|
+            mWifiMonitor.broadcastAssociationRejectionEvent(mIfaceName, statusCode,
+                    NativeUtil.macAddressFromByteArray(bssid));
         }
 
         @Override
         public void onAuthenticationTimeout(byte[/* 6 */] bssid) {
+            mWifiMonitor.broadcastAuthenticationFailureEvent(
+                    mIfaceName, WifiMonitor.AUTHENTICATION_FAILURE_REASON_TIMEOUT);
         }
 
         @Override
         public void onEapFailure() {
+            mWifiMonitor.broadcastAuthenticationFailureEvent(
+                    mIfaceName, WifiMonitor.AUTHENTICATION_FAILURE_REASON_EAP_FAILURE);
         }
 
         @Override
         public void onWpsEventSuccess() {
+            mWifiMonitor.broadcastWpsSuccessEvent(mIfaceName);
         }
 
         @Override
         public void onWpsEventFail(byte[/* 6 */] bssid, short configError, short errorInd) {
+            if (configError == WpsConfigError.MSG_TIMEOUT
+                    && errorInd == WpsErrorIndication.NO_ERROR) {
+                mWifiMonitor.broadcastWpsTimeoutEvent(mIfaceName);
+            } else {
+                mWifiMonitor.broadcastWpsFailEvent(mIfaceName, configError, errorInd);
+            }
         }
 
         @Override
         public void onWpsEventPbcOverlap() {
+            mWifiMonitor.broadcastWpsOverlapEvent(mIfaceName);
         }
 
         @Override
