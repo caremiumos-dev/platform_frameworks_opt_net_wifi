@@ -492,6 +492,30 @@
       "revId": "1bdf55cabbb591859d2fdec0defb2e85f3580380",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fc285a7_605b01ea",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1385,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-17T22:39:52Z",
+      "side": 1,
+      "message": "1) is fine, I just totally missed the logCompletion calls when I made this comment.",
+      "parentUuid": "0ac0adf5_2ec9c9f9",
+      "range": {
+        "startLine": 1385,
+        "startChar": 0,
+        "endLine": 1385,
+        "endChar": 36
+      },
+      "revId": "1bdf55cabbb591859d2fdec0defb2e85f3580380",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
