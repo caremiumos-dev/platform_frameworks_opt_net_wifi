@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cd7ceafa_2305e94c",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-17T06:39:57Z",
+      "side": 1,
+      "message": "OK, I\u0027ll change that.",
+      "parentUuid": "70f7d137_002569b3",
+      "range": {
+        "startLine": 797,
+        "startChar": 49,
+        "endLine": 797,
+        "endChar": 70
+      },
+      "revId": "bcd7eb9549ca5dd99a14325ed2b3b6cae7ee6596",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c140881_c9174d71",
         "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-15T00:37:46Z",
       "side": 1,
       "message": "There is no need to create private classes like this one. U can use a mutable\u003c\u003e like this: https://cs.corp.google.com/android/frameworks/opt/net/wifi/service/java/com/android/server/wifi/SupplicantStaIfaceHal.java?rcl\u003d05cef46d2ae1cbc48eacdc8a71864419b9815fbc\u0026l\u003d1062.",
+      "range": {
+        "startLine": 815,
+        "startChar": 8,
+        "endLine": 815,
+        "endChar": 39
+      },
+      "revId": "bcd7eb9549ca5dd99a14325ed2b3b6cae7ee6596",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ad3d30b_ec1d78fa",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-17T06:39:57Z",
+      "side": 1,
+      "message": "Yes, I know, but I felt the private class was clearer.",
+      "parentUuid": "3c140881_c9174d71",
       "range": {
         "startLine": 815,
         "startChar": 8,
