@@ -147,6 +147,16 @@ public class WifiNativeTest {
                 add("\"hiddenAP2\"");
             }};
 
+    private static final WifiNative.PnoSettings TEST_PNO_SETTINGS =
+            new WifiNative.PnoSettings() {{
+                isConnected = false;
+                periodInMs = 6000;
+                networkList = new WifiNative.PnoNetwork[2];
+                networkList[0] = new WifiNative.PnoNetwork();
+                networkList[1] = new WifiNative.PnoNetwork();
+                networkList[0].ssid = "\"testSsid0\"";
+                networkList[1].ssid = "\"testSsid1\"";
+            }};
     private WifiNative mWifiNative;
 
     @Before
@@ -653,6 +663,32 @@ public class WifiNativeTest {
 
         mWifiNative.scan(SCAN_FREQ_SET, SCAN_HIDDEN_NETWORK_SSID_SET);
         verify(wificondControl).scan(SCAN_FREQ_SET, SCAN_HIDDEN_NETWORK_SSID_SET);
+    }
+
+    /**
+     * Verifies that startPnoscan() calls underlying WificondControl.
+     */
+    @Test
+    public void testStartPnoScan() throws Exception {
+        WificondControl wificondControl = mock(WificondControl.class);
+
+        mWifiNative.setWificondControl(wificondControl);
+
+        mWifiNative.startPnoScan(TEST_PNO_SETTINGS);
+        verify(wificondControl).startPnoScan(TEST_PNO_SETTINGS);
+    }
+
+    /**
+     * Verifies that stopPnoscan() calls underlying WificondControl.
+     */
+    @Test
+    public void testStopPnoScan() throws Exception {
+        WificondControl wificondControl = mock(WificondControl.class);
+
+        mWifiNative.setWificondControl(wificondControl);
+
+        mWifiNative.stopPnoScan();
+        verify(wificondControl).stopPnoScan();
     }
 
     /**

@@ -29,6 +29,7 @@ import static org.mockito.Mockito.when;
 
 import android.net.wifi.IApInterface;
 import android.net.wifi.IClientInterface;
+import android.net.wifi.IPnoScanEvent;
 import android.net.wifi.IScanEvent;
 import android.net.wifi.IWifiScannerImpl;
 import android.net.wifi.IWificond;
@@ -38,6 +39,7 @@ import com.android.server.wifi.util.NativeUtil;
 import com.android.server.wifi.wificond.ChannelSettings;
 import com.android.server.wifi.wificond.HiddenNetwork;
 import com.android.server.wifi.wificond.NativeScanResult;
+import com.android.server.wifi.wificond.PnoSettings;
 import com.android.server.wifi.wificond.SingleScanSettings;
 
 import org.junit.Before;
@@ -101,6 +103,16 @@ public class WificondControlTest {
                 // These SSIDs should be quoted.
                 add("\"hiddenAP1\"");
                 add("\"hiddenAP2\"");
+            }};
+    private static final WifiNative.PnoSettings TEST_PNO_SETTINGS =
+            new WifiNative.PnoSettings() {{
+                isConnected = false;
+                periodInMs = 6000;
+                networkList = new WifiNative.PnoNetwork[2];
+                networkList[0] = new WifiNative.PnoNetwork();
+                networkList[1] = new WifiNative.PnoNetwork();
+                networkList[0].ssid = "\"testSsid0\"";
+                networkList[1].ssid = "\"testSsid1\"";
             }};
 
     @Before
@@ -490,6 +502,42 @@ public class WificondControlTest {
     }
 
     /**
+     * Verifies that startPnoScan() can convert input parameters to PnoSettings correctly.
+     */
+    @Test
+    public void testStartPnoScan() throws Exception {
+        IWifiScannerImpl scanner = setupClientInterfaceAndCreateMockWificondScanner();
+
+        when(scanner.startPnoScan(any(PnoSettings.class))).thenReturn(true);
+        assertTrue(mWificondControl.startPnoScan(TEST_PNO_SETTINGS));
+        verify(scanner).startPnoScan(argThat(new PnoScanMatcher(TEST_PNO_SETTINGS)));
+    }
+
+    /**
+     * Verifies that stopPnoScan() calls underlying wificond.
+     */
+    @Test
+    public void testStopPnoScan() throws Exception {
+        IWifiScannerImpl scanner = setupClientInterfaceAndCreateMockWificondScanner();
+
+        when(scanner.stopPnoScan()).thenReturn(true);
+        assertTrue(mWificondControl.stopPnoScan());
+        verify(scanner).stopPnoScan();
+    }
+
+    /**
+     * Verifies that stopPnoScan() can handle wificond failure.
+     */
+    @Test
+    public void testStopPnoScanFailure() throws Exception {
+        IWifiScannerImpl scanner = setupClientInterfaceAndCreateMockWificondScanner();
+
+        when(scanner.stopPnoScan()).thenReturn(false);
+        assertFalse(mWificondControl.stopPnoScan());
+        verify(scanner).stopPnoScan();
+    }
+
+    /**
      * Verifies that WificondControl can invoke WifiMonitor broadcast methods upon scan
      * reuslt event.
      */
@@ -521,6 +569,23 @@ public class WificondControlTest {
         scanEvent.OnScanFailed();
 
         verify(mWifiMonitor).broadcastScanFailedEvent(any(String.class));
+    }
+
+    /**
+     * Verifies that WificondControl can invoke WifiMonitor broadcast methods upon pno scan
+     * reuslt event.
+     */
+    @Test
+    public void testPnoScanResultEvent() throws Exception {
+        IWifiScannerImpl scanner = setupClientInterfaceAndCreateMockWificondScanner();
+
+        ArgumentCaptor<IPnoScanEvent> messageCaptor = ArgumentCaptor.forClass(IPnoScanEvent.class);
+        verify(scanner).subscribePnoScanEvents(messageCaptor.capture());
+        IPnoScanEvent pnoScanEvent = messageCaptor.getValue();
+        assertNotNull(pnoScanEvent);
+        pnoScanEvent.OnPnoNetworkFound();
+
+        verify(mWifiMonitor).broadcastScanResultEvent(any(String.class));
     }
 
     /**
@@ -602,4 +667,16 @@ public class WificondControlTest {
         }
     }
 
+    // Create a ArgumentMatcher which captures a PnoSettings parameter and checks if it
+    // matches the WifiNative.PnoSettings;
+    private class PnoScanMatcher extends ArgumentMatcher<PnoSettings> {
+        private final WifiNative.PnoSettings mExpectedPnoSettings;
+        PnoScanMatcher(WifiNative.PnoSettings expectedPnoSettings) {
+            this.mExpectedPnoSettings = expectedPnoSettings;
+        }
+        @Override
+        public boolean matches(Object argument) {
+            return true;
+        }
+    }
 }
