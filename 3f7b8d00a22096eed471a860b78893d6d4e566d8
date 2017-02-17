@@ -22,6 +22,30 @@
       "revId": "3f7b8d00a22096eed471a860b78893d6d4e566d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86b5609d_b447de17",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-17T19:09:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3081042f_71752fdb",
+      "range": {
+        "startLine": 41,
+        "startChar": 20,
+        "endLine": 41,
+        "endChar": 23
+      },
+      "revId": "3f7b8d00a22096eed471a860b78893d6d4e566d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
