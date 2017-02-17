@@ -40,7 +40,9 @@ import android.hardware.wifi.supplicant.V1_0.WpsConfigMethods;
 import android.hidl.manager.V1_0.IServiceManager;
 import android.hidl.manager.V1_0.IServiceNotification;
 import android.net.IpConfiguration;
+import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiSsid;
 import android.os.RemoteException;
 import android.util.Log;
 import android.util.SparseArray;
@@ -1601,6 +1603,24 @@ public class SupplicantStaIfaceHal {
         @Override
         public void onStateChanged(int newState, byte[/* 6 */] bssid, int id,
                                    ArrayList<Byte> ssid) {
+            SupplicantState newSupplicantState = SupplicantState.INVALID;
+            for (SupplicantState state : SupplicantState.values()) {
+                if (state.ordinal() == newState) {
+                    newSupplicantState = state;
+                    break;
+                }
+            }
+            WifiSsid wifiSsid =
+                    WifiSsid.createFromByteArray(NativeUtil.byteArrayFromArrayList(ssid));
+            String bssidStr = NativeUtil.macAddressFromByteArray(bssid);
+            mWifiMonitor.broadcastSupplicantStateChangeEvent(
+                    mIfaceName, mFrameworkNetworkId, wifiSsid, bssidStr, newSupplicantState);
+            if (newSupplicantState == SupplicantState.ASSOCIATED) {
+                mWifiMonitor.broadcastAssociationSuccesfulEvent(mIfaceName, bssidStr);
+            } else if (newSupplicantState == SupplicantState.COMPLETED) {
+                mWifiMonitor.broadcastNetworkConnectionEvent(
+                        mIfaceName, mFrameworkNetworkId, bssidStr);
+            }
         }
 
         @Override
