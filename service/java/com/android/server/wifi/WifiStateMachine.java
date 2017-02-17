@@ -1144,11 +1144,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
      * Set wpa_supplicant log level using |mVerboseLoggingLevel| flag.
      */
     void setSupplicantLogLevel() {
-        if (mVerboseLoggingEnabled) {
-            mWifiNative.setSupplicantLogLevel("DEBUG");
-        } else {
-            mWifiNative.setSupplicantLogLevel("INFO");
-        }
+        mWifiNative.setSupplicantLogLevel(mVerboseLoggingEnabled);
     }
 
     /**

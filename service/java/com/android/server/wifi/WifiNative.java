@@ -440,8 +440,13 @@ public class WifiNative {
         return (pong != null && pong.equals("PONG"));
     }
 
-    public void setSupplicantLogLevel(String level) {
-        doStringCommand("LOG_LEVEL " + level);
+    /**
+     * Set supplicant log level
+     *
+     * @param turnOnVerbose Whether to turn on verbose logging or not.
+     */
+    public void setSupplicantLogLevel(boolean turnOnVerbose) {
+        doStringCommand("LOG_LEVEL " + (turnOnVerbose ? "DEBUG" : "INFO"));
     }
 
     /*
@@ -1423,9 +1428,10 @@ public class WifiNative {
      * @param networkExtras Map of extra configuration parameters stored in wpa_supplicant.conf
      * @return Max priority of all the configs.
      */
-    public int migrateNetworksFromSupplicant(Map<String, WifiConfiguration> configs,
-                                             SparseArray<Map<String, String>> networkExtras) {
-        return mWifiSupplicantControl.loadNetworks(configs, networkExtras);
+    public boolean migrateNetworksFromSupplicant(Map<String, WifiConfiguration> configs,
+                                                 SparseArray<Map<String, String>> networkExtras) {
+        mWifiSupplicantControl.loadNetworks(configs, networkExtras);
+        return true;
     }
 
     /**
