@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a756c20_d627b766",
+        "filename": "service/java/com/android/server/wifi/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-17T22:15:28Z",
+      "side": 1,
+      "message": "Per OOB discussion, removed the machine-readable directives (set \u003cfoo\u003e), since this file isn\u0027t actually processed by machine.\n\nAlso, added a comment that this file is not enforced.",
+      "revId": "7f1900eb02a17ea6aacc450b7278526b54d6646a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ede3f07_0b2034cf",
+        "filename": "service/java/com/android/server/wifi/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-17T22:15:28Z",
+      "side": 1,
+      "message": "This block is unchanged from the previous patch set. I just moved the block to put the blocks in alphabetical order.",
+      "revId": "7f1900eb02a17ea6aacc450b7278526b54d6646a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
