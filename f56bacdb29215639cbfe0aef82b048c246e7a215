@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78b5414f_5d3063dd",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1666,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-17T00:23:55Z",
+      "side": 1,
+      "message": "indent",
+      "range": {
+        "startLine": 1666,
+        "startChar": 7,
+        "endLine": 1666,
+        "endChar": 21
+      },
+      "revId": "f56bacdb29215639cbfe0aef82b048c246e7a215",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
