@@ -411,4 +411,19 @@ public class WifiMonitorTest {
         assertEquals(bssid, result.BSSID);
         assertEquals(newState, result.state);
     }
+
+    /**
+     * Broadcast supplicant disconnection test.
+     */
+    @Test
+    public void testBroadcastSupplicantDisconnectionEvent() {
+        mWifiMonitor.registerHandler(
+                WLAN_IFACE_NAME, WifiMonitor.SUP_DISCONNECTION_EVENT, mHandlerSpy);
+        mWifiMonitor.broadcastSupplicantDisconnectionEvent(WLAN_IFACE_NAME);
+        mLooper.dispatchAll();
+
+        ArgumentCaptor<Message> messageCaptor = ArgumentCaptor.forClass(Message.class);
+        verify(mHandlerSpy).handleMessage(messageCaptor.capture());
+        assertEquals(WifiMonitor.SUP_DISCONNECTION_EVENT, messageCaptor.getValue().what);
+    }
 }
