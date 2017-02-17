@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37df2177_33fed66a",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNativeTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-02-17T17:15:45Z",
+      "side": 1,
+      "message": "Set",
+      "range": {
+        "startLine": 608,
+        "startChar": 8,
+        "endLine": 608,
+        "endChar": 15
+      },
+      "revId": "9057103b9d1c499053e39c16b023e7ef1e5b856e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44e6bd38_0f138f89",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNativeTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-02-17T17:15:45Z",
+      "side": 1,
+      "message": "Just curious, any reason for using TreeSet instead of HashSet.",
+      "range": {
+        "startLine": 608,
+        "startChar": 39,
+        "endLine": 608,
+        "endChar": 46
+      },
+      "revId": "9057103b9d1c499053e39c16b023e7ef1e5b856e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
