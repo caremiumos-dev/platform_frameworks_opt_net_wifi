@@ -22,6 +22,30 @@
       "revId": "f56bacdb29215639cbfe0aef82b048c246e7a215",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3fca4ab_8d18dc02",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1666,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-17T00:27:04Z",
+      "side": 1,
+      "message": "Hmm. I think android studio likes this indent. i.e align with the start of description on previous line.",
+      "parentUuid": "78b5414f_5d3063dd",
+      "range": {
+        "startLine": 1666,
+        "startChar": 7,
+        "endLine": 1666,
+        "endChar": 21
+      },
+      "revId": "f56bacdb29215639cbfe0aef82b048c246e7a215",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
