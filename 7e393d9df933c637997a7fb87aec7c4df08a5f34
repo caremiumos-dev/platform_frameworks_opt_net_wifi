@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2c4c172b_d29b574e",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1480,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-17T00:07:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8ef5e4f_865db895",
+      "range": {
+        "startLine": 1480,
+        "startChar": 16,
+        "endLine": 1480,
+        "endChar": 33
+      },
+      "revId": "7e393d9df933c637997a7fb87aec7c4df08a5f34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c89d823_ea6eb994",
         "filename": "service/java/com/android/server/wifi/WifiNative.java",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-16T15:58:47Z",
       "side": 1,
       "message": "This might be unnecessary. U can pass in WifiMonitor instance to you class constructor and then create the callback inside that class. \nhttps://cs.corp.google.com/android/frameworks/opt/net/wifi/service/java/com/android/server/wifi/WifiInjector.java?rcl\u003d6b6c7b51d735fdd7d9b6759f8eaf535df8eaf522\u0026l\u003d156",
+      "range": {
+        "startLine": 226,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 5
+      },
+      "revId": "7e393d9df933c637997a7fb87aec7c4df08a5f34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e98fdf6_2a6fd86c",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-17T00:07:11Z",
+      "side": 1,
+      "message": "sounds great. I\u0027ve been wondering what might be the best place to register callbacks.\nThis solution also drops pollution around. Thanks!",
+      "parentUuid": "1c89d823_ea6eb994",
       "range": {
         "startLine": 226,
         "startChar": 0,
