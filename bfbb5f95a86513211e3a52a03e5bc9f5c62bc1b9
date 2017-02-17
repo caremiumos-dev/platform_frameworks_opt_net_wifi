@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "395bdbd0_12396ad8",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3144,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-17T01:25:44Z",
+      "side": 1,
+      "message": "Still like to see a name clearly speaks out where the networks are migrated from, given we have another config store. Otherwise, it can become confusing when reading the code that calls into this method.",
+      "range": {
+        "startLine": 3144,
+        "startChar": 15,
+        "endLine": 3144,
+        "endChar": 30
+      },
+      "revId": "bfbb5f95a86513211e3a52a03e5bc9f5c62bc1b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
