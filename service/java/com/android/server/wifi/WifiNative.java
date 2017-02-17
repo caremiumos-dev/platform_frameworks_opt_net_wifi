@@ -869,12 +869,22 @@ public class WifiNative {
     }
 
     /**
-     * Start/Stop PNO scan.
-     * @param enable boolean indicating whether PNO is being enabled or disabled.
+     * Start PNO scan.
+     * @param pnoSettings Pno scan configuration.
+     * @return true on success.
      */
-    public boolean setPnoScan(boolean enable) {
-        String cmd = enable ? "SET pno 1" : "SET pno 0";
-        return doBooleanCommand(cmd);
+    public boolean startPnoScan(PnoSettings pnoSettings) {
+        Log.d(TAG, "wificond debug, try to start pno scan");
+        return mWificondControl.startPnoScan(pnoSettings);
+    }
+
+    /**
+     * Stop PNO scan.
+     * @return true on success.
+     */
+    public boolean stopPnoScan() {
+        Log.d(TAG, "wificond debug, try to stop pno scan");
+        return mWificondControl.stopPnoScan();
     }
 
     public void startTdls(String macAddr, boolean enable) {
