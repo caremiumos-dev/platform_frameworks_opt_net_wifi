@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dea8c164_40317727",
+        "filename": "service/java/com/android/server/wifi/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-17T21:40:06Z",
+      "side": 1,
+      "message": "Add a header comment stating that this is just a guideline, and is non-functional/unused. Don\u0027t mention google3 or piper though.",
+      "revId": "97582691d2800228766f1cb7c31240d0b0573fa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f5df51f9_6ebcf662",
+        "filename": "service/java/com/android/server/wifi/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-17T21:40:06Z",
+      "side": 1,
+      "message": "Assign this to me as well",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "97582691d2800228766f1cb7c31240d0b0573fa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
