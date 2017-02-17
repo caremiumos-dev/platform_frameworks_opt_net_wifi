@@ -29,6 +29,7 @@ import static org.mockito.Mockito.when;
 
 import android.net.wifi.IApInterface;
 import android.net.wifi.IClientInterface;
+import android.net.wifi.IPnoScanEvent;
 import android.net.wifi.IScanEvent;
 import android.net.wifi.IWifiScannerImpl;
 import android.net.wifi.IWificond;
@@ -490,6 +491,30 @@ public class WificondControlTest {
     }
 
     /**
+     * Verifies that stopPnoScan() calls underlying wificond.
+     */
+    @Test
+    public void testStopPnoScan() throws Exception {
+        IWifiScannerImpl scanner = setupClientInterfaceAndCreateMockWificondScanner();
+
+        when(scanner.stopPnoScan()).thenReturn(true);
+        assertTrue(mWificondControl.stopPnoScan());
+        verify(scanner).stopPnoScan();
+    }
+
+    /**
+     * Verifies that stopPnoScan() can handle wificond failure.
+     */
+    @Test
+    public void testStopPnoScanFailure() throws Exception {
+        IWifiScannerImpl scanner = setupClientInterfaceAndCreateMockWificondScanner();
+
+        when(scanner.stopPnoScan()).thenReturn(false);
+        assertFalse(mWificondControl.stopPnoScan());
+        verify(scanner).stopPnoScan();
+    }
+
+    /**
      * Verifies that WificondControl can invoke WifiMonitor broadcast methods upon scan
      * reuslt event.
      */
@@ -521,6 +546,23 @@ public class WificondControlTest {
         scanEvent.OnScanFailed();
 
         verify(mWifiMonitor).broadcastScanFailedEvent(any(String.class));
+    }
+
+    /**
+     * Verifies that WificondControl can invoke WifiMonitor broadcast methods upon pno scan
+     * reuslt event.
+     */
+    @Test
+    public void testPnoScanResultEvent() throws Exception {
+        IWifiScannerImpl scanner = setupClientInterfaceAndCreateMockWificondScanner();
+
+        ArgumentCaptor<IPnoScanEvent> messageCaptor = ArgumentCaptor.forClass(IPnoScanEvent.class);
+        verify(scanner).subscribePnoScanEvents(messageCaptor.capture());
+        IPnoScanEvent pnoScanEvent = messageCaptor.getValue();
+        assertNotNull(pnoScanEvent);
+        pnoScanEvent.OnPnoNetworkFound();
+
+        verify(mWifiMonitor).broadcastScanResultEvent(any(String.class));
     }
 
     /**
