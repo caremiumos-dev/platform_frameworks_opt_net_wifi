@@ -43,7 +43,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.regex.Pattern;
@@ -60,6 +64,8 @@ public class WifiDiagnosticsTest {
     @Mock WifiInjector mWifiInjector;
     @Spy FakeWifiLog mLog;
     @Mock LastMileLogger mLastMileLogger;
+    @Mock Runtime mJavaRuntime;
+    FakeProcess mExternalProcess;
     WifiDiagnostics mWifiDiagnostics;
 
     private static final String FAKE_RING_BUFFER_NAME = "fake-ring-buffer";
@@ -92,6 +98,7 @@ public class WifiDiagnosticsTest {
                 mFakeRbs
         };
         mWifiNativeLocalLog = new LocalLog(8192);
+        mExternalProcess = new FakeProcess();
 
         when(mWifiNative.getRingBufferStatus()).thenReturn(ringBufferStatuses);
         when(mWifiNative.readKernelLog()).thenReturn("");
@@ -99,6 +106,7 @@ public class WifiDiagnosticsTest {
         when(mBuildProperties.isEngBuild()).thenReturn(false);
         when(mBuildProperties.isUserdebugBuild()).thenReturn(false);
         when(mBuildProperties.isUserBuild()).thenReturn(true);
+        when(mJavaRuntime.exec(anyString())).thenReturn(mExternalProcess);
 
         MockResources resources = new MockResources();
         resources.setInteger(R.integer.config_wifi_logger_ring_buffer_default_size_limit_kb,
@@ -107,6 +115,7 @@ public class WifiDiagnosticsTest {
                 LARGE_RING_BUFFER_SIZE_KB);
         when(mContext.getResources()).thenReturn(resources);
         when(mWifiInjector.makeLog(anyString())).thenReturn(mLog);
+        when(mWifiInjector.getJavaRuntime()).thenReturn(mJavaRuntime);
 
         mWifiDiagnostics = new WifiDiagnostics(
                 mContext, mWifiInjector, mWsm, mWifiNative, mBuildProperties, mLastMileLogger);
@@ -795,5 +804,41 @@ public class WifiDiagnosticsTest {
         mWifiDiagnostics.dump(
                 new FileDescriptor(), new PrintWriter(new StringWriter()), new String[]{});
         verify(mLastMileLogger).dump(anyObject());
+    }
+
+    private class FakeProcess extends Process {
+        @Override
+        public void destroy() {
+            // Do nothing.
+        }
+
+        @Override
+        public int exitValue() {
+            return 0;
+        }
+
+        @Override
+        public InputStream getErrorStream() {
+            return mErrorStream;
+        }
+
+        @Override
+        public InputStream getInputStream() {
+            return mInputStream;
+        }
+
+        @Override
+        public OutputStream getOutputStream() {
+            return mOutputStream;
+        }
+
+        @Override
+        public int waitFor() throws InterruptedException {
+            return 0;
+        }
+
+        private final InputStream mInputStream = new ByteArrayInputStream(new byte[0]);
+        private final InputStream mErrorStream = new ByteArrayInputStream(new byte[0]);
+        private final OutputStream mOutputStream = new ByteArrayOutputStream();
     }
 }
