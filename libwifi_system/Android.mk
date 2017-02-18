@@ -39,7 +39,9 @@ LOCAL_SHARED_LIBRARIES := \
     libcutils \
     liblog \
     libnetutils \
-    libnl
+    libnl \
+    libwifi-hal \
+    libcld80211
 
 # Tolerate certain emulators which apparently don't have supplicant installed.
 ifdef WPA_SUPPLICANT_VERSION
