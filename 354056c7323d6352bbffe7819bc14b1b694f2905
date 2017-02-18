@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c78cafa_b03e0878",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-18T01:25:34Z",
+      "side": 1,
+      "message": "2.0",
+      "revId": "354056c7323d6352bbffe7819bc14b1b694f2905",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ee2a922_5c4be163",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1551,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-18T01:25:34Z",
+      "side": 1,
+      "message": "private static",
+      "range": {
+        "startLine": 1551,
+        "startChar": 8,
+        "endLine": 1551,
+        "endChar": 15
+      },
+      "revId": "354056c7323d6352bbffe7819bc14b1b694f2905",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1292b5d_25c376f2",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1572,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-18T01:25:34Z",
+      "side": 1,
+      "message": "private static",
+      "range": {
+        "startLine": 1572,
+        "startChar": 8,
+        "endLine": 1572,
+        "endChar": 15
+      },
+      "revId": "354056c7323d6352bbffe7819bc14b1b694f2905",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fedd050_d0d578e3",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1620,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-18T01:25:34Z",
+      "side": 1,
+      "message": "Can this potentially add elements to elementsMap that were not in the ANQP response? (with null/empty values)\nIf so, will that be a problem?",
+      "range": {
+        "startLine": 1611,
+        "startChar": 0,
+        "endLine": 1620,
+        "endChar": 88
+      },
+      "revId": "354056c7323d6352bbffe7819bc14b1b694f2905",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
