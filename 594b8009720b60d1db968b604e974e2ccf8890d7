@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1d01aca_91020b05",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-18T15:54:17Z",
+      "side": 1,
+      "message": "This is used in WifiP2pServiceImpl. You have to hook up this method to HIDL interface to retrieve any network info.\n\nPS: Probably rename this to p2pListNetworks().",
+      "range": {
+        "startLine": 502,
+        "startChar": 18,
+        "endLine": 502,
+        "endChar": 30
+      },
+      "revId": "594b8009720b60d1db968b604e974e2ccf8890d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6a32d20_49961a90",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1525,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-18T15:54:17Z",
+      "side": 1,
+      "message": "You need to plumb these NFC methods as well.",
+      "range": {
+        "startLine": 1525,
+        "startChar": 18,
+        "endLine": 1525,
+        "endChar": 45
+      },
+      "revId": "594b8009720b60d1db968b604e974e2ccf8890d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
