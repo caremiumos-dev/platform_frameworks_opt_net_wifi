@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "13aecf17_216c4f90",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-18T18:46:10Z",
+      "side": 1,
+      "message": "You should  pull out this entire block from WifiP2pServiceImpl and return a list of groups from this WifiNative method. So, you can then switch over to HIDL and replicate the same using ISupplicantP2pNetwork.\n\n    // Skip the first line, which is a header\n            for (int i \u003d 1; i \u003c lines.length; i++) {\n                String[] result \u003d lines[i].split(\"\\t\");\n                if (result \u003d\u003d null || result.length \u003c 4) {\n                    continue;\n                }\n                // network-id | ssid | bssid | flags\n                int netId \u003d -1;\n                String ssid \u003d result[1];\n                String bssid \u003d result[2];\n                String flags \u003d result[3];\n                try {\n                    netId \u003d Integer.parseInt(result[0]);\n                } catch (NumberFormatException e) {\n                    e.printStackTrace();\n                    continue;\n                }\n\n                if (flags.indexOf(\"[CURRENT]\") !\u003d -1) {\n                    continue;\n                }\n                if (flags.indexOf(\"[P2P-PERSISTENT]\") \u003d\u003d -1) {\n                    // The unused profile is sometimes remained when the p2p group formation\n                    // is failed. So, we clean up the p2p group here.\n                    if (DBG) logd(\"clean up the unused persistent group. netId\u003d\" + netId);\n                    mWifiNative.removeNetwork(netId);\n                    isSaveRequired \u003d true;\n                    continue;\n                }\n\n                if (mGroups.contains(netId)) {\n                    continue;\n                }\n\n                WifiP2pGroup group \u003d new WifiP2pGroup();\n                group.setNetworkId(netId);\n                group.setNetworkName(ssid);\n                String mode \u003d mWifiNative.getNetworkVariable(netId, \"mode\");\n                if (mode !\u003d null \u0026\u0026 mode.equals(\"3\")) {\n                    group.setIsGroupOwner(true);\n                }\n                if (bssid.equalsIgnoreCase(mThisDevice.deviceAddress)) {\n                    group.setOwner(mThisDevice);\n                } else {\n                    WifiP2pDevice device \u003d new WifiP2pDevice();\n                    device.deviceAddress \u003d bssid;\n                    group.setOwner(device);\n                }\n                mGroups.add(group);\n                isSaveRequired \u003d true;\n            }",
+      "parentUuid": "f1d01aca_91020b05",
+      "range": {
+        "startLine": 502,
+        "startChar": 18,
+        "endLine": 502,
+        "endChar": 30
+      },
+      "revId": "594b8009720b60d1db968b604e974e2ccf8890d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6a32d20_49961a90",
         "filename": "service/java/com/android/server/wifi/WifiNative.java",
         "patchSetId": 18
