@@ -48,7 +48,7 @@ import java.util.regex.Pattern;
  */
 public class SupplicantStaNetworkHal {
     private static final String TAG = "SupplicantStaNetworkHal";
-    private static final boolean DBG = false;
+    private static final boolean DBG = true;
     @VisibleForTesting
     public static final String ID_STRING_KEY_FQDN = "fqdn";
     @VisibleForTesting
