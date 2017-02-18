@@ -103,6 +103,7 @@ LOCAL_JNI_SHARED_LIBRARIES := \
 	libui \
 	libunwind \
 	libutils \
+	libcld80211 \
 
 ifdef WPA_SUPPLICANT_VERSION
 LOCAL_JNI_SHARED_LIBRARIES += libwpa_client

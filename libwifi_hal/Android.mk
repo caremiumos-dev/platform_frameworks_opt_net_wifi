@@ -111,7 +111,8 @@ LOCAL_SHARED_LIBRARIES := \
     libcutils \
     liblog \
     libnl \
-    libutils
+    libutils \
+    libcld80211
 LOCAL_SRC_FILES := \
     driver_tool.cpp
 LOCAL_WHOLE_STATIC_LIBRARIES := $(LIB_WIFI_HAL) libwifi-hal-common
