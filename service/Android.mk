@@ -33,7 +33,8 @@ LOCAL_SHARED_LIBRARIES += \
 	libutils \
 	libdl \
 	libwifi-hal \
-	libwifi-system
+	libwifi-system \
+	libcld80211
 
 LOCAL_SRC_FILES := \
 	jni/com_android_server_wifi_WifiNative.cpp \
