@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25b7d91f_dc737f4e",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-18T02:10:13Z",
+      "side": 1,
+      "message": "Don\u0027t think this should be inside the try catch block.",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 13
+      },
+      "revId": "51bb5d5b5be897cb4da03749cf1a080f506cb0e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6aeed918_180c7b23",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-18T02:10:13Z",
+      "side": 1,
+      "message": "This is not being used.",
+      "range": {
+        "startLine": 349,
+        "startChar": 19,
+        "endLine": 349,
+        "endChar": 25
+      },
+      "revId": "51bb5d5b5be897cb4da03749cf1a080f506cb0e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
