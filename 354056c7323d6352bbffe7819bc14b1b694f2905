@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bfac10eb_9c7188d3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-18T01:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c78cafa_b03e0878",
+      "revId": "354056c7323d6352bbffe7819bc14b1b694f2905",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ee2a922_5c4be163",
         "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-02-18T01:25:34Z",
       "side": 1,
       "message": "private static",
+      "range": {
+        "startLine": 1551,
+        "startChar": 8,
+        "endLine": 1551,
+        "endChar": 15
+      },
+      "revId": "354056c7323d6352bbffe7819bc14b1b694f2905",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cfbd540f_cadb81d8",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1551,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-18T01:33:38Z",
+      "side": 1,
+      "message": "Tried that. Can\u0027t make static methods in inner classes.",
+      "parentUuid": "1ee2a922_5c4be163",
       "range": {
         "startLine": 1551,
         "startChar": 8,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "17ee2950_59f6b95c",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1572,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-18T01:33:38Z",
+      "side": 1,
+      "message": "Same.",
+      "parentUuid": "c1292b5d_25c376f2",
+      "range": {
+        "startLine": 1572,
+        "startChar": 8,
+        "endLine": 1572,
+        "endChar": 15
+      },
+      "revId": "354056c7323d6352bbffe7819bc14b1b694f2905",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fedd050_d0d578e3",
         "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
         "patchSetId": 4
@@ -76,6 +142,30 @@
       "writtenOn": "2017-02-18T01:25:34Z",
       "side": 1,
       "message": "Can this potentially add elements to elementsMap that were not in the ANQP response? (with null/empty values)\nIf so, will that be a problem?",
+      "range": {
+        "startLine": 1611,
+        "startChar": 0,
+        "endLine": 1620,
+        "endChar": 88
+      },
+      "revId": "354056c7323d6352bbffe7819bc14b1b694f2905",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "248b948e_8af21e38",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1620,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-18T01:33:38Z",
+      "side": 1,
+      "message": "Hmm. I can potentially add a size check to ensure that we don\u0027t add params which are empty in wpa_supplicant\u0027s response.",
+      "parentUuid": "3fedd050_d0d578e3",
       "range": {
         "startLine": 1611,
         "startChar": 0,
