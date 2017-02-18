@@ -71,7 +71,7 @@ import java.util.regex.Pattern;
  * sending requests to the supplicant daemon
  */
 public class SupplicantStaIfaceHal {
-    private static final boolean DBG = false;
+    private static final boolean DBG = true;
     private static final String TAG = "SupplicantStaIfaceHal";
     private static final String SERVICE_MANAGER_NAME = "manager";
     /**
