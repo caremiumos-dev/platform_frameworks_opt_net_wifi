@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a37b29a7_a0ae275d",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2890,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-21T22:37:16Z",
+      "side": 0,
+      "message": "This puts a dependency on WifiService executing \u0027connectToSupplicant\u0027 before WifiP2pService can use HAL methods, is this ok?",
+      "range": {
+        "startLine": 2890,
+        "startChar": 12,
+        "endLine": 2890,
+        "endChar": 50
+      },
+      "revId": "9ad5fabfd002a9e78a200ea50186bc584ce04588",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
