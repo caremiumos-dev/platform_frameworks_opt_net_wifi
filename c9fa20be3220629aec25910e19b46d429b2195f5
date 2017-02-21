@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c64b8661_29a74936",
+        "filename": "tests/wifitests/src/com/android/server/wifi/SupplicantStaIfaceHalTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-21T08:08:33Z",
+      "side": 1,
+      "message": "auts",
+      "range": {
+        "startLine": 642,
+        "startChar": 30,
+        "endLine": 642,
+        "endChar": 34
+      },
+      "revId": "c9fa20be3220629aec25910e19b46d429b2195f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
