@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b1d5de2_c548b819",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1613,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-21T07:24:39Z",
+      "side": 1,
+      "message": "Relying on the order of constants defined in the SupplicantState to match those of ISupplicantStaIfaceCallback.State is bad.\n\nPlease use a translating switch method to handle this instead.",
+      "range": {
+        "startLine": 1607,
+        "startChar": 0,
+        "endLine": 1613,
+        "endChar": 13
+      },
+      "revId": "f1ba0fbc28b1d4a74421ae7cd7668b050021c7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
