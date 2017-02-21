@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b598483_c9cde5b0",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-21T07:51:02Z",
+      "side": 1,
+      "message": "Clarify that you\u0027re attempting to \u0027removeAllNetworks\u0027\n\nI assume it\u0027s intentional that you\u0027re removing ALL networks, instead of JUST this specific network.",
+      "range": {
+        "startLine": 291,
+        "startChar": 32,
+        "endLine": 291,
+        "endChar": 46
+      },
+      "revId": "91459722effbe816bd05763de28960ff03b75827",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
