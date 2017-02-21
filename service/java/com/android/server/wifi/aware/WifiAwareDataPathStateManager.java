@@ -795,6 +795,7 @@ public class WifiAwareDataPathStateManager {
             int type, role, uid, clientId, sessionId = 0, peerId = 0, pubSubId = 0;
             byte[] peerMac = null;
             byte[] pmk = null;
+            String passphrase = null;
 
             if (VDBG) {
                 Log.v(TAG, "parseNetworkSpecifier: networkSpecifier=" + networkSpecifier);
@@ -868,6 +869,23 @@ public class WifiAwareDataPathStateManager {
                         Base64.DEFAULT);
                 if (pmk != null && pmk.length == 0) {
                     pmk = null;
+                }
+
+                // passphrase: always present (though can be an empty string - equivalent to null)
+                passphrase = jsonObject.getString(
+                        WifiAwareManager.NETWORK_SPECIFIER_KEY_PASSPHRASE);
+                if (passphrase != null && passphrase.length() == 0) {
+                    passphrase = null;
+                }
+
+                if (passphrase != null) {
+                    if (pmk != null) {
+                        Log.e(TAG, "parseNetworkSpecifier: networkSpecifier=" + networkSpecifier
+                                + " -- invalid: can't specify both PMK and Passphrase");
+                        return null;
+                    }
+
+                    pmk = derivePmkFromPassphrase(passphrase, mgr);
                 }
             } catch (JSONException e) {
                 Log.e(TAG, "parseNetworkSpecifier: networkSpecifier=" + networkSpecifier
