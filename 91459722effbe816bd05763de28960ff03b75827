@@ -22,6 +22,30 @@
       "revId": "91459722effbe816bd05763de28960ff03b75827",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0efe7212_9aa2a1bb",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-21T17:31:50Z",
+      "side": 1,
+      "message": "Done.\n\nYep. I don\u0027t want any networks remaining in wpa_supplicant on failure.",
+      "parentUuid": "5b598483_c9cde5b0",
+      "range": {
+        "startLine": 291,
+        "startChar": 32,
+        "endLine": 291,
+        "endChar": 46
+      },
+      "revId": "91459722effbe816bd05763de28960ff03b75827",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
