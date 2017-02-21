@@ -594,11 +594,12 @@ public class WifiAwareNativeApi {
      * @param channel            The channel on which to set up the data-path.
      * @param peer               The MAC address of the peer to create a connection with.
      * @param interfaceName      The interface on which to create the data connection.
-     * @param message An arbitrary byte array to forward to the peer as part of the data path
-     *                request.
+     * @param pmk Pairwise master key (PMK, see IEEE 802.11i). Null value means an unsecured (open)
+     *            datapath.
+     * @param capabilities The capabilities of the firmware.
      */
     public boolean initiateDataPath(short transactionId, int peerId, int channelRequestType,
-            int channel, byte[] peer, String interfaceName, byte[] message) {
+            int channel, byte[] peer, String interfaceName, byte[] pmk, Capabilities capabilities) {
         if (VDBG) {
             Log.v(TAG, "initiateDataPath: transactionId=" + transactionId + ", peerId=" + peerId
                     + ", channelRequestType=" + channelRequestType + ", channel=" + channel
@@ -612,14 +613,20 @@ public class WifiAwareNativeApi {
             return false;
         }
 
+        if (capabilities == null) {
+            Log.e(TAG, "initiateDataPath: null capabilities");
+            return false;
+        }
+
         NanInitiateDataPathRequest req = new NanInitiateDataPathRequest();
         req.peerId = peerId;
         copyArray(peer, req.peerDiscMacAddr);
         req.channelRequestType = channelRequestType;
         req.channel = channel;
         req.ifaceName = interfaceName;
-        req.securityRequired = false;
-        convertLcByteToUcByteArray(message, req.appInfo);
+        req.supportedCipherTypes = capabilities.supportedCipherSuites;
+        req.securityRequired = req.pmk != null;
+        convertLcByteToUcByteArray(pmk, req.pmk);
 
         try {
             WifiStatus status = iface.initiateDataPathRequest(transactionId, req);
@@ -644,10 +651,12 @@ public class WifiAwareNativeApi {
      * @param ndpId The NDP (Aware data path) ID. Obtained from the request callback.
      * @param interfaceName The interface on which the data path will be setup. Obtained from the
      *                      request callback.
-     * @param message An arbitrary byte array to forward to the peer in the respond message.
+     * @param pmk Pairwise master key (PMK - see IEEE 802.11i) for the data-path. A null indicates
+     *            an unsecure (open) link.
+     * @param capabilities The capabilities of the firmware.
      */
     public boolean respondToDataPathRequest(short transactionId, boolean accept, int ndpId,
-            String interfaceName, byte[] message) {
+            String interfaceName, byte[] pmk, Capabilities capabilities) {
         if (VDBG) {
             Log.v(TAG, "respondToDataPathRequest: transactionId=" + transactionId + ", accept="
                     + accept + ", int ndpId=" + ndpId + ", interfaceName=" + interfaceName);
@@ -659,12 +668,18 @@ public class WifiAwareNativeApi {
             return false;
         }
 
+        if (capabilities == null) {
+            Log.e(TAG, "initiateDataPath: null capabilities");
+            return false;
+        }
+
         NanRespondToDataPathIndicationRequest req = new NanRespondToDataPathIndicationRequest();
         req.acceptRequest = accept;
         req.ndpInstanceId = ndpId;
         req.ifaceName = interfaceName;
-        req.securityRequired = false;
-        convertLcByteToUcByteArray(message, req.appInfo);
+        req.supportedCipherTypes = capabilities.supportedCipherSuites;
+        req.securityRequired = req.pmk != null;
+        convertLcByteToUcByteArray(pmk, req.pmk);
 
         try {
             WifiStatus status = iface.respondToDataPathIndicationRequest(transactionId, req);
