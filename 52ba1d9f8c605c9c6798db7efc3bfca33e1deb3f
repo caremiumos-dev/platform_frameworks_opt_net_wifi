@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de597b34_8d02be6d",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1680,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-21T07:35:03Z",
+      "side": 1,
+      "message": "Sohani created these recently.\nhttps://googleplex-android.git.corp.google.com/platform/frameworks/opt/net/wifi/+/1241ac94aa2f5d6c5f5c3e935c7f7baa8045ee5c%5E%21/service/java/com/android/server/wifi/WifiMonitor.java\n\nI don\u0027t believe it comes under Association Rejection at all though.\nCreate a bug for either yourself or her, and quote it here.",
+      "range": {
+        "startLine": 1680,
+        "startChar": 28,
+        "endLine": 1680,
+        "endChar": 68
+      },
+      "revId": "52ba1d9f8c605c9c6798db7efc3bfca33e1deb3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
