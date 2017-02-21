@@ -5576,6 +5576,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                 case WifiManager.CONNECT_NETWORK:
                     int netId = message.arg1;
                     if (mWifiInfo.getNetworkId() == netId) {
+                        replyToMessage(message, WifiManager.CONNECT_NETWORK_SUCCEEDED);
                         break;
                     }
                     return NOT_HANDLED;
