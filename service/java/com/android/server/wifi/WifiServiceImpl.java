@@ -1512,9 +1512,9 @@ public class WifiServiceImpl extends IWifiManager.Stub {
                     + ", uid=" + Binder.getCallingUid());
             return;
         }
+        mWifiStateMachine.updateWifiMetrics();
         if (args.length > 0 && WifiMetrics.PROTO_DUMP_ARG.equals(args[0])) {
             // WifiMetrics proto bytes were requested. Dump only these.
-            mWifiStateMachine.updateWifiMetrics();
             mWifiMetrics.dump(fd, pw, args);
         } else if (args.length > 0 && IpManager.DUMP_ARG.equals(args[0])) {
             // IpManager dump was requested. Pass it along and take no further action.
@@ -1549,6 +1549,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
             mWifiMulticastLockManager.dump(pw);
             pw.println();
             mWifiStateMachine.dump(fd, pw, args);
+            mWifiMetrics.dump(fd, pw, args);
             pw.println();
             mWifiBackupRestore.dump(fd, pw, args);
             pw.println();
