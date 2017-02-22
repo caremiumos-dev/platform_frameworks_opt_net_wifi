@@ -184,21 +184,33 @@ public class WifiNativeTest {
         assertArrayEquals(FATE_REPORT_FRAME_BYTES, fateReport.mFrameBytes);
     }
 
+
     /**
-     * Verifies that RxFateReport's constructor sets all of the RxFateReport fields.
+     * Verifies the hashCode methods for HiddenNetwork and PnoNetwork classes
      */
     @Test
-    public void testRxFateReportCtorSetsFields() {
-        WifiNative.RxFateReport fateReport = new WifiNative.RxFateReport(
-                WifiLoggerHal.RX_PKT_FATE_FW_DROP_INVALID,  // non-zero value
-                FATE_REPORT_DRIVER_TIMESTAMP_USEC,
-                WifiLoggerHal.FRAME_TYPE_ETHERNET_II,  // non-zero value
-                FATE_REPORT_FRAME_BYTES
-        );
-        assertEquals(WifiLoggerHal.RX_PKT_FATE_FW_DROP_INVALID, fateReport.mFate);
-        assertEquals(FATE_REPORT_DRIVER_TIMESTAMP_USEC, fateReport.mDriverTimestampUSec);
-        assertEquals(WifiLoggerHal.FRAME_TYPE_ETHERNET_II, fateReport.mFrameType);
-        assertArrayEquals(FATE_REPORT_FRAME_BYTES, fateReport.mFrameBytes);
+    public void testHashCode() {
+        WifiNative.HiddenNetwork hiddenNet1 = new WifiNative.HiddenNetwork();
+        hiddenNet1.ssid = new String("sametext");
+
+        WifiNative.HiddenNetwork hiddenNet2 = new WifiNative.HiddenNetwork();
+        hiddenNet2.ssid = new String("sametext");
+
+        assertEquals(true, hiddenNet1.equals(hiddenNet2));
+        assertEquals(hiddenNet1.hashCode(), hiddenNet2.hashCode());
+
+        WifiNative.PnoNetwork pnoNet1 = new WifiNative.PnoNetwork();
+        pnoNet1.ssid = new String("sametext");
+        pnoNet1.flags = 2;
+        pnoNet1.auth_bit_field = 4;
+
+        WifiNative.PnoNetwork pnoNet2 = new WifiNative.PnoNetwork();
+        pnoNet2.ssid = new String("sametext");
+        pnoNet2.flags = 2;
+        pnoNet2.auth_bit_field = 4;
+
+        assertEquals(true, pnoNet1.equals(pnoNet2));
+        assertEquals(pnoNet1.hashCode(), pnoNet2.hashCode());
     }
 
     // Support classes for test{Tx,Rx}FateReportToString.
