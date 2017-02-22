@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d290e4a_dba5cd88",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-22T15:56:09Z",
+      "side": 1,
+      "message": "This is a boolean?",
+      "range": {
+        "startLine": 752,
+        "startChar": 35,
+        "endLine": 752,
+        "endChar": 43
+      },
+      "revId": "c887a88d874a11b56444a566be2fcabab20c5566",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f86ae3e4_180a8198",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-22T15:56:09Z",
+      "side": 1,
+      "message": "You can invoke the getChannelsForBand to see if it is supported for the first query. You don\u0027t have to rely on someone calling that first before they invoke this.",
+      "range": {
+        "startLine": 753,
+        "startChar": 20,
+        "endLine": 753,
+        "endChar": 89
+      },
+      "revId": "c887a88d874a11b56444a566be2fcabab20c5566",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
