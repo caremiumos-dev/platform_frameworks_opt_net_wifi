@@ -16,9 +16,11 @@
 package com.android.server.wifi;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -143,6 +145,8 @@ public class SupplicantStaNetworkHalTest {
         config.enterpriseConfig =
                 WifiConfigurationTestUtil.createTLSWifiEnterpriseConfigWithNonePhase2();
         testWifiConfigurationSaveLoad(config);
+        // We should not set phase2 method if it is none.
+        verify(mISupplicantStaNetworkMock, never()).setEapPhase2Method(anyInt());
     }
 
     /**
@@ -1237,7 +1241,8 @@ public class SupplicantStaNetworkHalTest {
         public ArrayList<Byte>[] wepKey = new ArrayList[4];
         public int wepTxKeyIdx;
         public int eapMethod = -1;
-        public int eapPhase2Method = -1;
+        // This is none by default.
+        public int eapPhase2Method = ISupplicantStaNetwork.EapPhase2Method.NONE;
         public ArrayList<Byte> eapIdentity;
         public ArrayList<Byte> eapAnonymousIdentity;
         public ArrayList<Byte> eapPassword;

@@ -462,7 +462,8 @@ public class SupplicantStaNetworkHal {
             return false;
         }
         /** EAP Phase 2 method */
-        if (!setEapPhase2Method(wifiConfigurationToSupplicantEapPhase2Method(
+        if (eapConfig.getPhase2Method() != WifiEnterpriseConfig.Phase2.NONE
+                && !setEapPhase2Method(wifiConfigurationToSupplicantEapPhase2Method(
                 eapConfig.getPhase2Method()))) {
             Log.e(TAG, ssid + ": failed to set eap phase 2 method: " + eapConfig.getPhase2Method());
             return false;
