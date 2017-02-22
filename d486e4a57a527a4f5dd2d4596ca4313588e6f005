@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b0eceb6d_3dfb4617",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-22T18:12:45Z",
+      "side": 1,
+      "message": "this line also looks too long.  sorry I missed it!",
+      "range": {
+        "startLine": 9,
+        "startChar": 62,
+        "endLine": 9,
+        "endChar": 80
+      },
+      "revId": "d486e4a57a527a4f5dd2d4596ca4313588e6f005",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4f0e778_8559d18d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
