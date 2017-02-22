@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdef3a66_ada5f8ec",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiDiagnosticsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-22T20:58:37Z",
+      "side": 1,
+      "message": "Why not just mock Process, and setup when-thenReturns for these overrides? Is there some non-faked functionality that it must support?",
+      "range": {
+        "startLine": 809,
+        "startChar": 18,
+        "endLine": 809,
+        "endChar": 45
+      },
+      "revId": "55ee3ba87e3b610f0d6dbc2933f657a092631a28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
