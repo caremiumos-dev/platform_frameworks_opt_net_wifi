@@ -538,7 +538,7 @@ public class WifiNative {
         if (encoded == null) {
             return false;
         }
-        return setNetworkVariable(netId, name, encoded);
+        return setNetworkVariable(netId, name, "\"" + encoded + "\"");
     }
 
     @VisibleForTesting
@@ -553,7 +553,7 @@ public class WifiNative {
             Log.e(TAG, "Unable to serialize networkExtra: " + e.toString());
             return null;
         }
-        return "\"" + encoded + "\"";
+        return encoded;
     }
 
     public boolean setNetworkVariable(int netId, String name, String value) {
@@ -570,15 +570,20 @@ public class WifiNative {
 
     public Map<String, String> getNetworkExtra(int netId, String name) {
         final String extraString = getNetworkVariable(netId, name);
-        return parseNetworkExtra(extraString);
+        if (extraString == null || !extraString.startsWith("\"") || !extraString.endsWith("\"")) {
+            return null;
+        }
+        return parseNetworkExtra(extraString.substring(1, extraString.length() - 1));
     }
 
-    public static Map<String, String> parseNetworkExtra(String extraSting) {
-        if (extraSting == null || !extraSting.startsWith("\"") || !extraSting.endsWith("\"")) {
+    /**
+     * Parse the network extra JSON encoded string to a map of string key, value pairs.
+     */
+    public static Map<String, String> parseNetworkExtra(String encoded) {
+        if (TextUtils.isEmpty(encoded)) {
             return null;
         }
         try {
-            final String encoded = extraSting.substring(1, extraSting.length() - 1);
             // This method reads a JSON dictionary that was written by setNetworkExtra(). However,
             // on devices that upgraded from Marshmallow, it may encounter a legacy value instead -
             // an FQDN stored as a plain string. If such a value is encountered, the JSONObject
