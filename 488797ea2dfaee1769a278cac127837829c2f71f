@@ -46,6 +46,30 @@
       "revId": "488797ea2dfaee1769a278cac127837829c2f71f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cace50f8_57abb183",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4165,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-22T21:13:24Z",
+      "side": 1,
+      "message": "But do we really want to start roaming if we failed to scan and we are happily connected?\n\nThis is also odd...  this can happen when we are in ScanMode...  but then we could send a start roam when we are in scan mode.",
+      "parentUuid": "5dd6125e_9742dce5",
+      "range": {
+        "startLine": 4157,
+        "startChar": 20,
+        "endLine": 4165,
+        "endChar": 21
+      },
+      "revId": "488797ea2dfaee1769a278cac127837829c2f71f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

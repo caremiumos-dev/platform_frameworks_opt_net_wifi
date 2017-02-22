@@ -69,6 +69,30 @@
       "revId": "fc83b303a3382329c28d631b1e0fb2bb35969f85",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c9fd4ed_1a394e29",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-22T21:13:24Z",
+      "side": 0,
+      "message": "Yeah, I think that is better.  That way we can check for errors because the scan result event is still valid.\n\nYou might also hand in an empty one (or null?) to make sure we don\u0027t have any new errors since there are some changes to calls where they wouldn\u0027t happen if it was empty.",
+      "parentUuid": "3b8ded0f_c3419bdc",
+      "range": {
+        "startLine": 722,
+        "startChar": 8,
+        "endLine": 723,
+        "endChar": 57
+      },
+      "revId": "fc83b303a3382329c28d631b1e0fb2bb35969f85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
