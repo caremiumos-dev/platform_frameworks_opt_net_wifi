@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eb940a8e_17bcb9ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1140244
+      },
+      "writtenOn": "2017-02-22T20:34:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0eceb6d_3dfb4617",
+      "range": {
+        "startLine": 9,
+        "startChar": 62,
+        "endLine": 9,
+        "endChar": 80
+      },
+      "revId": "d486e4a57a527a4f5dd2d4596ca4313588e6f005",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4f0e778_8559d18d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e45637f4_11d17340",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1140244
+      },
+      "writtenOn": "2017-02-22T20:34:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4f0e778_8559d18d",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 52
+      },
+      "revId": "d486e4a57a527a4f5dd2d4596ca4313588e6f005",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "839d08fb_428bf85e",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-02-22T18:12:07Z",
       "side": 1,
       "message": "does this fit on the line above?",
+      "range": {
+        "startLine": 832,
+        "startChar": 16,
+        "endLine": 832,
+        "endChar": 19
+      },
+      "revId": "d486e4a57a527a4f5dd2d4596ca4313588e6f005",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9f19cac_7df2ac0b",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1140244
+      },
+      "writtenOn": "2017-02-22T20:34:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "839d08fb_428bf85e",
       "range": {
         "startLine": 832,
         "startChar": 16,
