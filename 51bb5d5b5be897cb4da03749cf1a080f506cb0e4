@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5fe7a26c_a06b38d6",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-22T07:44:55Z",
+      "side": 1,
+      "message": "Moved outside. 2 other bugs here, though:\n\ntest should be for mIWifiStaIface \u003d\u003d null, because otherwise get null fault if in AP mode.\n\nAccess to mIWifiStaIface should be with lock held, to avoid races with teardown.\n\nThe teardown code needs a lock too, but that would be a different cl.",
+      "parentUuid": "25b7d91f_dc737f4e",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 13
+      },
+      "revId": "51bb5d5b5be897cb4da03749cf1a080f506cb0e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6aeed918_180c7b23",
         "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-18T02:10:13Z",
       "side": 1,
       "message": "This is not being used.",
+      "range": {
+        "startLine": 349,
+        "startChar": 19,
+        "endLine": 349,
+        "endChar": 25
+      },
+      "revId": "51bb5d5b5be897cb4da03749cf1a080f506cb0e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "feda5c84_de4e34bb",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-22T07:44:55Z",
+      "side": 1,
+      "message": "fixed by using it",
+      "parentUuid": "6aeed918_180c7b23",
       "range": {
         "startLine": 349,
         "startChar": 19,
