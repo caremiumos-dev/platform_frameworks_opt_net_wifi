@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d464bcc_4281b5f5",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2835,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-22T17:59:20Z",
+      "side": 0,
+      "message": "This section of code was one of the reasons I didn\u0027t remove it before.  Given that WifiConnectivityManager also gets scan results, this could be fine, but I would double check through the CMD_START_ROAM message handling to make sure everything is ok.",
+      "range": {
+        "startLine": 2828,
+        "startChar": 8,
+        "endLine": 2835,
+        "endChar": 9
+      },
+      "revId": "fc83b303a3382329c28d631b1e0fb2bb35969f85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2dfadbcd_6a92c690",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-22T17:59:20Z",
+      "side": 0,
+      "message": "I am not sure removing this is so simple.  The code still handles scan results events.",
+      "range": {
+        "startLine": 722,
+        "startChar": 8,
+        "endLine": 723,
+        "endChar": 57
+      },
+      "revId": "fc83b303a3382329c28d631b1e0fb2bb35969f85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

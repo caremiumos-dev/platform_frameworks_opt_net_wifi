@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5684c92_6ad26397",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4165,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-22T17:59:20Z",
+      "side": 1,
+      "message": "ah, now i see it is here :)\n\nOne difference is that if the scan results were empty, this call would not be made in the previous code.",
+      "range": {
+        "startLine": 4157,
+        "startChar": 20,
+        "endLine": 4165,
+        "endChar": 21
+      },
+      "revId": "488797ea2dfaee1769a278cac127837829c2f71f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
