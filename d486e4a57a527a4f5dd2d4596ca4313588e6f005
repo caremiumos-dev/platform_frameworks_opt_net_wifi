@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4f0e778_8559d18d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-22T18:12:07Z",
+      "side": 1,
+      "message": "here you might consider putting the command you used to run the tests:\nTest: frameworks/opt/net/wifi/tests/wifitests/runtests.sh\nTest: frameworks/base/wifi/tests/runtests.sh\n\nI find this helpful because the way we run tests may change and then if I am working on an older branch I will have a hint of how to run the tests :)",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 52
+      },
+      "revId": "d486e4a57a527a4f5dd2d4596ca4313588e6f005",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "839d08fb_428bf85e",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-22T18:12:07Z",
+      "side": 1,
+      "message": "does this fit on the line above?",
+      "range": {
+        "startLine": 832,
+        "startChar": 16,
+        "endLine": 832,
+        "endChar": 19
+      },
+      "revId": "d486e4a57a527a4f5dd2d4596ca4313588e6f005",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
