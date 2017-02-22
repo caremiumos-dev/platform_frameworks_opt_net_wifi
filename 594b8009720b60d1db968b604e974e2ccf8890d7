@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4738d5fa_ca8078da",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-22T17:58:10Z",
+      "side": 1,
+      "message": "i\u0027ll move the code, idea sounds good. Will do in a separate change, though to reduce confusion about deletion in ServiceImpl.\n\ni was confused as Sta was also calling listNetworks, but apparently it\u0027s just a different method with the same name, so SGTM.",
+      "parentUuid": "13aecf17_216c4f90",
+      "range": {
+        "startLine": 502,
+        "startChar": 18,
+        "endLine": 502,
+        "endChar": 30
+      },
+      "revId": "594b8009720b60d1db968b604e974e2ccf8890d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6a32d20_49961a90",
         "filename": "service/java/com/android/server/wifi/WifiNative.java",
         "patchSetId": 18
@@ -60,6 +84,30 @@
       "writtenOn": "2017-02-18T15:54:17Z",
       "side": 1,
       "message": "You need to plumb these NFC methods as well.",
+      "range": {
+        "startLine": 1525,
+        "startChar": 18,
+        "endLine": 1525,
+        "endChar": 45
+      },
+      "revId": "594b8009720b60d1db968b604e974e2ccf8890d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b83cce93_6028eb46",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1525,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-22T17:58:10Z",
+      "side": 1,
+      "message": "Let\u0027s do that in a separate change. This change is already pretty huge.",
+      "parentUuid": "f6a32d20_49961a90",
       "range": {
         "startLine": 1525,
         "startChar": 18,
