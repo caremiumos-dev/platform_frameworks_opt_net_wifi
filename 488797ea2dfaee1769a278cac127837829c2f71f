@@ -22,6 +22,30 @@
       "revId": "488797ea2dfaee1769a278cac127837829c2f71f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5dd6125e_9742dce5",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4165,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-22T19:53:20Z",
+      "side": 1,
+      "message": "Empty scan result is a corner case where things completely went wrong. I think this is a risk worth taking.",
+      "parentUuid": "c5684c92_6ad26397",
+      "range": {
+        "startLine": 4157,
+        "startChar": 20,
+        "endLine": 4165,
+        "endChar": 21
+      },
+      "revId": "488797ea2dfaee1769a278cac127837829c2f71f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
