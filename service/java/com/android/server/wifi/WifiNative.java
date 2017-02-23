@@ -2573,6 +2573,11 @@ public class WifiNative {
         }
     }
 
+    public int [] getChannelsForBandFromWificond(int band) {
+        return mWificondControl.getChannelsForBand(band);
+    }
+
+
     private static native boolean isGetChannelsForBandSupportedNative();
     public boolean isGetChannelsForBandSupported(){
         synchronized (sLock) {

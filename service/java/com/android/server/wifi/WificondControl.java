@@ -21,6 +21,7 @@ import android.net.wifi.IClientInterface;
 import android.net.wifi.IWifiScannerImpl;
 import android.net.wifi.IWificond;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiScanner;
 import android.net.wifi.WifiSsid;
 import android.os.Binder;
 import android.os.RemoteException;
@@ -287,5 +288,27 @@ public class WificondControl {
         }
 
         return results;
+    }
+
+    public int [] getChannelsForBand(int band) {
+        if (mWificondScanner == null) {
+            Log.e(TAG, "No valid wificond scanner interface handler");
+            return null;
+        }
+        try {
+            if (band == WifiScanner.WIFI_BAND_24_GHZ) {
+                return mWificondScanner.getAvailable2gChannels();
+            } else if (band == WifiScanner.WIFI_BAND_5_GHZ) {
+                return mWificondScanner.getAvailable5gNonDFSChannels();
+            } else if (band == WifiScanner.WIFI_BAND_5_GHZ_DFS_ONLY) {
+                return mWificondScanner.getAvailableDFSChannels();
+            } else {
+                Log.e(TAG, "Unknown band number: " + band);
+            }
+
+        } catch (RemoteException e1) {
+            Log.e(TAG, "Failed to get channels from wificond");
+        }
+        return null;
     }
 }
