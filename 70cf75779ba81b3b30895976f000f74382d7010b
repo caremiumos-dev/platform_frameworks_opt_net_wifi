@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7e886a4_3287a464",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-23T23:12:52Z",
+      "side": 1,
+      "message": "typo(s)",
+      "range": {
+        "startLine": 171,
+        "startChar": 33,
+        "endLine": 171,
+        "endChar": 41
+      },
+      "revId": "70cf75779ba81b3b30895976f000f74382d7010b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
