@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9a05699_bd42de26",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiMetricsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-23T23:02:39Z",
+      "side": 1,
+      "message": "missed one.  still don\u0027t know if I like this...",
+      "range": {
+        "startLine": 172,
+        "startChar": 78,
+        "endLine": 172,
+        "endChar": 81
+      },
+      "revId": "54b8f9dbb159a6b790bad4cd766b2b27513d0b93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8cbd357_b210d1e6",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-23T23:02:39Z",
+      "side": 1,
+      "message": "blank line",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 3
+      },
+      "revId": "54b8f9dbb159a6b790bad4cd766b2b27513d0b93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "41d9920b_2fb656b6",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-02-23T23:02:39Z",
+      "side": 1,
+      "message": "thanks!",
+      "range": {
+        "startLine": 180,
+        "startChar": 16,
+        "endLine": 180,
+        "endChar": 36
+      },
+      "revId": "54b8f9dbb159a6b790bad4cd766b2b27513d0b93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
