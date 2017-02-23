@@ -94,6 +94,30 @@
       "revId": "55ee3ba87e3b610f0d6dbc2933f657a092631a28",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9729d79_05327852",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiDiagnosticsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-23T22:09:35Z",
+      "side": 1,
+      "message": "1. It wouldn\u0027t be less confusing for me, but that\u0027s subjective. I just look at the code and am mostly ignorant of the distinction between various test double names (I think most people probably misuse them anyway)\n\nWhat makes the intent unclear is that we almost exclusively use mockito for test objects. You even use it to mock the other test doubles in this class, and this one is just as simple as them. I think FakeProcess breaks consistency with all the wifi test files, including this one, and that\u0027s what decreases readability the most.\n\nYour Fake class just makes it take longer for me to grok the code, and increases size of the CL.\n\n2.\n* It\u0027s pretty short though:\n\nProcess createStubProcess() {\n    Process stub \u003d mock(Process.class);\n    stub.when(stub.getErrorStream()).thenReturn(new ByteArrayInputStream(new byte[0]));\n    stub.when(stub.getInputStream()).thenReturn(new ByteArrayInputStream(new byte[0]));\n    stub.when(stub.getOutputStream()).thenReturn(new ByteArrayOutputStream());\n    return stub;\n}\n\n* \n\n3. Yeah, but it\u0027s just a test, http://b/35488106#comment12.\nIs it receiving so many calls that performance is an issue?",
+      "parentUuid": "c7d05969_473cd6a6",
+      "range": {
+        "startLine": 809,
+        "startChar": 18,
+        "endLine": 809,
+        "endChar": 45
+      },
+      "revId": "55ee3ba87e3b610f0d6dbc2933f657a092631a28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
