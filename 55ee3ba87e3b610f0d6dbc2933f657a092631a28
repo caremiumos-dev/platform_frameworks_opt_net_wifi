@@ -22,6 +22,30 @@
       "revId": "55ee3ba87e3b610f0d6dbc2933f657a092631a28",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "639f6f28_2b0027a6",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiDiagnosticsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-23T00:13:44Z",
+      "side": 1,
+      "message": "Fair question.\n\nFakeProcess doesn\u0027t inherit any functionality from (real) Process. I just think this approach is easier to read than the alternative.\n\nIn more detail:\n- Given that we don\u0027t verify any interactions with |mExternalProcess|, we don\u0027t need a mock. We just need a stub or a fake. (go/tott-296)\n- We can create a stub using Mockito, or we can explicitly write a fake.\n- If we use Mockito, then, in the context of setUp(), we have to understand the intent of all the thenReturn() calls. That is, what are all the thenReturn()s trying to accomplish?\n- With an explicitly written fake, we can separate the intent from the implementation details. In setUp() we just need to know that we\u0027re using a fake. Only when we\u0027re reading FakeProcess code do we need to understand the implementation.",
+      "parentUuid": "fdef3a66_ada5f8ec",
+      "range": {
+        "startLine": 809,
+        "startChar": 18,
+        "endLine": 809,
+        "endChar": 45
+      },
+      "revId": "55ee3ba87e3b610f0d6dbc2933f657a092631a28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
