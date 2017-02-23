@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "282aca2d_7cdaead6",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2603,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-23T20:13:46Z",
+      "side": 1,
+      "message": "Can u change this to do the same? Also, you can move this before invoking the mWifiConfigStore.read()",
+      "range": {
+        "startLine": 2597,
+        "startChar": 0,
+        "endLine": 2603,
+        "endChar": 9
+      },
+      "revId": "374d065fd9a8d2d4c2f8cad62e31a077f363a06d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
