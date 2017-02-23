@@ -25,6 +25,54 @@
     },
     {
       "key": {
+        "uuid": "6d8aa7ea_f5b4ff7c",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-23T01:42:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea670eca_722e8047",
+      "range": {
+        "startLine": 431,
+        "startChar": 0,
+        "endLine": 431,
+        "endChar": 2
+      },
+      "revId": "999b027c66c0665b2c69d8bf7f2e9f9967eb2b02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3e4c5c2_e0e5a190",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-23T01:42:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea670eca_722e8047",
+      "range": {
+        "startLine": 431,
+        "startChar": 0,
+        "endLine": 431,
+        "endChar": 2
+      },
+      "revId": "999b027c66c0665b2c69d8bf7f2e9f9967eb2b02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfbb7aa4_909352cf",
         "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
         "patchSetId": 2
@@ -36,6 +84,30 @@
       "writtenOn": "2017-02-13T23:28:05Z",
       "side": 1,
       "message": "https://cs.corp.google.com/android/frameworks/opt/net/wifi/service/java/com/android/server/wifi/util/NativeUtil.java?rcl\u003d79bb1568d439f4db2ba4160bd2ae23cdadd774d3\u0026l\u003d222.\n\nU can make that NativeUtil method public and use.",
+      "range": {
+        "startLine": 508,
+        "startChar": 0,
+        "endLine": 511,
+        "endChar": 9
+      },
+      "revId": "999b027c66c0665b2c69d8bf7f2e9f9967eb2b02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47c3d928_dc93b2a8",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-23T01:42:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfbb7aa4_909352cf",
       "range": {
         "startLine": 508,
         "startChar": 0,
