@@ -70,6 +70,30 @@
       "revId": "55ee3ba87e3b610f0d6dbc2933f657a092631a28",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7d05969_473cd6a6",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiDiagnosticsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-23T21:24:19Z",
+      "side": 1,
+      "message": "1. Agreed that the name FakeProcess could be confusing. Would StubProcess work for you? (I believe this is the crux of where the intent was unclear. Please correct if I\u0027m mistaken.)\n\n2. I don\u0027t believe that createStubProcess() would be cleaner. While it would be shorter, it would be harder to read overall. The native Java syntax is simply easier to read than the Mockito syntax.\n\n3. Implementing this with Mockito is also more complex in the sense that it uses a lot of machinery to do something that\u0027s easy to do directly in Java. This introduces the possibility of things going wrong in unexpected ways. See http://b/35488106#comment11, where I learned that a test was slow because mocks are slow.\n\n(To be clear, I\u0027m not arguing against the use of Mockito in general. I just don\u0027t think its beneficial in this case.)",
+      "parentUuid": "2a209e6f_165214c9",
+      "range": {
+        "startLine": 809,
+        "startChar": 18,
+        "endLine": 809,
+        "endChar": 45
+      },
+      "revId": "55ee3ba87e3b610f0d6dbc2933f657a092631a28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
