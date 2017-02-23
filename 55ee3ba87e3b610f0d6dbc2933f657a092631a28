@@ -46,6 +46,30 @@
       "revId": "55ee3ba87e3b610f0d6dbc2933f657a092631a28",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a209e6f_165214c9",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiDiagnosticsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-23T01:46:15Z",
+      "side": 1,
+      "message": "You can achieve clearer intent/implementation separation and reduce code size, using Mockito.\n\n* I don\u0027t think you need a \u0027mock\u0027, just a mockito mock object to implement a \u0027stub\u0027. (FakeProcess isn\u0027t really doing anything powerful enough to warrant being a \u0027fake\u0027)\n* A mockito stub is less code than your stub/fake class\n* You can separate the intent from implementation even more cleanly, using a createStubProcess() method, which internally initializes the mocks, and the thenReturns\u0027. The code would be structurally the same, but smaller.\n* The intent of a \u0027FakeProcess\u0027 class is also not so clear, (It\u0027s what confused me initially), as I\u0027m expecting more dynamic response functionality in the class definition.",
+      "parentUuid": "639f6f28_2b0027a6",
+      "range": {
+        "startLine": 809,
+        "startChar": 18,
+        "endLine": 809,
+        "endChar": 45
+      },
+      "revId": "55ee3ba87e3b610f0d6dbc2933f657a092631a28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
