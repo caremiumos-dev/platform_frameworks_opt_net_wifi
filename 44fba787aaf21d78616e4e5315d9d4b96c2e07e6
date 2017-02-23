@@ -22,6 +22,30 @@
       "revId": "44fba787aaf21d78616e4e5315d9d4b96c2e07e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f8d2d95_ddd42594",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2070,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-23T18:15:12Z",
+      "side": 0,
+      "message": "It has to be in WifiServiceImpl, so I\u0027ll just move the human readable there as well.",
+      "parentUuid": "bcf0176a_1974adf6",
+      "range": {
+        "startLine": 2064,
+        "startChar": 8,
+        "endLine": 2070,
+        "endChar": 9
+      },
+      "revId": "44fba787aaf21d78616e4e5315d9d4b96c2e07e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
