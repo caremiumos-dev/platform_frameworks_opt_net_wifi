@@ -152,8 +152,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
 
     public SupplicantWifiScannerImpl(Context context, WifiNative wifiNative, Looper looper,
             Clock clock) {
-        // TODO figure out how to get channel information from supplicant
-        this(context, wifiNative, new NoBandChannelHelper(), looper, clock);
+        this(context, wifiNative, new WificondChannelHelper(wifiNative), looper, clock);
     }
 
     @Override

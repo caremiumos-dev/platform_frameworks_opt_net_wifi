@@ -371,4 +371,84 @@ public class WificondControl {
         return false;
     }
 
+    /**
+     * Start PNO scan.
+     * @param pnoSettings Pno scan configuration.
+     * @return true on success.
+     */
+    public boolean startPnoScan(WifiNative.PnoSettings pnoSettings) {
+        if (mWificondScanner == null) {
+            Log.e(TAG, "No valid wificond scanner interface handler");
+            return false;
+        }
+        PnoSettings settings = new PnoSettings();
+        settings.pnoNetworks  = new ArrayList<>();
+        settings.intervalMs = 6000;
+        settings.min2gRssi = pnoSettings.min24GHzRssi;
+        settings.min5gRssi = pnoSettings.min5GHzRssi;
+        if (pnoSettings.networkList != null) {
+            for (WifiNative.PnoNetwork network : pnoSettings.networkList) {
+                PnoNetwork condNetwork = new PnoNetwork();
+                condNetwork.isHidden = (network.flags
+                        & WifiScanner.PnoSettings.PnoNetwork.FLAG_DIRECTED_SCAN) != 0;
+                condNetwork.ssid =
+                        NativeUtil.byteArrayFromArrayList(NativeUtil.decodeSsid(network.ssid));
+                settings.pnoNetworks.add(condNetwork);
+            }
+        }
+
+        try {
+            return mWificondScanner.startPnoScan(settings);
+        } catch (RemoteException e1) {
+            Log.e(TAG, "Failed to stop pno scan due to remote exception");
+        }
+        return false;
+    }
+
+    /**
+     * Stop PNO scan.
+     * @return true on success.
+     */
+    public boolean stopPnoScan() {
+        if (mWificondScanner == null) {
+            Log.e(TAG, "No valid wificond scanner interface handler");
+            return false;
+        }
+        try {
+            return mWificondScanner.stopPnoScan();
+        } catch (RemoteException e1) {
+            Log.e(TAG, "Failed to stop pno scan due to remote exception");
+        }
+        return false;
+    }
+
+    /**
+     * Get a list of frequencies in channel |band|.
+     * @param band It is one of the following values:
+     * WifiScanner.WIFI_BAND_24_GHZ,
+     * WifiScanner.WIFI_BAND_5_GHZ,
+     * WifiScanner.WIFI_BAND_5_GHZ_DFS_ONLY.
+     * @return null on failure.
+     */
+    public int [] getChannelsForBand(int band) {
+        if (mWificondScanner == null) {
+            Log.e(TAG, "No valid wificond scanner interface handler");
+            return null;
+        }
+        try {
+            if (band == WifiScanner.WIFI_BAND_24_GHZ) {
+                return mWificondScanner.getAvailable2gChannels();
+            } else if (band == WifiScanner.WIFI_BAND_5_GHZ) {
+                return mWificondScanner.getAvailable5gNonDFSChannels();
+            } else if (band == WifiScanner.WIFI_BAND_5_GHZ_DFS_ONLY) {
+                return mWificondScanner.getAvailableDFSChannels();
+            } else {
+                Log.e(TAG, "Unknown band number: " + band);
+            }
+
+        } catch (RemoteException e1) {
+            Log.e(TAG, "Failed to get channels from wificond");
+        }
+        return null;
+    }
 }
