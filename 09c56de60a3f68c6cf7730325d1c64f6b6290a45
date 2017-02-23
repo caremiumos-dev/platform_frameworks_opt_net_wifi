@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb273a58_4acb25f0",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1507,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-23T20:20:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07b6313d_84cc47bc",
+      "range": {
+        "startLine": 1507,
+        "startChar": 19,
+        "endLine": 1507,
+        "endChar": 74
+      },
+      "revId": "09c56de60a3f68c6cf7730325d1c64f6b6290a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74fdf00b_0591172e",
         "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4ccc46ab_7d71f356",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1515,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-23T20:20:35Z",
+      "side": 1,
+      "message": "Ive decided to call it twice, instead",
+      "parentUuid": "74fdf00b_0591172e",
+      "range": {
+        "startLine": 1515,
+        "startChar": 8,
+        "endLine": 1515,
+        "endChar": 46
+      },
+      "revId": "09c56de60a3f68c6cf7730325d1c64f6b6290a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f19c501e_2193ca22",
         "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-02-23T18:23:13Z",
       "side": 1,
       "message": "did you check the output?  might need a println here  (there was one in WifiStateMachine)",
+      "range": {
+        "startLine": 1552,
+        "startChar": 12,
+        "endLine": 1552,
+        "endChar": 44
+      },
+      "revId": "09c56de60a3f68c6cf7730325d1c64f6b6290a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2586bf6_33a243e4",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1552,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-23T20:20:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f19c501e_2193ca22",
       "range": {
         "startLine": 1552,
         "startChar": 12,
