@@ -2572,6 +2572,18 @@ public class WifiNative {
         }
     }
 
+    /**
+     * Get a list of frequencies in channel |band|.
+     * @param band It is one of the following values:
+     * WifiScanner.WIFI_BAND_24_GHZ,
+     * WifiScanner.WIFI_BAND_5_GHZ,
+     * WifiScanner.WIFI_BAND_5_GHZ_DFS_ONLY.
+     * @return null on failure.
+     */
+    public int [] getChannelsForBandFromWificond(int band) {
+        return mWificondControl.getChannelsForBand(band);
+    }
+
     private static native boolean isGetChannelsForBandSupportedNative();
     public boolean isGetChannelsForBandSupported(){
         synchronized (sLock) {
