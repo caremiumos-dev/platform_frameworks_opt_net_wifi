@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c506501a_2a8de290",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-23T23:32:47Z",
+      "side": 1,
+      "message": "Can we rename all of these methods to hidlToFramework\u003c\u003e \u0026 frameworkToHidl\u003c\u003e ? These names are very confusing and inconsistent.",
+      "range": {
+        "startLine": 565,
+        "startChar": 14,
+        "endLine": 565,
+        "endChar": 36
+      },
+      "revId": "2932bf3b2c93c0c7533f4d5de89a292faf1f3fbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
