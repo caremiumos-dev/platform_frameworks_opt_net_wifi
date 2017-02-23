@@ -22,6 +22,30 @@
       "revId": "eac3231b62e174bf89fdaace3b2cc80ae1bdc5c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f129c819_63e77b8f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-23T02:03:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bd7b117_709187c1",
+      "range": {
+        "startLine": 845,
+        "startChar": 37,
+        "endLine": 845,
+        "endChar": 39
+      },
+      "revId": "eac3231b62e174bf89fdaace3b2cc80ae1bdc5c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
