@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61397b7c_19411b86",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-23T01:58:16Z",
+      "side": 1,
+      "message": "We should probably try to simulate the existing native.cpp usage of these API\u0027s here: https://cs.corp.google.com/android/frameworks/opt/net/wifi/service/jni/com_android_server_wifi_WifiNative.cpp?rcl\u003d2c6426abc81292f8051695a4622cc582bd87d226\u0026l\u003d1227\n\nhttps://cs.corp.google.com/android/frameworks/opt/net/wifi/service/java/com/android/server/wifi/WifiNative.java?rcl\u003d2c6426abc81292f8051695a4622cc582bd87d226\u0026l\u003d2520",
+      "range": {
+        "startLine": 879,
+        "startChar": 28,
+        "endLine": 879,
+        "endChar": 43
+      },
+      "revId": "5a5b831bcc6bbc68a5024ecba3bc975948572731",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
