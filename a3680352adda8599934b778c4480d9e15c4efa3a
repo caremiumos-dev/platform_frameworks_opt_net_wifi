@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08347493_cd4d2f67",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-23T19:53:15Z",
+      "side": 1,
+      "message": "already",
+      "range": {
+        "startLine": 9,
+        "startChar": 55,
+        "endLine": 9,
+        "endChar": 61
+      },
+      "revId": "a3680352adda8599934b778c4480d9e15c4efa3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4685976_44c4add8",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNativeTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-23T19:53:15Z",
+      "side": 1,
+      "message": "maybe just assertEquals(hiddenNet1, hiddenNet2) here?\n\nOr assertTrue(hiddenNet1.equals(hiddenNet2)) would work.",
+      "range": {
+        "startLine": 215,
+        "startChar": 8,
+        "endLine": 215,
+        "endChar": 58
+      },
+      "revId": "a3680352adda8599934b778c4480d9e15c4efa3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
