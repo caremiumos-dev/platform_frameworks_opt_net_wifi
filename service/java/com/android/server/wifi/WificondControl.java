@@ -371,4 +371,33 @@ public class WificondControl {
         return false;
     }
 
+    /**
+     * Get a list of frequencies in channel |band|.
+     * @param band It is one of the following values:
+     * WifiScanner.WIFI_BAND_24_GHZ,
+     * WifiScanner.WIFI_BAND_5_GHZ,
+     * WifiScanner.WIFI_BAND_5_GHZ_DFS_ONLY.
+     * @return null on failure.
+     */
+    public int [] getChannelsForBand(int band) {
+        if (mWificondScanner == null) {
+            Log.e(TAG, "No valid wificond scanner interface handler");
+            return null;
+        }
+        try {
+            if (band == WifiScanner.WIFI_BAND_24_GHZ) {
+                return mWificondScanner.getAvailable2gChannels();
+            } else if (band == WifiScanner.WIFI_BAND_5_GHZ) {
+                return mWificondScanner.getAvailable5gNonDFSChannels();
+            } else if (band == WifiScanner.WIFI_BAND_5_GHZ_DFS_ONLY) {
+                return mWificondScanner.getAvailableDFSChannels();
+            } else {
+                Log.e(TAG, "Unknown band number: " + band);
+            }
+
+        } catch (RemoteException e1) {
+            Log.e(TAG, "Failed to get channels from wificond");
+        }
+        return null;
+    }
 }
