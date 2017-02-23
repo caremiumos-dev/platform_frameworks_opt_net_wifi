@@ -93,6 +93,30 @@
       "revId": "fc83b303a3382329c28d631b1e0fb2bb35969f85",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bbe4432e_be391188",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-23T01:05:55Z",
+      "side": 0,
+      "message": "After this change WifiStateMachine is not supposed to get or cache the scan result(WifiStateMachine no longer calls WifiNative.getScanResults()). So here we are not able to mock the scan result.\nIn the latter roaming process we rely on suppilcant to find the network in scan results.\nSince this roaming request is an opportunistically operation trying to debounce from disconnection. It won\u0027t break things if the roaming fails.",
+      "parentUuid": "6c9fd4ed_1a394e29",
+      "range": {
+        "startLine": 722,
+        "startChar": 8,
+        "endLine": 723,
+        "endChar": 57
+      },
+      "revId": "fc83b303a3382329c28d631b1e0fb2bb35969f85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

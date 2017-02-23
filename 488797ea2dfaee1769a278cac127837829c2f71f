@@ -70,6 +70,30 @@
       "revId": "488797ea2dfaee1769a278cac127837829c2f71f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d8aeb37_57e9c187",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4165,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-23T01:05:55Z",
+      "side": 1,
+      "message": "1st question:\nI think in \" link debouching state\" we are disconnected but pretend to be connected. In this case either there are new scan result or scan failure(upon failure there might be partial scan result available), we opportunistically try to roam to a working network.\n\n2nd question:\nYes this is weird.\nI think the reason why it works is that isLinkDebouncing() could be true only when StatMachine is in connected state. So this part of code won\u0027t truly be triggered in scan mode.",
+      "parentUuid": "cace50f8_57abb183",
+      "range": {
+        "startLine": 4157,
+        "startChar": 20,
+        "endLine": 4165,
+        "endChar": 21
+      },
+      "revId": "488797ea2dfaee1769a278cac127837829c2f71f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
