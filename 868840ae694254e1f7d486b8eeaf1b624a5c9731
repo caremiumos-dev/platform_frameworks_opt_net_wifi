@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f15f4e0_a09db02c",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceCallback.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-24T14:10:49Z",
+      "side": 1,
+      "message": "All of these callbacks have been removed from the HIDL interface in go/aog/329608 because they are redundant. All of these broadcasts can be generated from the single callback below: onProvisionDiscoveryCompleted()",
+      "range": {
+        "startLine": 372,
+        "startChar": 0,
+        "endLine": 471,
+        "endChar": 5
+      },
+      "revId": "868840ae694254e1f7d486b8eeaf1b624a5c9731",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f98b0ce0_699bbd53",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-24T14:10:49Z",
+      "side": 1,
+      "message": "U should probably return failure if registeration of calllback fails.",
+      "range": {
+        "startLine": 210,
+        "startChar": 12,
+        "endLine": 210,
+        "endChar": 28
+      },
+      "revId": "868840ae694254e1f7d486b8eeaf1b624a5c9731",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "196ed4df_cbed7ebd",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-24T14:10:49Z",
+      "side": 1,
+      "message": "Let\u0027s keep this false until we have the listNetworks implemented via HIDL as well.",
+      "range": {
+        "startLine": 138,
+        "startChar": 51,
+        "endLine": 138,
+        "endChar": 55
+      },
+      "revId": "868840ae694254e1f7d486b8eeaf1b624a5c9731",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
