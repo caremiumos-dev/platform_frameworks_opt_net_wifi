@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1af91626_d1b999d1",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-24T23:09:04Z",
+      "side": 1,
+      "message": "alert",
+      "range": {
+        "startLine": 978,
+        "startChar": 27,
+        "endLine": 978,
+        "endChar": 32
+      },
+      "revId": "902d5fed92e1599af910ad717da57ebe6333f249",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb0ce6e0_baeb6377",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-24T23:09:04Z",
+      "side": 1,
+      "message": "I would snag a copy of mLogEventHandler with the lock held, and then do the upcall after dropping the lock.",
+      "range": {
+        "startLine": 1899,
+        "startChar": 12,
+        "endLine": 1900,
+        "endChar": 44
+      },
+      "revId": "902d5fed92e1599af910ad717da57ebe6333f249",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
