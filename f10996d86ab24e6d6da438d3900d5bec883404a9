@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bea48666_6f232121",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-24T01:02:39Z",
+      "side": 1,
+      "message": "Typo?",
+      "range": {
+        "startLine": 1237,
+        "startChar": 14,
+        "endLine": 1237,
+        "endChar": 65
+      },
+      "revId": "f10996d86ab24e6d6da438d3900d5bec883404a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cd4da32_a2e0f394",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1523,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-24T01:02:39Z",
+      "side": 1,
+      "message": "Hmm. Do we need this? We can invoke the callback directly inside the sync() {}. There is no need to keep this out of it.",
+      "range": {
+        "startLine": 1523,
+        "startChar": 12,
+        "endLine": 1523,
+        "endChar": 52
+      },
+      "revId": "f10996d86ab24e6d6da438d3900d5bec883404a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
