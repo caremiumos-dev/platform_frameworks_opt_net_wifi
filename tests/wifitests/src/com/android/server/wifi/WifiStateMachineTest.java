@@ -16,7 +16,10 @@
 
 package com.android.server.wifi;
 
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -904,7 +907,8 @@ public class WifiStateMachineTest {
 
     @Test
     public void verboseLogRecSizeIsGreaterThanNormalSize() {
-        assertTrue(LOG_REC_LIMIT_IN_VERBOSE_MODE > WifiStateMachine.NUM_LOG_RECS_NORMAL);
+        assertThat(LOG_REC_LIMIT_IN_VERBOSE_MODE,
+                greaterThan(WifiStateMachine.NUM_LOG_RECS_NORMAL));
     }
 
     /**
@@ -928,7 +932,7 @@ public class WifiStateMachineTest {
     public void disablingVerboseLoggingClearsRecords() {
         mWsm.sendMessage(WifiStateMachine.CMD_DISCONNECT);
         mLooper.dispatchAll();
-        assertTrue(mWsm.getLogRecSize() >= 1);
+        assertThat(mWsm.getLogRecSize(), greaterThanOrEqualTo(1));
 
         mWsm.enableVerboseLogging(0);
         assertEquals(0, mWsm.getLogRecSize());

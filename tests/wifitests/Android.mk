@@ -58,6 +58,7 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
 	android-support-test \
 	mockito-target-minus-junit4 \
 	frameworks-base-testutils \
+	hamcrest-library \
 	services \
 	wifi-service \
 

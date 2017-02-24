@@ -157,9 +157,9 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
 
     private static final String NETWORKTYPE = "WIFI";
     private static final String NETWORKTYPE_UNTRUSTED = "WIFI_UT";
-    @VisibleForTesting public static final short NUM_LOG_RECS_NORMAL = 100;
-    @VisibleForTesting public static final short NUM_LOG_RECS_VERBOSE_LOW_MEMORY = 200;
-    @VisibleForTesting public static final short NUM_LOG_RECS_VERBOSE = 3000;
+    @VisibleForTesting public static final int NUM_LOG_RECS_NORMAL = 100;
+    @VisibleForTesting public static final int NUM_LOG_RECS_VERBOSE_LOW_MEMORY = 200;
+    @VisibleForTesting public static final int NUM_LOG_RECS_VERBOSE = 3000;
     private static final String TAG = "WifiStateMachine";
 
     private static final int ONE_HOUR_MILLI = 1000 * 60 * 60;
