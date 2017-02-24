@@ -497,7 +497,11 @@ public class WifiNative {
      * to kill the process
      */
     public boolean stopSupplicant() {
-        return doBooleanCommand("TERMINATE");
+        if (HIDL_SUP_ENABLE) {
+            return mSupplicantStaIfaceHal.terminate();
+        } else {
+            return doBooleanCommand("TERMINATE");
+        }
     }
 
     public String listNetworks() {

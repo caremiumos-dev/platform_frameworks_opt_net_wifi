@@ -1494,6 +1494,21 @@ public class SupplicantStaIfaceHal {
         }
     }
 
+    /** See ISupplicant.hal for documentation */
+    public boolean terminate() {
+        synchronized (mLock) {
+            final String methodStr = "terminate";
+            if (!checkSupplicantAndLogFailure(methodStr)) return false;
+            try {
+                SupplicantStatus status = mISupplicant.terminate();
+                return checkStatusAndLogFailure(status, methodStr);
+            } catch (RemoteException e) {
+                handleRemoteException(e, methodStr);
+                return false;
+            }
+        }
+    }
+
     /**
      * Returns false if Supplicant is null, and logs failure to call methodStr
      */
