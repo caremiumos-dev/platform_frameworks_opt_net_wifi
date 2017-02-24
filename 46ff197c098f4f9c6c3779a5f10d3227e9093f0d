@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "0d024db7_6c95a9f9",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-24T22:57:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "583b7f77_11872ff4",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 100
+      },
+      "revId": "46ff197c098f4f9c6c3779a5f10d3227e9093f0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cc04dbf_05109a6a",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
         "patchSetId": 4
@@ -83,6 +107,30 @@
       "side": 1,
       "message": "U can use ArgumentCaptor to capture this.",
       "parentUuid": "7cc04dbf_05109a6a",
+      "range": {
+        "startLine": 566,
+        "startChar": 60,
+        "endLine": 566,
+        "endChar": 64
+      },
+      "revId": "46ff197c098f4f9c6c3779a5f10d3227e9093f0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53183a1f_19a3f99b",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-24T22:57:50Z",
+      "side": 1,
+      "message": "oops, int is primitive.\n\nUsed @VisibleForTesing on the value instead.",
+      "parentUuid": "49997021_5ffffe3f",
       "range": {
         "startLine": 566,
         "startChar": 60,
