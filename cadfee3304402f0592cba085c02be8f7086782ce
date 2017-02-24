@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7b099c60_113de03a",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4915,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2017-02-24T23:33:32Z",
+      "side": 1,
+      "message": "Agreed.  I\u0027ve now tested this explicitly as well.",
+      "parentUuid": "4be45bd6_85a8f6e2",
+      "range": {
+        "startLine": 4915,
+        "startChar": 31,
+        "endLine": 4915,
+        "endChar": 99
+      },
+      "revId": "cadfee3304402f0592cba085c02be8f7086782ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adaede87_5895e549",
         "filename": "tests/wifitests/src/com/android/server/wifi/util/TelephonyUtilTest.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-24T17:23:33Z",
       "side": 1,
       "message": "I think you can use WifiConfigurationTestUtil#createEapNetwork, then overwrite the eap method and phase2 method.",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 51
+      },
+      "revId": "cadfee3304402f0592cba085c02be8f7086782ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5383fc6_e52c72f9",
+        "filename": "tests/wifitests/src/com/android/server/wifi/util/TelephonyUtilTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2017-02-24T23:33:32Z",
+      "side": 1,
+      "message": "I\u0027ve added a new method in WifiConfigurationTestUtil to take an EAP inner and outer method, since it might be generically useful.  Thanks for the pointer.",
+      "parentUuid": "adaede87_5895e549",
       "range": {
         "startLine": 40,
         "startChar": 8,
