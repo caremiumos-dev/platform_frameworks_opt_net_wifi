@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4be45bd6_85a8f6e2",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4915,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-02-24T17:23:33Z",
+      "side": 1,
+      "message": "This is probably not needed. The check below |isSimConfig| should be sufficient.",
+      "range": {
+        "startLine": 4915,
+        "startChar": 31,
+        "endLine": 4915,
+        "endChar": 99
+      },
+      "revId": "cadfee3304402f0592cba085c02be8f7086782ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "adaede87_5895e549",
+        "filename": "tests/wifitests/src/com/android/server/wifi/util/TelephonyUtilTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-02-24T17:23:33Z",
+      "side": 1,
+      "message": "I think you can use WifiConfigurationTestUtil#createEapNetwork, then overwrite the eap method and phase2 method.",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 51
+      },
+      "revId": "cadfee3304402f0592cba085c02be8f7086782ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
