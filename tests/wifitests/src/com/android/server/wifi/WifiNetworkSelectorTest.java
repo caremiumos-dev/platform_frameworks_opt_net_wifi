@@ -39,6 +39,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -197,8 +198,9 @@ public class WifiNetworkSelectorTest {
                 WifiNetworkSelectorTestUtil.setupScanDetailsAndConfigStore(ssids, bssids,
                     freqs, caps, levels, securities, mWifiConfigManager, mClock);
         List<ScanDetail> scanDetails = scanDetailsAndConfigs.getScanDetails();
+        ArrayList<String> blacklist = new ArrayList<String>();
         WifiConfiguration candidate = mWifiNetworkSelector.selectNetwork(scanDetails,
-                mWifiInfo, false, true, false);
+                blacklist, mWifiInfo, false, true, false);
         assertEquals("Expect null configuration", null, candidate);
     }
 
@@ -225,8 +227,9 @@ public class WifiNetworkSelectorTest {
                 WifiNetworkSelectorTestUtil.setupScanDetailsAndConfigStore(ssids, bssids,
                     freqs, caps, levels, securities, mWifiConfigManager, mClock);
         List<ScanDetail> scanDetails = scanDetailsAndConfigs.getScanDetails();
+        ArrayList<String> blacklist = new ArrayList<String>();
         WifiConfiguration candidate = mWifiNetworkSelector.selectNetwork(scanDetails,
-                mWifiInfo, false, true, false);
+                blacklist, mWifiInfo, false, true, false);
         assertEquals("Expect null configuration", null, candidate);
     }
 
@@ -254,15 +257,16 @@ public class WifiNetworkSelectorTest {
                 WifiNetworkSelectorTestUtil.setupScanDetailsAndConfigStore(ssids, bssids,
                     freqs, caps, levels, securities, mWifiConfigManager, mClock);
         List<ScanDetail> scanDetails = scanDetailsAndConfigs.getScanDetails();
+        ArrayList<String> blacklist = new ArrayList<String>();
         WifiConfiguration candidate = mWifiNetworkSelector.selectNetwork(scanDetails,
-                mWifiInfo, false, true, false);
+                blacklist, mWifiInfo, false, true, false);
 
         when(mClock.getElapsedSinceBootMillis()).thenReturn(SystemClock.elapsedRealtime()
                 + WifiNetworkSelector.MINIMUM_NETWORK_SELECTION_INTERVAL_MS - 2000);
 
         // Do another network selection with WSM in CONNECTED state.
         candidate = mWifiNetworkSelector.selectNetwork(scanDetails,
-                mWifiInfo, true, false, false);
+                blacklist, mWifiInfo, true, false, false);
 
         assertEquals("Expect null configuration", null, candidate);
     }
@@ -292,15 +296,16 @@ public class WifiNetworkSelectorTest {
                     freqs, caps, levels, securities, mWifiConfigManager, mClock);
         List<ScanDetail> scanDetails = scanDetailsAndConfigs.getScanDetails();
         WifiConfiguration[] savedConfigs = scanDetailsAndConfigs.getWifiConfigs();
+        ArrayList<String> blacklist = new ArrayList<String>();
         WifiConfiguration candidate = mWifiNetworkSelector.selectNetwork(scanDetails,
-                mWifiInfo, false, true, false);
+                blacklist, mWifiInfo, false, true, false);
 
         when(mClock.getElapsedSinceBootMillis()).thenReturn(SystemClock.elapsedRealtime()
                 + WifiNetworkSelector.MINIMUM_NETWORK_SELECTION_INTERVAL_MS - 2000);
 
         // Do another network selection with WSM in DISCONNECTED state.
         candidate = mWifiNetworkSelector.selectNetwork(scanDetails,
-                mWifiInfo, false, true, false);
+                blacklist, mWifiInfo, false, true, false);
 
         ScanResult chosenScanResult = scanDetails.get(0).getScanResult();
         WifiConfigurationTestUtil.assertConfigurationEqual(savedConfigs[0], candidate);
@@ -330,9 +335,10 @@ public class WifiNetworkSelectorTest {
                 WifiNetworkSelectorTestUtil.setupScanDetailsAndConfigStore(ssids, bssids,
                     freqs, caps, levels, securities, mWifiConfigManager, mClock);
         List<ScanDetail> scanDetails = scanDetailsAndConfigs.getScanDetails();
+        ArrayList<String> blacklist = new ArrayList<String>();
 
         // connect to test1
-        mWifiNetworkSelector.selectNetwork(scanDetails, mWifiInfo, false, true, false);
+        mWifiNetworkSelector.selectNetwork(scanDetails, blacklist, mWifiInfo, false, true, false);
         when(mWifiInfo.getNetworkId()).thenReturn(0);
         when(mWifiInfo.getBSSID()).thenReturn(bssids[0]);
         when(mWifiInfo.is24GHz()).thenReturn(false);
@@ -347,7 +353,7 @@ public class WifiNetworkSelectorTest {
         scanDetails = scanDetailsAndConfigs.getScanDetails();
 
         WifiConfiguration candidate = mWifiNetworkSelector.selectNetwork(scanDetails,
-                mWifiInfo, true, false, false);
+                blacklist, mWifiInfo, true, false, false);
         assertEquals("Expect null configuration", null, candidate);
     }
 
@@ -375,10 +381,11 @@ public class WifiNetworkSelectorTest {
                 WifiNetworkSelectorTestUtil.setupScanDetailsAndConfigStore(ssids, bssids,
                     freqs, caps, levels, securities, mWifiConfigManager, mClock);
         List<ScanDetail> scanDetails = scanDetailsAndConfigs.getScanDetails();
+        ArrayList<String> blacklist = new ArrayList<String>();
         WifiConfiguration[] savedConfigs = scanDetailsAndConfigs.getWifiConfigs();
 
         // connect to test1
-        mWifiNetworkSelector.selectNetwork(scanDetails, mWifiInfo, false, true, false);
+        mWifiNetworkSelector.selectNetwork(scanDetails, blacklist, mWifiInfo, false, true, false);
         when(mWifiInfo.getNetworkId()).thenReturn(0);
         when(mWifiInfo.getBSSID()).thenReturn(bssids[0]);
         when(mWifiInfo.is24GHz()).thenReturn(true);
@@ -388,7 +395,7 @@ public class WifiNetworkSelectorTest {
 
         // Do another network selection.
         WifiConfiguration candidate = mWifiNetworkSelector.selectNetwork(scanDetails,
-                mWifiInfo, true, false, false);
+                blacklist, mWifiInfo, true, false, false);
 
         ScanResult chosenScanResult = scanDetails.get(0).getScanResult();
         WifiConfigurationTestUtil.assertConfigurationEqual(savedConfigs[0], candidate);
@@ -420,10 +427,11 @@ public class WifiNetworkSelectorTest {
                 WifiNetworkSelectorTestUtil.setupScanDetailsAndConfigStore(ssids, bssids,
                     freqs, caps, levels, securities, mWifiConfigManager, mClock);
         List<ScanDetail> scanDetails = scanDetailsAndConfigs.getScanDetails();
+        ArrayList<String> blacklist = new ArrayList<String>();
         WifiConfiguration[] savedConfigs = scanDetailsAndConfigs.getWifiConfigs();
 
         // connect to test1
-        mWifiNetworkSelector.selectNetwork(scanDetails, mWifiInfo, false, true, false);
+        mWifiNetworkSelector.selectNetwork(scanDetails, blacklist, mWifiInfo, false, true, false);
         when(mWifiInfo.getNetworkId()).thenReturn(0);
         when(mWifiInfo.getBSSID()).thenReturn(bssids[0]);
         when(mWifiInfo.is24GHz()).thenReturn(false);
@@ -434,7 +442,7 @@ public class WifiNetworkSelectorTest {
 
         // Do another network selection.
         WifiConfiguration candidate = mWifiNetworkSelector.selectNetwork(scanDetails,
-                mWifiInfo, true, false, false);
+                blacklist, mWifiInfo, true, false, false);
 
         ScanResult chosenScanResult = scanDetails.get(0).getScanResult();
         WifiConfigurationTestUtil.assertConfigurationEqual(savedConfigs[0], candidate);
@@ -465,10 +473,11 @@ public class WifiNetworkSelectorTest {
                 WifiNetworkSelectorTestUtil.setupScanDetailsAndConfigStore(ssids, bssids,
                     freqs, caps, levels, securities, mWifiConfigManager, mClock);
         List<ScanDetail> scanDetails = scanDetailsAndConfigs.getScanDetails();
+        ArrayList<String> blacklist = new ArrayList<String>();
         WifiConfiguration[] savedConfigs = scanDetailsAndConfigs.getWifiConfigs();
 
         // connect to test1
-        mWifiNetworkSelector.selectNetwork(scanDetails, mWifiInfo, false, true, false);
+        mWifiNetworkSelector.selectNetwork(scanDetails, blacklist, mWifiInfo, false, true, false);
         when(mWifiInfo.getNetworkId()).thenReturn(0);
         when(mWifiInfo.getBSSID()).thenReturn(bssids[0]);
         when(mWifiInfo.is24GHz()).thenReturn(false);
@@ -480,7 +489,7 @@ public class WifiNetworkSelectorTest {
 
         // Do another network selection.
         WifiConfiguration candidate = mWifiNetworkSelector.selectNetwork(scanDetails,
-                mWifiInfo, true, false, false);
+                blacklist, mWifiInfo, true, false, false);
 
         ScanResult chosenScanResult = scanDetails.get(0).getScanResult();
         WifiConfigurationTestUtil.assertConfigurationEqual(savedConfigs[0], candidate);
@@ -509,15 +518,11 @@ public class WifiNetworkSelectorTest {
                 WifiNetworkSelectorTestUtil.setupScanDetailsAndConfigStore(ssids, bssids,
                     freqs, caps, levels, securities, mWifiConfigManager, mClock);
         List<ScanDetail> scanDetails = scanDetailsAndConfigs.getScanDetails();
-
-        // Disable this network for BSSID_BLACKLIST_THRESHOLD times so it gets
-        // blacklisted by WNS.
-        for (int i = 0; i < WifiNetworkSelector.BSSID_BLACKLIST_THRESHOLD; i++) {
-            mWifiNetworkSelector.enableBssidForNetworkSelection(bssids[0], false, 1);
-        }
+        ArrayList<String> blacklist = new ArrayList<String>();
+        blacklist.add(bssids[0]);
 
         WifiConfiguration candidate = mWifiNetworkSelector.selectNetwork(scanDetails,
-                mWifiInfo, false, true, false);
+                blacklist, mWifiInfo, false, true, false);
         assertEquals("Expect null configuration", null, candidate);
     }
 
@@ -545,8 +550,9 @@ public class WifiNetworkSelectorTest {
                 WifiNetworkSelectorTestUtil.setupScanDetailsAndConfigStore(ssids, bssids,
                     freqs, caps, levels, securities, mWifiConfigManager, mClock);
         List<ScanDetail> scanDetails = scanDetailsAndConfigs.getScanDetails();
+        ArrayList<String> blacklist = new ArrayList<String>();
         WifiConfiguration candidate = mWifiNetworkSelector.selectNetwork(scanDetails,
-                mWifiInfo, false, true, false);
+                blacklist, mWifiInfo, false, true, false);
 
         when(mWifiInfo.getNetworkId()).thenReturn(0);
         when(mWifiInfo.getBSSID()).thenReturn(bssids[0]);
@@ -564,41 +570,11 @@ public class WifiNetworkSelectorTest {
         int[] levelsNew = {mThresholdMinimumRssi2G + 40};
         scanDetails = WifiNetworkSelectorTestUtil.buildScanDetails(ssidsNew, bssidsNew,
                 freqsNew, capsNew, levelsNew, mClock);
-        candidate = mWifiNetworkSelector.selectNetwork(scanDetails, mWifiInfo, true, false, false);
+        candidate = mWifiNetworkSelector.selectNetwork(scanDetails, blacklist, mWifiInfo,
+                true, false, false);
 
         // The second network selection is skipped since current connected network is
         // missing from the scan results.
-        assertEquals("Expect null configuration", null, candidate);
-    }
-
-    /**
-     * Wifi network selector blacklists a BSSID immediately if it's unable to handle
-     * new stations.
-     *
-     * Expected behavior: no network recommended by Network Selector
-     */
-    @Test
-    public void blacklistNetworkImmeidatelyIfApHasNoCapacityForNewStation() {
-        String[] ssids = {"\"test1\""};
-        String[] bssids = {"6c:f3:7f:ae:99:f3"};
-        int[] freqs = {2437};
-        String[] caps = {"[WPA2-EAP-CCMP][ESS]"};
-        int[] levels = {mThresholdMinimumRssi2G + 20};
-        int[] securities = {SECURITY_PSK};
-
-        // Disable test1 with reason code indicating it is unable to handle new stations.
-        mWifiNetworkSelector.enableBssidForNetworkSelection(bssids[0], false,
-                WifiNetworkSelector.REASON_CODE_AP_UNABLE_TO_HANDLE_NEW_STA);
-
-        // Make a network selection with test1 in the scan results.
-        ScanDetailsAndWifiConfigs scanDetailsAndConfigs =
-                WifiNetworkSelectorTestUtil.setupScanDetailsAndConfigStore(ssids, bssids,
-                    freqs, caps, levels, securities, mWifiConfigManager, mClock);
-        List<ScanDetail> scanDetails = scanDetailsAndConfigs.getScanDetails();
-        WifiConfiguration candidate = mWifiNetworkSelector.selectNetwork(scanDetails,
-                mWifiInfo, false, true, false);
-
-        // No network recommended by WNS as test1 is blacklisted.
         assertEquals("Expect null configuration", null, candidate);
     }
 }
