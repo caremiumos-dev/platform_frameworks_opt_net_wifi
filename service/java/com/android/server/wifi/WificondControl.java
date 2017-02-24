@@ -117,6 +117,7 @@ public class WificondControl {
         try {
             mClientInterfaceName = clientInterface.getInterfaceName();
             mWificondScanner = mClientInterface.getWifiScannerImpl();
+            Binder.allowBlocking(mWificondScanner.asBinder());
             mScanEventHandler = new ScanEventHandler();
             mWificondScanner.subscribeScanEvents(mScanEventHandler);
         } catch (RemoteException e) {
