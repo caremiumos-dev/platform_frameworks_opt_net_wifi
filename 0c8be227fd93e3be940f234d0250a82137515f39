@@ -22,6 +22,30 @@
       "revId": "0c8be227fd93e3be940f234d0250a82137515f39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee6e0573_4c9d7ec6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-24T19:29:52Z",
+      "side": 1,
+      "message": "b/35399013 is focused on the speed of running the tests. so it feels like a stretch to include this CL under that umbrella.",
+      "parentUuid": "32839471_4f804c40",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 9
+      },
+      "revId": "0c8be227fd93e3be940f234d0250a82137515f39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
