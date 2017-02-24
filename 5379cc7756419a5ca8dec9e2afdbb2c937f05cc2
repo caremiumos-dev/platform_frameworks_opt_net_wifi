@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a38c10d8_aa6360d0",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-24T23:32:43Z",
+      "side": 1,
+      "message": "received",
+      "range": {
+        "startLine": 497,
+        "startChar": 36,
+        "endLine": 497,
+        "endChar": 44
+      },
+      "revId": "5379cc7756419a5ca8dec9e2afdbb2c937f05cc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0e6c3c3_46c6c866",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-24T23:32:43Z",
+      "side": 1,
+      "message": "extra space",
+      "range": {
+        "startLine": 501,
+        "startChar": 33,
+        "endLine": 501,
+        "endChar": 35
+      },
+      "revId": "5379cc7756419a5ca8dec9e2afdbb2c937f05cc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7d14502_1c2e3097",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-24T23:32:43Z",
+      "side": 1,
+      "message": "are",
+      "range": {
+        "startLine": 1103,
+        "startChar": 46,
+        "endLine": 1103,
+        "endChar": 48
+      },
+      "revId": "5379cc7756419a5ca8dec9e2afdbb2c937f05cc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90bb0892_c3453cfe",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1125,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-24T23:32:43Z",
+      "side": 1,
+      "message": "are",
+      "range": {
+        "startLine": 1125,
+        "startChar": 41,
+        "endLine": 1125,
+        "endChar": 43
+      },
+      "revId": "5379cc7756419a5ca8dec9e2afdbb2c937f05cc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa4aecdd_f4f7eaca",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1166,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-24T23:32:43Z",
+      "side": 1,
+      "message": "its",
+      "range": {
+        "startLine": 1166,
+        "startChar": 45,
+        "endLine": 1166,
+        "endChar": 50
+      },
+      "revId": "5379cc7756419a5ca8dec9e2afdbb2c937f05cc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05a6e007_3c7118eb",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-24T23:32:43Z",
+      "side": 1,
+      "message": "its",
+      "range": {
+        "startLine": 1200,
+        "startChar": 44,
+        "endLine": 1200,
+        "endChar": 48
+      },
+      "revId": "5379cc7756419a5ca8dec9e2afdbb2c937f05cc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
