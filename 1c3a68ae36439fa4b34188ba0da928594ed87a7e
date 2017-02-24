@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4625815_5ebc4682",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-24T00:01:01Z",
+      "side": 1,
+      "message": "You might have to use the ap iface one if the sta iface is null since this can be used in both the modes.",
+      "range": {
+        "startLine": 777,
+        "startChar": 16,
+        "endLine": 777,
+        "endChar": 30
+      },
+      "revId": "1c3a68ae36439fa4b34188ba0da928594ed87a7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
