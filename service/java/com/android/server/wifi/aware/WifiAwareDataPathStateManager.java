@@ -943,6 +943,26 @@ public class WifiAwareDataPathStateManager {
             return nnri;
         }
 
+        /**
+         * Generate a PMK from the Passphrase.
+         *
+         * Mechanism is TODO: b/35702875.
+         * Option: hashing(Passphrase, Salt information, e.g. discovery addresses)
+         * Option: more proprietary algorithms
+         *
+         * @param passphrase Passphrase to be converted to PMK.
+         * @param mgr Aware manager to use for more information (salt) for the PMK generation.
+         * @return Generated PMK.
+         */
+        private static byte[] derivePmkFromPassphrase(String passphrase,
+                WifiAwareStateManager mgr) {
+            // DUMMY VALUE!
+            return HexEncoding.decode(
+                    "61c9144050482ea1f07f0b67465ded21a44f91aa188368f1d251205025d8e48f"
+                            .toCharArray(),
+                    true);
+        }
+
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder("AwareNetworkRequestInformation: ");
