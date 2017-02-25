@@ -93,6 +93,30 @@
       "revId": "902d5fed92e1599af910ad717da57ebe6333f249",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9abd10b_a0c72c33",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-25T01:20:26Z",
+      "side": 1,
+      "message": "as long as it doesn\u0027t deadlock!",
+      "parentUuid": "444b4949_4f9d3258",
+      "range": {
+        "startLine": 1899,
+        "startChar": 12,
+        "endLine": 1900,
+        "endChar": 44
+      },
+      "revId": "902d5fed92e1599af910ad717da57ebe6333f249",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
