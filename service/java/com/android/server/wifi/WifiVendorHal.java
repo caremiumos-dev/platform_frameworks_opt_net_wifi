@@ -583,7 +583,7 @@ public class WifiVendorHal {
      * This is called unconditionally whenever we create a STA interface.
      *
      */
-    private void enableLinkLayerStats() {
+    public void enableLinkLayerStats() {
         synchronized (sLock) {
             try {
                 kilroy();
