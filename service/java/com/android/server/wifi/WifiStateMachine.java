@@ -1286,6 +1286,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             // reconnection unless it was forced.
             logi("connectToUserSelectNetwork already connecting/connected=" + netId);
         } else {
+            mWifiConnectivityManager.prepareForForcedConnection(netId);
             startConnectToNetwork(netId, SUPPLICANT_BSSID_ANY);
         }
         return true;
