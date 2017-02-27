@@ -1082,16 +1082,21 @@ public class WifiConnectivityManager {
             return false;
         }
 
-        boolean updated = updateBssidBlacklist(bssid, enable, reasonCode);
+        if (!updateBssidBlacklist(bssid, enable, reasonCode)) {
+            return false;
+        }
 
-        if (updated && !enable) {
+        // Blacklist was updated, so update firmware blacklist as well.
+        updateFirmwareBssidBlacklist();
+
+        if (!enable) {
             // Disabling a BSSID can happen when the AP candidate to connect to has
             // no capacity for new stations. We start another scan immediately so that
             // WifiNetworkSelector can give us another candidate to connect to.
             startConnectivityScan(SCAN_IMMEDIATELY);
         }
 
-        return updated;
+        return true;
     }
 
     /**
@@ -1118,12 +1123,45 @@ public class WifiConnectivityManager {
     }
 
     /**
+     * Compile and write the BSSID blacklist to firmware if firmware
+     * roaming feature is supported.
+     */
+    private void updateFirmwareBssidBlacklist() {
+        if (!mConnectivityHelper.isFirmwareRoamingSupported()) {
+            return;
+        }
+
+        int maxBlacklistSize = mConnectivityHelper.getMaxNumBlacklistBssid();
+        if (maxBlacklistSize <= 0) {
+            localLog("Don't update firmware BSSID blacklist, max size is " + maxBlacklistSize);
+        }
+
+        ArrayList<String> blacklistedBssids = new ArrayList<String>(buildBssidBlacklist());
+        int blacklistSize = blacklistedBssids.size();
+
+        if (blacklistSize > maxBlacklistSize) {
+            for (int i = blacklistSize - 1; i > (maxBlacklistSize - 1); i--) {
+                blacklistedBssids.remove(i);
+            }
+            localLog("Trim down BSSID blacklist size from " + blacklistSize + " to "
+                    + blacklistedBssids.size());
+        }
+
+        if (!mConnectivityHelper.setFirmwareRoamingConfiguration(blacklistedBssids,
+                new ArrayList<String>())) {  // SSID whitelist is always empty for now.
+            localLog("Failed to set firmware roaming configuration.");
+        }
+    }
+
+    /**
      * Refresh the BSSID blacklist
      *
      * Go through the BSSID blacklist and check if a BSSID has been blacklisted for
      * BSSID_BLACKLIST_EXPIRE_TIME_MS. If yes, re-enable it.
      */
     private void refreshBssidBlacklist() {
+        boolean updated = false;
+
         Iterator<BssidBlacklistStatus> iter = mBssidBlacklist.values().iterator();
         Long currentTimeStamp = mClock.getElapsedSinceBootMillis();
 
@@ -1132,8 +1170,40 @@ public class WifiConnectivityManager {
             if (status.isBlacklisted && ((currentTimeStamp - status.blacklistedTimeStamp)
                     >= BSSID_BLACKLIST_EXPIRE_TIME_MS)) {
                 iter.remove();
+                updated = true;
             }
         }
+
+        if (updated) {
+            updateFirmwareBssidBlacklist();
+        }
+    }
+
+    /**
+     * Clear the BSSID blacklist
+     */
+    private void clearBssidBlacklist() {
+        mBssidBlacklist.clear();
+        updateFirmwareBssidBlacklist();
+    }
+
+    /**
+     * Start WifiConnectivityManager
+     */
+    private void start() {
+        mConnectivityHelper.getFirmwareRoamingInfo();
+        startConnectivityScan(SCAN_IMMEDIATELY);
+    }
+
+    /**
+     * Stop and reset WifiConnectivityManager
+     */
+    private void stop() {
+        stopConnectivityScan();
+        clearBssidBlacklist();
+        resetLastPeriodicSingleScanTimeStamp();
+        mLastConnectionAttemptBssid = null;
+        mWaitForFullBandScanResults = false;
     }
 
     /**
@@ -1145,13 +1215,9 @@ public class WifiConnectivityManager {
         mWifiEnabled = enable;
 
         if (!mWifiEnabled) {
-            stopConnectivityScan();
-            resetLastPeriodicSingleScanTimeStamp();
-            mLastConnectionAttemptBssid = null;
-            mWaitForFullBandScanResults = false;
+            stop();
         } else if (mWifiConnectivityManagerEnabled) {
-            mConnectivityHelper.getFirmwareRoamingInfo();
-            startConnectivityScan(SCAN_IMMEDIATELY);
+            start();
         }
     }
 
@@ -1164,13 +1230,9 @@ public class WifiConnectivityManager {
         mWifiConnectivityManagerEnabled = enable;
 
         if (!mWifiConnectivityManagerEnabled) {
-            stopConnectivityScan();
-            resetLastPeriodicSingleScanTimeStamp();
-            mLastConnectionAttemptBssid = null;
-            mWaitForFullBandScanResults = false;
+            stop();
         } else if (mWifiEnabled) {
-            mConnectivityHelper.getFirmwareRoamingInfo();
-            startConnectivityScan(SCAN_IMMEDIATELY);
+            start();
         }
     }
 
