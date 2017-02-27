@@ -2259,23 +2259,7 @@ public class WifiVendorHal {
     StackTraceElement[] mTrace;
 
     private void kilroy() {
-        Thread cur = Thread.currentThread();
-        mTrace = cur.getStackTrace();
-        StackTraceElement s = mTrace[3];
-        String name = s.getMethodName();
-        if (name.contains("lambda$")) {
-            // Try to find a friendlier method name
-            String myFile = s.getFileName();
-            if (myFile != null) {
-                for (int i = 4; i < mTrace.length; i++) {
-                    if (myFile.equals(mTrace[i].getFileName())) {
-                        name = mTrace[i].getMethodName();
-                        break;
-                    }
-                }
-            }
-        }
-        Log.e(TAG, "th " + cur.getId() + " line " + s.getLineNumber() + " " + name);
+        return;
     }
 
     // This creates a blob of IE elements from the array received.
@@ -2433,7 +2417,7 @@ public class WifiVendorHal {
         public void onDebugRingBufferDataAvailable(
                 WifiDebugRingBufferStatus status, java.util.ArrayList<Byte> data) {
             kilroy();
-            Log.d(TAG, "onDebugRingBufferDataAvailable " + status);
+            // Log.d(TAG, "onDebugRingBufferDataAvailable " + status);
             WifiNative.WifiLoggerEventHandler eventHandler;
             synchronized (sLock) {
                 if (mLogEventHandler == null || status == null || data == null) return;
