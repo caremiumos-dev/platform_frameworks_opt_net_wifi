@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3083e51e_e0c4887f",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-27T19:05:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aa85cec_adb98e3b",
+      "range": {
+        "startLine": 519,
+        "startChar": 12,
+        "endLine": 519,
+        "endChar": 29
+      },
+      "revId": "2932bf3b2c93c0c7533f4d5de89a292faf1f3fbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c506501a_2a8de290",
         "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4ed7e43b_719dc9bf",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-27T19:05:57Z",
+      "side": 1,
+      "message": "Is it the \"from\" you\u0027re objecting to?\n\nI very much prefer foo \u003d fooFromBar(bar) instead of foo \u003d barToFoo(bar) because it puts the type of the destination close to the destination and the type of the source next to the source.\n\nI\u0027ve added \u0027hal\u0027 and \u0027framework\u0027 to all of the names.",
+      "parentUuid": "c506501a_2a8de290",
+      "range": {
+        "startLine": 565,
+        "startChar": 14,
+        "endLine": 565,
+        "endChar": 36
+      },
+      "revId": "2932bf3b2c93c0c7533f4d5de89a292faf1f3fbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9bcb6fb_4ad88155",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
         "patchSetId": 6
@@ -59,6 +107,24 @@
       "writtenOn": "2017-02-23T23:35:19Z",
       "side": 1,
       "message": "We should have negative test cases as well. where we invoke RTT without putting the HAL in the correct mode for example.",
+      "revId": "2932bf3b2c93c0c7533f4d5de89a292faf1f3fbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2eab947_3996d804",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-27T19:05:57Z",
+      "side": 1,
+      "message": "Noted.",
+      "parentUuid": "d9bcb6fb_4ad88155",
       "revId": "2932bf3b2c93c0c7533f4d5de89a292faf1f3fbf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
