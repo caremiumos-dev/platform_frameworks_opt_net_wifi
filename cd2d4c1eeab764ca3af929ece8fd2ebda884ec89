@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9f4a1b5_ab355090",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-27T21:54:29Z",
+      "side": 1,
+      "message": "Who is going to call this? WifiNative.getScanResults is wired to mWificondControl.",
+      "range": {
+        "startLine": 503,
+        "startChar": 34,
+        "endLine": 503,
+        "endChar": 48
+      },
+      "revId": "cd2d4c1eeab764ca3af929ece8fd2ebda884ec89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
