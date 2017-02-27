@@ -22,6 +22,30 @@
       "revId": "442141fdf41301e38ce2a2ccfdcc30264093a9a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9dbf9d93_dd3a3f9d",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareDataPathStateManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-02-27T23:35:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad5084b1_baec3481",
+      "range": {
+        "startLine": 955,
+        "startChar": 20,
+        "endLine": 955,
+        "endChar": 41
+      },
+      "revId": "442141fdf41301e38ce2a2ccfdcc30264093a9a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
