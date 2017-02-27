@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "e41412f5_c7a9a9c8",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2424,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-27T19:54:43Z",
+      "side": 1,
+      "message": "OK - make sure that removing the flush parameter is on the cleanup list.",
+      "parentUuid": "0c14a222_eeebda1e",
+      "range": {
+        "startLine": 2424,
+        "startChar": 49,
+        "endLine": 2424,
+        "endChar": 62
+      },
+      "revId": "51d6e6e28de29d444092ed9eac6c77e046933a76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1791cac_44e49caf",
         "filename": "service/java/com/android/server/wifi/WifiNative.java",
         "patchSetId": 6
@@ -177,6 +201,30 @@
       "writtenOn": "2017-02-27T17:41:33Z",
       "side": 1,
       "message": "Yeah. As commented in the other place. Let\u0027s keep it same for now. I don\u0027t think there is any harm in turning it on twice. We\u0027ll clean it up once we get rid of all the old code.",
+      "parentUuid": "9432652d_226c1170",
+      "range": {
+        "startLine": 586,
+        "startChar": 4,
+        "endLine": 586,
+        "endChar": 10
+      },
+      "revId": "51d6e6e28de29d444092ed9eac6c77e046933a76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67de7bde_4495ed94",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-27T19:54:43Z",
+      "side": 1,
+      "message": "Why change this to public and back to private when we can just cut it off in the the wifinative layer? seems like that is just making extra cleanup work that is likely to be forgotten.\n\nAt least add a TODO here.",
       "parentUuid": "9432652d_226c1170",
       "range": {
         "startLine": 586,
