@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2da9cda5_8a8bb835",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2017-02-27T16:51:34Z",
+      "side": 1,
+      "message": "\"removed\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 36,
+        "endLine": 9,
+        "endChar": 42
+      },
+      "revId": "5673ef81724702d37c97ba5baa1057ccb4a31f82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
