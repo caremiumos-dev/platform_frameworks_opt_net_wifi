@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6cc1ccea_b66e3e14",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1917,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-27T17:41:33Z",
+      "side": 1,
+      "message": "Hmm. true. The diff is a little ugly. But, we have been using the same pattern for supplicant\u0027s changes. So, I would keep them for now. All of these code is going be removed very soon anyway.",
+      "parentUuid": "b0084a86_97f7af36",
+      "range": {
+        "startLine": 1917,
+        "startChar": 8,
+        "endLine": 1917,
+        "endChar": 16
+      },
+      "revId": "51d6e6e28de29d444092ed9eac6c77e046933a76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77e9686f_9f9a847d",
         "filename": "service/java/com/android/server/wifi/WifiNative.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-27T17:19:04Z",
       "side": 1,
       "message": "Since we\u0027re retaining the caching behavior, shouldn\u0027t this be passed down?",
+      "range": {
+        "startLine": 2424,
+        "startChar": 49,
+        "endLine": 2424,
+        "endChar": 62
+      },
+      "revId": "51d6e6e28de29d444092ed9eac6c77e046933a76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c14a222_eeebda1e",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2424,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-27T17:41:33Z",
+      "side": 1,
+      "message": "Nope. not needed for the HIDL interface. We always flush in the HIDL implementation.",
+      "parentUuid": "77e9686f_9f9a847d",
       "range": {
         "startLine": 2424,
         "startChar": 49,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "04365b86_646dcacc",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2607,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-27T17:41:33Z",
+      "side": 1,
+      "message": "I have kept this on to be compatible with existing behaviour. I don\u0027t see any issues with this currently. We can remove all of these once we turn on the HIDL interface for good.",
+      "parentUuid": "c1791cac_44e49caf",
+      "range": {
+        "startLine": 2607,
+        "startChar": 12,
+        "endLine": 2607,
+        "endChar": 50
+      },
+      "revId": "51d6e6e28de29d444092ed9eac6c77e046933a76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9432652d_226c1170",
         "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-02-27T17:19:04Z",
       "side": 1,
       "message": "We always enable link layer stats on a STA, and there is no way to disable, so WifiNative.setLinkLayerStats turns into a NOP.",
+      "range": {
+        "startLine": 586,
+        "startChar": 4,
+        "endLine": 586,
+        "endChar": 10
+      },
+      "revId": "51d6e6e28de29d444092ed9eac6c77e046933a76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "494316c9_65c5f350",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-27T17:41:33Z",
+      "side": 1,
+      "message": "Yeah. As commented in the other place. Let\u0027s keep it same for now. I don\u0027t think there is any harm in turning it on twice. We\u0027ll clean it up once we get rid of all the old code.",
+      "parentUuid": "9432652d_226c1170",
       "range": {
         "startLine": 586,
         "startChar": 4,
