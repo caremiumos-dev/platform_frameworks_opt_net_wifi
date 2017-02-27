@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a46e314_b21c4033",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-27T22:14:39Z",
+      "side": 1,
+      "message": "Maybe \"respond\"? (Possible typo.)",
+      "range": {
+        "startLine": 10,
+        "startChar": 23,
+        "endLine": 10,
+        "endChar": 31
+      },
+      "revId": "668bd5895a17f27eeaaea4ba07b96c02630227f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc84a712_e30939fa",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareDataPathStateManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-27T22:14:39Z",
+      "side": 1,
+      "message": "Should the docstring include @params lines?",
+      "revId": "668bd5895a17f27eeaaea4ba07b96c02630227f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4948d189_200c7455",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareDataPathStateManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-27T22:14:39Z",
+      "side": 1,
+      "message": "Should this be conditional on |success|? (At present, it looks like |success| is only used for debugging.)",
+      "revId": "668bd5895a17f27eeaaea4ba07b96c02630227f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
