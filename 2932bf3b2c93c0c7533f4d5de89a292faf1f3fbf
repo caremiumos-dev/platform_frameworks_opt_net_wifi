@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "bd84664b_2b02d643",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-27T19:14:52Z",
+      "side": 1,
+      "message": "SGTM.\nI only wanted hal/hidl \u0026 framework in the names so that the direction of conversion is clear.",
+      "parentUuid": "4ed7e43b_719dc9bf",
+      "range": {
+        "startLine": 565,
+        "startChar": 14,
+        "endLine": 565,
+        "endChar": 36
+      },
+      "revId": "2932bf3b2c93c0c7533f4d5de89a292faf1f3fbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9bcb6fb_4ad88155",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
         "patchSetId": 6
