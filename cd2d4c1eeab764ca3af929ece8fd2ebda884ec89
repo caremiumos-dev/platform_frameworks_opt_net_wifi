@@ -46,6 +46,30 @@
       "revId": "cd2d4c1eeab764ca3af929ece8fd2ebda884ec89",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "850b9976_d4ba5396",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-27T22:34:51Z",
+      "side": 1,
+      "message": "Filed b/35806209 to clean up this.",
+      "parentUuid": "c09ffc8a_e27742c3",
+      "range": {
+        "startLine": 503,
+        "startChar": 34,
+        "endLine": 503,
+        "endChar": 48
+      },
+      "revId": "cd2d4c1eeab764ca3af929ece8fd2ebda884ec89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
