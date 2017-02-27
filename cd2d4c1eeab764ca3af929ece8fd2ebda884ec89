@@ -22,6 +22,30 @@
       "revId": "cd2d4c1eeab764ca3af929ece8fd2ebda884ec89",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c09ffc8a_e27742c3",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-27T21:59:38Z",
+      "side": 1,
+      "message": "There are 2 methods in that class with the same name (but different signatures): https://cs.corp.google.com/android/frameworks/opt/net/wifi/service/java/com/android/server/wifi/WifiNative.java?rcl\u003d4dc38061478bf69e2858148b03552fedf711d2ee\u0026l\u003d2388",
+      "parentUuid": "e9f4a1b5_ab355090",
+      "range": {
+        "startLine": 503,
+        "startChar": 34,
+        "endLine": 503,
+        "endChar": 48
+      },
+      "revId": "cd2d4c1eeab764ca3af929ece8fd2ebda884ec89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
