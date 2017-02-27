@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d16a7e4_660fb23a",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaNetworkHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2370,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-02-27T21:00:34Z",
+      "side": 1,
+      "message": "This is unused now",
+      "range": {
+        "startLine": 2370,
+        "startChar": 23,
+        "endLine": 2370,
+        "endChar": 30
+      },
+      "revId": "76eeedfa629d34e0bb86a09975816f5a4fa01f99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
