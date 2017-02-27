@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad5084b1_baec3481",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareDataPathStateManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-27T22:59:23Z",
+      "side": 1,
+      "message": "Can we leave this out, or make it conditional on VDBG?",
+      "range": {
+        "startLine": 955,
+        "startChar": 20,
+        "endLine": 955,
+        "endChar": 41
+      },
+      "revId": "442141fdf41301e38ce2a2ccfdcc30264093a9a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
