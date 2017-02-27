@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0084a86_97f7af36",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1917,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-27T17:19:04Z",
+      "side": 1,
+      "message": "The diff would be easier to review if it just dropped though to the old code - the else is not needed after a return.\n\nNot that it matters for long, though.",
+      "range": {
+        "startLine": 1917,
+        "startChar": 8,
+        "endLine": 1917,
+        "endChar": 16
+      },
+      "revId": "51d6e6e28de29d444092ed9eac6c77e046933a76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77e9686f_9f9a847d",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2424,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-27T17:19:04Z",
+      "side": 1,
+      "message": "Since we\u0027re retaining the caching behavior, shouldn\u0027t this be passed down?",
+      "range": {
+        "startLine": 2424,
+        "startChar": 49,
+        "endLine": 2424,
+        "endChar": 62
+      },
+      "revId": "51d6e6e28de29d444092ed9eac6c77e046933a76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1791cac_44e49caf",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2607,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-27T17:19:04Z",
+      "side": 1,
+      "message": "just return",
+      "range": {
+        "startLine": 2607,
+        "startChar": 12,
+        "endLine": 2607,
+        "endChar": 50
+      },
+      "revId": "51d6e6e28de29d444092ed9eac6c77e046933a76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9432652d_226c1170",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-02-27T17:19:04Z",
+      "side": 1,
+      "message": "We always enable link layer stats on a STA, and there is no way to disable, so WifiNative.setLinkLayerStats turns into a NOP.",
+      "range": {
+        "startLine": 586,
+        "startChar": 4,
+        "endLine": 586,
+        "endChar": 10
+      },
+      "revId": "51d6e6e28de29d444092ed9eac6c77e046933a76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
