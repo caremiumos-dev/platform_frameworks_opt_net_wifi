@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99b77cda_5ff7f01d",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1856,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-02-28T23:48:19Z",
+      "side": 1,
+      "message": "Sure, will do.",
+      "parentUuid": "4a70ef4b_96e126a9",
+      "range": {
+        "startLine": 1856,
+        "startChar": 25,
+        "endLine": 1856,
+        "endChar": 50
+      },
+      "revId": "f26e3e6984a44db33e820807c081da8709f646e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "740f1f12_928a7373",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-28T23:37:24Z",
       "side": 1,
       "message": "can you please also add a test where we expect an empty list back?  (just want to make sure we don\u0027t hit any nulls)",
+      "range": {
+        "startLine": 1088,
+        "startChar": 16,
+        "endLine": 1088,
+        "endChar": 41
+      },
+      "revId": "f26e3e6984a44db33e820807c081da8709f646e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "35d946cd_236f2092",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-02-28T23:48:19Z",
+      "side": 1,
+      "message": "It is already being tested in this test (line 1106).  PasspointManager#getProviderConfigs will never return a null, which is already being tested in PasspointManagerTest.",
+      "parentUuid": "740f1f12_928a7373",
       "range": {
         "startLine": 1088,
         "startChar": 16,
