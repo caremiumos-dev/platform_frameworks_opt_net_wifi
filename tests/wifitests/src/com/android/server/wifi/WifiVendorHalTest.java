@@ -1388,10 +1388,10 @@ public class WifiVendorHalTest {
 
         Pair<StaScanResult, ScanResult> result = createHidlAndFrameworkBgScanResult();
         mIWifiStaIfaceEventCallback.onBackgroundFullScanResult(
-                mWifiVendorHal.mScan.cmdId, result.first);
+                mWifiVendorHal.mScan.cmdId, (short) 5, result.first);
 
         ArgumentCaptor<ScanResult> scanResultCaptor = ArgumentCaptor.forClass(ScanResult.class);
-        verify(eventHandler).onFullScanResult(scanResultCaptor.capture(), eq(0));
+        verify(eventHandler).onFullScanResult(scanResultCaptor.capture(), eq(5));
 
         assertScanResultEqual(result.second, scanResultCaptor.getValue());
     }

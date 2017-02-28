@@ -2360,7 +2360,7 @@ public class WifiVendorHal {
 
         @Override
         public void onBackgroundFullScanResult(
-                int cmdId, StaScanResult result) {
+                int cmdId, short bucketsScanned, StaScanResult result) {
             kilroy();
             Log.d(TAG, "onBackgroundFullScanResult " + cmdId);
             WifiNative.ScanEventHandler eventHandler;
@@ -2369,7 +2369,7 @@ public class WifiVendorHal {
                 eventHandler = mScan.eventHandler;
                 kilroy();
             }
-            eventHandler.onFullScanResult(hidlToFrameworkScanResult(result), 0);
+            eventHandler.onFullScanResult(hidlToFrameworkScanResult(result), bucketsScanned);
         }
 
         @Override
