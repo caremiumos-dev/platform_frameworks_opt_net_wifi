@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eb58269_63b89644",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2017-02-28T22:45:12Z",
+      "side": 1,
+      "message": "remove this field entirely if you apply the other 2 suggestions to remove this implicit dependency.",
+      "range": {
+        "startLine": 210,
+        "startChar": 8,
+        "endLine": 210,
+        "endChar": 20
+      },
+      "revId": "e21d6b71b5480dfc7f539a6f73a5f9f046fb5b2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b4d4caa_3e530b7a",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2017-02-28T22:45:12Z",
+      "side": 1,
+      "message": "explicitly call in Runtime.getRuntime() and pass it in as a constructor parameter.",
+      "revId": "e21d6b71b5480dfc7f539a6f73a5f9f046fb5b2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40470f08_0e4081fe",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2017-02-28T22:45:12Z",
+      "side": 1,
+      "message": "This method is only used within WifiDiagnostics and it\u0027s called in the constructor of WifiDiagnostics. You can remove this method if you pass in Runtime.getRuntime into the constructor above.",
+      "revId": "e21d6b71b5480dfc7f539a6f73a5f9f046fb5b2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
