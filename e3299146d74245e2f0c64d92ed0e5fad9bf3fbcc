@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0915174_9de32596",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-28T17:36:03Z",
+      "side": 1,
+      "message": "Do we have some constant for this in framework? If not, let\u0027s add a constant here.",
+      "range": {
+        "startLine": 333,
+        "startChar": 38,
+        "endLine": 333,
+        "endChar": 44
+      },
+      "revId": "e3299146d74245e2f0c64d92ed0e5fad9bf3fbcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dbea2ed3_7f8c5fd7",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-28T17:36:03Z",
+      "side": 1,
+      "message": "Same. We should have constants for these and below.",
+      "range": {
+        "startLine": 567,
+        "startChar": 53,
+        "endLine": 567,
+        "endChar": 56
+      },
+      "revId": "e3299146d74245e2f0c64d92ed0e5fad9bf3fbcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ead22e4_23609cb3",
+        "filename": "tests/wifitests/src/com/android/server/wifi/hotspot2/PasspointManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-02-28T17:36:03Z",
+      "side": 1,
+      "message": "U can reuse the (suggested) constant defined in PasspointManager here.",
+      "range": {
+        "startLine": 832,
+        "startChar": 36,
+        "endLine": 832,
+        "endChar": 42
+      },
+      "revId": "e3299146d74245e2f0c64d92ed0e5fad9bf3fbcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
