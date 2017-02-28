@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f697bb7e_3e164d7e",
+        "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-02-28T05:42:04Z",
+      "side": 1,
+      "message": "Can we add some unit tests to cover this new behavior?",
+      "range": {
+        "startLine": 211,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 32
+      },
+      "revId": "86a484d0592411bb7a0121f6715ba0ef6b792230",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
