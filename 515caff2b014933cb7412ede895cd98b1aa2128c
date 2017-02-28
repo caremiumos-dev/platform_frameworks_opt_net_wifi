@@ -69,6 +69,24 @@
       "revId": "515caff2b014933cb7412ede895cd98b1aa2128c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6caa47f_9757387e",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1106048
+      },
+      "writtenOn": "2017-02-28T03:51:45Z",
+      "side": 1,
+      "message": "\u003ebut why not make a parseHex() which doesn\u0027t include length and call it instead.\nI thought some procedure in parseHex() can be re-used.\nIf a new API is created, we have to maintain the procedure of both APIs.\nDoes that answer your question?",
+      "parentUuid": "7d2443f4_ee4ccddf",
+      "revId": "515caff2b014933cb7412ede895cd98b1aa2128c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
