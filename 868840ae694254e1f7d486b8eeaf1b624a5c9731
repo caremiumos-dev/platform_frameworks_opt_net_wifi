@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f7b38e61_3fe9e35e",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceCallback.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-28T00:01:31Z",
+      "side": 1,
+      "message": "got it. that\u0027s why there was this extra call. thanks!",
+      "parentUuid": "9f15f4e0_a09db02c",
+      "range": {
+        "startLine": 372,
+        "startChar": 0,
+        "endLine": 471,
+        "endChar": 5
+      },
+      "revId": "868840ae694254e1f7d486b8eeaf1b624a5c9731",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f98b0ce0_699bbd53",
         "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
         "patchSetId": 30
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f2839ae5_59963ac9",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-28T00:01:31Z",
+      "side": 1,
+      "message": "SG",
+      "parentUuid": "f98b0ce0_699bbd53",
+      "range": {
+        "startLine": 210,
+        "startChar": 12,
+        "endLine": 210,
+        "endChar": 28
+      },
+      "revId": "868840ae694254e1f7d486b8eeaf1b624a5c9731",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "196ed4df_cbed7ebd",
         "filename": "service/java/com/android/server/wifi/WifiNative.java",
         "patchSetId": 30
@@ -59,6 +107,30 @@
       "writtenOn": "2017-02-24T14:10:49Z",
       "side": 1,
       "message": "Let\u0027s keep this false until we have the listNetworks implemented via HIDL as well.",
+      "range": {
+        "startLine": 138,
+        "startChar": 51,
+        "endLine": 138,
+        "endChar": 55
+      },
+      "revId": "868840ae694254e1f7d486b8eeaf1b624a5c9731",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cdba52b6_217f41ed",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1079707
+      },
+      "writtenOn": "2017-02-28T00:01:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "196ed4df_cbed7ebd",
       "range": {
         "startLine": 138,
         "startChar": 51,
