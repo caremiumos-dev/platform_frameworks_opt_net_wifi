@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "152049a6_b1b75a8b",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-02-28T22:15:05Z",
+      "side": 1,
+      "message": "Yes, they are defined in framework/base, but currently are private. Will upload a CL to make those constants public instead.",
+      "parentUuid": "d0915174_9de32596",
+      "range": {
+        "startLine": 333,
+        "startChar": 38,
+        "endLine": 333,
+        "endChar": 44
+      },
+      "revId": "e3299146d74245e2f0c64d92ed0e5fad9bf3fbcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbea2ed3_7f8c5fd7",
         "filename": "service/java/com/android/server/wifi/hotspot2/PasspointProvider.java",
         "patchSetId": 4
