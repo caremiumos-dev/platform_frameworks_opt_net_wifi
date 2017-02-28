@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "575c0c1c_858c670b",
+        "filename": "service/wifi-events.rc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1021676
+      },
+      "writtenOn": "2017-02-28T23:06:13Z",
+      "side": 1,
+      "message": "how about sys.wifitracing.started 0",
+      "range": {
+        "startLine": 18,
+        "startChar": 32,
+        "endLine": 18,
+        "endChar": 33
+      },
+      "revId": "2921023f9581fecfe3b48da756ed560bd1d56bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2e9ffbe_296cc806",
+        "filename": "service/wifi-events.rc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1021676
+      },
+      "writtenOn": "2017-02-28T23:06:13Z",
+      "side": 1,
+      "message": "started\u003d0",
+      "range": {
+        "startLine": 20,
+        "startChar": 67,
+        "endLine": 20,
+        "endChar": 68
+      },
+      "revId": "2921023f9581fecfe3b48da756ed560bd1d56bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2a5f7fd_deb6f1a2",
+        "filename": "service/wifi-events.rc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1021676
+      },
+      "writtenOn": "2017-02-28T23:06:13Z",
+      "side": 1,
+      "message": "started 1",
+      "range": {
+        "startLine": 60,
+        "startChar": 32,
+        "endLine": 60,
+        "endChar": 33
+      },
+      "revId": "2921023f9581fecfe3b48da756ed560bd1d56bf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
