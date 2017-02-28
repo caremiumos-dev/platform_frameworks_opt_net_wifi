@@ -56,6 +56,24 @@
       "revId": "e21d6b71b5480dfc7f539a6f73a5f9f046fb5b2e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a1c0373_a1c3389a",
+        "filename": "service/java/com/android/server/wifi/WifiInjector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-02-28T23:48:24Z",
+      "side": 1,
+      "message": "How would that change affect WifiDiagnosticsTest.setUp()?",
+      "parentUuid": "40470f08_0e4081fe",
+      "revId": "e21d6b71b5480dfc7f539a6f73a5f9f046fb5b2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
