@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd2075df_5643a1ef",
+        "filename": "service/java/com/android/server/wifi/scanner/SupplicantWifiScannerImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-01T18:52:56Z",
+      "side": 1,
+      "message": "Filtering",
+      "range": {
+        "startLine": 568,
+        "startChar": 34,
+        "endLine": 568,
+        "endChar": 35
+      },
+      "revId": "aad40d1d62eda5e5caafacf02a3d3510e9ef0b6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
