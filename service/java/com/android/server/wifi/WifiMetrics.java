@@ -17,11 +17,15 @@
 package com.android.server.wifi;
 
 import android.net.NetworkAgent;
+import android.net.wifi.SupplicantState;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Base64;
 import android.util.Log;
+import android.util.Pair;
 import android.util.SparseIntArray;
 
 import com.android.server.wifi.hotspot2.NetworkDetail;
@@ -29,8 +33,10 @@ import com.android.server.wifi.util.InformationElementUtil;
 import com.android.server.wifi.util.ScanResultUtil;
 
 import java.io.FileDescriptor;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Calendar;
 import java.util.List;
 
@@ -61,6 +67,13 @@ public class WifiMetrics {
     private Clock mClock;
     private boolean mScreenOn;
     private int mWifiState;
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            synchronized (mLock) {
+                processMessage(msg);
+            }
+        }
+    };
     /**
      * Metrics are stored within an instance of the WifiLog proto during runtime,
      * The ConnectionEvent, SystemStateEntries & ScanReturnEntries metrics are stored during
@@ -96,6 +109,8 @@ public class WifiMetrics {
     private long mScanResultRssiTimestampMillis = -1;
     /** Mapping of alert reason to the respective alert count. */
     private final SparseIntArray mWifiAlertReasonCounts = new SparseIntArray();
+    /** Connected Events */
+    ArrayList<String> mMonitorMessageLog = new ArrayList<>();
     /**
      * Records the getElapsedSinceBootMillis (in seconds) that represents the beginning of data
      * capture for for this WifiMetricsProto
@@ -1116,6 +1131,7 @@ public class WifiMetrics {
                 } else {
                     pw.println("()");
                 }
+                pw.println("BLEHBLEHBLEH");
                 pw.println("mWifiLogProto.numTotalScanResults="
                         + mWifiLogProto.numTotalScanResults);
                 pw.println("mWifiLogProto.numOpenNetworkScanResults="
@@ -1145,6 +1161,10 @@ public class WifiMetrics {
                 pw.println("  FAILED_NO_CHANNEL: " + mSoftApManagerReturnCodeCounts.get(
                         WifiMetricsProto.SoftApReturnCodeCount.SOFT_AP_FAILED_NO_CHANNEL));
                 pw.print("\n");
+                pw.println("mMonitorMessageLogList");
+                for (String event : mMonitorMessageLog) pw.println("  " + event);
+                pw.println("eventList");
+                for (String event : eventList) pw.println("  " + event);
             }
         }
     }
@@ -1347,5 +1367,403 @@ public class WifiMetrics {
         synchronized (mLock) {
             mWifiState = wifiState;
         }
+    }
+
+    public void settConnectedEvent(String eventDeets) {
+        mMonitorMessageLog.add(eventDeets);
+    }
+
+    private void processMessage(Message msg) {
+        switch (msg.what) {
+        case WifiMonitor.ASSOCIATION_REJECTION_EVENT:
+            Log.i(TAG,"Got ASSOCIATION_REJECTION_EVENT");
+            mMonitorMessageLog.add("ASSOCIATION_REJECTION_EVENT");
+            addEvent("ASSOCIATION_REJECTION_EVENT " + (String) msg.obj
+                    + " timeout=" + msg.arg1
+                    + " status=" + msg.arg2
+                    + ": " + associationStatusToString(msg.arg2));
+            break;
+        case WifiMonitor.AUTHENTICATION_FAILURE_EVENT:
+            Log.i(TAG,"Got AUTHENTICATION_FAILURE_EVENT");
+            addEvent("AUTHENTICATION_FAILURE_EVENT " + (String) msg.obj
+                    + " reason=" + msg.arg2
+                    + ": " + deauthReasonToString(msg.arg2));
+            mMonitorMessageLog.add("AUTHENTICATION_FAILURE_EVENT");
+            break;
+        case WifiMonitor.NETWORK_CONNECTION_EVENT:
+            int reasonCode = msg.arg2;
+            addEvent("NETWORK_CONNECTION_EVENT " + (String) msg.obj
+                    + " networkId(Supplicant)=" + msg.arg1
+                    + " reason=" + msg.arg2);
+            Log.i(TAG,"Got NETWORK_CONNECTION_EVENT");
+            mMonitorMessageLog.add("NETWORK_CONNECTION_EVENT");
+            break;
+        case WifiMonitor.NETWORK_DISCONNECTION_EVENT:
+            String disconnectBssid = (String) msg.obj;
+            addEvent("NETWORK_DISCONNECTION_EVENT " + disconnectBssid
+                    + " reason=" + msg.arg2
+                    + ": " + deauthReasonToString(msg.arg2)
+                    + " localgen=" + msg.arg1);
+            Log.i(TAG,"Got NETWORK_DISCONNECTION_EVENT");
+            mMonitorMessageLog.add("NETWORK_DISCONNECTION_EVENT");
+            break;
+        case WifiMonitor.SSID_TEMP_DISABLED:
+            Log.i(TAG,"Got SSID_TEMP_DISABLED");
+            mMonitorMessageLog.add("SSID_TEMP_DISABLED");
+            break;
+        case WifiMonitor.SUPPLICANT_STATE_CHANGE_EVENT:
+            StateChangeResult stateChangeResult = (StateChangeResult) msg.obj;
+            addEvent("SUPPLICANT_STATE_CHANGE_EVENT: "
+                    + stateChangeResult.wifiSsid.toString() + " "
+                    + stateChangeResult.BSSID + " "
+                    + supplicantStateToString(stateChangeResult.state));
+            mMonitorMessageLog.add("SUPPLICANT_STATE_CHANGE_EVENT");
+            break;
+        case WifiStateMachine.CMD_ASSOCIATED_BSSID:
+            addEvent("CMD_ASSOCIATED_BSSID " + (String) msg.obj);
+            break;
+        case WifiStateMachine.CMD_IP_CONFIGURATION_SUCCESSFUL:
+            addEvent("CMD_IP_CONFIGURATION_SUCCESSFUL");
+            break;
+        case WifiStateMachine.CMD_IP_CONFIGURATION_LOST:
+            addEvent("CMD_IP_CONFIGURATION_LOST");
+            break;
+        case WifiStateMachine.CMD_IP_REACHABILITY_LOST:
+            addEvent("CMD_IP_REACHABILITY_LOST");
+            break;
+        case WifiStateMachine.CMD_TARGET_BSSID:
+            addEvent("CMD_TARGET_BSSID " + (String) msg.obj);
+            break;
+        default:
+            Log.i(TAG, "Got UNKNOWN message");
+            break;
+        }
+    }
+
+    public Handler getHandler() {
+        return mHandler;
+    }
+
+    public String supplicantStateToString(SupplicantState state) {
+        switch(state) {
+        case DISCONNECTED:
+            return "DISCONNECTED";
+        case INTERFACE_DISABLED:
+            return "INTERFACE_DISABLED";
+        case INACTIVE:
+            return "INACTIVE";
+        case SCANNING:
+            return "SCANNING";
+        case AUTHENTICATING:
+            return "AUTHENTICATING";
+        case ASSOCIATING:
+            return "ASSOCIATING";
+        case ASSOCIATED:
+            return "ASSOCIATED";
+        case FOUR_WAY_HANDSHAKE:
+            return "FOUR_WAY_HANDSHAKE";
+        case GROUP_HANDSHAKE:
+            return "GROUP_HANDSHAKE";
+        case COMPLETED:
+            return "COMPLETED";
+        case DORMANT:
+            return "DORMANT";
+        case UNINITIALIZED:
+            return "UNINITIALIZED";
+        case INVALID:
+            return "INVALID";
+        default:
+            throw new IllegalStateException("Got illegal supplicant state: " + state.ordinal());
+        }
+    }
+
+    public String associationStatusToString(int status) {
+        switch (status) {
+        case 0:
+            return "Successful";
+        case 1:
+            return "Unspecified failure";
+        case 10:
+            return "Cannot support all requested capabilities in the Capability Information field";
+        case 11:
+            return "Reassociation denied due to inability to confirm that association exists";
+        case 12:
+            return "Association denied due to reason outside the scope of this standard";
+        case 13:
+            return "Responding station does not support the specified authentication algorithm";
+        case 14:
+            return "Received an Authentication frame with authentication transaction sequence number out of expected sequence";
+        case 15:
+            return "Authentication rejected because of challenge failure";
+        case 16:
+            return "Authentication rejected due to timeout waiting for next frame in sequence";
+        case 17:
+            return "Association denied because AP is unable to handle additional associated stations";
+        case 18:
+            return "Association denied due to requesting station not supporting all of the data rates in the BSSBasicRateSet parameter";
+        case 19:
+            return "Association denied due to requesting station not supporting the short preamble option";
+        case 20:
+            return "Association denied due to requesting station not supporting the PBCC modulation option";
+        case 21:
+            return "Association denied due to requesting station not supporting the Channel Agility option";
+        case 22:
+            return "Association request rejected because Spectrum Management capability is required";
+        case 23:
+            return "Association request rejected because the information in the Power Capability element is unacceptable";
+        case 24:
+            return "Association request rejected because the information in the Supported Channels element is unacceptable";
+        case 25:
+            return "Association denied due to requesting station not supporting the Short Slot Time option";
+        case 26:
+            return "Association denied due to requesting station not supporting the DSSS-OFDM option";
+        case 32:
+            return "Unspecified, QoS-related failure";
+        case 33:
+            return "Association denied because QAP has insufficient bandwidth to handle another QSTA";
+        case 34:
+            return "Association denied due to excessive frame loss rates and/or poor conditions on current operating channel";
+        case 35:
+            return "Association (with QBSS) denied because the requesting STA does not support the QoS facility";
+        case 36:
+            return "Reserved in 802.11";
+        case 37:
+            return "The request has been declined";
+        case 38:
+            return "The request has not been successful as one or more parameters have invalid values";
+        case 39:
+            return "The TS has not been created because the request cannot be honored; however, a suggested TSPEC is provided so that the initiating QSTA may attempt to set another TS with the suggested changes to the TSPEC";
+        case 40:
+            return "Invalid information element, i.e., an information element defined in this standard for which the content does not meet the specifications in Clause 7";
+        case 41:
+            return "Invalid group cipher";
+        case 42:
+            return "Invalid pairwise cipher";
+        case 43:
+            return "Invalid AKMP";
+        case 44:
+            return "Unsupported RSN information element version";
+        case 45:
+            return "Invalid RSN information element capabilities";
+        case 46:
+            return "Cipher suite rejected because of security policy";
+        case 47:
+            return "The TS has not been created; however, the HC may be capable of creating a TS, in response to a request, after the time indicated in the TS Delay element";
+        case 48:
+            return "Direct link is not allowed in the BSS by policy";
+        case 49:
+            return "Destination STA is not present within this QBSS";
+        case 50:
+            return "The Destination STA is not a QSTA";
+        case 51:
+            return "Association denied because the ListenInterval is too large";
+        case 200:
+            return "Unspecified, QoS-related failure. Not defined in IEEE, defined in CCXv4";
+        case 201:
+            return "TSPEC request refused due to AP’s policy configuration (e.g., AP is configured to deny all TSPEC requests on this SSID). A TSPEC will not be suggested by the AP for this reason code. Not defined in IEEE, defined in CCXv4";
+        case 202:
+            return "Association Denied due to AP having insufficient bandwidth to handle a new TS. This cause code will be useful while roaming only. Not defined in IEEE, defined in CCXv4";
+        case 203:
+            return "Invalid Parameters. The request has not been successful as one or more TSPEC parameters in the request have invalid values. A TSPEC SHALL be present in the response as a suggestion.";
+        default:
+            if (status >= 27 && status <= 31) {
+                return "Reserved";
+            } else {
+                return "UNKNOWN";
+            }
+        }
+    }
+
+    public String deauthReasonToString(int reason) {
+        switch (reason) {
+        case 0:
+            return "Reserved";
+        case 1:
+            return "Unspecified reason";
+        case 2:
+            return "Previous authentication no longer valid";
+        case 3:
+            return "station is leaving (or has left) IBSS or ESS";
+        case 4:
+            return "Disassociated due to inactivity";
+        case 5:
+            return "Disassociated because AP is unable to handle all currently associated stations";
+        case 6:
+            return "Class 2 frame received from nonauthenticated station";
+        case 7:
+            return "Class 3 frame received from nonassociated station";
+        case 8:
+            return "Disassociated because sending station is leaving (or has left) BSS";
+        case 9:
+            return "Station requesting (re)association is not authenticated with responding station";
+        case 10:
+            return "Disassociated because the information in the Power Capability element is unacceptable";
+        case 11:
+            return "Disassociated because the information in the Supported Channels element is unacceptable";
+        case 12:
+            return "Reserved";
+        case 13:
+            return "Invalid information element, i.e., an information element defined in this standard for which the content does not meet the specifications in Clause 7";
+        case 14:
+            return "Message integrity code (MIC) failure";
+        case 15:
+            return "4-Way Handshake timeout";
+        case 16:
+            return "Group Key Handshake timeout";
+        case 17:
+            return "Information element in 4-Way Handshake different from (Re)Association Request/Probe Response/Beacon frame";
+        case 18:
+            return "Invalid group cipher";
+        case 19:
+            return "Invalid pairwise cipher";
+        case 20:
+            return "Invalid AKMP";
+        case 21:
+            return "Unsupported RSN information element version";
+        case 22:
+            return "Invalid RSN information element capabilities";
+        case 23:
+            return "IEEE 802.1X authentication failed";
+        case 24:
+            return "Cipher suite rejected because of the security policy";
+        case 32:
+            return "Disassociated for unspecified, QoS-related reason";
+        case 33:
+            return "Disassociated because QAP lacks sufficient bandwidth for this QSTA";
+        case 34:
+            return "Disassociated because excessive number of frames need to be acknowledged, but are not acknowledged due to AP transmissions and/or poor channel conditions";
+        case 35:
+            return "Disassociated because QSTA is transmitting outside the limits of its TXOPs";
+        case 36:
+            return "Requested from peer QSTA as the QSTA is leaving the QBSS (or resetting)";
+        case 37:
+            return "Requested from peer QSTA as it does not want to use the mechanism";
+        case 38:
+            return "Requested from peer QSTA as the QSTA received frames using the mechanism for which a setup is required";
+        case 39:
+            return "Requested from peer QSTA due to timeout";
+        case 40:
+            return "Peer QSTA does not support the requested cipher suite";
+        default:
+            if ((reason >= 25 && reason <= 31) || (reason >= 46 && reason <= 65535)) {
+                return "Reserved";
+            } else {
+                return "UNKNOWN";
+            }
+        }
+    }
+
+    static final String ANY_BSSID = "any";
+    /*private void startFoRealz(WifiConfiguration config, int roamType) {
+        FoRealzConnectionEvent event = new FoRealzConnectionEvent();
+        switch (roamType) {
+            case WifiMetricsProto.ConnectionEvent.ROAM_USER_SELECTED:
+                event.startReason = "CONNECT_NETWORK";
+                break;
+            case WifiMetricsProto.ConnectionEvent.ROAM_UNRELATED:
+                event.startReason = "CMD_START_CONNECT";
+                break;
+            case WifiMetricsProto.ConnectionEvent.ROAM_ENTERPRISE:
+                event.startReason = "CMD_START_ROAM";
+                break;
+            default:
+                throw new IllegalStateException("Invalid roamType");
+        }
+        event.startTimeSec = mClock.getElapsedSinceBootMillis() / 1000;
+        bssid = targetBSSID;
+        if (config != null) {
+            event.allowedKeyManagement = config.allowedKeyManagement.clone();
+            event.allowedProtocols = config.allowedProtocols.clone();
+            event.allowedAuthAlgorithms = config.allowedAuthAlgorithms.clone();
+            event.allowedPairwiseCiphers = config.allowedPairwiseCiphers.clone();
+            event.allowedGroupCiphers = config.allowedGroupCiphers.clone();
+            event.hiddenSSID = config.hiddenSSID;
+        }
+        foRealzEvents.add(event);
+    }*/
+
+    private List<FoRealzConnectionEvent> foRealzEvents = new ArrayList<FoRealzConnectionEvent>();
+    public List<String> eventList = new ArrayList<String>();
+    long lastEventTime = 0;
+    public void addEvent(String event) {
+        Long time = mClock.getElapsedSinceBootMillis();
+        if (time - lastEventTime > 10*1000) {
+            eventList.add("-");
+        }
+        eventList.add(String.format("%7d ", time.intValue())
+                + " " + event);
+        lastEventTime = time;
+    }
+    // Keep track of the last network that actually succeeded in connecting, as network
+    // disconnections will occur after new connection attempts have started
+    private int lastConnectedEventIndex = -1;
+    public class FoRealzConnectionEvent {
+        long connectedTimeSec; // Uptime
+        long disconnectedTimeSec; // Time spent in an unconnected state
+
+        boolean hiddenSSID = false;
+        BitSet allowedKeyManagement = new BitSet();
+        BitSet allowedProtocols = new BitSet();
+        BitSet allowedAuthAlgorithms = new BitSet();
+        BitSet allowedPairwiseCiphers = new BitSet();
+        BitSet allowedGroupCiphers = new BitSet();
+
+        /** Frameworks desires */
+        // 'Trigger Start' is any path that causes framework to trigger a network connection in native
+        boolean frameworkTriggerStart = false;
+        String frameworkTriggerStartReason = "";
+        long   frameworkTriggerStartTimeSec;
+        // 'Trigger Disconnect' are disconnections that framework initiates (locally_generated)
+        boolean frameworkTriggerDisconnect = false; // Framework initiated a disconnect
+        String  frameworkTriggerDisconnectReason = ""; // CONNECT_NETWORK, START_CONNECT, START_ROAM
+        long    frameworkTriggerDisconnectTime;
+
+        /** L2 flow info (Supplicant essentially) */
+        // Connected = NETWORK_CONNECTION_EVENT (ASSOCIATION/AUTH/HANDSHAKEs completed)
+        boolean l2Connection = false;
+        long l2ConnectionTime;
+        // Disconnected = NETWORK_DISCONNECTION_EVENT (has some info attached)
+        boolean l2Disconnection = false;
+        long l2DisconnectionTime;
+        int l2DisconnectionReason;
+        int l2DisconnectionlocallyGenerated;
+
+        /** L3 flow info */
+        long obtainingIpStartedTimeSec;
+        long obtainingIpStoppedTimeSec; // Success or failure
+        boolean isUsingStaticIp = false;
+        boolean ipConfigurationSuccess = false; // Provisioning was successful
+        boolean ipConfigurationLost = false; // Provisioning was not successful
+        boolean ipReachabilityLost = false; // L3 failure, causes a framework disconnection
+        boolean networkValidated = false; // Was the network validated by connectivity service
+
+
+        // Connected
+        long connectedStateStartedTimeSec;
+        boolean reachedConnectedState = false; // Successfully connected
+
+        //private String bssid = ANY_BSSID;
+        
+        /**
+         * check if the given BSSID is more specific than the existing one
+         * @return true if it is the same or more specific than the current bssid,
+         * false if it is inconsistent (different)
+         */
+        //boolean checkAndSetBssid(String newBssid) {
+        //    if (ANY_BSSID.equals(bssid) || bssid.equals(newBssid)) {
+        //        bssid = newBssid;
+        //        return true;
+        //    }
+        //    Log.i(TAG, "  Incompatible target bssids, old:" + bssid + " new:" +  newBssid);
+        //    return false;
+        //}
+    }
+
+
+    public void sendMessage(int what) {
+        sendMessage(what, 0, 0, null);
+    }
+    public void sendMessage(int what, int arg1, int arg2, Object obj) {
+        mHandler.sendMessage(mHandler.obtainMessage(what, arg1, arg2, obj));
     }
 }

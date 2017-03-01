@@ -656,7 +656,8 @@ public class WifiConnectivityManager {
         } else {
             localLog("connectToNetwork: Reconnect from " + currentAssociationId + " to "
                         + targetAssociationId);
-            mStateMachine.startConnectToNetwork(candidate.networkId, scanResultCandidate.BSSID);
+            mStateMachine.startConnectToNetwork(candidate.networkId,
+                    WifiStateMachine.CONNECT_FROM_NETWORK_SELECTOR, scanResultCandidate.BSSID);
         }
     }
 
