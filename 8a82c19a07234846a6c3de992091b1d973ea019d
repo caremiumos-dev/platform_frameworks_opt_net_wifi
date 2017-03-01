@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d90adf9a_1362c541",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-03-01T19:10:11Z",
+      "side": 1,
+      "message": "Please be more specific here. Our goal in this repository is for the \"Test\" information to provide enough information to reproduce the test results.\n\nFor this particular change, I think the appropriate test would be:\n\n- Configure device to connect to GoogleGuest.\n$ adb shell dumpsys wifi | grep \u0027net_dev_queue\u0027\n  -\u003e there should be at least one matching line",
+      "revId": "8a82c19a07234846a6c3de992091b1d973ea019d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
