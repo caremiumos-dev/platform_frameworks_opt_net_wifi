@@ -16,6 +16,24 @@
       "revId": "8a82c19a07234846a6c3de992091b1d973ea019d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e57de083_3e9be4b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2017-03-01T19:29:18Z",
+      "side": 1,
+      "message": "Will do that specifically.\nA question here: do we want to support device that can change \"wifi.interface\" on the fly? If so, we should keep this section. Otherwise, we can remove safely.",
+      "parentUuid": "d90adf9a_1362c541",
+      "revId": "8a82c19a07234846a6c3de992091b1d973ea019d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
