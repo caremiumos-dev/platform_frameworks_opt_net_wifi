@@ -1,0 +1,10 @@
+Presubmit-Ready+1: Wei Wang <wvw@google.com>
+Code-Review+1: Pat Tjin <pattjin@google.com>
+Code-Review+1: Jeffrey Vander Stoep <jeffv@google.com>
+Code-Review+2: Paul Stewart <pstew@google.com>
+Verified+1: Wei Wang <wvw@google.com>
+Submitted-by: Wei Wang <wvw@google.com>
+Submitted-at: Wed, 01 Mar 2017 00:20:36 +0000
+Reviewed-on: https://android-review.googlesource.com/346227
+Project: platform/frameworks/opt/net/wifi
+Branch: refs/heads/master
