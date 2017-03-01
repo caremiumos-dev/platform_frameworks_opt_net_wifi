@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b285f612_bc464944",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1059418
+      },
+      "writtenOn": "2017-03-01T01:50:52Z",
+      "side": 1,
+      "message": "A null check is probably  required like in other places in this class.",
+      "range": {
+        "startLine": 501,
+        "startChar": 26,
+        "endLine": 501,
+        "endChar": 41
+      },
+      "revId": "782eac0bacec797262eb4d721ad58cfcf2fbf885",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cf950e2_e1078d4c",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1059418
+      },
+      "writtenOn": "2017-03-01T01:50:52Z",
+      "side": 1,
+      "message": "Log please",
+      "range": {
+        "startLine": 520,
+        "startChar": 16,
+        "endLine": 521,
+        "endChar": 25
+      },
+      "revId": "782eac0bacec797262eb4d721ad58cfcf2fbf885",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
