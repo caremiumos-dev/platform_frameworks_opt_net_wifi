@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d0f10b4_3dd5297a",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-01T17:52:44Z",
+      "side": 1,
+      "message": "Missed these.",
+      "range": {
+        "startLine": 566,
+        "startChar": 0,
+        "endLine": 573,
+        "endChar": 66
+      },
+      "revId": "6f890587cec28bbfdb8e99c521e13cabbf19154b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4e125d6_295e925d",
+        "filename": "tests/wifitests/src/com/android/server/wifi/hotspot2/PasspointManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-01T17:52:44Z",
+      "side": 1,
+      "message": "And this one.",
+      "range": {
+        "startLine": 817,
+        "startChar": 36,
+        "endLine": 817,
+        "endChar": 42
+      },
+      "revId": "6f890587cec28bbfdb8e99c521e13cabbf19154b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
