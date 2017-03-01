@@ -5728,18 +5728,13 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                 // Get Link layer stats so as we get fresh tx packet counters
                 getWifiLinkLayerStats();
             } else {
-                StaticIpConfiguration config = currentConfig.getStaticIpConfiguration();
-                if (config.ipAddress == null) {
-                    logd("Static IP lacks address");
-                    sendMessage(CMD_IPV4_PROVISIONING_FAILURE);
-                } else {
-                    final IpManager.ProvisioningConfiguration prov =
-                            IpManager.buildProvisioningConfiguration()
-                                .withStaticConfiguration(config)
-                                .withApfCapabilities(mWifiNative.getApfCapabilities())
-                                .build();
-                    mIpManager.startProvisioning(prov);
-                }
+                StaticIpConfiguration staticIpConfig = currentConfig.getStaticIpConfiguration();
+                final IpManager.ProvisioningConfiguration prov =
+                        IpManager.buildProvisioningConfiguration()
+                            .withStaticConfiguration(staticIpConfig)
+                            .withApfCapabilities(mWifiNative.getApfCapabilities())
+                            .build();
+                mIpManager.startProvisioning(prov);
             }
         }
 
