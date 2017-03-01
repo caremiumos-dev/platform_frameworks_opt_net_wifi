@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58989d21_f4dd69aa",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4331,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-01T23:59:31Z",
+      "side": 1,
+      "message": "would it make sense to also just have a single call to transitionTo(mInitialState) after the if/else since they both go there?  then it is a bit more obvious that we will land there no matter what.",
+      "range": {
+        "startLine": 4331,
+        "startChar": 16,
+        "endLine": 4331,
+        "endChar": 44
+      },
+      "revId": "8cb58e4f5c8d1c5b22441c9248e704d88302c3dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
