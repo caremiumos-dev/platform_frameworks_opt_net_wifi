@@ -34,6 +34,24 @@
       "revId": "8a82c19a07234846a6c3de992091b1d973ea019d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a87b909d_61ee4cb4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-03-01T21:15:53Z",
+      "side": 1,
+      "message": "Since this is a debugging feature, and I don\u0027t know of any devices that do this today, I think it\u0027s reasonable to leave out support for on-the-fly changes.\n\nThanks for asking. :-)",
+      "parentUuid": "e57de083_3e9be4b8",
+      "revId": "8a82c19a07234846a6c3de992091b1d973ea019d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
