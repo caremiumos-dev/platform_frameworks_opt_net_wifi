@@ -18,6 +18,7 @@ package com.android.server.wifi;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -27,6 +28,8 @@ import static org.mockito.Mockito.when;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.net.IpConfiguration;
+import android.net.wifi.WifiConfiguration;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -171,6 +174,33 @@ public class WifiServiceImplTest {
         assertEquals("AsyncChannel must be half connected",
                 WifiAsyncChannelTester.CHANNEL_STATE_HALF_CONNECTED,
                 channelTester.getChannelState());
+    }
+
+    @Test
+    public void testWifiConfigurationValidityCheckedWhenAddingNetwork() {
+        WifiAsyncChannelTester channelTester = new WifiAsyncChannelTester(mWifiInjector);
+        Handler handler = mock(Handler.class);
+        TestLooper looper = new TestLooper();
+        channelTester.connect(looper.getLooper(), mWifiServiceImpl.getWifiServiceMessenger(),
+                handler);
+    }
+
+    /**
+     * Tests the isValid() check for StaticIpConfigurations, ensuring that configurations with null
+     * ipAddress are rejected, and configurations with ipAddresses are valid.
+     */
+    @Test
+    public void testStaticIpConfigurationValidityCheck() {
+        WifiConfiguration conf = WifiConfigurationTestUtil.createOpenNetwork();
+        IpConfiguration ipConf =
+                WifiConfigurationTestUtil.createStaticIpConfigurationWithStaticProxy();
+        conf.setIpConfiguration(ipConf);
+        // Ensure staticIpConfiguration with IP Address is valid
+        assertTrue(mWifiServiceImpl.isValid(conf));
+        ipConf.staticIpConfiguration.ipAddress = null;
+        // Ensure staticIpConfiguration with null IP Address it is not valid
+        conf.setIpConfiguration(ipConf);
+        assertFalse(mWifiServiceImpl.isValid(conf));
     }
 
     /**
