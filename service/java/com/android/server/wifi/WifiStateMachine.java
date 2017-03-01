@@ -1067,6 +1067,21 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.WPS_SUCCESS_EVENT, getHandler());
         mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.WPS_TIMEOUT_EVENT, getHandler());
 
+        mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.ASSOCIATION_REJECTION_EVENT,
+                mWifiMetrics.getHandler());
+        mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.AUTHENTICATION_FAILURE_EVENT,
+                mWifiMetrics.getHandler());
+        mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.DRIVER_HUNG_EVENT,
+                mWifiMetrics.getHandler());
+        mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.NETWORK_CONNECTION_EVENT,
+                mWifiMetrics.getHandler());
+        mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.NETWORK_DISCONNECTION_EVENT,
+                mWifiMetrics.getHandler());
+        mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.SSID_TEMP_DISABLED,
+                mWifiMetrics.getHandler());
+        mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.SUPPLICANT_STATE_CHANGE_EVENT,
+                mWifiMetrics.getHandler());
+
         final Intent intent = new Intent(WifiManager.WIFI_SCAN_AVAILABLE);
         intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT);
         intent.putExtra(WifiManager.EXTRA_SCAN_AVAILABLE, WIFI_STATE_DISABLED);
@@ -1098,12 +1113,14 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
 
         @Override
         public void onProvisioningSuccess(LinkProperties newLp) {
+            mWifiMetrics.eventList.add("onProvisioningSuccess");
             sendMessage(CMD_UPDATE_LINKPROPERTIES, newLp);
             sendMessage(CMD_IP_CONFIGURATION_SUCCESSFUL);
         }
 
         @Override
         public void onProvisioningFailure(LinkProperties newLp) {
+            mWifiMetrics.eventList.add("onProvisioningLost");
             sendMessage(CMD_IP_CONFIGURATION_LOST);
         }
 
@@ -1114,6 +1131,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
 
         @Override
         public void onReachabilityLost(String logMsg) {
+            mWifiMetrics.eventList.add("onReachabilityLost");
             sendMessage(CMD_IP_REACHABILITY_LOST, logMsg);
         }
 
@@ -3405,6 +3423,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     private void handleSuccessfulIpConfiguration() {
         mLastSignalLevel = -1; // Force update of signal strength
         WifiConfiguration c = getCurrentWifiConfiguration();
+        mWifiMetrics.stopObtainingIp(CMD_IP_CONFIGURATION_SUCCESSFUL);
         if (c != null) {
             // Reset IP failure tracking
             c.getNetworkSelectionStatus().clearDisableReasonCounter(
@@ -4831,6 +4850,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     break;
                 case WifiP2pServiceImpl.DISCONNECT_WIFI_REQUEST:
                     if (message.arg1 == 1) {
+                        mWifiMetrics.eventList.add("DISCONNECT: WifiP2pServiceImpl.DISCONNECT_WIFI_REQUEST");
                         mWifiNative.disconnect();
                         mTemporarilyDisconnectWifi = true;
                     } else {
@@ -4934,6 +4954,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                                     WifiConfiguration.NetworkSelectionStatus
                                             .DISABLED_AUTHENTICATION_NO_CREDENTIALS);
                         }
+                        mWifiMetrics.eventList.add("WifiMonitor.SUP_REQUEST_IDENTITY");
                         mWifiNative.disconnect();
                     }
                     break;
@@ -4994,6 +5015,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                             WifiMetricsProto.ConnectionEvent.ROAM_UNRELATED);
                     boolean shouldDisconnect = (getCurrentState() != mDisconnectedState);
                     if (mWifiNative.connectToNetwork(config, shouldDisconnect)) {
+                        mWifiMetrics.eventList.add("CMD_START_CONNECT " + config.SSID + " " + bssid);
                         lastConnectAttemptTimestamp = mClock.getWallClockMillis();
                         targetWificonfiguration = config;
                         mAutoRoaming = false;
@@ -5002,6 +5024,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                         } else if (shouldDisconnect) {
                             transitionTo(mDisconnectingState);
                         } else {
+                            Log.i(TAG, "Transitioning to DisconnectedState (shouldDisconnect=false)");
                             transitionTo(mDisconnectedState);
                         }
                     } else {
@@ -5060,6 +5083,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                                 WifiManager.NOT_AUTHORIZED);
                         break;
                     }
+                    mWifiMetrics.eventList.add("CONNECT_NETWORK " + (config != null ? config.SSID : "<NULL>") + " any");
                     broadcastWifiCredentialChanged(WifiManager.WIFI_CREDENTIAL_SAVED, config);
                     replyToMessage(message, WifiManager.CONNECT_NETWORK_SUCCEEDED);
                     break;
@@ -5106,6 +5130,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                                     WifiManager.NOT_AUTHORIZED);
                             break;
                         }
+                        mWifiMetrics.eventList.add("SAVE_NETWORK " + (config != null ? config.SSID : "<NULL>") + " any");
                     }
                     broadcastWifiCredentialChanged(WifiManager.WIFI_CREDENTIAL_SAVED, config);
                     replyToMessage(message, WifiManager.SAVE_NETWORK_SUCCEEDED);
@@ -5183,6 +5208,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     mLastNetworkId = lookupFrameworkNetworkId(message.arg1);
                     mLastBssid = (String) message.obj;
                     reasonCode = message.arg2;
+                    mWifiMetrics.eventList.add("NETWORK_CONNECTION_EVENT " + mLastBssid + "frmwkId=" + mLastNetworkId + " reason=" + reasonCode);
                     // TODO: This check should not be needed after WifiStateMachinePrime refactor.
                     // Currently, the last connected network configuration is left in
                     // wpa_supplicant, this may result in wpa_supplicant initiating connection
@@ -5314,12 +5340,14 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     log("WifiNetworkAgent -> Wifi networkStatus invalid, score="
                             + Integer.toString(mWifiInfo.score));
                 }
+                mWifiMetrics.eventList.add("WifiNetworkAgent.networkStatus INVALID_NETWORK");
                 unwantedNetwork(NETWORK_STATUS_UNWANTED_VALIDATION_FAILED);
             } else if (status == NetworkAgent.VALID_NETWORK) {
                 if (mVerboseLoggingEnabled) {
                     log("WifiNetworkAgent -> Wifi networkStatus valid, score= "
                             + Integer.toString(mWifiInfo.score));
                 }
+                mWifiMetrics.eventList.add("WifiNetworkAgent.networkStatus VALID_NETWORK");
                 doNetworkStatus(status);
             }
         }
@@ -5582,11 +5610,13 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     }
                     break;
                 case CMD_DISCONNECT:
+                    mWifiMetrics.eventList.add("DISCONNECT: L2ConnectedState.CMD_DISCONNECT");
                     mWifiNative.disconnect();
                     transitionTo(mDisconnectingState);
                     break;
                 case WifiP2pServiceImpl.DISCONNECT_WIFI_REQUEST:
                     if (message.arg1 == 1) {
+                        mWifiMetrics.eventList.add("DISCONNECT: WifiP2pServiceImpl.DISCONNECT_WIFI_REQUEST");
                         mWifiNative.disconnect();
                         mTemporarilyDisconnectWifi = true;
                         transitionTo(mDisconnectingState);
@@ -5719,6 +5749,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                         WifiConfiguration config =
                                 mWifiConfigManager.getConfiguredNetwork(mLastNetworkId);
                         if (TelephonyUtil.isSimConfig(config)) {
+                            mWifiMetrics.eventList.add("DISCONNECT: CMD_RESET_SIM_NETWORKS");
                             mWifiNative.disconnect();
                             transitionTo(mDisconnectingState);
                         }
@@ -5778,7 +5809,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             if (!TextUtils.isEmpty(mTcpBufferSizes)) {
                 mIpManager.setTcpBufferSizes(mTcpBufferSizes);
             }
-
+            mWifiMetrics.startObtainingIp(isUsingStaticIp);
             if (!isUsingStaticIp) {
                 final IpManager.ProvisioningConfiguration prov =
                         IpManager.buildProvisioningConfiguration()
@@ -5940,6 +5971,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                                 WifiMetricsProto.ConnectionEvent.HLF_NONE);
                         mRoamFailCount++;
                         handleNetworkDisconnect();
+                        mWifiMetrics.eventList.add("DISCONNECT: CMD_ROAM_WATCHDOG_TIMER");
                         mWifiNative.disconnect();
                         transitionTo(mDisconnectedState);
                     }
@@ -6071,6 +6103,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             switch (message.what) {
                 case CMD_UNWANTED_NETWORK:
                     if (message.arg1 == NETWORK_STATUS_UNWANTED_DISCONNECT) {
+                        mWifiMetrics.eventList.add("DISCONNECT: CMD_UNWANTED_NETWORK");
                         mWifiNative.disconnect();
                         transitionTo(mDisconnectingState);
                     } else if (message.arg1 == NETWORK_STATUS_UNWANTED_DISABLE_AUTOJOIN ||
@@ -6213,6 +6246,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                         lastConnectAttemptTimestamp = mClock.getWallClockMillis();
                         targetWificonfiguration = config;
                         mAutoRoaming = true;
+                        mWifiMetrics.eventList.add("CMD_START_ROAM " + (config != null ? config.SSID : "<NULL>") + " " + bssid);
                         transitionTo(mRoamingState);
                     } else {
                         loge("CMD_START_ROAM Failed to start roaming to network " + config);
@@ -6326,6 +6360,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     class DisconnectedState extends State {
         @Override
         public void enter() {
+            Log.i(TAG, "disconnectedstate enter");
             // We dont scan frequently if this is a temporary disconnect
             // due to p2p
             if (mTemporarilyDisconnectWifi) {
@@ -6398,6 +6433,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     }
                     break;
                 case CMD_DISCONNECT:
+                mWifiMetrics.eventList.add("DISCONNECT: DisconnectedState.CMD_DISCONNECT");
                     mWifiNative.disconnect();
                     break;
                 /* Ignore network disconnect */
@@ -6455,6 +6491,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
 
         @Override
         public void exit() {
+            Log.i(TAG, "disconnected state exit");
             mWifiConnectivityManager.handleConnectionStateChanged(
                      WifiConnectivityManager.WIFI_STATE_TRANSITIONING);
         }
