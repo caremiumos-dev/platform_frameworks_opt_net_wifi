@@ -117,6 +117,7 @@ import com.android.server.wifi.util.NativeUtil;
 import com.android.server.wifi.util.TelephonyUtil;
 import com.android.server.wifi.util.TelephonyUtil.SimAuthRequestData;
 import com.android.server.wifi.util.TelephonyUtil.SimAuthResponseData;
+import com.android.server.wifi.util.WifiPermissionsUtil;
 
 import java.io.BufferedReader;
 import java.io.FileDescriptor;
@@ -197,6 +198,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     private WifiInjector mWifiInjector;
     private WifiMonitor mWifiMonitor;
     private WifiNative mWifiNative;
+    private WifiPermissionsUtil mWifiPermissionsUtil;
     private WifiConfigManager mWifiConfigManager;
     private WifiConnectivityManager mWifiConnectivityManager;
     private WifiNetworkSelector mWifiNetworkSelector;
@@ -879,6 +881,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         mP2pSupported = mContext.getPackageManager().hasSystemFeature(
                 PackageManager.FEATURE_WIFI_DIRECT);
 
+        mWifiPermissionsUtil = mWifiInjector.getWifiPermissionsUtil();
         mWifiConfigManager = mWifiInjector.getWifiConfigManager();
         mWifiApConfigStore = mWifiInjector.getWifiApConfigStore();
         mWifiNative.setSystemSupportsFastBssTransition(
@@ -5792,7 +5795,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         WifiConfiguration config = getCurrentWifiConfiguration();
         if (mWifiConfigManager.getLastSelectedNetwork() == config.networkId) {
             boolean prompt =
-                    mWifiConfigManager.checkConfigOverridePermission(config.lastConnectUid);
+                    mWifiPermissionsUtil.checkConfigOverridePermission(config.lastConnectUid);
             if (mVerboseLoggingEnabled) {
                 log("Network selected by UID " + config.lastConnectUid + " prompt=" + prompt);
             }
