@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "372b7c7c_7c2eea9e",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-01T04:50:13Z",
+      "side": 1,
+      "message": "instead of having a comment covering the TODO, please file a bug to track adding those components - otherwise we will have a javadoc that is never updated.  You can explicitly add a TODO: b/###### then a short summary of what will be added.",
+      "range": {
+        "startLine": 27,
+        "startChar": 55,
+        "endLine": 28,
+        "endChar": 50
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ddcbdbce_7de4705e",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-01T04:50:13Z",
+      "side": 1,
+      "message": "how often is this expected to be called?",
+      "range": {
+        "startLine": 46,
+        "startChar": 16,
+        "endLine": 46,
+        "endChar": 38
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3817995d_7e5a1088",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-01T04:50:13Z",
+      "side": 1,
+      "message": "on the else..  if it isn\u0027t supported on a second call, you are not clearing the values",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 9
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e05041a1_adfa3d9f",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-01T04:50:13Z",
+      "side": 1,
+      "message": "probably want a check here to see if firmware roaming is supported.  if it is supported and the value is -1 (because someone forgot to call getFirmwareRoamingInfo) you will not want to hand back an invalid int.",
+      "range": {
+        "startLine": 76,
+        "startChar": 15,
+        "endLine": 76,
+        "endChar": 37
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8bba7d95_98460717",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-01T04:50:13Z",
+      "side": 1,
+      "message": "can the lists be passed in as null?",
+      "range": {
+        "startLine": 93,
+        "startChar": 51,
+        "endLine": 94,
+        "endChar": 48
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "929e2400_41b31087",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-01T04:50:13Z",
+      "side": 1,
+      "message": "probably want a sanity check to make sure firmware roaming is supported before attempting the configure call.",
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "026542bd_fbcac85f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-01T04:50:13Z",
+      "side": 1,
+      "message": "would be nice to make sure firmware roaming is set to true on these calls.",
+      "range": {
+        "startLine": 126,
+        "startChar": 3,
+        "endLine": 131,
+        "endChar": 5
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7616d208_cb2985a3",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-01T04:50:13Z",
+      "side": 1,
+      "message": "please add a test where you call it with a failure or returning false to if it is supported after a successful call.  I think you will get back the values from the first call.",
+      "range": {
+        "startLine": 138,
+        "startChar": 16,
+        "endLine": 138,
+        "endChar": 67
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "272bae88_5000a4d8",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-01T04:50:13Z",
+      "side": 1,
+      "message": "what if you pass in null?",
+      "range": {
+        "startLine": 169,
+        "startChar": 76,
+        "endLine": 169,
+        "endChar": 96
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4bb8aa90_20e0371d",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-01T04:50:13Z",
+      "side": 1,
+      "message": "please add a test that looks like a call to clear the configs.  that should just be a call with two empty lists (or null) - not sure what that call is supposed to look like.",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 1
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
