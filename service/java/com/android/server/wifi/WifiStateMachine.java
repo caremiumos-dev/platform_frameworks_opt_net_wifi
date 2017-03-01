@@ -1061,6 +1061,21 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.WPS_SUCCESS_EVENT, getHandler());
         mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.WPS_TIMEOUT_EVENT, getHandler());
 
+        mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.ASSOCIATION_REJECTION_EVENT,
+                mWifiMetrics.getHandler());
+        mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.AUTHENTICATION_FAILURE_EVENT,
+                mWifiMetrics.getHandler());
+        mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.DRIVER_HUNG_EVENT,
+                mWifiMetrics.getHandler());
+        mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.NETWORK_CONNECTION_EVENT,
+                mWifiMetrics.getHandler());
+        mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.NETWORK_DISCONNECTION_EVENT,
+                mWifiMetrics.getHandler());
+        mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.SSID_TEMP_DISABLED,
+                mWifiMetrics.getHandler());
+        mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.SUPPLICANT_STATE_CHANGE_EVENT,
+                mWifiMetrics.getHandler());
+
         final Intent intent = new Intent(WifiManager.WIFI_SCAN_AVAILABLE);
         intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT);
         intent.putExtra(WifiManager.EXTRA_SCAN_AVAILABLE, WIFI_STATE_DISABLED);
@@ -3356,6 +3371,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     private void handleSuccessfulIpConfiguration() {
         mLastSignalLevel = -1; // Force update of signal strength
         WifiConfiguration c = getCurrentWifiConfiguration();
+        mWifiMetrics.stopObtainingIp(CMD_IP_CONFIGURATION_SUCCESSFUL);
         if (c != null) {
             // Reset IP failure tracking
             c.getNetworkSelectionStatus().clearDisableReasonCounter(
@@ -5726,7 +5742,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             if (!TextUtils.isEmpty(mTcpBufferSizes)) {
                 mIpManager.setTcpBufferSizes(mTcpBufferSizes);
             }
-
+            mWifiMetrics.startObtainingIp(isUsingStaticIp);
             if (!isUsingStaticIp) {
                 final IpManager.ProvisioningConfiguration prov =
                         IpManager.buildProvisioningConfiguration()

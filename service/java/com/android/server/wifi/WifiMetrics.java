@@ -17,11 +17,15 @@
 package com.android.server.wifi;
 
 import android.net.NetworkAgent;
+import android.net.wifi.SupplicantState;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Base64;
 import android.util.Log;
+import android.util.Pair;
 import android.util.SparseIntArray;
 
 import com.android.server.wifi.hotspot2.NetworkDetail;
@@ -29,6 +33,7 @@ import com.android.server.wifi.util.InformationElementUtil;
 import com.android.server.wifi.util.ScanResultUtil;
 
 import java.io.FileDescriptor;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -61,6 +66,11 @@ public class WifiMetrics {
     private Clock mClock;
     private boolean mScreenOn;
     private int mWifiState;
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            processMessage(msg);
+        }
+    };
     /**
      * Metrics are stored within an instance of the WifiLog proto during runtime,
      * The ConnectionEvent, SystemStateEntries & ScanReturnEntries metrics are stored during
@@ -96,6 +106,8 @@ public class WifiMetrics {
     private long mScanResultRssiTimestampMillis = -1;
     /** Mapping of alert reason to the respective alert count. */
     private final SparseIntArray mWifiAlertReasonCounts = new SparseIntArray();
+    /** Connected Events */
+    ArrayList<String> mMonitorMessageLog = new ArrayList<>();
     /**
      * Records the getElapsedSinceBootMillis (in seconds) that represents the beginning of data
      * capture for for this WifiMetricsProto
@@ -354,6 +366,7 @@ public class WifiMetrics {
      * @param roamType Roam type that caused connection attempt, see WifiMetricsProto.WifiLog.ROAM_X
      */
     public void startConnectionEvent(WifiConfiguration config, String targetBSSID, int roamType) {
+        startFoRealz(config, roamType);
         synchronized (mLock) {
             // Check if this is overlapping another current connection event
             if (mCurrentConnectionEvent != null) {
@@ -1145,6 +1158,8 @@ public class WifiMetrics {
                 pw.println("  FAILED_NO_CHANNEL: " + mSoftApManagerReturnCodeCounts.get(
                         WifiMetricsProto.SoftApReturnCodeCount.SOFT_AP_FAILED_NO_CHANNEL));
                 pw.print("\n");
+                pw.println("mMonitorMessageLogList");
+                for (String event : mMonitorMessageLog) pw.println("  " + event);
             }
         }
     }
@@ -1347,5 +1362,208 @@ public class WifiMetrics {
         synchronized (mLock) {
             mWifiState = wifiState;
         }
+    }
+
+    public void settConnectedEvent(String eventDeets) {
+        mMonitorMessageLog.add(eventDeets);
+    }
+
+    private void processMessage(Message msg) {
+        synchronized (mLock) {
+            switch (msg.what) {
+            case WifiMonitor.ASSOCIATION_REJECTION_EVENT:
+                Log.i(TAG,"Got ASSOCIATION_REJECTION_EVENT");
+                mMonitorMessageLog.add("ASSOCIATION_REJECTION_EVENT");
+                break;
+            case WifiMonitor.AUTHENTICATION_FAILURE_EVENT:
+                Log.i(TAG,"Got AUTHENTICATION_FAILURE_EVENT");
+                mMonitorMessageLog.add("AUTHENTICATION_FAILURE_EVENT");
+                break;
+            case WifiMonitor.DRIVER_HUNG_EVENT:
+                Log.i(TAG,"Got DRIVER_HUNG_EVENT");
+                mMonitorMessageLog.add("DRIVER_HUNG_EVENT");
+                break;
+            case WifiMonitor.NETWORK_CONNECTION_EVENT:
+                Log.i(TAG,"Got NETWORK_CONNECTION_EVENT");
+                connectedFoRealz();
+                mMonitorMessageLog.add("NETWORK_CONNECTION_EVENT");
+                break;
+            case WifiMonitor.NETWORK_DISCONNECTION_EVENT:
+                Log.i(TAG,"Got NETWORK_DISCONNECTION_EVENT");
+                disconnectedFoRealz();
+                mMonitorMessageLog.add("NETWORK_DISCONNECTION_EVENT");
+                break;
+            case WifiMonitor.SSID_TEMP_DISABLED:
+                Log.i(TAG,"Got SSID_TEMP_DISABLED");
+                mMonitorMessageLog.add("SSID_TEMP_DISABLED");
+                break;
+            case WifiMonitor.SUPPLICANT_STATE_CHANGE_EVENT:
+                StateChangeResult stateChangeResult = (StateChangeResult) msg.obj;
+                Log.i(TAG,"Got SUPPLICANT_STATE_CHANGE_EVENT: "
+                        + supplicantStateToString(stateChangeResult.state));
+                mMonitorMessageLog.add("SUPPLICANT_STATE_CHANGE_EVENT");
+                break;
+            default:
+                Log.i(TAG, "Got UNKNOWN message");
+                break;
+            }
+        }
+    }
+
+    public Handler getHandler() {
+        return mHandler;
+    }
+
+    public String supplicantStateToString(SupplicantState state) {
+        switch(state) {
+        case DISCONNECTED:
+            return "DISCONNECTED";
+        case INTERFACE_DISABLED:
+            return "INTERFACE_DISABLED";
+        case INACTIVE:
+            return "INACTIVE";
+        case SCANNING:
+            return "SCANNING";
+        case AUTHENTICATING:
+            return "AUTHENTICATING";
+        case ASSOCIATING:
+            return "ASSOCIATING";
+        case ASSOCIATED:
+            return "ASSOCIATED";
+        case FOUR_WAY_HANDSHAKE:
+            return "FOUR_WAY_HANDSHAKE";
+        case GROUP_HANDSHAKE:
+            return "GROUP_HANDSHAKE";
+        case COMPLETED:
+            return "COMPLETED";
+        case DORMANT:
+            return "DORMANT";
+        case UNINITIALIZED:
+            return "UNINITIALIZED";
+        case INVALID:
+            return "INVALID";
+        default:
+            throw new IllegalStateException("Got illegal supplicant state: " + state.ordinal());
+        }
+    }
+
+    private static final ANY_BSSID = "any";
+    private void startFoRealz(WifiConfiguration config, int roamType) {
+        FoRealzConnectionEvent event = new FoRealzConnectionEvent();
+        switch (roamType) {
+            WifiMetricsProto.ConnectionEvent.ROAM_USER_SELECTED:
+                event.startReason = "CONNECT_NETWORK";
+                break;
+            WifiMetricsProto.ConnectionEvent.ROAM_UNRELATED:
+                event.startReason = "CMD_START_CONNECT";
+                break;
+            WifiMetricsProto.ConnectionEvent.ROAM_ENTERPRISE:
+                event.startReason = "CMD_START_ROAM";
+                break;
+            default:
+                throw new IllegalStateException("Invalid roamType");
+        }
+        event.startTimeSec = mClock.getElapsedSinceBootMillis() / 1000;
+        bssid = targetBSSID;
+        if (config != null) {
+            event.allowedKeyManagement = config.allowedKeyManagement.clone();
+            event.allowedProtocols = config.allowedProtocols.clone();
+            event.allowedAuthAlgorithms = config.allowedAuthAlgorithms.clone();
+            event.allowedPairwiseCiphers = config.allowedPairwiseCiphers.clone();
+            event.allowedGroupCiphers = config.allowedGroupCiphers.clone();
+            event.hiddenSSID = config.hiddenSSID;
+        }
+        foRealzEvents.add(event);
+    }
+
+    private void disconnectedFoRealz() {
+        if (lastConnectedEventIndex < 0) {
+            return;
+        }
+        FoRealzConnectionEvent event = foRealzEvents.get(lastConnectedEventIndex);
+        event.disconnectTimeSec = mClock.getElapsedSinceBootMillis() / 1000;
+        event.disconnected = true;
+    }
+
+    private void connectedFoRealz() {
+        if (foRealzEvents.size() == 0) {
+            return;
+        }
+        lastConnectedEventIndex = foRealzEvents.size() - 1;
+        FoRealzConnectionEvent event = foRealzEvents.get(lastConnectedEventIndex);
+        event.connectTimeSec = mClock.getElapsedSinceBootMillis() / 1000;
+        event.connected = true;
+    }
+
+    public void startObtainingIp(boolean isUsingStaticIp) {
+        Log.i(TAG,"Start ObtainingIp");
+        // Last connected event must not have disconnected
+        if (lastConnectedEventIndex < 0) {
+            return;
+        }
+        FoRealzConnectionEvent event = foRealzEvents.get(lastConnectedEventIndex);
+        if (event.disconnected) {
+            Log.e(TAG, "Error: ObtainingIP for disconnected network");
+            return;
+        }
+        event.obtainingIpStartedTimeSec = mClock.getElapsedSinceBootMillis() / 1000;
+        event.isUsingStaticIp = isUsingStaticIp;
+    }
+
+    public void stopObtainingIp(int reason) {
+        Log.i(TAG,"Got NETWORK_CONNECTION_EVENT");
+        if (lastConnectedEventIndex < 0) {
+            return;
+        }
+        FoRealzConnectionEvent event = foRealzEvents.get(lastConnectedEventIndex);
+        event.obtainingIpStoppedTimeSec =  mClock.getElapsedSinceBootMillis() / 1000;
+    }
+    private List<FoRealzConnectionEvent> foRealzEvents = new ArrayList<FoRealzConnectionEvent>();
+    // Keep track of the last network that actually succeeded in connecting, as network
+    // disconnections will occur after new connection attempts have started
+    private int lastConnectedEventIndex = -1;
+    public class FoRealzConnectionEvent {
+        String startReason = "";
+        long startTimeSec;
+        long connectTimeSec;
+        long disconnectTimeSec;
+        long obtainingIpStartedTimeSec;
+        long obtainingIpStoppedTimeSec;
+        boolean hiddenSSID = false;
+        BitSet allowedKeyManagement = new BitSet();
+        BitSet allowedProtocols = new BitSet();
+        BitSet allowedAuthAlgorithms = new BitSet();
+        BitSet allowedPairwiseCiphers = new BitSet();
+        BitSet allowedGroupCiphers = new BitSet();
+
+        // Network connected (ASSOCIATION/AUTH/HANDSHAKEs completed)
+        //L2
+        boolean connected = false;
+        boolean disconnected = false;
+        int disconnectReason;
+        int locallyGenerated;
+
+        boolean isUsingStaticIp = false;
+        boolean ipConfigurationSuccess = false;
+        boolean ipConfigurationLost = false;
+        boolean ipReachabilityLost = false;
+
+
+
+        //private String bssid = ANY_BSSID;
+        
+        /**
+         * check if the given BSSID is more specific than the existing one
+         * @return true if it is the same or more specific than the current bssid,
+         * false if it is inconsistent (different)
+         */
+        //boolean checkAndSetBssid(String newBssid) {
+        //    if (ANY_BSSID.equals(bssid) || bssid.equals(newBssid)) {
+        //        bssid = newBssid;
+        //        return true;
+        //    }
+        //    Log.i(TAG, "  Incompatible target bssids, old:" + bssid + " new:" +  newBssid);
+        //    return false;
+        //}
     }
 }
