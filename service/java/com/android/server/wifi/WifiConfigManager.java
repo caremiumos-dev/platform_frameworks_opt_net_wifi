@@ -34,7 +34,6 @@ import android.net.wifi.WifiEnterpriseConfig;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiScanner;
-import android.os.RemoteException;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
@@ -50,6 +49,7 @@ import com.android.server.LocalServices;
 import com.android.server.wifi.WifiConfigStoreLegacy.WifiConfigStoreDataLegacy;
 import com.android.server.wifi.util.ScanResultUtil;
 import com.android.server.wifi.util.TelephonyUtil;
+import com.android.server.wifi.util.WifiPermissionsUtil;
 import com.android.server.wifi.util.WifiPermissionsWrapper;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -217,6 +217,7 @@ public class WifiConfigManager {
     private final WifiKeyStore mWifiKeyStore;
     private final WifiConfigStore mWifiConfigStore;
     private final WifiConfigStoreLegacy mWifiConfigStoreLegacy;
+    private final WifiPermissionsUtil mWifiPermissionsUtil;
     private final WifiPermissionsWrapper mWifiPermissionsWrapper;
     /**
      * Local log used for debugging any WifiConfigManager issues.
@@ -303,6 +304,7 @@ public class WifiConfigManager {
             Context context, FrameworkFacade facade, Clock clock, UserManager userManager,
             TelephonyManager telephonyManager, WifiKeyStore wifiKeyStore,
             WifiConfigStore wifiConfigStore, WifiConfigStoreLegacy wifiConfigStoreLegacy,
+            WifiPermissionsUtil wifiPermissionsUtil,
             WifiPermissionsWrapper wifiPermissionsWrapper,
             NetworkListStoreData networkListStoreData,
             DeletedEphemeralSsidsStoreData deletedEphemeralSsidsStoreData) {
@@ -315,6 +317,7 @@ public class WifiConfigManager {
         mWifiKeyStore = wifiKeyStore;
         mWifiConfigStore = wifiConfigStore;
         mWifiConfigStoreLegacy = wifiConfigStoreLegacy;
+        mWifiPermissionsUtil = wifiPermissionsUtil;
         mWifiPermissionsWrapper = wifiPermissionsWrapper;
 
         mConfiguredNetworks = new ConfigurationMap(userManager);
@@ -604,24 +607,6 @@ public class WifiConfigManager {
     }
 
     /**
-     * Checks if the app has the permission to override Wi-Fi network configuration or not.
-     *
-     * @param uid uid of the app.
-     * @return true if the app does have the permission, false otherwise.
-     */
-    public boolean checkConfigOverridePermission(int uid) {
-        try {
-            int permission =
-                    mFacade.checkUidPermission(
-                            android.Manifest.permission.OVERRIDE_WIFI_CONFIG, uid);
-            return (permission == PackageManager.PERMISSION_GRANTED);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Error checking for permission " + e);
-            return false;
-        }
-    }
-
-    /**
      * Checks if |uid| has permission to modify the provided configuration.
      *
      * @param config         WifiConfiguration object corresponding to the network to be modified.
@@ -645,7 +630,7 @@ public class WifiConfigManager {
         // Check if the |uid| holds the |OVERRIDE_CONFIG_WIFI| permission if the caller asks us to
         // bypass the lockdown checks.
         if (ignoreLockdown) {
-            return checkConfigOverridePermission(uid);
+            return mWifiPermissionsUtil.checkConfigOverridePermission(uid);
         }
 
         // Check if device has DPM capability. If it has and |dpmi| is still null, then we
@@ -660,13 +645,13 @@ public class WifiConfigManager {
         final boolean isConfigEligibleForLockdown = dpmi != null && dpmi.isActiveAdminWithPolicy(
                 config.creatorUid, DeviceAdminInfo.USES_POLICY_DEVICE_OWNER);
         if (!isConfigEligibleForLockdown) {
-            return isCreator || checkConfigOverridePermission(uid);
+            return isCreator || mWifiPermissionsUtil.checkConfigOverridePermission(uid);
         }
 
         final ContentResolver resolver = mContext.getContentResolver();
         final boolean isLockdownFeatureEnabled = Settings.Global.getInt(resolver,
                 Settings.Global.WIFI_DEVICE_OWNER_CONFIGS_LOCKDOWN, 0) != 0;
-        return !isLockdownFeatureEnabled && checkConfigOverridePermission(uid);
+        return !isLockdownFeatureEnabled && mWifiPermissionsUtil.checkConfigOverridePermission(uid);
     }
 
     /**
@@ -2724,7 +2709,8 @@ public class WifiConfigManager {
                 DeviceAdminInfo.USES_POLICY_PROFILE_OWNER);
         final boolean isUidDeviceOwner = dpmi != null && dpmi.isActiveAdminWithPolicy(uid,
                 DeviceAdminInfo.USES_POLICY_DEVICE_OWNER);
-        final boolean hasConfigOverridePermission = checkConfigOverridePermission(uid);
+        final boolean hasConfigOverridePermission =
+                mWifiPermissionsUtil.checkConfigOverridePermission(uid);
         // If |uid| corresponds to the device owner, allow all modifications.
         if (isUidDeviceOwner || isUidProfileOwner || hasConfigOverridePermission) {
             return true;
