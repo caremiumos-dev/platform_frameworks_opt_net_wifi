@@ -240,12 +240,12 @@ public class WifiNative {
     * Returns null on failure.
     */
     public IClientInterface setupDriverForClientMode() {
-        IClientInterface clientInterface = mWificondControl.setupDriverForClientMode();
         if (!startHal(true)) {
             // TODO(b/34859006): Handle failures.
             Log.e(TAG, "Failed to start HAL for client mode");
+            return null;
         }
-        return clientInterface;
+        return mWificondControl.setupDriverForClientMode();
     }
 
     /**
@@ -254,13 +254,12 @@ public class WifiNative {
     * Returns null on failure.
     */
     public IApInterface setupDriverForSoftApMode() {
-        IApInterface apInterface = mWificondControl.setupDriverForSoftApMode();
-
         if (!startHal(false)) {
             // TODO(b/34859006): Handle failures.
             Log.e(TAG, "Failed to start HAL for AP mode");
+            return null;
         }
-        return apInterface;
+        return mWificondControl.setupDriverForSoftApMode();
     }
 
     /**
