@@ -361,8 +361,8 @@ public class WifiStateMachineTest {
                 any(WifiConfiguration.class)))
                 .thenReturn(mSoftApManager);
 
-        when(mWifiNative.setupDriverForClientMode()).thenReturn(mClientInterface);
-        when(mWifiNative.setupDriverForSoftApMode()).thenReturn(mApInterface);
+        when(mWifiNative.setupForClientMode()).thenReturn(mClientInterface);
+        when(mWifiNative.setupForSoftApMode()).thenReturn(mApInterface);
         when(mWifiInjector.getWifiStateTracker()).thenReturn(mWifiStateTracker);
         when(mWifiNative.getInterfaceName()).thenReturn("mockWlan");
         when(mWifiNative.enableSupplicant()).thenReturn(true);
