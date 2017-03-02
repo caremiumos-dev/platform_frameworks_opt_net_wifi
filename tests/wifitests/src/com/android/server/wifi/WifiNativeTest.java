@@ -20,6 +20,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.anyBoolean;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.eq;
@@ -157,6 +158,7 @@ public class WifiNativeTest {
         wifiNativeConstructor.setAccessible(true);
         mWifiNative = spy(wifiNativeConstructor.newInstance("test", true));
         mWifiVendorHal = mock(WifiVendorHal.class);
+        when(mWifiVendorHal.startVendorHal(anyBoolean())).thenReturn(true);
         mWifiNative.setWifiVendorHal(mWifiVendorHal);
     }
 
@@ -519,8 +521,8 @@ public class WifiNativeTest {
 
         IClientInterface returnedClientInterface = mWifiNative.setupDriverForClientMode();
         assertEquals(clientInterface, returnedClientInterface);
-        verify(wificondControl).setupDriverForClientMode();
         verify(mWifiNative).startHal(eq(true));
+        verify(wificondControl).setupDriverForClientMode();
     }
 
     /**
@@ -537,6 +539,7 @@ public class WifiNativeTest {
 
         IClientInterface returnedClientInterface = mWifiNative.setupDriverForClientMode();
         assertEquals(null, returnedClientInterface);
+        verify(mWifiNative).startHal(eq(true));
         verify(wificondControl).setupDriverForClientMode();
     }
 
@@ -554,8 +557,8 @@ public class WifiNativeTest {
 
         IApInterface returnedApInterface = mWifiNative.setupDriverForSoftApMode();
         assertEquals(apInterface, returnedApInterface);
-        verify(wificondControl).setupDriverForSoftApMode();
         verify(mWifiNative).startHal(eq(false));
+        verify(wificondControl).setupDriverForSoftApMode();
     }
 
     /**
@@ -572,6 +575,7 @@ public class WifiNativeTest {
 
         IApInterface returnedApInterface = mWifiNative.setupDriverForSoftApMode();
         assertEquals(null, returnedApInterface);
+        verify(mWifiNative).startHal(eq(false));
         verify(wificondControl).setupDriverForSoftApMode();
     }
 
