@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e01de804_8b2fc7bf",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-02T21:10:58Z",
+      "side": 1,
+      "message": "Replace with IllegalArgumentException, check loadWifiConfiguration to see if there are any more specific Exceptions",
+      "range": {
+        "startLine": 470,
+        "startChar": 21,
+        "endLine": 470,
+        "endChar": 30
+      },
+      "revId": "57eea79ef3041eaf0de8238be820ff3a07a12af3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
