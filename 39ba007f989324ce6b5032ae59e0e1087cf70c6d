@@ -114,6 +114,29 @@
       "revId": "39ba007f989324ce6b5032ae59e0e1087cf70c6d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "687e0c66_7ba3bfec",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2434,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-02T16:24:11Z",
+      "side": 1,
+      "message": "Let\u0027s just remove this altogether for now. We can add it back later once the bug is fixed. Having additional logic just for just logging will confuse people later. You can add a TODO: with the log commented out for now.",
+      "range": {
+        "startLine": 2429,
+        "startChar": 0,
+        "endLine": 2434,
+        "endChar": 13
+      },
+      "revId": "39ba007f989324ce6b5032ae59e0e1087cf70c6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
