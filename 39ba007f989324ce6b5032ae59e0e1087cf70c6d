@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c08608a_e132e9d3",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-02T16:22:13Z",
+      "side": 1,
+      "message": "This is redundant since the android log already contains TID.",
+      "range": {
+        "startLine": 131,
+        "startChar": 20,
+        "endLine": 131,
+        "endChar": 29
+      },
+      "revId": "39ba007f989324ce6b5032ae59e0e1087cf70c6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6aa0a2b_f35c3c4d",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-02T16:22:13Z",
+      "side": 1,
+      "message": "Same.",
+      "range": {
+        "startLine": 152,
+        "startChar": 18,
+        "endLine": 152,
+        "endChar": 30
+      },
+      "revId": "39ba007f989324ce6b5032ae59e0e1087cf70c6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64d2d9df_c25719b3",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-02T16:22:13Z",
+      "side": 1,
+      "message": "We don\u0027t need these now.",
+      "range": {
+        "startLine": 201,
+        "startChar": 1,
+        "endLine": 211,
+        "endChar": 5
+      },
+      "revId": "39ba007f989324ce6b5032ae59e0e1087cf70c6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e701be36_ad2498fc",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-02T16:22:13Z",
+      "side": 1,
+      "message": "I would put thin in mErrorLog. We need some info logs for important events.",
+      "range": {
+        "startLine": 329,
+        "startChar": 8,
+        "endLine": 329,
+        "endChar": 12
+      },
+      "revId": "39ba007f989324ce6b5032ae59e0e1087cf70c6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dae0a695_8c9e399d",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-02T16:22:13Z",
+      "side": 1,
+      "message": "Same. Use mErrorLog.",
+      "range": {
+        "startLine": 373,
+        "startChar": 8,
+        "endLine": 373,
+        "endChar": 12
+      },
+      "revId": "39ba007f989324ce6b5032ae59e0e1087cf70c6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
