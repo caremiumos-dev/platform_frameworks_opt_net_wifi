@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "befd1037_fd86b537",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-02T21:08:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c08608a_e132e9d3",
+      "range": {
+        "startLine": 131,
+        "startChar": 20,
+        "endLine": 131,
+        "endChar": 29
+      },
+      "revId": "39ba007f989324ce6b5032ae59e0e1087cf70c6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6aa0a2b_f35c3c4d",
         "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-02T16:22:13Z",
       "side": 1,
       "message": "Same.",
+      "range": {
+        "startLine": 152,
+        "startChar": 18,
+        "endLine": 152,
+        "endChar": 30
+      },
+      "revId": "39ba007f989324ce6b5032ae59e0e1087cf70c6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "202dbf00_99574aed",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-02T21:08:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6aa0a2b_f35c3c4d",
       "range": {
         "startLine": 152,
         "startChar": 18,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e86ec166_d3534777",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-02T21:08:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64d2d9df_c25719b3",
+      "range": {
+        "startLine": 201,
+        "startChar": 1,
+        "endLine": 211,
+        "endChar": 5
+      },
+      "revId": "39ba007f989324ce6b5032ae59e0e1087cf70c6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e701be36_ad2498fc",
         "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c75280e8_13601cbf",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-02T21:08:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e701be36_ad2498fc",
+      "range": {
+        "startLine": 329,
+        "startChar": 8,
+        "endLine": 329,
+        "endChar": 12
+      },
+      "revId": "39ba007f989324ce6b5032ae59e0e1087cf70c6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dae0a695_8c9e399d",
         "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-03-02T16:22:13Z",
       "side": 1,
       "message": "Same. Use mErrorLog.",
+      "range": {
+        "startLine": 373,
+        "startChar": 8,
+        "endLine": 373,
+        "endChar": 12
+      },
+      "revId": "39ba007f989324ce6b5032ae59e0e1087cf70c6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7745cba1_07fa0d1d",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-02T21:08:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dae0a695_8c9e399d",
       "range": {
         "startLine": 373,
         "startChar": 8,
@@ -151,6 +271,30 @@
       "writtenOn": "2017-03-02T16:24:11Z",
       "side": 1,
       "message": "Let\u0027s just remove this altogether for now. We can add it back later once the bug is fixed. Having additional logic just for just logging will confuse people later. You can add a TODO: with the log commented out for now.",
+      "range": {
+        "startLine": 2429,
+        "startChar": 0,
+        "endLine": 2434,
+        "endChar": 13
+      },
+      "revId": "39ba007f989324ce6b5032ae59e0e1087cf70c6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc54f774_0f632a19",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2434,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-02T21:08:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "687e0c66_7ba3bfec",
       "range": {
         "startLine": 2429,
         "startChar": 0,
