@@ -198,7 +198,7 @@ public abstract class BaseWifiScannerImplTest {
                 .build();
 
         Set<String> hiddenNetworkSSIDSet = new HashSet<>();
-        for (int i = 0; i < SupplicantWifiScannerImpl.MAX_HIDDEN_NETWORK_IDS_PER_SCAN; i++) {
+        for (int i = 0; i < WificondWifiScannerImpl.MAX_HIDDEN_NETWORK_IDS_PER_SCAN; i++) {
             hiddenNetworkSSIDSet.add(hiddenNetworkSSIDs[i]);
         }
         doSuccessfulSingleScanTest(settings, createFreqSet(5650),
@@ -285,7 +285,7 @@ public abstract class BaseWifiScannerImplTest {
         mLooper.dispatchAll();
 
         // Fire timeout
-        mAlarmManager.dispatch(SupplicantWifiScannerImpl.TIMEOUT_ALARM_TAG);
+        mAlarmManager.dispatch(WificondWifiScannerImpl.TIMEOUT_ALARM_TAG);
         mLooper.dispatchAll();
 
         order.verify(eventHandler).onScanStatus(WifiNative.WIFI_SCAN_FAILED);

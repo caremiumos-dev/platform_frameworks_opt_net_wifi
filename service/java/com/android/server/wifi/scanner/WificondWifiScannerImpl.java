@@ -41,11 +41,11 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Implementation of the WifiScanner HAL API that uses wpa_supplicant to perform all scans
+ * Implementation of the WifiScanner HAL API that uses wificond to perform all scans
  * @see com.android.server.wifi.scanner.WifiScannerImpl for more details on each method.
  */
-public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handler.Callback {
-    private static final String TAG = "SupplicantWifiScannerImpl";
+public class WificondWifiScannerImpl extends WifiScannerImpl implements Handler.Callback {
+    private static final String TAG = "WificondWifiScannerImpl";
     private static final boolean DBG = false;
 
     public static final String BACKGROUND_PERIOD_ALARM_TAG = TAG + " Background Scan Period";
@@ -130,7 +130,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
             }
         };
 
-    public SupplicantWifiScannerImpl(Context context, WifiNative wifiNative,
+    public WificondWifiScannerImpl(Context context, WifiNative wifiNative,
             ChannelHelper channelHelper, Looper looper, Clock clock) {
         mContext = context;
         mWifiNative = wifiNative;
@@ -150,7 +150,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
                 WifiMonitor.SCAN_RESULTS_EVENT, mEventHandler);
     }
 
-    public SupplicantWifiScannerImpl(Context context, WifiNative wifiNative, Looper looper,
+    public WificondWifiScannerImpl(Context context, WifiNative wifiNative, Looper looper,
             Clock clock) {
         // TODO figure out how to get channel information from supplicant
         this(context, wifiNative, new NoBandChannelHelper(), looper, clock);
@@ -248,7 +248,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
             stopBatchedScan();
             if (DBG) {
                 Log.d(TAG, "Starting scan num_buckets=" + settings.num_buckets + ", base_period="
-                    + settings.base_period_ms + " ms");
+                        + settings.base_period_ms + " ms");
             }
             mPendingBackgroundScanSettings = settings;
             mPendingBackgroundScanEventHandler = eventHandler;
@@ -391,7 +391,8 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
                     mNextBackgroundScanPeriod++;
                     mBackgroundScanPeriodPending = false;
                     mAlarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                            mClock.getElapsedSinceBootMillis() + mBackgroundScanSettings.base_period_ms,
+                            mClock.getElapsedSinceBootMillis()
+                                    + mBackgroundScanSettings.base_period_ms,
                             BACKGROUND_PERIOD_ALARM_TAG, mScanPeriodListener, mEventHandler);
                 }
             }
@@ -774,7 +775,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
     private static class LastScanSettings {
         public long startTime;
 
-        public LastScanSettings(long startTime) {
+        LastScanSettings(long startTime) {
             this.startTime = startTime;
         }
 
@@ -829,7 +830,7 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
         private final ArrayDeque<WifiScanner.ScanData> mBuffer;
         private int mCapacity;
 
-        public ScanBuffer(int capacity) {
+        ScanBuffer(int capacity) {
             mCapacity = capacity;
             mBuffer = new ArrayDeque<>(mCapacity);
         }
@@ -1080,7 +1081,8 @@ public class SupplicantWifiScannerImpl extends WifiScannerImpl implements Handle
                     long alarmTimeout = MINIMUM_PNO_GAP_MS - timeDifference;
                     Log.d(TAG, "Start PNO timer with delay " + alarmTimeout);
                     mAlarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                            mClock.getElapsedSinceBootMillis() + alarmTimeout, PNO_DEBOUNCER_ALARM_TAG,
+                            mClock.getElapsedSinceBootMillis() + alarmTimeout,
+                            PNO_DEBOUNCER_ALARM_TAG,
                             mAlarmListener, mEventHandler);
                     mWaitForTimer = true;
                 }
