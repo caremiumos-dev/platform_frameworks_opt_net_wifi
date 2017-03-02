@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dfff461_53ecf0ff",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-03-02T18:10:29Z",
+      "side": 1,
+      "message": "Document needs update.",
+      "range": {
+        "startLine": 238,
+        "startChar": 6,
+        "endLine": 238,
+        "endChar": 48
+      },
+      "revId": "7bb6b19622d1180dc22e665d34f6d84b657cc7aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3e3c680_d9e78769",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-03-02T18:10:29Z",
+      "side": 1,
+      "message": "Ideally we should directly call \"mWifiVendorHal.startVendorHalSta()\" here, and remove startHal() method.",
+      "range": {
+        "startLine": 243,
+        "startChar": 13,
+        "endLine": 243,
+        "endChar": 21
+      },
+      "revId": "7bb6b19622d1180dc22e665d34f6d84b657cc7aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cea7464_60851aab",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-03-02T18:10:29Z",
+      "side": 1,
+      "message": "This doesn\u0027t sound correct if wificond no longer sets up driver.\nI will fix this later.",
+      "range": {
+        "startLine": 248,
+        "startChar": 32,
+        "endLine": 248,
+        "endChar": 58
+      },
+      "revId": "7bb6b19622d1180dc22e665d34f6d84b657cc7aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21ffda88_8e72d3a2",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-03-02T18:10:29Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 252,
+        "startChar": 5,
+        "endLine": 252,
+        "endChar": 48
+      },
+      "revId": "7bb6b19622d1180dc22e665d34f6d84b657cc7aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f9c0bad_a5a44129",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-03-02T18:10:29Z",
+      "side": 1,
+      "message": "same here. startVendorHalAp()",
+      "range": {
+        "startLine": 257,
+        "startChar": 9,
+        "endLine": 257,
+        "endChar": 30
+      },
+      "revId": "7bb6b19622d1180dc22e665d34f6d84b657cc7aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
