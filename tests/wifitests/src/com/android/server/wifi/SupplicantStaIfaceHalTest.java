@@ -401,7 +401,34 @@ public class SupplicantStaIfaceHalTest {
 
         Map<String, WifiConfiguration> configs = new HashMap<>();
         SparseArray<Map<String, String>> extras = new SparseArray<>();
-        assertFalse(mDut.loadNetworks(configs, extras));
+        assertTrue(mDut.loadNetworks(configs, extras));
+        assertTrue(configs.isEmpty());
+    }
+
+    /**
+     * Tests the failure to load networks because of loadWifiConfiguration exception.
+     */
+    @Test
+    public void testLoadNetworksFailedDueToExceptionInLoadWifiConfiguration() throws Exception {
+        executeAndValidateInitializationSequence();
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public void answer(ISupplicantStaIface.listNetworksCallback cb) {
+                cb.onValues(mStatusSuccess, new ArrayList<>(NETWORK_ID_TO_SSID.keySet()));
+            }
+        }).when(mISupplicantStaIfaceMock)
+                .listNetworks(any(ISupplicantStaIface.listNetworksCallback.class));
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public boolean answer(WifiConfiguration config, Map<String, String> networkExtra)
+                    throws Exception {
+                throw new Exception();
+            }
+        }).when(mSupplicantStaNetworkMock)
+                .loadWifiConfiguration(any(WifiConfiguration.class), any(Map.class));
+
+        Map<String, WifiConfiguration> configs = new HashMap<>();
+        SparseArray<Map<String, String>> extras = new SparseArray<>();
+        assertTrue(mDut.loadNetworks(configs, extras));
+        assertTrue(configs.isEmpty());
     }
 
     /**
