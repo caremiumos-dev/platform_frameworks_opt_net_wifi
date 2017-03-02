@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "af2dba30_b5cc22d7",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-02T19:56:23Z",
+      "side": 1,
+      "message": "There is already a bug filed to track this work. Will add the bug number here.",
+      "parentUuid": "372b7c7c_7c2eea9e",
+      "range": {
+        "startLine": 27,
+        "startChar": 55,
+        "endLine": 28,
+        "endChar": 50
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddcbdbce_7de4705e",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-01T04:50:13Z",
       "side": 1,
       "message": "how often is this expected to be called?",
+      "range": {
+        "startLine": 46,
+        "startChar": 16,
+        "endLine": 46,
+        "endChar": 38
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a1775ab_bbd55208",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-02T19:56:23Z",
+      "side": 1,
+      "message": "It\u0027s called by WifiConnectivityManager.setWifiEnabled(true). Essentially it is every time when WifiStateMachine enters ConnectMode.",
+      "parentUuid": "ddcbdbce_7de4705e",
       "range": {
         "startLine": 46,
         "startChar": 16,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "83db3196_504a01a3",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-02T19:56:23Z",
+      "side": 1,
+      "message": "Nice catch. Will fix.",
+      "parentUuid": "3817995d_7e5a1088",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 9
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e05041a1_adfa3d9f",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-03-01T04:50:13Z",
       "side": 1,
       "message": "probably want a check here to see if firmware roaming is supported.  if it is supported and the value is -1 (because someone forgot to call getFirmwareRoamingInfo) you will not want to hand back an invalid int.",
+      "range": {
+        "startLine": 76,
+        "startChar": 15,
+        "endLine": 76,
+        "endChar": 37
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db70131b_622e3f34",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-02T19:56:23Z",
+      "side": 1,
+      "message": "I was debating whether we need to check if firmware roaming is supported here. Right now the caller always checks if firmware roaming is supported before calling any API of this class except for getFirmwareRoamingInfo() and isFirmwareRoamingSupported().\n\nNow for the case that someone forgot to call getFirmwareRoamingInfo, I think we want to take the default values which means firmware roaming is not supported and return -1 here.",
+      "parentUuid": "e05041a1_adfa3d9f",
       "range": {
         "startLine": 76,
         "startChar": 15,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6321842c_3f95ce56",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-02T19:56:23Z",
+      "side": 1,
+      "message": "This API is called only at one place right now and we guarantee they are not null. With that said, I think it doesn\u0027t hurt performance much to add a sanity null check here. Will do.",
+      "parentUuid": "8bba7d95_98460717",
+      "range": {
+        "startLine": 93,
+        "startChar": 51,
+        "endLine": 94,
+        "endChar": 48
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "929e2400_41b31087",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
         "patchSetId": 3
@@ -134,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "2cd10b0d_b857d13d",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-02T19:56:23Z",
+      "side": 1,
+      "message": "Please see my comments above. The caller does the check already. It builds the blacklist array and calls this method only if firmware roaming is supported.",
+      "parentUuid": "929e2400_41b31087",
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "026542bd_fbcac85f",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
         "patchSetId": 3
@@ -145,6 +283,30 @@
       "writtenOn": "2017-03-01T04:50:13Z",
       "side": 1,
       "message": "would be nice to make sure firmware roaming is set to true on these calls.",
+      "range": {
+        "startLine": 126,
+        "startChar": 3,
+        "endLine": 131,
+        "endChar": 5
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c206892d_9b610330",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-02T19:56:23Z",
+      "side": 1,
+      "message": "Sure, will add an assert just to verify that isFirmwareRoamingSupported() returns true here.",
+      "parentUuid": "026542bd_fbcac85f",
       "range": {
         "startLine": 126,
         "startChar": 3,
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "f676e6a7_5f1c3fe7",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-02T19:56:23Z",
+      "side": 1,
+      "message": "Yep. There\u0027s a bug in getFirmwareRoamingInfo. Will fix it.",
+      "parentUuid": "7616d208_cb2985a3",
+      "range": {
+        "startLine": 138,
+        "startChar": 16,
+        "endLine": 138,
+        "endChar": 67
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "272bae88_5000a4d8",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
         "patchSetId": 3
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "eaafc31f_6fe79899",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-02T19:56:23Z",
+      "side": 1,
+      "message": "Please see my reply in WifiConnectivityHelper.java. Yes, a null check will be added there.",
+      "parentUuid": "272bae88_5000a4d8",
+      "range": {
+        "startLine": 169,
+        "startChar": 76,
+        "endLine": 169,
+        "endChar": 96
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bb8aa90_20e0371d",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
         "patchSetId": 3
@@ -214,6 +424,30 @@
       "writtenOn": "2017-03-01T04:50:13Z",
       "side": 1,
       "message": "please add a test that looks like a call to clear the configs.  that should just be a call with two empty lists (or null) - not sure what that call is supposed to look like.",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 1
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5794a90_0d363b18",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-02T19:56:23Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "4bb8aa90_20e0371d",
       "range": {
         "startLine": 182,
         "startChar": 0,
