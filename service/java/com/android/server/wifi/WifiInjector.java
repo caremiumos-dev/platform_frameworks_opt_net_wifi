@@ -194,7 +194,7 @@ public class WifiInjector {
                 mConnectivityLocalLog);
         mSavedNetworkEvaluator = new SavedNetworkEvaluator(mContext,
                 mWifiConfigManager, mClock, mConnectivityLocalLog, wifiStateMachineLooper,
-                mFrameworkFacade);
+                mFrameworkFacade, mWifiConnectivityHelper);
         mRecommendedNetworkEvaluator = new RecommendedNetworkEvaluator(context,
                 context.getContentResolver(), wifiStateMachineLooper, mFrameworkFacade,
                 mNetworkScoreManager, mWifiConfigManager, mConnectivityLocalLog);
