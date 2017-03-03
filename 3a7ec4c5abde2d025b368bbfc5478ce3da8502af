@@ -22,6 +22,30 @@
       "revId": "3a7ec4c5abde2d025b368bbfc5478ce3da8502af",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05d6e664_be36d9bb",
+        "filename": "service/wifi-events.rc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-03-03T19:13:27Z",
+      "side": 0,
+      "message": "Makes sense. Thanks.",
+      "parentUuid": "db125145_6c4849ce",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 61
+      },
+      "revId": "3a7ec4c5abde2d025b368bbfc5478ce3da8502af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
