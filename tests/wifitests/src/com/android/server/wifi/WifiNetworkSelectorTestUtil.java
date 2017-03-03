@@ -37,7 +37,9 @@ import android.text.TextUtils;
 import com.android.server.wifi.util.ScanResultUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Helper for WifiNetworkSelector unit tests.
@@ -145,10 +147,23 @@ public class WifiNetworkSelectorTestUtil {
             return null;
         }
 
+        Map<String, Integer> netIdMap = new HashMap<>();
+        int netId = 0;
+
         WifiConfiguration[] configs = new WifiConfiguration[ssids.length];
         for (int index = 0; index < ssids.length; index++) {
-            configs[index] = generateWifiConfig(index, 0, ssids[index], false, true, null, null,
-                    securities[index]);
+            String configKey = ssids[index] + Integer.toString(securities[index]);
+            Integer id;
+
+            id = netIdMap.get(configKey);
+            if (id == null) {
+                id = new Integer(netId);
+                netIdMap.put(configKey, id);
+                netId++;
+            }
+
+            configs[index] = generateWifiConfig(id.intValue(), 0, ssids[index], false, true, null,
+                    null, securities[index]);
         }
 
         return configs;
