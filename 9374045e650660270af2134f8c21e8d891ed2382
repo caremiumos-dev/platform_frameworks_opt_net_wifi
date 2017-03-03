@@ -22,6 +22,30 @@
       "revId": "9374045e650660270af2134f8c21e8d891ed2382",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "adbd5d93_480c279f",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-03T01:51:06Z",
+      "side": 1,
+      "message": "Unfortunately, the stopHal has no return value today. So, the only error we can handle is wificond\u0027s error.",
+      "parentUuid": "878434ee_74d80581",
+      "range": {
+        "startLine": 287,
+        "startChar": 12,
+        "endLine": 287,
+        "endChar": 49
+      },
+      "revId": "9374045e650660270af2134f8c21e8d891ed2382",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
