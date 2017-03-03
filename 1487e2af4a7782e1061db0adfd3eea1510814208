@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "24859d94_5b684e79",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-03T05:59:39Z",
+      "side": 1,
+      "message": "I do prefer to err on the side of the class not assuming all calls will be used properly...  you never know with a bug.\n\nI was thinking the same thing for returning -1.  I think it would be best to be safe and add the check, then return -1 if fwroam is false.",
+      "parentUuid": "db70131b_622e3f34",
+      "range": {
+        "startLine": 76,
+        "startChar": 15,
+        "endLine": 76,
+        "endChar": 37
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bba7d95_98460717",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
         "patchSetId": 3
@@ -266,6 +290,24 @@
       "side": 1,
       "message": "Please see my comments above. The caller does the check already. It builds the blacklist array and calls this method only if firmware roaming is supported.",
       "parentUuid": "929e2400_41b31087",
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2e008e_e6c0ac04",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-03T05:59:39Z",
+      "side": 1,
+      "message": "bugs happen, I think it would be safer if this method protected itself.\n\nWhat would happen if we tried to write the config and it isn\u0027t supported?",
+      "parentUuid": "2cd10b0d_b857d13d",
       "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
