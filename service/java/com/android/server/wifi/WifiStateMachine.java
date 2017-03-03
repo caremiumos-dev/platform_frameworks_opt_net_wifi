@@ -3949,7 +3949,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     setSupplicantLogLevel();
                     setWifiState(WIFI_STATE_ENABLING);
                     if (mVerboseLoggingEnabled) log("Supplicant start successful");
-                    mWifiMonitor.startMonitoring(mInterfaceName);
+                    mWifiMonitor.startMonitoring(mInterfaceName, true);
                     transitionTo(mSupplicantStartingState);
                     break;
                 case CMD_START_AP:
