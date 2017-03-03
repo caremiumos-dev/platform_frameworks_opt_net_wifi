@@ -42,6 +42,7 @@ public class SavedNetworkEvaluator implements WifiNetworkSelector.NetworkEvaluat
     private final WifiConfigManager mWifiConfigManager;
     private final Clock mClock;
     private final LocalLog mLocalLog;
+    private final WifiConnectivityHelper mConnectivityHelper;
     private final int mRssiScoreSlope;
     private final int mRssiScoreOffset;
     private final int mSameBssidAward;
@@ -56,10 +57,12 @@ public class SavedNetworkEvaluator implements WifiNetworkSelector.NetworkEvaluat
     private boolean mCurateSavedOpenNetworks;
 
     SavedNetworkEvaluator(final Context context, WifiConfigManager configManager, Clock clock,
-            LocalLog localLog, Looper looper, final FrameworkFacade frameworkFacade) {
+            LocalLog localLog, Looper looper, final FrameworkFacade frameworkFacade,
+            WifiConnectivityHelper connectivityHelper) {
         mWifiConfigManager = configManager;
         mClock = clock;
         mLocalLog = localLog;
+        mConnectivityHelper = connectivityHelper;
 
         mRssiScoreSlope = context.getResources().getInteger(
                 R.integer.config_wifi_framework_RSSI_SCORE_SLOPE);
@@ -202,13 +205,31 @@ public class SavedNetworkEvaluator implements WifiNetworkSelector.NetworkEvaluat
             score += mSameNetworkAward;
             sbuf.append(" Same network the current one bonus: ")
                     .append(mSameNetworkAward).append(",");
+
+            if (mConnectivityHelper.isFirmwareRoamingSupported()) {
+                // Apply the same BSSID award to all the BSSIDs under the same
+                // network(same SSID & security type) as the currently connected one.
+                // This might save a disconnection triggered by network switch when
+                // the score of the currently connected BSSID is lower than a network
+                // with a different SSID, but within the currently connected network
+                // there is a BSSID better than the currently connected BSSID.
+                // This is under the assumption that firmware will roam the device
+                // to that better BSSID.
+                score += mSameBssidAward;
+                sbuf.append(" Firmware roaming same BSSID bonus: ")
+                    .append(mSameBssidAward).append(",");
+            }
         }
 
-        // Same BSSID award.
-        if (currentBssid != null && currentBssid.equals(scanResult.BSSID)) {
-            score += mSameBssidAward;
-            sbuf.append(" Same BSSID as the current one bonus: ").append(mSameBssidAward)
-                .append(",");
+        // When firmware roaming is supported, the same BSSID award is already
+        // applied above, skip it.
+        if (!mConnectivityHelper.isFirmwareRoamingSupported()) {
+            // Same BSSID award.
+            if (currentBssid != null && currentBssid.equals(scanResult.BSSID)) {
+                score += mSameBssidAward;
+                sbuf.append(" Same BSSID as the current one bonus: ").append(mSameBssidAward)
+                    .append(",");
+            }
         }
 
         // Security award.
