@@ -25,7 +25,9 @@ import static org.mockito.Mockito.when;
 import android.app.test.MockAnswerUtil.AnswerWithArguments;
 import android.hardware.wifi.supplicant.V1_0.ISupplicant;
 import android.hardware.wifi.supplicant.V1_0.ISupplicantIface;
+import android.hardware.wifi.supplicant.V1_0.ISupplicantNetwork;
 import android.hardware.wifi.supplicant.V1_0.ISupplicantP2pIface;
+import android.hardware.wifi.supplicant.V1_0.ISupplicantP2pNetwork;
 import android.hardware.wifi.supplicant.V1_0.IfaceType;
 import android.hardware.wifi.supplicant.V1_0.SupplicantStatus;
 import android.hardware.wifi.supplicant.V1_0.SupplicantStatusCode;
@@ -52,7 +54,9 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 /**
  * Unit tests for SupplicantP2pIfaceHal
@@ -64,6 +68,7 @@ public class SupplicantP2pIfaceHalTest {
     @Mock ISupplicant mISupplicantMock;
     @Mock ISupplicantIface mISupplicantIfaceMock;
     @Mock ISupplicantP2pIface mISupplicantP2pIfaceMock;
+    @Mock ISupplicantP2pNetwork mISupplicantP2pNetworkMock;
 
     SupplicantStatus mStatusSuccess;
     SupplicantStatus mStatusFailure;
@@ -144,6 +149,11 @@ public class SupplicantP2pIfaceHalTest {
         @Override
         protected ISupplicantP2pIface getP2pIfaceMockable(ISupplicantIface iface) {
             return mISupplicantP2pIfaceMock;
+        }
+
+        @Override
+        protected ISupplicantP2pNetwork getP2pNetworkMockable(ISupplicantNetwork network) {
+            return mISupplicantP2pNetworkMock;
         }
     }
 
@@ -2153,6 +2163,55 @@ public class SupplicantP2pIfaceHalTest {
         assertFalse(mDut.isInitializationComplete());
     }
 
+    /**
+     * Verify the loading of group info.
+     */
+    @Test
+    public void testLoadGroups() throws Exception {
+        executeAndValidateInitializationSequence(false, false, false);
+
+        // Class to hold the P2p group info returned from the HIDL interface.
+        class P2pGroupInfo {
+            boolean isGo;
+            boolean isCurrent;
+            byte[] bssid;
+            P2pGroupInfo(boolean isGo, boolean isCurrent, byte[] bssid) {
+                isGo = isGo;
+                isCurrent = isCurrent;
+                bssid = bssid;
+            }
+        };
+
+        Map<Integer, P2pGroupInfo> groups = new HashMap<>();
+        groups.put(0, new P2pGroupInfo(
+                false, true, NativeUtil.macAddressToByteArray("56:34:ab:12:12:34")));
+        groups.put(1, new P2pGroupInfo(
+                true, true, NativeUtil.macAddressToByteArray("89:34:09:12:45:34")));
+        groups.put(2, new P2pGroupInfo(
+                true, true, NativeUtil.macAddressToByteArray("64:34:22:34:12:34")));
+
+        doAnswer(new AnswerWithArguments() {
+            public void answer(ISupplicantP2pIface.listNetworksCallback cb) {
+                cb.onValues(mStatusSuccess, new ArrayList<Integer>(groups.keySet()));
+            }
+        }).when(mISupplicantP2pIfaceMock)
+                .listNetworks(any(ISupplicantP2pIface.listNetworksCallback.class));
+
+        doAnswer(new AnswerWithArguments() {
+            public void answer(final int networkId, ISupplicantP2pIface.getNetworkCallback cb) {
+                doAnswer(new AnswerWithArguments() {
+                    public void answer(ISupplicantP2pNetwork.isCurrentCallback cb) {
+                        cb.onValues(mStatusSuccess, groups.get(networkId).isCurrent);
+                        return;
+                    }
+                }).when(mISupplicantP2pNetworkMock)
+                        .isCurrent(any(ISupplicantP2pNetwork.isCurrentCallback.class));
+                cb.onValues(mStatusSuccess, mISupplicantP2pNetworkMock);
+                return;
+            }
+        }).when(mISupplicantP2pIfaceMock)
+                .getNetwork(anyInt(), any(ISupplicantP2pIface.getNetworkCallback.class));
+    }
 
     /**
      * Calls.initialize(), mocking various call back answers and verifying flow, asserting for the
