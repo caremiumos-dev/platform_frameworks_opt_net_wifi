@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "878434ee_74d80581",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-03-03T01:49:21Z",
+      "side": 1,
+      "message": "I think this belongs to stopHal() ?",
+      "range": {
+        "startLine": 287,
+        "startChar": 12,
+        "endLine": 287,
+        "endChar": 49
+      },
+      "revId": "9374045e650660270af2134f8c21e8d891ed2382",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
