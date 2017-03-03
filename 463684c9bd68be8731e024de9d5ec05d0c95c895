@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fde6e984_3beadf43",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-03T19:37:42Z",
+      "side": 1,
+      "message": "Store this callback, don\u0027t use a lambda",
+      "range": {
+        "startLine": 85,
+        "startChar": 46,
+        "endLine": 85,
+        "endChar": 56
+      },
+      "revId": "463684c9bd68be8731e024de9d5ec05d0c95c895",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6e74e0e_0ad64b86",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-03T19:37:42Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 154,
+        "startChar": 42,
+        "endLine": 154,
+        "endChar": 51
+      },
+      "revId": "463684c9bd68be8731e024de9d5ec05d0c95c895",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
