@@ -49,6 +49,53 @@
     },
     {
       "key": {
+        "uuid": "7935261d_130fd41d",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-03T05:53:26Z",
+      "side": 1,
+      "message": "depending on how often you write the config vs how often you handle scan results (and thereby the blacklist).  Please consider that you can also turn a hashset into an arraylist pretty trivially:\nList\u003cString\u003e list \u003d new ArrayList\u003cString\u003e(hashset);",
+      "parentUuid": "6ca3e27a_08add236",
+      "range": {
+        "startLine": 258,
+        "startChar": 60,
+        "endLine": 258,
+        "endChar": 77
+      },
+      "revId": "af1ee09663c9a19ead56c08b84bfa9257cf80d40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c438a8ea_266e8e02",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-03T05:53:26Z",
+      "side": 1,
+      "message": "is this ever called in succession to update multiple entries all in a row?",
+      "range": {
+        "startLine": 1018,
+        "startChar": 19,
+        "endLine": 1018,
+        "endChar": 29
+      },
+      "revId": "af1ee09663c9a19ead56c08b84bfa9257cf80d40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2291a62_d4acfea5",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 4
@@ -143,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "91e396bb_6f7afc66",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-03T05:53:26Z",
+      "side": 1,
+      "message": "Since it doesn\u0027t really make sense to have a null bssid here, why not just do a check at the top and return immediately?  This gives us two benefits:\n1. we can avoid the inconsistency with enable vs disable\n2. avoid the extra layer of indentation from the if (so the code is easier to read)",
+      "parentUuid": "93368744_d4bd1c45",
+      "range": {
+        "startLine": 1026,
+        "startChar": 12,
+        "endLine": 1026,
+        "endChar": 31
+      },
+      "revId": "af1ee09663c9a19ead56c08b84bfa9257cf80d40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14503260_890e0c48",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 4
@@ -183,6 +254,76 @@
         "startChar": 16,
         "endLine": 1034,
         "endChar": 40
+      },
+      "revId": "af1ee09663c9a19ead56c08b84bfa9257cf80d40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "427132dc_d3a0f5c1",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-03T05:53:26Z",
+      "side": 1,
+      "message": "if we can get here when a bssid is already blacklisted, it seems that updating the timestamp would be a good idea.  This way we have a more accurate time to refresh since we have a newer reported failure for the bssid.",
+      "parentUuid": "e962659a_6dd36235",
+      "range": {
+        "startLine": 1034,
+        "startChar": 16,
+        "endLine": 1034,
+        "endChar": 40
+      },
+      "revId": "af1ee09663c9a19ead56c08b84bfa9257cf80d40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6dc5e7af_372c8b50",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-03T05:53:26Z",
+      "side": 1,
+      "message": "in the case where the bssid is already blacklisted:\n\nyou could end up in this method where it was blacklisted, but the elapsed time is too old and it should have been cleared.  In this case you might want to check the time to see if it should have been cleared and then update the count.  or you might consider updating the time.  depends on how stale the times could possibly get.\n\nThere are tradeoffs that I can see for both sides, but my main concern would be what happens with timing depending on when a trackBssid call comes in vs a scan result.  It would be good to make sure we do the right thing and don\u0027t just lose data because of a stale timestamp.\n\nWe can chat about this if you want.  I am not sure I am clear on my concern.",
+      "range": {
+        "startLine": 1042,
+        "startChar": 16,
+        "endLine": 1042,
+        "endChar": 17
+      },
+      "revId": "af1ee09663c9a19ead56c08b84bfa9257cf80d40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d380dffe_74efca1e",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-03T05:53:26Z",
+      "side": 1,
+      "message": "something that might really help with separating the logic in this method is to make a private updateBlacklist method.  If that returns true, then you would write out the updated blacklist.  It could look something like:\n\npublic boolean trackBssid(...) {\n   boolean updated \u003d updateBlacklist(...);\n   if (updated \u0026\u0026 fwroam) {\n       write config\n    }\n \n    ....  do other one off stuff\n}\n\nThis would let you separate the logic of maintaining the blacklist from what happens when the blacklist is updated.",
+      "range": {
+        "startLine": 1053,
+        "startChar": 8,
+        "endLine": 1053,
+        "endChar": 23
       },
       "revId": "af1ee09663c9a19ead56c08b84bfa9257cf80d40",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -389,6 +530,30 @@
       "side": 1,
       "message": "I guess you meant AllSingleScanListener instead of PeriodicScanListener? Either way, isn\u0027t that the listener object is private to WifiConnectivityManager? How can we get hold of it?",
       "parentUuid": "c424c8c2_8794d25d",
+      "range": {
+        "startLine": 1058,
+        "startChar": 8,
+        "endLine": 1058,
+        "endChar": 57
+      },
+      "revId": "af1ee09663c9a19ead56c08b84bfa9257cf80d40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61fea4c6_6a9e9cd6",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-03T05:53:26Z",
+      "side": 1,
+      "message": "Sorry, I mixed up the listeners.  I mainly meant that if you had a handle on the appropriate listener, you could directly call onResults.   For this, can you just hand it in...  ah, i see, the listener classes are all private.  In this case, it would have been nice to structure the class so it is easier to test.\n\nGiven the current state, I bet there is a way to use a spy so you can get ahold of what you need to call onResults.",
+      "parentUuid": "8b134915_cb007f72",
       "range": {
         "startLine": 1058,
         "startChar": 8,
