@@ -147,7 +147,15 @@ public class WifiNetworkSelectorTestUtil {
 
         WifiConfiguration[] configs = new WifiConfiguration[ssids.length];
         for (int index = 0; index < ssids.length; index++) {
-            configs[index] = generateWifiConfig(index, 0, ssids[index], false, true, null, null,
+            int networkId = index;
+            for (int k = 0; k < index; k++) {
+                // If two networks have the same SSID and security type, assign them
+                // the same network Id.
+                if (ssids[index].equals(ssids[k]) && (securities[index] == securities[k])) {
+                    networkId = k;
+                }
+            }
+            configs[index] = generateWifiConfig(networkId, 0, ssids[index], false, true, null, null,
                     securities[index]);
         }
 
