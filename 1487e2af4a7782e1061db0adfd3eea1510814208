@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e45cfe29_9a02fb43",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-03T23:43:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af2dba30_b5cc22d7",
+      "range": {
+        "startLine": 27,
+        "startChar": 55,
+        "endLine": 28,
+        "endChar": 50
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddcbdbce_7de4705e",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
         "patchSetId": 3
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "0a6961ab_7bdb524d",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-03T23:43:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83db3196_504a01a3",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 9
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e05041a1_adfa3d9f",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
         "patchSetId": 3
@@ -214,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "411c1395_ccc4980d",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-03T23:43:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24859d94_5b684e79",
+      "range": {
+        "startLine": 76,
+        "startChar": 15,
+        "endLine": 76,
+        "endChar": 37
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bba7d95_98460717",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
         "patchSetId": 3
@@ -249,6 +321,30 @@
       "side": 1,
       "message": "This API is called only at one place right now and we guarantee they are not null. With that said, I think it doesn\u0027t hurt performance much to add a sanity null check here. Will do.",
       "parentUuid": "8bba7d95_98460717",
+      "range": {
+        "startLine": 93,
+        "startChar": 51,
+        "endLine": 94,
+        "endChar": 48
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2a6b9a7_5fd1ad73",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-03T23:43:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6321842c_3f95ce56",
       "range": {
         "startLine": 93,
         "startChar": 51,
@@ -314,6 +410,24 @@
     },
     {
       "key": {
+        "uuid": "913eae46_d7541e35",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-03T23:43:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a2e008e_e6c0ac04",
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "026542bd_fbcac85f",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
         "patchSetId": 3
@@ -349,6 +463,30 @@
       "side": 1,
       "message": "Sure, will add an assert just to verify that isFirmwareRoamingSupported() returns true here.",
       "parentUuid": "026542bd_fbcac85f",
+      "range": {
+        "startLine": 126,
+        "startChar": 3,
+        "endLine": 131,
+        "endChar": 5
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e290847_9f71e226",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-03T23:43:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c206892d_9b610330",
       "range": {
         "startLine": 126,
         "startChar": 3,
@@ -408,6 +546,30 @@
     },
     {
       "key": {
+        "uuid": "392e6fe7_d362b02f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-03T23:43:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f676e6a7_5f1c3fe7",
+      "range": {
+        "startLine": 138,
+        "startChar": 16,
+        "endLine": 138,
+        "endChar": 67
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "272bae88_5000a4d8",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
         "patchSetId": 3
@@ -455,6 +617,30 @@
     },
     {
       "key": {
+        "uuid": "c275a4d8_ba6eadb4",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-03T23:43:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaafc31f_6fe79899",
+      "range": {
+        "startLine": 169,
+        "startChar": 76,
+        "endLine": 169,
+        "endChar": 96
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bb8aa90_20e0371d",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
         "patchSetId": 3
@@ -490,6 +676,30 @@
       "side": 1,
       "message": "Sure.",
       "parentUuid": "4bb8aa90_20e0371d",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 1
+      },
+      "revId": "1487e2af4a7782e1061db0adfd3eea1510814208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44a32330_a96262f4",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-03T23:43:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5794a90_0d363b18",
       "range": {
         "startLine": 182,
         "startChar": 0,
