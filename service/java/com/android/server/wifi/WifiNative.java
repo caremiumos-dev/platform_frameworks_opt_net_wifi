@@ -315,22 +315,29 @@ public class WifiNative {
     /**
      * This method is called repeatedly until the connection to wpa_supplicant is established.
      *
+     * @param isStaIface Whether STA or P2P iface.
      * @return true if connection is established, false otherwise.
+     * TODO: Add unit tests for these once we remove the legacy code.
      */
-    public boolean connectToSupplicant() {
+    public boolean connectToSupplicant(boolean isStaIface) {
         if (HIDL_SUP_ENABLE) {
-            // Start initialization if not already started.
-            if (!mSupplicantP2pIfaceHal.isInitializationStarted()
-                    && !mSupplicantP2pIfaceHal.initialize()) {
-                return false;
+            if (isStaIface) {
+                // Start initialization if not already started.
+                if (!mSupplicantStaIfaceHal.isInitializationStarted()
+                        && !mSupplicantStaIfaceHal.initialize()) {
+                    return false;
+                }
+                // Check if the initialization is complete.
+                return mSupplicantStaIfaceHal.isInitializationComplete();
+            } else {
+                // Start initialization if not already started.
+                if (!mSupplicantP2pIfaceHal.isInitializationStarted()
+                        && !mSupplicantP2pIfaceHal.initialize()) {
+                    return false;
+                }
+                // Check if the initialization is complete.
+                return mSupplicantP2pIfaceHal.isInitializationComplete();
             }
-            if (!mSupplicantStaIfaceHal.isInitializationStarted()
-                    && !mSupplicantStaIfaceHal.initialize()) {
-                return false;
-            }
-            // Check if the initialization is complete.
-            return (mSupplicantP2pIfaceHal.isInitializationComplete()
-                    && mSupplicantStaIfaceHal.isInitializationComplete());
         } else {
             synchronized (sLock) {
                 localLog(mInterfacePrefix + "connectToSupplicant");
