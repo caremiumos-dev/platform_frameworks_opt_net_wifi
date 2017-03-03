@@ -57,6 +57,7 @@ public class SavedNetworkEvaluatorTest {
         setupResource();
         setupWifiConfigManager();
 
+        when(mWifiConnectivityHelper.isFirmwareRoamingSupported()).thenReturn(false);
         when(mClock.getElapsedSinceBootMillis()).thenReturn(SystemClock.elapsedRealtime());
         when(mFrameworkFacade.getIntegerSetting(mContext,
                 Settings.Global.CURATE_SAVED_OPEN_NETWORKS, 0)).thenReturn(0);
@@ -88,6 +89,7 @@ public class SavedNetworkEvaluatorTest {
 
     private SavedNetworkEvaluator mSavedNetworkEvaluator;
     @Mock private WifiConfigManager mWifiConfigManager;
+    @Mock private WifiConnectivityHelper mWifiConnectivityHelper;
     @Mock private Context mContext;
     @Mock private ContentResolver mContentResolver;
     @Mock private FrameworkFacade mFrameworkFacade;
@@ -388,5 +390,37 @@ public class SavedNetworkEvaluatorTest {
         // currently connected BSSID bonus.
         ScanResult chosenScanResult = scanDetails.get(0).getScanResult();
         WifiConfigurationTestUtil.assertConfigurationEqual(savedConfigs[0], candidate);
+    }
+
+    /**
+     * Verify that we stick to the currently connected network if the other one is
+     * just slightly better scored.
+     */
+    @Test
+    public void currentBssidAwardForAllBssidsWithinTheSameNetworkWhenFirmwareRoamingSupported() {
+        String[] ssids = {"\"test1\"", "\"test1\"", "\"test2\""};
+        String[] bssids = {"6c:f3:7f:ae:8c:f3", "6c:f3:7f:ae:8c:f4", "6c:f3:7f:ae:8c:f5"};
+        int[] freqs = {5200, 5240, 5200};
+        String[] caps = {"[WPA2-EAP-CCMP][ESS]", "[WPA2-EAP-CCMP][ESS]"};
+        // test2 has slightly stronger RSSI value than test1
+        int[] levels = {mThresholdMinimumRssi5G + 2, mThresholdMinimumRssi5G + 4};
+        int[] securities = {SECURITY_PSK, SECURITY_PSK};
+
+        ScanDetailsAndWifiConfigs scanDetailsAndConfigs =
+                WifiNetworkSelectorTestUtil.setupScanDetailsAndConfigStore(ssids, bssids,
+                    freqs, caps, levels, securities, mWifiConfigManager, mClock);
+        List<ScanDetail> scanDetails = scanDetailsAndConfigs.getScanDetails();
+        WifiConfiguration[] savedConfigs = scanDetailsAndConfigs.getWifiConfigs();
+
+        // Simuluate we are connected to SSID test1 already.
+        WifiConfiguration candidate = mSavedNetworkEvaluator.evaluateNetworks(scanDetails,
+                savedConfigs[0], null, true, false, null);
+
+        // Even though test2 has higher RSSI value, test1 is chosen because of the
+        // currently connected network bonus.
+        ScanResult chosenScanResult = scanDetails.get(0).getScanResult();
+        WifiConfigurationTestUtil.assertConfigurationEqual(savedConfigs[0], candidate);
+        WifiNetworkSelectorTestUtil.verifySelectedScanResult(mWifiConfigManager,
+                chosenScanResult, candidate);
     }
 }
