@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "80382bff_f38d9010",
+        "filename": "service/java/com/android/server/wifi/FrameworkFacade.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-05T02:18:07Z",
+      "side": 1,
+      "message": "I\u0027ll try removing it.  I did this part first since it was the first error I hit.  I think you are right and the other mock should take care of it.  thanks!",
+      "parentUuid": "c5cebc4d_f58617df",
+      "range": {
+        "startLine": 68,
+        "startChar": 15,
+        "endLine": 68,
+        "endChar": 28
+      },
+      "revId": "2afa670026ad06e173a04741b2d6ae7f4c9ff8f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c73bcb75_ec4b1d58",
         "filename": "tests/wifitests/src/com/android/server/wifi/RecommendedNetworkEvaluatorTest.java",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-03-04T19:24:25Z",
       "side": 1,
       "message": "we can remove this mock. in fact, we could even use another ArgumentCaptor to capture the registered Uris to ensure that they\u0027re correct (no need to do this in this change).",
+      "revId": "2afa670026ad06e173a04741b2d6ae7f4c9ff8f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95d44e2f_dd15f140",
+        "filename": "tests/wifitests/src/com/android/server/wifi/RecommendedNetworkEvaluatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-05T02:18:07Z",
+      "side": 1,
+      "message": "I almost did that...  but I was too sleepy. :)",
+      "parentUuid": "c73bcb75_ec4b1d58",
       "revId": "2afa670026ad06e173a04741b2d6ae7f4c9ff8f6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
