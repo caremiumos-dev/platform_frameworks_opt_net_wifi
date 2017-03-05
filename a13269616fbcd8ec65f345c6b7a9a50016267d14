@@ -22,6 +22,30 @@
       "revId": "a13269616fbcd8ec65f345c6b7a9a50016267d14",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d55051d_3497ba57",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-05T07:49:34Z",
+      "side": 1,
+      "message": "Adjustment according to whether firmware roaming is supported needs to happen. A coupe of reasons why it\u0027s done here:\n\n1) WifiNetworkSelector returns a WifiConfiguration to indicate which network to connect to. WifiConfiguration is structured in a way that its NetworkSelectionStatus attribute contains a ScanResult to specify the candidate. This ScanResult is a valid scan result which cannot have \"any\" as its bssid.\n\n2) I would like to keep the WifiNetworkSelector logic as generic as possible for both firmware roaming supported and not supported. Let WifiConnectivityManager to handle the difference as much as possible. If the experiment results turns out that we even don\u0027t have to make that scoring adjustment for the corner case, it would be much easier to clean up the firmware roaming specific handling from WifiNetworkSelector.",
+      "parentUuid": "8d203676_f5c61d0e",
+      "range": {
+        "startLine": 646,
+        "startChar": 57,
+        "endLine": 646,
+        "endChar": 66
+      },
+      "revId": "a13269616fbcd8ec65f345c6b7a9a50016267d14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
