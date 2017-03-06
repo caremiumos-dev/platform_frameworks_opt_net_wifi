@@ -219,12 +219,8 @@ public class WifiVendorHal {
     public static final Object sLock = new Object();
 
     private void handleRemoteException(RemoteException e) {
-        mErrLog.e("RemoteException in HIDL call " + e);
-    }
-
-    private void noteHidlError(WifiStatus status, String culprit) {
-        mErrLog.e("Error in " + culprit + " code: " + status.code
-                + " (" + status.description + ")");
+        String methodName = niceMethodName(Thread.currentThread().getStackTrace(), 3);
+        mErrLog.err("% RemoteException in HIDL call %").c(methodName).c(e.toString()).flush();
     }
 
     /**
@@ -1273,9 +1269,7 @@ public class WifiVendorHal {
                 if (ok(status)) {
                     mRttResponderCmdId = id;
                     config = frameworkResponderConfigFromHalRttResponder(info);
-                    mLog.d("enabling rtt " + mRttResponderCmdId);
-                } else {
-                    noteHidlError(status, "enableRttResponder");
+                    mLog.i("enabling rtt " + mRttResponderCmdId);
                 }
                 return config;
             } catch (RemoteException e) {

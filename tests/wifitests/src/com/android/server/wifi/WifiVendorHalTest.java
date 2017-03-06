@@ -83,6 +83,7 @@ public class WifiVendorHalTest {
     WifiVendorHal mWifiVendorHal;
     private WifiStatus mWifiStatusSuccess;
     private WifiStatus mWifiStatusFailure;
+    WifiLog mWifiLog;
     @Mock
     private HalDeviceManager mHalDeviceManager;
     @Mock
@@ -113,13 +114,13 @@ public class WifiVendorHalTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
+        mWifiLog = new FakeWifiLog();
         mWifiStatusSuccess = new WifiStatus();
         mWifiStatusSuccess.code = WifiStatusCode.SUCCESS;
         mWifiStatusFailure = new WifiStatus();
         mWifiStatusFailure.code = WifiStatusCode.ERROR_UNKNOWN;
         mWifiStatusFailure.description = "I don't even know what a Mock Turtle is.";
         when(mIWifiStaIface.enableLinkLayerStatsCollection(false)).thenReturn(mWifiStatusSuccess);
-
 
         // Setup the HalDeviceManager mock's start/stop behaviour. This can be overridden in
         // individual tests, if needed.
@@ -410,6 +411,43 @@ public class WifiVendorHalTest {
 
         verify(mHalDeviceManager, never()).createStaIface(eq(null), eq(null));
         verify(mHalDeviceManager, never()).createRttController(any(IWifiIface.class));
+    }
+
+    /**
+     * Check that enableVerboseLogging changes the logging handle
+     */
+    @Test
+    public void testEnableVerboseLogging() {
+        assertNotEquals(mWifiVendorHal.mErrLog, mWifiVendorHal.mLog);
+        Object mlogBefore = mWifiVendorHal.mLog;
+        mWifiVendorHal.enableVerboseLogging(true);
+        assertEquals(mWifiVendorHal.mErrLog, mWifiVendorHal.mLog);
+        assertNotEquals(mlogBefore, mWifiVendorHal.mLog);
+        mWifiVendorHal.enableVerboseLogging(false);
+        assertNotEquals(mWifiVendorHal.mErrLog, mWifiVendorHal.mLog);
+    }
+
+    /**
+     * Test that enter logs when verbose logging is enabled
+     */
+    @Test
+    public void testEnterLogging() {
+        mWifiVendorHal.mErrLog = spy(mWifiLog);
+        mWifiVendorHal.enableVerboseLogging(true);
+        mWifiVendorHal.installPacketFilter(new byte[0]);
+        verify(mWifiVendorHal.mErrLog).trace("% filter length %");
+    }
+
+    /**
+     * Test that boolResult logs a false result
+     */
+    @Test
+    public void testBoolResultFalse() {
+        mWifiLog = spy(mWifiLog);
+        mWifiVendorHal.mErrLog = mWifiLog;
+        mWifiVendorHal.mLog = mWifiLog;
+        assertFalse(mWifiVendorHal.getScanCapabilities(new WifiNative.ScanCapabilities()));
+        verify(mWifiLog).err("% returns %");
     }
 
     /**
@@ -892,6 +930,20 @@ public class WifiVendorHalTest {
         assertFalse(mWifiVendorHal.setCountryCodeHal("ZZZ"));
 
         verify(mIWifiApIface).setCountryCode(eq(expected));
+    }
+
+    /**
+     * Test that RemoteException is caught and logged.
+     */
+    @Test
+    public void testRemoteExceptionIsHandled() throws Exception {
+        mWifiLog = spy(mWifiLog);
+        mWifiVendorHal.mErrLog = mWifiLog;
+        when(mIWifiApIface.setCountryCode(any()))
+                .thenThrow(new RemoteException("oops"));
+        assertTrue(mWifiVendorHal.startVendorHalAp());
+        assertFalse(mWifiVendorHal.setCountryCodeHal("CA"));
+        verify(mWifiLog).err(any());
     }
 
     /**
