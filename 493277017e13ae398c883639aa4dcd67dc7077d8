@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08db5a50_8dbae1c7",
+        "filename": "service/java/com/android/server/wifi/FrameworkFacade.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2017-03-06T20:27:40Z",
+      "side": 1,
+      "message": "{@see ContentResolver#registerContentObserver(Uri,boolean,ContentObserver)}",
+      "range": {
+        "startLine": 64,
+        "startChar": 6,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "493277017e13ae398c883639aa4dcd67dc7077d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1e806be_ce3b5e08",
+        "filename": "tests/wifitests/src/com/android/server/wifi/SavedNetworkEvaluatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2017-03-06T20:27:40Z",
+      "side": 1,
+      "message": "nit: getValue()",
+      "range": {
+        "startLine": 91,
+        "startChar": 42,
+        "endLine": 91,
+        "endChar": 63
+      },
+      "revId": "493277017e13ae398c883639aa4dcd67dc7077d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
