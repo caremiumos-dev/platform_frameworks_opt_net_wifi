@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b13aa5a_86b48e5f",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-06T22:25:26Z",
+      "side": 1,
+      "message": "Can we rename this to mLog \u0026 the other one to mVerboseLog instead? The name error here kind of implies that this is only used for error logs even though that is what we\u0027re doing in principle. We do have some non error logs being printed using mErrorLog.\n\nmVerboseLog sounds more natural to me since that is used when when enableVerboseLogging is set.",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 19
+      },
+      "revId": "4d9139ee6b645209c731c81ea46caf777922c928",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c91564a_03b6545f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-06T22:25:26Z",
+      "side": 1,
+      "message": "I don\u0027t like these tests which actually access members which should have been private.",
+      "range": {
+        "startLine": 417,
+        "startChar": 0,
+        "endLine": 428,
+        "endChar": 5
+      },
+      "revId": "4d9139ee6b645209c731c81ea46caf777922c928",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68434419_77a6306a",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-06T22:25:26Z",
+      "side": 1,
+      "message": "I like these. These test the actual end output from the module.",
+      "range": {
+        "startLine": 433,
+        "startChar": 0,
+        "endLine": 439,
+        "endChar": 5
+      },
+      "revId": "4d9139ee6b645209c731c81ea46caf777922c928",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
