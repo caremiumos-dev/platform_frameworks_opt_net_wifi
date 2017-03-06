@@ -767,8 +767,6 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     private State mSupplicantStartingState = new SupplicantStartingState();
     /* Driver loaded and supplicant ready */
     private State mSupplicantStartedState = new SupplicantStartedState();
-    /* Waiting for supplicant to stop and monitor to exit */
-    private State mSupplicantStoppingState = new SupplicantStoppingState();
     /* Wait until p2p is disabled
      * This is a special state which is entered right after we exit out of DriverStartedState
      * before transitioning to another state.
@@ -1016,7 +1014,6 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                         addState(mDisconnectedState, mConnectModeState);
                         addState(mWpsRunningState, mConnectModeState);
                 addState(mWaitForP2pDisableState, mSupplicantStartedState);
-            addState(mSupplicantStoppingState, mDefaultState);
             addState(mSoftApState, mDefaultState);
         // CHECKSTYLE:ON IndentationCheck
 
@@ -3253,21 +3250,6 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         mLastNetworkId = WifiConfiguration.INVALID_NETWORK_ID;
     }
 
-    private void handleSupplicantConnectionLoss(boolean killSupplicant) {
-        /* Socket connection can be lost when we do a graceful shutdown
-        * or when the driver is hung. Ensure supplicant is stopped here.
-        */
-        if (killSupplicant) {
-            mWifiMonitor.stopAllMonitoring();
-            if (!mWifiNative.disableSupplicant()) {
-                loge("Failed to disable supplicant after connection loss");
-            }
-        }
-        mWifiNative.closeSupplicantConnection();
-        sendSupplicantConnectionChangedBroadcast(false);
-        setWifiState(WIFI_STATE_DISABLED);
-    }
-
     void handlePreDhcpSetup() {
         if (!mBluetoothConnectionActive) {
             /*
@@ -4184,7 +4166,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                 // Transitioning to Disconnected state will trigger a scan and subsequently AutoJoin
                 transitionTo(mDisconnectedState);
             } else if (mOperationalMode == DISABLED_MODE) {
-                transitionTo(mSupplicantStoppingState);
+                stopSupplicant();
             }
 
             // Set the right suspend mode settings
@@ -4221,13 +4203,12 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     if (mP2pSupported) {
                         transitionTo(mWaitForP2pDisableState);
                     } else {
-                        transitionTo(mSupplicantStoppingState);
+                        stopSupplicant();
                     }
                     break;
                 case WifiMonitor.SUP_DISCONNECTION_EVENT:  /* Supplicant connection lost */
                     loge("Connection lost, restart supplicant");
-                    handleSupplicantConnectionLoss(true);
-                    handleNetworkDisconnect();
+                    stopSupplicant();
                     mSupplicantStateTracker.sendMessage(CMD_RESET_SUPPLICANT_STATE);
                     if (mP2pSupported) {
                         transitionTo(mWaitForP2pDisableState);
@@ -4263,7 +4244,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                 case CMD_SET_OPERATIONAL_MODE:
                     mOperationalMode = message.arg1;
                     if (mOperationalMode == DISABLED_MODE) {
-                        transitionTo(mSupplicantStoppingState);
+                        stopSupplicant();
                     }
                     break;
                 case CMD_TARGET_BSSID:
@@ -4372,42 +4353,35 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         }
     }
 
-    class SupplicantStoppingState extends State {
-        @Override
-        public void enter() {
-            /* Send any reset commands to supplicant before shutting it down */
-            handleNetworkDisconnect();
+    private void stopSupplicant() {
+        /* Send any reset commands to supplicant before shutting it down */
+        handleNetworkDisconnect();
 
-            String suppState = System.getProperty("init.svc.wpa_supplicant");
-            if (suppState == null) suppState = "unknown";
+        String suppState = System.getProperty("init.svc.wpa_supplicant");
+        if (suppState == null) suppState = "unknown";
 
-            setWifiState(WIFI_STATE_DISABLING);
-            mSupplicantStateTracker.sendMessage(CMD_RESET_SUPPLICANT_STATE);
-            logd("SupplicantStoppingState: disableSupplicant "
-                    + " init.svc.wpa_supplicant=" + suppState);
-            if (mWifiNative.disableSupplicant()) {
-                mWifiNative.closeSupplicantConnection();
-                sendSupplicantConnectionChangedBroadcast(false);
-                setWifiState(WIFI_STATE_DISABLED);
-            } else {
-                // Failed to disable supplicant
-                handleSupplicantConnectionLoss(true);
-            }
-            transitionTo(mInitialState);
-        }
+        setWifiState(WIFI_STATE_DISABLING);
+        mSupplicantStateTracker.sendMessage(CMD_RESET_SUPPLICANT_STATE);
+        logd("stopSupplicant " + " init.svc.wpa_supplicant=" + suppState);
+        mWifiNative.disableSupplicant();
+        mWifiNative.closeSupplicantConnection();
+        sendSupplicantConnectionChangedBroadcast(false);
+        setWifiState(WIFI_STATE_DISABLED);
+
+        transitionTo(mInitialState);
     }
 
     class WaitForP2pDisableState extends State {
-        private State mTransitionToState;
+        private boolean mNeedToStopSupplicant = false;
         @Override
         public void enter() {
             switch (getCurrentMessage().what) {
                 case WifiMonitor.SUP_DISCONNECTION_EVENT:
-                    mTransitionToState = mInitialState;
+                    mNeedToStopSupplicant = false;
                     break;
                 case CMD_STOP_SUPPLICANT:
                 default:
-                    mTransitionToState = mSupplicantStoppingState;
+                    mNeedToStopSupplicant = true;
                     break;
             }
             p2pSendMessage(WifiStateMachine.CMD_DISABLE_P2P_REQ);
@@ -4418,7 +4392,11 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
 
             switch(message.what) {
                 case WifiStateMachine.CMD_DISABLE_P2P_RSP:
-                    transitionTo(mTransitionToState);
+                    if (mNeedToStopSupplicant) {
+                        stopSupplicant();
+                    } else {
+                        transitionTo(mInitialState);
+                    }
                     break;
                 /* Defer wifi start/shut and driver commands */
                 case WifiMonitor.SUPPLICANT_STATE_CHANGE_EVENT:
@@ -4458,7 +4436,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                         mOperationalMode = CONNECT_MODE;
                         transitionTo(mDisconnectedState);
                     } else if (message.arg1 == DISABLED_MODE) {
-                        transitionTo(mSupplicantStoppingState);
+                        stopSupplicant();
                     }
                     // Nothing to do
                     break;
@@ -4807,7 +4785,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                         log("Detected an interface down, restart driver");
                         // Rely on the fact that this will force us into killing supplicant and then
                         // restart supplicant from a clean state.
-                        transitionTo(mSupplicantStoppingState);
+                        stopSupplicant();
                         sendMessage(CMD_START_SUPPLICANT);
                         break;
                     }
@@ -6392,7 +6370,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     if (message.arg1 != CONNECT_MODE) {
                         mOperationalMode = message.arg1;
                         if (mOperationalMode == DISABLED_MODE) {
-                            transitionTo(mSupplicantStoppingState);
+                            stopSupplicant();
                         } else if (mOperationalMode == SCAN_ONLY_MODE
                                 || mOperationalMode == SCAN_ONLY_WITH_WIFI_OFF_MODE) {
                             p2pSendMessage(CMD_DISABLE_P2P_REQ);
