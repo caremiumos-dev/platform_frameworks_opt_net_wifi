@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e318a6e_deed935b",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1828,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T19:53:12Z",
+      "side": 1,
+      "message": "I don\u0027t see where we make use of this input parameter.",
+      "range": {
+        "startLine": 1828,
+        "startChar": 87,
+        "endLine": 1828,
+        "endChar": 95
+      },
+      "revId": "628d75b1dedb8df7a7ad2dd14835f46b8d4aa51c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
