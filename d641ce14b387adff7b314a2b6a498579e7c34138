@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c60cf48_153f46ec",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaNetworkHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-07T21:46:50Z",
+      "side": 1,
+      "message": "if(!A \u0026\u0026 B) {...}\n  else if (!A \u0026\u0026 !B) {...}\n\nis a bit weird\n\nSimplify with:\n\n  if(!A){\n    if (B) {...}\n    else {...}\n  }",
+      "range": {
+        "startLine": 257,
+        "startChar": 12,
+        "endLine": 257,
+        "endChar": 39
+      },
+      "revId": "d641ce14b387adff7b314a2b6a498579e7c34138",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
