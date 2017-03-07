@@ -93,6 +93,29 @@
       "revId": "7b5e10dfe8b32782b0934a7c42ba875d37db937f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ff663e5_87ad5145",
+        "filename": "service/java/com/android/server/wifi/scanner/WificondWifiScannerImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-07T23:11:52Z",
+      "side": 1,
+      "message": "Don\u0027t think this is needed here.",
+      "range": {
+        "startLine": 1034,
+        "startChar": 10,
+        "endLine": 1034,
+        "endChar": 85
+      },
+      "revId": "7b5e10dfe8b32782b0934a7c42ba875d37db937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
