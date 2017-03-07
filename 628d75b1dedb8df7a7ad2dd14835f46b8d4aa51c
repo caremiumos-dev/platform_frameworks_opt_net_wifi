@@ -94,6 +94,30 @@
       "revId": "628d75b1dedb8df7a7ad2dd14835f46b8d4aa51c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dd26ee1_f4277b5a",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1828,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-07T20:39:12Z",
+      "side": 1,
+      "message": "I\u0027ve added the plumbing till WifiStateMachine now. You can take over from here.",
+      "parentUuid": "9854a883_62148532",
+      "range": {
+        "startLine": 1828,
+        "startChar": 87,
+        "endLine": 1828,
+        "endChar": 95
+      },
+      "revId": "628d75b1dedb8df7a7ad2dd14835f46b8d4aa51c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
