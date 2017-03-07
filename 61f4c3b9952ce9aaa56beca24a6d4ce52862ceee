@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10e8f470_6073a8ea",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-07T02:53:35Z",
+      "side": 1,
+      "message": "Sorry. I\u0027m sorry if I wasn\u0027t clear in my comments on the previous revision. I wanted this to be mLog \u0026 the variable in line 90 to be mVerboseLog.\nThat way all the logs that we want to be always logged will use mLog.() and all the logs that are controllable via the verbose settings to use mVerboseLog.().",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 23
+      },
+      "revId": "61f4c3b9952ce9aaa56beca24a6d4ce52862ceee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
