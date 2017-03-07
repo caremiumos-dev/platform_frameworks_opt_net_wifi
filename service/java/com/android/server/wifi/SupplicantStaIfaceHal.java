@@ -1825,7 +1825,7 @@ public class SupplicantStaIfaceHal {
         }
 
         @Override
-        public void onAssociationRejected(byte[/* 6 */] bssid, int statusCode) {
+        public void onAssociationRejected(byte[/* 6 */] bssid, int statusCode, boolean timedOut) {
             logCallback("onAssociationRejected");
             synchronized (mLock) {
                 // TODO(b/35464954): Need to figure out when to trigger
