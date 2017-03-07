@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "60897a18_41e59ebf",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T00:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7935261d_130fd41d",
+      "range": {
+        "startLine": 258,
+        "startChar": 60,
+        "endLine": 258,
+        "endChar": 77
+      },
+      "revId": "af1ee09663c9a19ead56c08b84bfa9257cf80d40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c438a8ea_266e8e02",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 4
@@ -262,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "b7f2925c_c03803fc",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T00:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "834970df_53b7671c",
+      "range": {
+        "startLine": 1026,
+        "startChar": 12,
+        "endLine": 1026,
+        "endChar": 31
+      },
+      "revId": "af1ee09663c9a19ead56c08b84bfa9257cf80d40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14503260_890e0c48",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 4
@@ -345,6 +393,30 @@
       "side": 1,
       "message": "I actually also noticed that. Will update the time stamp.",
       "parentUuid": "427132dc_d3a0f5c1",
+      "range": {
+        "startLine": 1034,
+        "startChar": 16,
+        "endLine": 1034,
+        "endChar": 40
+      },
+      "revId": "af1ee09663c9a19ead56c08b84bfa9257cf80d40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53ad9820_05d8ee59",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T00:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45de88ab_7eefac49",
       "range": {
         "startLine": 1034,
         "startChar": 16,
@@ -451,6 +523,30 @@
     },
     {
       "key": {
+        "uuid": "ce01ed05_8bdfe48a",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T00:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60ee4c01_31224150",
+      "range": {
+        "startLine": 1053,
+        "startChar": 8,
+        "endLine": 1053,
+        "endChar": 23
+      },
+      "revId": "af1ee09663c9a19ead56c08b84bfa9257cf80d40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d50a367_fef0bd4a",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 4
@@ -486,6 +582,30 @@
       "side": 1,
       "message": "Nope. Will fix.",
       "parentUuid": "6d50a367_fef0bd4a",
+      "range": {
+        "startLine": 1089,
+        "startChar": 16,
+        "endLine": 1089,
+        "endChar": 31
+      },
+      "revId": "af1ee09663c9a19ead56c08b84bfa9257cf80d40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ddf3b088_1408f8c5",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1089,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T00:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ca5b030_b736bf6e",
       "range": {
         "startLine": 1089,
         "startChar": 16,
@@ -545,6 +665,30 @@
     },
     {
       "key": {
+        "uuid": "8004a63d_a786af9d",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T00:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ba4632a_b69474aa",
+      "range": {
+        "startLine": 265,
+        "startChar": 16,
+        "endLine": 265,
+        "endChar": 64
+      },
+      "revId": "af1ee09663c9a19ead56c08b84bfa9257cf80d40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2cb2ef8_7ac917da",
         "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
         "patchSetId": 4
@@ -592,6 +736,30 @@
     },
     {
       "key": {
+        "uuid": "6361eb0a_befd5acc",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T00:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f2981a6_01ef5d7c",
+      "range": {
+        "startLine": 385,
+        "startChar": 20,
+        "endLine": 388,
+        "endChar": 28
+      },
+      "revId": "af1ee09663c9a19ead56c08b84bfa9257cf80d40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79676662_e2fa3a22",
         "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
         "patchSetId": 4
@@ -603,6 +771,30 @@
       "writtenOn": "2017-03-01T05:51:36Z",
       "side": 1,
       "message": "this is confusing.  we could be connected and disconnected?  or not connected and not disconnected?",
+      "range": {
+        "startLine": 400,
+        "startChar": 0,
+        "endLine": 401,
+        "endChar": 63
+      },
+      "revId": "af1ee09663c9a19ead56c08b84bfa9257cf80d40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ead0770_2ac795c0",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T00:38:42Z",
+      "side": 1,
+      "message": "WifiStateMachine has transient states between Disconnected and Connected states. WifiConnectivityManager basically takes the results of two WifiStateMachine APIs (WifiStateMachine#isConnected and WifiStateMachine#isDisonnected) and pass them in there.",
+      "parentUuid": "79676662_e2fa3a22",
       "range": {
         "startLine": 400,
         "startChar": 0,
