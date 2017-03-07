@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c46fa3c9_948501af",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-07T00:59:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b13aa5a_86b48e5f",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 19
+      },
+      "revId": "4d9139ee6b645209c731c81ea46caf777922c928",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c91564a_03b6545f",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-06T22:25:26Z",
       "side": 1,
       "message": "I don\u0027t like these tests which actually access members which should have been private.",
+      "range": {
+        "startLine": 417,
+        "startChar": 0,
+        "endLine": 428,
+        "endChar": 5
+      },
+      "revId": "4d9139ee6b645209c731c81ea46caf777922c928",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76bd831_d529f926",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-07T00:59:09Z",
+      "side": 1,
+      "message": "OK - replaced with a more behavior-based test.",
+      "parentUuid": "0c91564a_03b6545f",
       "range": {
         "startLine": 417,
         "startChar": 0,
