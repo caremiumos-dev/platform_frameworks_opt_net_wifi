@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61cfa813_9d53a453",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5796,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-07T07:33:39Z",
+      "side": 1,
+      "message": "do we want to do these two things after the if/else?  (why don\u0027t we do the link layer stats with a static ip?)",
+      "range": {
+        "startLine": 5794,
+        "startChar": 16,
+        "endLine": 5796,
+        "endChar": 40
+      },
+      "revId": "64a0282071f1981968cf17148f156cca87fe0173",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14c549b5_b1a9a31d",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-07T07:33:39Z",
+      "side": 1,
+      "message": "want to also check the case where the IpConfiguraiton object itself is null?",
+      "range": {
+        "startLine": 191,
+        "startChar": 8,
+        "endLine": 191,
+        "endChar": 36
+      },
+      "revId": "64a0282071f1981968cf17148f156cca87fe0173",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
