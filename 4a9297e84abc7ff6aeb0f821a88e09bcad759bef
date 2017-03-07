@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cae5dc05_97d41a9e",
+        "filename": "service/java/com/android/server/wifi/SupplicantP2pIfaceHal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1748,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-07T21:30:52Z",
+      "side": 1,
+      "message": "Didn\u0027t know you could abbreviate the class",
+      "range": {
+        "startLine": 1748,
+        "startChar": 33,
+        "endLine": 1748,
+        "endChar": 42
+      },
+      "revId": "4a9297e84abc7ff6aeb0f821a88e09bcad759bef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
