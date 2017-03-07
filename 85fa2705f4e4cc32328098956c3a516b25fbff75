@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8c56f8c_96573964",
+        "filename": "tests/wifitests/src/com/android/server/wifi/util/WifiPermissionsUtilTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-07T22:03:47Z",
+      "side": 1,
+      "message": "Unused",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 43
+      },
+      "revId": "85fa2705f4e4cc32328098956c3a516b25fbff75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "66dcf5b3_f50f5503",
+        "filename": "tests/wifitests/src/com/android/server/wifi/util/WifiPermissionsUtilTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-07T22:03:47Z",
+      "side": 1,
+      "message": "Unused",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 38
+      },
+      "revId": "85fa2705f4e4cc32328098956c3a516b25fbff75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
