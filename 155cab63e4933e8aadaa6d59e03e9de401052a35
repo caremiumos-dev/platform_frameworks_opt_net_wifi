@@ -72,6 +72,29 @@
     },
     {
       "key": {
+        "uuid": "0153d955_343a7abc",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-07T22:19:27Z",
+      "side": 1,
+      "message": "it would probably be a good idea to define this as a static, then use that anywhere you need to return -1.",
+      "range": {
+        "startLine": 34,
+        "startChar": 40,
+        "endLine": 34,
+        "endChar": 42
+      },
+      "revId": "155cab63e4933e8aadaa6d59e03e9de401052a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92e8e78c_f41f3cac",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
         "patchSetId": 4
@@ -396,6 +419,29 @@
         "startChar": 0,
         "endLine": 75,
         "endChar": 50
+      },
+      "revId": "155cab63e4933e8aadaa6d59e03e9de401052a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d32e3050_ae0f3027",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-07T22:19:27Z",
+      "side": 1,
+      "message": "actually, with the fix that you have above to set the max values to -1, you can do the check for it not being supported, then log.  and then just return mMaxNumBlacklistBssid (which is now -1 from the changes above).\n\nI could go either way on this.  I tend to prefer having as much normal path not guarded by if/else and get the error cases out of the way first so the normal path proceeds cleanly and indented as little as possible.",
+      "range": {
+        "startLine": 77,
+        "startChar": 15,
+        "endLine": 77,
+        "endChar": 38
       },
       "revId": "155cab63e4933e8aadaa6d59e03e9de401052a35",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
