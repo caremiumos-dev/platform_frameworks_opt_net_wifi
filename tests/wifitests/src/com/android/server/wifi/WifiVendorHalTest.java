@@ -565,7 +565,7 @@ public class WifiVendorHalTest {
 
     /**
      * Test enablement of link layer stats after startup
-     * <p>
+     *
      * Request link layer stats before HAL start
      * - should not make it to the HAL layer
      * Start the HAL in STA mode
@@ -590,7 +590,7 @@ public class WifiVendorHalTest {
 
     /**
      * Test that link layer stats are not enabled and harmless in AP mode
-     * <p>
+     *
      * Start the HAL in AP mode
      * - stats should not be enabled
      * Request link layer stats
@@ -610,7 +610,13 @@ public class WifiVendorHalTest {
         verify(mIWifiStaIface, never()).getLinkLayerStats(any());
     }
 
-    // TODO(b/34900534) add test for correct MOVE CORRESPONDING of fields
+    /**
+     * Test that the link layer stats fields are populated correctly
+     */
+    @Test
+    public void testLinkLayerStatsAssignment() throws Exception {
+//TODO
+    }
 
     /**
      * Test that getFirmwareVersion() and getDriverVersion() work
