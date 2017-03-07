@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04211459_aab048d6",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3981,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-07T18:33:16Z",
+      "side": 1,
+      "message": "I definitely agree that we need to account for this, but I don\u0027t think that dropping the CMD_START_SUPPLICANT message is quite the right location.  I am concerned with the timing of this message and want to be very careful that we don\u0027t accidentally lose a message in the regular case.  I will look and see if I can suggest a better way to handle this, maybe in WifiController.  Unfortunately, the current implementation of WifiStateMachine is a bit messy with startup and it won\u0027t be a very clean.  In good news, this will be covered with the WSM refactor...  but we don\u0027t have that yet.  Please followup if I don\u0027t post an update or alternate CL in the next day!!!",
+      "range": {
+        "startLine": 3981,
+        "startChar": 21,
+        "endLine": 3981,
+        "endChar": 41
+      },
+      "revId": "95485be93fc9cb3989149777078fdfad6ebd2f63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
