@@ -118,6 +118,30 @@
       "revId": "628d75b1dedb8df7a7ad2dd14835f46b8d4aa51c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ff5d172_35510bb3",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1828,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T21:23:14Z",
+      "side": 1,
+      "message": "Oh, thanks.",
+      "parentUuid": "8dd26ee1_f4277b5a",
+      "range": {
+        "startLine": 1828,
+        "startChar": 87,
+        "endLine": 1828,
+        "endChar": 95
+      },
+      "revId": "628d75b1dedb8df7a7ad2dd14835f46b8d4aa51c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
