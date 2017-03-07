@@ -70,6 +70,30 @@
       "revId": "628d75b1dedb8df7a7ad2dd14835f46b8d4aa51c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9854a883_62148532",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1828,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T20:24:56Z",
+      "side": 1,
+      "message": "In order for WifiStateMachine to handle this, SupplicantStaIfaceHal needs to populate this piece of information, right? Anyway, if you are busy I can take care of this.",
+      "parentUuid": "a3ca856f_d2b1d133",
+      "range": {
+        "startLine": 1828,
+        "startChar": 87,
+        "endLine": 1828,
+        "endChar": 95
+      },
+      "revId": "628d75b1dedb8df7a7ad2dd14835f46b8d4aa51c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
