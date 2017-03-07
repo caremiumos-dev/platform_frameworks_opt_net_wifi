@@ -46,6 +46,30 @@
       "revId": "628d75b1dedb8df7a7ad2dd14835f46b8d4aa51c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3ca856f_d2b1d133",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1828,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-07T20:18:03Z",
+      "side": 1,
+      "message": "Yes. It\u0027s not being used. I thought you were going to make the changes needed to handle this in framework. we need to make changes in WifiStateMachine \u0026 WCM to handle this?\n\nAnyway, we can do that in a separate CL, I want to add the HIDL interface in fist.",
+      "parentUuid": "f9dfd57d_52432097",
+      "range": {
+        "startLine": 1828,
+        "startChar": 87,
+        "endLine": 1828,
+        "endChar": 95
+      },
+      "revId": "628d75b1dedb8df7a7ad2dd14835f46b8d4aa51c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
