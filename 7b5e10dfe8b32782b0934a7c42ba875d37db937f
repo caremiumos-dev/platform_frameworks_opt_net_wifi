@@ -116,6 +116,30 @@
       "revId": "7b5e10dfe8b32782b0934a7c42ba875d37db937f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3231b272_c3ac4cc1",
+        "filename": "service/java/com/android/server/wifi/scanner/WificondWifiScannerImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-03-07T23:14:44Z",
+      "side": 1,
+      "message": "Ah.. I forgot to remove it when fixing merge conflict.\nDone.",
+      "parentUuid": "3ff663e5_87ad5145",
+      "range": {
+        "startLine": 1034,
+        "startChar": 10,
+        "endLine": 1034,
+        "endChar": 85
+      },
+      "revId": "7b5e10dfe8b32782b0934a7c42ba875d37db937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
