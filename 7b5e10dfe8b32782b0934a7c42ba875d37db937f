@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50d11181_7abceba8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-07T21:45:15Z",
+      "side": 1,
+      "message": "Might want to put in a little more detail since it isn\u0027t obvious which way the rename goes.  Maybe:\nRename SupplicantWifiScannerImpl to NewClassName",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 32
+      },
+      "revId": "7b5e10dfe8b32782b0934a7c42ba875d37db937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d488ffc8_94f14c3e",
+        "filename": "service/java/com/android/server/wifi/scanner/WificondWifiScannerImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-07T21:45:15Z",
+      "side": 1,
+      "message": "the extra \"Wifi\" in here seems a bit unnecessary.  I think WificondScannerImpl would be sufficient",
+      "range": {
+        "startLine": 47,
+        "startChar": 21,
+        "endLine": 47,
+        "endChar": 25
+      },
+      "revId": "7b5e10dfe8b32782b0934a7c42ba875d37db937f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
