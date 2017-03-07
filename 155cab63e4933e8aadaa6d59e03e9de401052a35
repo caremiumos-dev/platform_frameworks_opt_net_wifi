@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "a69a74f0_543b9650",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T22:10:00Z",
+      "side": 1,
+      "message": "Oh, actually \"{@link android.net.wifi.WifiManager#WIFI_FEATURE_CONTROL_ROAMING}.\" is part of that sentence. Does it make more sense to you now?",
+      "parentUuid": "a55b26e9_736780c7",
+      "range": {
+        "startLine": 42,
+        "startChar": 22,
+        "endLine": 42,
+        "endChar": 36
+      },
+      "revId": "155cab63e4933e8aadaa6d59e03e9de401052a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86ccc1e9_4039460c",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
         "patchSetId": 4
@@ -449,6 +473,24 @@
       "side": 1,
       "message": "I am just suggesting that you add the method to the log error.  Since the calls are not necessarily close together, it may not be obvious what is going on if you just see \"Firmware roaming is not supported.\"",
       "parentUuid": "6de6681d_e8ce0b66",
+      "revId": "155cab63e4933e8aadaa6d59e03e9de401052a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ecfa914_51c692fb",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T22:10:00Z",
+      "side": 1,
+      "message": "Sure, will add the method name there.",
+      "parentUuid": "8ecf5332_0691e273",
       "revId": "155cab63e4933e8aadaa6d59e03e9de401052a35",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
