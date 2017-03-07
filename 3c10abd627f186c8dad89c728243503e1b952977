@@ -22,6 +22,30 @@
       "revId": "3c10abd627f186c8dad89c728243503e1b952977",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95f3e14a_474667a9",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-07T21:30:38Z",
+      "side": 1,
+      "message": "We don\u0027t use this anymore. I\u0027ll removing all of these string parsing in a day or 2 once HIDL is stable. I\u0027m just making this change so that it compiles.",
+      "parentUuid": "5cb0cb0e_e24d0800",
+      "range": {
+        "startLine": 1044,
+        "startChar": 62,
+        "endLine": 1044,
+        "endChar": 67
+      },
+      "revId": "3c10abd627f186c8dad89c728243503e1b952977",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
