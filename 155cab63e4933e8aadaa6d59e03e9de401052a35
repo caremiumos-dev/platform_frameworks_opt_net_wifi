@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "dd2ef3cc_2b6fad37",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-07T22:12:58Z",
+      "side": 1,
+      "message": "ah, ok.  yeah.  the formatting made it confusing with the line length.",
+      "parentUuid": "a69a74f0_543b9650",
+      "range": {
+        "startLine": 42,
+        "startChar": 22,
+        "endLine": 42,
+        "endChar": 36
+      },
+      "revId": "155cab63e4933e8aadaa6d59e03e9de401052a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86ccc1e9_4039460c",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
         "patchSetId": 4
