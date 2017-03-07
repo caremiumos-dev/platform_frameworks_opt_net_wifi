@@ -22,6 +22,30 @@
       "revId": "628d75b1dedb8df7a7ad2dd14835f46b8d4aa51c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9dfd57d_52432097",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1828,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T19:59:04Z",
+      "side": 1,
+      "message": "I guess the question is, when broadcasting the reject event, can we attach the timedOut value?",
+      "parentUuid": "2e318a6e_deed935b",
+      "range": {
+        "startLine": 1828,
+        "startChar": 87,
+        "endLine": 1828,
+        "endChar": 95
+      },
+      "revId": "628d75b1dedb8df7a7ad2dd14835f46b8d4aa51c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
