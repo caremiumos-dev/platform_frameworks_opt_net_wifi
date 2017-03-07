@@ -2497,6 +2497,45 @@ public class WifiConfigManagerTest {
     }
 
     /**
+     * Verifies the loading of networks using {@link WifiConfigManager#loadFromStore()} adds quotes
+     * around ascii psk's when loading from store.
+     */
+    @Test
+    public void testUnquotedAsciiPassphraseLoadFromStore() throws Exception {
+        WifiConfiguration pskNetworkWithNoQuotes = WifiConfigurationTestUtil.createPskNetwork();
+        pskNetworkWithNoQuotes.preSharedKey = "pskWithNoQuotes";
+        WifiConfiguration pskNetworkWithQuotes = WifiConfigurationTestUtil.createPskNetwork();
+        pskNetworkWithQuotes.preSharedKey = "\"pskWithQuotes\"";
+        WifiConfiguration pskNetworkWithHexString = WifiConfigurationTestUtil.createPskNetwork();
+        pskNetworkWithHexString.preSharedKey =
+                "945ef00c463c2a7c2496376b13263d1531366b46377179a4b17b393687450779";
+
+        List<WifiConfiguration> sharedNetworks = new ArrayList<WifiConfiguration>() {{
+                add(pskNetworkWithQuotes);
+                add(pskNetworkWithNoQuotes);
+                add(pskNetworkWithHexString);
+            }};
+        setupStoreDataForRead(sharedNetworks, new ArrayList<>(), new HashSet<String>());
+        assertTrue(mWifiConfigManager.loadFromStore());
+
+        verify(mWifiConfigStore).read();
+        verify(mWifiConfigStoreLegacy, never()).read();
+
+        List<WifiConfiguration> retrievedNetworks =
+                mWifiConfigManager.getConfiguredNetworksWithPasswords();
+
+        // The network with no quotes should now have quotes, the others should remain the same.
+        pskNetworkWithNoQuotes.preSharedKey = "\"pskWithNoQuotes\"";
+        List<WifiConfiguration> expectedNetworks = new ArrayList<WifiConfiguration>() {{
+                add(pskNetworkWithQuotes);
+                add(pskNetworkWithNoQuotes);
+                add(pskNetworkWithHexString);
+            }};
+        WifiConfigurationTestUtil.assertConfigurationsEqualForConfigStore(
+                expectedNetworks, retrievedNetworks);
+    }
+
+    /**
      * Verifies that the last user selected network parameter is set when
      * {@link WifiConfigManager#enableNetwork(int, boolean, int)} with disableOthers flag is set
      * to true and cleared when either {@link WifiConfigManager#disableNetwork(int, int)} or
