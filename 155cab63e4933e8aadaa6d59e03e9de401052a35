@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "c5d12580_8ff25496",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T21:13:10Z",
+      "side": 1,
+      "message": "sure.",
+      "parentUuid": "7afa3ce1_8e08c0d0",
+      "range": {
+        "startLine": 11,
+        "startChar": 20,
+        "endLine": 13,
+        "endChar": 20
+      },
+      "revId": "155cab63e4933e8aadaa6d59e03e9de401052a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92e8e78c_f41f3cac",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
         "patchSetId": 4
@@ -59,6 +83,30 @@
       "writtenOn": "2017-03-07T19:28:38Z",
       "side": 1,
       "message": "if FirmwareRoaming is supported.",
+      "range": {
+        "startLine": 42,
+        "startChar": 22,
+        "endLine": 42,
+        "endChar": 36
+      },
+      "revId": "155cab63e4933e8aadaa6d59e03e9de401052a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32b4cda4_c892f001",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T21:13:10Z",
+      "side": 1,
+      "message": "Not sure if I get your point. Are you suggesting getting rid of \"{@link android.net.wifi.WifiManager#WIFI_FEATURE_CONTROL_ROAMING}\"? How about something like \"Query firmware if it supports the FirmwareRoaming feature ({@link android.net.wifi.WifiManager#WIFI_FEATURE_CONTROL_ROAMING}).\"?",
+      "parentUuid": "92e8e78c_f41f3cac",
       "range": {
         "startLine": 42,
         "startChar": 22,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "d5d341a9_dbc0cf7a",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T21:13:10Z",
+      "side": 1,
+      "message": "Sure, can add such a note for this class. But I thought the Wifi framework is not threadsafe by default.",
+      "parentUuid": "86ccc1e9_4039460c",
+      "range": {
+        "startLine": 44,
+        "startChar": 27,
+        "endLine": 44,
+        "endChar": 28
+      },
+      "revId": "155cab63e4933e8aadaa6d59e03e9de401052a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c47e565_fe93b37a",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
         "patchSetId": 4
@@ -105,6 +177,30 @@
       "writtenOn": "2017-03-07T19:28:38Z",
       "side": 1,
       "message": "do we need to do any sanity checking on the returned values?  Like make sure they are at least 0?  (or some min that was agreed upon?  and if there is an upperbound, make sure that number is valid?)",
+      "range": {
+        "startLine": 56,
+        "startChar": 16,
+        "endLine": 57,
+        "endChar": 67
+      },
+      "revId": "155cab63e4933e8aadaa6d59e03e9de401052a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39c6f101_27b7da10",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T21:13:10Z",
+      "side": 1,
+      "message": "These values are firmware implementation dependent. The best we can do here is to make sure they are not less than 0. Will add that sanity check.",
+      "parentUuid": "8c47e565_fe93b37a",
       "range": {
         "startLine": 56,
         "startChar": 16,
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "79c1f26c_13bfbd5a",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T21:13:10Z",
+      "side": 1,
+      "message": "That\u0027s a good point. Unfortunately WifiNative/VendorHal doesn\u0027t give the specific reason of the failure. Most likely it is just the issue with this particular feature. Probably what we should do is to fall back to the framework roaming if either getRoamingCapabilities failed or the returned max list size was invalid. It\u0027s probably too much to reload firmware. In case the whole firmware is screwed, other more significant failures should trigger that. \n\nWill make the change and add unit tests for that.",
+      "parentUuid": "e6d1dda3_434dc505",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 74
+      },
+      "revId": "155cab63e4933e8aadaa6d59e03e9de401052a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c295c6a_8fc0dc95",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
         "patchSetId": 4
@@ -151,6 +271,30 @@
       "writtenOn": "2017-03-07T19:28:38Z",
       "side": 1,
       "message": "would be good to document the return value.",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 50
+      },
+      "revId": "155cab63e4933e8aadaa6d59e03e9de401052a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9620414c_41298210",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T21:13:10Z",
+      "side": 1,
+      "message": "sure",
+      "parentUuid": "8c295c6a_8fc0dc95",
       "range": {
         "startLine": 75,
         "startChar": 0,
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "d212a7e9_6af475f0",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T21:13:10Z",
+      "side": 1,
+      "message": "True. But I think the code is more readable with the else here.",
+      "parentUuid": "e4351d6d_b60c973a",
+      "range": {
+        "startLine": 80,
+        "startChar": 10,
+        "endLine": 80,
+        "endChar": 16
+      },
+      "revId": "155cab63e4933e8aadaa6d59e03e9de401052a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1ab31fa_17ad767a",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
         "patchSetId": 4
@@ -197,6 +365,24 @@
       "writtenOn": "2017-03-07T19:28:38Z",
       "side": 1,
       "message": "maybe add something like \"MaxNumBlacklistBssid invalid: \"...  then what you have here.",
+      "revId": "155cab63e4933e8aadaa6d59e03e9de401052a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6de6681d_e8ce0b66",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T21:13:10Z",
+      "side": 1,
+      "message": "Hmm, I somehow feel adding that creates confusion.",
+      "parentUuid": "f1ab31fa_17ad767a",
       "revId": "155cab63e4933e8aadaa6d59e03e9de401052a35",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -318,6 +504,30 @@
     },
     {
       "key": {
+        "uuid": "bdf41bd3_eb05f3c2",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T21:13:10Z",
+      "side": 1,
+      "message": "Yeah, will remove them.",
+      "parentUuid": "bbd1099a_5c51248f",
+      "range": {
+        "startLine": 145,
+        "startChar": 16,
+        "endLine": 146,
+        "endChar": 46
+      },
+      "revId": "155cab63e4933e8aadaa6d59e03e9de401052a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e0fb733_9650b8de",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
         "patchSetId": 4
@@ -329,6 +539,30 @@
       "writtenOn": "2017-03-07T19:28:38Z",
       "side": 1,
       "message": "can you also please verify that sizes below the max are written?",
+      "range": {
+        "startLine": 158,
+        "startChar": 16,
+        "endLine": 158,
+        "endChar": 66
+      },
+      "revId": "155cab63e4933e8aadaa6d59e03e9de401052a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08d455c5_7fed9040",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-07T21:13:10Z",
+      "side": 1,
+      "message": "sure.",
+      "parentUuid": "6e0fb733_9650b8de",
       "range": {
         "startLine": 158,
         "startChar": 16,
