@@ -221,9 +221,9 @@ public class WifiConnectivityManager {
      *         false - if no candidate is selected by WifiNetworkSelector
      */
     private boolean handleScanResults(List<ScanDetail> scanDetails, String listenerName) {
-        if (mStateMachine.isLinkDebouncing() || mStateMachine.isSupplicantTransientState()) {
-            localLog(listenerName + " onResults: No network selection because linkDebouncing is "
-                    + mStateMachine.isLinkDebouncing() + " and supplicantTransient is "
+        if (mStateMachine.isSupplicantTransientState()) {
+            localLog(listenerName
+                    + " onResults: No network selection because supplicantTransient is "
                     + mStateMachine.isSupplicantTransientState());
             return false;
         }
