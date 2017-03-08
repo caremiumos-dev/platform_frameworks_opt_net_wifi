@@ -147,7 +147,7 @@ public final class RttService extends SystemService {
 
         RttServiceImpl(Context context, Looper looper, WifiInjector wifiInjector) {
             mContext = context;
-            mWifiNative = WifiNative.getWlanNativeInterface();
+            mWifiNative = WifiInjector.getInstance().getWifiNative();
             mLooper = looper;
             mWifiInjector = wifiInjector;
         }
