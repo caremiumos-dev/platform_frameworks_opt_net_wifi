@@ -19,6 +19,7 @@ namespace android {
 /* JNI Helpers for wifi_hal to WifiNative bridge implementation */
 
 class JNIHelper;
+typedef unsigned char byte;
 
 template<typename T>
 class JNIObject {

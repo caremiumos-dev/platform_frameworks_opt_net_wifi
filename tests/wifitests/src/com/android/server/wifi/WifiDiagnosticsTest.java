@@ -70,7 +70,6 @@ public class WifiDiagnosticsTest {
     private static final int LARGE_RING_BUFFER_SIZE_KB = 1024;
     private static final int BYTES_PER_KBYTE = 1024;
     private static final long FAKE_CONNECTION_ID = 1;
-    private LocalLog mWifiNativeLocalLog;
 
     private WifiNative.RingBufferStatus mFakeRbs;
     /**
@@ -94,11 +93,9 @@ public class WifiDiagnosticsTest {
         WifiNative.RingBufferStatus[] ringBufferStatuses = new WifiNative.RingBufferStatus[] {
                 mFakeRbs
         };
-        mWifiNativeLocalLog = new LocalLog(8192);
 
         when(mWifiNative.getRingBufferStatus()).thenReturn(ringBufferStatuses);
         when(mWifiNative.readKernelLog()).thenReturn("");
-        when(mWifiNative.getLocalLog()).thenReturn(mWifiNativeLocalLog);
         when(mBuildProperties.isEngBuild()).thenReturn(false);
         when(mBuildProperties.isUserdebugBuild()).thenReturn(false);
         when(mBuildProperties.isUserBuild()).thenReturn(true);
@@ -782,19 +779,6 @@ public class WifiDiagnosticsTest {
         PrintWriter pw = new PrintWriter(sw);
         mWifiDiagnostics.dump(new FileDescriptor(), pw, new String[]{});
         assertFalse(sw.toString().contains(WifiDiagnostics.FIRMWARE_DUMP_SECTION_HEADER));
-    }
-
-    /** Verifies that the dump() includes contents of WifiNative's LocalLog. */
-    @Test
-    public void dumpIncludesContentOfWifiNativeLocalLog() {
-        final String wifiNativeLogMessage = "This is a message";
-        mWifiNativeLocalLog.log(wifiNativeLogMessage);
-
-        mWifiDiagnostics.startLogging(false  /* verbose disabled */);
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        mWifiDiagnostics.dump(new FileDescriptor(), pw, new String[]{});
-        assertTrue(sw.toString().contains(wifiNativeLogMessage));
     }
 
     @Test
