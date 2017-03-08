@@ -281,11 +281,11 @@ public class WifiConfigStoreLegacy {
             }
             // Ignore configuration without FQDN.
             Map<String, String> extras = networkExtras.get(wifiConfig.networkId);
-            if (extras == null || !extras.containsKey(WifiSupplicantControl.ID_STRING_KEY_FQDN)) {
+            if (extras == null || !extras.containsKey(SupplicantStaNetworkHal.ID_STRING_KEY_FQDN)) {
                 continue;
             }
             String fqdn = networkExtras.get(wifiConfig.networkId).get(
-                    WifiSupplicantControl.ID_STRING_KEY_FQDN);
+                    SupplicantStaNetworkHal.ID_STRING_KEY_FQDN);
 
             // Remove the configuration if failed to find the matching configuration in the
             // Passpoint configuration file.
