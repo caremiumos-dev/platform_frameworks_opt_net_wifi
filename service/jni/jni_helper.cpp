@@ -22,7 +22,6 @@
 #include <utils/Log.h>
 #include <utils/String16.h>
 #include <utils/misc.h>
-#include <wifi_system/wifi.h>
 
 #include "jni_helper.h"
 

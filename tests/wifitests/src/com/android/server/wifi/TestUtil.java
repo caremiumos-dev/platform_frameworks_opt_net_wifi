@@ -32,18 +32,6 @@ import java.util.ArrayList;
  * Utils for wifi tests.
  */
 public class TestUtil {
-
-    /**
-     * Override wifi interface using {@code wifiNative}.
-     */
-    public static void installWlanWifiNative(WifiNative wifiNative) throws Exception {
-        Field field = WifiNative.class.getDeclaredField("wlanNativeInterface");
-        field.setAccessible(true);
-        field.set(null, wifiNative);
-
-        when(wifiNative.getInterfaceName()).thenReturn("mockWlan");
-    }
-
     /**
      * Send {@link WifiManager#NETWORK_STATE_CHANGED_ACTION} broadcast.
      */
