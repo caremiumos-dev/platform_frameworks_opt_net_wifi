@@ -162,16 +162,10 @@ public class WifiInjector {
         mSupplicantStaIfaceHal = new SupplicantStaIfaceHal(mContext, WifiMonitor.getInstance());
         mWificondControl = new WificondControl(this, WifiMonitor.getInstance());
         mSupplicantP2pIfaceHal = new SupplicantP2pIfaceHal(WifiMonitor.getInstance());
-        mWifiNative = WifiNative.getWlanNativeInterface();
-        mWifiNative.setSupplicantStaIfaceHal(mSupplicantStaIfaceHal);
-        mWifiNative.setSupplicantP2pIfaceHal(mSupplicantP2pIfaceHal);
-        mWifiNative.setWifiVendorHal(mWifiVendorHal);
-        mWifiNative.setWificondControl(mWificondControl);
-        mWifiP2pNative = WifiNative.getP2pNativeInterface();
-        mWifiP2pNative.setSupplicantStaIfaceHal(mSupplicantStaIfaceHal);
-        mWifiP2pNative.setSupplicantP2pIfaceHal(mSupplicantP2pIfaceHal);
-        mWifiP2pNative.setWifiVendorHal(mWifiVendorHal);
-        mWifiP2pNative.setWificondControl(mWificondControl);
+        mWifiNative = new WifiNative(SystemProperties.get("wifi.interface", "wlan0"),
+                mWifiVendorHal, mSupplicantStaIfaceHal, mSupplicantP2pIfaceHal, mWificondControl);
+        mWifiP2pNative = new WifiNative(SystemProperties.get("wifi.direct.interface", "p2p0"),
+                mWifiVendorHal, mSupplicantStaIfaceHal, mSupplicantP2pIfaceHal, mWificondControl);
 
         // WifiConfigManager/Store objects and their dependencies.
         // New config store

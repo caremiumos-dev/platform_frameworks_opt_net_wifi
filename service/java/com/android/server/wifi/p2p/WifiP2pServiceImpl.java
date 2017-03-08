@@ -2834,7 +2834,6 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
         }
 
         private void initializeP2pSettings() {
-            mWifiNative.setPersistentReconnect(true);
             mThisDevice.deviceName = getPersistedDeviceName();
             mWifiNative.setP2pDeviceName(mThisDevice.deviceName);
             // DIRECT-XY-DEVICENAME (XY is randomly generated)
@@ -2844,7 +2843,7 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
             // which refers to a remote display. Use physical_display
             mWifiNative.setConfigMethods("virtual_push_button physical_display keypad");
             // STA has higher priority over P2P
-            mWifiNative.setConcurrencyPriority("sta");
+            mWifiNative.setConcurrencyPriority(true);
 
             mThisDevice.deviceAddress = mWifiNative.p2pGetDeviceAddress();
             updateThisDevice(WifiP2pDevice.AVAILABLE);
