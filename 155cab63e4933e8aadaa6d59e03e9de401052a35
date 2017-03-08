@@ -917,6 +917,30 @@
     },
     {
       "key": {
+        "uuid": "293cf3b0_2793cec8",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-08T23:41:17Z",
+      "side": 1,
+      "message": "Filed b/36070648 to add unit tests for WifiVendorHal.",
+      "parentUuid": "968c5ad1_d4b6d450",
+      "range": {
+        "startLine": 91,
+        "startChar": 30,
+        "endLine": 91,
+        "endChar": 48
+      },
+      "revId": "155cab63e4933e8aadaa6d59e03e9de401052a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbd1099a_5c51248f",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
         "patchSetId": 4
