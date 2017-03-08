@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49387408_e319f184",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-08T19:09:19Z",
+      "side": 1,
+      "message": "I *think* you can remove the public here.",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 10
+      },
+      "revId": "6f03c57e544f842ecc177da99c69f3462cd360a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "46bcab84_18b12b0c",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-08T19:09:19Z",
+      "side": 1,
+      "message": "adding a variable and an extra if makes this more complicated to read.  You could default mFirmwareRoamingSupported to false. then do:\n\nif ((fwFeatureSet \u0026 WIFI_FEATURE_CONTROL_ROAMING) \u003e 0) {\n   if (the get roaming capabilities works) {\n      if (list sizes make sense) {\n          set mFirmwareRoamingSupported\n          set list sizes\n          return true;\n      } else {\n          log an error?\n      }\n   } else {\n      log an error?  probably will already be logged in native, so maybe we don\u0027t have to log here as well (would want to double check we get logging)\n   }\n}\n\nreturn false;\n}",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 54
+      },
+      "revId": "6f03c57e544f842ecc177da99c69f3462cd360a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
