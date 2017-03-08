@@ -41,8 +41,12 @@ import android.util.Log;
 import com.android.internal.util.ArrayUtils;
 import com.android.server.wifi.util.NativeUtil;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Native calls sending requests to the P2P Hals, and callbacks for receiving P2P events
@@ -54,6 +58,12 @@ public class SupplicantP2pIfaceHal {
     private static final String TAG = "SupplicantP2pIfaceHal";
     private static final int RESULT_NOT_VALID = -1;
     private static final int DEFAULT_GROUP_OWNER_INTENT = 6;
+    /**
+     * Regex pattern for extracting the wps device type bytes.
+     * Matches a strings like the following: "<categ>-<OUI>-<subcateg>";
+     */
+    private static final Pattern WPS_DEVICE_TYPE_PATTERN =
+            Pattern.compile("^(\\d{1,2})-([0-9a-fA-F]{8})-(\\d{1,2})$");
 
     private Object mLock = new Object();
 
@@ -1657,6 +1667,29 @@ public class SupplicantP2pIfaceHal {
     }
 
     /**
+     * Remove network with provided id.
+     *
+     * @param networkId Id of the network to lookup.
+     * @return true, if operation was successful.
+     */
+    public boolean removeNetwork(int networkId) {
+        synchronized (mLock) {
+            if (!checkSupplicantP2pIfaceAndLogFailure("removeNetwork")) return false;
+
+            SupplicantResult<Void> result = new SupplicantResult(
+                    "removeNetwork(" + networkId + ")");
+            try {
+                result.setResult(mISupplicantP2pIface.removeNetwork(networkId));
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantP2pIface exception: " + e);
+                supplicantServiceDiedHandler();
+            }
+
+            return result.isSuccess();
+        }
+    }
+
+    /**
      * List the networks saved in wpa_supplicant.
      *
      * @return List of network ids.
@@ -1799,6 +1832,166 @@ public class SupplicantP2pIfaceHal {
         return true;
     }
 
+    /**
+     * Set WPS device name.
+     *
+     * @param name String to be set.
+     * @return true if request is sent successfully, false otherwise.
+     */
+    public boolean setWpsDeviceName(String name) {
+        if (name == null) {
+            return false;
+        }
+        synchronized (mLock) {
+            if (!checkSupplicantP2pIfaceAndLogFailure("setWpsDeviceName")) return false;
+            SupplicantResult<Void> result = new SupplicantResult(
+                    "setWpsDeviceName(" + name + ")");
+            try {
+                result.setResult(mISupplicantP2pIface.setWpsDeviceName(name));
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantP2pIface exception: " + e);
+                supplicantServiceDiedHandler();
+            }
+            return result.isSuccess();
+        }
+    }
+
+    /**
+     * Set WPS device type.
+     *
+     * @param typeStr Type specified as a string. Used format: <categ>-<OUI>-<subcateg>
+     * @return true if request is sent successfully, false otherwise.
+     */
+    public boolean setWpsDeviceType(String typeStr) {
+        Matcher match = WPS_DEVICE_TYPE_PATTERN.matcher(typeStr);
+        if (!match.find() || match.groupCount() != 3) {
+            Log.e(TAG, "Malformed WPS device type " + typeStr);
+            return false;
+        }
+        short categ = Short.parseShort(match.group(1));
+        byte[] oui = NativeUtil.hexStringToByteArray(match.group(2));
+        short subCateg = Short.parseShort(match.group(3));
+
+        byte[] bytes = new byte[8];
+        ByteBuffer byteBuffer = ByteBuffer.wrap(bytes).order(ByteOrder.BIG_ENDIAN);
+        byteBuffer.putShort(categ);
+        byteBuffer.put(oui);
+        byteBuffer.putShort(subCateg);
+        synchronized (mLock) {
+            if (!checkSupplicantP2pIfaceAndLogFailure("setWpsDeviceType")) return false;
+            SupplicantResult<Void> result = new SupplicantResult(
+                    "setWpsDeviceType(" + typeStr + ")");
+            try {
+                result.setResult(mISupplicantP2pIface.setWpsDeviceType(bytes));
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantP2pIface exception: " + e);
+                supplicantServiceDiedHandler();
+            }
+            return result.isSuccess();
+        }
+    }
+
+    /**
+     * Get NFC handover request message.
+     *
+     * @return select message if created successfully, null otherwise.
+     */
+    public String getNfcHandoverRequest() {
+        synchronized (mLock) {
+            if (!checkSupplicantP2pIfaceAndLogFailure("getNfcHandoverRequest")) return null;
+            SupplicantResult<ArrayList> result = new SupplicantResult(
+                    "getNfcHandoverRequest()");
+            try {
+                mISupplicantP2pIface.createNfcHandoverRequestMessage(
+                        (SupplicantStatus status, ArrayList<Byte> message) -> {
+                            result.setResult(status, message);
+                        });
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantP2pIface exception: " + e);
+                supplicantServiceDiedHandler();
+            }
+            if (!result.isSuccess()) {
+                return null;
+
+            }
+            return NativeUtil.hexStringFromByteArray(
+                    NativeUtil.byteArrayFromArrayList(result.getResult()));
+        }
+    }
+
+    /**
+     * Get NFC handover select message.
+     *
+     * @return select message if created successfully, null otherwise.
+     */
+    public String getNfcHandoverSelect() {
+        synchronized (mLock) {
+            if (!checkSupplicantP2pIfaceAndLogFailure("getNfcHandoverSelect")) return null;
+            SupplicantResult<ArrayList> result = new SupplicantResult(
+                    "getNfcHandoverSelect()");
+            try {
+                mISupplicantP2pIface.createNfcHandoverSelectMessage(
+                        (SupplicantStatus status, ArrayList<Byte> message) -> {
+                            result.setResult(status, message);
+                        });
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantP2pIface exception: " + e);
+                supplicantServiceDiedHandler();
+            }
+            if (!result.isSuccess()) {
+                return null;
+
+            }
+            return NativeUtil.hexStringFromByteArray(
+                    NativeUtil.byteArrayFromArrayList(result.getResult()));
+        }
+    }
+
+    /**
+     * Report NFC handover select message.
+     *
+     * @return true if reported successfully, false otherwise.
+     */
+    public boolean initiatorReportNfcHandover(String selectMessage) {
+        if (selectMessage == null) return false;
+        synchronized (mLock) {
+            if (!checkSupplicantP2pIfaceAndLogFailure("initiatorReportNfcHandover")) return false;
+            SupplicantResult<Void> result = new SupplicantResult(
+                    "initiatorReportNfcHandover(" + selectMessage + ")");
+            try {
+                result.setResult(mISupplicantP2pIface.reportNfcHandoverInitiation(
+                        NativeUtil.byteArrayToArrayList(NativeUtil.hexStringToByteArray(
+                            selectMessage))));
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantP2pIface exception: " + e);
+                supplicantServiceDiedHandler();
+            }
+            return result.isSuccess();
+        }
+    }
+
+    /**
+     * Report NFC handover request message.
+     *
+     * @return true if reported successfully, false otherwise.
+     */
+    public boolean responderReportNfcHandover(String requestMessage) {
+        if (requestMessage == null) return false;
+        synchronized (mLock) {
+            if (!checkSupplicantP2pIfaceAndLogFailure("responderReportNfcHandover")) return false;
+            SupplicantResult<Void> result = new SupplicantResult(
+                    "responderReportNfcHandover(" + requestMessage + ")");
+            try {
+                result.setResult(mISupplicantP2pIface.reportNfcHandoverResponse(
+                        NativeUtil.byteArrayToArrayList(NativeUtil.hexStringToByteArray(
+                            requestMessage))));
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantP2pIface exception: " + e);
+                supplicantServiceDiedHandler();
+            }
+            return result.isSuccess();
+        }
+    }
     /** Container class allowing propagation of status and/or value
      * from callbacks.
      *
