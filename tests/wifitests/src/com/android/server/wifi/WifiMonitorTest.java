@@ -19,6 +19,7 @@ package com.android.server.wifi;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
@@ -60,10 +61,7 @@ public class WifiMonitorTest {
 
     @Before
     public void setUp() throws Exception {
-        final Constructor<WifiMonitor> wifiMonitorConstructor =
-                WifiMonitor.class.getDeclaredConstructor();
-        wifiMonitorConstructor.setAccessible(true);
-        mWifiMonitor = spy(wifiMonitorConstructor.newInstance());
+        mWifiMonitor = new WifiMonitor(mock(WifiInjector.class));
         mLooper = new TestLooper();
         mHandlerSpy = spy(new Handler(mLooper.getLooper()));
         mWifiMonitor.setMonitoring(WLAN_IFACE_NAME, true);
