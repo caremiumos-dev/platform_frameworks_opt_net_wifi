@@ -593,7 +593,7 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                     @Override
                     public void onDeleteGroup(int netId) {
                         if (DBG) logd("called onDeleteGroup() netId=" + netId);
-                        mWifiNative.removeNetwork(netId);
+                        mWifiNative.removeP2pNetwork(netId);
                         mWifiNative.saveConfig();
                         sendP2pPersistentGroupsChangedBroadcast();
                     }
@@ -2837,10 +2837,10 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
         private void initializeP2pSettings() {
             mWifiNative.setPersistentReconnect(true);
             mThisDevice.deviceName = getPersistedDeviceName();
-            mWifiNative.setDeviceName(mThisDevice.deviceName);
+            mWifiNative.setP2pDeviceName(mThisDevice.deviceName);
             // DIRECT-XY-DEVICENAME (XY is randomly generated)
             mWifiNative.setP2pSsidPostfix("-" + mThisDevice.deviceName);
-            mWifiNative.setDeviceType(mThisDevice.primaryDeviceType);
+            mWifiNative.setP2pDeviceType(mThisDevice.primaryDeviceType);
             // Supplicant defaults to using virtual display with display
             // which refers to a remote display. Use physical_display
             mWifiNative.setConfigMethods("virtual_push_button physical_display keypad");

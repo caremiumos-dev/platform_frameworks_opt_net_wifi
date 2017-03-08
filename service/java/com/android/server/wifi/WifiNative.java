@@ -138,7 +138,7 @@ public class WifiNative {
     // TODO(b/34884202): Set this to true to enable HIDL once we're fully ready.
     private static final boolean HIDL_VENDOR_ENABLE = true;
     public static final boolean HIDL_SUP_ENABLE = true;
-    private static final boolean HIDL_P2P_ENABLE = false;
+    private static final boolean HIDL_P2P_ENABLE = true;
     private final String mTAG;
     private final String mInterfaceName;
     private final String mInterfacePrefix;
@@ -1179,6 +1179,31 @@ public class WifiNative {
             return mSupplicantStaIfaceHal.setWpsSerialNumber(value);
         } else {
             return doBooleanCommand("SET serial_number " + value);
+        }
+    }
+
+    public boolean removeP2pNetwork(int netId) {
+        if (HIDL_P2P_ENABLE && mSupplicantP2pIfaceHal != null) {
+            return mSupplicantP2pIfaceHal.removeNetwork(netId);
+        } else {
+            return doBooleanCommand("REMOVE_NETWORK " + netId);
+        }
+
+    }
+
+    public boolean setP2pDeviceName(String name) {
+        if (HIDL_P2P_ENABLE && mSupplicantP2pIfaceHal != null) {
+            return mSupplicantP2pIfaceHal.setWpsDeviceName(name);
+        } else {
+            return doBooleanCommand("SET device_name " + name);
+        }
+    }
+
+    public boolean setP2pDeviceType(String type) {
+        if (HIDL_P2P_ENABLE && mSupplicantP2pIfaceHal != null) {
+            return mSupplicantP2pIfaceHal.setWpsDeviceType(type);
+        } else {
+            return doBooleanCommand("SET device_type " + type);
         }
     }
 
