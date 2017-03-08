@@ -36,6 +36,7 @@ import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.nsd.WifiP2pServiceInfo;
 import android.os.HwRemoteBinder;
 import android.os.RemoteException;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.internal.util.ArrayUtils;
@@ -1184,8 +1185,7 @@ public class SupplicantP2pIfaceHal {
     /**
      * This command can be used to add a upnp/bonjour service.
      *
-     * @param query Hex dump of the query data.
-     * @param return Hex dump of the response data.
+     * @param servInfo List of service queries.
      *
      * @return true, if operation was successful.
      */
@@ -1261,7 +1261,7 @@ public class SupplicantP2pIfaceHal {
     /**
      * This command can be used to remove a upnp/bonjour service.
      *
-     * @param query Hex dump of the query data.
+     * @param servInfo List of service queries.
      *
      * @return true, if operation was successful.
      */
@@ -1469,6 +1469,7 @@ public class SupplicantP2pIfaceHal {
      * @return true, if operation was successful.
      */
     public boolean startWpsPbc(String groupIfName, String bssid) {
+        if (TextUtils.isEmpty(groupIfName) || TextUtils.isEmpty(bssid)) return false;
         synchronized (mLock) {
             if (!checkSupplicantP2pIfaceAndLogFailure("startWpsPbc")) return false;
             if (groupIfName == null) {
@@ -1509,6 +1510,7 @@ public class SupplicantP2pIfaceHal {
      * @return true, if operation was successful.
      */
     public boolean startWpsPinKeypad(String groupIfName, String pin) {
+        if (TextUtils.isEmpty(groupIfName) || TextUtils.isEmpty(pin)) return false;
         synchronized (mLock) {
             if (!checkSupplicantP2pIfaceAndLogFailure("startWpsPinKeypad")) return false;
             if (groupIfName == null) {
@@ -1542,6 +1544,7 @@ public class SupplicantP2pIfaceHal {
      * @return true, if operation was successful.
      */
     public String startWpsPinDisplay(String groupIfName, String bssid) {
+        if (TextUtils.isEmpty(groupIfName) || TextUtils.isEmpty(bssid)) return "";
         synchronized (mLock) {
             if (!checkSupplicantP2pIfaceAndLogFailure("startWpsPinDisplay")) return null;
             if (groupIfName == null) {

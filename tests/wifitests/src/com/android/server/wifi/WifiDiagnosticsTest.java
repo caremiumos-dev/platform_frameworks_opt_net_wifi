@@ -98,7 +98,6 @@ public class WifiDiagnosticsTest {
 
         when(mWifiNative.getRingBufferStatus()).thenReturn(ringBufferStatuses);
         when(mWifiNative.readKernelLog()).thenReturn("");
-        when(mWifiNative.getLocalLog()).thenReturn(mWifiNativeLocalLog);
         when(mBuildProperties.isEngBuild()).thenReturn(false);
         when(mBuildProperties.isUserdebugBuild()).thenReturn(false);
         when(mBuildProperties.isUserBuild()).thenReturn(true);
