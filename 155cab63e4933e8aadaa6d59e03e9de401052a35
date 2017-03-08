@@ -869,6 +869,30 @@
     },
     {
       "key": {
+        "uuid": "1128553d_4f94decd",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-08T18:10:31Z",
+      "side": 1,
+      "message": "WifiConnectivityHelper interfaces with WifiNative. WifiNative doesn\u0027t do anything with this string and passes it as is to WifiVendorHal.\n\nWifiVendorHal strips off the double quotes if they are there. The SSID string is kept as is if there is no quotes. Maybe my previous comment was a bit misleading. Shouldn\u0027t have said WifiVendorHal expects double quotes.",
+      "parentUuid": "a59fc5a6_2adc9606",
+      "range": {
+        "startLine": 91,
+        "startChar": 30,
+        "endLine": 91,
+        "endChar": 48
+      },
+      "revId": "155cab63e4933e8aadaa6d59e03e9de401052a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbd1099a_5c51248f",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
         "patchSetId": 4
