@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0fe2d328_173e206b",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-09T00:05:40Z",
+      "side": 1,
+      "message": "sounds good.  other places in the code that I work with do not mark it public - so I was more used to those.",
+      "parentUuid": "456870ea_13094ed3",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 10
+      },
+      "revId": "6f03c57e544f842ecc177da99c69f3462cd360a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46bcab84_18b12b0c",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
         "patchSetId": 6
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Done with a few modifications as we still need to return true if fwFeatureSet indicates firmware roaming is not supported.\n\nWhen getRoamingCapabilities returns an error. WifiNative and WifiVendorHal don\u0027t print out an error. It\u0027s the QCOM HAL which prints out something. I think it is good to keep our own log here. We don\u0027t want to rely on QCOM\u0027s log. We never know what will happen to their logging mechanism.",
       "parentUuid": "46bcab84_18b12b0c",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 54
+      },
+      "revId": "6f03c57e544f842ecc177da99c69f3462cd360a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37ad993c_9a707fe2",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-09T00:05:40Z",
+      "side": 1,
+      "message": "thanks",
+      "parentUuid": "58d0980f_c2aa83c9",
       "range": {
         "startLine": 65,
         "startChar": 0,
