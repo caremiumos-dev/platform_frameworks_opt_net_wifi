@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bbe9963_4491fa19",
+        "filename": "service/jni/jni_helper.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-09T19:18:07Z",
+      "side": 1,
+      "message": "I think this is no longer needed.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "fd925d194e08cb39f25fecb9aff73f95fe39a3e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b61c566_082e13a8",
+        "filename": "service/jni/jni_helper.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-09T19:18:07Z",
+      "side": 1,
+      "message": "formatting.",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 1
+      },
+      "revId": "fd925d194e08cb39f25fecb9aff73f95fe39a3e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

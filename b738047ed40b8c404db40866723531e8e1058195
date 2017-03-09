@@ -586,6 +586,53 @@
       "revId": "b738047ed40b8c404db40866723531e8e1058195",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3dc9b6e_3df45f9c",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1151,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-09T19:18:07Z",
+      "side": 1,
+      "message": "No wonder, I put the comment on the wrong function. I meant getSupportedLoggerFeatureSet.",
+      "parentUuid": "d167769b_52307c0c",
+      "range": {
+        "startLine": 1151,
+        "startChar": 15,
+        "endLine": 1151,
+        "endChar": 52
+      },
+      "revId": "b738047ed40b8c404db40866723531e8e1058195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b07fb0cc_8f623940",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-09T19:18:07Z",
+      "side": 1,
+      "message": "My comment on line 1151 belongs here.",
+      "range": {
+        "startLine": 1161,
+        "startChar": 15,
+        "endLine": 1161,
+        "endChar": 58
+      },
+      "revId": "b738047ed40b8c404db40866723531e8e1058195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
