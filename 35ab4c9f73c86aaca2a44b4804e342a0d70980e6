@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b6422637_b350bc65",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-09T19:30:02Z",
+      "side": 1,
+      "message": "It should return true if it\u0027s already stopped.",
+      "parentUuid": "2815e8c5_9ac5ccde",
+      "range": {
+        "startLine": 365,
+        "startChar": 15,
+        "endLine": 365,
+        "endChar": 50
+      },
+      "revId": "35ab4c9f73c86aaca2a44b4804e342a0d70980e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc5b751b_b38cf865",
         "filename": "service/java/com/android/server/wifi/WifiNative.java",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1978040b_81581c65",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-09T19:30:02Z",
+      "side": 1,
+      "message": "Starting \u0026 Stopping here refers to the filter addition/removal. \n\nstartFiltering -\u003e addRxFilter\nstopFiltering -\u003e removeRxFilter\n\nWe always need to restart the filtering engine after the operations.",
+      "parentUuid": "cc5b751b_b38cf865",
+      "range": {
+        "startLine": 366,
+        "startChar": 42,
+        "endLine": 366,
+        "endChar": 56
+      },
+      "revId": "35ab4c9f73c86aaca2a44b4804e342a0d70980e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6c62906_34dbb112",
         "filename": "service/java/com/android/server/wifi/WifiNative.java",
         "patchSetId": 13
@@ -59,6 +107,30 @@
       "writtenOn": "2017-03-09T19:18:07Z",
       "side": 1,
       "message": "Hmm, nobody ever calls this.",
+      "range": {
+        "startLine": 386,
+        "startChar": 19,
+        "endLine": 386,
+        "endChar": 51
+      },
+      "revId": "35ab4c9f73c86aaca2a44b4804e342a0d70980e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14f97cc2_278bfa03",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-09T19:30:02Z",
+      "side": 1,
+      "message": "True. I\u0027ll take a second pass at removing stuff from here. Thee are some more methods here which can be totally removed now.",
+      "parentUuid": "b6c62906_34dbb112",
       "range": {
         "startLine": 386,
         "startChar": 19,

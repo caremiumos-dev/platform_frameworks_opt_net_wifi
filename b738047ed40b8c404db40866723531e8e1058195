@@ -613,6 +613,30 @@
     },
     {
       "key": {
+        "uuid": "ae0327b2_8d85fd18",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1151,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-09T19:30:02Z",
+      "side": 1,
+      "message": "Aah.",
+      "parentUuid": "d3dc9b6e_3df45f9c",
+      "range": {
+        "startLine": 1151,
+        "startChar": 15,
+        "endLine": 1151,
+        "endChar": 52
+      },
+      "revId": "b738047ed40b8c404db40866723531e8e1058195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b07fb0cc_8f623940",
         "filename": "service/java/com/android/server/wifi/WifiNative.java",
         "patchSetId": 10
@@ -624,6 +648,30 @@
       "writtenOn": "2017-03-09T19:18:07Z",
       "side": 1,
       "message": "My comment on line 1151 belongs here.",
+      "range": {
+        "startLine": 1161,
+        "startChar": 15,
+        "endLine": 1161,
+        "endChar": 58
+      },
+      "revId": "b738047ed40b8c404db40866723531e8e1058195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1f2e3cc_c74e87b0",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-09T19:30:02Z",
+      "side": 1,
+      "message": "Will do. I noticed that we\u0027re returning -1.",
+      "parentUuid": "b07fb0cc_8f623940",
       "range": {
         "startLine": 1161,
         "startChar": 15,
