@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "c7e88e7d_8241808a",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-09T19:43:39Z",
+      "side": 1,
+      "message": "Right. But startFilteringMulticastV4Packets calls removeRxFilter and stopFilteringMulticastV4Packets calls addRxFilter.",
+      "parentUuid": "1978040b_81581c65",
+      "range": {
+        "startLine": 366,
+        "startChar": 42,
+        "endLine": 366,
+        "endChar": 56
+      },
+      "revId": "35ab4c9f73c86aaca2a44b4804e342a0d70980e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6c62906_34dbb112",
         "filename": "service/java/com/android/server/wifi/WifiNative.java",
         "patchSetId": 13
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "True. I\u0027ll take a second pass at removing stuff from here. Thee are some more methods here which can be totally removed now.",
       "parentUuid": "b6c62906_34dbb112",
+      "range": {
+        "startLine": 386,
+        "startChar": 19,
+        "endLine": 386,
+        "endChar": 51
+      },
+      "revId": "35ab4c9f73c86aaca2a44b4804e342a0d70980e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "454b6c4f_634a9519",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-09T19:43:39Z",
+      "side": 1,
+      "message": "Seems more likely that the v6 filtering should be called somewhere...",
+      "parentUuid": "14f97cc2_278bfa03",
       "range": {
         "startLine": 386,
         "startChar": 19,
