@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11517cdd_3f5107cf",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-09T05:22:38Z",
+      "side": 1,
+      "message": "This comment is not true anymore, is it?",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 54
+      },
+      "revId": "b738047ed40b8c404db40866723531e8e1058195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61cde2aa_754cbb6c",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-09T05:22:38Z",
+      "side": 1,
+      "message": "soon is now?",
+      "range": {
+        "startLine": 493,
+        "startChar": 39,
+        "endLine": 493,
+        "endChar": 72
+      },
+      "revId": "b738047ed40b8c404db40866723531e8e1058195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c73d3c3_72af4ba4",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-09T05:22:38Z",
+      "side": 1,
+      "message": "This has nothing to do with vendor hal, should be moved up near signalPoll() method.",
+      "range": {
+        "startLine": 956,
+        "startChar": 3,
+        "endLine": 965,
+        "endChar": 5
+      },
+      "revId": "b738047ed40b8c404db40866723531e8e1058195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11dbe4ae_d618d75c",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-09T05:22:38Z",
+      "side": 1,
+      "message": "no longer necessary.",
+      "range": {
+        "startLine": 1014,
+        "startChar": 20,
+        "endLine": 1014,
+        "endChar": 58
+      },
+      "revId": "b738047ed40b8c404db40866723531e8e1058195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec834aeb_9b91e471",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-09T05:22:38Z",
+      "side": 1,
+      "message": "Maybe add a TODO w/ a bugid to rm calling code.",
+      "range": {
+        "startLine": 1073,
+        "startChar": 16,
+        "endLine": 1073,
+        "endChar": 37
+      },
+      "revId": "b738047ed40b8c404db40866723531e8e1058195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb88471c_07bceb3a",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-09T05:22:38Z",
+      "side": 1,
+      "message": "If you add the missing space, will checkstyle punish you by requiring javadoc? :-)",
+      "range": {
+        "startLine": 1119,
+        "startChar": 50,
+        "endLine": 1119,
+        "endChar": 51
+      },
+      "revId": "b738047ed40b8c404db40866723531e8e1058195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42720f13_aebb5ac9",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1151,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-09T05:22:38Z",
+      "side": 1,
+      "message": "This is just stubbed out, and the callers never do anything with it but print it out. Maybe a TODO to help remember this?",
+      "range": {
+        "startLine": 1151,
+        "startChar": 15,
+        "endLine": 1151,
+        "endChar": 52
+      },
+      "revId": "b738047ed40b8c404db40866723531e8e1058195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
