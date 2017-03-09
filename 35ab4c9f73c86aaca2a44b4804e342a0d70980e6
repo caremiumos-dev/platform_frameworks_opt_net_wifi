@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "37c8c302_8601c854",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-09T20:48:51Z",
+      "side": 1,
+      "message": "Actually, I just re-read the documentation above. It looks like the filtering is on by default. The rules are being added to stop the filtering.\n\nSo,\nstartFiltering -\u003e removeRxFilter\nstopFiltering -\u003e addRxFilter.",
+      "parentUuid": "c7e88e7d_8241808a",
+      "range": {
+        "startLine": 366,
+        "startChar": 42,
+        "endLine": 366,
+        "endChar": 56
+      },
+      "revId": "35ab4c9f73c86aaca2a44b4804e342a0d70980e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6c62906_34dbb112",
         "filename": "service/java/com/android/server/wifi/WifiNative.java",
         "patchSetId": 13
