@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1581c9f5_c1366788",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-09T17:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11517cdd_3f5107cf",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 54
+      },
+      "revId": "b738047ed40b8c404db40866723531e8e1058195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61cde2aa_754cbb6c",
         "filename": "service/java/com/android/server/wifi/WifiNative.java",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-09T05:22:38Z",
       "side": 1,
       "message": "soon is now?",
+      "range": {
+        "startLine": 493,
+        "startChar": 39,
+        "endLine": 493,
+        "endChar": 72
+      },
+      "revId": "b738047ed40b8c404db40866723531e8e1058195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36a3cea2_490587b9",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-09T17:25:04Z",
+      "side": 1,
+      "message": "Too soon :)",
+      "parentUuid": "61cde2aa_754cbb6c",
       "range": {
         "startLine": 493,
         "startChar": 39,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e20294ea_bcb63817",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-09T17:25:04Z",
+      "side": 1,
+      "message": "Ah. True.",
+      "parentUuid": "0c73d3c3_72af4ba4",
+      "range": {
+        "startLine": 956,
+        "startChar": 3,
+        "endLine": 965,
+        "endChar": 5
+      },
+      "revId": "b738047ed40b8c404db40866723531e8e1058195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11dbe4ae_d618d75c",
         "filename": "service/java/com/android/server/wifi/WifiNative.java",
         "patchSetId": 10
@@ -82,6 +154,30 @@
       "writtenOn": "2017-03-09T05:22:38Z",
       "side": 1,
       "message": "no longer necessary.",
+      "range": {
+        "startLine": 1014,
+        "startChar": 20,
+        "endLine": 1014,
+        "endChar": 58
+      },
+      "revId": "b738047ed40b8c404db40866723531e8e1058195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f478687a_4aca00c5",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-09T17:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11dbe4ae_d618d75c",
       "range": {
         "startLine": 1014,
         "startChar": 20,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "5b5bd258_ad4562cb",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-09T17:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec834aeb_9b91e471",
+      "range": {
+        "startLine": 1073,
+        "startChar": 16,
+        "endLine": 1073,
+        "endChar": 37
+      },
+      "revId": "b738047ed40b8c404db40866723531e8e1058195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb88471c_07bceb3a",
         "filename": "service/java/com/android/server/wifi/WifiNative.java",
         "patchSetId": 10
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "9790b049_db8b95be",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-09T17:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb88471c_07bceb3a",
+      "range": {
+        "startLine": 1119,
+        "startChar": 50,
+        "endLine": 1119,
+        "endChar": 51
+      },
+      "revId": "b738047ed40b8c404db40866723531e8e1058195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42720f13_aebb5ac9",
         "filename": "service/java/com/android/server/wifi/WifiNative.java",
         "patchSetId": 10
@@ -151,6 +295,30 @@
       "writtenOn": "2017-03-09T05:22:38Z",
       "side": 1,
       "message": "This is just stubbed out, and the callers never do anything with it but print it out. Maybe a TODO to help remember this?",
+      "range": {
+        "startLine": 1151,
+        "startChar": 15,
+        "endLine": 1151,
+        "endChar": 52
+      },
+      "revId": "b738047ed40b8c404db40866723531e8e1058195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d167769b_52307c0c",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1151,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-09T17:25:04Z",
+      "side": 1,
+      "message": "I didn\u0027t understand this comment.",
+      "parentUuid": "42720f13_aebb5ac9",
       "range": {
         "startLine": 1151,
         "startChar": 15,
