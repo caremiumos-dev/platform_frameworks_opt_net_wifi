@@ -34,6 +34,24 @@
       "revId": "2c13c22672523ad1a5ca3654e90e8c2d48341731",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37f68015_14f35c5d",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1184,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-09T19:34:33Z",
+      "side": 1,
+      "message": "I\u0027ve gone ahead and added javadocs for all WifiNative methods  (including these) in the next CL in the stack.",
+      "parentUuid": "1df07917_432610e4",
+      "revId": "2c13c22672523ad1a5ca3654e90e8c2d48341731",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
