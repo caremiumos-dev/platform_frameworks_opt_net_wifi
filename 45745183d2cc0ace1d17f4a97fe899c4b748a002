@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fff978aa_60853667",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-09T00:16:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78b69940_f2bdcbd2",
+      "range": {
+        "startLine": 80,
+        "startChar": 16,
+        "endLine": 81,
+        "endChar": 57
+      },
+      "revId": "45745183d2cc0ace1d17f4a97fe899c4b748a002",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9eee297_b9cb3afa",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-09T00:05:40Z",
       "side": 1,
       "message": "indent here looks off, either 8 spaces in from the line start above or lined up with the A in ArrayList above.",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 16
+      },
+      "revId": "45745183d2cc0ace1d17f4a97fe899c4b748a002",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e0ad84c_2946e266",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-09T00:16:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9eee297_b9cb3afa",
       "range": {
         "startLine": 138,
         "startChar": 4,
