@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d290af41_ec269f79",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1261,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-09T03:35:43Z",
+      "side": 1,
+      "message": "WifiConfigManager#enableNetwork could return false for reasons other than lack of permission. Same applies to WifiConfigManager#checkAndUpdateLastConnectUid.",
+      "range": {
+        "startLine": 1261,
+        "startChar": 13,
+        "endLine": 1261,
+        "endChar": 45
+      },
+      "revId": "0b1bf5a7e4c3451e80084dcfd312b60e173e204d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
