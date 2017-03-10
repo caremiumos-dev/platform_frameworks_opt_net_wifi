@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8d377493_5a98650e",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-10T18:48:23Z",
+      "side": 1,
+      "message": "Sorry for the confusion!  We discussed offline and it would be great to clean up the confusing calls here (in a separate CL). :) \n\nThanks!",
+      "parentUuid": "5108ace2_0c289c90",
+      "range": {
+        "startLine": 1268,
+        "startChar": 32,
+        "endLine": 1268,
+        "endChar": 45
+      },
+      "revId": "8bb7b1c7889543e6c1c19ce980464a857b38dc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b60493fe_99332ade",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
         "patchSetId": 3
