@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3343a5fc_f459d119",
+        "filename": "service/java/com/android/server/wifi/scanner/HalWifiScannerImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-10T21:30:10Z",
+      "side": 1,
+      "message": "looks like this slipped back in",
+      "range": {
+        "startLine": 32,
+        "startChar": 78,
+        "endLine": 32,
+        "endChar": 84
+      },
+      "revId": "49734144bed2cf0436cc440cf6ec3a156e848d5a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
