@@ -2673,10 +2673,9 @@ public class WifiConfigManager {
                 continue;
             }
 
-            // Legacy Passpoint configuration represented by WifiConfiguration is created by an
-            // actual user, so migrate the configurations owned by the current user to
+            // Migrate the legacy Passpoint configurations owned by the current user to
             // {@link PasspointManager}.
-            if (config.isPasspoint() && WifiConfigurationUtil.doesUidBelongToAnyProfile(
+            if (config.isLegacyPasspointConfig && WifiConfigurationUtil.doesUidBelongToAnyProfile(
                         config.creatorUid, mUserManager.getProfiles(mCurrentUserId))) {
                 legacyPasspointNetId.add(config.networkId);
                 // Migrate the legacy Passpoint configuration and add it to PasspointManager.
