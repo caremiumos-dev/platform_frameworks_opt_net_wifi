@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "108a0137_6680b206",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-03-10T23:36:08Z",
+      "side": 1,
+      "message": "Yup, will update.",
+      "parentUuid": "9cec6818_bab58fd3",
+      "range": {
+        "startLine": 15,
+        "startChar": 24,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "9c99e3723a317b33d0778a94be7f74e91609f0e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac4603cf_b2f7a0b9",
         "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-10T23:26:57Z",
       "side": 1,
       "message": "Shall we do this null check before onRequestCompleted() call? Or we have to call it no matter what?",
+      "range": {
+        "startLine": 109,
+        "startChar": 16,
+        "endLine": 109,
+        "endChar": 36
+      },
+      "revId": "9c99e3723a317b33d0778a94be7f74e91609f0e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f26c2ece_74b9e3d2",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-03-10T23:36:08Z",
+      "side": 1,
+      "message": "We need to call it no matter what.  It is used as the indication of the result status (success or failure).",
+      "parentUuid": "ac4603cf_b2f7a0b9",
       "range": {
         "startLine": 109,
         "startChar": 16,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bd1f5cab_c713a2fb",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-03-10T23:36:08Z",
+      "side": 1,
+      "message": "Will update.",
+      "parentUuid": "cfcd123d_b10e6710",
+      "range": {
+        "startLine": 387,
+        "startChar": 77,
+        "endLine": 387,
+        "endChar": 78
+      },
+      "revId": "9c99e3723a317b33d0778a94be7f74e91609f0e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "430c086c_2a175a2a",
         "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-03-10T23:26:57Z",
       "side": 1,
       "message": "Maybe move this to @return?",
+      "range": {
+        "startLine": 387,
+        "startChar": 78,
+        "endLine": 388,
+        "endChar": 54
+      },
+      "revId": "9c99e3723a317b33d0778a94be7f74e91609f0e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44d6f0c1_6b4f331a",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-03-10T23:36:08Z",
+      "side": 1,
+      "message": "Hmm, I think I would prefer leaving it here. @return specifies the return type.  The comment here specifies the expected value for one specific case.",
+      "parentUuid": "430c086c_2a175a2a",
       "range": {
         "startLine": 387,
         "startChar": 78,
