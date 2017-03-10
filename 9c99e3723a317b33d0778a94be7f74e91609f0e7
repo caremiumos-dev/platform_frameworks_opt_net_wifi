@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cec6818_bab58fd3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-10T23:26:57Z",
+      "side": 1,
+      "message": "Global?",
+      "range": {
+        "startLine": 15,
+        "startChar": 24,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "9c99e3723a317b33d0778a94be7f74e91609f0e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac4603cf_b2f7a0b9",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-10T23:26:57Z",
+      "side": 1,
+      "message": "Shall we do this null check before onRequestCompleted() call? Or we have to call it no matter what?",
+      "range": {
+        "startLine": 109,
+        "startChar": 16,
+        "endLine": 109,
+        "endChar": 36
+      },
+      "revId": "9c99e3723a317b33d0778a94be7f74e91609f0e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cfcd123d_b10e6710",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-10T23:26:57Z",
+      "side": 1,
+      "message": "Nit: extra white space.",
+      "range": {
+        "startLine": 387,
+        "startChar": 77,
+        "endLine": 387,
+        "endChar": 78
+      },
+      "revId": "9c99e3723a317b33d0778a94be7f74e91609f0e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "430c086c_2a175a2a",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-10T23:26:57Z",
+      "side": 1,
+      "message": "Maybe move this to @return?",
+      "range": {
+        "startLine": 387,
+        "startChar": 78,
+        "endLine": 388,
+        "endChar": 54
+      },
+      "revId": "9c99e3723a317b33d0778a94be7f74e91609f0e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
