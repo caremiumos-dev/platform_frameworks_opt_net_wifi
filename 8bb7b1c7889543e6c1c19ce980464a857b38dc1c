@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92023543_55fb819c",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-10T06:36:37Z",
+      "side": 1,
+      "message": "I am not sure if i read this right, but can\u0027t this return false for reasons that are not due to permissions?  what if the network is blacklisted?  (i think that can return false based on the updateNetworkSelectionStatus method in WifiConfigManager.  - but i might be reading that wrong!)",
+      "range": {
+        "startLine": 1268,
+        "startChar": 32,
+        "endLine": 1268,
+        "endChar": 45
+      },
+      "revId": "8bb7b1c7889543e6c1c19ce980464a857b38dc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b60493fe_99332ade",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-10T06:36:37Z",
+      "side": 1,
+      "message": "can you add a test where the network is blacklisted?",
+      "range": {
+        "startLine": 880,
+        "startChar": 16,
+        "endLine": 880,
+        "endChar": 42
+      },
+      "revId": "8bb7b1c7889543e6c1c19ce980464a857b38dc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
