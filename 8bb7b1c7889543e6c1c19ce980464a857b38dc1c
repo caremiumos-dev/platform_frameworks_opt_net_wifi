@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5108ace2_0c289c90",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-10T15:44:40Z",
+      "side": 1,
+      "message": "Blacklist is considered only while auto-connecting by network selector. When the user or app choses to connect to a specified network, we don\u0027t look at the blacklist. So, even if the network is in our blacklist, we\u0027ve been forced to initiate connection to the network.\n\nAlso, updateNetworkSelectionStatus would only return false if it was sent an invalid selection status code, so that should never happen inside enableNetwork()",
+      "parentUuid": "92023543_55fb819c",
+      "range": {
+        "startLine": 1268,
+        "startChar": 32,
+        "endLine": 1268,
+        "endChar": 45
+      },
+      "revId": "8bb7b1c7889543e6c1c19ce980464a857b38dc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b60493fe_99332ade",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-10T06:36:37Z",
       "side": 1,
       "message": "can you add a test where the network is blacklisted?",
+      "range": {
+        "startLine": 880,
+        "startChar": 16,
+        "endLine": 880,
+        "endChar": 42
+      },
+      "revId": "8bb7b1c7889543e6c1c19ce980464a857b38dc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b41cb26f_8d947a6b",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiStateMachineTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-10T15:44:40Z",
+      "side": 1,
+      "message": "We don\u0027t check for blacklist in this forced connect attempt, so adding the test would be a no-op.",
+      "parentUuid": "b60493fe_99332ade",
       "range": {
         "startLine": 880,
         "startChar": 16,
