@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c55791f_848dabd8",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 951,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-03-13T20:56:42Z",
+      "side": 1,
+      "message": "Just curious, looking at the implementation of startConnectivityScan, this will not change anything if the screen is off. Do we want to force immediate scan regardless the screen state after disconnect?",
+      "range": {
+        "startLine": 951,
+        "startChar": 34,
+        "endLine": 951,
+        "endChar": 50
+      },
+      "revId": "28ee5c3660018a8f1df3a75b5a029db09bfba25f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
