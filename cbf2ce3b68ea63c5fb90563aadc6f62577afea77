@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc7499c9_3c0956b3",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1731,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-13T15:02:03Z",
+      "side": 1,
+      "message": "Don\u0027t think there is a need to convert to |ParcelListSize| and back to |List| here. You can directly invoke the wifi state machine method to fetch the list since the necessary permission checks are already performed above.\n\n if (mWifiStateMachineChannel !\u003d null) {\n            List\u003cWifiConfiguration\u003e configs \u003d mWifiStateMachine.syncGetConfiguredNetworks(\n                    Binder.getCallingUid(), mWifiStateMachineChannel);",
+      "range": {
+        "startLine": 1731,
+        "startChar": 64,
+        "endLine": 1731,
+        "endChar": 88
+      },
+      "revId": "cbf2ce3b68ea63c5fb90563aadc6f62577afea77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
