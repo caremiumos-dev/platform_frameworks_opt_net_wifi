@@ -37,6 +37,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ParceledListSlice;
 import android.database.ContentObserver;
 import android.net.ConnectivityManager;
 import android.net.DhcpInfo;
@@ -852,16 +853,19 @@ public class WifiServiceImpl extends IWifiManager.Stub {
      * @return the list of configured networks
      */
     @Override
-    public List<WifiConfiguration> getConfiguredNetworks() {
+    public ParceledListSlice<WifiConfiguration> getConfiguredNetworks() {
         enforceAccessPermission();
         mLog.trace("getConfiguredNetworks uid=%").c(Binder.getCallingUid()).flush();
         if (mWifiStateMachineChannel != null) {
-            return mWifiStateMachine.syncGetConfiguredNetworks(Binder.getCallingUid(),
-                    mWifiStateMachineChannel);
+            List<WifiConfiguration> configs = mWifiStateMachine.syncGetConfiguredNetworks(
+                    Binder.getCallingUid(), mWifiStateMachineChannel);
+            if (configs != null) {
+                return new ParceledListSlice<WifiConfiguration>(configs);
+            }
         } else {
             Slog.e(TAG, "mWifiStateMachineChannel is not initialized");
-            return null;
         }
+        return null;
     }
 
     /**
@@ -869,16 +873,20 @@ public class WifiServiceImpl extends IWifiManager.Stub {
      * @return the list of configured networks with real preSharedKey
      */
     @Override
-    public List<WifiConfiguration> getPrivilegedConfiguredNetworks() {
+    public ParceledListSlice<WifiConfiguration> getPrivilegedConfiguredNetworks() {
         enforceReadCredentialPermission();
         enforceAccessPermission();
         mLog.trace("getPrivilegedConfiguredNetworks uid=%").c(Binder.getCallingUid()).flush();
         if (mWifiStateMachineChannel != null) {
-            return mWifiStateMachine.syncGetPrivilegedConfiguredNetwork(mWifiStateMachineChannel);
+            List<WifiConfiguration> configs =
+                    mWifiStateMachine.syncGetPrivilegedConfiguredNetwork(mWifiStateMachineChannel);
+            if (configs != null) {
+                return new ParceledListSlice<WifiConfiguration>(configs);
+            }
         } else {
             Slog.e(TAG, "mWifiStateMachineChannel is not initialized");
-            return null;
         }
+        return null;
     }
 
     /**
@@ -1724,7 +1732,8 @@ public class WifiServiceImpl extends IWifiManager.Stub {
                 /* ignore - local call */
             }
             // Delete all Wifi SSIDs
-            List<WifiConfiguration> networks = getConfiguredNetworks();
+            List<WifiConfiguration> networks = mWifiStateMachine.syncGetConfiguredNetworks(
+                    Binder.getCallingUid(), mWifiStateMachineChannel);
             if (networks != null) {
                 for (WifiConfiguration config : networks) {
                     removeNetwork(config.networkId);
