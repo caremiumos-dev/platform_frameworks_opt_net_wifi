@@ -941,6 +941,7 @@ public class WifiConnectivityManager {
     public void handleConnectionStateChanged(int state) {
         localLog("handleConnectionStateChanged: state=" + state);
 
+
         mWifiState = state;
 
         // Reset BSSID of last connection attempt and kick off
@@ -948,9 +949,10 @@ public class WifiConnectivityManager {
         if (mWifiState == WIFI_STATE_DISCONNECTED) {
             mLastConnectionAttemptBssid = null;
             scheduleWatchdogTimer();
+            startConnectivityScan(SCAN_IMMEDIATELY);
+        } else {
+            startConnectivityScan(SCAN_ON_SCHEDULE);
         }
-
-        startConnectivityScan(SCAN_ON_SCHEDULE);
     }
 
     /**
