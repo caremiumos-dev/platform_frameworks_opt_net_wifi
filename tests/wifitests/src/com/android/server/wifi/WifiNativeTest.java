@@ -148,7 +148,6 @@ public class WifiNativeTest {
             }};
 
     private WifiNative mWifiNative;
-    private WifiVendorHal mWifiVendorHal;
 
     @Before
     public void setUp() throws Exception {
@@ -156,8 +155,6 @@ public class WifiNativeTest {
                 WifiNative.class.getDeclaredConstructor(String.class, Boolean.TYPE);
         wifiNativeConstructor.setAccessible(true);
         mWifiNative = spy(wifiNativeConstructor.newInstance("test", true));
-        mWifiVendorHal = mock(WifiVendorHal.class);
-        mWifiNative.setWifiVendorHal(mWifiVendorHal);
     }
 
     /**
