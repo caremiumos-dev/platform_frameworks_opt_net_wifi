@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65bd8624_7bd60bb2",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1834,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-13T22:33:54Z",
+      "side": 1,
+      "message": "Looking at wpa_supplicant\u0027s logic, I think this should be:\n\nif (mStateIsFourway \u0026\u0026 (!locally_generated || reasonCode !\u003d WLAN_REASON_IE_IN_4WAY_DIFFERS))",
+      "range": {
+        "startLine": 1830,
+        "startChar": 0,
+        "endLine": 1834,
+        "endChar": 17
+      },
+      "revId": "22b654a55c73a317950691677bccb15decb6ce6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
