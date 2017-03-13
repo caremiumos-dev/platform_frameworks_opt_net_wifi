@@ -22,6 +22,30 @@
       "revId": "28ee5c3660018a8f1df3a75b5a029db09bfba25f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eea418a0_f424d5f6",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 951,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-13T21:27:14Z",
+      "side": 1,
+      "message": "In startConnectivityScan() we start PNO scan immediately when screen is off.",
+      "parentUuid": "9c55791f_848dabd8",
+      "range": {
+        "startLine": 951,
+        "startChar": 34,
+        "endLine": 951,
+        "endChar": 50
+      },
+      "revId": "28ee5c3660018a8f1df3a75b5a029db09bfba25f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
