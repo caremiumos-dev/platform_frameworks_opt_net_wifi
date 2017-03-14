@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68989014_d1781300",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1527,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-14T00:17:42Z",
+      "side": 1,
+      "message": "This should be removed now.",
+      "range": {
+        "startLine": 1527,
+        "startChar": 51,
+        "endLine": 1527,
+        "endChar": 64
+      },
+      "revId": "c276c0f4d9a1948788fa37a1eb290e2495b5eb19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
