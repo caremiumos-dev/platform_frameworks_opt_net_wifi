@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cfeb187_0b18a8ad",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1734,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-14T04:33:25Z",
+      "side": 1,
+      "message": "Please add the null check as well. \nif (mWifiStateMachineChannel !\u003d null) {",
+      "revId": "3afa0fa51b8d25189ef61f49131b28afedbef864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
