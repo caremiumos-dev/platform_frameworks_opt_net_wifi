@@ -51,6 +51,7 @@ public class SavedNetworkEvaluator implements WifiNetworkSelector.NetworkEvaluat
     private final int mSecurityAward;
     private final int mNoInternetPenalty;
     private final int mThresholdSaturatedRssi24;
+    private final int mThresholdSaturatedRssi5;
     private final ContentObserver mContentObserver;
     private boolean mCurateSavedOpenNetworks;
 
@@ -78,6 +79,8 @@ public class SavedNetworkEvaluator implements WifiNetworkSelector.NetworkEvaluat
                 R.integer.config_wifi_framework_5GHz_preference_boost_factor);
         mThresholdSaturatedRssi24 = context.getResources().getInteger(
                 R.integer.config_wifi_framework_wifi_score_good_rssi_threshold_24GHz);
+        mThresholdSaturatedRssi5 = context.getResources().getInteger(
+                R.integer.config_wifi_framework_wifi_score_good_rssi_threshold_5GHz);
         mNoInternetPenalty = (mThresholdSaturatedRssi24 + mRssiScoreOffset)
                 * mRssiScoreSlope + mBand5GHzAward + mSameNetworkAward
                 + mSameBssidAward + mSecurityAward;
@@ -168,8 +171,14 @@ public class SavedNetworkEvaluator implements WifiNetworkSelector.NetworkEvaluat
 
         sbuf.append("[ ").append(scanResult).append("] ");
         // Calculate the RSSI score.
-        int rssi = scanResult.level <= mThresholdSaturatedRssi24
-                ? scanResult.level : mThresholdSaturatedRssi24;
+        int rssi = scanResult.level;
+        int saturationThreshold = scanResult.is5GHz()
+                ? mThresholdSaturatedRssi5 : mThresholdSaturatedRssi24;
+
+        if (rssi > saturationThreshold) {
+            rssi = saturationThreshold;
+        }
+
         score += (rssi + mRssiScoreOffset) * mRssiScoreSlope;
         sbuf.append(" RSSI score: ").append(score).append(",");
 
