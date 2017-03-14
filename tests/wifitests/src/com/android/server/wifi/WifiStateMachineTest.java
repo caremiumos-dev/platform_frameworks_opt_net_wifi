@@ -820,6 +820,7 @@ public class WifiStateMachineTest {
         mLooper.stopAutoDispatch();
 
         verify(mWifiConfigManager).enableNetwork(eq(0), eq(true), anyInt());
+        verify(mWifiConnectivityManager).setUserConnectChoice(eq(0));
 
         mWsm.sendMessage(WifiMonitor.NETWORK_CONNECTION_EVENT, 0, 0, sBSSID);
         mLooper.dispatchAll();
@@ -856,6 +857,7 @@ public class WifiStateMachineTest {
         mLooper.stopAutoDispatch();
 
         verify(mWifiConfigManager).enableNetwork(eq(0), eq(true), anyInt());
+        verify(mWifiConnectivityManager, never()).setUserConnectChoice(eq(0));
 
         mWsm.sendMessage(WifiMonitor.NETWORK_CONNECTION_EVENT, 0, 0, sBSSID);
         mLooper.dispatchAll();
