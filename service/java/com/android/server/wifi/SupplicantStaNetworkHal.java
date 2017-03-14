@@ -143,12 +143,10 @@ public class SupplicantStaNetworkHal {
     /**
      * Read network variables from wpa_supplicant into the provided WifiConfiguration object.
      *
-     * @param config        WifiConfiguration object to be populated.
-     * @param networkExtras Map of network extras parsed from wpa_supplicant.
+     * @param config WifiConfiguration object to be populated.
      * @return true if succeeds, false otherwise.
      */
-    public boolean loadWifiConfiguration(WifiConfiguration config,
-                                         Map<String, String> networkExtras) {
+    public boolean loadWifiConfiguration(WifiConfiguration config) {
         if (config == null) return false;
         /** SSID */
         config.SSID = null;
@@ -225,6 +223,22 @@ public class SupplicantStaNetworkHal {
             config.allowedPairwiseCiphers =
                     supplicantToWifiConfigurationPairwiseCipherMask(mPairwiseCipherMask);
         }
+        return loadWifiEnterpriseConfig(config.SSID, config.enterpriseConfig);
+    }
+
+    /**
+     * Read network variables from wpa_supplicant into the provided WifiConfiguration object and
+     * network extras map.
+     *
+     * @param config        WifiConfiguration object to be populated.
+     * @param networkExtras Map of network extras parsed from wpa_supplicant.
+     * @return true if succeeds, false otherwise.
+     */
+    public boolean loadWifiConfigurationAndExtras(WifiConfiguration config,
+                                                  Map<String, String> networkExtras) {
+        if (!loadWifiConfiguration(config)) {
+            return false;
+        }
         /** metadata: idstr */
         if (getIdStr() && !TextUtils.isEmpty(mIdStr)) {
             Map<String, String> metadata = parseNetworkExtra(mIdStr);
@@ -233,7 +247,7 @@ public class SupplicantStaNetworkHal {
             Log.e(TAG, "getIdStr failed");
             return false;
         }
-        return loadWifiEnterpriseConfig(config.SSID, config.enterpriseConfig);
+        return true;
     }
 
     /**

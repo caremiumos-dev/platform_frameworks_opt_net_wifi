@@ -211,7 +211,7 @@ public class SupplicantStaNetworkHalTest {
         mSupplicantVariables.networkId = 5;
         WifiConfiguration loadConfig = new WifiConfiguration();
         Map<String, String> networkExtras = new HashMap<>();
-        assertTrue(mSupplicantNetwork.loadWifiConfiguration(loadConfig, networkExtras));
+        assertTrue(mSupplicantNetwork.loadWifiConfigurationAndExtras(loadConfig, networkExtras));
         assertEquals(mSupplicantVariables.networkId, loadConfig.networkId);
     }
 
@@ -232,7 +232,7 @@ public class SupplicantStaNetworkHalTest {
 
         WifiConfiguration loadConfig = new WifiConfiguration();
         Map<String, String> networkExtras = new HashMap<>();
-        assertFalse(mSupplicantNetwork.loadWifiConfiguration(loadConfig, networkExtras));
+        assertFalse(mSupplicantNetwork.loadWifiConfigurationAndExtras(loadConfig, networkExtras));
     }
 
     /**
@@ -281,7 +281,8 @@ public class SupplicantStaNetworkHalTest {
         WifiConfiguration loadConfig = new WifiConfiguration();
         Map<String, String> networkExtras = new HashMap<>();
         try {
-            assertFalse(mSupplicantNetwork.loadWifiConfiguration(loadConfig, networkExtras));
+            assertFalse(mSupplicantNetwork.loadWifiConfigurationAndExtras(
+                    loadConfig, networkExtras));
         } catch (IllegalArgumentException e) {
             return;
         }
@@ -318,7 +319,8 @@ public class SupplicantStaNetworkHalTest {
         WifiConfiguration loadConfig = new WifiConfiguration();
         Map<String, String> networkExtras = new HashMap<>();
         try {
-            assertFalse(mSupplicantNetwork.loadWifiConfiguration(loadConfig, networkExtras));
+            assertFalse(mSupplicantNetwork.loadWifiConfigurationAndExtras(
+                    loadConfig, networkExtras));
         } catch (IllegalArgumentException e) {
             return;
         }
@@ -338,7 +340,7 @@ public class SupplicantStaNetworkHalTest {
 
         WifiConfiguration loadConfig = new WifiConfiguration();
         Map<String, String> networkExtras = new HashMap<>();
-        assertFalse(mSupplicantNetwork.loadWifiConfiguration(loadConfig, networkExtras));
+        assertFalse(mSupplicantNetwork.loadWifiConfigurationAndExtras(loadConfig, networkExtras));
     }
 
     /**
@@ -358,7 +360,7 @@ public class SupplicantStaNetworkHalTest {
 
         WifiConfiguration loadConfig = new WifiConfiguration();
         Map<String, String> networkExtras = new HashMap<>();
-        assertTrue(mSupplicantNetwork.loadWifiConfiguration(loadConfig, networkExtras));
+        assertTrue(mSupplicantNetwork.loadWifiConfigurationAndExtras(loadConfig, networkExtras));
     }
 
     /**
@@ -376,7 +378,7 @@ public class SupplicantStaNetworkHalTest {
 
         WifiConfiguration loadConfig = new WifiConfiguration();
         Map<String, String> networkExtras = new HashMap<>();
-        assertFalse(mSupplicantNetwork.loadWifiConfiguration(loadConfig, networkExtras));
+        assertFalse(mSupplicantNetwork.loadWifiConfigurationAndExtras(loadConfig, networkExtras));
     }
 
     /**
@@ -626,7 +628,7 @@ public class SupplicantStaNetworkHalTest {
 
         WifiConfiguration loadConfig = new WifiConfiguration();
         Map<String, String> networkExtras = new HashMap<>();
-        assertTrue(mSupplicantNetwork.loadWifiConfiguration(loadConfig, networkExtras));
+        assertTrue(mSupplicantNetwork.loadWifiConfigurationAndExtras(loadConfig, networkExtras));
         // The FT flags should be stripped out when reading it back.
         WifiConfigurationTestUtil.assertConfigurationEqualForSupplicant(config, loadConfig);
     }
@@ -648,7 +650,7 @@ public class SupplicantStaNetworkHalTest {
 
         WifiConfiguration loadConfig = new WifiConfiguration();
         Map<String, String> networkExtras = new HashMap<>();
-        assertTrue(mSupplicantNetwork.loadWifiConfiguration(loadConfig, networkExtras));
+        assertTrue(mSupplicantNetwork.loadWifiConfigurationAndExtras(loadConfig, networkExtras));
         // The FT flags should be stripped out when reading it back.
         WifiConfigurationTestUtil.assertConfigurationEqualForSupplicant(config, loadConfig);
     }
@@ -762,7 +764,7 @@ public class SupplicantStaNetworkHalTest {
         assertTrue(mSupplicantNetwork.saveWifiConfiguration(config));
         WifiConfiguration loadConfig = new WifiConfiguration();
         Map<String, String> networkExtras = new HashMap<>();
-        assertTrue(mSupplicantNetwork.loadWifiConfiguration(loadConfig, networkExtras));
+        assertTrue(mSupplicantNetwork.loadWifiConfigurationAndExtras(loadConfig, networkExtras));
         WifiConfigurationTestUtil.assertConfigurationEqualForSupplicant(config, loadConfig);
         assertEquals(config.configKey(),
                 networkExtras.get(SupplicantStaNetworkHal.ID_STRING_KEY_CONFIG_KEY));

@@ -238,7 +238,8 @@ public class SupplicantStaIfaceHalTest {
                         return true;
                     }
                 }).when(mSupplicantStaNetworkMock)
-                        .loadWifiConfiguration(any(WifiConfiguration.class), any(Map.class));
+                        .loadWifiConfigurationAndExtras(any(WifiConfiguration.class),
+                                any(Map.class));
                 cb.onValues(mStatusSuccess, mock(ISupplicantStaNetwork.class));
                 return;
             }
@@ -259,6 +260,10 @@ public class SupplicantStaIfaceHalTest {
             assertEquals(IpConfiguration.IpAssignment.DHCP, config.getIpAssignment());
             assertEquals(IpConfiguration.ProxySettings.NONE, config.getProxySettings());
         }
+        verify(mISupplicantStaIfaceMock, times(3))
+                .getNetwork(anyInt(), any(ISupplicantStaIface.getNetworkCallback.class));
+        verify(mSupplicantStaNetworkMock, times(3))
+                .loadWifiConfigurationAndExtras(any(WifiConfiguration.class), any(Map.class));
     }
 
     /**
@@ -304,7 +309,8 @@ public class SupplicantStaIfaceHalTest {
                         return true;
                     }
                 }).when(mSupplicantStaNetworkMock)
-                        .loadWifiConfiguration(any(WifiConfiguration.class), any(Map.class));
+                        .loadWifiConfigurationAndExtras(any(WifiConfiguration.class),
+                                any(Map.class));
                 cb.onValues(mStatusSuccess, mock(ISupplicantStaNetwork.class));
                 return;
             }
@@ -335,6 +341,10 @@ public class SupplicantStaIfaceHalTest {
             assertEquals(IpConfiguration.IpAssignment.DHCP, config.getIpAssignment());
             assertEquals(IpConfiguration.ProxySettings.NONE, config.getProxySettings());
         }
+        verify(mISupplicantStaIfaceMock, times(3))
+                .getNetwork(anyInt(), any(ISupplicantStaIface.getNetworkCallback.class));
+        verify(mSupplicantStaNetworkMock, times(3))
+                .loadWifiConfigurationAndExtras(any(WifiConfiguration.class), any(Map.class));
     }
 
     /**
@@ -353,6 +363,10 @@ public class SupplicantStaIfaceHalTest {
         Map<String, WifiConfiguration> configs = new HashMap<>();
         SparseArray<Map<String, String>> extras = new SparseArray<>();
         assertFalse(mDut.loadNetworks(configs, extras));
+        verify(mISupplicantStaIfaceMock, never())
+                .getNetwork(anyInt(), any(ISupplicantStaIface.getNetworkCallback.class));
+        verify(mSupplicantStaNetworkMock, never())
+                .loadWifiConfigurationAndExtras(any(WifiConfiguration.class), any(Map.class));
     }
 
     /**
@@ -378,6 +392,10 @@ public class SupplicantStaIfaceHalTest {
         Map<String, WifiConfiguration> configs = new HashMap<>();
         SparseArray<Map<String, String>> extras = new SparseArray<>();
         assertFalse(mDut.loadNetworks(configs, extras));
+        verify(mISupplicantStaIfaceMock)
+                .getNetwork(anyInt(), any(ISupplicantStaIface.getNetworkCallback.class));
+        verify(mSupplicantStaNetworkMock, never())
+                .loadWifiConfigurationAndExtras(any(WifiConfiguration.class), any(Map.class));
     }
 
     /**
@@ -404,12 +422,16 @@ public class SupplicantStaIfaceHalTest {
                 return false;
             }
         }).when(mSupplicantStaNetworkMock)
-                .loadWifiConfiguration(any(WifiConfiguration.class), any(Map.class));
+                .loadWifiConfigurationAndExtras(any(WifiConfiguration.class), any(Map.class));
 
         Map<String, WifiConfiguration> configs = new HashMap<>();
         SparseArray<Map<String, String>> extras = new SparseArray<>();
         assertTrue(mDut.loadNetworks(configs, extras));
         assertTrue(configs.isEmpty());
+        verify(mISupplicantStaIfaceMock, times(3))
+                .getNetwork(anyInt(), any(ISupplicantStaIface.getNetworkCallback.class));
+        verify(mSupplicantStaNetworkMock, times(3))
+                .loadWifiConfigurationAndExtras(any(WifiConfiguration.class), any(Map.class));
     }
 
     /**
@@ -437,12 +459,76 @@ public class SupplicantStaIfaceHalTest {
                 throw new IllegalArgumentException();
             }
         }).when(mSupplicantStaNetworkMock)
-                .loadWifiConfiguration(any(WifiConfiguration.class), any(Map.class));
+                .loadWifiConfigurationAndExtras(any(WifiConfiguration.class), any(Map.class));
 
         Map<String, WifiConfiguration> configs = new HashMap<>();
         SparseArray<Map<String, String>> extras = new SparseArray<>();
         assertTrue(mDut.loadNetworks(configs, extras));
         assertTrue(configs.isEmpty());
+        verify(mISupplicantStaIfaceMock, times(3))
+                .getNetwork(anyInt(), any(ISupplicantStaIface.getNetworkCallback.class));
+        verify(mSupplicantStaNetworkMock, times(3))
+                .loadWifiConfigurationAndExtras(any(WifiConfiguration.class), any(Map.class));
+    }
+
+    /**
+     * Tests the loading of network using {@link SupplicantStaNetworkHal}.
+     */
+    @Test
+    public void testLoadNetwork() throws Exception {
+        executeAndValidateInitializationSequence();
+        final int networkId = NETWORK_ID_TO_SSID.entrySet().iterator().next().getKey();
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public void answer(ISupplicantStaIface.listNetworksCallback cb) {
+                cb.onValues(mStatusSuccess, new ArrayList<>(Arrays.asList(networkId)));
+            }
+        }).when(mISupplicantStaIfaceMock)
+                .listNetworks(any(ISupplicantStaIface.listNetworksCallback.class));
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public void answer(final int networkId, ISupplicantStaIface.getNetworkCallback cb) {
+                cb.onValues(mStatusSuccess, mock(ISupplicantStaNetwork.class));
+                return;
+            }
+        }).when(mISupplicantStaIfaceMock)
+                .getNetwork(anyInt(), any(ISupplicantStaIface.getNetworkCallback.class));
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public boolean answer(WifiConfiguration config) {
+                config.SSID = NETWORK_ID_TO_SSID.get(networkId);
+                config.networkId = networkId;
+                return true;
+            }
+        }).when(mSupplicantStaNetworkMock)
+                .loadWifiConfiguration(any(WifiConfiguration.class));
+
+        WifiConfiguration loadConfig = new WifiConfiguration();
+        assertTrue(mDut.loadNetwork(loadConfig));
+        assertEquals(networkId, loadConfig.networkId);
+        assertEquals(NETWORK_ID_TO_SSID.get(networkId), loadConfig.SSID);
+        verify(mISupplicantStaIfaceMock)
+                .getNetwork(anyInt(), any(ISupplicantStaIface.getNetworkCallback.class));
+        verify(mSupplicantStaNetworkMock)
+                .loadWifiConfiguration(any(WifiConfiguration.class));
+    }
+
+    /**
+     * Tests the failure to load networks because more than 1 network is present in listNetworks.
+     */
+    @Test
+    public void testLoadNetworkFailedDueToMoreNetworks() throws Exception {
+        executeAndValidateInitializationSequence();
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public void answer(ISupplicantStaIface.listNetworksCallback cb) {
+                cb.onValues(mStatusSuccess, new ArrayList<>(NETWORK_ID_TO_SSID.keySet()));
+            }
+        }).when(mISupplicantStaIfaceMock)
+                .listNetworks(any(ISupplicantStaIface.listNetworksCallback.class));
+
+        WifiConfiguration loadConfig = new WifiConfiguration();
+        assertFalse(mDut.loadNetwork(loadConfig));
+        verify(mISupplicantStaIfaceMock, never())
+                .getNetwork(anyInt(), any(ISupplicantStaIface.getNetworkCallback.class));
+        verify(mSupplicantStaNetworkMock, never())
+                .loadWifiConfiguration(any(WifiConfiguration.class));
     }
 
     /**

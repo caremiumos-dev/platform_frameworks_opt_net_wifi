@@ -445,11 +445,47 @@ public class SupplicantStaIfaceHal {
     }
 
     /**
+     * Load the only configured network from wpa_supplicant.
+     * This is used for loading the network from wpa_supplicant after WPS.
+     *
+     * @param config  WifiConfiguration object to be filled up.
+     * @return true if succeeds, false otherwise.
+     */
+    public boolean loadNetwork(WifiConfiguration config) {
+        List<Integer> networkIds = listNetworks();
+        if (networkIds == null) {
+            Log.e(TAG, "Failed to list networks");
+            return false;
+        }
+        if (networkIds.size() != 1) {
+            Log.e(TAG, "Expected 1 network to be present. Found: " + networkIds.size());
+            return false;
+        }
+        SupplicantStaNetworkHal network = getNetwork(networkIds.get(0));
+        if (network == null) {
+            Log.e(TAG, "Failed to get network with ID: " + networkIds.get(0));
+            return false;
+        }
+        boolean loadSuccess = false;
+        try {
+            loadSuccess = network.loadWifiConfiguration(config);
+        } catch (IllegalArgumentException e) {
+            Log.wtf(TAG, "Exception while loading config params: " + config, e);
+        }
+        if (!loadSuccess) {
+            Log.e(TAG, "Failed to load wifi configuration for network with ID: "
+                    + networkIds.get(0));
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Load all the configured networks from wpa_supplicant.
      *
      * @param configs       Map of configuration key to configuration objects corresponding to all
      *                      the networks.
-     * @param networkExtras Map of extra configuration parameters stored in wpa_supplicant.conf
+     * @param networkExtras Map of extra configuration parameters stored in wpa_supplicant.conf.
      * @return true if succeeds, false otherwise.
      */
     public boolean loadNetworks(Map<String, WifiConfiguration> configs,
@@ -469,7 +505,7 @@ public class SupplicantStaIfaceHal {
             Map<String, String> networkExtra = new HashMap<>();
             boolean loadSuccess = false;
             try {
-                loadSuccess = network.loadWifiConfiguration(config, networkExtra);
+                loadSuccess = network.loadWifiConfigurationAndExtras(config, networkExtra);
             } catch (IllegalArgumentException e) {
                 Log.wtf(TAG, "Exception while loading config params: " + config, e);
             }
