@@ -229,9 +229,6 @@ public class SupplicantStaNetworkHal {
         if (getIdStr() && !TextUtils.isEmpty(mIdStr)) {
             Map<String, String> metadata = parseNetworkExtra(mIdStr);
             networkExtras.putAll(metadata);
-        } else {
-            Log.e(TAG, "getIdStr failed");
-            return false;
         }
         return loadWifiEnterpriseConfig(config.SSID, config.enterpriseConfig);
     }
