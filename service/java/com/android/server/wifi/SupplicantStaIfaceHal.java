@@ -1821,6 +1821,7 @@ public class SupplicantStaIfaceHal {
                 mWifiMonitor.broadcastNetworkDisconnectionEvent(
                         mIfaceName, locallyGenerated ? 1 : 0, reasonCode,
                         NativeUtil.macAddressFromByteArray(bssid));
+                removeAllNetworks();
             }
         }
 
@@ -1832,6 +1833,7 @@ public class SupplicantStaIfaceHal {
                 // |WifiMonitor.AUTHENTICATION_FAILURE_REASON_WRONG_PSWD|
                 mWifiMonitor.broadcastAssociationRejectionEvent(mIfaceName, statusCode, timedOut,
                         NativeUtil.macAddressFromByteArray(bssid));
+                removeAllNetworks();
             }
         }
 
@@ -1841,6 +1843,7 @@ public class SupplicantStaIfaceHal {
             synchronized (mLock) {
                 mWifiMonitor.broadcastAuthenticationFailureEvent(
                         mIfaceName, WifiMonitor.AUTHENTICATION_FAILURE_REASON_TIMEOUT);
+                removeAllNetworks();
             }
         }
 
@@ -1850,6 +1853,7 @@ public class SupplicantStaIfaceHal {
             synchronized (mLock) {
                 mWifiMonitor.broadcastAuthenticationFailureEvent(
                         mIfaceName, WifiMonitor.AUTHENTICATION_FAILURE_REASON_EAP_FAILURE);
+                removeAllNetworks();
             }
         }
 

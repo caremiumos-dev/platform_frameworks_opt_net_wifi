@@ -912,6 +912,12 @@ public class SupplicantStaIfaceHalTest {
     public void testDisconnectedCallback() throws Exception {
         executeAndValidateInitializationSequence();
         assertNotNull(mISupplicantStaIfaceCallback);
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public void answer(ISupplicantStaIface.listNetworksCallback cb) throws RemoteException {
+                cb.onValues(mStatusSuccess, new ArrayList<>());
+            }
+        }).when(mISupplicantStaIfaceMock)
+                .listNetworks(any(ISupplicantStaIface.listNetworksCallback.class));
 
         int reasonCode = 5;
         mISupplicantStaIfaceCallback.onDisconnected(
@@ -923,6 +929,8 @@ public class SupplicantStaIfaceHalTest {
                 NativeUtil.macAddressToByteArray(BSSID), false, reasonCode);
         verify(mWifiMonitor).broadcastNetworkDisconnectionEvent(
                 eq(WLAN_IFACE_NAME), eq(0), eq(reasonCode), eq(BSSID));
+        verify(mISupplicantStaIfaceMock, times(2))
+                .listNetworks(any(ISupplicantStaIface.listNetworksCallback.class));
     }
 
     /**
@@ -932,12 +940,20 @@ public class SupplicantStaIfaceHalTest {
     public void testAssociationRejectionCallback() throws Exception {
         executeAndValidateInitializationSequence();
         assertNotNull(mISupplicantStaIfaceCallback);
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public void answer(ISupplicantStaIface.listNetworksCallback cb) throws RemoteException {
+                cb.onValues(mStatusSuccess, new ArrayList<>());
+            }
+        }).when(mISupplicantStaIfaceMock)
+                .listNetworks(any(ISupplicantStaIface.listNetworksCallback.class));
 
         int statusCode = 7;
         mISupplicantStaIfaceCallback.onAssociationRejected(
                 NativeUtil.macAddressToByteArray(BSSID), statusCode, false);
         verify(mWifiMonitor).broadcastAssociationRejectionEvent(
                 eq(WLAN_IFACE_NAME), eq(statusCode), eq(false), eq(BSSID));
+        verify(mISupplicantStaIfaceMock)
+                .listNetworks(any(ISupplicantStaIface.listNetworksCallback.class));
     }
 
     /**
@@ -947,11 +963,19 @@ public class SupplicantStaIfaceHalTest {
     public void testAuthenticationTimeoutCallback() throws Exception {
         executeAndValidateInitializationSequence();
         assertNotNull(mISupplicantStaIfaceCallback);
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public void answer(ISupplicantStaIface.listNetworksCallback cb) throws RemoteException {
+                cb.onValues(mStatusSuccess, new ArrayList<>());
+            }
+        }).when(mISupplicantStaIfaceMock)
+                .listNetworks(any(ISupplicantStaIface.listNetworksCallback.class));
 
         mISupplicantStaIfaceCallback.onAuthenticationTimeout(
                 NativeUtil.macAddressToByteArray(BSSID));
         verify(mWifiMonitor).broadcastAuthenticationFailureEvent(eq(WLAN_IFACE_NAME),
                 eq(WifiMonitor.AUTHENTICATION_FAILURE_REASON_TIMEOUT));
+        verify(mISupplicantStaIfaceMock)
+                .listNetworks(any(ISupplicantStaIface.listNetworksCallback.class));
     }
 
     /**
@@ -961,10 +985,18 @@ public class SupplicantStaIfaceHalTest {
     public void testEapFailureCallback() throws Exception {
         executeAndValidateInitializationSequence();
         assertNotNull(mISupplicantStaIfaceCallback);
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public void answer(ISupplicantStaIface.listNetworksCallback cb) throws RemoteException {
+                cb.onValues(mStatusSuccess, new ArrayList<>());
+            }
+        }).when(mISupplicantStaIfaceMock)
+                .listNetworks(any(ISupplicantStaIface.listNetworksCallback.class));
 
         mISupplicantStaIfaceCallback.onEapFailure();
         verify(mWifiMonitor).broadcastAuthenticationFailureEvent(eq(WLAN_IFACE_NAME),
                 eq(WifiMonitor.AUTHENTICATION_FAILURE_REASON_EAP_FAILURE));
+        verify(mISupplicantStaIfaceMock)
+                .listNetworks(any(ISupplicantStaIface.listNetworksCallback.class));
     }
 
     /**
