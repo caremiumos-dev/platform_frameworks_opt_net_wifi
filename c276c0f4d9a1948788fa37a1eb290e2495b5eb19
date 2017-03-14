@@ -22,6 +22,30 @@
       "revId": "c276c0f4d9a1948788fa37a1eb290e2495b5eb19",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e81586f3_607ffd76",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1527,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-14T00:19:23Z",
+      "side": 1,
+      "message": "Yep. We should. Do u want to do that in a separate CL or this one?",
+      "parentUuid": "68989014_d1781300",
+      "range": {
+        "startLine": 1527,
+        "startChar": 51,
+        "endLine": 1527,
+        "endChar": 64
+      },
+      "revId": "c276c0f4d9a1948788fa37a1eb290e2495b5eb19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
