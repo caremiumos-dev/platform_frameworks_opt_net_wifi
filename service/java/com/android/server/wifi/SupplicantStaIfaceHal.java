@@ -400,15 +400,16 @@ public class SupplicantStaIfaceHal {
             loge("Failed to remove existing networks");
             return false;
         }
-        mCurrentNetwork = addNetwork(config);
-        if (mCurrentNetwork == null) {
+        SupplicantStaNetworkHal newNetwork = addNetwork(config);
+        if (newNetwork == null) {
             loge("Failed to add/save network configuration: " + config.configKey());
             return false;
         }
-        if (!mCurrentNetwork.select()) {
+        if (!newNetwork.select()) {
             loge("Failed to select network configuration: " + config.configKey());
             return false;
         }
+        mCurrentNetwork = newNetwork;
         mFrameworkNetworkId = config.networkId;
         return true;
     }
@@ -1731,6 +1732,27 @@ public class SupplicantStaIfaceHal {
             }
         }
 
+        /**
+         * Helper function to remove the current network from supplicant on a disconnection event.
+         * This function needs to check if we're in the midst of another connection (by checking if
+         * mCurrentNetwork is not null).
+         */
+        private void removeCurrentNetwork() {
+            if (mCurrentNetwork == null) {
+                return;
+            }
+            int existingNetworkId = mCurrentNetwork.getNetworkId();
+            if (existingNetworkId == WifiConfiguration.INVALID_NETWORK_ID) {
+                return;
+            }
+            if (mVerboseLoggingEnabled) {
+                Log.d(TAG, "Removing current network with id " + existingNetworkId);
+            }
+            if (!removeNetwork(existingNetworkId)) {
+                Log.e(TAG, "Failed to remove current network");
+            }
+        }
+
         @Override
         public void onNetworkAdded(int id) {
             logCallback("onNetworkAdded");
@@ -1835,6 +1857,7 @@ public class SupplicantStaIfaceHal {
                 mWifiMonitor.broadcastNetworkDisconnectionEvent(
                         mIfaceName, locallyGenerated ? 1 : 0, reasonCode,
                         NativeUtil.macAddressFromByteArray(bssid));
+                removeCurrentNetwork();
             }
         }
 
@@ -1844,6 +1867,7 @@ public class SupplicantStaIfaceHal {
             synchronized (mLock) {
                 mWifiMonitor.broadcastAssociationRejectionEvent(mIfaceName, statusCode, timedOut,
                         NativeUtil.macAddressFromByteArray(bssid));
+                removeCurrentNetwork();
             }
         }
 
@@ -1853,6 +1877,7 @@ public class SupplicantStaIfaceHal {
             synchronized (mLock) {
                 mWifiMonitor.broadcastAuthenticationFailureEvent(
                         mIfaceName, WifiMonitor.AUTHENTICATION_FAILURE_REASON_TIMEOUT);
+                removeCurrentNetwork();
             }
         }
 
@@ -1862,6 +1887,7 @@ public class SupplicantStaIfaceHal {
             synchronized (mLock) {
                 mWifiMonitor.broadcastAuthenticationFailureEvent(
                         mIfaceName, WifiMonitor.AUTHENTICATION_FAILURE_REASON_EAP_FAILURE);
+                removeCurrentNetwork();
             }
         }
 

@@ -574,6 +574,18 @@ public class SupplicantStaNetworkHal {
     }
 
     /**
+     * Retrieves the ID of this network.
+     * @return -1 if the network Id cannot be fetched, ID otherwise.
+     */
+    public int getNetworkId() {
+        if (!getId()) {
+            return WifiConfiguration.INVALID_NETWORK_ID;
+        } else {
+            return mNetworkId;
+        }
+    }
+
+    /**
      * Maps WifiConfiguration Key Management BitSet to Supplicant HIDL bitmask int
      * TODO(b/32571829): Update mapping when fast transition keys are added
      * @return bitmask int describing the allowed Key Management schemes, readable by the Supplicant
