@@ -585,7 +585,7 @@ public class WifiAwareNativeApi {
 
     /**
      * Initiates setting up a data-path between device and peer. Security is provided by either
-     * PMK or Passphrase - if both are null then an open (unencrypted) link is set up.
+     * PMK or Passphrase (not both) - if both are null then an open (unencrypted) link is set up.
      *
      * @param transactionId      Transaction ID for the transaction - used in the async callback to
      *                           match with the original request.
@@ -628,14 +628,16 @@ public class WifiAwareNativeApi {
         req.channelRequestType = channelRequestType;
         req.channel = channel;
         req.ifaceName = interfaceName;
-        if (pmk == null || pmk.length == 0) {
-            req.securityRequired = false;
-        } else {
-            req.securityRequired = true;
+        req.securityRequired = (pmk == null || pmk.length == 0) && (passphrase == null
+                || passphrase.length() == 0);
+        if (req.securityRequired) {
             req.cipherType = getStrongestCipherSuiteType(capabilities.supportedCipherSuites);
-            convertLcByteToUcByteArray(pmk, req.pmk);
+            if (pmk != null && pmk.length != 0) {
+                convertLcByteToUcByteArray(pmk, req.pmk);
+            } else {
+                convertLcByteToUcByteArray(passphrase.getBytes(), req.passphrase);
+            }
         }
-        // TODO: b/35866810 connect passphrase to HAL!
 
         try {
             WifiStatus status = iface.initiateDataPathRequest(transactionId, req);
@@ -652,8 +654,8 @@ public class WifiAwareNativeApi {
     }
 
     /**
-     * Responds to a data request from a peer. Security is provided by either PMK or Passphrase -
-     * if both are null then an open (unencrypted) link is set up.
+     * Responds to a data request from a peer. Security is provided by either PMK or Passphrase (not
+     * both) - if both are null then an open (unencrypted) link is set up.
      *
      * @param transactionId Transaction ID for the transaction - used in the async callback to
      *                      match with the original request.
@@ -687,14 +689,16 @@ public class WifiAwareNativeApi {
         req.acceptRequest = accept;
         req.ndpInstanceId = ndpId;
         req.ifaceName = interfaceName;
-        if (pmk == null || pmk.length == 0) {
-            req.securityRequired = false;
-        } else {
-            req.securityRequired = true;
+        req.securityRequired = (pmk == null || pmk.length == 0) && (passphrase == null
+                || passphrase.length() == 0);
+        if (req.securityRequired) {
             req.cipherType = getStrongestCipherSuiteType(capabilities.supportedCipherSuites);
-            convertLcByteToUcByteArray(pmk, req.pmk);
+            if (pmk != null && pmk.length != 0) {
+                convertLcByteToUcByteArray(pmk, req.pmk);
+            } else {
+                convertLcByteToUcByteArray(passphrase.getBytes(), req.passphrase);
+            }
         }
-        // TODO: b/35866810 connect passphrase to HAL!
 
         try {
             WifiStatus status = iface.respondToDataPathIndicationRequest(transactionId, req);
