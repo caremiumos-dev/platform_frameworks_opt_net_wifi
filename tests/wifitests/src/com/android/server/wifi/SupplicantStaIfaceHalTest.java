@@ -923,6 +923,29 @@ public class SupplicantStaIfaceHalTest {
                 NativeUtil.macAddressToByteArray(BSSID), false, reasonCode);
         verify(mWifiMonitor).broadcastNetworkDisconnectionEvent(
                 eq(WLAN_IFACE_NAME), eq(0), eq(reasonCode), eq(BSSID));
+        verify(mISupplicantStaIfaceMock, never()).removeNetwork(anyInt());
+    }
+
+    /**
+     * Tests the handling of network disconnected notification.
+     */
+    @Test
+    public void testDisconnectedCallbackRemovesCurrentNetwork() throws Exception {
+        executeAndValidateInitializationSequence();
+        assertNotNull(mISupplicantStaIfaceCallback);
+        executeAndValidateConnectSequence(5, false, false);
+
+        int reasonCode = 5;
+        mISupplicantStaIfaceCallback.onDisconnected(
+                NativeUtil.macAddressToByteArray(BSSID), true, reasonCode);
+        verify(mWifiMonitor).broadcastNetworkDisconnectionEvent(
+                eq(WLAN_IFACE_NAME), eq(1), eq(reasonCode), eq(BSSID));
+
+        mISupplicantStaIfaceCallback.onDisconnected(
+                NativeUtil.macAddressToByteArray(BSSID), false, reasonCode);
+        verify(mWifiMonitor).broadcastNetworkDisconnectionEvent(
+                eq(WLAN_IFACE_NAME), eq(0), eq(reasonCode), eq(BSSID));
+        verify(mISupplicantStaIfaceMock).removeNetwork(eq(SUPPLICANT_NETWORK_ID));
     }
 
     /**
@@ -938,6 +961,7 @@ public class SupplicantStaIfaceHalTest {
                 NativeUtil.macAddressToByteArray(BSSID), statusCode, false);
         verify(mWifiMonitor).broadcastAssociationRejectionEvent(
                 eq(WLAN_IFACE_NAME), eq(statusCode), eq(false), eq(BSSID));
+        verify(mISupplicantStaIfaceMock, never()).removeNetwork(anyInt());
     }
 
     /**
@@ -952,6 +976,7 @@ public class SupplicantStaIfaceHalTest {
                 NativeUtil.macAddressToByteArray(BSSID));
         verify(mWifiMonitor).broadcastAuthenticationFailureEvent(eq(WLAN_IFACE_NAME),
                 eq(WifiMonitor.AUTHENTICATION_FAILURE_REASON_TIMEOUT));
+        verify(mISupplicantStaIfaceMock, never()).removeNetwork(anyInt());
     }
 
     /**
@@ -961,10 +986,17 @@ public class SupplicantStaIfaceHalTest {
     public void testEapFailureCallback() throws Exception {
         executeAndValidateInitializationSequence();
         assertNotNull(mISupplicantStaIfaceCallback);
+        doAnswer(new MockAnswerUtil.AnswerWithArguments() {
+            public void answer(ISupplicantStaIface.listNetworksCallback cb) throws RemoteException {
+                cb.onValues(mStatusSuccess, new ArrayList<>());
+            }
+        }).when(mISupplicantStaIfaceMock)
+                .listNetworks(any(ISupplicantStaIface.listNetworksCallback.class));
 
         mISupplicantStaIfaceCallback.onEapFailure();
         verify(mWifiMonitor).broadcastAuthenticationFailureEvent(eq(WLAN_IFACE_NAME),
                 eq(WifiMonitor.AUTHENTICATION_FAILURE_REASON_EAP_FAILURE));
+        verify(mISupplicantStaIfaceMock, never()).removeNetwork(anyInt());
     }
 
     /**
