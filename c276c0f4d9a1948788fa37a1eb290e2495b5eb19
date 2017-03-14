@@ -70,6 +70,30 @@
       "revId": "c276c0f4d9a1948788fa37a1eb290e2495b5eb19",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22007374_7f19ab5a",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1527,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-14T00:25:50Z",
+      "side": 1,
+      "message": "Nope. Nothing else.",
+      "parentUuid": "37803019_c6593054",
+      "range": {
+        "startLine": 1527,
+        "startChar": 51,
+        "endLine": 1527,
+        "endChar": 64
+      },
+      "revId": "c276c0f4d9a1948788fa37a1eb290e2495b5eb19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
