@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e037b5d_0a053ae3",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-14T21:06:34Z",
+      "side": 1,
+      "message": "Extra white space?",
+      "range": {
+        "startLine": 126,
+        "startChar": 42,
+        "endLine": 126,
+        "endChar": 43
+      },
+      "revId": "033d4620f6af57b74978eca8f58166205c8f802c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e281b32_23ad06c0",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-14T21:06:34Z",
+      "side": 1,
+      "message": "Extra white space?",
+      "range": {
+        "startLine": 127,
+        "startChar": 68,
+        "endLine": 127,
+        "endChar": 69
+      },
+      "revId": "033d4620f6af57b74978eca8f58166205c8f802c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de90c84c_10170cd5",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-14T21:06:34Z",
+      "side": 1,
+      "message": "Nit: extra white space?",
+      "range": {
+        "startLine": 272,
+        "startChar": 45,
+        "endLine": 272,
+        "endChar": 47
+      },
+      "revId": "033d4620f6af57b74978eca8f58166205c8f802c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b305c957_e0810116",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-14T21:06:34Z",
+      "side": 1,
+      "message": "Nit: extra white space?",
+      "range": {
+        "startLine": 273,
+        "startChar": 71,
+        "endLine": 273,
+        "endChar": 73
+      },
+      "revId": "033d4620f6af57b74978eca8f58166205c8f802c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
