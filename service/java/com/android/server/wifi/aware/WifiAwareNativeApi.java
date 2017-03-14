@@ -21,6 +21,7 @@ import android.hardware.wifi.V1_0.NanBandIndex;
 import android.hardware.wifi.V1_0.NanBandSpecificConfig;
 import android.hardware.wifi.V1_0.NanCipherSuiteType;
 import android.hardware.wifi.V1_0.NanConfigRequest;
+import android.hardware.wifi.V1_0.NanDataPathSecurityConfig;
 import android.hardware.wifi.V1_0.NanEnableRequest;
 import android.hardware.wifi.V1_0.NanInitiateDataPathRequest;
 import android.hardware.wifi.V1_0.NanMatchAlg;
@@ -302,12 +303,12 @@ public class WifiAwareNativeApi {
         req.baseConfigs.ttlSec = (short) publishConfig.mTtlSec;
         req.baseConfigs.discoveryWindowPeriod = 1;
         req.baseConfigs.discoveryCount = (byte) publishConfig.mPublishCount;
-        convertLcByteToUcByteArray(publishConfig.mServiceName, req.baseConfigs.serviceName);
+        convertNativeByteArrayToArrayList(publishConfig.mServiceName, req.baseConfigs.serviceName);
         // TODO: what's the right value on publish?
         req.baseConfigs.discoveryMatchIndicator = NanMatchAlg.MATCH_ONCE;
-        convertLcByteToUcByteArray(publishConfig.mServiceSpecificInfo,
+        convertNativeByteArrayToArrayList(publishConfig.mServiceSpecificInfo,
                 req.baseConfigs.serviceSpecificInfo);
-        convertLcByteToUcByteArray(publishConfig.mMatchFilter,
+        convertNativeByteArrayToArrayList(publishConfig.mMatchFilter,
                 publishConfig.mPublishType == PublishConfig.PUBLISH_TYPE_UNSOLICITED
                         ? req.baseConfigs.txMatchFilter : req.baseConfigs.rxMatchFilter);
         req.baseConfigs.useRssiThreshold = false;
@@ -317,7 +318,7 @@ public class WifiAwareNativeApi {
         req.baseConfigs.disableFollowupReceivedIndication = false;
 
         // TODO: configure ranging and security
-        req.baseConfigs.securityEnabledInNdp = false;
+        req.baseConfigs.securityConfigOfNdp = NanDataPathSecurityConfig.OPEN;
         req.baseConfigs.rangingRequired = false;
         req.autoAcceptDataPathRequests = false;
 
@@ -364,11 +365,12 @@ public class WifiAwareNativeApi {
         req.baseConfigs.ttlSec = (short) subscribeConfig.mTtlSec;
         req.baseConfigs.discoveryWindowPeriod = 1;
         req.baseConfigs.discoveryCount = (byte) subscribeConfig.mSubscribeCount;
-        convertLcByteToUcByteArray(subscribeConfig.mServiceName, req.baseConfigs.serviceName);
+        convertNativeByteArrayToArrayList(subscribeConfig.mServiceName,
+                req.baseConfigs.serviceName);
         req.baseConfigs.discoveryMatchIndicator = subscribeConfig.mMatchStyle;
-        convertLcByteToUcByteArray(subscribeConfig.mServiceSpecificInfo,
+        convertNativeByteArrayToArrayList(subscribeConfig.mServiceSpecificInfo,
                 req.baseConfigs.serviceSpecificInfo);
-        convertLcByteToUcByteArray(subscribeConfig.mMatchFilter,
+        convertNativeByteArrayToArrayList(subscribeConfig.mMatchFilter,
                 subscribeConfig.mSubscribeType == SubscribeConfig.SUBSCRIBE_TYPE_ACTIVE
                         ? req.baseConfigs.txMatchFilter : req.baseConfigs.rxMatchFilter);
         req.baseConfigs.useRssiThreshold = false;
@@ -378,7 +380,7 @@ public class WifiAwareNativeApi {
         req.baseConfigs.disableFollowupReceivedIndication = false;
 
         // TODO: configure ranging and security
-        req.baseConfigs.securityEnabledInNdp = false;
+        req.baseConfigs.securityConfigOfNdp = NanDataPathSecurityConfig.OPEN;
         req.baseConfigs.rangingRequired = false;
 
         req.subscribeType = subscribeConfig.mSubscribeType;
@@ -433,7 +435,7 @@ public class WifiAwareNativeApi {
         copyArray(dest, req.addr);
         req.isHighPriority = false;
         req.shouldUseDiscoveryWindow = true;
-        convertLcByteToUcByteArray(message, req.serviceSpecificInfo);
+        convertNativeByteArrayToArrayList(message, req.serviceSpecificInfo);
         req.disableFollowupResultIndication = false;
 
         try {
@@ -585,7 +587,7 @@ public class WifiAwareNativeApi {
 
     /**
      * Initiates setting up a data-path between device and peer. Security is provided by either
-     * PMK or Passphrase - if both are null then an open (unencrypted) link is set up.
+     * PMK or Passphrase (not both) - if both are null then an open (unencrypted) link is set up.
      *
      * @param transactionId      Transaction ID for the transaction - used in the async callback to
      *                           match with the original request.
@@ -628,14 +630,17 @@ public class WifiAwareNativeApi {
         req.channelRequestType = channelRequestType;
         req.channel = channel;
         req.ifaceName = interfaceName;
-        if (pmk == null || pmk.length == 0) {
-            req.securityRequired = false;
-        } else {
-            req.securityRequired = true;
+        req.securityConfig = NanDataPathSecurityConfig.OPEN;
+        if (pmk != null && pmk.length != 0) {
             req.cipherType = getStrongestCipherSuiteType(capabilities.supportedCipherSuites);
-            convertLcByteToUcByteArray(pmk, req.pmk);
+            req.securityConfig = NanDataPathSecurityConfig.PMK;
+            copyArray(pmk, req.pmk);
         }
-        // TODO: b/35866810 connect passphrase to HAL!
+        if (passphrase != null && passphrase.length() != 0) {
+            req.cipherType = getStrongestCipherSuiteType(capabilities.supportedCipherSuites);
+            req.securityConfig = NanDataPathSecurityConfig.PASSPHRASE;
+            convertNativeByteArrayToArrayList(passphrase.getBytes(), req.passphrase);
+        }
 
         try {
             WifiStatus status = iface.initiateDataPathRequest(transactionId, req);
@@ -652,8 +657,8 @@ public class WifiAwareNativeApi {
     }
 
     /**
-     * Responds to a data request from a peer. Security is provided by either PMK or Passphrase -
-     * if both are null then an open (unencrypted) link is set up.
+     * Responds to a data request from a peer. Security is provided by either PMK or Passphrase (not
+     * both) - if both are null then an open (unencrypted) link is set up.
      *
      * @param transactionId Transaction ID for the transaction - used in the async callback to
      *                      match with the original request.
@@ -687,14 +692,17 @@ public class WifiAwareNativeApi {
         req.acceptRequest = accept;
         req.ndpInstanceId = ndpId;
         req.ifaceName = interfaceName;
-        if (pmk == null || pmk.length == 0) {
-            req.securityRequired = false;
-        } else {
-            req.securityRequired = true;
+        req.securityConfig = NanDataPathSecurityConfig.OPEN;
+        if (pmk != null && pmk.length != 0) {
             req.cipherType = getStrongestCipherSuiteType(capabilities.supportedCipherSuites);
-            convertLcByteToUcByteArray(pmk, req.pmk);
+            req.securityConfig = NanDataPathSecurityConfig.PMK;
+            copyArray(pmk, req.pmk);
         }
-        // TODO: b/35866810 connect passphrase to HAL!
+        if (passphrase != null && passphrase.length() != 0) {
+            req.cipherType = getStrongestCipherSuiteType(capabilities.supportedCipherSuites);
+            req.securityConfig = NanDataPathSecurityConfig.PASSPHRASE;
+            convertNativeByteArrayToArrayList(passphrase.getBytes(), req.passphrase);
+        }
 
         try {
             WifiStatus status = iface.respondToDataPathIndicationRequest(transactionId, req);
@@ -769,7 +777,7 @@ public class WifiAwareNativeApi {
      *
      * @return A newly allocated ArrayList<> if 'to' is null, otherwise null.
      */
-    private ArrayList<Byte> convertLcByteToUcByteArray(byte[] from, ArrayList<Byte> to) {
+    private ArrayList<Byte> convertNativeByteArrayToArrayList(byte[] from, ArrayList<Byte> to) {
         if (from == null) {
             from = new byte[0];
         }
