@@ -6460,6 +6460,20 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         }
     }
 
+    /**
+     * WPS connection flow:
+     * 1. WifiStateMachine receive WPS_START message from WifiManager API.
+     * 2. WifiStateMachine initiates the appropriate WPS operation using WifiNative methods:
+     * {@link WifiNative#startWpsPbc(String)}, {@link WifiNative#startWpsPinDisplay(String)}, etc.
+     * 3. WifiStateMachine then transitions to this WpsRunningState.
+     * 4. Once WifiStateMachine receive the connected event:
+     * {@link WifiMonitor#NETWORK_CONNECTION_EVENT}, we load the network from wpa_supplicant
+     * and add it to WifiConfigManager and send a response to the original source of WifiManager
+     * API using {@link #mSourceMessage}.
+     * 5. We then exit from this state to disconnected state and let network selection reconnect.
+     * 6. Any failures are notified to the original source of WifiManager API
+     * using {@link #mSourceMessage}.
+     */
     class WpsRunningState extends State {
         // Tracks the source to provide a reply
         private Message mSourceMessage;
@@ -6476,7 +6490,12 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     // Ignore intermediate success, wait for full connection
                     break;
                 case WifiMonitor.NETWORK_CONNECTION_EVENT:
-                    replyToMessage(mSourceMessage, WifiManager.WPS_COMPLETED);
+                    if (loadNetworkFromSupplicantAfterWps()) {
+                        replyToMessage(mSourceMessage, WifiManager.WPS_COMPLETED);
+                    } else {
+                        replyToMessage(mSourceMessage, WifiManager.WPS_FAILED,
+                                WifiManager.ERROR);
+                    }
                     mSourceMessage.recycle();
                     mSourceMessage = null;
                     deferMessage(message);
@@ -6565,9 +6584,21 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             return HANDLED;
         }
 
-        @Override
-        public void exit() {
-            mWifiConfigManager.loadFromStore();
+        /**
+         * Load network config from wpa_supplicant after WPS is complete.
+         */
+        private boolean loadNetworkFromSupplicantAfterWps() {
+            WifiConfiguration wpsNetwork = new WifiConfiguration();
+            if (!mWifiNative.loadNetworkFromSupplicant(wpsNetwork)) {
+                loge("Failed to load network from wpa_supplicant after Wps");
+                return false;
+            }
+            if (!mWifiConfigManager.addOrUpdateNetwork(
+                    wpsNetwork, mSourceMessage.sendingUid).isSuccess()) {
+                loge("Failed to add network after WPS");
+                return false;
+            }
+            return true;
         }
     }
 

@@ -684,6 +684,17 @@ public class WifiNative {
     }
 
     /**
+     * Load the only configured network from wpa_supplicant.
+     * This is used for loading the network from wpa_supplicant after WPS.
+     *
+     * @param config  WifiConfiguration object to be filled up.
+     * @return true if succeeds, false otherwise.
+     */
+    public boolean loadNetworkFromSupplicant(WifiConfiguration config) {
+        return mSupplicantStaIfaceHal.loadNetwork(config);
+    }
+
+    /**
      * Add the provided network configuration to wpa_supplicant and initiate connection to it.
      * This method does the following:
      * 1. Triggers disconnect command to wpa_supplicant (if |shouldDisconnect| is true).
