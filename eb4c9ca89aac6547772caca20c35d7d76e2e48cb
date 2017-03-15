@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80d45bad_573a8be4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-15T05:36:23Z",
+      "side": 1,
+      "message": "choose",
+      "range": {
+        "startLine": 9,
+        "startChar": 32,
+        "endLine": 9,
+        "endChar": 37
+      },
+      "revId": "eb4c9ca89aac6547772caca20c35d7d76e2e48cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b3d4711_85ce0350",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-15T05:36:23Z",
+      "side": 1,
+      "message": "Which App is this? From the original code, seems like it was using zero\u0027ed BSSID for wildcard? Or is that a bug? Just want to make sure we are not changing the behavior.",
+      "range": {
+        "startLine": 9,
+        "startChar": 24,
+        "endLine": 9,
+        "endChar": 27
+      },
+      "revId": "eb4c9ca89aac6547772caca20c35d7d76e2e48cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
