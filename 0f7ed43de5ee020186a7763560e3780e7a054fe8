@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "035721fc_0399112d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-15T00:04:28Z",
+      "side": 1,
+      "message": "Let\u0027s make is more explicit. Maybe say something like \" if 5GHz networks are in range.\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 35,
+        "endLine": 7,
+        "endChar": 49
+      },
+      "revId": "0f7ed43de5ee020186a7763560e3780e7a054fe8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0690dde_53d6653f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-15T00:04:28Z",
+      "side": 1,
+      "message": "I believe QNS does the same. It\u0027s just that we used to allow user to specify band preference for connection and QNS take that into count. Now the band preference is always both 2.4GHz and 5GHz. The current logic is the same as QNS when the band preference is set to both.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 42
+      },
+      "revId": "0f7ed43de5ee020186a7763560e3780e7a054fe8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11f9e57d_1749dd26",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-15T00:04:28Z",
+      "side": 1,
+      "message": "Can we add some unit tests?",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 11
+      },
+      "revId": "0f7ed43de5ee020186a7763560e3780e7a054fe8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7839bce3_a1bb392f",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-15T00:04:28Z",
+      "side": 1,
+      "message": "You wanted to say 5GHz is available?",
+      "range": {
+        "startLine": 187,
+        "startChar": 53,
+        "endLine": 187,
+        "endChar": 80
+      },
+      "revId": "0f7ed43de5ee020186a7763560e3780e7a054fe8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "469644b4_ce431a5d",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-15T00:04:28Z",
+      "side": 1,
+      "message": "Do we really need this check and the Log.wtd()? Can\u0027t we do if (2.4GHz) {} else {}? I think the convention in Wifi Framework today is that a WIfi network must be 5GHz if not 2.4GHz.",
+      "range": {
+        "startLine": 196,
+        "startChar": 19,
+        "endLine": 196,
+        "endChar": 36
+      },
+      "revId": "0f7ed43de5ee020186a7763560e3780e7a054fe8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1d090b7_c85fe031",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-15T00:04:28Z",
+      "side": 1,
+      "message": "Since this is only used by isCurrentNetworkSufficient(), why not pass scanDetails as an input parameter to isCurrentNetworkSufficient()? Let isCurrentNetworkSufficient() call into is5GHzNetworkAvailable().",
+      "range": {
+        "startLine": 248,
+        "startChar": 0,
+        "endLine": 248,
+        "endChar": 74
+      },
+      "revId": "0f7ed43de5ee020186a7763560e3780e7a054fe8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
