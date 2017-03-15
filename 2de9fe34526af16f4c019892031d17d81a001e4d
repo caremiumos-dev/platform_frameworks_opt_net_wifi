@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f131ca2f_1259ad43",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-15T23:14:58Z",
+      "side": 1,
+      "message": "This is how we handle other mocked objects in this class. My understanding is that, if an object just needs to be mocked, then we do @Mock xxx. If we need to do some setup for a mocked object, we use a mockXXXX() or setupXXX() method and invoke it from the test class\u0027s setUp().\n\nIf there is a new style for unit test, I can certainly modify this unit test class to follow that style. Preferably not in this CL though.",
+      "parentUuid": "1e38dbba_b44c15fd",
+      "range": {
+        "startLine": 207,
+        "startChar": 4,
+        "endLine": 207,
+        "endChar": 55
+      },
+      "revId": "2de9fe34526af16f4c019892031d17d81a001e4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5842c85_19b422ef",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
         "patchSetId": 14
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-14T06:04:36Z",
       "side": 1,
       "message": "also check when wificonnectivitymanager is enabled",
+      "range": {
+        "startLine": 1072,
+        "startChar": 17,
+        "endLine": 1072,
+        "endChar": 39
+      },
+      "revId": "2de9fe34526af16f4c019892031d17d81a001e4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bad112ca_bd4a52ea",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-15T23:14:58Z",
+      "side": 1,
+      "message": "Done, and add one more test for that.",
+      "parentUuid": "a5842c85_19b422ef",
       "range": {
         "startLine": 1072,
         "startChar": 17,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ed834912_4b346c14",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-15T23:14:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b03b6b0_83eb0f08",
+      "range": {
+        "startLine": 1079,
+        "startChar": 16,
+        "endLine": 1079,
+        "endChar": 38
+      },
+      "revId": "2de9fe34526af16f4c019892031d17d81a001e4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69a34e4a_a1be5c20",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
         "patchSetId": 14
@@ -82,6 +154,30 @@
       "writtenOn": "2017-03-14T06:04:36Z",
       "side": 1,
       "message": "this can either fit on one line or, better yet, check the int and config.  make sure you get the right values.",
+      "range": {
+        "startLine": 1132,
+        "startChar": 8,
+        "endLine": 1133,
+        "endChar": 39
+      },
+      "revId": "2de9fe34526af16f4c019892031d17d81a001e4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce58e3ac_2fc39dd9",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-15T23:14:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69a34e4a_a1be5c20",
       "range": {
         "startLine": 1132,
         "startChar": 8,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "401bd795_8192592f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-15T23:14:58Z",
+      "side": 1,
+      "message": "The 4th one is the case that firmware roaming is not supported and framework connects to a network with both networkId and BSSID specified. That\u0027s the default case, and it has been tested by many existing tests such as enterWifiDisconnectedStateWhenScreenOn().",
+      "parentUuid": "cbb27bf8_e76f6e3d",
+      "range": {
+        "startLine": 1137,
+        "startChar": 7,
+        "endLine": 1137,
+        "endChar": 15
+      },
+      "revId": "2de9fe34526af16f4c019892031d17d81a001e4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87470641_8281a2c8",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
         "patchSetId": 14
@@ -128,6 +248,30 @@
       "writtenOn": "2017-03-14T06:04:36Z",
       "side": 1,
       "message": "does this actually check the right thing?\n\nyou are connected..  but does it know the correct network?  I am not as familiar with this test, but it seems like you might not call this anyway.",
+      "range": {
+        "startLine": 1156,
+        "startChar": 8,
+        "endLine": 1157,
+        "endChar": 39
+      },
+      "revId": "2de9fe34526af16f4c019892031d17d81a001e4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0d1f37b_4200f764",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1157,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-15T23:14:58Z",
+      "side": 1,
+      "message": "Add some preparation to make sure there is a currently connected network setup.",
+      "parentUuid": "87470641_8281a2c8",
       "range": {
         "startLine": 1156,
         "startChar": 8,
