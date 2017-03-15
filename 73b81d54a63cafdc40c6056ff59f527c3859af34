@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ec535199_e92903c7",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1188,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-03-15T20:20:47Z",
+      "side": 1,
+      "message": "Yes I will do it in another CL.",
+      "parentUuid": "7f2fba86_2b24a986",
+      "range": {
+        "startLine": 1188,
+        "startChar": 59,
+        "endLine": 1188,
+        "endChar": 66
+      },
+      "revId": "73b81d54a63cafdc40c6056ff59f527c3859af34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f13c4ff_8e6ee97f",
         "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-15T19:56:32Z",
       "side": 1,
       "message": "I don\u0027t think this call will throw any known exceptions. If it does, we should document it in CountryCode#setCountryCode.  Consider removing the try - finally clause here.",
+      "range": {
+        "startLine": 1195,
+        "startChar": 12,
+        "endLine": 1195,
+        "endChar": 39
+      },
+      "revId": "73b81d54a63cafdc40c6056ff59f527c3859af34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05a77ba2_0ac854ce",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-03-15T20:20:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f13c4ff_8e6ee97f",
       "range": {
         "startLine": 1195,
         "startChar": 12,
