@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2643a606_069a83f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1135278
+      },
+      "writtenOn": "2017-03-15T06:16:39Z",
+      "side": 1,
+      "message": "I see. Will be updated in next patch.",
+      "parentUuid": "0a425b4c_473989f8",
+      "revId": "2c354b06e4451c7b6a6031fc15d4cece7e215c6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a425b4c_91ca0f72",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "71beed44_93d46c89",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8790,
+      "author": {
+        "id": 1135278
+      },
+      "writtenOn": "2017-03-15T06:16:39Z",
+      "side": 1,
+      "message": "I agree. We can remove it. mRoamFailCount will not be incremented.",
+      "parentUuid": "0a425b4c_91ca0f72",
+      "revId": "2c354b06e4451c7b6a6031fc15d4cece7e215c6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a425b4c_ccdebe02",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2016-07-19T19:47:31Z",
       "side": 1,
       "message": "Do we still want to deferMessage() for the message.arg1 \u003d\u003d SCAN_ONLY_WITH_WIFI_OFF_MODE case? If not, consider reorganizing the code to sth like\n\nif (message.arg1 \u003d\u003d SCAN_ONLY_WITH_WIFI_OFF_MODE) {\n   ...\n} else if (message.arg1 !\u003d CONNECT_MODE) {\n  deferMessage()\n}",
+      "revId": "2c354b06e4451c7b6a6031fc15d4cece7e215c6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95b79e2d_8a4734bf",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8795,
+      "author": {
+        "id": 1135278
+      },
+      "writtenOn": "2017-03-15T06:16:39Z",
+      "side": 1,
+      "message": "I think we still need to defer this message. \nIn DisconnectedState, there is some operation related to P2P needed to be executed.\n\n    class DisconnectedState extends State {\n                :\n                :\n                case CMD_SET_OPERATIONAL_MODE:\n                    if (message.arg1 !\u003d CONNECT_MODE) {\n                        mOperationalMode \u003d message.arg1;\n                        if (mOperationalMode \u003d\u003d DISABLED_MODE) {\n                            transitionTo(mSupplicantStoppingState);\n                        } else if (mOperationalMode \u003d\u003d SCAN_ONLY_MODE\n                                || mOperationalMode \u003d\u003d SCAN_ONLY_WITH_WIFI_OFF_MODE) {\n                            p2pSendMessage(CMD_DISABLE_P2P_REQ);\n                            setWifiState(WIFI_STATE_DISABLED);\n                            transitionTo(mScanModeState);\n                        }",
+      "parentUuid": "0a425b4c_ccdebe02",
       "revId": "2c354b06e4451c7b6a6031fc15d4cece7e215c6e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
