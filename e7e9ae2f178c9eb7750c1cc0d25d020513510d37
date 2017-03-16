@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c1c4ba9_e1b640ec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-16T04:14:51Z",
+      "side": 1,
+      "message": "Please add line starting with \"Test: \" to describe what kind of tests have been done for this CL.",
+      "revId": "e7e9ae2f178c9eb7750c1cc0d25d020513510d37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ef07c94_3817804f",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5904,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-16T04:14:51Z",
+      "side": 1,
+      "message": "Nit: Change to something like \"Avoid getting stuck..\" to make it a sentence.",
+      "range": {
+        "startLine": 5904,
+        "startChar": 31,
+        "endLine": 5904,
+        "endChar": 35
+      },
+      "revId": "e7e9ae2f178c9eb7750c1cc0d25d020513510d37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "637ece21_99be1c45",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5907,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-16T04:14:51Z",
+      "side": 1,
+      "message": "Nit: cancellation.",
+      "range": {
+        "startLine": 5907,
+        "startChar": 52,
+        "endLine": 5907,
+        "endChar": 58
+      },
+      "revId": "e7e9ae2f178c9eb7750c1cc0d25d020513510d37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
