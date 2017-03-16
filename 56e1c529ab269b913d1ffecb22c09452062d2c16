@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa0e8eca_d2c90454",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4015,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-16T22:36:41Z",
+      "side": 1,
+      "message": "startMonitoring is a blocking call which will not return until we establish connection with the HIDL interface. So, If u place it just after |startMonitoring|, u\u0027ll probably get the most coverage.",
+      "revId": "56e1c529ab269b913d1ffecb22c09452062d2c16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
