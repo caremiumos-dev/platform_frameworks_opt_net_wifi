@@ -167,4 +167,21 @@ public class WifiCountryCodeTest {
         verify(mWifiNative, times(2)).setCountryCode(anyString());
         assertEquals(mDefaultCountryCode, mWifiCountryCode.getCountryCodeSentToDriver());
     }
+
+    /**
+     * Test if we can reset to default country code when phone is out of service.
+     * Telepohy service call setCountryCode with an empty string when phone is out of service.
+     * In this case we should fall back to default country code.
+     * @throws Exception
+     */
+    @Test
+    public void resetCountryCodeWhenOutOfService() throws Exception {
+        assertEquals(mDefaultCountryCode, mWifiCountryCode.getCountryCode());
+        mWifiCountryCode.setCountryCode(mTelephonyCountryCode);
+        assertEquals(mTelephonyCountryCode, mWifiCountryCode.getCountryCode());
+        // Out of service.
+        mWifiCountryCode.setCountryCode("");
+        assertEquals(mDefaultCountryCode, mWifiCountryCode.getCountryCode());
+    }
+
 }
