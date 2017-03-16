@@ -22,6 +22,30 @@
       "revId": "46070585c24b4139a457ee4058995344e5167e88",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cef448e2_b0a92c4a",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6512,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-16T16:17:49Z",
+      "side": 1,
+      "message": "In my experiments with one of the AP\u0027s, i sometimes saw the AP adding 2 networks when WPS is initiated (one for 2g and one for 5g). So, it might be best if we just force start a new scan after this and let QNS pick the best.\n\nI wasn\u0027t sure whether we should be at the mercy of the next scan request kicking off QNS or if we should do it ourselves. I think it makes more sense for us to force it since we want to connect to the network immediately.",
+      "parentUuid": "ebd7d07d_0ee85235",
+      "range": {
+        "startLine": 6512,
+        "startChar": 0,
+        "endLine": 6512,
+        "endChar": 53
+      },
+      "revId": "46070585c24b4139a457ee4058995344e5167e88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
