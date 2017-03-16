@@ -46,6 +46,30 @@
       "revId": "46070585c24b4139a457ee4058995344e5167e88",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b872a28_1fce955a",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6512,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-16T16:25:10Z",
+      "side": 1,
+      "message": "After setup, do we have scan results (or information equivalent) to get \"scores\" for the two networks and just go with one?",
+      "parentUuid": "cef448e2_b0a92c4a",
+      "range": {
+        "startLine": 6512,
+        "startChar": 0,
+        "endLine": 6512,
+        "endChar": 53
+      },
+      "revId": "46070585c24b4139a457ee4058995344e5167e88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
