@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a1585f78_a84a9e0e",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaNetworkHal.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-16T15:51:53Z",
+      "side": 1,
+      "message": "We\u0027ve been using the same pattern in this file so far. I do like the idea of keeping the log. So, will put the log back.\n\nThe Idstr is only present in old networks that we load from supplicant on upgrade from N to O. For WPS networks, they\u0027re not set.",
+      "parentUuid": "b937ad46_ecdb9aa3",
+      "range": {
+        "startLine": 229,
+        "startChar": 1,
+        "endLine": 232,
+        "endChar": 9
+      },
+      "revId": "beb9fe4a70f866f4583c6f4677c4326c61ddb488",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "738f9740_18b466b9",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 3
@@ -59,6 +83,54 @@
       "writtenOn": "2017-03-16T04:38:21Z",
       "side": 1,
       "message": "add sth like \"transition to\".",
+      "range": {
+        "startLine": 6477,
+        "startChar": 17,
+        "endLine": 6477,
+        "endChar": 18
+      },
+      "revId": "beb9fe4a70f866f4583c6f4677c4326c61ddb488",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8231e7fb_4d0c8eb5",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6477,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-16T15:51:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "738f9740_18b466b9",
+      "range": {
+        "startLine": 6477,
+        "startChar": 39,
+        "endLine": 6477,
+        "endChar": 97
+      },
+      "revId": "beb9fe4a70f866f4583c6f4677c4326c61ddb488",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2df3562_e7f151ac",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6477,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-16T15:51:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5053dc9_7db73db4",
       "range": {
         "startLine": 6477,
         "startChar": 17,
