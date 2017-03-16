@@ -4010,7 +4010,6 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                         cleanup();
                         break;
                     }
-                    setSupplicantLogLevel();
                     setWifiState(WIFI_STATE_ENABLING);
                     if (mVerboseLoggingEnabled) log("Supplicant start successful");
                     mWifiMonitor.startMonitoring(mInterfaceName, true);
@@ -4085,6 +4084,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     if (!mWifiConfigManager.migrateFromLegacyStore()) {
                         Log.e(TAG, "Failed to migrate from legacy config store");
                     }
+                    setSupplicantLogLevel();
                     initializeWpsDetails();
                     sendSupplicantConnectionChangedBroadcast(true);
                     transitionTo(mSupplicantStartedState);
