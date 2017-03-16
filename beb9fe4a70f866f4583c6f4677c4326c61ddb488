@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b937ad46_ecdb9aa3",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaNetworkHal.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-16T04:38:21Z",
+      "side": 1,
+      "message": "Since getIdStr() might return false, shall do something like:\n\nif (getIdStr()) {\n     Log.e();\n    return false;\n}\n\nif (!TextUtils.isEmpty()) {\n\n}",
+      "range": {
+        "startLine": 229,
+        "startChar": 1,
+        "endLine": 232,
+        "endChar": 9
+      },
+      "revId": "beb9fe4a70f866f4583c6f4677c4326c61ddb488",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "738f9740_18b466b9",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6477,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-16T04:38:21Z",
+      "side": 1,
+      "message": "We enable this network and disable other networks here, right? Probably worth mentioning it. Otherwise, people would ask what if there is higher scored saved network around.",
+      "range": {
+        "startLine": 6477,
+        "startChar": 39,
+        "endLine": 6477,
+        "endChar": 97
+      },
+      "revId": "beb9fe4a70f866f4583c6f4677c4326c61ddb488",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5053dc9_7db73db4",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6477,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-16T04:38:21Z",
+      "side": 1,
+      "message": "add sth like \"transition to\".",
+      "range": {
+        "startLine": 6477,
+        "startChar": 17,
+        "endLine": 6477,
+        "endChar": 18
+      },
+      "revId": "beb9fe4a70f866f4583c6f4677c4326c61ddb488",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
