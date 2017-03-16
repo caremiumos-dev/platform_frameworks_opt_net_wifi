@@ -70,6 +70,30 @@
       "revId": "46070585c24b4139a457ee4058995344e5167e88",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee5d2069_c27081f6",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6512,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-16T16:28:19Z",
+      "side": 1,
+      "message": "Technically yes. But, there isn\u0027t a way to tell QNS to use the existing scan results today. We have to always start a new scan for it to use it for network selection.",
+      "parentUuid": "6b872a28_1fce955a",
+      "range": {
+        "startLine": 6512,
+        "startChar": 0,
+        "endLine": 6512,
+        "endChar": 53
+      },
+      "revId": "46070585c24b4139a457ee4058995344e5167e88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
