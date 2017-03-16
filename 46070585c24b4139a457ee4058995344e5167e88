@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebd7d07d_0ee85235",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6512,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-16T16:10:35Z",
+      "side": 1,
+      "message": "since this is successful, should this also issue a connect?",
+      "range": {
+        "startLine": 6512,
+        "startChar": 0,
+        "endLine": 6512,
+        "endChar": 53
+      },
+      "revId": "46070585c24b4139a457ee4058995344e5167e88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
