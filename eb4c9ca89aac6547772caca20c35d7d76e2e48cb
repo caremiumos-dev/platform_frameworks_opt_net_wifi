@@ -45,6 +45,54 @@
       "revId": "eb4c9ca89aac6547772caca20c35d7d76e2e48cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6e776c6_ec1877a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-16T01:18:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80d45bad_573a8be4",
+      "range": {
+        "startLine": 9,
+        "startChar": 32,
+        "endLine": 9,
+        "endChar": 37
+      },
+      "revId": "eb4c9ca89aac6547772caca20c35d7d76e2e48cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bbca09f7_b497f30f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-16T01:18:40Z",
+      "side": 1,
+      "message": "The app here refers to the settings app. We supported initiating wps using wildcard in previous releases. This CL brings back that behaviour. Currently, we return false if the bssid is null instead of treating it as a wildcard.",
+      "parentUuid": "8b3d4711_85ce0350",
+      "range": {
+        "startLine": 9,
+        "startChar": 24,
+        "endLine": 9,
+        "endChar": 27
+      },
+      "revId": "eb4c9ca89aac6547772caca20c35d7d76e2e48cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
