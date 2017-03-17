@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "f3f083c3_cc5454fc",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5902,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-17T06:03:52Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be true for any mode change?  (anything leaving connect mode)",
+      "range": {
+        "startLine": 5902,
+        "startChar": 44,
+        "endLine": 5902,
+        "endChar": 72
+      },
+      "revId": "e7e9ae2f178c9eb7750c1cc0d25d020513510d37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ef07c94_3817804f",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 2
