@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8afc7ba9_633c08c5",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-17T20:01:47Z",
+      "side": 1,
+      "message": "U might want to put this under a verbose logging flag since this is going to be hit regularly during network selection (if there are no good networks to connect to).",
+      "range": {
+        "startLine": 445,
+        "startChar": 12,
+        "endLine": 445,
+        "endChar": 17
+      },
+      "revId": "5145b5a902461c264ace75f5c7bf76ef71d653ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
