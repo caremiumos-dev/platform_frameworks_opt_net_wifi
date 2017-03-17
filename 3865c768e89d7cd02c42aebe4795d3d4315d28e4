@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0130d67_100c4d5a",
+        "filename": "service/java/com/android/server/wifi/WifiCountryCode.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-17T05:17:44Z",
+      "side": 1,
+      "message": "since we will end up with country being null, this won\u0027t get called, right?  What country code will we end up with?",
+      "range": {
+        "startLine": 182,
+        "startChar": 12,
+        "endLine": 182,
+        "endChar": 42
+      },
+      "revId": "3865c768e89d7cd02c42aebe4795d3d4315d28e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
