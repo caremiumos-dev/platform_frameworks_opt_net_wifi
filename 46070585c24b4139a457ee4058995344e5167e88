@@ -94,6 +94,30 @@
       "revId": "46070585c24b4139a457ee4058995344e5167e88",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e3d6a1e_5fb26255",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6512,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-17T00:07:05Z",
+      "side": 1,
+      "message": "In theory I think QNS will always select the 5G one given that the device should be physically very close to the AP when doing WPS.",
+      "parentUuid": "ee5d2069_c27081f6",
+      "range": {
+        "startLine": 6512,
+        "startChar": 0,
+        "endLine": 6512,
+        "endChar": 53
+      },
+      "revId": "46070585c24b4139a457ee4058995344e5167e88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
