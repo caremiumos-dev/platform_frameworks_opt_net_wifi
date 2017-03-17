@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17157cd5_6e99a96e",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6508,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-17T05:38:23Z",
+      "side": 1,
+      "message": "will this happen anyway since we are going to the disconnected state?",
+      "range": {
+        "startLine": 6508,
+        "startChar": 24,
+        "endLine": 6508,
+        "endChar": 73
+      },
+      "revId": "df93b95754d9d7e15ec21384167cb169258b103b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1b068ec_a939bf83",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6510,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-17T05:38:23Z",
+      "side": 1,
+      "message": "if we end up here, do we go back the network we were connected to (if we were connected) or should we also scan?\n\n(or again, does disconnected state do a scan?)",
+      "range": {
+        "startLine": 6510,
+        "startChar": 24,
+        "endLine": 6510,
+        "endChar": 38
+      },
+      "revId": "df93b95754d9d7e15ec21384167cb169258b103b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
