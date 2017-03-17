@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "775cdbcf_54d2d61a",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6508,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-17T21:48:35Z",
+      "side": 1,
+      "message": "Thanks!  I was a little confused why we needed a scan in one case but not the other.",
+      "parentUuid": "155db57d_2de75bdd",
+      "range": {
+        "startLine": 6508,
+        "startChar": 24,
+        "endLine": 6508,
+        "endChar": 73
+      },
+      "revId": "df93b95754d9d7e15ec21384167cb169258b103b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1b068ec_a939bf83",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 6
