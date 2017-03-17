@@ -118,6 +118,30 @@
       "revId": "46070585c24b4139a457ee4058995344e5167e88",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f79b193_21b60a68",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6512,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-17T00:19:52Z",
+      "side": 1,
+      "message": "True. But, we can\u0027t figure out from the loaded network config here if it\u0027s for 5G or not. We\u0027ll need to wait for QNS to make the decision.",
+      "parentUuid": "7e3d6a1e_5fb26255",
+      "range": {
+        "startLine": 6512,
+        "startChar": 0,
+        "endLine": 6512,
+        "endChar": 53
+      },
+      "revId": "46070585c24b4139a457ee4058995344e5167e88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
