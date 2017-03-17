@@ -84,7 +84,7 @@ public class FrameworkFacade {
 
     public SupplicantStateTracker makeSupplicantStateTracker(Context context,
             WifiConfigManager configManager, Handler handler) {
-        return new SupplicantStateTracker(context, configManager, handler);
+        return new SupplicantStateTracker(context, configManager, this, handler);
     }
 
     public boolean getConfigWiFiDisableInECBM(Context context) {
