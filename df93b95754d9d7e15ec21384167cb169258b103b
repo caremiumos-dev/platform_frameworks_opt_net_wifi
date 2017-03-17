@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "155db57d_2de75bdd",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6508,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-17T15:00:16Z",
+      "side": 1,
+      "message": "It won\u0027t happen when go into disconnected state on it/s own. But, since we process the deferred |NETWORK_CONNECTION_EVENT| in Disconnected state from an unknown network, we\u0027ll immeditately trigger a disconnect: https://cs.corp.google.com/android/frameworks/opt/net/wifi/service/java/com/android/server/wifi/WifiStateMachine.java?rcl\u003d1356c05b7b5d5ca0e7f79340355e50cf8e5df39d\u0026l\u003d5204.\n\nWith Randy\u0027s recent change to trigger a scan on disconnect: go/aog/351836, we probably don\u0027t need the scan here.",
+      "parentUuid": "17157cd5_6e99a96e",
+      "range": {
+        "startLine": 6508,
+        "startChar": 24,
+        "endLine": 6508,
+        "endChar": 73
+      },
+      "revId": "df93b95754d9d7e15ec21384167cb169258b103b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1b068ec_a939bf83",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-17T05:38:23Z",
       "side": 1,
       "message": "if we end up here, do we go back the network we were connected to (if we were connected) or should we also scan?\n\n(or again, does disconnected state do a scan?)",
+      "range": {
+        "startLine": 6510,
+        "startChar": 24,
+        "endLine": 6510,
+        "endChar": 38
+      },
+      "revId": "df93b95754d9d7e15ec21384167cb169258b103b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f145fd0_140a76bd",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6510,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-17T15:00:16Z",
+      "side": 1,
+      "message": "Same as above. We don\u0027t need a scan.",
+      "parentUuid": "e1b068ec_a939bf83",
       "range": {
         "startLine": 6510,
         "startChar": 24,
