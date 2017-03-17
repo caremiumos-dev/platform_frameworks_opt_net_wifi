@@ -46,6 +46,30 @@
       "revId": "5145b5a902461c264ace75f5c7bf76ef71d653ed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24541e58_af8a609b",
+        "filename": "service/java/com/android/server/wifi/hotspot2/PasspointManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-03-17T20:54:57Z",
+      "side": 1,
+      "message": "I think I will leave this log out for now.  It might be too much even with verbose logging enabled (especially when no provider is installed).",
+      "parentUuid": "07be7823_1ae40730",
+      "range": {
+        "startLine": 445,
+        "startChar": 12,
+        "endLine": 445,
+        "endChar": 17
+      },
+      "revId": "5145b5a902461c264ace75f5c7bf76ef71d653ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
