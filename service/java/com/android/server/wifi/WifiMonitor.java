@@ -150,7 +150,8 @@ public class WifiMonitor {
 
     private final WifiInjector mWifiInjector;
     private boolean mVerboseLoggingEnabled = false;
-    private boolean mConnected = false;
+    private boolean mP2pConnected = false;
+    private boolean mStaConnected = false;
 
     public WifiMonitor(WifiInjector wifiInjector) {
         mWifiInjector = wifiInjector;
@@ -215,18 +216,24 @@ public class WifiMonitor {
      * TODO: Add unit tests for these once we remove the legacy code.
      */
     private boolean ensureConnectedLocked(boolean isStaIface) {
-        if (mConnected) {
+        if (mStaConnected && isStaIface) {
+            return true;
+        }
+        if (mP2pConnected && !isStaIface) {
             return true;
         }
         if (mVerboseLoggingEnabled) Log.d(TAG, "connecting to supplicant");
         int connectTries = 0;
         while (true) {
             if (isStaIface) {
-                mConnected = mWifiInjector.getWifiNative().connectToStaSupplicant();
+                mStaConnected = mWifiInjector.getWifiNative().connectToStaSupplicant();
             } else {
-                mConnected = mWifiInjector.getP2pWifiNative().connectToP2pSupplicant();
+                mP2pConnected = mWifiInjector.getP2pWifiNative().connectToP2pSupplicant();
             }
-            if (mConnected) {
+            if (mStaConnected && isStaIface) {
+                return true;
+            }
+            if (mP2pConnected && !isStaIface) {
                 return true;
             }
             if (connectTries++ < 5) {
@@ -248,8 +255,6 @@ public class WifiMonitor {
      * TODO: Add unit tests for these once we remove the legacy code.
      */
     public synchronized void startMonitoring(String iface, boolean isStaIface) {
-        Log.d(TAG, "startMonitoring(" + iface + ") with mConnected = " + mConnected);
-
         if (ensureConnectedLocked(isStaIface)) {
             setMonitoring(iface, true);
             broadcastSupplicantConnectionEvent(iface);
@@ -271,7 +276,8 @@ public class WifiMonitor {
     }
 
     public synchronized void stopAllMonitoring() {
-        mConnected = false;
+        mStaConnected = false;
+        mP2pConnected = false;
         setMonitoringNone();
     }
 
