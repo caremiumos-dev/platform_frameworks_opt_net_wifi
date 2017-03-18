@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "49a37f3f_c34a290e",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T07:52:36Z",
+      "side": 1,
+      "message": "This code previously ignored the bssid if it was specified, now it does not.  If you combine the commit message (let apps specify a bssid) + the text above (\"The connect call here is only from WNS\") and then no changes for what would be an app call (?), this is not clear.\n\nIf you update the commit message to have more details about the motivation for the change, that would certainly help.  But at a high level, from reading the code and text, it doesn\u0027t seem like this code matches up with what is described.\n\n...  and now i am more confused.  If WNS always sets a BSSID and this is only called by WNS, then how can the if path happen?",
+      "parentUuid": "d101cf68_ba5e5fb2",
+      "range": {
+        "startLine": 662,
+        "startChar": 80,
+        "endLine": 663,
+        "endChar": 68
+      },
+      "revId": "f6c3f6669c0411aa78ca2baec37e4a664fb7169b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6ef74bf_85d91f74",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
         "patchSetId": 15
