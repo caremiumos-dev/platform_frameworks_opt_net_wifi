@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "85b879d8_68f36da7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-18T07:00:06Z",
+      "side": 1,
+      "message": "Hmm, I don\u0027t see any function change. Do I miss anything?",
+      "parentUuid": "d01cf078_c6826a7b",
+      "range": {
+        "startLine": 10,
+        "startChar": 59,
+        "endLine": 11,
+        "endChar": 18
+      },
+      "revId": "3a1a8f70256fb4eb9abe38cc575eef512edd4dfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "846e8f28_023699ac",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 17
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "dd54568f_1a97d01a",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-18T07:00:06Z",
+      "side": 1,
+      "message": "Hmm, personally I think having an if-else statement here is more readable logic wise. Otherwise, we could have simply got rid of the \"else {}\" since functionality wise they are the same. Please let me know if you have strong preference. \n\nI can definitely add some comments if that helps.",
+      "parentUuid": "846e8f28_023699ac",
+      "range": {
+        "startLine": 1026,
+        "startChar": 9,
+        "endLine": 1026,
+        "endChar": 16
+      },
+      "revId": "3a1a8f70256fb4eb9abe38cc575eef512edd4dfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d521f15d_c56c421b",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 17
@@ -59,6 +107,30 @@
       "writtenOn": "2017-03-18T05:48:13Z",
       "side": 1,
       "message": "given the other changes in different CLs with disconnects/failures, will this scan duplicate another scan call?",
+      "range": {
+        "startLine": 1070,
+        "startChar": 0,
+        "endLine": 1070,
+        "endChar": 52
+      },
+      "revId": "3a1a8f70256fb4eb9abe38cc575eef512edd4dfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c202635c_96f5e5ce",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-18T07:00:06Z",
+      "side": 1,
+      "message": "It shouldn\u0027t. Association rejection event doesn\u0027t trigger Wifi state change.",
+      "parentUuid": "d521f15d_c56c421b",
       "range": {
         "startLine": 1070,
         "startChar": 0,
