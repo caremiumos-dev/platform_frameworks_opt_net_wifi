@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "ce21a275_b967528c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-18T19:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff075ad6_0b7dc8a1",
+      "range": {
+        "startLine": 10,
+        "startChar": 59,
+        "endLine": 11,
+        "endChar": 18
+      },
+      "revId": "3a1a8f70256fb4eb9abe38cc575eef512edd4dfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "846e8f28_023699ac",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 17
@@ -144,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "4efc7303_37abdcc6",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-18T19:36:46Z",
+      "side": 1,
+      "message": "Alright, I guess this is probably more a personal preference thingy. Anyway, I made the change to make sure the code reviewer is happy. :-)",
+      "parentUuid": "69e0fc44_9bff6cf0",
+      "range": {
+        "startLine": 1026,
+        "startChar": 9,
+        "endLine": 1026,
+        "endChar": 16
+      },
+      "revId": "3a1a8f70256fb4eb9abe38cc575eef512edd4dfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d521f15d_c56c421b",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 17
@@ -203,6 +251,30 @@
       "side": 1,
       "message": "what if an association rejection comes in right around the same time as a scheduled scan?  do we assume scanning service will bucket them for us?",
       "parentUuid": "c202635c_96f5e5ce",
+      "range": {
+        "startLine": 1070,
+        "startChar": 0,
+        "endLine": 1070,
+        "endChar": 52
+      },
+      "revId": "3a1a8f70256fb4eb9abe38cc575eef512edd4dfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a25168e_20b0cbd4",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-18T19:36:46Z",
+      "side": 1,
+      "message": "The idea is that we have to start a scan immediately to get new scan results which will trigger the connect attempt to a new network. This happens when connecting to GoogleGuest and get a ASSOC_REJECTION. So we can try a different GoogleGuest AP.\n\nWCM SCAN_ON_SCHEDULE happens at an interval of 20s, 40s.. 160s. If we don\u0027t start a scan immediately it could be that we will have to wait for up to 160s for next connect attempt, which is not what we want.\n\nThis scan won\u0027t run into the scans scheduled by WCM as starting a scan immediately will stop the previously scheduled scan. Now if there is a scan scheduled by other modules around the same time, WifiScanner will schedule one then schedule another one right after the first one finishes. Note, these are single scans. Here we could be wasting a scan, but we don\u0027t have other choice as we don\u0027t want to rely on scans initiated by other modules which is not predictable.",
+      "parentUuid": "498f6adf_51706a7a",
       "range": {
         "startLine": 1070,
         "startChar": 0,

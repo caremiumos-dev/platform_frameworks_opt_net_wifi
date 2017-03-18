@@ -879,6 +879,30 @@
     },
     {
       "key": {
+        "uuid": "b13f9b23_06964b59",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-18T19:36:46Z",
+      "side": 1,
+      "message": "Filed b/6412389. Do you have plan to clean this up in WifiStateMachine? Is there a bug I can link them together?",
+      "parentUuid": "1bd9a0c9_9ec9ac01",
+      "range": {
+        "startLine": 400,
+        "startChar": 0,
+        "endLine": 401,
+        "endChar": 63
+      },
+      "revId": "af1ee09663c9a19ead56c08b84bfa9257cf80d40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c424c8c2_8794d25d",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
         "patchSetId": 4
