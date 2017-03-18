@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c28c68e_fcaac607",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T06:57:25Z",
+      "side": 1,
+      "message": "when the BSSID blacklist is updated and WCM is active (WCM + wifi enabled).",
+      "range": {
+        "startLine": 10,
+        "startChar": 47,
+        "endLine": 10,
+        "endChar": 62
+      },
+      "revId": "f5a396c13ff5000ec7fb4bcce26508df7872074b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0eb7826f_9e611c91",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T06:57:25Z",
+      "side": 1,
+      "message": "you could do:\n\nif (!updateBssidBlacklist...) {\n    return false;\n}\n// then avoid the extra indent",
+      "range": {
+        "startLine": 1083,
+        "startChar": 26,
+        "endLine": 1083,
+        "endChar": 74
+      },
+      "revId": "f5a396c13ff5000ec7fb4bcce26508df7872074b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "940741c2_b593afd7",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1095,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T06:57:25Z",
+      "side": 1,
+      "message": "I do not understand the implications of having this call here.  If we have disabled a BSSID, this implies we want to scan.  But since this is an async flow, we could be handling a failure that might have come in since we had selected another ssid or bssid.  It seems like scheduling a scan here is risky.\n\nWith this code:\n        if (mWifiState \u003d\u003d WIFI_STATE_DISCONNECTED) {\n            mLastConnectionAttemptBssid \u003d null;\n            scheduleWatchdogTimer();\n            startConnectivityScan(SCAN_IMMEDIATELY);\n\naren\u0027t we issuing 2 scan requests?",
+      "range": {
+        "startLine": 1090,
+        "startChar": 12,
+        "endLine": 1095,
+        "endChar": 13
+      },
+      "revId": "f5a396c13ff5000ec7fb4bcce26508df7872074b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f1d3c81_2b831180",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1127,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T06:57:25Z",
+      "side": 1,
+      "message": "since this will eventually(?) get a whitelist to also update, would a more general name be more appropriate?",
+      "range": {
+        "startLine": 1127,
+        "startChar": 17,
+        "endLine": 1127,
+        "endChar": 45
+      },
+      "revId": "f5a396c13ff5000ec7fb4bcce26508df7872074b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd74b782_f8f9ec60",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1127,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T06:57:25Z",
+      "side": 1,
+      "message": "I am concerned with the trimming of the blacklist.  If you are on a particular ssid and you trim off the relevant bssids for that network, you will end up with unexpected behavior.  Do we have any protections against this?",
+      "range": {
+        "startLine": 1127,
+        "startChar": 17,
+        "endLine": 1127,
+        "endChar": 45
+      },
+      "revId": "f5a396c13ff5000ec7fb4bcce26508df7872074b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "465593e5_c69367ea",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T06:57:25Z",
+      "side": 1,
+      "message": "want to get this once and reuse for the next 3 lines?",
+      "range": {
+        "startLine": 1131,
+        "startChar": 12,
+        "endLine": 1131,
+        "endChar": 57
+      },
+      "revId": "f5a396c13ff5000ec7fb4bcce26508df7872074b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "38420cad_22e22e76",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T06:57:25Z",
+      "side": 1,
+      "message": "it looks like there is a call to get a sublist:\nsubList(int fromIndex, int toIndex)",
+      "range": {
+        "startLine": 1132,
+        "startChar": 0,
+        "endLine": 1132,
+        "endChar": 80
+      },
+      "revId": "f5a396c13ff5000ec7fb4bcce26508df7872074b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0013943e_ba7485ca",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T06:57:25Z",
+      "side": 1,
+      "message": "if you check this first, then you won\u0027t have to create the arraylist objects at the start of the method. You can just log and return.",
+      "range": {
+        "startLine": 1146,
+        "startChar": 10,
+        "endLine": 1149,
+        "endChar": 9
+      },
+      "revId": "f5a396c13ff5000ec7fb4bcce26508df7872074b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fca94f5d_905ede11",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1159,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T06:57:25Z",
+      "side": 1,
+      "message": "you could add a check for an empty blacklist and return to avoid calling the code below.",
+      "revId": "f5a396c13ff5000ec7fb4bcce26508df7872074b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37d03476_e30ae12c",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1184,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T06:57:25Z",
+      "side": 1,
+      "message": "if you add a check for supported inside updateFirmwareBssidBlacklist you can clean up all the callers (and not depend on the caller(s) checking first)",
+      "range": {
+        "startLine": 1184,
+        "startChar": 0,
+        "endLine": 1184,
+        "endChar": 63
+      },
+      "revId": "f5a396c13ff5000ec7fb4bcce26508df7872074b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "269cd11a_4e7dabe7",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T06:57:25Z",
+      "side": 1,
+      "message": "you can also check that this is empty (until you start using it)",
+      "range": {
+        "startLine": 1091,
+        "startChar": 49,
+        "endLine": 1091,
+        "endChar": 60
+      },
+      "revId": "f5a396c13ff5000ec7fb4bcce26508df7872074b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
