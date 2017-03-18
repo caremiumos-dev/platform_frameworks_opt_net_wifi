@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "4a472be5_dda99d79",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T07:44:02Z",
+      "side": 1,
+      "message": "I have done too many reviews in a row and they are all a blur, but I believe I had questions in that CL as well about this test.  I would appreciate having the test start here - especially since one of the next CLs changes this method.  If it gets reverted for some reason, we wouldn\u0027t have coverage of that path in the code.  Or if the assumption I ask about in that new test changes, we may lose coverage on an option.",
+      "parentUuid": "4e24bfb8_8cc36661",
+      "range": {
+        "startLine": 1174,
+        "startChar": 16,
+        "endLine": 1174,
+        "endChar": 65
+      },
+      "revId": "a24837bb7ab4957264349a3c97f356fbb67eb306",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1cc6e22_4c4b3313",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
         "patchSetId": 18
