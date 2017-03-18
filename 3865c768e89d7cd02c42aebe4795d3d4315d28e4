@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "519570b8_a97d9653",
+        "filename": "service/java/com/android/server/wifi/WifiCountryCode.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T08:18:04Z",
+      "side": 1,
+      "message": "Do we have any protections against apps in case it isn\u0027t Telephony service?",
+      "range": {
+        "startLine": 128,
+        "startChar": 7,
+        "endLine": 129,
+        "endChar": 56
+      },
+      "revId": "3865c768e89d7cd02c42aebe4795d3d4315d28e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a9ea450_c0dd55c6",
+        "filename": "service/java/com/android/server/wifi/WifiCountryCode.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T08:18:04Z",
+      "side": 1,
+      "message": "spelling",
+      "range": {
+        "startLine": 136,
+        "startChar": 33,
+        "endLine": 136,
+        "endChar": 42
+      },
+      "revId": "3865c768e89d7cd02c42aebe4795d3d4315d28e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0130d67_100c4d5a",
         "filename": "service/java/com/android/server/wifi/WifiCountryCode.java",
         "patchSetId": 4
@@ -37,6 +83,30 @@
       "side": 1,
       "message": "In the changed lines |mTelephonyCountryCode| is set to null.\nThen pickCountryCode in line 175 will pick |mDefaultCountryCode| instead. For all google devices SKU has a default country code. This ensures that |mDefaultCountryCode| should not be null.\nFor other devices, I think the best we can do is doing nothing(leaving it to the driver).",
       "parentUuid": "b0130d67_100c4d5a",
+      "range": {
+        "startLine": 182,
+        "startChar": 12,
+        "endLine": 182,
+        "endChar": 42
+      },
+      "revId": "3865c768e89d7cd02c42aebe4795d3d4315d28e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af050ab3_60fac0c6",
+        "filename": "service/java/com/android/server/wifi/WifiCountryCode.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T08:18:04Z",
+      "side": 1,
+      "message": "ah, ok.  thanks!",
+      "parentUuid": "859a06be_41dc50e1",
       "range": {
         "startLine": 182,
         "startChar": 12,
