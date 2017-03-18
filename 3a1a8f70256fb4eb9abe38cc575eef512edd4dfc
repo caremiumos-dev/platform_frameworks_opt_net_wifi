@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ff075ad6_0b7dc8a1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T07:39:24Z",
+      "side": 1,
+      "message": "many things were changed - updating the timestamp when already blacklisted is a big one.",
+      "parentUuid": "85b879d8_68f36da7",
+      "range": {
+        "startLine": 10,
+        "startChar": 59,
+        "endLine": 11,
+        "endChar": 18
+      },
+      "revId": "3a1a8f70256fb4eb9abe38cc575eef512edd4dfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "846e8f28_023699ac",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 17
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "69e0fc44_9bff6cf0",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T07:39:24Z",
+      "side": 1,
+      "message": "it is more that you have more indenting.  it is harder to follow with 3 levels of indenting by the bottom.\n\nwhen reading the method, if you document that you are returning right away, then as you are reading the code you know you are dealing with the case where you need to deal with disabling/updating.  you can also add a // comment right after the if.\n\nit is certainly a personal preference, but I do find the amount of if/else nesting in this code to be particularly hard to follow.  I have to keep remember which case I am in, especially when you have to check multiple clauses.",
+      "parentUuid": "dd54568f_1a97d01a",
+      "range": {
+        "startLine": 1026,
+        "startChar": 9,
+        "endLine": 1026,
+        "endChar": 16
+      },
+      "revId": "3a1a8f70256fb4eb9abe38cc575eef512edd4dfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d521f15d_c56c421b",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 17
@@ -131,6 +179,30 @@
       "side": 1,
       "message": "It shouldn\u0027t. Association rejection event doesn\u0027t trigger Wifi state change.",
       "parentUuid": "d521f15d_c56c421b",
+      "range": {
+        "startLine": 1070,
+        "startChar": 0,
+        "endLine": 1070,
+        "endChar": 52
+      },
+      "revId": "3a1a8f70256fb4eb9abe38cc575eef512edd4dfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "498f6adf_51706a7a",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T07:39:24Z",
+      "side": 1,
+      "message": "what if an association rejection comes in right around the same time as a scheduled scan?  do we assume scanning service will bucket them for us?",
+      "parentUuid": "c202635c_96f5e5ce",
       "range": {
         "startLine": 1070,
         "startChar": 0,
