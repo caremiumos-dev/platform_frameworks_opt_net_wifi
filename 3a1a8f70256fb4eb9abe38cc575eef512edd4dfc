@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d01cf078_c6826a7b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T05:48:13Z",
+      "side": 1,
+      "message": "This is no longer just a move, probably should remove this line.",
+      "range": {
+        "startLine": 10,
+        "startChar": 59,
+        "endLine": 11,
+        "endChar": 18
+      },
+      "revId": "3a1a8f70256fb4eb9abe38cc575eef512edd4dfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "846e8f28_023699ac",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T05:48:13Z",
+      "side": 1,
+      "message": "To make this a little more readable:  The majority of the impl in this method has an extra indent because of the else.  If this seems less readable, then maybe adding a comment above the if would alleviate that concern.\n\nHaving the else makes it harder to read since you end up with deep indents near the end of the method.",
+      "range": {
+        "startLine": 1026,
+        "startChar": 9,
+        "endLine": 1026,
+        "endChar": 16
+      },
+      "revId": "3a1a8f70256fb4eb9abe38cc575eef512edd4dfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d521f15d_c56c421b",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-18T05:48:13Z",
+      "side": 1,
+      "message": "given the other changes in different CLs with disconnects/failures, will this scan duplicate another scan call?",
+      "range": {
+        "startLine": 1070,
+        "startChar": 0,
+        "endLine": 1070,
+        "endChar": 52
+      },
+      "revId": "3a1a8f70256fb4eb9abe38cc575eef512edd4dfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
