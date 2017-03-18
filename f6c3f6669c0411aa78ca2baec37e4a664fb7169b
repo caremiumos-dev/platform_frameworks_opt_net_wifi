@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d101cf68_ba5e5fb2",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-18T07:33:35Z",
+      "side": 1,
+      "message": "The connect call here is only from WNS. Apps is not in picture. It\u0027s just that the WifiConfiguration selected by WNS has a particular BSSID set by an App. The app could set the BSSID field during or after WifiConfiguration creation. \"BSSID\" is a public field of WifiConfiguration and no setter/getter API, which is another issue though.\n\nNot sure if I get your question right. We can have a face to face chat if needed.",
+      "parentUuid": "b753693e_8ca24f02",
+      "range": {
+        "startLine": 662,
+        "startChar": 80,
+        "endLine": 663,
+        "endChar": 68
+      },
+      "revId": "f6c3f6669c0411aa78ca2baec37e4a664fb7169b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6ef74bf_85d91f74",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5c6590fe_0d00d144",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-18T07:33:35Z",
+      "side": 1,
+      "message": "WNS always picks a BSSID (scan result), which is stored at WifiConfiguration.mCandidate. This WifiConfiguration.BSSID is used to specify that we only connect to this particular BSSID.",
+      "parentUuid": "d6ef74bf_85d91f74",
+      "range": {
+        "startLine": 233,
+        "startChar": 8,
+        "endLine": 233,
+        "endChar": 63
+      },
+      "revId": "f6c3f6669c0411aa78ca2baec37e4a664fb7169b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea865a12_90569e70",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
         "patchSetId": 15
@@ -59,6 +107,30 @@
       "writtenOn": "2017-03-18T07:10:16Z",
       "side": 1,
       "message": "and?  (but implies that there is an error)",
+      "range": {
+        "startLine": 1190,
+        "startChar": 53,
+        "endLine": 1190,
+        "endChar": 56
+      },
+      "revId": "f6c3f6669c0411aa78ca2baec37e4a664fb7169b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6373c2b_52bbb3c8",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-18T07:33:35Z",
+      "side": 1,
+      "message": "sure",
+      "parentUuid": "ea865a12_90569e70",
       "range": {
         "startLine": 1190,
         "startChar": 53,
