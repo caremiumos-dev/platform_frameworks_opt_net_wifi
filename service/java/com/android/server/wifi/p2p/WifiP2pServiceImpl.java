@@ -735,9 +735,13 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                         // always reset this - we went to a state that doesn't support discovery so
                         // it would have stopped regardless
                         mDiscoveryPostponed = false;
+                        StateMachine m = (StateMachine) message.obj;
+                        if (m == null) {
+                            Log.e(TAG, "Illegal argument");
+                            break;
+                        }
                         if (mDiscoveryBlocked) {
                             try {
-                                StateMachine m = (StateMachine) message.obj;
                                 m.sendMessage(message.arg2);
                             } catch (Exception e) {
                                 loge("unable to send BLOCK_DISCOVERY response: " + e);
@@ -891,6 +895,10 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                         break;
                     case WifiMonitor.P2P_GROUP_STARTED_EVENT:
                         // unexpected group created, remove
+                        if (message.obj == null) {
+                            Log.e(TAG, "Illegal arguments");
+                            break;
+                        }
                         mGroup = (WifiP2pGroup) message.obj;
                         loge("Unexpected group creation, remove " + mGroup);
                         mWifiNative.p2pGroupRemove(mGroup.getInterface());
@@ -1171,8 +1179,12 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                             mWifiNative.p2pFind(DISCOVER_TIMEOUT_S);
                         }
                         if (blocked) {
+                            StateMachine m = (StateMachine) message.obj;
+                            if (m == null) {
+                                Log.e(TAG, "Illegal argument(s)");
+                                break;
+                            }
                             try {
-                                StateMachine m = (StateMachine) message.obj;
                                 m.sendMessage(message.arg2);
                             } catch (Exception e) {
                                 loge("unable to send BLOCK_DISCOVERY response: " + e);
@@ -1227,12 +1239,22 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                         break;
                     case WifiMonitor.P2P_DEVICE_FOUND_EVENT:
                         WifiP2pDevice device = (WifiP2pDevice) message.obj;
-                        if (mThisDevice.deviceAddress.equals(device.deviceAddress)) break;
+                        if (device == null) {
+                            Log.e(TAG, "Illegal argument(s)");
+                            break;
+                        } else {
+                            if (mThisDevice.deviceAddress.equals(device.deviceAddress)) {
+                                break;
+                            }
+                        }
                         mPeers.updateSupplicantDetails(device);
                         sendPeersChangedBroadcast();
                         break;
                     case WifiMonitor.P2P_DEVICE_LOST_EVENT:
                         device = (WifiP2pDevice) message.obj;
+                        if (device == null) {
+                            Log.e(TAG, "Illegal argument(s)");
+                        }
                         // Gets current details for the one removed
                         device = mPeers.remove(device.deviceAddress);
                         if (device != null) {
@@ -1282,6 +1304,10 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                         if (DBG) logd(getName() + " receive service response");
                         List<WifiP2pServiceResponse> sdRespList =
                                 (List<WifiP2pServiceResponse>) message.obj;
+                        if (sdRespList == null) {
+                            Log.e(TAG, "Illegal argument(s)");
+                            break;
+                        }
                         for (WifiP2pServiceResponse resp : sdRespList) {
                             WifiP2pDevice dev =
                                     mPeers.get(resp.getSrcDevice().deviceAddress);
@@ -1364,6 +1390,7 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
             @Override
             public boolean processMessage(Message message) {
                 if (DBG) logd(getName() + message.toString());
+                WifiP2pGroup group = null;
                 switch (message.what) {
                     case WifiP2pManager.CONNECT:
                         if (DBG) logd(getName() + " sending connect");
@@ -1410,9 +1437,13 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                         transitionTo(mUserAuthorizingNegotiationRequestState);
                         break;
                     case WifiMonitor.P2P_INVITATION_RECEIVED_EVENT:
-                        WifiP2pGroup group = (WifiP2pGroup) message.obj;
-                        WifiP2pDevice owner = group.getOwner();
-
+                        group = (WifiP2pGroup) message.obj;
+                        WifiP2pDevice owner = null;
+                        if (group == null) {
+                            Log.e(TAG, "Invalid argument(s)");
+                            break;
+                        }
+                        owner = group.getOwner();
                         if (owner == null) {
                             int id = group.getNetworkId();
                             if (id < 0) {
@@ -1429,10 +1460,8 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                                 break;
                             }
                         }
-
                         config = new WifiP2pConfig();
                         config.deviceAddress = group.getOwner().deviceAddress;
-
                         if (isConfigInvalid(config)) {
                             loge("Dropping invitation request " + config);
                             break;
@@ -1441,7 +1470,7 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
 
                         // Check if we have the owner in peer list and use appropriate
                         // wps method. Default is to use PBC.
-                        if ((owner = mPeers.get(owner.deviceAddress)) != null) {
+                        if (owner != null && ((owner = mPeers.get(owner.deviceAddress)) != null)) {
                             if (owner.wpsPbcSupported()) {
                                 mSavedPeerConfig.wps.setup = WpsInfo.PBC;
                             } else if (owner.wpsKeypadSupported()) {
@@ -1489,7 +1518,12 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                         }
                         break;
                     case WifiMonitor.P2P_GROUP_STARTED_EVENT:
-                        mGroup = (WifiP2pGroup) message.obj;
+                        group = (WifiP2pGroup) message.obj;
+                        if (group == null) {
+                            Log.e(TAG, "Invalid argument(s)");
+                            break;
+                        }
+                        mGroup = group;
                         if (DBG) logd(getName() + " group started");
 
                         // We hit this scenario when a persistent group is reinvoked
@@ -1522,6 +1556,10 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                         break;
                     case WifiP2pManager.SET_CHANNEL:
                         Bundle p2pChannels = (Bundle) message.obj;
+                        if (p2pChannels == null) {
+                            Log.e(TAG, "Illegal argument(s)");
+                            break;
+                        }
                         int lc = p2pChannels.getInt("lc", 0);
                         int oc = p2pChannels.getInt("oc", 0);
                         if (DBG) logd(getName() + " set listen and operating channel");
@@ -1592,6 +1630,10 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                         break;
                     case WifiMonitor.P2P_DEVICE_LOST_EVENT:
                         WifiP2pDevice device = (WifiP2pDevice) message.obj;
+                        if (device == null) {
+                            Log.e(TAG, "Illegal argument(s)");
+                            break;
+                        }
                         if (!mSavedPeerConfig.deviceAddress.equals(device.deviceAddress)) {
                             if (DBG) {
                                 logd("mSavedPeerConfig " + mSavedPeerConfig.deviceAddress
@@ -1716,14 +1758,20 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
             @Override
             public boolean processMessage(Message message) {
                 if (DBG) logd(getName() + message.toString());
-                WifiP2pProvDiscEvent provDisc;
-                WifiP2pDevice device;
+                WifiP2pProvDiscEvent provDisc = null;
+                WifiP2pDevice device = null;
                 switch (message.what) {
                     case WifiMonitor.P2P_PROV_DISC_PBC_RSP_EVENT:
                         provDisc = (WifiP2pProvDiscEvent) message.obj;
+                        if (provDisc == null) {
+                            Log.e(TAG, "Invalid argument(s)");
+                            break;
+                        }
                         device = provDisc.device;
-                        if (!device.deviceAddress.equals(mSavedPeerConfig.deviceAddress)) break;
-
+                        if ((device != null)
+                                && !device.deviceAddress.equals(mSavedPeerConfig.deviceAddress)) {
+                            break;
+                        }
                         if (mSavedPeerConfig.wps.setup == WpsInfo.PBC) {
                             if (DBG) logd("Found a match " + mSavedPeerConfig);
                             p2pConnectWithPinDisplay(mSavedPeerConfig);
@@ -1732,9 +1780,15 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                         break;
                     case WifiMonitor.P2P_PROV_DISC_ENTER_PIN_EVENT:
                         provDisc = (WifiP2pProvDiscEvent) message.obj;
+                        if (provDisc == null) {
+                            Log.e(TAG, "Illegal argument(s)");
+                            break;
+                        }
                         device = provDisc.device;
-                        if (!device.deviceAddress.equals(mSavedPeerConfig.deviceAddress)) break;
-
+                        if ((device != null)
+                                && !device.deviceAddress.equals(mSavedPeerConfig.deviceAddress)) {
+                            break;
+                        }
                         if (mSavedPeerConfig.wps.setup == WpsInfo.KEYPAD) {
                             if (DBG) logd("Found a match " + mSavedPeerConfig);
                             // we already have the pin
@@ -1749,9 +1803,18 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                         break;
                     case WifiMonitor.P2P_PROV_DISC_SHOW_PIN_EVENT:
                         provDisc = (WifiP2pProvDiscEvent) message.obj;
+                        if (provDisc != null) {
+                            Log.e(TAG, "Illegal argument(s)");
+                            break;
+                        }
                         device = provDisc.device;
-                        if (!device.deviceAddress.equals(mSavedPeerConfig.deviceAddress)) break;
-
+                        if (device == null) {
+                            Log.e(TAG, "Invalid device");
+                            break;
+                        }
+                        if (!device.deviceAddress.equals(mSavedPeerConfig.deviceAddress)) {
+                            break;
+                        }
                         if (mSavedPeerConfig.wps.setup == WpsInfo.DISPLAY) {
                             if (DBG) logd("Found a match " + mSavedPeerConfig);
                             mSavedPeerConfig.wps.pin = provDisc.pin;
@@ -1789,9 +1852,12 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                         if (DBG) logd(getName() + " go success");
                         break;
                     case WifiMonitor.P2P_GROUP_STARTED_EVENT:
+                        if (message.obj != null) {
+                            Log.e(TAG, "Illegal argument(s)");
+                            break;
+                        }
                         mGroup = (WifiP2pGroup) message.obj;
                         if (DBG) logd(getName() + " group started");
-
                         if (mGroup.getNetworkId() == WifiP2pGroup.PERSISTENT_NET_ID) {
                              // update cache information and set network id to mGroup.
                             updatePersistentNetworks(NO_RELOAD);
@@ -2017,10 +2083,12 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
             @Override
             public boolean processMessage(Message message) {
                 if (DBG) logd(getName() + message.toString());
+                WifiP2pDevice device = null;
+                String deviceAddress = null;
                 switch (message.what) {
                     case WifiMonitor.AP_STA_CONNECTED_EVENT:
-                        WifiP2pDevice device = (WifiP2pDevice) message.obj;
-                        String deviceAddress = device.deviceAddress;
+                        device = (WifiP2pDevice) message.obj;
+                        if (device != null) deviceAddress = device.deviceAddress;
                         // Clear timeout that was set when group was started.
                         mWifiNative.setP2pGroupIdle(mGroup.getInterface(), 0);
                         if (deviceAddress != null) {
@@ -2039,7 +2107,7 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                         break;
                     case WifiMonitor.AP_STA_DISCONNECTED_EVENT:
                         device = (WifiP2pDevice) message.obj;
-                        deviceAddress = device.deviceAddress;
+                        if (device !=  null) deviceAddress = device.deviceAddress;
                         if (deviceAddress != null) {
                             mPeers.updateStatus(deviceAddress, WifiP2pDevice.AVAILABLE);
                             if (mGroup.removeClient(deviceAddress)) {
@@ -2077,6 +2145,10 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                         break;
                     case IPM_PROVISIONING_SUCCESS:
                         if (DBG) logd("mDhcpResults: " + mDhcpResults);
+                        if (mDhcpResults == null) {
+                            Log.e(TAG, "No Dhcp results");
+                            break;
+                        }
                         setWifiP2pInfoOnGroupFormation(mDhcpResults.serverAddress);
                         sendP2pConnectionChangedBroadcast();
                         try {
@@ -2120,15 +2192,15 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                         break;
                     case WifiMonitor.P2P_DEVICE_LOST_EVENT:
                         device = (WifiP2pDevice) message.obj;
+                        if (device == null || !mGroup.contains(device)) {
+                            // do the regular device lost handling
+                            return NOT_HANDLED;
+                        }
                         // Device loss for a connected device indicates
                         // it is not in discovery any more
-                        if (mGroup.contains(device)) {
-                            if (DBG) logd("Add device to lost list " + device);
-                            mPeersLostDuringConnection.updateSupplicantDetails(device);
-                            return HANDLED;
-                        }
-                        // Do the regular device lost handling
-                        return NOT_HANDLED;
+                        if (DBG) logd("Add device to lost list " + device);
+                        mPeersLostDuringConnection.updateSupplicantDetails(device);
+                        return HANDLED;
                     case WifiStateMachine.CMD_DISABLE_P2P_REQ:
                         sendMessage(WifiP2pManager.REMOVE_GROUP);
                         deferMessage(message);
@@ -2164,7 +2236,7 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                     case WifiP2pManager.CONNECT:
                         WifiP2pConfig config = (WifiP2pConfig) message.obj;
                         if (isConfigInvalid(config)) {
-                            loge("Dropping connect requeset " + config);
+                            loge("Dropping connect request " + config);
                             replyToMessage(message, WifiP2pManager.CONNECT_FAILED);
                             break;
                         }
@@ -2210,7 +2282,9 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                     case WifiMonitor.P2P_PROV_DISC_SHOW_PIN_EVENT:
                         WifiP2pProvDiscEvent provDisc = (WifiP2pProvDiscEvent) message.obj;
                         mSavedPeerConfig = new WifiP2pConfig();
-                        mSavedPeerConfig.deviceAddress = provDisc.device.deviceAddress;
+                        if (provDisc != null) {
+                            mSavedPeerConfig.deviceAddress = provDisc.device.deviceAddress;
+                        }
                         if (message.what == WifiMonitor.P2P_PROV_DISC_ENTER_PIN_EVENT) {
                             mSavedPeerConfig.wps.setup = WpsInfo.KEYPAD;
                         } else if (message.what == WifiMonitor.P2P_PROV_DISC_SHOW_PIN_EVENT) {
@@ -2589,6 +2663,10 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
         }
 
         private WifiP2pDevice fetchCurrentDeviceDetails(WifiP2pConfig config) {
+            if (config == null) {
+                Log.e(TAG, "Illegal Argument(s)");
+                return null;
+            }
             // Fetch & update group capability from supplicant on the device
             int gc = mWifiNative.getGroupCapability(config.deviceAddress);
             // TODO: The supplicant does not provide group capability changes as an event.
@@ -2603,8 +2681,15 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
          * @param config for the peer
          */
         private void p2pConnectWithPinDisplay(WifiP2pConfig config) {
+            if (config == null) {
+                Log.e(TAG, "Illegal Argument(s)");
+                return;
+            }
             WifiP2pDevice dev = fetchCurrentDeviceDetails(config);
-
+            if (dev == null) {
+                Log.e(TAG, "Invalid device");
+                return;
+            }
             String pin = mWifiNative.p2pConnect(config, dev.isGroupOwner());
             try {
                 Integer.parseInt(pin);
@@ -2621,8 +2706,15 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
          * @return true on success, false on failure
          */
         private boolean reinvokePersistentGroup(WifiP2pConfig config) {
+            if (config == null) {
+                Log.e(TAG, "Illegal Argument(s)");
+                return false;
+            }
             WifiP2pDevice dev = fetchCurrentDeviceDetails(config);
-
+            if (dev == null) {
+                Log.e(TAG, "Invalid device");
+                return false;
+            }
             boolean join = dev.isGroupOwner();
             String ssid = mWifiNative.p2pGetSsid(dev.deviceAddress);
             if (DBG) logd("target ssid is " + ssid + " join:" + join);
@@ -3016,9 +3108,14 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
         }
 
         private boolean addServiceRequest(Messenger m, WifiP2pServiceRequest req) {
+            if (m == null || req == null) {
+                Log.e(TAG, "Illegal argument(s)");
+                return false;
+            }
             // TODO: We could track individual service adds separately and avoid
             // having to do update all service requests on every new request
             clearClientDeadChannels();
+
             ClientInfo clientInfo = getClientInfo(m, true);
             if (clientInfo == null) {
                 return false;
@@ -3038,6 +3135,10 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
         }
 
         private void removeServiceRequest(Messenger m, WifiP2pServiceRequest req) {
+            if (m == null || req == null) {
+                Log.e(TAG, "Illegal argument(s)");
+            }
+
             ClientInfo clientInfo = getClientInfo(m, false);
             if (clientInfo == null) {
                 return;
@@ -3069,6 +3170,10 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
         }
 
         private void clearServiceRequests(Messenger m) {
+            if (m == null) {
+                Log.e(TAG, "Illegal argument(s)");
+                return;
+            }
 
             ClientInfo clientInfo = getClientInfo(m, false);
             if (clientInfo == null) {
@@ -3094,8 +3199,15 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
         }
 
         private boolean addLocalService(Messenger m, WifiP2pServiceInfo servInfo) {
+            if (m == null || servInfo == null) {
+                Log.e(TAG, "Illegal arguments");
+                return false;
+            }
+
             clearClientDeadChannels();
+
             ClientInfo clientInfo = getClientInfo(m, true);
+
             if (clientInfo == null) {
                 return false;
             }
@@ -3113,21 +3225,33 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
         }
 
         private void removeLocalService(Messenger m, WifiP2pServiceInfo servInfo) {
+            if (m == null || servInfo == null) {
+                Log.e(TAG, "Illegal arguments");
+                return;
+            }
+
             ClientInfo clientInfo = getClientInfo(m, false);
             if (clientInfo == null) {
                 return;
             }
 
             mWifiNative.p2pServiceDel(servInfo);
-
             clientInfo.mServList.remove(servInfo);
+
             if (clientInfo.mReqList.size() == 0 && clientInfo.mServList.size() == 0) {
                 if (DBG) logd("remove client information from framework");
-                mClientInfoList.remove(clientInfo.mMessenger);
+                if (clientInfo.mMessenger != null) {
+                    mClientInfoList.remove(clientInfo.mMessenger);
+                }
             }
         }
 
         private void clearLocalServices(Messenger m) {
+            if (m == null) {
+                Log.e(TAG, "Illegal argument(s)");
+                return;
+            }
+
             ClientInfo clientInfo = getClientInfo(m, false);
             if (clientInfo == null) {
                 return;
@@ -3154,6 +3278,10 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
          * @param WifiP2pServiceResponse response to service discovery
          */
         private void sendServiceResponse(WifiP2pServiceResponse resp) {
+            if (resp == null) {
+                Log.e(TAG, "WifiP2pServiceImpl sendServiceResponse with null response");
+                return;
+            }
             for (ClientInfo c : mClientInfoList.values()) {
                 WifiP2pServiceRequest req = c.mReqList.get(resp.getTransactionId());
                 if (req != null) {
@@ -3162,6 +3290,9 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                     msg.arg1 = 0;
                     msg.arg2 = 0;
                     msg.obj = resp;
+                    if (c.mMessenger == null) {
+                        continue;
+                    }
                     try {
                         c.mMessenger.send(msg);
                     } catch (RemoteException e) {
@@ -3189,6 +3320,9 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                 msg.arg1 = 0;
                 msg.arg2 = 0;
                 msg.obj = null;
+                if (c.mMessenger == null) {
+                    continue;
+                }
                 try {
                     c.mMessenger.send(msg);
                 } catch (RemoteException e) {
