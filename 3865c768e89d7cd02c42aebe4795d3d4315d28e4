@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "98b3fe6e_521e4275",
+        "filename": "service/java/com/android/server/wifi/WifiCountryCode.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-03-18T20:17:24Z",
+      "side": 1,
+      "message": "Yes we have permission checks :-)\nhttp://cs/android/frameworks/opt/net/wifi/service/java/com/android/server/wifi/WifiServiceImpl.java?l\u003d1199\u0026rcl\u003db1a8a099c092b321702610f56e9bfcf25c5087a9",
+      "parentUuid": "519570b8_a97d9653",
+      "range": {
+        "startLine": 128,
+        "startChar": 7,
+        "endLine": 129,
+        "endChar": 56
+      },
+      "revId": "3865c768e89d7cd02c42aebe4795d3d4315d28e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a9ea450_c0dd55c6",
         "filename": "service/java/com/android/server/wifi/WifiCountryCode.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-18T08:18:04Z",
       "side": 1,
       "message": "spelling",
+      "range": {
+        "startLine": 136,
+        "startChar": 33,
+        "endLine": 136,
+        "endChar": 42
+      },
+      "revId": "3865c768e89d7cd02c42aebe4795d3d4315d28e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91970e3a_978fd38c",
+        "filename": "service/java/com/android/server/wifi/WifiCountryCode.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-03-18T20:17:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a9ea450_c0dd55c6",
       "range": {
         "startLine": 136,
         "startChar": 33,
