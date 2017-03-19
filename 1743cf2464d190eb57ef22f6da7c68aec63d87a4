@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bb2adb3_33db0160",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-19T04:12:21Z",
+      "side": 1,
+      "message": "Now I am a bit confused with this test.  Shouldn\u0027t it have a setup like below and then confirm the selected BSSID is replaced with ANY?",
+      "range": {
+        "startLine": 1174,
+        "startChar": 16,
+        "endLine": 1174,
+        "endChar": 65
+      },
+      "revId": "1743cf2464d190eb57ef22f6da7c68aec63d87a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
