@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "22ae4bf1_6f569e7f",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-19T04:23:44Z",
+      "side": 1,
+      "message": "Right, I was suggesting that you don\u0027t need the extra firmware roaming supported check below if the \"exact\" match (bssid match) wasn\u0027t in the same network section.  If you process it separately below, then it just gets the bonus no matter what and won\u0027t get a double bonus.",
+      "parentUuid": "348b1bfc_44da0b00",
+      "range": {
+        "startLine": 206,
+        "startChar": 0,
+        "endLine": 206,
+        "endChar": 30
+      },
+      "revId": "b633c99e9ee53ad54ebd83bdb439f7a4746d26ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b680dc9_103385c3",
         "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
         "patchSetId": 15
