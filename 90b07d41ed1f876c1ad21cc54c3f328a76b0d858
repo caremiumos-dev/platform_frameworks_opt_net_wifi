@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "889b51c9_4135e1db",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-19T04:06:42Z",
+      "side": 1,
+      "message": "you could just put the buildBssidBlacklist call here (no real preference on this, just doesn\u0027t seem to be used after this)",
+      "range": {
+        "startLine": 259,
+        "startChar": 60,
+        "endLine": 259,
+        "endChar": 77
+      },
+      "revId": "90b07d41ed1f876c1ad21cc54c3f328a76b0d858",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

@@ -903,6 +903,30 @@
     },
     {
       "key": {
+        "uuid": "732a34b2_dbb5bed1",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-19T04:06:42Z",
+      "side": 1,
+      "message": "WifiStateMachine will be VERY different. :)  We will make sure this type of situation is covered before coding - When I get back to working on it, we can chat!",
+      "parentUuid": "b13f9b23_06964b59",
+      "range": {
+        "startLine": 400,
+        "startChar": 0,
+        "endLine": 401,
+        "endChar": 63
+      },
+      "revId": "af1ee09663c9a19ead56c08b84bfa9257cf80d40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c424c8c2_8794d25d",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
         "patchSetId": 4
