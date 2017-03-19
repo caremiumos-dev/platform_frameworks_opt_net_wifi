@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "7874443d_e52e64e9",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-19T00:39:19Z",
+      "side": 1,
+      "message": "Maybe I didn\u0027t do a good job explaining what\u0027s going on here. Let me try again. \n\nFor a network\u0027s configuration, an App can specify a particular BSSID which gets stored as the configuration\u0027s \u0027BSSID\u0027 field. If a configuration has BSSID field set, we will only connect to that BSSID when connect to the network. Later on if WNS picks such a network, its configuration\u0027s \u0027mCandidate\u0027 (type is ScanResult) is assigned with the ScanResult of that AP that matches the \u0027BSSID\u0027 field. That happens no matter firmware roaming is supported or not.\n\nWhen calling WifiStateMachine.startConnectToNetwork() we pass in two parameters: 1, networkId which is obtained from the configuration, 2, target BSSID which is obtained from the mCandidate if firmware roaming is not supported, no matter app has specified a BSSID or not.  So framework initiated connection has no issue.\n\nNow in the previous CL \"hand off roaming to firmware\" we always set target BSSID in 2) above to \u0027any\u0027 if firmware roaming is supported. This works for most case but not the one that the configuration has an app specified BSSID. That\u0027s what this CL is for. If the configuration has an app specified BSSID we always honor it no matter firmware roaming is supported or not.\n\nSo the case we set target BSSID to \u0027any\u0027 is that: firmware roaming is supported and the network configuration doesn\u0027t have an app specified BSSID.",
+      "parentUuid": "49a37f3f_c34a290e",
+      "range": {
+        "startLine": 662,
+        "startChar": 80,
+        "endLine": 663,
+        "endChar": 68
+      },
+      "revId": "f6c3f6669c0411aa78ca2baec37e4a664fb7169b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6ef74bf_85d91f74",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
         "patchSetId": 15
