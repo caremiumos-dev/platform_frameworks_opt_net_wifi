@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "348b1bfc_44da0b00",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-19T00:59:35Z",
+      "side": 1,
+      "message": "When you say \"exact network\", did you mean the currently connected BSSID? The same network check doesn\u0027t exclude that. This bonus gets applied to the currently connected BSSID and other BSSIDs share the same network configuration or linked.",
+      "parentUuid": "26747463_1b56bca4",
+      "range": {
+        "startLine": 206,
+        "startChar": 0,
+        "endLine": 206,
+        "endChar": 30
+      },
+      "revId": "b633c99e9ee53ad54ebd83bdb439f7a4746d26ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b680dc9_103385c3",
         "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "eef9dbc1_37bcff33",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-19T00:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b680dc9_103385c3",
+      "range": {
+        "startLine": 224,
+        "startChar": 47,
+        "endLine": 224,
+        "endChar": 51
+      },
+      "revId": "b633c99e9ee53ad54ebd83bdb439f7a4746d26ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b67820c9_68ff8928",
         "filename": "tests/wifitests/src/com/android/server/wifi/SavedNetworkEvaluatorTest.java",
         "patchSetId": 15
@@ -59,6 +107,30 @@
       "writtenOn": "2017-03-18T07:22:47Z",
       "side": 1,
       "message": "spelling",
+      "range": {
+        "startLine": 492,
+        "startChar": 11,
+        "endLine": 492,
+        "endChar": 20
+      },
+      "revId": "b633c99e9ee53ad54ebd83bdb439f7a4746d26ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e864c02_1d2fdaa4",
+        "filename": "tests/wifitests/src/com/android/server/wifi/SavedNetworkEvaluatorTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-19T00:59:35Z",
+      "side": 1,
+      "message": "I missed this comment in the morning when updating this CL. Will fix.",
+      "parentUuid": "b67820c9_68ff8928",
       "range": {
         "startLine": 492,
         "startChar": 11,
