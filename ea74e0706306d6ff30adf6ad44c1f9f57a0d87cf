@@ -22,6 +22,30 @@
       "revId": "ea74e0706306d6ff30adf6ad44c1f9f57a0d87cf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c63fd29_56fccb2f",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-19T05:09:32Z",
+      "side": 1,
+      "message": "A final variable can be initialized to null. In this case mLocalLog is initialized to the value of this class constructor\u0027s input parameter \u0027localLog\u0027. Nothing guarantees that the input parameter cannot be null. It\u0027s safer to be defensive here. Also users of this class may choose to pass in null to mute the local log.\n\nIf you still remember, we used to pass in null for \u0027localLog\u0027 in the unit test of this class.",
+      "parentUuid": "e9d871a3_cbf66c6d",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 9
+      },
+      "revId": "ea74e0706306d6ff30adf6ad44c1f9f57a0d87cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
