@@ -46,6 +46,30 @@
       "revId": "ea74e0706306d6ff30adf6ad44c1f9f57a0d87cf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73e3ce9c_ae643009",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-19T06:05:27Z",
+      "side": 1,
+      "message": "By \"is this possible?\", I meant that we are creating a local log and then handing it in from WifiInjector.  If you really want to be defensive, then an exception should be dealt with and we need to know about it.  Silently ignoring will not do us any good and would mask bugs.\n\nThat unit test was written incorrectly and should have passed in a mock, not null.",
+      "parentUuid": "0c63fd29_56fccb2f",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 9
+      },
+      "revId": "ea74e0706306d6ff30adf6ad44c1f9f57a0d87cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
