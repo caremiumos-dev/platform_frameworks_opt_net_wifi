@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9d871a3_cbf66c6d",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-19T04:20:44Z",
+      "side": 1,
+      "message": "is this possible?  it is a final variable",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 9
+      },
+      "revId": "ea74e0706306d6ff30adf6ad44c1f9f57a0d87cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
