@@ -610,10 +610,12 @@ public class WifiStateMachineTest {
         mLooper.dispatchAll();
         assertEquals("InitialState", getCurrentState().getName());
         assertEquals(WifiStateMachine.CONNECT_MODE, mWsm.getOperationalModeForTest());
+        verify(mWifiNative).removeAllNetworks();
 
         // Update the mode
         mWsm.setOperationalMode(WifiStateMachine.SCAN_ONLY_MODE);
         mLooper.dispatchAll();
+        verify(mWifiNative).removeAllNetworks();
         assertEquals(WifiStateMachine.SCAN_ONLY_MODE, mWsm.getOperationalModeForTest());
 
         // Start supplicant so we move to the next state
