@@ -4691,6 +4691,9 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             // initialize network state
             setNetworkDetailedState(DetailedState.DISCONNECTED);
 
+            if (!mWifiNative.removeAllNetworks()) {
+                loge("Failed to remove networks on entering connect mode");
+            }
 
             // Inform WifiConnectivityManager that Wifi is enabled
             mWifiConnectivityManager.setWifiEnabled(true);
@@ -4705,6 +4708,11 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             // Let the system know that wifi is not available since we are exiting client mode.
             mNetworkInfo.setIsAvailable(false);
             if (mNetworkAgent != null) mNetworkAgent.sendNetworkInfo(mNetworkInfo);
+
+            if (!mWifiNative.removeAllNetworks()) {
+                loge("Failed to remove networks on exiting connect mode");
+            }
+
             // Inform WifiConnectivityManager that Wifi is disabled
             mWifiConnectivityManager.setWifiEnabled(false);
             // Inform metrics that Wifi is being disabled (Toggled, airplane enabled, etc)
