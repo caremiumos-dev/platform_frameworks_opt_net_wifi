@@ -22,6 +22,30 @@
       "revId": "90b07d41ed1f876c1ad21cc54c3f328a76b0d858",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31f1e553_8e887e12",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-20T18:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "889b51c9_4135e1db",
+      "range": {
+        "startLine": 259,
+        "startChar": 60,
+        "endLine": 259,
+        "endChar": 77
+      },
+      "revId": "90b07d41ed1f876c1ad21cc54c3f328a76b0d858",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
