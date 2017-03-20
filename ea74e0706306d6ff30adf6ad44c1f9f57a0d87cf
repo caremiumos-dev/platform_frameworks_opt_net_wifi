@@ -70,6 +70,30 @@
       "revId": "ea74e0706306d6ff30adf6ad44c1f9f57a0d87cf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "120deda3_87178366",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-20T05:36:00Z",
+      "side": 1,
+      "message": "LocalLog is a final class and it cannot be mocked. So that leaves us two options for the unit test: passing in a real object, or null which is allowed  by WifiNetworkSelector as of today. When null is passed in, this class just won\u0027t generate any local log. I wouldn\u0027t call that unit test was written incorrectly, at least for today\u0027s WifiNetworkSelector implementation. \n\nFrom class WifiNetworkSelector\u0027s perspective, there is no restriction such that it can only be initialized by WifiInjector. We shouldn\u0027t assume the input parameter localLog is always non-null.\n\nI think the question here is, do we want to consider null as a valid value for the localLog input parameter? My take is why not. Caller of this class can choose to mute the local logs by passing in null. This is also how WifiConfigManager localLog() works. It used to get its LocalLog buffer from WifiNative and log to it only if it is not null. Today WifiConfigManager creates its own localLog buffer and still performs the null check in localLog(), which is probably no longer necessary though. My point is, if the local log buffer is passed in from constructor input parameter or another object, we have been doing the null check.\n\nhttps://cs.corp.google.com/aosp-master/frameworks/opt/net/wifi/service/java/com/android/server/wifi/WifiConfigManager.java?type\u003dcs\u0026q\u003dLocalLog+file:%5Eframeworks/opt/net/wifi/service/java/com/android/server/wifi/+package:%5Eaosp-master$\u0026l\u003d2727\n\nIf we decide that Wifi framework classes will always log to the local log and cannot be muted, the null check in localLog() of course should be removed. Also we probably don\u0027t need to check the input parameter value and generate exception in constructor as we don\u0027t check against other parameters. Just let exception happen so we can catch and fix it.",
+      "parentUuid": "73e3ce9c_ae643009",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 9
+      },
+      "revId": "ea74e0706306d6ff30adf6ad44c1f9f57a0d87cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
