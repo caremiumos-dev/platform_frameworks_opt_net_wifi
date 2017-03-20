@@ -235,6 +235,9 @@ public class WifiAwareServiceImpl extends IWifiAwareManager.Stub {
             throw new IllegalArgumentException("PublishConfig must not be null");
         }
         publishConfig.assertValid(mStateManager.getCharacteristics());
+        if (publishConfig.mPublishCount != 0) {
+            enforceConnectivityInternalPermission();
+        }
 
         int uid = getMockableCallingUid();
         enforceClientValidity(uid, clientId);
@@ -255,6 +258,9 @@ public class WifiAwareServiceImpl extends IWifiAwareManager.Stub {
             throw new IllegalArgumentException("PublishConfig must not be null");
         }
         publishConfig.assertValid(mStateManager.getCharacteristics());
+        if (publishConfig.mPublishCount != 0) {
+            enforceConnectivityInternalPermission();
+        }
 
         int uid = getMockableCallingUid();
         enforceClientValidity(uid, clientId);
@@ -280,6 +286,9 @@ public class WifiAwareServiceImpl extends IWifiAwareManager.Stub {
             throw new IllegalArgumentException("SubscribeConfig must not be null");
         }
         subscribeConfig.assertValid(mStateManager.getCharacteristics());
+        if (subscribeConfig.mSubscribeCount != 0) {
+            enforceConnectivityInternalPermission();
+        }
 
         int uid = getMockableCallingUid();
         enforceClientValidity(uid, clientId);
@@ -300,6 +309,9 @@ public class WifiAwareServiceImpl extends IWifiAwareManager.Stub {
             throw new IllegalArgumentException("SubscribeConfig must not be null");
         }
         subscribeConfig.assertValid(mStateManager.getCharacteristics());
+        if (subscribeConfig.mSubscribeCount != 0) {
+            enforceConnectivityInternalPermission();
+        }
 
         int uid = getMockableCallingUid();
         enforceClientValidity(uid, clientId);
