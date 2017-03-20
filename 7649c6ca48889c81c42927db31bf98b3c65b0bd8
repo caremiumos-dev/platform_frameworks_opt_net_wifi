@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfcd1e2e_f9bb40fe",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-20T18:05:45Z",
+      "side": 1,
+      "message": "Should this be checked here or in the location where the message is actually processed.\n\nConcern: possibly dhcpResults\u003dnull is valid or becomes valid and some point (e.g. fallback behavior on null). Blocking here doesn\u0027t expose that behavior.",
+      "range": {
+        "startLine": 445,
+        "startChar": 28,
+        "endLine": 445,
+        "endChar": 39
+      },
+      "revId": "7649c6ca48889c81c42927db31bf98b3c65b0bd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf9503fc_62f8e0c8",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-20T18:05:45Z",
+      "side": 1,
+      "message": "is a null here ok?",
+      "range": {
+        "startLine": 1236,
+        "startChar": 55,
+        "endLine": 1236,
+        "endChar": 61
+      },
+      "revId": "7649c6ca48889c81c42927db31bf98b3c65b0bd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee13ecd4_de6e2aa6",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1497,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-20T18:05:45Z",
+      "side": 1,
+      "message": "Note: you\u0027re already updating some persistent state here. Is that ok?",
+      "range": {
+        "startLine": 1497,
+        "startChar": 24,
+        "endLine": 1497,
+        "endChar": 30
+      },
+      "revId": "7649c6ca48889c81c42927db31bf98b3c65b0bd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a2bef89_ca72471a",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1531,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-20T18:05:45Z",
+      "side": 1,
+      "message": "Here and elsewhere: if these are unexpected may want to log an error or a warning",
+      "range": {
+        "startLine": 1531,
+        "startChar": 28,
+        "endLine": 1531,
+        "endChar": 39
+      },
+      "revId": "7649c6ca48889c81c42927db31bf98b3c65b0bd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7095a73_656532dd",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1614,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-20T18:05:45Z",
+      "side": 1,
+      "message": "ok to pass a null?",
+      "range": {
+        "startLine": 1614,
+        "startChar": 75,
+        "endLine": 1614,
+        "endChar": 81
+      },
+      "revId": "7649c6ca48889c81c42927db31bf98b3c65b0bd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b624e782_0fbe58ef",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1733,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-20T18:05:45Z",
+      "side": 1,
+      "message": "strange - these are not used in this clause",
+      "range": {
+        "startLine": 1733,
+        "startChar": 28,
+        "endLine": 1733,
+        "endChar": 34
+      },
+      "revId": "7649c6ca48889c81c42927db31bf98b3c65b0bd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cff1426e_d2e0ad68",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1747,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-20T18:05:45Z",
+      "side": 1,
+      "message": "device not used, ok to proceed with null value?",
+      "range": {
+        "startLine": 1747,
+        "startChar": 28,
+        "endLine": 1747,
+        "endChar": 34
+      },
+      "revId": "7649c6ca48889c81c42927db31bf98b3c65b0bd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cda7d73b_782bba86",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1767,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-20T18:05:45Z",
+      "side": 1,
+      "message": "device not used - ok to proceed with null value?",
+      "range": {
+        "startLine": 1767,
+        "startChar": 28,
+        "endLine": 1767,
+        "endChar": 34
+      },
+      "revId": "7649c6ca48889c81c42927db31bf98b3c65b0bd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c28b60e9_b312da44",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1810,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-20T18:05:45Z",
+      "side": 1,
+      "message": "same: already modifying some state",
+      "range": {
+        "startLine": 1810,
+        "startChar": 28,
+        "endLine": 1810,
+        "endChar": 34
+      },
+      "revId": "7649c6ca48889c81c42927db31bf98b3c65b0bd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f69a53f8_85f25c63",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2148,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-20T18:05:45Z",
+      "side": 1,
+      "message": "What does this entail and what does that code do with a null device?",
+      "range": {
+        "startLine": 2148,
+        "startChar": 35,
+        "endLine": 2148,
+        "endChar": 46
+      },
+      "revId": "7649c6ca48889c81c42927db31bf98b3c65b0bd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e80638f_fbbdcf02",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3049,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-20T18:05:45Z",
+      "side": 1,
+      "message": "it is ok/expected to call this if m\u003d\u003dnull?",
+      "range": {
+        "startLine": 3049,
+        "startChar": 12,
+        "endLine": 3049,
+        "endChar": 35
+      },
+      "revId": "7649c6ca48889c81c42927db31bf98b3c65b0bd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d93d8f9b_87e20bae",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3127,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-20T18:05:45Z",
+      "side": 1,
+      "message": "is it ok to call this with m\u003d\u003dnull?",
+      "range": {
+        "startLine": 3127,
+        "startChar": 12,
+        "endLine": 3127,
+        "endChar": 35
+      },
+      "revId": "7649c6ca48889c81c42927db31bf98b3c65b0bd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8f10562_2bb0c8bd",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3148,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-20T18:05:45Z",
+      "side": 1,
+      "message": "seems to run partial functionality depending on which var is a null - ok?",
+      "range": {
+        "startLine": 3148,
+        "startChar": 21,
+        "endLine": 3148,
+        "endChar": 39
+      },
+      "revId": "7649c6ca48889c81c42927db31bf98b3c65b0bd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c067190f_2624265f",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3196,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-20T18:05:45Z",
+      "side": 1,
+      "message": "simplify by checking for resp\u003d\u003dnull at the beginning and returning?",
+      "range": {
+        "startLine": 3196,
+        "startChar": 20,
+        "endLine": 3196,
+        "endChar": 32
+      },
+      "revId": "7649c6ca48889c81c42927db31bf98b3c65b0bd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
