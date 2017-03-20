@@ -34,6 +34,7 @@ import android.net.wifi.WifiEnterpriseConfig;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiScanner;
+import android.os.Process;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
@@ -613,6 +614,14 @@ public class WifiConfigManager {
      * @param ignoreLockdown Ignore the configuration lockdown checks for connection attempts.
      */
     private boolean canModifyNetwork(WifiConfiguration config, int uid, boolean ignoreLockdown) {
+        // Passpoint configurations are generated and managed by PasspointManager. They can be
+        // added by either PasspointNetworkEvaluator (for auto connection) or Settings app
+        // (for manual connection), and need to be removed once the connection is completed.
+        // Since it is "owned" by us, so always allow us to modify them.
+        if (config.isPasspoint() && uid == Process.WIFI_UID) {
+            return true;
+        }
+
         final DevicePolicyManagerInternal dpmi = LocalServices.getService(
                 DevicePolicyManagerInternal.class);
 
@@ -1050,6 +1059,7 @@ public class WifiConfigManager {
         if (config == null) {
             return false;
         }
+        // Bypass permission check for Passpoint network removal by us.
         if (!canModifyNetwork(config, uid, DISALLOW_LOCKDOWN_CHECK_BYPASS)) {
             Log.e(TAG, "UID " + uid + " does not have permission to delete configuration "
                     + config.configKey());
