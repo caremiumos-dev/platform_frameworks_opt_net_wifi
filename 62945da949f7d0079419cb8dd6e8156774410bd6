@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b47b00f_b5775943",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4671,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-20T02:25:22Z",
+      "side": 1,
+      "message": "isEapNetwork?",
+      "range": {
+        "startLine": 4671,
+        "startChar": 20,
+        "endLine": 4671,
+        "endChar": 31
+      },
+      "revId": "62945da949f7d0079419cb8dd6e8156774410bd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25b3d72a_23a6ed21",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4677,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-20T02:25:22Z",
+      "side": 1,
+      "message": "Can u move these helper methods to WifiConfigurationUtil please?",
+      "range": {
+        "startLine": 4671,
+        "startChar": 0,
+        "endLine": 4677,
+        "endChar": 5
+      },
+      "revId": "62945da949f7d0079419cb8dd6e8156774410bd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
