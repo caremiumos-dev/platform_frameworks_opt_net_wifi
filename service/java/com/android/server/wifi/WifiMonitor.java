@@ -60,33 +60,35 @@ public class WifiMonitor {
     public static final int NETWORK_DISCONNECTION_EVENT          = BASE + 4;
     /* Scan results are available */
     public static final int SCAN_RESULTS_EVENT                   = BASE + 5;
+    /* Scheduled scan results are available */
+    public static final int SCHED_SCAN_RESULTS_EVENT             = BASE + 6;
     /* Supplicate state changed */
-    public static final int SUPPLICANT_STATE_CHANGE_EVENT        = BASE + 6;
+    public static final int SUPPLICANT_STATE_CHANGE_EVENT        = BASE + 7;
     /* Password failure and EAP authentication failure */
-    public static final int AUTHENTICATION_FAILURE_EVENT         = BASE + 7;
+    public static final int AUTHENTICATION_FAILURE_EVENT         = BASE + 8;
     /* WPS success detected */
-    public static final int WPS_SUCCESS_EVENT                    = BASE + 8;
+    public static final int WPS_SUCCESS_EVENT                    = BASE + 9;
     /* WPS failure detected */
-    public static final int WPS_FAIL_EVENT                       = BASE + 9;
+    public static final int WPS_FAIL_EVENT                       = BASE + 10;
      /* WPS overlap detected */
-    public static final int WPS_OVERLAP_EVENT                    = BASE + 10;
+    public static final int WPS_OVERLAP_EVENT                    = BASE + 11;
      /* WPS timeout detected */
-    public static final int WPS_TIMEOUT_EVENT                    = BASE + 11;
+    public static final int WPS_TIMEOUT_EVENT                    = BASE + 12;
     /* Driver was hung */
-    public static final int DRIVER_HUNG_EVENT                    = BASE + 12;
+    public static final int DRIVER_HUNG_EVENT                    = BASE + 13;
     /* SSID was disabled due to auth failure or excessive
      * connection failures */
-    public static final int SSID_TEMP_DISABLED                   = BASE + 13;
+    public static final int SSID_TEMP_DISABLED                   = BASE + 14;
     /* SSID reenabled by supplicant */
-    public static final int SSID_REENABLED                       = BASE + 14;
+    public static final int SSID_REENABLED                       = BASE + 15;
 
     /* Request Identity */
-    public static final int SUP_REQUEST_IDENTITY                 = BASE + 15;
+    public static final int SUP_REQUEST_IDENTITY                 = BASE + 16;
 
     /* Request SIM Auth */
-    public static final int SUP_REQUEST_SIM_AUTH                 = BASE + 16;
+    public static final int SUP_REQUEST_SIM_AUTH                 = BASE + 17;
 
-    public static final int SCAN_FAILED_EVENT                    = BASE + 17;
+    public static final int SCAN_FAILED_EVENT                    = BASE + 18;
 
     /* Indicates assoc reject event */
     public static final int ASSOCIATION_REJECTION_EVENT          = BASE + 43;
@@ -461,6 +463,14 @@ public class WifiMonitor {
      */
     public void broadcastScanResultEvent(String iface) {
         sendMessage(iface, SCAN_RESULTS_EVENT);
+    }
+
+    /**
+     * Broadcast scheduled scan result event to all the handlers registered for this event.
+     * @param iface Name of iface on which this occurred.
+     */
+    public void broadcastSchedScanResultEvent(String iface) {
+        sendMessage(iface, SCHED_SCAN_RESULTS_EVENT);
     }
 
     /**

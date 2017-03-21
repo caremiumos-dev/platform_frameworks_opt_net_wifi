@@ -291,6 +291,21 @@ public class WifiMonitorTest {
     }
 
     /**
+     * Broadcast Scheduled scan results event test.
+     */
+    @Test
+    public void testBroadcastSchedScanResultsEvent() {
+        mWifiMonitor.registerHandler(
+                WLAN_IFACE_NAME, WifiMonitor.SCHED_SCAN_RESULTS_EVENT, mHandlerSpy);
+        mWifiMonitor.broadcastSchedScanResultEvent(WLAN_IFACE_NAME);
+        mLooper.dispatchAll();
+
+        ArgumentCaptor<Message> messageCaptor = ArgumentCaptor.forClass(Message.class);
+        verify(mHandlerSpy).handleMessage(messageCaptor.capture());
+        assertEquals(WifiMonitor.SCHED_SCAN_RESULTS_EVENT, messageCaptor.getValue().what);
+    }
+
+    /**
      * Broadcast Scan results event test.
      */
     @Test
