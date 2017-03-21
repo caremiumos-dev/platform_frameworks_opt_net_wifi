@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8783283c_8ec66f64",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4694,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-21T03:46:39Z",
+      "side": 1,
+      "message": "These are networks for supplicant to make a connection? Can such networks be added in non-connect mode?",
+      "revId": "cb3cdca74f1752ad885b891430b5a1ddc0f7f131",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
