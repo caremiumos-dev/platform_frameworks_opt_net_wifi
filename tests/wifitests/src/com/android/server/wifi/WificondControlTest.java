@@ -592,7 +592,7 @@ public class WificondControlTest {
         assertNotNull(pnoScanEvent);
         pnoScanEvent.OnPnoNetworkFound();
 
-        verify(mWifiMonitor).broadcastScanResultEvent(any(String.class));
+        verify(mWifiMonitor).broadcastSchedScanResultEvent(any(String.class));
     }
 
     /**
