@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "84d2f1a1_05a3d6ad",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-21T21:28:33Z",
+      "side": 1,
+      "message": "True, the one with bssid specified would fail once the next CL kicks in. This CL and the very next 2 CLs are under the same topic, they will go in together. We cannot submit them one by one. That said, not sure if there is a lot of value to add such a test in this CL as the test in next CL does cover this case.\n\nI can squash this CL and the next one if you prefer.",
+      "parentUuid": "9bfca69a_28ec9491",
+      "range": {
+        "startLine": 1174,
+        "startChar": 16,
+        "endLine": 1174,
+        "endChar": 65
+      },
+      "revId": "5f525ecc00685e1f4369cd8bf871d13fde1c55c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90a881b0_ab175dd6",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
         "patchSetId": 21
@@ -59,6 +83,54 @@
       "writtenOn": "2017-03-21T21:02:40Z",
       "side": 1,
       "message": "test this for firmware roaming supported and not supported.",
+      "range": {
+        "startLine": 1199,
+        "startChar": 50,
+        "endLine": 1199,
+        "endChar": 51
+      },
+      "revId": "5f525ecc00685e1f4369cd8bf871d13fde1c55c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4142f102_addf409c",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-21T21:28:33Z",
+      "side": 1,
+      "message": "Are you suggesting something like \"useConfigSpecifiedBssidForConnection()\"? How about something like \"useConfigurationWithBssidSpecifiedForConnection()\"?",
+      "parentUuid": "90a881b0_ab175dd6",
+      "range": {
+        "startLine": 1199,
+        "startChar": 16,
+        "endLine": 1199,
+        "endChar": 49
+      },
+      "revId": "5f525ecc00685e1f4369cd8bf871d13fde1c55c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "acb494c1_9888de0f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-21T21:28:33Z",
+      "side": 1,
+      "message": "The test is in next CL. I can squash these two CLs together if that helps you review.\n\nWill also change this test name to useAppSpecifiedBssidForConnectionIfFirmwareRoamingNotSupported(). And the other test in next CL to use AppSpecifiedBssidForConnectionIfFirmwareRoamingSupport().",
+      "parentUuid": "39761ce6_adbdc689",
       "range": {
         "startLine": 1199,
         "startChar": 50,
