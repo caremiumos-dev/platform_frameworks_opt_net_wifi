@@ -237,6 +237,54 @@
     },
     {
       "key": {
+        "uuid": "03571222_539b8f1b",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1127,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-21T00:54:17Z",
+      "side": 1,
+      "message": "Changed the method name as we discussed.",
+      "parentUuid": "1ca56c75_1b69798a",
+      "range": {
+        "startLine": 1127,
+        "startChar": 17,
+        "endLine": 1127,
+        "endChar": 45
+      },
+      "revId": "f5a396c13ff5000ec7fb4bcce26508df7872074b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec3b1c47_c8c5241d",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1127,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-21T00:54:17Z",
+      "side": 1,
+      "message": "Added the wtf message as we discussed.",
+      "parentUuid": "bd74b782_f8f9ec60",
+      "range": {
+        "startLine": 1127,
+        "startChar": 17,
+        "endLine": 1127,
+        "endChar": 45
+      },
+      "revId": "f5a396c13ff5000ec7fb4bcce26508df7872074b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "465593e5_c69367ea",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 14
@@ -319,6 +367,30 @@
       "side": 1,
       "message": "I somehow missed this comment when updating the CL this morning. Will take a look.",
       "parentUuid": "38420cad_22e22e76",
+      "range": {
+        "startLine": 1132,
+        "startChar": 0,
+        "endLine": 1132,
+        "endChar": 80
+      },
+      "revId": "f5a396c13ff5000ec7fb4bcce26508df7872074b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d17f098_285af55b",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-21T00:54:17Z",
+      "side": 1,
+      "message": "Tried subList(). The return type of subList() is List, not ArrayList. Type cast generates run time exception.",
+      "parentUuid": "2bc3d824_6668f91a",
       "range": {
         "startLine": 1132,
         "startChar": 0,
