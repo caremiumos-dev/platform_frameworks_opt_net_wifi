@@ -52,6 +52,24 @@
       "revId": "cb3cdca74f1752ad885b891430b5a1ddc0f7f131",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7dc48892_ae4a5da6",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4694,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-21T04:27:53Z",
+      "side": 1,
+      "message": "Both the cases. If we\u0027re connected to a network and we suddenly reboot. we don\u0027t want wpa_supplicant to start connecting to the previously configured network before QNS kicks in.\n\nSo, remove all networks on turning wifi off (exiting ConnectMode) \u0026 reboot (entering ConnectMode).",
+      "parentUuid": "1af4eb62_d848d1c3",
+      "revId": "cb3cdca74f1752ad885b891430b5a1ddc0f7f131",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
