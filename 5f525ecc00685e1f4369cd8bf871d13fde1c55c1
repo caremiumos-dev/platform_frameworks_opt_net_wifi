@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bfca69a_28ec9491",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-21T21:02:40Z",
+      "side": 1,
+      "message": "this test should have 2 flavors - with and without a bssid specified.  One of the two should have failed with the next CL.",
+      "range": {
+        "startLine": 1174,
+        "startChar": 16,
+        "endLine": 1174,
+        "endChar": 65
+      },
+      "revId": "5f525ecc00685e1f4369cd8bf871d13fde1c55c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90a881b0_ab175dd6",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-21T21:02:40Z",
+      "side": 1,
+      "message": "App -\u003e Config (in comments and test name)",
+      "range": {
+        "startLine": 1199,
+        "startChar": 16,
+        "endLine": 1199,
+        "endChar": 49
+      },
+      "revId": "5f525ecc00685e1f4369cd8bf871d13fde1c55c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39761ce6_adbdc689",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-21T21:02:40Z",
+      "side": 1,
+      "message": "test this for firmware roaming supported and not supported.",
+      "range": {
+        "startLine": 1199,
+        "startChar": 50,
+        "endLine": 1199,
+        "endChar": 51
+      },
+      "revId": "5f525ecc00685e1f4369cd8bf871d13fde1c55c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
