@@ -16,6 +16,10 @@
 
 package com.android.server.wifi;
 
+import static android.net.wifi.WifiManager.WIFI_STATE_DISABLED;
+
+import static com.android.server.wifi.WifiController.CMD_WIFI_TOGGLED;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Matchers.any;
@@ -23,14 +27,17 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
 import android.net.wifi.WifiConfiguration;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.IPowerManager;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
+import android.os.PowerManager;
 import android.os.test.TestLooper;
 import android.test.suitebuilder.annotation.SmallTest;
 
@@ -63,6 +70,7 @@ public class WifiServiceImplTest {
     @Mock WifiInjector mWifiInjector;
     WifiServiceImpl mWifiServiceImpl;
 
+    @Mock WifiController mWifiController;
     @Mock WifiTrafficPoller mWifiTrafficPoller;
     @Mock WifiStateMachine mWifiStateMachine;
     @Mock HandlerThread mHandlerThread;
@@ -77,6 +85,10 @@ public class WifiServiceImplTest {
     @Mock WifiMetrics mWifiMetrics;
     @Spy FakeWifiLog mLog;
     @Mock WifiPermissionsUtil mWifiPermissionsUtil;
+    @Mock PropertyService mPropertyService;
+    @Mock WifiSettingsStore mSettingsStore;
+    @Mock ContentResolver mContentResolver;
+    PowerManager mPowerManager;
 
     private class WifiAsyncChannelTester {
         private static final String TAG = "WifiAsyncChannelTester";
@@ -135,11 +147,16 @@ public class WifiServiceImplTest {
         MockitoAnnotations.initMocks(this);
         mLooper = new TestLooper();
 
+        when(mWifiInjector.getWifiController()).thenReturn(mWifiController);
         when(mWifiInjector.getWifiMetrics()).thenReturn(mWifiMetrics);
         when(mWifiInjector.getWifiStateMachine()).thenReturn(mWifiStateMachine);
         when(mWifiInjector.getWifiServiceHandlerThread()).thenReturn(mHandlerThread);
         when(mHandlerThread.getLooper()).thenReturn(mLooper.getLooper());
         when(mContext.getResources()).thenReturn(mResources);
+        when(mContext.getContentResolver()).thenReturn(mContentResolver);
+        IPowerManager powerManagerService = mock(IPowerManager.class);
+        mPowerManager = new PowerManager(mContext, powerManagerService, new Handler());
+        when(mContext.getSystemService(Context.POWER_SERVICE)).thenReturn(mPowerManager);
         WifiAsyncChannel wifiAsyncChannel = new WifiAsyncChannel("WifiServiceImplTest");
         wifiAsyncChannel.setWifiLog(mLog);
         when(mFrameworkFacade.makeWifiAsyncChannel(anyString())).thenReturn(wifiAsyncChannel);
@@ -153,6 +170,8 @@ public class WifiServiceImplTest {
                 mLooper.getLooper(), "mockWlan");
         when(mWifiInjector.getWifiTrafficPoller()).thenReturn(wifiTrafficPoller);
         when(mWifiInjector.getWifiPermissionsUtil()).thenReturn(mWifiPermissionsUtil);
+        when(mWifiInjector.getPropertyService()).thenReturn(mPropertyService);
+        when(mWifiInjector.getWifiSettingsStore()).thenReturn(mSettingsStore);
         mWifiServiceImpl = new WifiServiceImpl(mContext, mWifiInjector, mAsyncChannel);
         mWifiServiceImpl.setWifiHandlerLogForTest(mLog);
     }
@@ -244,5 +263,57 @@ public class WifiServiceImplTest {
         WifiConfiguration apConfig = new WifiConfiguration();
         when(mWifiStateMachine.syncGetWifiApConfiguration()).thenReturn(apConfig);
         assertEquals(apConfig, mWifiServiceImpl.getWifiApConfiguration());
+    }
+
+    /**
+     * Make sure we do not start wifi if System services have to be restarted to decrypt the device
+     * (trigger_reset_main).
+     */
+    @Test
+    public void testWifiDoesNotStartWhenDeviceTriggerResetMainAtBoot() {
+        when(mPropertyService.get(eq("vold.decrypt"),
+                  anyString())).thenReturn("trigger_reset_main");
+        when(mSettingsStore.isWifiToggleEnabled()).thenReturn(false);
+        mWifiServiceImpl.checkAndStartWifi();
+        verify(mWifiController, never()).start();
+    }
+
+    /**
+     * Make sure we do not start wifi if System services have to be restarted to decrypt the device
+     * (trigger_restart_min_framework).
+     */
+    @Test
+    public void testWifiDoesNotStartWhenDeviceTriggerRestartMinFrameworkAtBoot() {
+        when(mPropertyService.get(eq("vold.decrypt"),
+                  anyString())).thenReturn("trigger_restart_min_framework");
+        when(mSettingsStore.isWifiToggleEnabled()).thenReturn(false);
+        mWifiServiceImpl.checkAndStartWifi();
+        verify(mWifiController, never()).start();
+    }
+
+    /**
+     * Make sure we do start WifiController (wifi disabled) if the device is already decrypted.
+     */
+    @Test
+    public void testWifiStartsWhenDeviceIsDecryptedAtBootWithWifiDisabled() {
+        when(mPropertyService.get(eq("vold.decrypt"), anyString())).thenReturn("");
+        when(mSettingsStore.isWifiToggleEnabled()).thenReturn(false);
+        mWifiServiceImpl.checkAndStartWifi();
+        verify(mWifiController).start();
+        verify(mWifiController, never()).sendMessage(CMD_WIFI_TOGGLED);
+    }
+
+    /**
+     * Make sure we do start WifiController (wifi disabled) if the device is already decrypted.
+     */
+    @Test
+    public void testWifiStartsWhenDeviceIsDecryptedAtBootWithWifiEnabled() {
+        when(mPropertyService.get(eq("vold.decrypt"), anyString())).thenReturn("");
+        when(mSettingsStore.handleWifiToggled(true)).thenReturn(true);
+        when(mSettingsStore.isWifiToggleEnabled()).thenReturn(true);
+        when(mWifiStateMachine.syncGetWifiState()).thenReturn(WIFI_STATE_DISABLED);
+        mWifiServiceImpl.checkAndStartWifi();
+        verify(mWifiController).start();
+        verify(mWifiController).sendMessage(CMD_WIFI_TOGGLED);
     }
 }
