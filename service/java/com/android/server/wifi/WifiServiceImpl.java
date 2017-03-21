@@ -129,6 +129,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
 
     private final Context mContext;
     private final FrameworkFacade mFacade;
+    private final PropertyService mPropertyService;
 
     private final PowerManager mPowerManager;
     private final AppOpsManager mAppOps;
@@ -345,6 +346,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         mWifiPermissionsUtil = mWifiInjector.getWifiPermissionsUtil();
         mLog = mWifiInjector.makeLog(TAG);
         mFrameworkFacade = wifiInjector.getFrameworkFacade();
+        mPropertyService = wifiInjector.getPropertyService();
         enableVerboseLoggingInternal(getVerboseLoggingLevel());
     }
 
@@ -356,14 +358,23 @@ public class WifiServiceImpl extends IWifiManager.Stub {
     public void setWifiHandlerLogForTest(WifiLog log) {
         mClientHandler.setWifiLog(log);
     }
+
     /**
-     * Check if Wi-Fi needs to be enabled and start
-     * if needed
+     * Check if we are ready to start wifi.
      *
-     * This function is used only at boot time
+     * First check if we will be restarting system services to decrypt the device. If the device is
+     * not encrypted, check if Wi-Fi needs to be enabled and start if needed
+     *
+     * This function is used only at boot time.
      */
     public void checkAndStartWifi() {
-        /* Check if wi-fi needs to be enabled */
+        // First check if we will end up restarting WifiService
+        if (mFrameworkFacade.inStorageManagerCryptKeeperBounce()) {
+            Log.d(TAG, "Device still encrypted. Need to restart SystemServer.  Do not start wifi.");
+            return;
+        }
+
+        // Check if wi-fi needs to be enabled
         boolean wifiEnabled = mSettingsStore.isWifiToggleEnabled();
         Slog.i(TAG, "WifiService starting up with Wi-Fi " +
                 (wifiEnabled ? "enabled" : "disabled"));
