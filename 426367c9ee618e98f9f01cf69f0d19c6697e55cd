@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d333772d_bc2a0e24",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pNative.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-21T18:22:11Z",
+      "side": 1,
+      "message": "Does this trigger some callback? Mention it here",
+      "revId": "426367c9ee618e98f9f01cf69f0d19c6697e55cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

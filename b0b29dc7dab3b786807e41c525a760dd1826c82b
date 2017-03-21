@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80b40a89_1f4c2b96",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-21T18:22:11Z",
+      "side": 1,
+      "message": "...\" into STA / P2P\"",
+      "revId": "b0b29dc7dab3b786807e41c525a760dd1826c82b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

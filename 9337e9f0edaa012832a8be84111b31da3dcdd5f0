@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c416fec9_8aed933b",
+        "filename": "service/java/com/android/server/wifi/WifiConfigStoreLegacy.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-21T18:22:11Z",
+      "side": 0,
+      "message": "Did you intend to remove this in this CL?",
+      "range": {
+        "startLine": 306,
+        "startChar": 8,
+        "endLine": 306,
+        "endChar": 33
+      },
+      "revId": "9337e9f0edaa012832a8be84111b31da3dcdd5f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
