@@ -28,7 +28,7 @@
 #include <cutils/properties.h>
 #include <openssl/evp.h>
 #include <openssl/sha.h>
-#include <private/android_filesystem_config.h>
+#include <cutils/android_filesystem_config.h>
 
 #include "wifi_system/wifi.h"
 

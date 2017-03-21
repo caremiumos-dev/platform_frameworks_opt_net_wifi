@@ -17,7 +17,7 @@
 #include "wifi_hal/driver_tool.h"
 
 #include <android-base/logging.h>
-#include <private/android_filesystem_config.h>
+#include <cutils/android_filesystem_config.h>
 
 #include "hardware_legacy/wifi.h"
 

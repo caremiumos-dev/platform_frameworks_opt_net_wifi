@@ -31,7 +31,7 @@
 #include <cutils/memory.h>
 #include <cutils/misc.h>
 #include <cutils/properties.h>
-#include <private/android_filesystem_config.h>
+#include <cutils/android_filesystem_config.h>
 
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
 #include <sys/_system_properties.h>
