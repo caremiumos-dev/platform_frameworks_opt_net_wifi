@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2f113e9_b151d62b",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-21T21:45:15Z",
+      "side": 1,
+      "message": "do we want to write the configs if the blacklist is already cleared?  seems like you would want two calls: clear blacklist and clear whitelist.  then call the write configuration after those are done (if anything was removed).\n\nmaybe something like:\nprivate void resetFirmwareRoamingConfig() {\n    boolean writeNeeded \u003d false;\n    if (!mBssidBlacklst.isEmpty()) {\n        writeNeeded \u003d true;\n        mBssidBlacklist.clear();\n    }\n    //note about whitelist impl going here with bug to track whitelist management implementation\n\n    if (writeNeeded) {\n        updateFirmwareRoamingConfiguration();\n    }\n}",
+      "range": {
+        "startLine": 1194,
+        "startChar": 8,
+        "endLine": 1194,
+        "endChar": 45
+      },
+      "revId": "5109d1643299c2530139fcf15a57bc10aa79c5e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
