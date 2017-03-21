@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "938340d8_5f683be0",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-21T00:02:02Z",
+      "side": 1,
+      "message": "confusing code construct. Use:\n\nif (msg.obj \u003d\u003d null) {\n  Log ...\n  break;\n}",
+      "range": {
+        "startLine": 894,
+        "startChar": 24,
+        "endLine": 899,
+        "endChar": 25
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d9ee53c_e0fdd2ee",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1181,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-21T00:02:02Z",
+      "side": 1,
+      "message": "When using if/else don\u0027t reverse the comparison, i.e.\n\nif (m \u003d\u003d null)\nelse",
+      "range": {
+        "startLine": 1181,
+        "startChar": 32,
+        "endLine": 1181,
+        "endChar": 48
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab90d7ef_fdabb792",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-21T00:02:02Z",
+      "side": 1,
+      "message": "You\u0027re doing a break before. Confusing code flow to have an else and then another break ...\n\nif () {\n  break;\n}\nif () {\n  break;\n}\n... rest of code",
+      "range": {
+        "startLine": 1242,
+        "startChar": 24,
+        "endLine": 1243,
+        "endChar": 30
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b619735_a6f5034a",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-21T00:02:02Z",
+      "side": 1,
+      "message": "multiple if (device !\u003d null) ??\n\nMaybe just if (device \u003d\u003dnull) break;",
+      "range": {
+        "startLine": 1252,
+        "startChar": 12,
+        "endLine": 1258,
+        "endChar": 25
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50b80a74_1b0d087a",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-21T00:02:02Z",
+      "side": 1,
+      "message": "more information? e.g. \"Null argument\"",
+      "range": {
+        "startLine": 1304,
+        "startChar": 57,
+        "endLine": 1304,
+        "endChar": 59
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "640e86df_59e9c8ff",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1389,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-21T00:02:02Z",
+      "side": 1,
+      "message": "no need for a method global variable - only declare where used",
+      "range": {
+        "startLine": 1389,
+        "startChar": 16,
+        "endLine": 1389,
+        "endChar": 42
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11e2e9cc_3d56ee39",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1435,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-21T00:02:02Z",
+      "side": 1,
+      "message": "add {} so can declare local variable here",
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30272d78_60bd3b01",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1443,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-21T00:02:02Z",
+      "side": 1,
+      "message": "simplify as above to break early",
+      "range": {
+        "startLine": 1438,
+        "startChar": 24,
+        "endLine": 1443,
+        "endChar": 25
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7202634d_f590f773",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1466,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-21T00:02:02Z",
+      "side": 1,
+      "message": "is a break needed here? how can group \u003d\u003d null here - don\u0027t you break earlier?",
+      "range": {
+        "startLine": 1465,
+        "startChar": 22,
+        "endLine": 1466,
+        "endChar": 25
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d643f2f_ee589082",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1475,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-21T00:02:02Z",
+      "side": 1,
+      "message": "owner is being assigned - why is it being checked?\nalso assigning in a comparison is really bad (I know that\u0027s original code)",
+      "range": {
+        "startLine": 1475,
+        "startChar": 28,
+        "endLine": 1475,
+        "endChar": 51
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17ebe3c6_5965b650",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1523,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-21T00:02:02Z",
+      "side": 1,
+      "message": "use local",
+      "range": {
+        "startLine": 1523,
+        "startChar": 23,
+        "endLine": 1523,
+        "endChar": 32
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "787a0907_78149e78",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1766,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-21T00:02:02Z",
+      "side": 1,
+      "message": "no extra parenthasis",
+      "range": {
+        "startLine": 1766,
+        "startChar": 28,
+        "endLine": 1766,
+        "endChar": 29
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ebaf62d8_e3be3b98",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1766,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-21T00:02:02Z",
+      "side": 1,
+      "message": "what if device \u003d\u003d null?",
+      "range": {
+        "startLine": 1766,
+        "startChar": 24,
+        "endLine": 1766,
+        "endChar": 25
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
