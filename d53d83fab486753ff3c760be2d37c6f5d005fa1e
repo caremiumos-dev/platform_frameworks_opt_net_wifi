@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d0db09d_b75d0d71",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-21T14:21:51Z",
+      "side": 1,
+      "message": "Strictly speaking this check only needs to happen if mDiscoveryBlocked is true. \n\nHowever, considering the !mDiscoveryBlocked doesn\u0027t do anything this is ok - it doesn\u0027t change functionality. But would be cleaner if were moved back under conditional.",
+      "range": {
+        "startLine": 738,
+        "startChar": 23,
+        "endLine": 741,
+        "endChar": 25
+      },
+      "revId": "d53d83fab486753ff3c760be2d37c6f5d005fa1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5610ccd9_1b654a4f",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1185,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-21T14:21:51Z",
+      "side": 1,
+      "message": "Same as above - belongs under \u0027if (blocked)\u0027",
+      "range": {
+        "startLine": 1181,
+        "startChar": 24,
+        "endLine": 1185,
+        "endChar": 68
+      },
+      "revId": "d53d83fab486753ff3c760be2d37c6f5d005fa1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

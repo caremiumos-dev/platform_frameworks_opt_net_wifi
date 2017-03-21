@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "0e10c3ee_2bcd473a",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-21T14:21:51Z",
+      "side": 1,
+      "message": "my oversight - sorry",
+      "parentUuid": "24b560ee_94097ac9",
+      "range": {
+        "startLine": 1252,
+        "startChar": 12,
+        "endLine": 1258,
+        "endChar": 25
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50b80a74_1b0d087a",
         "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
         "patchSetId": 8
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "I thought about this. It might help with debugging but WifiAsyncChannel will already be logging the message.what (in other words WifiMonitor.P2P_SERV_DISC_RESP_EVENT) will already be available in logcat. Then we have to worry about what we log will give out too much information or not. Since we know the message and something in the message is null, is that good enough?",
       "parentUuid": "50b80a74_1b0d087a",
+      "range": {
+        "startLine": 1304,
+        "startChar": 57,
+        "endLine": 1304,
+        "endChar": 59
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "954e2d30_6796a423",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-21T14:21:51Z",
+      "side": 1,
+      "message": "makes sense",
+      "parentUuid": "fcebe7a7_5f72e8cd",
       "range": {
         "startLine": 1304,
         "startChar": 57,
@@ -424,6 +472,30 @@
       "side": 1,
       "message": "if owner was null , it will never be assigned. if it wasn\u0027t null, it got reassigned. so either ways, need to check here.",
       "parentUuid": "3d643f2f_ee589082",
+      "range": {
+        "startLine": 1475,
+        "startChar": 28,
+        "endLine": 1475,
+        "endChar": 51
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4b2b3067_006d3b6a",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1475,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-21T14:21:51Z",
+      "side": 1,
+      "message": "missed the internal owner.deviceAddress reference. +1",
+      "parentUuid": "e21ac8fe_fd9da1bd",
       "range": {
         "startLine": 1475,
         "startChar": 28,
