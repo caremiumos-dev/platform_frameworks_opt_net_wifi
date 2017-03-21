@@ -16,6 +16,24 @@
       "revId": "1eca6ef9898bc7fec677c05c89faa9416d253781",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73bea6e6_dd4124cf",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1870,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-21T17:46:34Z",
+      "side": 1,
+      "message": "We don\u0027t have any handling for that. We get StateChange with DISCONNECTED state. We don\u0027t care about the bssid change for DISASSOC.",
+      "parentUuid": "51f3674c_0859909c",
+      "revId": "1eca6ef9898bc7fec677c05c89faa9416d253781",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
