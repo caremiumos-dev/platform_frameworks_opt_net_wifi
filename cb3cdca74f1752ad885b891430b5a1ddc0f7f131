@@ -70,6 +70,24 @@
       "revId": "cb3cdca74f1752ad885b891430b5a1ddc0f7f131",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d3de94c_21a462d2",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4694,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-21T04:55:15Z",
+      "side": 1,
+      "message": "Now with the new config manager and config store, do we still persist the configuration created for wpa_supplicant to connect?",
+      "parentUuid": "7dc48892_ae4a5da6",
+      "revId": "cb3cdca74f1752ad885b891430b5a1ddc0f7f131",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
