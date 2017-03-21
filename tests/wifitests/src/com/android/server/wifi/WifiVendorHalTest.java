@@ -56,7 +56,6 @@ import android.net.wifi.WifiScanner;
 import android.net.wifi.WifiSsid;
 import android.net.wifi.WifiWakeReasonAndCounts;
 import android.os.HandlerThread;
-import android.os.Looper;
 import android.os.RemoteException;
 import android.util.Pair;
 
@@ -104,6 +103,8 @@ public class WifiVendorHalTest {
     private IWifiRttController mIWifiRttController;
     private IWifiStaIfaceEventCallback mIWifiStaIfaceEventCallback;
     private IWifiChipEventCallback mIWifiChipEventCallback;
+    @Mock
+    private WifiNative.VendorHalDeathEventHandler mVendorHalDeathHandler;
 
     /**
      * Identity function to supply a type to its argument, which is a lambda
@@ -173,11 +174,10 @@ public class WifiVendorHalTest {
         mWifiVendorHal = new WifiVendorHal(mHalDeviceManager, mWifiStateMachineHandlerThread);
 
         // Initialize the vendor HAL to capture the registered callback.
-        mWifiVendorHal.initialize();
+        mWifiVendorHal.initialize(mVendorHalDeathHandler);
         ArgumentCaptor<WifiVendorHal.HalDeviceManagerStatusListener> hdmCallbackCaptor =
                 ArgumentCaptor.forClass(WifiVendorHal.HalDeviceManagerStatusListener.class);
-        verify(mHalDeviceManager).registerStatusListener(
-                hdmCallbackCaptor.capture(), any(Looper.class));
+        verify(mHalDeviceManager).registerStatusListener(hdmCallbackCaptor.capture(), any());
         mHalDeviceManagerStatusCallbacks = hdmCallbackCaptor.getValue();
 
     }
@@ -1729,6 +1729,19 @@ public class WifiVendorHalTest {
         assertTrue(mWifiVendorHal.resetLogHandler());
         mIWifiChipEventCallback.onDebugRingBufferDataAvailable(
                 new WifiDebugRingBufferStatus(), NativeUtil.byteArrayToArrayList(errorData));
+    }
+
+    /**
+     * Test the handling of Vendor HAL death.
+     */
+    @Test
+    public void testVendorHalDeath() {
+        // Invoke the HAL device manager status callback with ready set to false to indicate the
+        // death of the HAL.
+        when(mHalDeviceManager.isReady()).thenReturn(false);
+        mHalDeviceManagerStatusCallbacks.onStatusChanged();
+
+        verify(mVendorHalDeathHandler).onDeath();
     }
 
     private void startBgScan(WifiNative.ScanEventHandler eventHandler) throws Exception {
