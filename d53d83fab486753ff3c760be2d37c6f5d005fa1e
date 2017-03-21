@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1da6bd9d_b53107a0",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-03-21T17:10:30Z",
+      "side": 1,
+      "message": "Will do. This code seems weird. Line 734 sets this variable from the input argument but Line 737 resets it to false. Shouldn\u0027t it be the other way around?",
+      "parentUuid": "5d0db09d_b75d0d71",
+      "range": {
+        "startLine": 738,
+        "startChar": 23,
+        "endLine": 741,
+        "endChar": 25
+      },
+      "revId": "d53d83fab486753ff3c760be2d37c6f5d005fa1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5610ccd9_1b654a4f",
         "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-21T14:21:51Z",
       "side": 1,
       "message": "Same as above - belongs under \u0027if (blocked)\u0027",
+      "range": {
+        "startLine": 1181,
+        "startChar": 24,
+        "endLine": 1185,
+        "endChar": 68
+      },
+      "revId": "d53d83fab486753ff3c760be2d37c6f5d005fa1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32dab65b_7d7d7328",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1185,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-03-21T17:10:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5610ccd9_1b654a4f",
       "range": {
         "startLine": 1181,
         "startChar": 24,
