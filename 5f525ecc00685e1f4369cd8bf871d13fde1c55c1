@@ -140,6 +140,30 @@
       "revId": "5f525ecc00685e1f4369cd8bf871d13fde1c55c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "415a4e38_3556c769",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-21T22:03:01Z",
+      "side": 1,
+      "message": "Never mind. Saw your comment on the next CL. Will change to \"useConfigSpecifiedBssid...\".",
+      "parentUuid": "4142f102_addf409c",
+      "range": {
+        "startLine": 1199,
+        "startChar": 16,
+        "endLine": 1199,
+        "endChar": 49
+      },
+      "revId": "5f525ecc00685e1f4369cd8bf871d13fde1c55c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
