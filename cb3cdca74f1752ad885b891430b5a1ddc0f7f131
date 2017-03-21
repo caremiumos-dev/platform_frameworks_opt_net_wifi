@@ -34,6 +34,24 @@
       "revId": "cb3cdca74f1752ad885b891430b5a1ddc0f7f131",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af4eb62_d848d1c3",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4694,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-21T04:01:59Z",
+      "side": 1,
+      "message": "By \"reboot\" did you mean Android reboot? Or device reboot? What I am actually trying to figure out is why we have to this cleanup at both enter() and exit()?",
+      "parentUuid": "429d915a_6bc1190d",
+      "revId": "cb3cdca74f1752ad885b891430b5a1ddc0f7f131",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
