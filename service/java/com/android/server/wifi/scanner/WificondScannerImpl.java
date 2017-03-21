@@ -145,6 +145,8 @@ public class WificondScannerImpl extends WifiScannerImpl implements Handler.Call
         wifiMonitor.registerHandler(mWifiNative.getInterfaceName(),
                 WifiMonitor.SCAN_FAILED_EVENT, mEventHandler);
         wifiMonitor.registerHandler(mWifiNative.getInterfaceName(),
+                WifiMonitor.SCHED_SCAN_RESULTS_EVENT, mEventHandler);
+        wifiMonitor.registerHandler(mWifiNative.getInterfaceName(),
                 WifiMonitor.SCAN_RESULTS_EVENT, mEventHandler);
     }
 
@@ -502,6 +504,13 @@ public class WificondScannerImpl extends WifiScannerImpl implements Handler.Call
                 reportScanFailure();
                 processPendingScans();
                 break;
+            case WifiMonitor.SCHED_SCAN_RESULTS_EVENT:
+                mAlarmManager.cancel(mScanTimeoutListener);
+                pollLatestScanDataForPno();
+                // TODO(b/36276738): Remove this after we fix b/36231150.
+                Log.d(TAG, "processPendingScans in request of SCHED_SCAN_RESULTS_EVENT");
+                processPendingScans();
+                break;
             case WifiMonitor.SCAN_RESULTS_EVENT:
                 mAlarmManager.cancel(mScanTimeoutListener);
                 pollLatestScanData();
@@ -542,6 +551,44 @@ public class WificondScannerImpl extends WifiScannerImpl implements Handler.Call
         }
     }
 
+    private void pollLatestScanDataForPno() {
+        synchronized (mSettingsLock) {
+            if (mLastScanSettings == null) {
+                 // got a scan before we started scanning or after scan was canceled
+                return;
+            }
+            ArrayList<ScanDetail> nativeResults = mWifiNative.getScanResults();
+            List<ScanResult> hwPnoScanResults = new ArrayList<>();
+            int numFilteredScanResults = 0;
+            for (int i = 0; i < nativeResults.size(); ++i) {
+                ScanResult result = nativeResults.get(i).getScanResult();
+                long timestamp_ms = result.timestamp / 1000; // convert us -> ms
+                if (timestamp_ms > mLastScanSettings.startTime) {
+                    if (mLastScanSettings.hwPnoScanActive) {
+                        hwPnoScanResults.add(result);
+                    }
+                } else {
+                    numFilteredScanResults++;
+                }
+            }
+
+            if (numFilteredScanResults != 0) {
+                Log.d(TAG, "Filtering out " + numFilteredScanResults + " pno scan results.");
+            }
+
+            if (mLastScanSettings.hwPnoScanActive
+                    && mLastScanSettings.pnoScanEventHandler != null) {
+                ScanResult[] pnoScanResultsArray = new ScanResult[hwPnoScanResults.size()];
+                for (int i = 0; i < pnoScanResultsArray.length; ++i) {
+                    ScanResult result = nativeResults.get(i).getScanResult();
+                    pnoScanResultsArray[i] = hwPnoScanResults.get(i);
+                }
+                mLastScanSettings.pnoScanEventHandler.onPnoNetworkFound(pnoScanResultsArray);
+            }
+            mLastScanSettings.removeHwPnoScan();
+        }
+    }
+
     private void pollLatestScanData() {
         synchronized (mSettingsLock) {
             if (mLastScanSettings == null) {
@@ -553,7 +600,6 @@ public class WificondScannerImpl extends WifiScannerImpl implements Handler.Call
             ArrayList<ScanDetail> nativeResults = mWifiNative.getScanResults();
             List<ScanResult> singleScanResults = new ArrayList<>();
             List<ScanResult> backgroundScanResults = new ArrayList<>();
-            List<ScanResult> hwPnoScanResults = new ArrayList<>();
             int numFilteredScanResults = 0;
             for (int i = 0; i < nativeResults.size(); ++i) {
                 ScanResult result = nativeResults.get(i).getScanResult();
@@ -566,9 +612,6 @@ public class WificondScannerImpl extends WifiScannerImpl implements Handler.Call
                             && mLastScanSettings.singleScanFreqs.containsChannel(
                                     result.frequency)) {
                         singleScanResults.add(result);
-                    }
-                    if (mLastScanSettings.hwPnoScanActive) {
-                        hwPnoScanResults.add(result);
                     }
                 } else {
                     numFilteredScanResults++;
@@ -648,15 +691,6 @@ public class WificondScannerImpl extends WifiScannerImpl implements Handler.Call
                         singleScanResults.toArray(new ScanResult[singleScanResults.size()]));
                 mLastScanSettings.singleScanEventHandler
                         .onScanStatus(WifiNative.WIFI_SCAN_RESULTS_AVAILABLE);
-            }
-
-            if (mLastScanSettings.hwPnoScanActive
-                    && mLastScanSettings.pnoScanEventHandler != null) {
-                ScanResult[] pnoScanResultsArray = new ScanResult[hwPnoScanResults.size()];
-                for (int i = 0; i < pnoScanResultsArray.length; ++i) {
-                    pnoScanResultsArray[i] = hwPnoScanResults.get(i);
-                }
-                mLastScanSettings.pnoScanEventHandler.onPnoNetworkFound(pnoScanResultsArray);
             }
 
             mLastScanSettings = null;
@@ -834,6 +868,12 @@ public class WificondScannerImpl extends WifiScannerImpl implements Handler.Call
             hwPnoScanActive = true;
             this.pnoNetworkList = pnoNetworkList;
             this.pnoScanEventHandler = pnoScanEventHandler;
+        }
+
+        public void removeHwPnoScan() {
+            hwPnoScanActive = false;
+            this.pnoNetworkList = null;
+            this.pnoScanEventHandler = null;
         }
     }
 
