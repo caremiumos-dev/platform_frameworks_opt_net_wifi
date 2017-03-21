@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a01ffd7_1b8cf1a0",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-03-21T02:32:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "938340d8_5f683be0",
+      "range": {
+        "startLine": 894,
+        "startChar": 24,
+        "endLine": 899,
+        "endChar": 25
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d9ee53c_e0fdd2ee",
         "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-21T00:02:02Z",
       "side": 1,
       "message": "When using if/else don\u0027t reverse the comparison, i.e.\n\nif (m \u003d\u003d null)\nelse",
+      "range": {
+        "startLine": 1181,
+        "startChar": 32,
+        "endLine": 1181,
+        "endChar": 48
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3504153b_edef5753",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1181,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-03-21T02:32:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d9ee53c_e0fdd2ee",
       "range": {
         "startLine": 1181,
         "startChar": 32,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "55ae108b_0e7222b2",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-03-21T02:32:06Z",
+      "side": 1,
+      "message": "will make it more readable.",
+      "parentUuid": "ab90d7ef_fdabb792",
+      "range": {
+        "startLine": 1242,
+        "startChar": 24,
+        "endLine": 1243,
+        "endChar": 30
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b619735_a6f5034a",
         "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
         "patchSetId": 8
@@ -82,6 +154,30 @@
       "writtenOn": "2017-03-21T00:02:02Z",
       "side": 1,
       "message": "multiple if (device !\u003d null) ??\n\nMaybe just if (device \u003d\u003dnull) break;",
+      "range": {
+        "startLine": 1252,
+        "startChar": 12,
+        "endLine": 1258,
+        "endChar": 25
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24b560ee_94097ac9",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-03-21T02:32:06Z",
+      "side": 1,
+      "message": "well.. device is updated in line 1254 and therefore, has to be checked again. I\u0027ll redo this for readability.",
+      "parentUuid": "1b619735_a6f5034a",
       "range": {
         "startLine": 1252,
         "startChar": 12,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "fcebe7a7_5f72e8cd",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-03-21T02:32:06Z",
+      "side": 1,
+      "message": "I thought about this. It might help with debugging but WifiAsyncChannel will already be logging the message.what (in other words WifiMonitor.P2P_SERV_DISC_RESP_EVENT) will already be available in logcat. Then we have to worry about what we log will give out too much information or not. Since we know the message and something in the message is null, is that good enough?",
+      "parentUuid": "50b80a74_1b0d087a",
+      "range": {
+        "startLine": 1304,
+        "startChar": 57,
+        "endLine": 1304,
+        "endChar": 59
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "640e86df_59e9c8ff",
         "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
         "patchSetId": 8
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "eb13ff9c_df09773a",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1389,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-03-21T02:32:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "640e86df_59e9c8ff",
+      "range": {
+        "startLine": 1389,
+        "startChar": 16,
+        "endLine": 1389,
+        "endChar": 42
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11e2e9cc_3d56ee39",
         "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
         "patchSetId": 8
@@ -151,6 +295,24 @@
       "writtenOn": "2017-03-21T00:02:02Z",
       "side": 1,
       "message": "add {} so can declare local variable here",
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "774b178e_4137381f",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1435,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-03-21T02:32:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11e2e9cc_3d56ee39",
       "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -203,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "3b01a33d_6fababe0",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1466,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-03-21T02:32:06Z",
+      "side": 1,
+      "message": "yes not required",
+      "parentUuid": "7202634d_f590f773",
+      "range": {
+        "startLine": 1465,
+        "startChar": 22,
+        "endLine": 1466,
+        "endChar": 25
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d643f2f_ee589082",
         "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
         "patchSetId": 8
@@ -226,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "e21ac8fe_fd9da1bd",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1475,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-03-21T02:32:06Z",
+      "side": 1,
+      "message": "if owner was null , it will never be assigned. if it wasn\u0027t null, it got reassigned. so either ways, need to check here.",
+      "parentUuid": "3d643f2f_ee589082",
+      "range": {
+        "startLine": 1475,
+        "startChar": 28,
+        "endLine": 1475,
+        "endChar": 51
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17ebe3c6_5965b650",
         "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
         "patchSetId": 8
@@ -237,6 +447,30 @@
       "writtenOn": "2017-03-21T00:02:02Z",
       "side": 1,
       "message": "use local",
+      "range": {
+        "startLine": 1523,
+        "startChar": 23,
+        "endLine": 1523,
+        "endChar": 32
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d651af6a_9dda0e7c",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1523,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-03-21T02:32:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17ebe3c6_5965b650",
       "range": {
         "startLine": 1523,
         "startChar": 23,
@@ -283,6 +517,30 @@
       "writtenOn": "2017-03-21T00:02:02Z",
       "side": 1,
       "message": "what if device \u003d\u003d null?",
+      "range": {
+        "startLine": 1766,
+        "startChar": 24,
+        "endLine": 1766,
+        "endChar": 25
+      },
+      "revId": "fa3dc944f1e4eafe1d9abcb691d78496db590f9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40e1147b_04f4719b",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1766,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-03-21T02:32:06Z",
+      "side": 1,
+      "message": "i can remove the parenthesis. If device \u003d\u003d null, it doesn\u0027t seem to matter. the original code goes on to do some operations.",
+      "parentUuid": "ebaf62d8_e3be3b98",
       "range": {
         "startLine": 1766,
         "startChar": 24,
