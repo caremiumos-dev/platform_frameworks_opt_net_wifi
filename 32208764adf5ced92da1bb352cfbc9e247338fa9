@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a871b220_b9eeff98",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-21T21:12:11Z",
+      "side": 1,
+      "message": "config",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "32208764adf5ced92da1bb352cfbc9e247338fa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea27676d_5aec62af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-21T21:12:11Z",
+      "side": 1,
+      "message": "can we take out the word app here?  it is more that the config has a bssid.  we don\u0027t really care how it got there, right?",
+      "range": {
+        "startLine": 10,
+        "startChar": 40,
+        "endLine": 10,
+        "endChar": 43
+      },
+      "revId": "32208764adf5ced92da1bb352cfbc9e247338fa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a6dc61c_01f9d1bd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-21T21:12:11Z",
+      "side": 1,
+      "message": "config",
+      "range": {
+        "startLine": 14,
+        "startChar": 41,
+        "endLine": 14,
+        "endChar": 44
+      },
+      "revId": "32208764adf5ced92da1bb352cfbc9e247338fa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e955fba_e781cab4",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-21T21:12:11Z",
+      "side": 1,
+      "message": "remove (pending changes in commit message)",
+      "range": {
+        "startLine": 662,
+        "startChar": 48,
+        "endLine": 662,
+        "endChar": 51
+      },
+      "revId": "32208764adf5ced92da1bb352cfbc9e247338fa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e719bdd_37404747",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-21T21:12:11Z",
+      "side": 1,
+      "message": "Config",
+      "range": {
+        "startLine": 1235,
+        "startChar": 19,
+        "endLine": 1235,
+        "endChar": 23
+      },
+      "revId": "32208764adf5ced92da1bb352cfbc9e247338fa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
