@@ -22,6 +22,30 @@
       "revId": "5109d1643299c2530139fcf15a57bc10aa79c5e8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2cf48836_6491b7fa",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-22T00:48:31Z",
+      "side": 1,
+      "message": "Add check to see if the blacklist is empty.\n\nAs for firmware SSID whitelist, other than always clearing it we are not doing anything with it right now. WCM doesn\u0027t maintain such a list either. Let\u0027s keep code only for blacklist for now. The future work for SSID whitelist management is tracked by b/36488259. We will have better idea of how this should be handled when the whitelist is ready. Also very likely the HAL API for roaming configuration will change.",
+      "parentUuid": "d2f113e9_b151d62b",
+      "range": {
+        "startLine": 1194,
+        "startChar": 8,
+        "endLine": 1194,
+        "endChar": 45
+      },
+      "revId": "5109d1643299c2530139fcf15a57bc10aa79c5e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
