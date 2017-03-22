@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2aed6112_4461df98",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-22T19:52:31Z",
+      "side": 1,
+      "message": "Add a unit test to ensure this does not throw an error for various poorly formed networks. Just fails",
+      "range": {
+        "startLine": 357,
+        "startChar": 36,
+        "endLine": 357,
+        "endChar": 59
+      },
+      "revId": "9c170450f1b83675739a5fb66a9bc54e86a37d31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc86ec25_8b3abd1b",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaNetworkHal.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-22T19:52:31Z",
+      "side": 1,
+      "message": "@throws IllegalArgumentException for malformed wificonfiguration fields",
+      "revId": "9c170450f1b83675739a5fb66a9bc54e86a37d31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc4b9190_3b704371",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2267,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-22T19:52:31Z",
+      "side": 1,
+      "message": "Missed one",
+      "range": {
+        "startLine": 2267,
+        "startChar": 48,
+        "endLine": 2267,
+        "endChar": 69
+      },
+      "revId": "9c170450f1b83675739a5fb66a9bc54e86a37d31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "869d51e4_72c8c679",
+        "filename": "service/java/com/android/server/wifi/p2p/SupplicantP2pIfaceHal.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-22T19:52:31Z",
+      "side": 1,
+      "message": "missed one",
+      "range": {
+        "startLine": 600,
+        "startChar": 35,
+        "endLine": 600,
+        "endChar": 45
+      },
+      "revId": "9c170450f1b83675739a5fb66a9bc54e86a37d31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6a5e701_e0ef1844",
+        "filename": "service/java/com/android/server/wifi/p2p/SupplicantP2pIfaceHal.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1999,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-22T19:52:31Z",
+      "side": 1,
+      "message": "Missed one",
+      "range": {
+        "startLine": 1999,
+        "startChar": 67,
+        "endLine": 1999,
+        "endChar": 87
+      },
+      "revId": "9c170450f1b83675739a5fb66a9bc54e86a37d31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
