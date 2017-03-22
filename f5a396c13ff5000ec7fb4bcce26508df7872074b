@@ -569,6 +569,24 @@
     },
     {
       "key": {
+        "uuid": "706ea181_01a8d976",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1159,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-22T05:42:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1104751_88e3db86",
+      "revId": "f5a396c13ff5000ec7fb4bcce26508df7872074b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37d03476_e30ae12c",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 14
