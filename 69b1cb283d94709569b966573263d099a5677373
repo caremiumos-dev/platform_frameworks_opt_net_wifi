@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d72472e_379cd192",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-22T03:44:45Z",
+      "side": 1,
+      "message": "Can this be added after SCAN_FAILED_EVENT?",
+      "revId": "69b1cb283d94709569b966573263d099a5677373",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc23183f_c442ede0",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-22T03:44:45Z",
+      "side": 1,
+      "message": "Do we want to make it more specific so we know it is PNO scan results since there are other type of scheduled scans?",
+      "range": {
+        "startLine": 90,
+        "startChar": 34,
+        "endLine": 90,
+        "endChar": 39
+      },
+      "revId": "69b1cb283d94709569b966573263d099a5677373",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
