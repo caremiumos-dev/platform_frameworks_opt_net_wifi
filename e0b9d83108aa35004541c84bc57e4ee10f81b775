@@ -76,6 +76,24 @@
     },
     {
       "key": {
+        "uuid": "d857bfc3_a3f9e1cf",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1044551
+      },
+      "writtenOn": "2017-03-22T20:14:04Z",
+      "side": 1,
+      "message": "I added some apis in N (I think) - see\n\nhttps://android.googlesource.com/platform/frameworks/base/+/nougat-release/core/java/android/os/storage/StorageManager.java#1195\n\nfor examples. It would be better to use these if possibl, since we will then maintain them and not break them as properties get shuffled about",
+      "parentUuid": "bb0c88a8_b71e7462",
+      "revId": "e0b9d83108aa35004541c84bc57e4ee10f81b775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae5d4568_e930712c",
         "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
         "patchSetId": 2
