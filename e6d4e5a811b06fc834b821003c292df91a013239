@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5282afa1_8017c3c0",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-22T05:31:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "914569d6_f12e02ad",
+      "range": {
+        "startLine": 1190,
+        "startChar": 7,
+        "endLine": 1190,
+        "endChar": 8
+      },
+      "revId": "e6d4e5a811b06fc834b821003c292df91a013239",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99e8e09b_e8493392",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
         "patchSetId": 22
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-22T04:35:03Z",
       "side": 1,
       "message": "extra space again and below",
+      "range": {
+        "startLine": 1227,
+        "startChar": 7,
+        "endLine": 1227,
+        "endChar": 8
+      },
+      "revId": "e6d4e5a811b06fc834b821003c292df91a013239",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17384128_3fbcb6e4",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-22T05:31:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99e8e09b_e8493392",
       "range": {
         "startLine": 1227,
         "startChar": 7,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "12cd0559_98fb20c4",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-22T05:31:52Z",
+      "side": 1,
+      "message": "When a config specified BSSID is there, a scan result can be saved to the config\u0027s NetworkSelectionStatus if and only if the scan result is from that particular BSSID.",
+      "parentUuid": "c0bb596d_95e72f12",
+      "range": {
+        "startLine": 1235,
+        "startChar": 16,
+        "endLine": 1235,
+        "endChar": 34
+      },
+      "revId": "e6d4e5a811b06fc834b821003c292df91a013239",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10320be5_7a28edeb",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
         "patchSetId": 22
@@ -82,6 +154,30 @@
       "writtenOn": "2017-03-22T04:35:03Z",
       "side": 1,
       "message": "shouldn\u0027t this just be once?",
+      "range": {
+        "startLine": 1243,
+        "startChar": 34,
+        "endLine": 1243,
+        "endChar": 47
+      },
+      "revId": "e6d4e5a811b06fc834b821003c292df91a013239",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b8f16a3_fa484897",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-22T05:31:52Z",
+      "side": 1,
+      "message": "Oops. Fixed.",
+      "parentUuid": "10320be5_7a28edeb",
       "range": {
         "startLine": 1243,
         "startChar": 34,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3d8f13f0_32b228e5",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-22T05:31:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "056ae6c2_274b897f",
+      "range": {
+        "startLine": 1248,
+        "startChar": 7,
+        "endLine": 1248,
+        "endChar": 8
+      },
+      "revId": "e6d4e5a811b06fc834b821003c292df91a013239",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b51f44e_c498d5f4",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
         "patchSetId": 22
@@ -128,6 +248,30 @@
       "writtenOn": "2017-03-22T04:35:03Z",
       "side": 1,
       "message": "does this fit on the line above?",
+      "range": {
+        "startLine": 1277,
+        "startChar": 16,
+        "endLine": 1277,
+        "endChar": 55
+      },
+      "revId": "e6d4e5a811b06fc834b821003c292df91a013239",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e04bcb5f_8ea789f2",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-22T05:31:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b51f44e_c498d5f4",
       "range": {
         "startLine": 1277,
         "startChar": 16,
