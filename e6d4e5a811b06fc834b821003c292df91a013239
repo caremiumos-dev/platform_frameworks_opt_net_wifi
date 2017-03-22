@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "914569d6_f12e02ad",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-22T04:35:03Z",
+      "side": 1,
+      "message": "spacing different here (and the line below)",
+      "range": {
+        "startLine": 1190,
+        "startChar": 7,
+        "endLine": 1190,
+        "endChar": 8
+      },
+      "revId": "e6d4e5a811b06fc834b821003c292df91a013239",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99e8e09b_e8493392",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-22T04:35:03Z",
+      "side": 1,
+      "message": "extra space again and below",
+      "range": {
+        "startLine": 1227,
+        "startChar": 7,
+        "endLine": 1227,
+        "endChar": 8
+      },
+      "revId": "e6d4e5a811b06fc834b821003c292df91a013239",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0bb596d_95e72f12",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-22T04:35:03Z",
+      "side": 1,
+      "message": "what happens if we have a config with a bssid, but the scan results have a different bssid?",
+      "range": {
+        "startLine": 1235,
+        "startChar": 16,
+        "endLine": 1235,
+        "endChar": 34
+      },
+      "revId": "e6d4e5a811b06fc834b821003c292df91a013239",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10320be5_7a28edeb",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-22T04:35:03Z",
+      "side": 1,
+      "message": "shouldn\u0027t this just be once?",
+      "range": {
+        "startLine": 1243,
+        "startChar": 34,
+        "endLine": 1243,
+        "endChar": 47
+      },
+      "revId": "e6d4e5a811b06fc834b821003c292df91a013239",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "056ae6c2_274b897f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-22T04:35:03Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 1248,
+        "startChar": 7,
+        "endLine": 1248,
+        "endChar": 8
+      },
+      "revId": "e6d4e5a811b06fc834b821003c292df91a013239",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b51f44e_c498d5f4",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-22T04:35:03Z",
+      "side": 1,
+      "message": "does this fit on the line above?",
+      "range": {
+        "startLine": 1277,
+        "startChar": 16,
+        "endLine": 1277,
+        "endChar": 55
+      },
+      "revId": "e6d4e5a811b06fc834b821003c292df91a013239",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
