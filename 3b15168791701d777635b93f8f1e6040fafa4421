@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc96ed0c_5a8d58bd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-22T03:38:52Z",
+      "side": 1,
+      "message": "Can this message be more specific so we know it is for single scan result?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 58
+      },
+      "revId": "3b15168791701d777635b93f8f1e6040fafa4421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd967075_0f5c1a06",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-22T03:38:52Z",
+      "side": 1,
+      "message": "I wondering if it is possible to trigger the failure in the previous implementation then verify it gets fixed by this CL.",
+      "revId": "3b15168791701d777635b93f8f1e6040fafa4421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
