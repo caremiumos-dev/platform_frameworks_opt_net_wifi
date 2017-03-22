@@ -46,6 +46,30 @@
       "revId": "51493e199ebf1e1191ccf652f0081d229018a11f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1116effa_e04e2045",
+        "filename": "service/java/com/android/server/wifi/scanner/WificondScannerImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-03-22T18:38:38Z",
+      "side": 1,
+      "message": "Fixed some typos. please read the following:\n\nSometimes pno is paused(actually stopped) when there is single scan request comes in:\nhttp://cs/android/frameworks/opt/net/wifi/service/java/com/android/server/wifi/scanner/WificondScannerImpl.java?l\u003d440\u0026rcl\u003d099b837815bc6e0c24a0e4a4fad0bee8ec339d01\nThen both pno and single scan are active in mLastScanSettings.\nAt this time if there is a single scan result from kernel.\npollLatestScanData() will also add this scan result in to hwPnoScanResults. This might confuse NetworkSelector.\nSo we are better off if we call onPnoNetworkFound() only upon scheduled scan result event.\n(I just found out this patch doesn\u0027t cover all cases. Will update later, but please let me know if my concern here make sense)",
+      "parentUuid": "f68f77da_8ad1bb6f",
+      "range": {
+        "startLine": 554,
+        "startChar": 0,
+        "endLine": 592,
+        "endChar": 5
+      },
+      "revId": "51493e199ebf1e1191ccf652f0081d229018a11f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
