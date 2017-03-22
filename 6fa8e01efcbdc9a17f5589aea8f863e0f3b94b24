@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cf1d89c_acd23e39",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-22T21:05:38Z",
+      "side": 1,
+      "message": "Should we log here?",
+      "range": {
+        "startLine": 997,
+        "startChar": 12,
+        "endLine": 997,
+        "endChar": 24
+      },
+      "revId": "6fa8e01efcbdc9a17f5589aea8f863e0f3b94b24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
