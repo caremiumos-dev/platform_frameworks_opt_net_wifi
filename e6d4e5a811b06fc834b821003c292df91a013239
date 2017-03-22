@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "55b921f4_52a3eb9d",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-22T06:00:02Z",
+      "side": 1,
+      "message": "I am not following you. What do you mean by \"they\" in \"are they filtered out before they are passed in to WNS\"?\nWhen you say \"we do not depend on WNS setting the bssid to any\", are you talking about WifiConfiguraton.BSSID? If not, what bssid you refer to here?",
+      "parentUuid": "88e21e21_99ab7cee",
+      "range": {
+        "startLine": 1235,
+        "startChar": 16,
+        "endLine": 1235,
+        "endChar": 34
+      },
+      "revId": "e6d4e5a811b06fc834b821003c292df91a013239",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10320be5_7a28edeb",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
         "patchSetId": 22
