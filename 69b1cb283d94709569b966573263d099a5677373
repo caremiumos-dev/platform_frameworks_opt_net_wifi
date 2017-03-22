@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "06140b25_0bc900a2",
+        "filename": "service/java/com/android/server/wifi/WifiMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-03-22T17:07:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d72472e_379cd192",
+      "revId": "69b1cb283d94709569b966573263d099a5677373",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc23183f_c442ede0",
         "filename": "service/java/com/android/server/wifi/WificondControl.java",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-03-22T03:44:45Z",
       "side": 1,
       "message": "Do we want to make it more specific so we know it is PNO scan results since there are other type of scheduled scans?",
+      "range": {
+        "startLine": 90,
+        "startChar": 34,
+        "endLine": 90,
+        "endChar": 39
+      },
+      "revId": "69b1cb283d94709569b966573263d099a5677373",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a961ccb_505b2d34",
+        "filename": "service/java/com/android/server/wifi/WificondControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-03-22T17:07:59Z",
+      "side": 1,
+      "message": "Done.\nAlso change the event name from SCHED_SCAN_* to PNO_SCAN_*\nThis makes sense because we want to hide the kernel naming details from wificond level up.",
+      "parentUuid": "cc23183f_c442ede0",
       "range": {
         "startLine": 90,
         "startChar": 34,
