@@ -46,6 +46,30 @@
       "revId": "1b054f2535c5f76bd8f64d9023580b1d734099b8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "780e62be_3d5cdb5f",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-22T23:04:07Z",
+      "side": 1,
+      "message": "Done. Also moved the comments to commit message.",
+      "parentUuid": "9970b6cc_8129ddf9",
+      "range": {
+        "startLine": 214,
+        "startChar": 12,
+        "endLine": 214,
+        "endChar": 67
+      },
+      "revId": "1b054f2535c5f76bd8f64d9023580b1d734099b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
