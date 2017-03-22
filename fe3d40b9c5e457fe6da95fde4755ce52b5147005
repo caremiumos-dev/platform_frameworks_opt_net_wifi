@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9afba59c_cfba685a",
+        "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-22T17:32:51Z",
+      "side": 1,
+      "message": "Can you push all this into FrameworkFacade (getBatteryStatsService)\nThat will save a lot of unnecessary test code.",
+      "range": {
+        "startLine": 98,
+        "startChar": 24,
+        "endLine": 99,
+        "endChar": 63
+      },
+      "revId": "fe3d40b9c5e457fe6da95fde4755ce52b5147005",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "805e607f_8a5ac79d",
+        "filename": "tests/wifitests/src/com/android/server/wifi/SupplicantStateTrackerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-22T17:32:51Z",
+      "side": 1,
+      "message": "Add a javadoc, explain what behaviour this is testing",
+      "revId": "fe3d40b9c5e457fe6da95fde4755ce52b5147005",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a061f3b_10ee84fa",
+        "filename": "tests/wifitests/src/com/android/server/wifi/SupplicantStateTrackerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-22T17:32:51Z",
+      "side": 1,
+      "message": "Remove the action type check, unless you\u0027re going to assert on it. Otherwise it hides the actual assert, (like if we magically get a \u0027NETWORK_STATE_CHANGED\u0027 action instead.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 81
+      },
+      "revId": "fe3d40b9c5e457fe6da95fde4755ce52b5147005",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
