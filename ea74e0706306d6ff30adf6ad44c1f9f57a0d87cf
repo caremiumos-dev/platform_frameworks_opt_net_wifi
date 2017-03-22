@@ -94,6 +94,30 @@
       "revId": "ea74e0706306d6ff30adf6ad44c1f9f57a0d87cf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36645541_88e320a1",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-22T04:58:01Z",
+      "side": 1,
+      "message": "This is not a stand alone class.  You can either make a LocalLog in the test and pass it in - there is no call in our framework where this is null.  Passing in a null and having a check here can mask errors.  You could also make a MockLocalLog class, other classes have opted to make a LocalLog instance to pass in.\n\nWifiConfigManager would have a null pointer exception - dump must not be tested with a null config passed in.\n\nIf you are worried about a null being passed in, then you can annotate the param to make sure it can\u0027t be null.",
+      "parentUuid": "120deda3_87178366",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 9
+      },
+      "revId": "ea74e0706306d6ff30adf6ad44c1f9f57a0d87cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
