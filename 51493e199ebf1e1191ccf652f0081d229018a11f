@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e829011_490a630e",
+        "filename": "service/java/com/android/server/wifi/scanner/WificondScannerImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-22T17:31:18Z",
+      "side": 1,
+      "message": "Is there a reason to duplicate this logic? We\u0027re pretty much doing the same thing as |pollLatestScanData|",
+      "range": {
+        "startLine": 554,
+        "startChar": 0,
+        "endLine": 592,
+        "endChar": 5
+      },
+      "revId": "51493e199ebf1e1191ccf652f0081d229018a11f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
