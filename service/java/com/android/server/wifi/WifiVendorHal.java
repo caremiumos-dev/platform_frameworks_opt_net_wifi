@@ -2286,6 +2286,9 @@ public class WifiVendorHal {
             } catch (RemoteException e) {
                 handleRemoteException(e);
                 return false;
+            } catch (IllegalArgumentException e) {
+                mLog.err("Illegal argument").flush();
+                return false;
             }
             return true;
         }

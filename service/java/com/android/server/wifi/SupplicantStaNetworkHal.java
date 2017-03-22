@@ -979,7 +979,12 @@ public class SupplicantStaNetworkHal {
      * @return true if it succeeds, false otherwise.
      */
     public boolean setBssid(String bssidStr) {
-        return setBssid(NativeUtil.macAddressToByteArray(bssidStr));
+        try {
+            return setBssid(NativeUtil.macAddressToByteArray(bssidStr));
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Illegal argument " + bssidStr, e);
+            return false;
+        }
     }
 
     /** See ISupplicantStaNetwork.hal for documentation */
@@ -2082,36 +2087,41 @@ public class SupplicantStaNetworkHal {
      * @return true if succeeds, false otherwise.
      */
     public boolean sendNetworkEapSimGsmAuthResponse(String paramsStr) {
-        Matcher match = GSM_AUTH_RESPONSE_PARAMS_PATTERN.matcher(paramsStr);
-        ArrayList<ISupplicantStaNetwork.NetworkResponseEapSimGsmAuthParams> params =
-                new ArrayList<>();
-        while (match.find()) {
-            if (match.groupCount() != 2) {
+        try {
+            Matcher match = GSM_AUTH_RESPONSE_PARAMS_PATTERN.matcher(paramsStr);
+            ArrayList<ISupplicantStaNetwork.NetworkResponseEapSimGsmAuthParams> params =
+                    new ArrayList<>();
+            while (match.find()) {
+                if (match.groupCount() != 2) {
+                    Log.e(TAG, "Malformed gsm auth response params: " + paramsStr);
+                    return false;
+                }
+                ISupplicantStaNetwork.NetworkResponseEapSimGsmAuthParams param =
+                        new ISupplicantStaNetwork.NetworkResponseEapSimGsmAuthParams();
+                byte[] kc = NativeUtil.hexStringToByteArray(match.group(1));
+                if (kc == null || kc.length != param.kc.length) {
+                    Log.e(TAG, "Invalid kc value: " + match.group(1));
+                    return false;
+                }
+                byte[] sres = NativeUtil.hexStringToByteArray(match.group(2));
+                if (sres == null || sres.length != param.sres.length) {
+                    Log.e(TAG, "Invalid sres value: " + match.group(2));
+                    return false;
+                }
+                System.arraycopy(kc, 0, param.kc, 0, param.kc.length);
+                System.arraycopy(sres, 0, param.sres, 0, param.sres.length);
+                params.add(param);
+            }
+            // The number of kc/sres pairs can either be 2 or 3 depending on the request.
+            if (params.size() > 3 || params.size() < 2) {
                 Log.e(TAG, "Malformed gsm auth response params: " + paramsStr);
                 return false;
             }
-            ISupplicantStaNetwork.NetworkResponseEapSimGsmAuthParams param =
-                    new ISupplicantStaNetwork.NetworkResponseEapSimGsmAuthParams();
-            byte[] kc = NativeUtil.hexStringToByteArray(match.group(1));
-            if (kc == null || kc.length != param.kc.length) {
-                Log.e(TAG, "Invalid kc value: " + match.group(1));
-                return false;
-            }
-            byte[] sres = NativeUtil.hexStringToByteArray(match.group(2));
-            if (sres == null || sres.length != param.sres.length) {
-                Log.e(TAG, "Invalid sres value: " + match.group(2));
-                return false;
-            }
-            System.arraycopy(kc, 0, param.kc, 0, param.kc.length);
-            System.arraycopy(sres, 0, param.sres, 0, param.sres.length);
-            params.add(param);
-        }
-        // The number of kc/sres pairs can either be 2 or 3 depending on the request.
-        if (params.size() > 3 || params.size() < 2) {
-            Log.e(TAG, "Malformed gsm auth response params: " + paramsStr);
+            return sendNetworkEapSimGsmAuthResponse(params);
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Illegal argument " + paramsStr, e);
             return false;
         }
-        return sendNetworkEapSimGsmAuthResponse(params);
     }
 
     /** See ISupplicantStaNetwork.hal for documentation */
@@ -2151,35 +2161,41 @@ public class SupplicantStaNetworkHal {
      * @return true if succeeds, false otherwise.
      */
     public boolean sendNetworkEapSimUmtsAuthResponse(String paramsStr) {
-        Matcher match = UMTS_AUTH_RESPONSE_PARAMS_PATTERN.matcher(paramsStr);
-        if (!match.find() || match.groupCount() != 3) {
-            Log.e(TAG, "Malformed umts auth response params: " + paramsStr);
+        try {
+            Matcher match = UMTS_AUTH_RESPONSE_PARAMS_PATTERN.matcher(paramsStr);
+            if (!match.find() || match.groupCount() != 3) {
+                Log.e(TAG, "Malformed umts auth response params: " + paramsStr);
+                return false;
+            }
+            ISupplicantStaNetwork.NetworkResponseEapSimUmtsAuthParams params =
+                    new ISupplicantStaNetwork.NetworkResponseEapSimUmtsAuthParams();
+            byte[] ik = NativeUtil.hexStringToByteArray(match.group(1));
+            if (ik == null || ik.length != params.ik.length) {
+                Log.e(TAG, "Invalid ik value: " + match.group(1));
+                return false;
+            }
+            byte[] ck = NativeUtil.hexStringToByteArray(match.group(2));
+            if (ck == null || ck.length != params.ck.length) {
+                Log.e(TAG, "Invalid ck value: " + match.group(2));
+                return false;
+            }
+            byte[] res = NativeUtil.hexStringToByteArray(match.group(3));
+            if (res == null || res.length == 0) {
+                Log.e(TAG, "Invalid res value: " + match.group(3));
+                return false;
+            }
+            System.arraycopy(ik, 0, params.ik, 0, params.ik.length);
+            System.arraycopy(ck, 0, params.ck, 0, params.ck.length);
+            for (byte b : res) {
+                params.res.add(b);
+            }
+            return sendNetworkEapSimUmtsAuthResponse(params);
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Illegal argument " + paramsStr, e);
             return false;
         }
-        ISupplicantStaNetwork.NetworkResponseEapSimUmtsAuthParams params =
-                new ISupplicantStaNetwork.NetworkResponseEapSimUmtsAuthParams();
-        byte[] ik = NativeUtil.hexStringToByteArray(match.group(1));
-        if (ik == null || ik.length != params.ik.length) {
-            Log.e(TAG, "Invalid ik value: " + match.group(1));
-            return false;
-        }
-        byte[] ck = NativeUtil.hexStringToByteArray(match.group(2));
-        if (ck == null || ck.length != params.ck.length) {
-            Log.e(TAG, "Invalid ck value: " + match.group(2));
-            return false;
-        }
-        byte[] res = NativeUtil.hexStringToByteArray(match.group(3));
-        if (res == null || res.length == 0) {
-            Log.e(TAG, "Invalid res value: " + match.group(3));
-            return false;
-        }
-        System.arraycopy(ik, 0, params.ik, 0, params.ik.length);
-        System.arraycopy(ck, 0, params.ck, 0, params.ck.length);
-        for (byte b : res) {
-            params.res.add(b);
-        }
-        return sendNetworkEapSimUmtsAuthResponse(params);
     }
+
     /** See ISupplicantStaNetwork.hal for documentation */
     private boolean sendNetworkEapSimUmtsAuthResponse(
             ISupplicantStaNetwork.NetworkResponseEapSimUmtsAuthParams params) {
@@ -2203,17 +2219,22 @@ public class SupplicantStaNetworkHal {
      * @return true if succeeds, false otherwise.
      */
     public boolean sendNetworkEapSimUmtsAutsResponse(String paramsStr) {
-        Matcher match = UMTS_AUTS_RESPONSE_PARAMS_PATTERN.matcher(paramsStr);
-        if (!match.find() || match.groupCount() != 1) {
-            Log.e(TAG, "Malformed umts auts response params: " + paramsStr);
+        try {
+            Matcher match = UMTS_AUTS_RESPONSE_PARAMS_PATTERN.matcher(paramsStr);
+            if (!match.find() || match.groupCount() != 1) {
+                Log.e(TAG, "Malformed umts auts response params: " + paramsStr);
+                return false;
+            }
+            byte[] auts = NativeUtil.hexStringToByteArray(match.group(1));
+            if (auts == null || auts.length != 14) {
+                Log.e(TAG, "Invalid auts value: " + match.group(1));
+                return false;
+            }
+            return sendNetworkEapSimUmtsAutsResponse(auts);
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Illegal argument " + paramsStr, e);
             return false;
         }
-        byte[] auts = NativeUtil.hexStringToByteArray(match.group(1));
-        if (auts == null || auts.length != 14) {
-            Log.e(TAG, "Invalid auts value: " + match.group(1));
-            return false;
-        }
-        return sendNetworkEapSimUmtsAutsResponse(auts);
     }
     /** See ISupplicantStaNetwork.hal for documentation */
     private boolean sendNetworkEapSimUmtsAutsResponse(byte[/* 14 */] auts) {
@@ -2251,8 +2272,13 @@ public class SupplicantStaNetworkHal {
      * @return true if succeeds, false otherwise.
      */
     public boolean sendNetworkEapIdentityResponse(String identityStr) {
-        ArrayList<Byte> identity = NativeUtil.stringToByteArrayList(identityStr);
-        return sendNetworkEapIdentityResponse(identity);
+        try {
+            ArrayList<Byte> identity = NativeUtil.stringToByteArrayList(identityStr);
+            return sendNetworkEapIdentityResponse(identity);
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Illegal argument " + identityStr, e);
+            return false;
+        }
     }
     /** See ISupplicantStaNetwork.hal for documentation */
     private boolean sendNetworkEapIdentityResponse(ArrayList<Byte> identity) {
