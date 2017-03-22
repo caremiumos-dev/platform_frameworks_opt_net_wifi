@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "898c137b_98b818bf",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-22T05:09:14Z",
+      "side": 1,
+      "message": "I am still finding this section difficult to understand.  You have two sections: checking for same network, to give one bonus, and you also need to check for equivalence vs exact.\n\nfor same: ssids match, you can apply the same network bonus\nwithin same networks, you have equivalent and exact.  when you apply the same bssid bonus here, you end up special casing the exact network match below for !firmwareRoaming to avoid applying the bonus twice.\n\nyou could probably avoid the long comment (which also is a signal that something is hard to understand), by something like:\n\n// with firmware roaming supported, equivalent networks get the bssid bonus\nif (fw roaming \u0026\u0026 not the current bssid) {\n    apply the bssid bonus\n}\n\nthen, below you only deal with the exact network and you can keep what you had before.  that makes the change smaller, and more localized to what your goal is for this CL.",
+      "range": {
+        "startLine": 214,
+        "startChar": 12,
+        "endLine": 214,
+        "endChar": 67
+      },
+      "revId": "1b054f2535c5f76bd8f64d9023580b1d734099b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
