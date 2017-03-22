@@ -1259,8 +1259,15 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     /**
      * Initiates connection to a network specified by the user/app. This method checks if the
      * requesting app holds the WIFI_CONFIG_OVERRIDE permission.
+     *
+     * @param netId Id network to initiate connection.
+     * @param uid UID of the app requesting the connection.
+     * @param forceReconnect Whether to force a connection even if we're connected to the same
+     *                       network currently.
      */
-    private boolean connectToUserSelectNetwork(int netId, int uid) {
+    private boolean connectToUserSelectNetwork(int netId, int uid, boolean forceReconnect) {
+        logd("connectToUserSelectNetwork netId " + netId + ", uid " + uid
+                + ", forceReconnect = " + forceReconnect);
         if (mWifiConfigManager.getConfiguredNetwork(netId) == null) {
             loge("connectToUserSelectNetwork Invalid network Id=" + netId);
             return false;
@@ -1274,7 +1281,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             // selection.
             mWifiConnectivityManager.setUserConnectChoice(netId);
         }
-        if (mWifiInfo.getNetworkId() == netId) {
+        if (!forceReconnect && mWifiInfo.getNetworkId() == netId) {
             // We're already connected to the user specified network, don't trigger a
             // reconnection.
             logi("connectToUserSelectNetwork already connecting/connected=" + netId);
@@ -4793,7 +4800,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     if (disableOthers) {
                         // If the app has all the necessary permissions, this will trigger a connect
                         // attempt.
-                        ok = connectToUserSelectNetwork(netId, message.sendingUid);
+                        ok = connectToUserSelectNetwork(netId, message.sendingUid, false);
                     } else {
                         ok = mWifiConfigManager.enableNetwork(netId, false, message.sendingUid);
                     }
@@ -4970,6 +4977,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     netId = message.arg1;
                     config = (WifiConfiguration) message.obj;
                     mWifiConnectionStatistics.numWifiManagerJoinAttempt++;
+                    boolean hasCredentialChanged = false;
                     // New network addition.
                     if (config != null) {
                         result = mWifiConfigManager.addOrUpdateNetwork(config, message.sendingUid);
@@ -4981,8 +4989,10 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                             break;
                         }
                         netId = result.getNetworkId();
+                        hasCredentialChanged = result.hasCredentialChanged();
                     }
-                    if (!connectToUserSelectNetwork(netId, message.sendingUid)) {
+                    if (!connectToUserSelectNetwork(
+                            netId, message.sendingUid, hasCredentialChanged)) {
                         messageHandlingStatus = MESSAGE_HANDLING_STATUS_FAIL;
                         replyToMessage(message, WifiManager.CONNECT_NETWORK_FAILED,
                                 WifiManager.NOT_AUTHORIZED);
@@ -5012,7 +5022,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                         break;
                     }
                     netId = result.getNetworkId();
-                    if (mWifiInfo.getNetworkId() == netId) {
+                    if (!result.hasCredentialChanged() && mWifiInfo.getNetworkId() == netId) {
                         if (result.hasIpChanged()) {
                             // The currently connection configuration was changed
                             // We switched from DHCP to static or from static to DHCP, or the
@@ -5028,7 +5038,8 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                                     getCurrentWifiConfiguration().getHttpProxy());
                         }
                     } else {
-                        if (!connectToUserSelectNetwork(netId, message.sendingUid)) {
+                        if (!connectToUserSelectNetwork(
+                                netId, message.sendingUid, result.hasCredentialChanged())) {
                             messageHandlingStatus = MESSAGE_HANDLING_STATUS_FAIL;
                             replyToMessage(message, WifiManager.SAVE_NETWORK_FAILED,
                                     WifiManager.NOT_AUTHORIZED);

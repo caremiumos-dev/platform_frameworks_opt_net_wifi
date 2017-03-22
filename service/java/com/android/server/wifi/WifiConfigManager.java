@@ -930,10 +930,17 @@ public class WifiConfigManager {
         }
 
         boolean newNetwork = (existingInternalConfig == null);
-        // Reset the |hasEverConnected| flag if the credential parameters changed in this update.
         boolean hasCredentialChanged =
                 newNetwork || WifiConfigurationUtil.hasCredentialChanged(
                         existingInternalConfig, newInternalConfig);
+        // This is needed to inform IpManager about any IP configuration changes.
+        boolean hasIpChanged =
+                newNetwork || WifiConfigurationUtil.hasIpChanged(
+                        existingInternalConfig, newInternalConfig);
+        boolean hasProxyChanged =
+                newNetwork || WifiConfigurationUtil.hasProxyChanged(
+                        existingInternalConfig, newInternalConfig);
+        // Reset the |hasEverConnected| flag if the credential parameters changed in this update.
         if (hasCredentialChanged) {
             newInternalConfig.getNetworkSelectionStatus().setHasEverConnected(false);
         }
@@ -951,14 +958,8 @@ public class WifiConfigManager {
         // Stage the backup of the SettingsProvider package which backs this up.
         mBackupManagerProxy.notifyDataChanged();
 
-        // This is needed to inform IpManager about any IP configuration changes.
-        boolean hasIpChanged =
-                newNetwork || WifiConfigurationUtil.hasIpChanged(
-                        existingInternalConfig, newInternalConfig);
-        boolean hasProxyChanged =
-                newNetwork || WifiConfigurationUtil.hasProxyChanged(
-                        existingInternalConfig, newInternalConfig);
-        NetworkUpdateResult result = new NetworkUpdateResult(hasIpChanged, hasProxyChanged);
+        NetworkUpdateResult result =
+                new NetworkUpdateResult(hasIpChanged, hasProxyChanged, hasCredentialChanged);
         result.setIsNewNetwork(newNetwork);
         result.setNetworkId(newInternalConfig.networkId);
 
