@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e6387b47_252ae56c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-03-22T17:15:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc96ed0c_5a8d58bd",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 58
+      },
+      "revId": "3b15168791701d777635b93f8f1e6040fafa4421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd967075_0f5c1a06",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-03-22T03:38:52Z",
       "side": 1,
       "message": "I wondering if it is possible to trigger the failure in the previous implementation then verify it gets fixed by this CL.",
+      "revId": "3b15168791701d777635b93f8f1e6040fafa4421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6b29654_dd07ec2f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-03-22T17:15:14Z",
+      "side": 1,
+      "message": "I will ask for a integration test for possible regression.\nThis is not likely to be verified because in order to expose the potential failure we need to call this API from the same process(within system_server) instead of some testing app client.",
+      "parentUuid": "bd967075_0f5c1a06",
       "revId": "3b15168791701d777635b93f8f1e6040fafa4421",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
