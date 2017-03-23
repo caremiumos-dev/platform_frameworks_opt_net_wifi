@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "05dae381_f39e5154",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-23T22:03:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f8283c2_17916661",
+      "range": {
+        "startLine": 1161,
+        "startChar": 12,
+        "endLine": 1161,
+        "endChar": 20
+      },
+      "revId": "19fe68b54a69063fdce96a24f99da652cd6d57d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99ac30f6_b8f01ae6",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 20
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cfafe6ed_4208ee34",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-23T22:03:37Z",
+      "side": 1,
+      "message": "Added a clear here. In addition to that I also filed a bug to track the work to differentiate BSSID blacklisted because of issues like AP has no capacity for new STA.",
+      "parentUuid": "99ac30f6_b8f01ae6",
+      "range": {
+        "startLine": 1214,
+        "startChar": 17,
+        "endLine": 1214,
+        "endChar": 25
+      },
+      "revId": "19fe68b54a69063fdce96a24f99da652cd6d57d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5fdd807_98e99ff5",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 20
@@ -59,6 +107,30 @@
       "writtenOn": "2017-03-23T09:37:11Z",
       "side": 1,
       "message": "it is confusing to have this check and the one below reversed...  what about a little helper method that looks something like (the name needs work):\n\nprivate void checkRunningState() {\n    if (mWifiEnabled \u0026\u0026 mWifiConnectivityManagerEnabled) {\n        localLog(\"starting up WifiConnectivityManager\");\n        start();\n        return;\n    }\n    localLog(\"stopping WifiConnectivitymanager\");\n    stop();\n}",
+      "range": {
+        "startLine": 1238,
+        "startChar": 8,
+        "endLine": 1241,
+        "endChar": 20
+      },
+      "revId": "19fe68b54a69063fdce96a24f99da652cd6d57d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "011b1c3b_0f535cd0",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-23T22:03:37Z",
+      "side": 1,
+      "message": "Done. The helper function is called updateRunningState() right now. Let me know if you have better name. Thanks.",
+      "parentUuid": "a5fdd807_98e99ff5",
       "range": {
         "startLine": 1238,
         "startChar": 8,
