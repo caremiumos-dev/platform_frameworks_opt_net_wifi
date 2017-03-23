@@ -489,7 +489,7 @@ public class SupplicantStaIfaceHalTest {
         }).when(mISupplicantStaIfaceMock).addNetwork(
                 any(ISupplicantStaIface.addNetworkCallback.class));
 
-        assertFalse(mDut.connectToNetwork(new WifiConfiguration(), false));
+        assertFalse(mDut.connectToNetwork(new WifiConfiguration()));
     }
 
     /**
@@ -503,7 +503,7 @@ public class SupplicantStaIfaceHalTest {
         when(mSupplicantStaNetworkMock.saveWifiConfiguration(any(WifiConfiguration.class)))
                 .thenReturn(false);
 
-        assertFalse(mDut.connectToNetwork(new WifiConfiguration(), false));
+        assertFalse(mDut.connectToNetwork(new WifiConfiguration()));
         // We should have removed the existing network once before connection and once more
         // on failure to save network configuration.
         verify(mISupplicantStaIfaceMock, times(2)).removeNetwork(anyInt());
@@ -519,7 +519,7 @@ public class SupplicantStaIfaceHalTest {
 
         when(mSupplicantStaNetworkMock.select()).thenReturn(false);
 
-        assertFalse(mDut.connectToNetwork(new WifiConfiguration(), false));
+        assertFalse(mDut.connectToNetwork(new WifiConfiguration()));
     }
 
     /**
@@ -1427,11 +1427,7 @@ public class SupplicantStaIfaceHalTest {
      * Helper function to validate the connect sequence.
      */
     private void validateConnectSequence(
-            final boolean haveExistingNetwork, boolean shouldDisconnect, int numNetworkAdditions)
-            throws Exception {
-        if (shouldDisconnect) {
-            verify(mISupplicantStaIfaceMock).disconnect();
-        }
+            final boolean haveExistingNetwork, int numNetworkAdditions) throws Exception {
         if (haveExistingNetwork) {
             verify(mISupplicantStaIfaceMock).removeNetwork(anyInt());
         }
@@ -1447,16 +1443,14 @@ public class SupplicantStaIfaceHalTest {
      *
      * @param newFrameworkNetworkId Framework Network Id of the new network to connect.
      * @param haveExistingNetwork Removes the existing network.
-     * @param shouldDisconnect Should trigger disconnect before connecting.
      */
     private void executeAndValidateConnectSequence(
-            final int newFrameworkNetworkId, final boolean haveExistingNetwork,
-            boolean shouldDisconnect) throws Exception {
+            final int newFrameworkNetworkId, final boolean haveExistingNetwork) throws Exception {
         setupMocksForConnectSequence(haveExistingNetwork);
         WifiConfiguration config = new WifiConfiguration();
         config.networkId = newFrameworkNetworkId;
-        assertTrue(mDut.connectToNetwork(config, shouldDisconnect));
-        validateConnectSequence(haveExistingNetwork, shouldDisconnect, 1);
+        assertTrue(mDut.connectToNetwork(config));
+        validateConnectSequence(haveExistingNetwork, 1);
     }
 
     /**
