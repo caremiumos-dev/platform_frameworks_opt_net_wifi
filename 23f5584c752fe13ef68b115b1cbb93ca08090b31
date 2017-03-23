@@ -68,6 +68,54 @@
       "revId": "23f5584c752fe13ef68b115b1cbb93ca08090b31",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "911fc3e3_ecc99112",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-23T21:07:23Z",
+      "side": 1,
+      "message": "There isn\u0027t a need to explicitly disconnect. Whenever we attempt a new connection attempt, the disconnect will be implicitly done.",
+      "parentUuid": "147348bb_f88f42f8",
+      "range": {
+        "startLine": 1289,
+        "startChar": 12,
+        "endLine": 1289,
+        "endChar": 63
+      },
+      "revId": "23f5584c752fe13ef68b115b1cbb93ca08090b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aef597c_b2820c9c",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-23T21:07:23Z",
+      "side": 1,
+      "message": "That is handled in START_CONNECT processing here: https://cs.corp.google.com/android/frameworks/opt/net/wifi/service/java/com/android/server/wifi/WifiStateMachine.java?rcl\u003d13124e91e541c1a91cd91075064d5560cc2f7db0\u0026l\u003d5011.",
+      "parentUuid": "30d802ee_f2df5b59",
+      "range": {
+        "startLine": 1289,
+        "startChar": 41,
+        "endLine": 1289,
+        "endChar": 61
+      },
+      "revId": "23f5584c752fe13ef68b115b1cbb93ca08090b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
