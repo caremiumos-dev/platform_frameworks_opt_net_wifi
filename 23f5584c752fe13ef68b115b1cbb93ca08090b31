@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5fab82a4_6a20f8c7",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-23T21:07:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b87d5902_7db56d8b",
+      "range": {
+        "startLine": 1285,
+        "startChar": 15,
+        "endLine": 1286,
+        "endChar": 28
+      },
+      "revId": "23f5584c752fe13ef68b115b1cbb93ca08090b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30d802ee_f2df5b59",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 4
