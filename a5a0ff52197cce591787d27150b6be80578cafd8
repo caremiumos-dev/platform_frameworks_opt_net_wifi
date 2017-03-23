@@ -94,6 +94,30 @@
       "revId": "a5a0ff52197cce591787d27150b6be80578cafd8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d465f9f7_8c485704",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-23T23:40:38Z",
+      "side": 1,
+      "message": "Also, I think it is good to always wipe out the previous state when setWifiEnabled(true) is invoked by ConnectMode.enter(). So we always have a clean start. We don\u0027t really care about the previous state at this point. This is similar to we always call WifiNative.removeAllNetworks() in ConnectMode.enter().",
+      "parentUuid": "78e5caf1_e9efd777",
+      "range": {
+        "startLine": 1258,
+        "startChar": 16,
+        "endLine": 1258,
+        "endChar": 30
+      },
+      "revId": "a5a0ff52197cce591787d27150b6be80578cafd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
