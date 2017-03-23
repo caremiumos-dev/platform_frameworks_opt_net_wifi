@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f8283c2_17916661",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T09:37:11Z",
+      "side": 1,
+      "message": "indent 8",
+      "range": {
+        "startLine": 1161,
+        "startChar": 12,
+        "endLine": 1161,
+        "endChar": 20
+      },
+      "revId": "19fe68b54a69063fdce96a24f99da652cd6d57d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99ac30f6_b8f01ae6",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T09:37:11Z",
+      "side": 1,
+      "message": "if we crash, or just don\u0027t clear the roaming config, will it persist?  Do we need to clear it out when we call start?",
+      "range": {
+        "startLine": 1214,
+        "startChar": 17,
+        "endLine": 1214,
+        "endChar": 25
+      },
+      "revId": "19fe68b54a69063fdce96a24f99da652cd6d57d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5fdd807_98e99ff5",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T09:37:11Z",
+      "side": 1,
+      "message": "it is confusing to have this check and the one below reversed...  what about a little helper method that looks something like (the name needs work):\n\nprivate void checkRunningState() {\n    if (mWifiEnabled \u0026\u0026 mWifiConnectivityManagerEnabled) {\n        localLog(\"starting up WifiConnectivityManager\");\n        start();\n        return;\n    }\n    localLog(\"stopping WifiConnectivitymanager\");\n    stop();\n}",
+      "range": {
+        "startLine": 1238,
+        "startChar": 8,
+        "endLine": 1241,
+        "endChar": 20
+      },
+      "revId": "19fe68b54a69063fdce96a24f99da652cd6d57d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
