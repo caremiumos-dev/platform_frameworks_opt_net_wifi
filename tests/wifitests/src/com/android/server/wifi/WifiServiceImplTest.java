@@ -18,6 +18,7 @@ package com.android.server.wifi;
 
 import static android.net.wifi.WifiManager.WIFI_STATE_DISABLED;
 
+import static com.android.server.wifi.WifiController.CMD_SET_AP;
 import static com.android.server.wifi.WifiController.CMD_WIFI_TOGGLED;
 
 import static org.junit.Assert.assertEquals;
@@ -93,6 +94,7 @@ public class WifiServiceImplTest {
     @Mock WifiPermissionsUtil mWifiPermissionsUtil;
     @Mock WifiSettingsStore mSettingsStore;
     @Mock ContentResolver mContentResolver;
+    @Mock WifiConfiguration mApConfig;
     PowerManager mPowerManager;
 
     private class WifiAsyncChannelTester {
@@ -416,5 +418,70 @@ public class WifiServiceImplTest {
         mWifiServiceImpl.checkAndStartWifi();
         verify(mWifiController).start();
         verify(mWifiController).sendMessage(CMD_WIFI_TOGGLED);
+    }
+
+    /**
+     * Verify caller with proper permission can call startSoftAp.
+     */
+    @Test
+    public void testStartSoftApWithPermissionsAndNullConfig() {
+        boolean result = mWifiServiceImpl.startSoftAp(null);
+        assertTrue(result);
+        verify(mWifiController).sendMessage(eq(CMD_SET_AP), eq(1), eq(0), eq(null));
+    }
+
+    /**
+     * Verify caller with proper permissions but an invalid config does not start softap.
+     */
+    @Test
+    public void testStartSoftApWithPermissionsAndInvalidConfig() {
+        boolean result = mWifiServiceImpl.startSoftAp(mApConfig);
+        assertFalse(result);
+        verifyZeroInteractions(mWifiController);
+    }
+
+    /**
+     * Verify caller with proper permission and valid config does start softap.
+     */
+    @Test
+    public void testStartSoftApWithPermissionsAndValidConfig() {
+        WifiConfiguration config = new WifiConfiguration();
+        boolean result = mWifiServiceImpl.startSoftAp(config);
+        assertTrue(result);
+        verify(mWifiController).sendMessage(eq(CMD_SET_AP), eq(1), eq(0), eq(config));
+    }
+
+    /**
+     * Verify a SecurityException is thrown when a caller without the correct permission attempts to
+     * start softap.
+     */
+    @Test(expected = SecurityException.class)
+    public void testStartSoftApWithoutPermissionThrowsException() throws Exception {
+        doThrow(new SecurityException()).when(mContext)
+                .enforceCallingOrSelfPermission(eq(android.Manifest.permission.NETWORK_STACK),
+                                                eq("WifiService"));
+        mWifiServiceImpl.startSoftAp(null);
+    }
+
+    /**
+     * Verify caller with proper permission can call stopSoftAp.
+     */
+    @Test
+    public void testStopSoftApWithPermissions() {
+        boolean result = mWifiServiceImpl.stopSoftAp();
+        assertTrue(result);
+        verify(mWifiController).sendMessage(eq(CMD_SET_AP), eq(0), eq(0));
+    }
+
+    /**
+     * Verify SecurityException is thrown when a caller without the correct permission attempts to
+     * stop softap.
+     */
+    @Test(expected = SecurityException.class)
+    public void testStopSoftApWithoutPermissionThrowsException() throws Exception {
+        doThrow(new SecurityException()).when(mContext)
+                .enforceCallingOrSelfPermission(eq(android.Manifest.permission.NETWORK_STACK),
+                                                eq("WifiService"));
+        mWifiServiceImpl.stopSoftAp();
     }
 }
