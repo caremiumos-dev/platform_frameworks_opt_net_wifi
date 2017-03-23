@@ -5119,10 +5119,12 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                                     getCurrentWifiConfiguration().getHttpProxy());
                         }
                     } else {
-                        if (!connectToUserSelectNetwork(netId, message.sendingUid)) {
+                        if (!mWifiConfigManager.enableNetwork(result.getNetworkId(),
+                                false, message.sendingUid)) {
+                            loge("ENABLE_NETWORK config=" + config + " failed");
                             messageHandlingStatus = MESSAGE_HANDLING_STATUS_FAIL;
                             replyToMessage(message, WifiManager.SAVE_NETWORK_FAILED,
-                                    WifiManager.NOT_AUTHORIZED);
+                                    WifiManager.ERROR);
                             break;
                         }
                     }
