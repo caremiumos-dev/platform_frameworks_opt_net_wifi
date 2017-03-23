@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54fa2b0b_84dfeb13",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T09:45:51Z",
+      "side": 1,
+      "message": "does this fit on the same line?",
+      "range": {
+        "startLine": 228,
+        "startChar": 16,
+        "endLine": 228,
+        "endChar": 29
+      },
+      "revId": "3762e18748f56b3272eee0ba103cf8b8003e09f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
