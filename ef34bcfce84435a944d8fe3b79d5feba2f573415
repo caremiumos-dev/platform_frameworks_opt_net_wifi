@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "41f079da_88a65066",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-23T23:41:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0293439_ae60d53b",
+      "range": {
+        "startLine": 218,
+        "startChar": 16,
+        "endLine": 218,
+        "endChar": 21
+      },
+      "revId": "ef34bcfce84435a944d8fe3b79d5feba2f573415",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfa95e9a_3900218d",
         "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
         "patchSetId": 23
@@ -60,6 +84,30 @@
       "writtenOn": "2017-03-23T22:54:35Z",
       "side": 1,
       "message": "indent 8",
+      "range": {
+        "startLine": 226,
+        "startChar": 12,
+        "endLine": 226,
+        "endChar": 17
+      },
+      "revId": "ef34bcfce84435a944d8fe3b79d5feba2f573415",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25a3abc1_1131d2dd",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-23T23:41:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfa95e9a_3900218d",
       "range": {
         "startLine": 226,
         "startChar": 12,
