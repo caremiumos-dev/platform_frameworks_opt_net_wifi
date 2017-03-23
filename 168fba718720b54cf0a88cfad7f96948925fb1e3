@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e5fe882_86af42b1",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5102,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-23T04:05:30Z",
+      "side": 0,
+      "message": "Now that you\u0027re not invoking connectToUserSelectNetwork(), you need to call enableNetwork here now. \n\nif (!mWifiConfigManager.enableNetwork(result.getNetworkId(), false, message.sendingUid)) {\n   loge(\"ENABLE_NETWORK config\u003d\" + config + \" failed\");\n   messageHandlingStatus \u003d MESSAGE_HANDLING_STATUS_FAIL;\n   replyToMessage(message, WifiManager.SAVE_NETWORK_FAILED,\n                   WifiManager.ERROR);\n   break;\n}",
+      "revId": "168fba718720b54cf0a88cfad7f96948925fb1e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
