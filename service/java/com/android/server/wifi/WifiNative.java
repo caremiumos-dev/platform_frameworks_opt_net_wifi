@@ -681,11 +681,10 @@ public class WifiNative {
      * 6. Triggers reconnect command to wpa_supplicant.
      *
      * @param configuration WifiConfiguration parameters for the provided network.
-     * @param shouldDisconnect whether to trigger a disconnection or not.
      * @return {@code true} if it succeeds, {@code false} otherwise
      */
-    public boolean connectToNetwork(WifiConfiguration configuration, boolean shouldDisconnect) {
-        return mSupplicantStaIfaceHal.connectToNetwork(configuration, shouldDisconnect);
+    public boolean connectToNetwork(WifiConfiguration configuration) {
+        return mSupplicantStaIfaceHal.connectToNetwork(configuration);
     }
 
     /**
