@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f0293439_ae60d53b",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-23T23:02:48Z",
+      "side": 1,
+      "message": "Will make the change so it is consistent with line 210. \n\nI am curious what\u0027s policy of indent for Android framework code? Shall we make checkstyle to complain if it must be indent 8?",
+      "parentUuid": "c7552fe9_93089f48",
+      "range": {
+        "startLine": 218,
+        "startChar": 16,
+        "endLine": 218,
+        "endChar": 21
+      },
+      "revId": "ef34bcfce84435a944d8fe3b79d5feba2f573415",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfa95e9a_3900218d",
         "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
         "patchSetId": 23
