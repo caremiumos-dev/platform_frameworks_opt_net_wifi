@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a98b01fa_b16945fe",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T09:40:40Z",
+      "side": 1,
+      "message": "This check can also be removed - same reason",
+      "range": {
+        "startLine": 194,
+        "startChar": 0,
+        "endLine": 194,
+        "endChar": 32
+      },
+      "revId": "f71568d6831db34c2019873e21ec36ae25ce6223",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
