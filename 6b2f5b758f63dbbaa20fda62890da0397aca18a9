@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cae0b4f_e1d94ac9",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T09:23:44Z",
+      "side": 1,
+      "message": "fit on line above?",
+      "range": {
+        "startLine": 1224,
+        "startChar": 16,
+        "endLine": 1224,
+        "endChar": 55
+      },
+      "revId": "6b2f5b758f63dbbaa20fda62890da0397aca18a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc5772fb_8e05790e",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1267,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T09:23:44Z",
+      "side": 1,
+      "message": "indent was off here too",
+      "range": {
+        "startLine": 1267,
+        "startChar": 8,
+        "endLine": 1267,
+        "endChar": 18
+      },
+      "revId": "6b2f5b758f63dbbaa20fda62890da0397aca18a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c44df04_7c24c222",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T09:23:44Z",
+      "side": 1,
+      "message": "indent is off",
+      "range": {
+        "startLine": 1357,
+        "startChar": 8,
+        "endLine": 1357,
+        "endChar": 16
+      },
+      "revId": "6b2f5b758f63dbbaa20fda62890da0397aca18a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b012f119_5f9dcacc",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T09:23:44Z",
+      "side": 1,
+      "message": "fit on line above?",
+      "range": {
+        "startLine": 1367,
+        "startChar": 16,
+        "endLine": 1367,
+        "endChar": 55
+      },
+      "revId": "6b2f5b758f63dbbaa20fda62890da0397aca18a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "66cb2625_1b3ac966",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityManagerTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1397,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T09:23:44Z",
+      "side": 1,
+      "message": "indent is off",
+      "range": {
+        "startLine": 1397,
+        "startChar": 8,
+        "endLine": 1397,
+        "endChar": 17
+      },
+      "revId": "6b2f5b758f63dbbaa20fda62890da0397aca18a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
