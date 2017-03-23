@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b87d5902_7db56d8b",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-23T04:55:27Z",
+      "side": 1,
+      "message": "Please update the comment to reflect this new \u0027forceReconnect\u0027 parameter.",
+      "range": {
+        "startLine": 1285,
+        "startChar": 15,
+        "endLine": 1286,
+        "endChar": 28
+      },
+      "revId": "23f5584c752fe13ef68b115b1cbb93ca08090b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30d802ee_f2df5b59",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-23T04:55:27Z",
+      "side": 1,
+      "message": "What if the configuration for this network has the BSSID specified?",
+      "range": {
+        "startLine": 1289,
+        "startChar": 41,
+        "endLine": 1289,
+        "endChar": 61
+      },
+      "revId": "23f5584c752fe13ef68b115b1cbb93ca08090b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "147348bb_f88f42f8",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-23T04:55:27Z",
+      "side": 1,
+      "message": "When it is a forced reconnect, do we need to disconnect first?",
+      "range": {
+        "startLine": 1289,
+        "startChar": 12,
+        "endLine": 1289,
+        "endChar": 63
+      },
+      "revId": "23f5584c752fe13ef68b115b1cbb93ca08090b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
