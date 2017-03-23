@@ -651,6 +651,7 @@ public class PasspointProviderTest {
         assertTrue(wifiConfig.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.WPA_EAP));
         assertTrue(wifiConfig.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.IEEE8021X));
         assertEquals(realm, wifiEnterpriseConfig.getRealm());
+        assertEquals(fqdn, wifiEnterpriseConfig.getDomainSuffixMatch());
         assertEquals("anonymous@" + realm, wifiEnterpriseConfig.getAnonymousIdentity());
         assertEquals(WifiEnterpriseConfig.Eap.TTLS, wifiEnterpriseConfig.getEapMethod());
         assertEquals(WifiEnterpriseConfig.Phase2.MSCHAPV2, wifiEnterpriseConfig.getPhase2Method());
@@ -712,6 +713,7 @@ public class PasspointProviderTest {
         assertTrue(wifiConfig.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.WPA_EAP));
         assertTrue(wifiConfig.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.IEEE8021X));
         assertEquals(realm, wifiEnterpriseConfig.getRealm());
+        assertEquals(fqdn, wifiEnterpriseConfig.getDomainSuffixMatch());
         assertEquals("anonymous@" + realm, wifiEnterpriseConfig.getAnonymousIdentity());
         assertEquals(WifiEnterpriseConfig.Eap.TLS, wifiEnterpriseConfig.getEapMethod());
         assertEquals(CLIENT_CERTIFICATE_ALIAS, wifiEnterpriseConfig.getClientCertificateAlias());
@@ -760,6 +762,7 @@ public class PasspointProviderTest {
         assertTrue(wifiConfig.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.WPA_EAP));
         assertTrue(wifiConfig.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.IEEE8021X));
         assertEquals(realm, wifiEnterpriseConfig.getRealm());
+        assertEquals(fqdn, wifiEnterpriseConfig.getDomainSuffixMatch());
         assertEquals(WifiEnterpriseConfig.Eap.SIM, wifiEnterpriseConfig.getEapMethod());
         assertEquals(imsi, wifiEnterpriseConfig.getPlmn());
     }
