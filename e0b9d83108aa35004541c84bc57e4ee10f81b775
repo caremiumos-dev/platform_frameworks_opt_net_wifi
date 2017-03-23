@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "d9939f77_eead5cac",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T06:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adf871c2_bfe56181",
+      "revId": "e0b9d83108aa35004541c84bc57e4ee10f81b775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "843fae68_c5e337a7",
         "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
         "patchSetId": 2
@@ -47,6 +65,30 @@
       "writtenOn": "2017-03-22T02:21:02Z",
       "side": 1,
       "message": "Please remove one of these words. (Your choice which one. ;-))",
+      "range": {
+        "startLine": 367,
+        "startChar": 32,
+        "endLine": 367,
+        "endChar": 43
+      },
+      "revId": "e0b9d83108aa35004541c84bc57e4ee10f81b775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7eb71ed5_571cb2a1",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T06:01:53Z",
+      "side": 1,
+      "message": "you have to guess which one i removed! :)  (whoops!)",
+      "parentUuid": "843fae68_c5e337a7",
       "range": {
         "startLine": 367,
         "startChar": 32,
@@ -94,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "11f2f9be_92cd8ac8",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T06:01:53Z",
+      "side": 1,
+      "message": "oh!  thanks!",
+      "parentUuid": "d857bfc3_a3f9e1cf",
+      "revId": "e0b9d83108aa35004541c84bc57e4ee10f81b775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae5d4568_e930712c",
         "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
         "patchSetId": 2
@@ -111,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "5f1faa87_3748cb29",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T06:01:53Z",
+      "side": 1,
+      "message": "In this approach, we are initialized, but we haven\u0027t actually done anything.  So I am not actually worried.  Since nothing else is running, state can\u0027t change (and we would read the variables again anyway).  So, barring missing something huge, I am not worried about this.\n\nThe bigger issue is your other observation - wifi won\u0027t be on if the device needs to be decrypted overnight.  Hmm..  does cell come up on your device in this situation?  what happens if you get a phonecall and it isn\u0027t decrypted?   can we try a few things out tomorrow?",
+      "parentUuid": "ae5d4568_e930712c",
+      "revId": "e0b9d83108aa35004541c84bc57e4ee10f81b775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a08c2736_e9550d11",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
         "patchSetId": 2
@@ -122,6 +200,30 @@
       "writtenOn": "2017-03-22T02:21:02Z",
       "side": 1,
       "message": "Consider \"WifiControllerDoesNotStart\", for greater contrast with the successful start test.",
+      "range": {
+        "startLine": 273,
+        "startChar": 20,
+        "endLine": 273,
+        "endChar": 36
+      },
+      "revId": "e0b9d83108aa35004541c84bc57e4ee10f81b775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8df6c6d1_0ea6505e",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T06:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a08c2736_e9550d11",
       "range": {
         "startLine": 273,
         "startChar": 20,
@@ -157,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "3b260349_dd6c1cba",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T06:01:53Z",
+      "side": 1,
+      "message": "removed thanks to the helper method used in WifiServiceImpl",
+      "parentUuid": "1a351bd7_bba6cdb4",
+      "range": {
+        "startLine": 286,
+        "startChar": 20,
+        "endLine": 286,
+        "endChar": 36
+      },
+      "revId": "e0b9d83108aa35004541c84bc57e4ee10f81b775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6365417_2c8958eb",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
         "patchSetId": 2
@@ -168,6 +294,30 @@
       "writtenOn": "2017-03-22T02:21:02Z",
       "side": 1,
       "message": "Maybe \"WifiControllerStarts\", to make the test\u0027s aim more obvious? (It\u0027s surprising to read Wifistarts...WithWifiDisabled.)",
+      "range": {
+        "startLine": 298,
+        "startChar": 20,
+        "endLine": 298,
+        "endChar": 29
+      },
+      "revId": "e0b9d83108aa35004541c84bc57e4ee10f81b775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ae884f6_d1511ac4",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T06:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6365417_2c8958eb",
       "range": {
         "startLine": 298,
         "startChar": 20,
@@ -197,6 +347,24 @@
     },
     {
       "key": {
+        "uuid": "8b6d6562_721e44d3",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T06:01:53Z",
+      "side": 1,
+      "message": "whoopsies!  done",
+      "parentUuid": "3b518459_a8409ec5",
+      "revId": "e0b9d83108aa35004541c84bc57e4ee10f81b775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "699d79c1_a71ec6f7",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
         "patchSetId": 2
@@ -208,6 +376,30 @@
       "writtenOn": "2017-03-22T02:21:02Z",
       "side": 1,
       "message": "Consider \"WifiFullyStarts\" or \"WifiStartsFully\", to make the contrast with the other cases more obvious?",
+      "range": {
+        "startLine": 310,
+        "startChar": 20,
+        "endLine": 310,
+        "endChar": 30
+      },
+      "revId": "e0b9d83108aa35004541c84bc57e4ee10f81b775",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efc1c18e_1c82c62f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T06:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "699d79c1_a71ec6f7",
       "range": {
         "startLine": 310,
         "startChar": 20,
