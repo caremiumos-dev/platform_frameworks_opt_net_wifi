@@ -46,6 +46,30 @@
       "revId": "168fba718720b54cf0a88cfad7f96948925fb1e3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bab7c07_37223dbd",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-23T04:38:56Z",
+      "side": 0,
+      "message": "I still have some questions on how this kind of event/alert is handled today. Will chat with you tomorrow.",
+      "parentUuid": "f6b0d113_0fa3e0e6",
+      "range": {
+        "startLine": 1044,
+        "startChar": 65,
+        "endLine": 1044,
+        "endChar": 82
+      },
+      "revId": "168fba718720b54cf0a88cfad7f96948925fb1e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
