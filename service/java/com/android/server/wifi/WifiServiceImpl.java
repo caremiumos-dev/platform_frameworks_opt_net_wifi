@@ -529,6 +529,11 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         }
     }
 
+    private void enforceNetworkStackPermission() {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.NETWORK_STACK,
+                "WifiService");
+    }
+
     private void enforceAccessPermission() {
         mContext.enforceCallingOrSelfPermission(android.Manifest.permission.ACCESS_WIFI_STATE,
                 "WifiService");
@@ -670,6 +675,59 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         enforceAccessPermission();
         mLog.trace("getWifiApEnabledState uid=%").c(Binder.getCallingUid()).flush();
         return mWifiStateMachine.syncGetWifiApState();
+    }
+
+    /**
+     * see {@link android.net.wifi.WifiManager#startSoftAp(WifiConfiguration)}
+     * @param wifiConfig SSID, security and channel details as
+     *        part of WifiConfiguration
+     * @return true if softap start was triggered
+     * @throws SecurityException if the caller does not have permission to start softap
+     */
+    @Override
+    public boolean startSoftAp(WifiConfiguration wifiConfig) {
+        enforceChangePermission();
+        ConnectivityManager.enforceTetherChangePermission(mContext);
+        // NETWORK_STACK is a signature only permission.
+        enforceNetworkStackPermission();
+
+        mLog.trace("startSoftAp uid=%").c(Binder.getCallingUid()).flush();
+
+        if (mUserManager.hasUserRestriction(UserManager.DISALLOW_CONFIG_TETHERING)) {
+            throw new SecurityException("DISALLOW_CONFIG_TETHERING is enabled for this user.");
+        }
+        // null wifiConfig is a meaningful input for CMD_SET_AP
+        if (wifiConfig == null || isValid(wifiConfig)) {
+            mWifiController.obtainMessage(CMD_SET_AP, 1, 0, wifiConfig).sendToTarget();
+            return true;
+        }
+        Slog.e(TAG, "Invalid WifiConfiguration");
+        return false;
+    }
+
+    /**
+     * see {@link android.net.wifi.WifiManager#stopSoftAp()}
+     * @return true if softap stop was triggered
+     * @throws SecurityException if the caller does not have permission to stop softap
+     */
+    @Override
+    public boolean stopSoftAp() {
+        enforceChangePermission();
+        ConnectivityManager.enforceTetherChangePermission(mContext);
+        // NETWORK_STACK is a signature only permission.
+        enforceNetworkStackPermission();
+
+        mLog.trace("stopSoftAp uid=%").c(Binder.getCallingUid()).flush();
+
+        if (mUserManager.hasUserRestriction(UserManager.DISALLOW_CONFIG_TETHERING)) {
+            throw new SecurityException("DISALLOW_CONFIG_TETHERING is enabled for this user.");
+        }
+
+        // add checks here to make sure this is the proper caller - apps can't disable tethering or
+        // instances of local only hotspot that they didn't start.  return false for those cases
+
+        mWifiController.obtainMessage(CMD_SET_AP, 0, 0).sendToTarget();
+        return true;
     }
 
     /**
