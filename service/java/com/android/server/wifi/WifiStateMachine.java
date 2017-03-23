@@ -4452,6 +4452,11 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             mWifiStateTracker.updateState(WifiStateTracker.SCAN_MODE);
         }
         @Override
+        public void exit() {
+            mWifiInfo.reset();
+            mWifiInfo.setSupplicantState(SupplicantState.UNINITIALIZED);
+        }
+        @Override
         public boolean processMessage(Message message) {
             logStateAndMessage(message, this);
 
@@ -4469,10 +4474,6 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                 // handled only in ConnectModeState
                 case CMD_START_SCAN:
                     handleScanRequest(message);
-                    break;
-                case WifiMonitor.SUPPLICANT_STATE_CHANGE_EVENT:
-                    SupplicantState state = handleSupplicantStateChange(message);
-                    if (mVerboseLoggingEnabled) log("SupplicantState= " + state);
                     break;
                 default:
                     return NOT_HANDLED;
