@@ -16,6 +16,7 @@
 
 package com.android.server.wifi;
 
+import static com.android.server.connectivity.tethering.IControlsTethering.STATE_TETHERED;
 import static com.android.server.wifi.WifiController.CMD_AIRPLANE_TOGGLED;
 import static com.android.server.wifi.WifiController.CMD_BATTERY_CHANGED;
 import static com.android.server.wifi.WifiController.CMD_EMERGENCY_CALL_STATE_CHANGED;
@@ -538,6 +539,11 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         }
     }
 
+    private void enforceNetworkStackPermission() {
+        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.NETWORK_STACK,
+                "WifiService");
+    }
+
     private void enforceAccessPermission() {
         mContext.enforceCallingOrSelfPermission(android.Manifest.permission.ACCESS_WIFI_STATE,
                 "WifiService");
@@ -679,6 +685,83 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         enforceAccessPermission();
         mLog.trace("getWifiApEnabledState uid=%").c(Binder.getCallingUid()).flush();
         return mWifiStateMachine.syncGetWifiApState();
+    }
+
+    /**
+     * see {@link android.net.wifi.WifiManager#startSoftAp(WifiConfiguration)}
+     * @param wifiConfig SSID, security and channel details as
+     *        part of WifiConfiguration
+     * @return {@code true} if softap start was triggered
+     * @throws SecurityException if the caller does not have permission to start softap
+     */
+    @Override
+    public boolean startSoftAp(WifiConfiguration wifiConfig) {
+        enforceChangePermission();
+        ConnectivityManager.enforceTetherChangePermission(mContext);
+        mLog.trace("startSoftAp uid=%").c(Binder.getCallingUid()).flush();
+
+        if (mUserManager.hasUserRestriction(UserManager.DISALLOW_CONFIG_TETHERING)) {
+            throw new SecurityException("DISALLOW_CONFIG_TETHERING is set for this user.");
+        }
+
+        return startSoftApInternal(wifiConfig, STATE_TETHERED);
+    }
+
+    private boolean startSoftApInternal(WifiConfiguration wifiConfig, int mode) {
+        // NETWORK_STACK is a signature only permission.
+        enforceNetworkStackPermission();
+
+        mLog.trace("startSoftAp uid=% mode=%")
+                .c(Binder.getCallingUid()).c(mode.description).flush();
+
+        // null wifiConfig is a meaningful input for CMD_SET_AP
+        if (wifiConfig == null || isValid(wifiConfig)) {
+            // TODO: need a way to set the mode
+            mWifiController.obtainMessage(CMD_SET_AP, 1, 0, wifiConfig).sendToTarget();
+            return true;
+        }
+        Slog.e(TAG, "Invalid WifiConfiguration");
+        return false;
+    }
+
+    /**
+     * see {@link android.net.wifi.WifiManager#stopSoftAp()}
+     * @return {@code true} if softap stop was triggered
+     * @throws SecurityException if the caller does not have permission to stop softap
+     */
+    @Override
+    public boolean stopSoftAp() {
+        enforceChangePermission();
+        ConnectivityManager.enforceTetherChangePermission(mContext);
+
+        mLog.trace("stopSoftAp uid=%").c(Binder.getCallingUid()).flush();
+
+        if (mUserManager.hasUserRestriction(UserManager.DISALLOW_CONFIG_TETHERING)) {
+            throw new SecurityException("DISALLOW_CONFIG_TETHERING is set for this user.");
+        }
+
+        // add checks here to make sure this is the proper caller - apps can't disable tethering or
+        // instances of local only hotspot that they didn't start.  return false for those cases
+
+        return stopSoftApInternal();
+    }
+
+    /**
+     * Internal method to stop softap mode.  Callers of this method should have already checked
+     * proper permissions beyond the NetworkStack permission.
+     */
+    private boolean stopSoftApInternal() {
+        // NETWORK_STACK is a signature only permission.
+        enforceNetworkStackPermission();
+
+        mLog.trace("stopSoftApInternal uid=%").c(Binder.getCallingUid()).flush();
+        // we have an allowed caller - clear local only hotspot if it was enabled
+        synchronized (mLocalOnlyHotspotRequests) {
+            mLocalOnlyHotspotRequests.clear();
+            mLocalOnlyHotspotConfig = null;
+        }
+        mWifiController.obtainMessageAndSend(CMD_SET_AP, 0, 0);
+        return true;
     }
 
     /**
