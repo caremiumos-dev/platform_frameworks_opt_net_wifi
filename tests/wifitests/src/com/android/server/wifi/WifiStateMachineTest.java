@@ -1394,4 +1394,52 @@ public class WifiStateMachineTest {
         when(mWifiConfigManager.enableNetwork(eq(newNetworkId), anyBoolean(), anyInt()))
                 .thenReturn(true);
     }
+
+    /**
+     * Verifies that on entering ScanModeState, WifiInfo's BSSID is set to null
+     * Verifies that SUPPLICANT_STATE_CHANGE_EVENTS continue to update the supplicant state in
+     * WifiInfo, but do not update the BSSID.
+     * Verifies that on exiting ScanModeState, WifiInfo's BSSID is again set null, and
+     * setWifiEnabled is set true
+     *
+     * These conditions keep WifiConnectivity from blocking connections due to "connectToNetwork:
+     * Either already connected or is connecting to X", when supplicant changes state during
+     * ScanMode
+     */
+    @Test
+    public void testWifiInfoResetEnteringExitingScanModeState() throws Exception {
+        Log.i(TAG, mWsm.getCurrentState().getName());
+        WifiInfo wifiInfo = mWsm.getWifiInfo();
+        // Start WifiInfo with some dummy value, so we can verify it is NULLed
+        wifiInfo.setBSSID("SOMEBSSID");
+        // Set WSM to scanOnlyMode and verify it gets to that state
+        mWsm.setOperationalMode(WifiStateMachine.SCAN_ONLY_MODE);
+        startSupplicantAndDispatchMessages();
+        mWsm.setSupplicantRunning(true);
+        mLooper.dispatchAll();
+        assertEquals(WifiStateMachine.SCAN_ONLY_MODE, mWsm.getOperationalModeForTest());
+        assertEquals("ScanModeState", getCurrentState().getName());
+        // Verify WifiInfo's bssid was cleared
+        assertNull(wifiInfo.getBSSID());
+        // Send a SUPPLICANT_STATE_CHANGE_EVENT
+        mWsm.sendMessage(WifiMonitor.SUPPLICANT_STATE_CHANGE_EVENT, 0, 0,
+                new StateChangeResult(0, sWifiSsid, sBSSID, SupplicantState.COMPLETED));
+        mLooper.dispatchAll();
+        assertEquals(SupplicantState.COMPLETED, wifiInfo.getSupplicantState());
+        // Verify WifiInfo's bssid is not updated
+        assertNull(wifiInfo.getBSSID());
+
+        // switch to CONNECT_MODE
+        mWsm.setOperationalMode(WifiStateMachine.CONNECT_MODE);
+        assertEquals(WifiStateMachine.CONNECT_MODE, mWsm.getOperationalModeForTest());
+        assertEquals(WifiManager.WIFI_STATE_ENABLED, mWsm.syncGetWifiState());
+        mLooper.dispatchAll();
+
+        // Verify wifi has transitioned to DisconnectedState
+        assertEquals("DisconnectedState", getCurrentState().getName());
+        // Verify the WifiInfo bssid is still null
+        assertNull(wifiInfo.getBSSID());
+        // Verify that ConnectivityManager has setWifiEnabled to true
+        verify(mWifiConnectivityManager).setWifiEnabled(eq(true));
+    }
 }
