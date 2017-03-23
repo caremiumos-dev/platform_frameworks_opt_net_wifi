@@ -22,6 +22,30 @@
       "revId": "a5a0ff52197cce591787d27150b6be80578cafd8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce7c3842_a0fbcb87",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-23T22:49:38Z",
+      "side": 1,
+      "message": "I thought about that. What if we crashed before clearing the \u0027enabled\u0027 flag? Then on next start we will not do the needful.",
+      "parentUuid": "f7fd402e_88fffb86",
+      "range": {
+        "startLine": 1258,
+        "startChar": 16,
+        "endLine": 1258,
+        "endChar": 30
+      },
+      "revId": "a5a0ff52197cce591787d27150b6be80578cafd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
