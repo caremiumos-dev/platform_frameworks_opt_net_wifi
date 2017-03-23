@@ -453,7 +453,7 @@ public class SupplicantStaIfaceHalTest {
     @Test
     public void testConnectWithNoDisconnectAndEmptyExistingNetworks() throws Exception {
         executeAndValidateInitializationSequence();
-        executeAndValidateConnectSequence(0, false, false);
+        executeAndValidateConnectSequence(0, false);
     }
 
     /**
@@ -462,7 +462,7 @@ public class SupplicantStaIfaceHalTest {
     @Test
     public void testConnectWithNoDisconnectAndSingleExistingNetwork() throws Exception {
         executeAndValidateInitializationSequence();
-        executeAndValidateConnectSequence(0, true, false);
+        executeAndValidateConnectSequence(0, true);
     }
 
     /**
@@ -471,7 +471,7 @@ public class SupplicantStaIfaceHalTest {
     @Test
     public void testConnectWithDisconnectAndSingleExistingNetwork() throws Exception {
         executeAndValidateInitializationSequence();
-        executeAndValidateConnectSequence(0, false, true);
+        executeAndValidateConnectSequence(0, false);
     }
 
     /**
@@ -489,7 +489,7 @@ public class SupplicantStaIfaceHalTest {
         }).when(mISupplicantStaIfaceMock).addNetwork(
                 any(ISupplicantStaIface.addNetworkCallback.class));
 
-        assertFalse(mDut.connectToNetwork(new WifiConfiguration(), false));
+        assertFalse(mDut.connectToNetwork(new WifiConfiguration()));
     }
 
     /**
@@ -503,7 +503,7 @@ public class SupplicantStaIfaceHalTest {
         when(mSupplicantStaNetworkMock.saveWifiConfiguration(any(WifiConfiguration.class)))
                 .thenReturn(false);
 
-        assertFalse(mDut.connectToNetwork(new WifiConfiguration(), false));
+        assertFalse(mDut.connectToNetwork(new WifiConfiguration()));
         // We should have removed the existing network once before connection and once more
         // on failure to save network configuration.
         verify(mISupplicantStaIfaceMock, times(2)).removeNetwork(anyInt());
@@ -519,7 +519,7 @@ public class SupplicantStaIfaceHalTest {
 
         when(mSupplicantStaNetworkMock.select()).thenReturn(false);
 
-        assertFalse(mDut.connectToNetwork(new WifiConfiguration(), false));
+        assertFalse(mDut.connectToNetwork(new WifiConfiguration()));
     }
 
     /**
@@ -547,7 +547,7 @@ public class SupplicantStaIfaceHalTest {
     public void testRoamFailureDueToBssidSet() throws Exception {
         executeAndValidateInitializationSequence();
         int connectedNetworkId = 5;
-        executeAndValidateConnectSequence(connectedNetworkId, false, false);
+        executeAndValidateConnectSequence(connectedNetworkId, false);
         when(mSupplicantStaNetworkMock.setBssid(anyString())).thenReturn(false);
 
         WifiConfiguration roamingConfig = new WifiConfiguration();
@@ -586,7 +586,7 @@ public class SupplicantStaIfaceHalTest {
     public void testRoamFailureDueToReassociate() throws Exception {
         executeAndValidateInitializationSequence();
         int connectedNetworkId = 5;
-        executeAndValidateConnectSequence(connectedNetworkId, false, false);
+        executeAndValidateConnectSequence(connectedNetworkId, false);
 
         doAnswer(new MockAnswerUtil.AnswerWithArguments() {
             public SupplicantStatus answer() throws RemoteException {
@@ -613,7 +613,7 @@ public class SupplicantStaIfaceHalTest {
         // Return null when not connected to the network.
         assertTrue(mDut.getCurrentNetworkWpsNfcConfigurationToken() == null);
         verify(mSupplicantStaNetworkMock, never()).getWpsNfcConfigurationToken();
-        executeAndValidateConnectSequence(4, false, false);
+        executeAndValidateConnectSequence(4, false);
         assertEquals(token, mDut.getCurrentNetworkWpsNfcConfigurationToken());
         verify(mSupplicantStaNetworkMock).getWpsNfcConfigurationToken();
     }
@@ -630,7 +630,7 @@ public class SupplicantStaIfaceHalTest {
         // Fail when not connected to a network.
         assertFalse(mDut.setCurrentNetworkBssid(bssidStr));
         verify(mSupplicantStaNetworkMock, never()).setBssid(eq(bssidStr));
-        executeAndValidateConnectSequence(4, false, false);
+        executeAndValidateConnectSequence(4, false);
         assertTrue(mDut.setCurrentNetworkBssid(bssidStr));
         verify(mSupplicantStaNetworkMock).setBssid(eq(bssidStr));
     }
@@ -648,7 +648,7 @@ public class SupplicantStaIfaceHalTest {
         // Fail when not connected to a network.
         assertFalse(mDut.sendCurrentNetworkEapIdentityResponse(identity));
         verify(mSupplicantStaNetworkMock, never()).sendNetworkEapIdentityResponse(eq(identity));
-        executeAndValidateConnectSequence(4, false, false);
+        executeAndValidateConnectSequence(4, false);
         assertTrue(mDut.sendCurrentNetworkEapIdentityResponse(identity));
         verify(mSupplicantStaNetworkMock).sendNetworkEapIdentityResponse(eq(identity));
     }
@@ -666,7 +666,7 @@ public class SupplicantStaIfaceHalTest {
         // Fail when not connected to a network.
         assertFalse(mDut.sendCurrentNetworkEapSimGsmAuthResponse(params));
         verify(mSupplicantStaNetworkMock, never()).sendNetworkEapSimGsmAuthResponse(eq(params));
-        executeAndValidateConnectSequence(4, false, false);
+        executeAndValidateConnectSequence(4, false);
         assertTrue(mDut.sendCurrentNetworkEapSimGsmAuthResponse(params));
         verify(mSupplicantStaNetworkMock).sendNetworkEapSimGsmAuthResponse(eq(params));
     }
@@ -684,7 +684,7 @@ public class SupplicantStaIfaceHalTest {
         // Fail when not connected to a network.
         assertFalse(mDut.sendCurrentNetworkEapSimUmtsAuthResponse(params));
         verify(mSupplicantStaNetworkMock, never()).sendNetworkEapSimUmtsAuthResponse(eq(params));
-        executeAndValidateConnectSequence(4, false, false);
+        executeAndValidateConnectSequence(4, false);
         assertTrue(mDut.sendCurrentNetworkEapSimUmtsAuthResponse(params));
         verify(mSupplicantStaNetworkMock).sendNetworkEapSimUmtsAuthResponse(eq(params));
     }
@@ -702,7 +702,7 @@ public class SupplicantStaIfaceHalTest {
         // Fail when not connected to a network.
         assertFalse(mDut.sendCurrentNetworkEapSimUmtsAutsResponse(params));
         verify(mSupplicantStaNetworkMock, never()).sendNetworkEapSimUmtsAutsResponse(eq(params));
-        executeAndValidateConnectSequence(4, false, false);
+        executeAndValidateConnectSequence(4, false);
         assertTrue(mDut.sendCurrentNetworkEapSimUmtsAutsResponse(params));
         verify(mSupplicantStaNetworkMock).sendNetworkEapSimUmtsAutsResponse(eq(params));
     }
@@ -870,7 +870,7 @@ public class SupplicantStaIfaceHalTest {
     public void testStateChangeToAssociatedCallback() throws Exception {
         executeAndValidateInitializationSequence();
         int frameworkNetworkId = 6;
-        executeAndValidateConnectSequence(frameworkNetworkId, false, false);
+        executeAndValidateConnectSequence(frameworkNetworkId, false);
         assertNotNull(mISupplicantStaIfaceCallback);
 
         mISupplicantStaIfaceCallback.onStateChanged(
@@ -890,7 +890,7 @@ public class SupplicantStaIfaceHalTest {
     public void testStateChangeToCompletedCallback() throws Exception {
         executeAndValidateInitializationSequence();
         int frameworkNetworkId = 6;
-        executeAndValidateConnectSequence(frameworkNetworkId, false, false);
+        executeAndValidateConnectSequence(frameworkNetworkId, false);
         assertNotNull(mISupplicantStaIfaceCallback);
 
         mISupplicantStaIfaceCallback.onStateChanged(
@@ -1427,11 +1427,7 @@ public class SupplicantStaIfaceHalTest {
      * Helper function to validate the connect sequence.
      */
     private void validateConnectSequence(
-            final boolean haveExistingNetwork, boolean shouldDisconnect, int numNetworkAdditions)
-            throws Exception {
-        if (shouldDisconnect) {
-            verify(mISupplicantStaIfaceMock).disconnect();
-        }
+            final boolean haveExistingNetwork, int numNetworkAdditions) throws Exception {
         if (haveExistingNetwork) {
             verify(mISupplicantStaIfaceMock).removeNetwork(anyInt());
         }
@@ -1447,16 +1443,14 @@ public class SupplicantStaIfaceHalTest {
      *
      * @param newFrameworkNetworkId Framework Network Id of the new network to connect.
      * @param haveExistingNetwork Removes the existing network.
-     * @param shouldDisconnect Should trigger disconnect before connecting.
      */
     private void executeAndValidateConnectSequence(
-            final int newFrameworkNetworkId, final boolean haveExistingNetwork,
-            boolean shouldDisconnect) throws Exception {
+            final int newFrameworkNetworkId, final boolean haveExistingNetwork) throws Exception {
         setupMocksForConnectSequence(haveExistingNetwork);
         WifiConfiguration config = new WifiConfiguration();
         config.networkId = newFrameworkNetworkId;
-        assertTrue(mDut.connectToNetwork(config, shouldDisconnect));
-        validateConnectSequence(haveExistingNetwork, shouldDisconnect, 1);
+        assertTrue(mDut.connectToNetwork(config));
+        validateConnectSequence(haveExistingNetwork, 1);
     }
 
     /**
@@ -1485,7 +1479,7 @@ public class SupplicantStaIfaceHalTest {
         } else {
             roamNetworkId = connectedNetworkId + 1;
         }
-        executeAndValidateConnectSequence(connectedNetworkId, false, true);
+        executeAndValidateConnectSequence(connectedNetworkId, false);
         setupMocksForRoamSequence(roamBssid);
 
         WifiConfiguration roamingConfig = new WifiConfiguration();
