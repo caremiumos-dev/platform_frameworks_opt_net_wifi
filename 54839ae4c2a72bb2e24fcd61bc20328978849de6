@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d3781ac_71726d8e",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5039,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-03-23T21:39:33Z",
+      "side": 1,
+      "message": "You might need to add a one line log describe why do we start a connection.",
+      "range": {
+        "startLine": 5039,
+        "startChar": 28,
+        "endLine": 5039,
+        "endChar": 79
+      },
+      "revId": "54839ae4c2a72bb2e24fcd61bc20328978849de6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
