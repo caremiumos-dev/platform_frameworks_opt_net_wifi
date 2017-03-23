@@ -46,6 +46,30 @@
       "revId": "a5a0ff52197cce591787d27150b6be80578cafd8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "837a2eec_5bb08c38",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T22:59:55Z",
+      "side": 1,
+      "message": "Since you default private boolean mWifiEnabled \u003d false; if you crash, turning on wifi would clear it.\n\notherwise, if you were already running and you somehow got an extra wifi enabled call, then you would wipe your state.",
+      "parentUuid": "ce7c3842_a0fbcb87",
+      "range": {
+        "startLine": 1258,
+        "startChar": 16,
+        "endLine": 1258,
+        "endChar": 30
+      },
+      "revId": "a5a0ff52197cce591787d27150b6be80578cafd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
