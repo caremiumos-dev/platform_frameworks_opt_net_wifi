@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62eb65ff_ff241ac5",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5129,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-23T18:19:44Z",
+      "side": 1,
+      "message": "This can be above the if/else here. There is no harm in doing that. I would rather avoid having this unnecessary nesting.",
+      "range": {
+        "startLine": 5122,
+        "startChar": 20,
+        "endLine": 5129,
+        "endChar": 25
+      },
+      "revId": "2fdfc35fd084b7af71724b1915b909305e29b930",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
