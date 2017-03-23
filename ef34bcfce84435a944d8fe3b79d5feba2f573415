@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7552fe9_93089f48",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T22:54:35Z",
+      "side": 1,
+      "message": "indent 8",
+      "range": {
+        "startLine": 218,
+        "startChar": 16,
+        "endLine": 218,
+        "endChar": 21
+      },
+      "revId": "ef34bcfce84435a944d8fe3b79d5feba2f573415",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dfa95e9a_3900218d",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkEvaluator.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-23T22:54:35Z",
+      "side": 1,
+      "message": "indent 8",
+      "range": {
+        "startLine": 226,
+        "startChar": 12,
+        "endLine": 226,
+        "endChar": 17
+      },
+      "revId": "ef34bcfce84435a944d8fe3b79d5feba2f573415",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
