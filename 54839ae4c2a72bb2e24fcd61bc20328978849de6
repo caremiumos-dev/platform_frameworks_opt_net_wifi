@@ -46,6 +46,75 @@
       "revId": "54839ae4c2a72bb2e24fcd61bc20328978849de6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4feff1c6_badb138b",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5042,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-24T04:06:01Z",
+      "side": 1,
+      "message": "Nit: current",
+      "range": {
+        "startLine": 5042,
+        "startChar": 39,
+        "endLine": 5042,
+        "endChar": 48
+      },
+      "revId": "54839ae4c2a72bb2e24fcd61bc20328978849de6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb904d7b_04aa833b",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5046,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-24T04:06:01Z",
+      "side": 1,
+      "message": "Add a bug to track the work?",
+      "range": {
+        "startLine": 5046,
+        "startChar": 35,
+        "endLine": 5046,
+        "endChar": 39
+      },
+      "revId": "54839ae4c2a72bb2e24fcd61bc20328978849de6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bebdeb0f_1a9eb47a",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5050,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-24T04:06:01Z",
+      "side": 1,
+      "message": "Is it possible that both Ip and Proxy changed?",
+      "range": {
+        "startLine": 5050,
+        "startChar": 32,
+        "endLine": 5050,
+        "endChar": 54
+      },
+      "revId": "54839ae4c2a72bb2e24fcd61bc20328978849de6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
