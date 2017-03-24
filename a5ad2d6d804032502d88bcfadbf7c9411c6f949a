@@ -22,6 +22,30 @@
       "revId": "a5ad2d6d804032502d88bcfadbf7c9411c6f949a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c26260ba_e347db84",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-03-24T06:22:57Z",
+      "side": 0,
+      "message": "currently we only save one network to supplicant. So connectToNetwork()  actually calls removeAllNetworks() firstly, it then adds the new network and connects.\nRemoving networks will surely trigger a disconnect.\nSee this:\nhttp://cs/android/external/wpa_supplicant_8/wpa_supplicant/wpa_supplicant.c?l\u003d2910\u0026rcl\u003d47af5b8074d665e06a92e0f26bb2e76230574064",
+      "parentUuid": "f888e1e9_957369a1",
+      "range": {
+        "startLine": 433,
+        "startChar": 19,
+        "endLine": 433,
+        "endChar": 50
+      },
+      "revId": "a5ad2d6d804032502d88bcfadbf7c9411c6f949a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
