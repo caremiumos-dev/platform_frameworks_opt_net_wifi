@@ -1325,6 +1325,7 @@ public class WifiConfigManagerTest {
                 mWifiConfigManager.getConfiguredNetwork(result.getNetworkId());
         assertTrue("Updating network non-credentials config should not clear hasEverConnected.",
                 retrievedNetwork.getNetworkSelectionStatus().getHasEverConnected());
+        assertFalse(result.hasCredentialChanged());
     }
 
     /**
@@ -3831,6 +3832,7 @@ public class WifiConfigManagerTest {
                 mWifiConfigManager.getConfiguredNetwork(result.getNetworkId());
         assertFalse("Updating network credentials config should clear hasEverConnected.",
                 retrievedNetwork.getNetworkSelectionStatus().getHasEverConnected());
+        assertTrue(result.hasCredentialChanged());
     }
 
     /**
