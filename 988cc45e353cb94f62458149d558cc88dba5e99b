@@ -332,6 +332,30 @@
       "revId": "988cc45e353cb94f62458149d558cc88dba5e99b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "318a02c1_dcb8845a",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3901,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-24T04:46:11Z",
+      "side": 1,
+      "message": "I looked at that, but then we will create a bermuda triangle since WSM doesn\u0027t know about WifiController yet.\n\ndo we fully clean up after wifi goes down?  if we are in device active state in wificontroller and we get a wifi state change with wifi going down, we could have wificontroller send itself the recover message.",
+      "parentUuid": "4ddf1624_48a319dc",
+      "range": {
+        "startLine": 3901,
+        "startChar": 0,
+        "endLine": 3901,
+        "endChar": 48
+      },
+      "revId": "988cc45e353cb94f62458149d558cc88dba5e99b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
