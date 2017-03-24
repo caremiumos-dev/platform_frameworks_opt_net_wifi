@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f888e1e9_957369a1",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-24T04:21:57Z",
+      "side": 0,
+      "message": "are you sure that a roam will for sure trigger a disconnect?   If we are roaming between bssids, we may not see a disconnect if everything goes well.",
+      "range": {
+        "startLine": 433,
+        "startChar": 19,
+        "endLine": 433,
+        "endChar": 50
+      },
+      "revId": "a5ad2d6d804032502d88bcfadbf7c9411c6f949a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e088778_62fbe869",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-24T04:21:57Z",
+      "side": 1,
+      "message": "implicitly",
+      "range": {
+        "startLine": 12,
+        "startChar": 24,
+        "endLine": 12,
+        "endChar": 34
+      },
+      "revId": "53d0cd52b6f0a70ce7a4e54b57631b4f8005cc8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1578075e_7464486f",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-24T04:21:57Z",
+      "side": 1,
+      "message": "would need to update doc",
+      "range": {
+        "startLine": 676,
+        "startChar": 56,
+        "endLine": 676,
+        "endChar": 78
+      },
+      "revId": "53d0cd52b6f0a70ce7a4e54b57631b4f8005cc8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
