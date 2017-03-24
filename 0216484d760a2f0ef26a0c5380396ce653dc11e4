@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f603a062_d1bee23d",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTestUtil.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-24T03:51:37Z",
+      "side": 1,
+      "message": "given this implementation, you should be able to break out once you have a match.\n\nwill this leave holes in the networkId numbers?  i am guessing that doesn\u0027t matter.  just mentioning in case it does.",
+      "range": {
+        "startLine": 155,
+        "startChar": 20,
+        "endLine": 155,
+        "endChar": 34
+      },
+      "revId": "0216484d760a2f0ef26a0c5380396ce653dc11e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7548fd0_5c59c27e",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTestUtil.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-24T03:51:37Z",
+      "side": 1,
+      "message": "this is pretty complicated to read - consider thinking about an alternate impl to make this a bit easier to read.",
+      "range": {
+        "startLine": 150,
+        "startChar": 12,
+        "endLine": 157,
+        "endChar": 13
+      },
+      "revId": "0216484d760a2f0ef26a0c5380396ce653dc11e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
