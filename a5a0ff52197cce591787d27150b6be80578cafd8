@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ddffa8a6_53ad4d33",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-24T03:23:19Z",
+      "side": 1,
+      "message": "I don\u0027t think clearBssidBlacklist() is sufficient here.  You actually want to overwrite the firmware - even if the local copy of the list is empty.  If you are just starting up but there was something left over in firmware, you won\u0027t overwrite it.  It would be good to use that other call we put in where you call with null (or was it empty lists?) and it overwrites/resets the firmware.",
+      "range": {
+        "startLine": 1224,
+        "startChar": 8,
+        "endLine": 1224,
+        "endChar": 30
+      },
+      "revId": "a5a0ff52197cce591787d27150b6be80578cafd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7fd402e_88fffb86",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 22
@@ -109,6 +132,30 @@
       "side": 1,
       "message": "Also, I think it is good to always wipe out the previous state when setWifiEnabled(true) is invoked by ConnectMode.enter(). So we always have a clean start. We don\u0027t really care about the previous state at this point. This is similar to we always call WifiNative.removeAllNetworks() in ConnectMode.enter().",
       "parentUuid": "78e5caf1_e9efd777",
+      "range": {
+        "startLine": 1258,
+        "startChar": 16,
+        "endLine": 1258,
+        "endChar": 30
+      },
+      "revId": "a5a0ff52197cce591787d27150b6be80578cafd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78c086ba_5a6fa04a",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-24T03:23:19Z",
+      "side": 1,
+      "message": "i agree with that, but i am asking a different question.  if you get notified twice, setWifiEnabled(true) setWifiEnabled(true) you will wipe out your blacklist.  same for enable(true) enable(true) below.",
+      "parentUuid": "d465f9f7_8c485704",
       "range": {
         "startLine": 1258,
         "startChar": 16,
