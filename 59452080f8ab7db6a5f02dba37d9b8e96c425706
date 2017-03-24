@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ec150e2_2627d320",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-24T19:09:35Z",
+      "side": 1,
+      "message": "Rebase, get a treehugger presubmit build, send it to go/wifi-test-request",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 32
+      },
+      "revId": "59452080f8ab7db6a5f02dba37d9b8e96c425706",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
