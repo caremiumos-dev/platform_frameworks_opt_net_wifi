@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7558c392_1f5f5f40",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-24T04:36:18Z",
+      "side": 1,
+      "message": "can you confirm that toggling wifi will work.  I think there is a chance that we could get in an inconsistent state and the user might be stuck",
+      "parentUuid": "e9804e44_4bf49c15",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 13
+      },
+      "revId": "988cc45e353cb94f62458149d558cc88dba5e99b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4212203a_bd682ae2",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "These were wiley@\u0027s comment when he added wificond death handling.",
       "parentUuid": "4212203a_bd682ae2",
+      "range": {
+        "startLine": 3899,
+        "startChar": 84,
+        "endLine": 3900,
+        "endChar": 48
+      },
+      "revId": "988cc45e353cb94f62458149d558cc88dba5e99b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efc7ea30_be9840f5",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3900,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-24T04:36:18Z",
+      "side": 1,
+      "message": "I thought it was his style...  maybe we can update it when we add recovery.  :)",
+      "parentUuid": "cd0e6f0e_08e3f29c",
       "range": {
         "startLine": 3899,
         "startChar": 84,
@@ -154,6 +202,54 @@
       "writtenOn": "2017-03-24T04:28:45Z",
       "side": 1,
       "message": "We could potentially restart the wifi stack using the trigger in WifiLastResortWatchdog.restartWifiStack(). But, that should be done closer to release. We probably want users reporting issues till then for us to debug.",
+      "parentUuid": "e5cb2c04_0445be26",
+      "range": {
+        "startLine": 3901,
+        "startChar": 0,
+        "endLine": 3901,
+        "endChar": 48
+      },
+      "revId": "988cc45e353cb94f62458149d558cc88dba5e99b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5036020_952bf0c6",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3901,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-24T04:36:18Z",
+      "side": 1,
+      "message": "I was looking at that too - would also have to make sure that won\u0027t impact the LRW metrics.",
+      "parentUuid": "064d8675_59276d44",
+      "range": {
+        "startLine": 3901,
+        "startChar": 0,
+        "endLine": 3901,
+        "endChar": 48
+      },
+      "revId": "988cc45e353cb94f62458149d558cc88dba5e99b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2aac5b43_61ae721b",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3901,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-24T04:36:18Z",
+      "side": 1,
+      "message": "I don\u0027t really feel comfortable putting in recovery just yet since it wouldn\u0027t be trivial...  but I would like to make sure we don\u0027t end up with a user stuck in inconsistent states where they can\u0027t toggle wifi.  When we leave connect mode, we may be sending a message that will cause wifiController to go to an inactive state, but then wifistatemachine might be confused.",
       "parentUuid": "e5cb2c04_0445be26",
       "range": {
         "startLine": 3901,
