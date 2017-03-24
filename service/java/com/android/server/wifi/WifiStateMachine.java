@@ -5018,6 +5018,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                         if (isRoaming() || isLinkDebouncing()) {
                             transitionTo(mRoamingState);
                         } else if (getCurrentState() != mDisconnectedState) {
+                            mWifiConnectivityManager.setExpectedDisconnection();
                             transitionTo(mDisconnectingState);
                         }
                     } else {

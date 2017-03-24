@@ -30,6 +30,7 @@ import android.net.wifi.WifiScanner.ScanSettings;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.LocalLog;
+import android.util.Log;
 
 import com.android.internal.R;
 import com.android.internal.annotations.VisibleForTesting;
@@ -150,8 +151,10 @@ public class WifiConnectivityManager {
     private String mLastConnectionAttemptBssid = null;
     private int mPeriodicSingleScanInterval = PERIODIC_SCAN_INTERVAL_MS;
     private long mLastPeriodicSingleScanTimeStamp = RESET_TIME_STAMP;
+    private long mLastSingleScanTimeStamp = RESET_TIME_STAMP;
     private boolean mPnoScanStarted = false;
     private boolean mPeriodicScanTimerSet = false;
+    private boolean mExpectedDisconnection = false;
     // Device configs
     private boolean mEnableAutoJoinWhenAssociated;
     private boolean mWaitForFullBandScanResults = false;
@@ -187,6 +190,7 @@ public class WifiConnectivityManager {
     // be retrieved in bugreport.
     private void localLog(String log) {
         if (mLocalLog != null) {
+            Log.d("WifiConnectivityManager", log);
             mLocalLog.log(log);
         }
     }
@@ -794,6 +798,11 @@ public class WifiConnectivityManager {
 
         SingleScanListener singleScanListener =
                 new SingleScanListener(isFullBandScan);
+        if (mLastSingleScanTimeStamp != RESET_TIME_STAMP) {
+            localLog("Last single scan started "
+                    + (mClock.getElapsedSinceBootMillis() - mLastSingleScanTimeStamp) + " ms ago");
+        }
+        mLastSingleScanTimeStamp = mClock.getElapsedSinceBootMillis();
         mScanner.startScan(settings, singleScanListener, WIFI_WORK_SOURCE);
     }
 
@@ -955,6 +964,15 @@ public class WifiConnectivityManager {
     }
 
     /**
+     * There is an expected disconnection coming.
+     * Do not issue connectivity scan upon that.
+     */
+
+    public void setExpectedDisconnection() {
+        mExpectedDisconnection = true;
+    }
+
+    /**
      * Handler for screen state (on/off) changes
      */
     public void handleScreenStateChanged(boolean screenOn) {
@@ -977,9 +995,13 @@ public class WifiConnectivityManager {
         // the watchdog timer if entering disconnected state.
         if (mWifiState == WIFI_STATE_DISCONNECTED) {
             mLastConnectionAttemptBssid = null;
-            scheduleWatchdogTimer();
-            startConnectivityScan(SCAN_IMMEDIATELY);
-        } else {
+            if (mExpectedDisconnection) {
+                mExpectedDisconnection = false;
+            } else {
+                scheduleWatchdogTimer();
+                startConnectivityScan(SCAN_IMMEDIATELY);
+            }
+        } else if (mWifiState != WIFI_STATE_TRANSITIONING) {
             startConnectivityScan(SCAN_ON_SCHEDULE);
         }
     }
