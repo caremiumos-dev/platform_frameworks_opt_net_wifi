@@ -94,6 +94,30 @@
       "revId": "a5ad2d6d804032502d88bcfadbf7c9411c6f949a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e204717_6c5e38b0",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-03-24T16:49:42Z",
+      "side": 0,
+      "message": "I think ideally we roam between the APs within the same networkId. In that case connectToNetwork() will not be called here.\nIn case line 430 is true, that means what we are supposed to do here is not strictly \"roaming\", it is actually connect to another network. So it is OK and necessary to disconnect there.",
+      "parentUuid": "b2ae83a4_e5a5e34a",
+      "range": {
+        "startLine": 433,
+        "startChar": 19,
+        "endLine": 433,
+        "endChar": 50
+      },
+      "revId": "a5ad2d6d804032502d88bcfadbf7c9411c6f949a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
