@@ -129,14 +129,14 @@ public class WifiAwareStateManagerTest {
         mDut.start(mMockContext, mMockLooper.getLooper());
         installMocksInStateManager(mDut, mMockAwareRttStateManager, mMockAwareDataPathStatemanager);
 
-        when(mMockNative.enableAndConfigure(anyShort(), any(ConfigRequest.class), anyBoolean(),
+        when(mMockNative.enableAndConfigure(anyShort(), any(), anyBoolean(),
                 anyBoolean())).thenReturn(true);
         when(mMockNative.disable(anyShort())).thenReturn(true);
-        when(mMockNative.publish(anyShort(), anyInt(), any(PublishConfig.class))).thenReturn(true);
-        when(mMockNative.subscribe(anyShort(), anyInt(), any(SubscribeConfig.class)))
+        when(mMockNative.publish(anyShort(), anyInt(), any())).thenReturn(true);
+        when(mMockNative.subscribe(anyShort(), anyInt(), any()))
                 .thenReturn(true);
-        when(mMockNative.sendMessage(anyShort(), anyInt(), anyInt(), any(byte[].class),
-                any(byte[].class), anyInt())).thenReturn(true);
+        when(mMockNative.sendMessage(anyShort(), anyInt(), anyInt(), any(),
+                any(), anyInt())).thenReturn(true);
         when(mMockNative.stopPublish(anyShort(), anyInt())).thenReturn(true);
         when(mMockNative.stopSubscribe(anyShort(), anyInt())).thenReturn(true);
         when(mMockNative.getCapabilities(anyShort())).thenReturn(true);
@@ -1737,7 +1737,7 @@ public class WifiAwareStateManagerTest {
         SendMessageQueueModelAnswer answerObj = new SendMessageQueueModelAnswer(queueDepth,
                 null, null, null);
         when(mMockNative.sendMessage(anyShort(), anyInt(), anyInt(), any(byte[].class),
-                any(byte[].class), anyInt())).thenAnswer(answerObj);
+                any(), anyInt())).thenAnswer(answerObj);
 
         int remainingMessages = numberOfMessages;
         for (int i = 0; i < numberOfMessages; ++i) {
@@ -1877,7 +1877,7 @@ public class WifiAwareStateManagerTest {
         SendMessageQueueModelAnswer answerObj = new SendMessageQueueModelAnswer(queueDepth,
                 failQueueCommandImmediately, failQueueCommandLater, numberOfRetries);
         when(mMockNative.sendMessage(anyShort(), anyInt(), anyInt(), any(byte[].class),
-                any(byte[].class), anyInt())).thenAnswer(answerObj);
+                any(), anyInt())).thenAnswer(answerObj);
 
         for (int i = 0; i < numberOfMessages; ++i) {
             mDut.sendMessage(clientId, sessionId.getValue(), requestorId, null, messageIdBase + i,

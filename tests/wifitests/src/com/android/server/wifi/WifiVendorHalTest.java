@@ -28,7 +28,6 @@ import android.hardware.wifi.V1_0.RttCapabilities;
 import android.hardware.wifi.V1_0.RttConfig;
 import android.hardware.wifi.V1_0.StaApfPacketFilterCapabilities;
 import android.hardware.wifi.V1_0.StaBackgroundScanCapabilities;
-import android.hardware.wifi.V1_0.StaBackgroundScanParameters;
 import android.hardware.wifi.V1_0.StaLinkLayerIfacePacketStats;
 import android.hardware.wifi.V1_0.StaLinkLayerRadioStats;
 import android.hardware.wifi.V1_0.StaLinkLayerStats;
@@ -56,7 +55,6 @@ import android.net.wifi.WifiScanner;
 import android.net.wifi.WifiSsid;
 import android.net.wifi.WifiWakeReasonAndCounts;
 import android.os.HandlerThread;
-import android.os.Looper;
 import android.os.RemoteException;
 import android.util.Pair;
 
@@ -148,21 +146,21 @@ public class WifiVendorHalTest {
                 .thenReturn(mIWifiStaIface);
         when(mHalDeviceManager.createApIface(eq(null), eq(null)))
                 .thenReturn(mIWifiApIface);
-        when(mHalDeviceManager.getChip(any(IWifiIface.class)))
+        when(mHalDeviceManager.getChip(any()))
                 .thenReturn(mIWifiChip);
-        when(mHalDeviceManager.createRttController(any(IWifiIface.class)))
+        when(mHalDeviceManager.createRttController(any()))
                 .thenReturn(mIWifiRttController);
-        when(mIWifiChip.registerEventCallback(any(IWifiChipEventCallback.class)))
+        when(mIWifiChip.registerEventCallback(any()))
                 .thenReturn(mWifiStatusSuccess);
         mIWifiStaIfaceEventCallback = null;
-        when(mIWifiStaIface.registerEventCallback(any(IWifiStaIfaceEventCallback.class)))
+        when(mIWifiStaIface.registerEventCallback(any()))
                 .thenAnswer(answerWifiStatus((invocation) -> {
                     Object[] args = invocation.getArguments();
                     mIWifiStaIfaceEventCallback = (IWifiStaIfaceEventCallback) args[0];
                     return (mWifiStatusSuccess);
                 }));
         mIWifiChipEventCallback = null;
-        when(mIWifiChip.registerEventCallback(any(IWifiChipEventCallback.class)))
+        when(mIWifiChip.registerEventCallback(any()))
                 .thenAnswer(answerWifiStatus((invocation) -> {
                     Object[] args = invocation.getArguments();
                     mIWifiChipEventCallback = (IWifiChipEventCallback) args[0];
@@ -177,7 +175,7 @@ public class WifiVendorHalTest {
         ArgumentCaptor<WifiVendorHal.HalDeviceManagerStatusListener> hdmCallbackCaptor =
                 ArgumentCaptor.forClass(WifiVendorHal.HalDeviceManagerStatusListener.class);
         verify(mHalDeviceManager).registerStatusListener(
-                hdmCallbackCaptor.capture(), any(Looper.class));
+                hdmCallbackCaptor.capture(), any());
         mHalDeviceManagerStatusCallbacks = hdmCallbackCaptor.getValue();
 
     }
@@ -1733,7 +1731,7 @@ public class WifiVendorHalTest {
 
     private void startBgScan(WifiNative.ScanEventHandler eventHandler) throws Exception {
         when(mIWifiStaIface.startBackgroundScan(
-                anyInt(), any(StaBackgroundScanParameters.class))).thenReturn(mWifiStatusSuccess);
+                anyInt(), any())).thenReturn(mWifiStatusSuccess);
         WifiNative.ScanSettings settings = new WifiNative.ScanSettings();
         settings.num_buckets = 1;
         WifiNative.BucketSettings bucketSettings = new WifiNative.BucketSettings();

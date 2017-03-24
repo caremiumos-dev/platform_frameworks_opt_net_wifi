@@ -683,14 +683,14 @@ public class WifiStateMachineTest {
 
         assertEquals("SupplicantStartingState", getCurrentState().getName());
 
-        when(mWifiNative.setDeviceName(anyString())).thenReturn(true);
-        when(mWifiNative.setManufacturer(anyString())).thenReturn(true);
-        when(mWifiNative.setModelName(anyString())).thenReturn(true);
-        when(mWifiNative.setModelNumber(anyString())).thenReturn(true);
-        when(mWifiNative.setSerialNumber(anyString())).thenReturn(true);
+        when(mWifiNative.setDeviceName(any())).thenReturn(true);
+        when(mWifiNative.setManufacturer(any())).thenReturn(true);
+        when(mWifiNative.setModelName(any())).thenReturn(true);
+        when(mWifiNative.setModelNumber(any())).thenReturn(true);
+        when(mWifiNative.setSerialNumber(any())).thenReturn(true);
         when(mWifiNative.setConfigMethods(anyString())).thenReturn(true);
-        when(mWifiNative.setDeviceType(anyString())).thenReturn(true);
-        when(mWifiNative.setSerialNumber(anyString())).thenReturn(true);
+        when(mWifiNative.setDeviceType(any())).thenReturn(true);
+        when(mWifiNative.setSerialNumber(any())).thenReturn(true);
         when(mWifiNative.setScanningMacOui(any(byte[].class))).thenReturn(true);
 
         mWsm.sendMessage(WifiMonitor.SUP_CONNECTION_EVENT);

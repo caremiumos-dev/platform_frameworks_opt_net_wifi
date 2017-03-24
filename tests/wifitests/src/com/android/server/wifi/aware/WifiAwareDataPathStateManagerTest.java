@@ -39,7 +39,6 @@ import android.net.LinkProperties;
 import android.net.NetworkCapabilities;
 import android.net.NetworkFactory;
 import android.net.NetworkInfo;
-import android.net.NetworkMisc;
 import android.net.NetworkRequest;
 import android.net.wifi.aware.AttachCallback;
 import android.net.wifi.aware.ConfigRequest;
@@ -139,10 +138,10 @@ public class WifiAwareDataPathStateManagerTest {
         when(mMockNative.createAwareNetworkInterface(anyShort(), anyString())).thenReturn(true);
         when(mMockNative.deleteAwareNetworkInterface(anyShort(), anyString())).thenReturn(true);
         when(mMockNative.initiateDataPath(anyShort(), anyInt(), anyInt(), anyInt(),
-                any(byte[].class), anyString(), any(byte[].class), anyString(),
-                any(Capabilities.class))).thenReturn(true);
+                any(), anyString(), any(), any(),
+                any())).thenReturn(true);
         when(mMockNative.respondToDataPathRequest(anyShort(), anyBoolean(), anyInt(), anyString(),
-                any(byte[].class), anyString(), any(Capabilities.class))).thenReturn(true);
+                any(), any(), any(Capabilities.class))).thenReturn(true);
         when(mMockNative.endDataPath(anyShort(), anyInt())).thenReturn(true);
 
         when(mMockNetworkInterface.configureAgentProperties(
@@ -468,7 +467,8 @@ public class WifiAwareDataPathStateManagerTest {
 
         if (immediateHalFailure) {
             when(mMockNative.initiateDataPath(anyShort(), anyInt(), anyInt(), anyInt(),
-                    any(byte[].class), anyString(), any(byte[].class), anyString(),
+                    any(byte[].class), anyString(),
+                    any(byte[].class), any(),
                     any(Capabilities.class))).thenReturn(false);
 
         }
@@ -515,7 +515,7 @@ public class WifiAwareDataPathStateManagerTest {
             inOrder.verify(mMockCm).registerNetworkAgent(messengerCaptor.capture(),
                     any(NetworkInfo.class), any(LinkProperties.class),
                     any(NetworkCapabilities.class),
-                    anyInt(), any(NetworkMisc.class));
+                    anyInt(), any());
         } else {
             assertTrue(mAlarmManager.dispatch(
                     WifiAwareStateManager.HAL_DATA_PATH_CONFIRM_TIMEOUT_TAG));
@@ -599,7 +599,7 @@ public class WifiAwareDataPathStateManagerTest {
             inOrder.verify(mMockCm).registerNetworkAgent(messengerCaptor.capture(),
                     any(NetworkInfo.class), any(LinkProperties.class),
                     any(NetworkCapabilities.class),
-                    anyInt(), any(NetworkMisc.class));
+                    anyInt(), any());
         } else {
             assertTrue(mAlarmManager.dispatch(
                     WifiAwareStateManager.HAL_DATA_PATH_CONFIRM_TIMEOUT_TAG));
@@ -665,7 +665,7 @@ public class WifiAwareDataPathStateManagerTest {
                 DiscoverySessionCallback.class);
 
         mgr.attach(mMockLooperHandler, configRequest, mockCallback, null);
-        verify(mMockAwareService).connect(any(IBinder.class), anyString(),
+        verify(mMockAwareService).connect(any(IBinder.class), any(),
                 clientProxyCallback.capture(), eq(configRequest), eq(false));
         clientProxyCallback.getValue().onConnectSuccess(clientId);
         mMockLooper.dispatchAll();
@@ -724,7 +724,7 @@ public class WifiAwareDataPathStateManagerTest {
         AttachCallback mockCallback = mock(AttachCallback.class);
 
         mgr.attach(mMockLooperHandler, configRequest, mockCallback, null);
-        verify(mMockAwareService).connect(any(IBinder.class), anyString(),
+        verify(mMockAwareService).connect(any(IBinder.class), any(),
                 clientProxyCallback.capture(), eq(configRequest), eq(false));
         clientProxyCallback.getValue().onConnectSuccess(clientId);
         mMockLooper.dispatchAll();

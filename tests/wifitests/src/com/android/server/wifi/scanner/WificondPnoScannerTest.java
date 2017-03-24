@@ -389,8 +389,9 @@ public class WificondPnoScannerTest {
             WifiNative.PnoEventHandler pnoEventHandler) {
         reset(mWifiNative);
         // Scans succeed
+        // TODO: Check whether the first parameter can actually be null.
         when(mWifiNative.scan(any(), any(Set.class))).thenReturn(true);
-        when(mWifiNative.startPnoScan(any(WifiNative.PnoSettings.class))).thenReturn(true);
+        when(mWifiNative.startPnoScan(any())).thenReturn(true);
         when(mWifiNative.stopPnoScan()).thenReturn(true);
 
         if (mScanner.isHwPnoSupported(pnoSettings.isConnected)) {

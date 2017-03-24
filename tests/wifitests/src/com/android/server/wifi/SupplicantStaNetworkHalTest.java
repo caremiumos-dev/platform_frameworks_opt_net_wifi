@@ -1259,7 +1259,7 @@ public class SupplicantStaNetworkHalTest {
                 return mStatusSuccess;
             }
         }).when(mISupplicantStaNetworkMock)
-                .registerCallback(any(ISupplicantStaNetworkCallback.class));
+                .registerCallback(any());
     }
 
     private SupplicantStatus createSupplicantStatus(int code) {

@@ -165,8 +165,12 @@ public class WifiConfigManagerTest {
             }
         }).when(mPackageManager).getPackageUidAsUser(anyString(), anyInt(), anyInt());
 
+        // TODO: Make test more realistic by not matching on null for the first parameter.
+        // The any() matcher is used for the first parameter because this test relies on it matching
+        // against null. That is not a realistic as passing null as the first parameter to
+        // updateNetworkKeys will cause a NPE.
         when(mWifiKeyStore
-                .updateNetworkKeys(any(WifiConfiguration.class), any(WifiConfiguration.class)))
+                .updateNetworkKeys(any(), any()))
                 .thenReturn(true);
 
         when(mWifiConfigStore.areStoresPresent()).thenReturn(true);
