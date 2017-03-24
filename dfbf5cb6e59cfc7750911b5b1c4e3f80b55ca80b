@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3cb668d_69cf5c01",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-03-24T01:06:45Z",
+      "side": 1,
+      "message": "Can you double-check the unit test results for this patch? When I pull in the current stack of patches, I see some error messages that look to be related to this change:\n\n66) testRttTypeTranslation(com.android.server.wifi.WifiVendorHalTest)\norg.mockito.exceptions.base.MockitoException: \nCannot mock/spy class android.os.Looper\nMockito cannot mock/spy because :\n - final or anonymous class\n        at com.android.server.wifi.WifiVendorHalTest.setUp(WifiVendorHalTest.java:122)",
+      "revId": "dfbf5cb6e59cfc7750911b5b1c4e3f80b55ca80b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
