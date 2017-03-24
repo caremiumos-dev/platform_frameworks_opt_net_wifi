@@ -187,6 +187,30 @@
       "revId": "54839ae4c2a72bb2e24fcd61bc20328978849de6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65cc9641_fe88b00f",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5050,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-24T04:39:23Z",
+      "side": 1,
+      "message": "When IP\u0027s changed, we transition to ObtainingIpState. Can you please make sure we do take care of poxy change somewhere in this case?",
+      "parentUuid": "69ad3227_abe5daca",
+      "range": {
+        "startLine": 5050,
+        "startChar": 32,
+        "endLine": 5050,
+        "endChar": 54
+      },
+      "revId": "54839ae4c2a72bb2e24fcd61bc20328978849de6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
