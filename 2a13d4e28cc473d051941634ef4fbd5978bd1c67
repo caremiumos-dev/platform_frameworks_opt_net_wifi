@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "e63471a9_de98534b",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4453,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-24T04:42:41Z",
+      "side": 1,
+      "message": "If supplicant isn\u0027t needed for scan mode, then we should just be able to clear  wifiInfo on connect mode exit and leave scan mode alone (wrt a wifiInfo reset)",
+      "parentUuid": "eb1d3eb4_4c0b15cc",
+      "range": {
+        "startLine": 4453,
+        "startChar": 12,
+        "endLine": 4453,
+        "endChar": 29
+      },
+      "revId": "2a13d4e28cc473d051941634ef4fbd5978bd1c67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96f28ec0_2eeb1cfe",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4478,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-24T04:42:41Z",
+      "side": 1,
+      "message": "I thought that since supplicant wasn\u0027t doing scans anymore, this shouldn\u0027t be needed at all.",
+      "range": {
+        "startLine": 4478,
+        "startChar": 21,
+        "endLine": 4478,
+        "endChar": 62
+      },
+      "revId": "2a13d4e28cc473d051941634ef4fbd5978bd1c67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33479c10_5614e5e4",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 2
