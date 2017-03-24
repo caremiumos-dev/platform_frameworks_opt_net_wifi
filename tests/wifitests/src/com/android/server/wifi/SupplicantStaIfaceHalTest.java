@@ -1418,7 +1418,7 @@ public class SupplicantStaIfaceHalTest {
             }
         }).when(mISupplicantStaIfaceMock).addNetwork(
                 any(ISupplicantStaIface.addNetworkCallback.class));
-        when(mSupplicantStaNetworkMock.saveWifiConfiguration(any(WifiConfiguration.class)))
+        when(mSupplicantStaNetworkMock.saveWifiConfiguration(any()))
                 .thenReturn(true);
         when(mSupplicantStaNetworkMock.select()).thenReturn(true);
     }

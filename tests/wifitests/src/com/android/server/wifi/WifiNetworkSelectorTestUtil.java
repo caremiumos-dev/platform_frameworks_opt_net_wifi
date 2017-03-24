@@ -211,7 +211,7 @@ public class WifiNetworkSelectorTestUtil {
                     }
                 });
         when(wifiConfigManager.setNetworkCandidateScanResult(
-                anyInt(), any(ScanResult.class), anyInt()))
+                anyInt(), any(), anyInt()))
                 .then(new AnswerWithArguments() {
                     public boolean answer(int netId, ScanResult scanResult, int score) {
                         if (netId >= 0 && netId < configs.length) {

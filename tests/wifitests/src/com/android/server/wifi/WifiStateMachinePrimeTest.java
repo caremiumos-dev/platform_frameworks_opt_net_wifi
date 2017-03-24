@@ -114,7 +114,7 @@ public class WifiStateMachinePrimeTest {
                 }).when(mWifiInjector).makeSoftApManager(any(INetworkManagementService.class),
                                                          any(SoftApManager.Listener.class),
                                                          any(IApInterface.class),
-                                                         any(WifiConfiguration.class));
+                                                         any());
         mWifiStateMachinePrime.enterSoftAPMode(wifiConfig);
         mLooper.dispatchAll();
         Log.e("WifiStateMachinePrimeTest", "check fromState: " + fromState);
@@ -361,9 +361,9 @@ public class WifiStateMachinePrimeTest {
         WifiConfiguration config2 = new WifiConfiguration();
         config2.SSID = "ThisIsASecondConfig";
 
-        when(mWifiInjector.makeSoftApManager(any(INetworkManagementService.class),
-                                             any(SoftApManager.Listener.class),
-                                             any(IApInterface.class),
+        when(mWifiInjector.makeSoftApManager(any(),
+                                             any(),
+                                             any(),
                                              eq(config1)))
                 .thenReturn(mSoftApManager);
         when(mWifiInjector.makeSoftApManager(any(INetworkManagementService.class),

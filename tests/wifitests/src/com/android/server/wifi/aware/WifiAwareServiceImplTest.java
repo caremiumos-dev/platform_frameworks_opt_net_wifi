@@ -39,7 +39,6 @@ import android.net.wifi.aware.PublishConfig;
 import android.net.wifi.aware.SubscribeConfig;
 import android.os.HandlerThread;
 import android.os.IBinder;
-import android.os.Looper;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
@@ -117,7 +116,7 @@ public class WifiAwareServiceImplTest {
         mDut = new WifiAwareServiceImplSpy(mContextMock);
         mDut.fakeUid = mDefaultUid;
         mDut.start(mHandlerThreadMock, mAwareStateManagerMock);
-        verify(mAwareStateManagerMock).start(eq(mContextMock), any(Looper.class));
+        verify(mAwareStateManagerMock).start(eq(mContextMock), any());
     }
 
     /**
