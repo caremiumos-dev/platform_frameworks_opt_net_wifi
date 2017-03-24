@@ -22,6 +22,30 @@
       "revId": "a5936a61582404692c6046e3b496d3b1d22a94cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b96123b4_ecc708ad",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-03-24T16:56:30Z",
+      "side": 1,
+      "message": "See:\nhttp://cs/android/hardware/interfaces/wifi/supplicant/1.0/ISupplicantStaIface.hal?l\u003d107\u0026rcl\u003d53065979787c44cdf934bc3d3fbd4323cc7a5325\n\nand\nhttp://cs/android/external/wpa_supplicant_8/wpa_supplicant/hidl/sta_iface.cpp?l\u003d593\u0026rcl\u003d47af5b8074d665e06a92e0f26bb2e76230574064\n\n\nSupplicant HIDL only has reconnect() and disconnect().\nreconnect() actually requests a connection.\nI think it is called reconnect() because it requires we have configured an active network there.",
+      "parentUuid": "e736c4a8_2ea01d55",
+      "range": {
+        "startLine": 680,
+        "startChar": 19,
+        "endLine": 680,
+        "endChar": 28
+      },
+      "revId": "a5936a61582404692c6046e3b496d3b1d22a94cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
