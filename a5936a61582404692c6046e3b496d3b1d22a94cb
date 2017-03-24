@@ -46,6 +46,30 @@
       "revId": "a5936a61582404692c6046e3b496d3b1d22a94cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c51cdd01_9df20734",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-24T17:38:33Z",
+      "side": 1,
+      "message": "Thanks. Don\u0027t quite understand why supplicant chooses to use the term \"reconnect\".",
+      "parentUuid": "b96123b4_ecc708ad",
+      "range": {
+        "startLine": 680,
+        "startChar": 19,
+        "endLine": 680,
+        "endChar": 28
+      },
+      "revId": "a5936a61582404692c6046e3b496d3b1d22a94cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
