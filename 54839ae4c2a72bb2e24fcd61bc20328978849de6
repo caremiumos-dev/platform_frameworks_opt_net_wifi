@@ -211,6 +211,30 @@
       "revId": "54839ae4c2a72bb2e24fcd61bc20328978849de6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4651ca3a_868d1139",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5050,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-24T04:43:03Z",
+      "side": 1,
+      "message": "Transition will only happen once we finish processing this message. So, we will enter the next if which checks for proxy change.",
+      "parentUuid": "65cc9641_fe88b00f",
+      "range": {
+        "startLine": 5050,
+        "startChar": 32,
+        "endLine": 5050,
+        "endChar": 54
+      },
+      "revId": "54839ae4c2a72bb2e24fcd61bc20328978849de6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
