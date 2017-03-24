@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "82adfe83_dc5cd3c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-24T04:42:09Z",
+      "side": 1,
+      "message": "Yep. I toggled wifi and we it was working. Will confirm once more tomo.",
+      "parentUuid": "7558c392_1f5f5f40",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 13
+      },
+      "revId": "988cc45e353cb94f62458149d558cc88dba5e99b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4212203a_bd682ae2",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 3
@@ -251,6 +275,54 @@
       "side": 1,
       "message": "I don\u0027t really feel comfortable putting in recovery just yet since it wouldn\u0027t be trivial...  but I would like to make sure we don\u0027t end up with a user stuck in inconsistent states where they can\u0027t toggle wifi.  When we leave connect mode, we may be sending a message that will cause wifiController to go to an inactive state, but then wifistatemachine might be confused.",
       "parentUuid": "e5cb2c04_0445be26",
+      "range": {
+        "startLine": 3901,
+        "startChar": 0,
+        "endLine": 3901,
+        "endChar": 48
+      },
+      "revId": "988cc45e353cb94f62458149d558cc88dba5e99b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b8c925b_ce8ac53d",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3901,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-24T04:42:09Z",
+      "side": 1,
+      "message": "Will confirm once more. But, it was working from what I remember.",
+      "parentUuid": "2aac5b43_61ae721b",
+      "range": {
+        "startLine": 3901,
+        "startChar": 0,
+        "endLine": 3901,
+        "endChar": 48
+      },
+      "revId": "988cc45e353cb94f62458149d558cc88dba5e99b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ddf1624_48a319dc",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3901,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-24T04:42:09Z",
+      "side": 1,
+      "message": "We could just send the required message for toggling wifi: \"mWifiController.sendMessage(WifiController.CMD_RESTART_WIFI);\".",
+      "parentUuid": "a5036020_952bf0c6",
       "range": {
         "startLine": 3901,
         "startChar": 0,
