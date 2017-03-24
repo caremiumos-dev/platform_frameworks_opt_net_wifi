@@ -16,6 +16,24 @@
       "revId": "dfbf5cb6e59cfc7750911b5b1c4e3f80b55ca80b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de70ce51_db5c57da",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-24T01:27:16Z",
+      "side": 1,
+      "message": "Oh. I\u0027ll check this one. I guess I didn\u0027t run the unit tests with this patch. I\u0027ll probably have to use MockLooper here.",
+      "parentUuid": "a3cb668d_69cf5c01",
+      "revId": "dfbf5cb6e59cfc7750911b5b1c4e3f80b55ca80b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
