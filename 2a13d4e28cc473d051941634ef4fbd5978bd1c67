@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "59043034_ee8120fa",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4478,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-24T04:46:44Z",
+      "side": 1,
+      "message": "Yeah. Forgot this when we discussed this today morning. We don\u0027t need this block anymore. We don\u0027t use wpa_supplicant for scans and so, we don\u0027t need state handling here.",
+      "parentUuid": "96f28ec0_2eeb1cfe",
+      "range": {
+        "startLine": 4478,
+        "startChar": 21,
+        "endLine": 4478,
+        "endChar": 62
+      },
+      "revId": "2a13d4e28cc473d051941634ef4fbd5978bd1c67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33479c10_5614e5e4",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 2
