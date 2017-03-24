@@ -356,6 +356,30 @@
       "revId": "988cc45e353cb94f62458149d558cc88dba5e99b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b241bb8_1ef79ab6",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3901,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-24T15:06:42Z",
+      "side": 1,
+      "message": "Yeah. That\u0027s the reason I didn\u0027t attempt to do that for now. Something crashing is bad, so we should debug it instead of recovering from it automatically atleast for now. We\u0027ll rethink that if we do see actual issues coming in where we see wificond/HAL crashing.",
+      "parentUuid": "318a02c1_dcb8845a",
+      "range": {
+        "startLine": 3901,
+        "startChar": 0,
+        "endLine": 3901,
+        "endChar": 48
+      },
+      "revId": "988cc45e353cb94f62458149d558cc88dba5e99b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
