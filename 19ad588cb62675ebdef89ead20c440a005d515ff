@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f91586c_58447599",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-24T04:15:00Z",
+      "side": 1,
+      "message": "it is a little odd to split the hasCredentialChanged here from where it is set above.",
+      "range": {
+        "startLine": 952,
+        "startChar": 8,
+        "endLine": 955,
+        "endChar": 9
+      },
+      "revId": "19ad588cb62675ebdef89ead20c440a005d515ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
