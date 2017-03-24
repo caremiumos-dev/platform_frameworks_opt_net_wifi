@@ -22,6 +22,30 @@
       "revId": "19ad588cb62675ebdef89ead20c440a005d515ff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b87009da_f8ff3b72",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-24T04:18:59Z",
+      "side": 1,
+      "message": "I just wanted to group all the |has| flag setters together and then use the flags after that. It\u0027s my OCD kicking in :). I\u0027m ok with moving it back if you feel strongly.",
+      "parentUuid": "0f91586c_58447599",
+      "range": {
+        "startLine": 952,
+        "startChar": 8,
+        "endLine": 955,
+        "endChar": 9
+      },
+      "revId": "19ad588cb62675ebdef89ead20c440a005d515ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
