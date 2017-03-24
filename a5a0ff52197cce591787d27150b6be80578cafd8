@@ -213,6 +213,30 @@
       "revId": "a5a0ff52197cce591787d27150b6be80578cafd8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8e0cc4c_f9e1543a",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-24T05:02:02Z",
+      "side": 1,
+      "message": "A scenario could be: setWifiEnabled(true), then somehow the driver runs into some trouble and causes association rejection. The AP gets added to the blacklist although the issue is more on the STA device side. Then the situation gets worse and even without setWifiEnabled(false) we restart the driver to get things back in shape. Now the second setWifiEnabled(true) is executed, in this case we do want to clear the blacklist.",
+      "parentUuid": "e655c489_1f680026",
+      "range": {
+        "startLine": 1258,
+        "startChar": 16,
+        "endLine": 1258,
+        "endChar": 30
+      },
+      "revId": "a5a0ff52197cce591787d27150b6be80578cafd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
