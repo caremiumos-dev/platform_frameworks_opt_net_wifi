@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb1d3eb4_4c0b15cc",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4453,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-24T04:34:55Z",
+      "side": 1,
+      "message": "Shall we reset WifiInfo when exiting ConnectMode?",
+      "range": {
+        "startLine": 4453,
+        "startChar": 12,
+        "endLine": 4453,
+        "endChar": 29
+      },
+      "revId": "2a13d4e28cc473d051941634ef4fbd5978bd1c67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33479c10_5614e5e4",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4483,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-24T04:34:55Z",
+      "side": 1,
+      "message": "What if we add a private method like handleSupplicantStateChangeInScanMode() to do the needful? There we can even have sanity check to make sure the states are actually the ones for ScanMode.",
+      "range": {
+        "startLine": 4479,
+        "startChar": 0,
+        "endLine": 4483,
+        "endChar": 81
+      },
+      "revId": "2a13d4e28cc473d051941634ef4fbd5978bd1c67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
