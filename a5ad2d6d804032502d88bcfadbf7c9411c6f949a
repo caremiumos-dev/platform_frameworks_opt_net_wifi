@@ -70,6 +70,30 @@
       "revId": "a5ad2d6d804032502d88bcfadbf7c9411c6f949a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "942321b5_003b91f0",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-24T16:16:47Z",
+      "side": 0,
+      "message": "When WNS initiates a framework roaming, we do check the currently connected network ID via WifiStateMachine.mWifiInfo. I wouldn\u0027t expect this connectToNetwork() to happen unless something goes wrong. I think what we have here is a sanity check.",
+      "parentUuid": "b2ae83a4_e5a5e34a",
+      "range": {
+        "startLine": 433,
+        "startChar": 19,
+        "endLine": 433,
+        "endChar": 50
+      },
+      "revId": "a5ad2d6d804032502d88bcfadbf7c9411c6f949a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
