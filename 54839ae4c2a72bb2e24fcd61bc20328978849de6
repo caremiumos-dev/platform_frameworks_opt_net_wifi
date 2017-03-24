@@ -259,6 +259,30 @@
       "revId": "54839ae4c2a72bb2e24fcd61bc20328978849de6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d44612ae_a6343817",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5050,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-24T15:09:51Z",
+      "side": 1,
+      "message": "Hmm. It shouldn\u0027t matter either way. Changed it now.",
+      "parentUuid": "66029041_758b35c9",
+      "range": {
+        "startLine": 5050,
+        "startChar": 32,
+        "endLine": 5050,
+        "endChar": 54
+      },
+      "revId": "54839ae4c2a72bb2e24fcd61bc20328978849de6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
