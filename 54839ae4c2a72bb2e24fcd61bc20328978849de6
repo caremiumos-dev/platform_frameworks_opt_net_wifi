@@ -235,6 +235,30 @@
       "revId": "54839ae4c2a72bb2e24fcd61bc20328978849de6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "66029041_758b35c9",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5050,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-24T04:55:16Z",
+      "side": 1,
+      "message": "Oh, that\u0027s quite confusing. Is there a hard order of processing IP change and proxy change. Can we switch them if not?",
+      "parentUuid": "4651ca3a_868d1139",
+      "range": {
+        "startLine": 5050,
+        "startChar": 32,
+        "endLine": 5050,
+        "endChar": 54
+      },
+      "revId": "54839ae4c2a72bb2e24fcd61bc20328978849de6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
