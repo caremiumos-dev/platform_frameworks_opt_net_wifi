@@ -46,6 +46,30 @@
       "revId": "19ad588cb62675ebdef89ead20c440a005d515ff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e39ab7d0_4007ec0f",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-24T16:10:56Z",
+      "side": 1,
+      "message": "you can make us both happy - reorder the has checks.  :)\n\nI do think it is undesirable to split up the credential part, makes it easier to miss something if the code is changed.",
+      "parentUuid": "b87009da_f8ff3b72",
+      "range": {
+        "startLine": 952,
+        "startChar": 8,
+        "endLine": 955,
+        "endChar": 9
+      },
+      "revId": "19ad588cb62675ebdef89ead20c440a005d515ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
