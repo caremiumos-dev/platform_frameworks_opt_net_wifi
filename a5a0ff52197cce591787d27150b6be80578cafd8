@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d45dba1a_8df9f9ca",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-24T03:41:49Z",
+      "side": 1,
+      "message": "Then what about go back to the original implementation such that clearBssidBlacklist() always clears the WCM mBssidBlacklist and firmware one? Basically remove the mBssidBlacklist.isEmpty() check. We may waste a mBssidBlacklist.clear() operation, but logic wise it is more straight forward and we always do the same operation to the WCM blacklist and the firmware blacklist.",
+      "parentUuid": "ddffa8a6_53ad4d33",
+      "range": {
+        "startLine": 1224,
+        "startChar": 8,
+        "endLine": 1224,
+        "endChar": 30
+      },
+      "revId": "a5a0ff52197cce591787d27150b6be80578cafd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7fd402e_88fffb86",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 22
@@ -156,6 +180,30 @@
       "side": 1,
       "message": "i agree with that, but i am asking a different question.  if you get notified twice, setWifiEnabled(true) setWifiEnabled(true) you will wipe out your blacklist.  same for enable(true) enable(true) below.",
       "parentUuid": "d465f9f7_8c485704",
+      "range": {
+        "startLine": 1258,
+        "startChar": 16,
+        "endLine": 1258,
+        "endChar": 30
+      },
+      "revId": "a5a0ff52197cce591787d27150b6be80578cafd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e655c489_1f680026",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-24T03:41:49Z",
+      "side": 1,
+      "message": "Isn\u0027t that the purpose here is to wipe out the blacklist when we enter ConnectMode() so we have a clean start? No matter it is two enables or just one, right? Otherwise, we even don\u0027t need to clear the blacklist at all. \n\nAgain, later we will add some logic to make sure the BSSIDs blacklisted because AP had no capacity won\u0027t be cleared.",
+      "parentUuid": "78c086ba_5a6fa04a",
       "range": {
         "startLine": 1258,
         "startChar": 16,
