@@ -46,6 +46,30 @@
       "revId": "a5ad2d6d804032502d88bcfadbf7c9411c6f949a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2ae83a4_e5a5e34a",
+        "filename": "service/java/com/android/server/wifi/SupplicantStaIfaceHal.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-24T16:06:48Z",
+      "side": 0,
+      "message": "oh man, ok. Yeah, that will trigger a disconnect, but that means that \"roams\" are really expensive.  :(\n\ngiven the recent changes - we should basically treat roams and switching ssids to be equivalent wrt scoring and deciding what to do",
+      "parentUuid": "c26260ba_e347db84",
+      "range": {
+        "startLine": 433,
+        "startChar": 19,
+        "endLine": 433,
+        "endChar": 50
+      },
+      "revId": "a5ad2d6d804032502d88bcfadbf7c9411c6f949a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
