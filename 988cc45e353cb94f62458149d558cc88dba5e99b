@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffe542c6_4e526d8c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-24T04:03:39Z",
+      "side": 1,
+      "message": "after doing that, can you restart?  do WifiController and WifiStateMachine have consistent states after this?",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 13
+      },
+      "revId": "988cc45e353cb94f62458149d558cc88dba5e99b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4212203a_bd682ae2",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3900,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-24T04:03:39Z",
+      "side": 1,
+      "message": "the wording here is a bit odd",
+      "range": {
+        "startLine": 3899,
+        "startChar": 84,
+        "endLine": 3900,
+        "endChar": 48
+      },
+      "revId": "988cc45e353cb94f62458149d558cc88dba5e99b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3111a42_b6b149c0",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3901,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-24T04:03:39Z",
+      "side": 1,
+      "message": "I am not sure this is sufficient to get us back in to a working state.  Do we restart supplicant?",
+      "range": {
+        "startLine": 3901,
+        "startChar": 0,
+        "endLine": 3901,
+        "endChar": 48
+      },
+      "revId": "988cc45e353cb94f62458149d558cc88dba5e99b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
