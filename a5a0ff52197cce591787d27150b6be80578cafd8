@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1b99e508_d76aac7d",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-24T05:07:45Z",
+      "side": 1,
+      "message": "I still think the clear is the common case - so we shouldn\u0027t keep writing to firmware if it isn\u0027t needed.  we do have the ability to reset the firmware - we put that in the call for the helper.  The other reason I think we should do this is if you end up implementing a reason-based clear to avoid losing the assoc rejections, then you will not want to use that for this general purpose clear.",
+      "parentUuid": "d45dba1a_8df9f9ca",
+      "range": {
+        "startLine": 1224,
+        "startChar": 8,
+        "endLine": 1224,
+        "endChar": 30
+      },
+      "revId": "a5a0ff52197cce591787d27150b6be80578cafd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7fd402e_88fffb86",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 22
