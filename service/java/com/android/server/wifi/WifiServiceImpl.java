@@ -81,6 +81,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Slog;
 
+import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.telephony.IccCardConstants;
 import com.android.internal.telephony.PhoneConstants;
@@ -107,6 +108,7 @@ import java.security.cert.PKIXParameters;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -162,6 +164,11 @@ public class WifiServiceImpl extends IWifiManager.Stub {
 
     private final boolean mPermissionReviewRequired;
     private final FrameworkFacade mFrameworkFacade;
+
+    @GuardedBy("mLocalOnlyHotspotRequests")
+    private final HashMap<Integer, LocalOnlyHotspotRequestInfo> mLocalOnlyHotspotRequests;
+    @GuardedBy("mLocalOnlyHotspotRequests")
+    private WifiConfiguration mLocalOnlyHotspotConfig = null;
 
     /**
      * Handles client connections
@@ -314,6 +321,22 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         }
     }
 
+    /**
+     * Callback for use with LocalOnlyHotspot to unregister requesting applications upon death.
+     *
+     * @hide
+     */
+    public final class LocalOnlyRequestorCallback
+            implements LocalOnlyHotspotRequestInfo.RequestingApplicationDeathCallback {
+        /**
+         * Called with requesting app has died.
+         */
+        @Override
+        public void onLocalOnlyHotspotRequestorDeath(LocalOnlyHotspotRequestInfo requestor) {
+            unregisterCallingAppAndStopLocalOnlyHotspot(requestor);
+        };
+    }
+
     WifiStateMachineHandler mWifiStateMachineHandler;
     private WifiController mWifiController;
     private final WifiLockManager mWifiLockManager;
@@ -348,6 +371,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         mWifiPermissionsUtil = mWifiInjector.getWifiPermissionsUtil();
         mLog = mWifiInjector.makeLog(TAG);
         mFrameworkFacade = wifiInjector.getFrameworkFacade();
+        mLocalOnlyHotspotRequests = new HashMap<>();
         enableVerboseLoggingInternal(getVerboseLoggingLevel());
     }
 
@@ -679,9 +703,8 @@ public class WifiServiceImpl extends IWifiManager.Stub {
 
     /**
      * see {@link android.net.wifi.WifiManager#startSoftAp(WifiConfiguration)}
-     * @param wifiConfig SSID, security and channel details as
-     *        part of WifiConfiguration
-     * @return true if softap start was triggered
+     * @param wifiConfig SSID, security and channel details as part of WifiConfiguration
+     * @return {@code true} if softap start was triggered
      * @throws SecurityException if the caller does not have permission to start softap
      */
     @Override
@@ -707,7 +730,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
 
     /**
      * see {@link android.net.wifi.WifiManager#stopSoftAp()}
-     * @return true if softap stop was triggered
+     * @return {@code true} if softap stop was triggered
      * @throws SecurityException if the caller does not have permission to stop softap
      */
     @Override
@@ -728,6 +751,119 @@ public class WifiServiceImpl extends IWifiManager.Stub {
 
         mWifiController.obtainMessage(CMD_SET_AP, 0, 0).sendToTarget();
         return true;
+    }
+
+    /**
+     * see {@link WifiManager#startLocalOnlyHotspot()}
+     *
+     * @return WifiConfiguration generated temporary configuration for SoftAp mode.  Returns null if
+     * the hotspot cannot be started (incompatible mode)
+     *
+     * @throws SecurityException if the caller does not have permission to start a Local Only
+     * Hotspot.
+     */
+    @Override
+    public WifiConfiguration startLocalOnlyHotspot() {
+        // first check if the caller has permission to start a local only hotspot
+        // need to check for WIFI_STATE_CHANGE - and think about others
+        enforceChangePermission();
+        int uid = Binder.getCallingUid();
+
+        mLog.trace("startLocalOnlyHotspot uid=%").c(uid).flush();
+
+        synchronized (mLocalOnlyHotspotRequests) {
+            // now make sure the call is possible given the current mode...  return null if not
+            boolean apDisabled =
+                    mWifiStateMachine.syncGetWifiApState() == WifiManager.WIFI_AP_STATE_DISABLED;
+            if (!apDisabled && mLocalOnlyHotspotRequests.size() == 0) {
+                // Tethering is enabled, cannot start LocalOnlyHotspot
+                mLog.trace("Cannot start localOnlyHotspot when WiFi Tethering is active.");
+                return null;
+            }
+
+            // if we don't have any requests, we need to create a config
+            if (mLocalOnlyHotspotConfig == null) {
+                mLocalOnlyHotspotConfig =
+                        WifiApConfigStore.generateLocalOnlyHotspotConfig(mContext);
+            }
+            LocalOnlyHotspotRequestInfo request = mLocalOnlyHotspotRequests.get(uid);
+            if (request != null) {
+                // this caller is already registered, return the config
+                return mLocalOnlyHotspotConfig;
+            }
+
+            // add the caller to the request tracker
+            request = new LocalOnlyHotspotRequestInfo(
+                    new Binder(), new LocalOnlyRequestorCallback());
+            mLocalOnlyHotspotRequests.put(uid, request);
+
+            if (mLocalOnlyHotspotRequests.size() == 1) {
+                // we need to start up the hotspot!
+                long identity = Binder.clearCallingIdentity();
+                try {
+                    if (!startSoftAp(mLocalOnlyHotspotConfig)) {
+                        return null;
+                    }
+                } finally {
+                    Binder.restoreCallingIdentity(identity);
+                }
+            }
+            // hotspot was already running, eturn the config
+            return mLocalOnlyHotspotConfig;
+        } // end synchronized
+    }
+
+    /**
+     * see {@link WifiManager#stopLocalOnlyHotspot()}
+     *
+     * @return {@code true} if the caller successfully unregistered their LocalOnlyHotspot request.
+     *
+     * @throws SecurityException if the caller does not have permission to stop a Local Only
+     * Hotspot.
+     */
+    @Override
+    public boolean stopLocalOnlyHotspot() {
+        // first check if the caller has permission to stop a local only hotspot
+        enforceChangePermission();
+        int uid = Binder.getCallingUid();
+
+        mLog.trace("stopLocalOnlyHotspot uid=%").c(uid).flush();
+
+        synchronized (mLocalOnlyHotspotRequests) {
+            // was the caller already registered?  check request tracker - return false if not
+            LocalOnlyHotspotRequestInfo requestInfo = mLocalOnlyHotspotRequests.get(uid);
+            if (requestInfo == null) {
+                return false;
+            }
+
+            return unregisterCallingAppAndStopLocalOnlyHotspot(requestInfo);
+        } // end synchronized
+    }
+
+    private boolean unregisterCallingAppAndStopLocalOnlyHotspot(
+            LocalOnlyHotspotRequestInfo requestor) {
+        mLog.trace("unregisterCallingAppAndStopLocalOnlyHotspot uid=%")
+                .c(requestor.getUid()).flush();
+
+        synchronized (mLocalOnlyHotspotRequests) {
+            boolean removed = true;
+            if (mLocalOnlyHotspotRequests.remove(requestor.getUid()) == null) {
+                mLog.trace("LocalOnlyHotspotRequestInfo not found to remove");
+                removed = false;
+            }
+
+            if (mLocalOnlyHotspotRequests.size() == 0) {
+                mLocalOnlyHotspotConfig = null;
+                // if that was the last caller, then call stopSoftAp as WifiService
+                long identity = Binder.clearCallingIdentity();
+                try {
+                    return stopSoftAp();
+                } finally {
+                    Binder.restoreCallingIdentity(identity);
+                }
+            }
+            return removed;
+        }
     }
 
     /**
