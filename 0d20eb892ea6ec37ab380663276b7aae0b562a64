@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adb89804_cee4f7cd",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4456,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-25T06:02:46Z",
+      "side": 1,
+      "message": "Why is it not in the exit of connect mode?  If we go from client -\u003e softap -\u003e client, this will not get called.  clearing it from scan mode was only a problem because of the unnecessary handling (and populating) of this during scan mode. now that it isn\u0027t happening, it seems that clearing it out of connect mode would be sufficient.",
+      "range": {
+        "startLine": 4456,
+        "startChar": 12,
+        "endLine": 4456,
+        "endChar": 30
+      },
+      "revId": "0d20eb892ea6ec37ab380663276b7aae0b562a64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
