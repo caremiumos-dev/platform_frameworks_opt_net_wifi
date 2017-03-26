@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "1a6d02c9_21b9e5f3",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-26T05:36:08Z",
+      "side": 1,
+      "message": "Basically my take is that we just need one type of clear. Today it is simply a full clear. Later it will be improved (TODO: b/36562862) and become a reason based clearing. We don\u0027t need both.",
+      "parentUuid": "523fb941_75ee1c7f",
+      "range": {
+        "startLine": 1224,
+        "startChar": 8,
+        "endLine": 1224,
+        "endChar": 30
+      },
+      "revId": "a5a0ff52197cce591787d27150b6be80578cafd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7fd402e_88fffb86",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 22
