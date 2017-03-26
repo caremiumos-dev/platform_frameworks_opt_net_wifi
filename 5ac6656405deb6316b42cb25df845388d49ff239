@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5fab754_19b2030e",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-26T03:56:17Z",
+      "side": 1,
+      "message": "forgot to reset mLocalOnlyHotspotConfig to null",
+      "range": {
+        "startLine": 868,
+        "startChar": 12,
+        "endLine": 868,
+        "endChar": 18
+      },
+      "revId": "5ac6656405deb6316b42cb25df845388d49ff239",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
