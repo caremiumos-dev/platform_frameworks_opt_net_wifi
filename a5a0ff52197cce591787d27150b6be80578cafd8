@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "168d2255_b8396858",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-26T04:10:54Z",
+      "side": 1,
+      "message": "setFirmwareRoamingConfiguration(ArrayList\u003cString\u003e blacklistBssids,\n            ArrayList\u003cString\u003e whitelistSsids) {\n\nis the method.  If you send it two empty lists, it will reset it.  that was the suggestion I had made in the review (I asked for a test doing this on 2/28).  The point of having a flexible setFirmwareRoamingConfiguration was exactly so you could clear the lists and not need a separate reset method in the helper.\n\nback to the higher level.  You will have two types of clear in this class:\n1 - reason based clearing - where you mention that you don\u0027t want to clear everything - needs to be written out\n2 - full clear.   on startup you should do a full clear, just in case something was left in firmware, this can call setFirmwareRoamingConfiguration(empty, empty).  This does the full reset, and doesn\u0027t need a separate method in the helper.",
+      "parentUuid": "b305c99b_d4fbc001",
+      "range": {
+        "startLine": 1224,
+        "startChar": 8,
+        "endLine": 1224,
+        "endChar": 30
+      },
+      "revId": "a5a0ff52197cce591787d27150b6be80578cafd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7fd402e_88fffb86",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 22
@@ -276,6 +300,30 @@
       "side": 1,
       "message": "A scenario could be: setWifiEnabled(true), then somehow the driver runs into some trouble and causes association rejection. The AP gets added to the blacklist although the issue is more on the STA device side. Then the situation gets worse and even without setWifiEnabled(false) we restart the driver to get things back in shape. Now the second setWifiEnabled(true) is executed, in this case we do want to clear the blacklist.",
       "parentUuid": "e655c489_1f680026",
+      "range": {
+        "startLine": 1258,
+        "startChar": 16,
+        "endLine": 1258,
+        "endChar": 30
+      },
+      "revId": "a5a0ff52197cce591787d27150b6be80578cafd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff9601d0_aca2b40c",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-26T04:10:54Z",
+      "side": 1,
+      "message": "as long as the extra clear won\u0027t get us inconsistent with the ssid blacklist, then the extra clear is fine.  i just wanted it thought about.",
+      "parentUuid": "a8e0cc4c_f9e1543a",
       "range": {
         "startLine": 1258,
         "startChar": 16,
