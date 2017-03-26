@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "523fb941_75ee1c7f",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-26T05:25:12Z",
+      "side": 1,
+      "message": "From setFirmwareRoamingConfiguration()\u0027s perspective, it doesn\u0027t need to know whether the input blacklistBssids is the result of full clear or reason based clearing. All its job is to write the list generated from WCM\u0027s mBssidBlacklist hashmap to firmware. Even if there is something left in firmware, a reason based clear will wipe it out and replace it with the new blacklist, which can be either empty or a list of BSSIDs blacklisted because these APs were found having no capacity for new STAs during last WCM running period. Of course here these BSSIDs\u0027 timeout haven\u0027t expired yet. We don\u0027t need a full clear before the reason based clearing.\n\nClearing mBssidBlacklist is actually the one which controls what should be left when start() is invoked (wifi client mode gets enabled, assuming WCM is enabled) every time. setFirmwareRoamingConfiguration() simply brings the firmware blacklist and the framework blacklist in sync.",
+      "parentUuid": "168d2255_b8396858",
+      "range": {
+        "startLine": 1224,
+        "startChar": 8,
+        "endLine": 1224,
+        "endChar": 30
+      },
+      "revId": "a5a0ff52197cce591787d27150b6be80578cafd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7fd402e_88fffb86",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 22
