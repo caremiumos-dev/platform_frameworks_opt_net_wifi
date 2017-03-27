@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae30c7df_693793b5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-27T19:56:56Z",
+      "side": 1,
+      "message": "Can we add the bug number so we know why this change is needed?\n\nAlso, a \"Test\" section? I am curious how this CL was abel to be uploaded without that. Did you do \"repo upload --no-verify\"?",
+      "revId": "957817a9b8e25d845fc985efab52da629e568cdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
