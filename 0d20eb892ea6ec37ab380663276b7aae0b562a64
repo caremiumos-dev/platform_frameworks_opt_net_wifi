@@ -141,6 +141,30 @@
       "revId": "0d20eb892ea6ec37ab380663276b7aae0b562a64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "183155e5_8b37400c",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4457,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-27T18:36:13Z",
+      "side": 1,
+      "message": "Logic wise, isn\u0027t that we should do this when exiting the previous mode (i.e. ConnectMode) or entering the ScanMode? Given between ScanModeState.enter() and ScanModeState.exit() it doesn\u0027t touch supplicant at all.",
+      "parentUuid": "8e26bf38_2348209e",
+      "range": {
+        "startLine": 4457,
+        "startChar": 12,
+        "endLine": 4457,
+        "endChar": 72
+      },
+      "revId": "0d20eb892ea6ec37ab380663276b7aae0b562a64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
