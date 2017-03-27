@@ -17,6 +17,7 @@
 package com.android.server.wifi.hotspot2;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.any;
@@ -197,6 +198,7 @@ public class PasspointNetworkEvaluatorTest {
         verify(mWifiConfigManager).addOrUpdateNetwork(addedConfig.capture(), anyInt());
         assertEquals(ScanResultUtil.createQuotedSSID(TEST_SSID1), addedConfig.getValue().SSID);
         assertEquals(TEST_FQDN1, addedConfig.getValue().FQDN);
+        assertTrue(addedConfig.getValue().isHomeProviderNetwork);
         verify(mWifiConfigManager).enableNetwork(eq(TEST_NETWORK_ID), eq(false), anyInt());
         verify(mWifiConfigManager).setNetworkCandidateScanResult(
                 eq(TEST_NETWORK_ID), any(ScanResult.class), anyInt());
@@ -238,6 +240,7 @@ public class PasspointNetworkEvaluatorTest {
         verify(mWifiConfigManager).addOrUpdateNetwork(addedConfig.capture(), anyInt());
         assertEquals(ScanResultUtil.createQuotedSSID(TEST_SSID1), addedConfig.getValue().SSID);
         assertEquals(TEST_FQDN1, addedConfig.getValue().FQDN);
+        assertFalse(addedConfig.getValue().isHomeProviderNetwork);
         verify(mWifiConfigManager).enableNetwork(eq(TEST_NETWORK_ID), eq(false), anyInt());
         verify(mWifiConfigManager).setNetworkCandidateScanResult(
                 eq(TEST_NETWORK_ID), any(ScanResult.class), anyInt());
@@ -281,6 +284,7 @@ public class PasspointNetworkEvaluatorTest {
         verify(mWifiConfigManager).addOrUpdateNetwork(addedConfig.capture(), anyInt());
         assertEquals(ScanResultUtil.createQuotedSSID(TEST_SSID1), addedConfig.getValue().SSID);
         assertEquals(TEST_FQDN1, addedConfig.getValue().FQDN);
+        assertTrue(addedConfig.getValue().isHomeProviderNetwork);
         verify(mWifiConfigManager).enableNetwork(eq(TEST_NETWORK_ID), eq(false), anyInt());
         verify(mWifiConfigManager).setNetworkCandidateScanResult(
                 eq(TEST_NETWORK_ID), any(ScanResult.class), anyInt());
