@@ -64,7 +64,7 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-import org.mockito.compat.CapturingMatcher;
+import org.mockito.internal.matchers.CapturingMatcher;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -161,8 +161,7 @@ public class WifiScanningServiceTest {
     private static Message verifyHandleMessageAndGetMessage(InOrder order, Handler handler,
             final int what) {
         CapturingMatcher<Message> messageMatcher = new CapturingMatcher<Message>() {
-            public boolean matchesObject(Object argument) {
-                Message message = (Message) argument;
+            public boolean matches(Message message) {
                 return message.what == what;
             }
         };
