@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "37957161_2127b127",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4456,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-27T18:27:40Z",
+      "side": 1,
+      "message": "1 - no, it is not the bug, but this fix would not help in the case if we go from client to softap to client, or client to disabled to client.  There is nothing forcing us to go through scan mode.\n2 - this fix, in combination with not populating the wifiinfo, is needed (also, we need to stop connecting when not in connect mode).  If you put it at exit of connect, and then it is never populated in any other mode, then you will not have it populated on an enter to connect.\n\nMy main concern with it being in the enter of connect is that apps or other components may query the info when we are not in connect mode.  This could lead to odd behavior. If we resent out of connect and do not allow it to be populated outside of connect, then we shouldn\u0027t have inconsistent state.",
+      "parentUuid": "d0bf4834_a63da0fd",
+      "range": {
+        "startLine": 4456,
+        "startChar": 12,
+        "endLine": 4456,
+        "endChar": 30
+      },
+      "revId": "0d20eb892ea6ec37ab380663276b7aae0b562a64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3812aa30_47c1d3ef",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Because WifiConnectivityManager also checks if the SupplicantState is connecting. Reset() does not reset supplicant state.",
       "parentUuid": "3812aa30_47c1d3ef",
+      "range": {
+        "startLine": 4457,
+        "startChar": 12,
+        "endLine": 4457,
+        "endChar": 72
+      },
+      "revId": "0d20eb892ea6ec37ab380663276b7aae0b562a64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a9bf6ec_1c8d4084",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4457,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-27T18:27:40Z",
+      "side": 1,
+      "message": "is it then re-initialized on the enter of connect?  Changing supplicant state here is a bit more risky since we haven\u0027t tested (and do not thoroughly test) mode transitions in our integration tests.",
+      "parentUuid": "8e26bf38_2348209e",
       "range": {
         "startLine": 4457,
         "startChar": 12,
