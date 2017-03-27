@@ -169,6 +169,30 @@
     },
     {
       "key": {
+        "uuid": "d20a475e_208bd52c",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-27T22:29:46Z",
+      "side": 1,
+      "message": "The new patch set implements what we discussed just now. There is going to be only one type of clear which removes everything from the blacklist. In clearBssidBlacklist() we always clear mBssidBlack and update firmware. This is to handle the scenario that users may reset their AP.",
+      "parentUuid": "1a6d02c9_21b9e5f3",
+      "range": {
+        "startLine": 1224,
+        "startChar": 8,
+        "endLine": 1224,
+        "endChar": 30
+      },
+      "revId": "a5a0ff52197cce591787d27150b6be80578cafd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7fd402e_88fffb86",
         "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
         "patchSetId": 22
