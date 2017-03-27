@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "ef45c3bb_1c2d2b86",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4456,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-27T20:45:22Z",
+      "side": 1,
+      "message": "I think it makes sense to have this reset at both the enter \u0026 exit of ConnectMode.",
+      "parentUuid": "37957161_2127b127",
+      "range": {
+        "startLine": 4456,
+        "startChar": 12,
+        "endLine": 4456,
+        "endChar": 30
+      },
+      "revId": "0d20eb892ea6ec37ab380663276b7aae0b562a64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3812aa30_47c1d3ef",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 3
