@@ -22,6 +22,30 @@
       "revId": "da77d9b675a8d755600506f69f1a4d28ac855ea0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ae4d58a_6cfbff56",
+        "filename": "service/java/com/android/server/wifi/scanner/WificondScannerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-27T21:12:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2ac412a_1b491973",
+      "range": {
+        "startLine": 861,
+        "startChar": 4,
+        "endLine": 861,
+        "endChar": 37
+      },
+      "revId": "da77d9b675a8d755600506f69f1a4d28ac855ea0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
