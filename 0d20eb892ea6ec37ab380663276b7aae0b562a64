@@ -22,6 +22,30 @@
       "revId": "0d20eb892ea6ec37ab380663276b7aae0b562a64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0bf4834_a63da0fd",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4456,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-27T16:54:39Z",
+      "side": 1,
+      "message": "(1) That\u0027s the not the issue in the bug you assigned me.\n(2) Furthermore, adding it to the exit of connect mode won\u0027t handle this new case anyway. The enter() of ConnectMode, yes",
+      "parentUuid": "adb89804_cee4f7cd",
+      "range": {
+        "startLine": 4456,
+        "startChar": 12,
+        "endLine": 4456,
+        "endChar": 30
+      },
+      "revId": "0d20eb892ea6ec37ab380663276b7aae0b562a64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
