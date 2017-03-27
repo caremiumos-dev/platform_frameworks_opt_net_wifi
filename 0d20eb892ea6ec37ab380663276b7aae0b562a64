@@ -46,6 +46,29 @@
       "revId": "0d20eb892ea6ec37ab380663276b7aae0b562a64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3812aa30_47c1d3ef",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4457,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-27T17:37:14Z",
+      "side": 1,
+      "message": "If in ScanMode we are no longer using supplicant to do scan, why do we need to touch SupplicantState here?",
+      "range": {
+        "startLine": 4457,
+        "startChar": 12,
+        "endLine": 4457,
+        "endChar": 72
+      },
+      "revId": "0d20eb892ea6ec37ab380663276b7aae0b562a64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
