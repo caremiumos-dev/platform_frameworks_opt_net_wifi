@@ -34,6 +34,24 @@
       "revId": "dfbf5cb6e59cfc7750911b5b1c4e3f80b55ca80b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a50d7c8d_cbdaa9a5",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-27T16:18:47Z",
+      "side": 1,
+      "message": "Fixed this failure by using TestLooper.",
+      "parentUuid": "de70ce51_db5c57da",
+      "revId": "dfbf5cb6e59cfc7750911b5b1c4e3f80b55ca80b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
