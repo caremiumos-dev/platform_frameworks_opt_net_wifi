@@ -93,6 +93,30 @@
       "revId": "0216484d760a2f0ef26a0c5380396ce653dc11e4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6054e67_c3d53918",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTestUtil.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-27T22:31:35Z",
+      "side": 1,
+      "message": "Refactored this piece. Should be easier to read now. However the unit test fails right now. Looking into it.",
+      "parentUuid": "44d95dd1_091070b0",
+      "range": {
+        "startLine": 150,
+        "startChar": 12,
+        "endLine": 157,
+        "endChar": 13
+      },
+      "revId": "0216484d760a2f0ef26a0c5380396ce653dc11e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
