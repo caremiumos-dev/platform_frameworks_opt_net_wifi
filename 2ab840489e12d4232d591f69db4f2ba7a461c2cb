@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f837ec6d_9dce9484",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-03-28T10:18:41Z",
+      "side": 1,
+      "message": "replace this with the command you used (i.e, make, or make checkbuild etc.)",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 15
+      },
+      "revId": "2ab840489e12d4232d591f69db4f2ba7a461c2cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
