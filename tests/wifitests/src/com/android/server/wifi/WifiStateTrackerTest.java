@@ -18,8 +18,8 @@ package com.android.server.wifi;
 
 import com.android.internal.app.IBatteryStats;
 
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyInt;
-import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -61,7 +61,7 @@ public class WifiStateTrackerTest {
         for (int i = 0; i < relevantStates.length; i++) {
             mWifiStateTracker.updateState(relevantStates[i]);
         }
-        verify(mBatteryStats, times(relevantStates.length)).noteWifiState(anyInt(), anyString());
+        verify(mBatteryStats, times(relevantStates.length)).noteWifiState(anyInt(), any());
     }
 
     /**
@@ -75,6 +75,6 @@ public class WifiStateTrackerTest {
         for (int i = 0; i < irrelevantStates.length; i++) {
             mWifiStateTracker.updateState(irrelevantStates[i]);
         }
-        verify(mBatteryStats, times(0)).noteWifiState(anyInt(), anyString());
+        verify(mBatteryStats, times(0)).noteWifiState(anyInt(), any());
     }
 }
