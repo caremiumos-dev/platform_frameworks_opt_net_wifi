@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "783c3f73_6410cb76",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-28T04:59:49Z",
+      "side": 1,
+      "message": "the name for this seems like it could be a general case.  maybe something like clearBlacklistForForcedConnection ?",
+      "range": {
+        "startLine": 1042,
+        "startChar": 16,
+        "endLine": 1042,
+        "endChar": 43
+      },
+      "revId": "88c66a6dc43981adfc222f7cbc3fa7c61acf38b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
