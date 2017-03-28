@@ -19,10 +19,9 @@ package com.android.server.wifi.aware;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -39,7 +38,6 @@ import android.net.wifi.aware.PublishConfig;
 import android.net.wifi.aware.SubscribeConfig;
 import android.os.HandlerThread;
 import android.os.IBinder;
-import android.os.Looper;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
@@ -120,7 +118,7 @@ public class WifiAwareServiceImplTest {
         mDut = new WifiAwareServiceImplSpy(mContextMock);
         mDut.fakeUid = mDefaultUid;
         mDut.start(mHandlerThreadMock, mAwareStateManagerMock);
-        verify(mAwareStateManagerMock).start(eq(mContextMock), any(Looper.class));
+        verify(mAwareStateManagerMock).start(eq(mContextMock), any());
     }
 
     /**
@@ -260,7 +258,7 @@ public class WifiAwareServiceImplTest {
         for (int i = 0; i < loopCount; ++i) {
             mDut.connect(mBinderMock, "", mCallbackMock, null, false);
             inOrder.verify(mAwareStateManagerMock).connect(clientIdCaptor.capture(), anyInt(),
-                    anyInt(), anyString(), eq(mCallbackMock), any(ConfigRequest.class), eq(false));
+                    anyInt(), any(), eq(mCallbackMock), any(), eq(false));
             int id = clientIdCaptor.getValue();
             if (i != 0) {
                 assertTrue("Client ID incrementing", id > prevId);
