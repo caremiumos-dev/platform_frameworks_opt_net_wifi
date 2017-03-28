@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3b912da_ad50b416",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2194,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-28T05:07:48Z",
+      "side": 1,
+      "message": "my main concern is that we are going to mask the root cause of this.  It is more than just sending it when the screen is on - we also get it when other modes are operating.  this is definitely a bandaid - just don\u0027t want the root cause to fester",
+      "range": {
+        "startLine": 2193,
+        "startChar": 12,
+        "endLine": 2194,
+        "endChar": 29
+      },
+      "revId": "8bf815d79698bde8c007fa5f21593069a4bdcdb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
