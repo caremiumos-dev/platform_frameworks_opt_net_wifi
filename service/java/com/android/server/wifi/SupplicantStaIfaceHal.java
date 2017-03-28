@@ -354,7 +354,7 @@ public class SupplicantStaIfaceHal {
      * @param config Config corresponding to the network.
      * @return SupplicantStaNetwork of the added network in wpa_supplicant.
      */
-    private SupplicantStaNetworkHal addNetworkAndSaveConfig(WifiConfiguration config) {
+    private SupplicantStaNetworkHal addNetwork(WifiConfiguration config) {
         logi("addSupplicantStaNetwork via HIDL");
         if (config == null) {
             loge("Cannot add NULL network!");
@@ -365,13 +365,7 @@ public class SupplicantStaIfaceHal {
             loge("Failed to add a network!");
             return null;
         }
-        boolean saveSuccess = false;
-        try {
-            saveSuccess = network.saveWifiConfiguration(config);
-        } catch (IllegalArgumentException e) {
-            Log.e(TAG, "Exception while saving config params: " + config, e);
-        }
-        if (!saveSuccess) {
+        if (!network.saveWifiConfiguration(config)) {
             loge("Failed to save variables for: " + config.configKey());
             if (!removeAllNetworks()) {
                 loge("Failed to remove all networks on failure.");
@@ -401,7 +395,7 @@ public class SupplicantStaIfaceHal {
             loge("Failed to remove existing networks");
             return false;
         }
-        mCurrentNetwork = addNetworkAndSaveConfig(config);
+        mCurrentNetwork = addNetwork(config);
         if (mCurrentNetwork == null) {
             loge("Failed to add/save network configuration: " + config.configKey());
             return false;
@@ -760,26 +754,21 @@ public class SupplicantStaIfaceHal {
      * @return true if request is sent successfully, false otherwise.
      */
     public boolean setWpsDeviceType(String typeStr) {
-        try {
-            Matcher match = WPS_DEVICE_TYPE_PATTERN.matcher(typeStr);
-            if (!match.find() || match.groupCount() != 3) {
-                Log.e(TAG, "Malformed WPS device type " + typeStr);
-                return false;
-            }
-            short categ = Short.parseShort(match.group(1));
-            byte[] oui = NativeUtil.hexStringToByteArray(match.group(2));
-            short subCateg = Short.parseShort(match.group(3));
-
-            byte[] bytes = new byte[8];
-            ByteBuffer byteBuffer = ByteBuffer.wrap(bytes).order(ByteOrder.BIG_ENDIAN);
-            byteBuffer.putShort(categ);
-            byteBuffer.put(oui);
-            byteBuffer.putShort(subCateg);
-            return setWpsDeviceType(bytes);
-        } catch (IllegalArgumentException e) {
-            Log.e(TAG, "Illegal argument " + typeStr, e);
+        Matcher match = WPS_DEVICE_TYPE_PATTERN.matcher(typeStr);
+        if (!match.find() || match.groupCount() != 3) {
+            Log.e(TAG, "Malformed WPS device type " + typeStr);
             return false;
         }
+        short categ = Short.parseShort(match.group(1));
+        byte[] oui = NativeUtil.hexStringToByteArray(match.group(2));
+        short subCateg = Short.parseShort(match.group(3));
+
+        byte[] bytes = new byte[8];
+        ByteBuffer byteBuffer = ByteBuffer.wrap(bytes).order(ByteOrder.BIG_ENDIAN);
+        byteBuffer.putShort(categ);
+        byteBuffer.put(oui);
+        byteBuffer.putShort(subCateg);
+        return setWpsDeviceType(bytes);
     }
 
     private boolean setWpsDeviceType(byte[/* 8 */] type) {
@@ -989,12 +978,7 @@ public class SupplicantStaIfaceHal {
      * @return true if request is sent successfully, false otherwise.
      */
     public boolean initiateTdlsDiscover(String macAddress) {
-        try {
-            return initiateTdlsDiscover(NativeUtil.macAddressToByteArray(macAddress));
-        } catch (IllegalArgumentException e) {
-            Log.e(TAG, "Illegal argument " + macAddress, e);
-            return false;
-        }
+        return initiateTdlsDiscover(NativeUtil.macAddressToByteArray(macAddress));
     }
     /** See ISupplicantStaIface.hal for documentation */
     private boolean initiateTdlsDiscover(byte[/* 6 */] macAddress) {
@@ -1018,12 +1002,7 @@ public class SupplicantStaIfaceHal {
      * @return true if request is sent successfully, false otherwise.
      */
     public boolean initiateTdlsSetup(String macAddress) {
-        try {
-            return initiateTdlsSetup(NativeUtil.macAddressToByteArray(macAddress));
-        } catch (IllegalArgumentException e) {
-            Log.e(TAG, "Illegal argument " + macAddress, e);
-            return false;
-        }
+        return initiateTdlsSetup(NativeUtil.macAddressToByteArray(macAddress));
     }
     /** See ISupplicantStaIface.hal for documentation */
     private boolean initiateTdlsSetup(byte[/* 6 */] macAddress) {
@@ -1046,12 +1025,7 @@ public class SupplicantStaIfaceHal {
      * @return true if request is sent successfully, false otherwise.
      */
     public boolean initiateTdlsTeardown(String macAddress) {
-        try {
-            return initiateTdlsTeardown(NativeUtil.macAddressToByteArray(macAddress));
-        } catch (IllegalArgumentException e) {
-            Log.e(TAG, "Illegal argument " + macAddress, e);
-            return false;
-        }
+        return initiateTdlsTeardown(NativeUtil.macAddressToByteArray(macAddress));
     }
 
     /** See ISupplicantStaIface.hal for documentation */
@@ -1079,13 +1053,8 @@ public class SupplicantStaIfaceHal {
      */
     public boolean initiateAnqpQuery(String bssid, ArrayList<Short> infoElements,
                                      ArrayList<Integer> hs20SubTypes) {
-        try {
-            return initiateAnqpQuery(
-                    NativeUtil.macAddressToByteArray(bssid), infoElements, hs20SubTypes);
-        } catch (IllegalArgumentException e) {
-            Log.e(TAG, "Illegal argument " + bssid, e);
-            return false;
-        }
+        return initiateAnqpQuery(
+                NativeUtil.macAddressToByteArray(bssid), infoElements, hs20SubTypes);
     }
 
     /** See ISupplicantStaIface.hal for documentation */
@@ -1113,12 +1082,7 @@ public class SupplicantStaIfaceHal {
      * @return true if request is sent successfully, false otherwise.
      */
     public boolean initiateHs20IconQuery(String bssid, String fileName) {
-        try {
-            return initiateHs20IconQuery(NativeUtil.macAddressToByteArray(bssid), fileName);
-        } catch (IllegalArgumentException e) {
-            Log.e(TAG, "Illegal argument " + bssid, e);
-            return false;
-        }
+        return initiateHs20IconQuery(NativeUtil.macAddressToByteArray(bssid), fileName);
     }
 
     /** See ISupplicantStaIface.hal for documentation */
@@ -1344,12 +1308,7 @@ public class SupplicantStaIfaceHal {
      */
     public boolean startWpsRegistrar(String bssidStr, String pin) {
         if (TextUtils.isEmpty(bssidStr) || TextUtils.isEmpty(pin)) return false;
-        try {
-            return startWpsRegistrar(NativeUtil.macAddressToByteArray(bssidStr), pin);
-        } catch (IllegalArgumentException e) {
-            Log.e(TAG, "Illegal argument " + bssidStr, e);
-            return false;
-        }
+        return startWpsRegistrar(NativeUtil.macAddressToByteArray(bssidStr), pin);
     }
 
     /** See ISupplicantStaIface.hal for documentation */
@@ -1374,12 +1333,7 @@ public class SupplicantStaIfaceHal {
      * @return true if request is sent successfully, false otherwise.
      */
     public boolean startWpsPbc(String bssidStr) {
-        try {
-            return startWpsPbc(NativeUtil.macAddressToByteArray(bssidStr));
-        } catch (IllegalArgumentException e) {
-            Log.e(TAG, "Illegal argument " + bssidStr, e);
-            return false;
-        }
+        return startWpsPbc(NativeUtil.macAddressToByteArray(bssidStr));
     }
 
     /** See ISupplicantStaIface.hal for documentation */
@@ -1425,12 +1379,7 @@ public class SupplicantStaIfaceHal {
      * @return new pin generated on success, null otherwise.
      */
     public String startWpsPinDisplay(String bssidStr) {
-        try {
-            return startWpsPinDisplay(NativeUtil.macAddressToByteArray(bssidStr));
-        } catch (IllegalArgumentException e) {
-            Log.e(TAG, "Illegal argument " + bssidStr, e);
-            return null;
-        }
+        return startWpsPinDisplay(NativeUtil.macAddressToByteArray(bssidStr));
     }
 
     /** See ISupplicantStaIface.hal for documentation */

@@ -601,7 +601,7 @@ public class SupplicantP2pIfaceHal {
             } catch (RemoteException e) {
                 Log.e(TAG, "ISupplicantP2pIface exception: " + e);
                 supplicantServiceDiedHandler();
-            } catch (IllegalArgumentException e) {
+            } catch (Exception e) {
                 Log.e(TAG, "Could not decode SSID.", e);
                 return false;
             }
@@ -1868,36 +1868,31 @@ public class SupplicantP2pIfaceHal {
      * @return true if request is sent successfully, false otherwise.
      */
     public boolean setWpsDeviceType(String typeStr) {
-        try {
-            Matcher match = WPS_DEVICE_TYPE_PATTERN.matcher(typeStr);
-            if (!match.find() || match.groupCount() != 3) {
-                Log.e(TAG, "Malformed WPS device type " + typeStr);
-                return false;
-            }
-            short categ = Short.parseShort(match.group(1));
-            byte[] oui = NativeUtil.hexStringToByteArray(match.group(2));
-            short subCateg = Short.parseShort(match.group(3));
-
-            byte[] bytes = new byte[8];
-            ByteBuffer byteBuffer = ByteBuffer.wrap(bytes).order(ByteOrder.BIG_ENDIAN);
-            byteBuffer.putShort(categ);
-            byteBuffer.put(oui);
-            byteBuffer.putShort(subCateg);
-            synchronized (mLock) {
-                if (!checkSupplicantP2pIfaceAndLogFailure("setWpsDeviceType")) return false;
-                SupplicantResult<Void> result = new SupplicantResult(
-                        "setWpsDeviceType(" + typeStr + ")");
-                try {
-                    result.setResult(mISupplicantP2pIface.setWpsDeviceType(bytes));
-                } catch (RemoteException e) {
-                    Log.e(TAG, "ISupplicantP2pIface exception: " + e);
-                    supplicantServiceDiedHandler();
-                }
-                return result.isSuccess();
-            }
-        } catch (IllegalArgumentException e) {
-            Log.e(TAG, "Illegal argument " + typeStr, e);
+        Matcher match = WPS_DEVICE_TYPE_PATTERN.matcher(typeStr);
+        if (!match.find() || match.groupCount() != 3) {
+            Log.e(TAG, "Malformed WPS device type " + typeStr);
             return false;
+        }
+        short categ = Short.parseShort(match.group(1));
+        byte[] oui = NativeUtil.hexStringToByteArray(match.group(2));
+        short subCateg = Short.parseShort(match.group(3));
+
+        byte[] bytes = new byte[8];
+        ByteBuffer byteBuffer = ByteBuffer.wrap(bytes).order(ByteOrder.BIG_ENDIAN);
+        byteBuffer.putShort(categ);
+        byteBuffer.put(oui);
+        byteBuffer.putShort(subCateg);
+        synchronized (mLock) {
+            if (!checkSupplicantP2pIfaceAndLogFailure("setWpsDeviceType")) return false;
+            SupplicantResult<Void> result = new SupplicantResult(
+                    "setWpsDeviceType(" + typeStr + ")");
+            try {
+                result.setResult(mISupplicantP2pIface.setWpsDeviceType(bytes));
+            } catch (RemoteException e) {
+                Log.e(TAG, "ISupplicantP2pIface exception: " + e);
+                supplicantServiceDiedHandler();
+            }
+            return result.isSuccess();
         }
     }
 
@@ -2001,9 +1996,6 @@ public class SupplicantP2pIfaceHal {
             } catch (RemoteException e) {
                 Log.e(TAG, "ISupplicantP2pIface exception: " + e);
                 supplicantServiceDiedHandler();
-            } catch (IllegalArgumentException e) {
-                Log.e(TAG, "Illegal argument " + selectMessage, e);
-                return false;
             }
             return result.isSuccess();
         }
@@ -2027,9 +2019,6 @@ public class SupplicantP2pIfaceHal {
             } catch (RemoteException e) {
                 Log.e(TAG, "ISupplicantP2pIface exception: " + e);
                 supplicantServiceDiedHandler();
-            } catch (IllegalArgumentException e) {
-                Log.e(TAG, "Illegal argument " + requestMessage, e);
-                return false;
             }
             return result.isSuccess();
         }
@@ -2056,18 +2045,15 @@ public class SupplicantP2pIfaceHal {
             }
             SupplicantResult<Void> result = new SupplicantResult(
                     "setClientList(" + networkId + ", " + clientListStr + ")");
+            ArrayList<byte[]> clients = new ArrayList<>();
+            for (String clientStr : Arrays.asList(clientListStr.split("\\s+"))) {
+                clients.add(NativeUtil.macAddressToByteArray(clientStr));
+            }
             try {
-                ArrayList<byte[]> clients = new ArrayList<>();
-                for (String clientStr : Arrays.asList(clientListStr.split("\\s+"))) {
-                    clients.add(NativeUtil.macAddressToByteArray(clientStr));
-                }
                 result.setResult(network.setClientList(clients));
             } catch (RemoteException e) {
                 Log.e(TAG, "ISupplicantP2pIface exception: " + e);
                 supplicantServiceDiedHandler();
-            } catch (IllegalArgumentException e) {
-                Log.e(TAG, "Illegal argument " + clientListStr, e);
-                return false;
             }
             return result.isSuccess();
         }

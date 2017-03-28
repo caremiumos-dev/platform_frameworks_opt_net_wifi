@@ -1189,14 +1189,11 @@ public class WifiVendorHal {
     static ArrayList<RttConfig> halRttConfigArrayFromFrameworkRttParamsArray(
             RttManager.RttParams[] params) {
         final int length = params.length;
-        ArrayList<RttConfig> configs = new ArrayList<RttConfig>(length);
+        ArrayList<RttConfig> config = new ArrayList<RttConfig>(length);
         for (int i = 0; i < length; i++) {
-            RttConfig config = halRttConfigFromFrameworkRttParams(params[i]);
-            if (config != null) {
-                configs.add(config);
-            }
+            config.add(halRttConfigFromFrameworkRttParams(params[i]));
         }
-        return configs;
+        return config;
     }
 
     /**
@@ -1207,13 +1204,7 @@ public class WifiVendorHal {
      * @return success indication
      */
     public boolean requestRtt(RttManager.RttParams[] params, WifiNative.RttEventHandler handler) {
-        ArrayList<RttConfig> rttConfigs;
-        try {
-            rttConfigs = halRttConfigArrayFromFrameworkRttParamsArray(params);
-        } catch (IllegalArgumentException e) {
-            mLog.err("Illegal argument for RTT request").c(e.toString()).flush();
-            return false;
-        }
+        ArrayList<RttConfig> rttConfigs = halRttConfigArrayFromFrameworkRttParamsArray(params);
         synchronized (sLock) {
             if (mIWifiRttController == null) return boolResult(false);
             if (mRttCmdId != 0) return boolResult(false);
@@ -2294,9 +2285,6 @@ public class WifiVendorHal {
                 if (!ok(status)) return false;
             } catch (RemoteException e) {
                 handleRemoteException(e);
-                return false;
-            } catch (IllegalArgumentException e) {
-                mLog.err("Illegal argument for roaming configuration").c(e.toString()).flush();
                 return false;
             }
             return true;
