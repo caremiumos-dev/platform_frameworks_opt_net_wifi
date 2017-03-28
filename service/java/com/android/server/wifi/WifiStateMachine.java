@@ -2187,6 +2187,16 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         }
     }
 
+    @Override
+    protected boolean recordLogRec(Message msg) {
+        switch (msg.what) {
+            case CMD_RSSI_POLL:
+                return false;
+            default:
+                return true;
+        }
+    }
+
     /**
      * Return the additional string to be logged by LogRec, default
      *
