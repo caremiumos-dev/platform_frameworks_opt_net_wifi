@@ -22,6 +22,30 @@
       "revId": "9b4c9366a784c85eedc0ffde41f3e9a36c34ace4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea83071b_4c6ac768",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5124,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-28T16:41:26Z",
+      "side": 1,
+      "message": "Nope, are you looking at a rebase delta?",
+      "parentUuid": "69d30af4_d2683144",
+      "range": {
+        "startLine": 5117,
+        "startChar": 0,
+        "endLine": 5124,
+        "endChar": 21
+      },
+      "revId": "9b4c9366a784c85eedc0ffde41f3e9a36c34ace4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
