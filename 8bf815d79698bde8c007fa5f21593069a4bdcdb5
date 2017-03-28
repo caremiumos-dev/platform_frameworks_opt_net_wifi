@@ -22,6 +22,30 @@
       "revId": "8bf815d79698bde8c007fa5f21593069a4bdcdb5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efc1ce56_948beb20",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2194,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-03-28T18:41:09Z",
+      "side": 1,
+      "message": "We have bug 27462055 for the root cause. (That bugs is for determining if we actually need all this polling. And if not, removing it.)\n\nNote that, in the screen-off case, RSSI polls don\u0027t cause much log spam. I could have recordLogRec return true for RSSI polls when the screen is off, but that seems a bit too special-case.",
+      "parentUuid": "f3b912da_ad50b416",
+      "range": {
+        "startLine": 2193,
+        "startChar": 12,
+        "endLine": 2194,
+        "endChar": 29
+      },
+      "revId": "8bf815d79698bde8c007fa5f21593069a4bdcdb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
