@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccdd215e_a0e814a3",
+        "filename": "service/java/com/android/server/wifi/NetworkUpdateResult.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-28T05:15:22Z",
+      "side": 1,
+      "message": "i guess not for this cl, but why aren\u0027t we using the naming conventions? (mNetId)",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "cdd56a55709407c9efe2a24b4ed25666e2e8318e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
