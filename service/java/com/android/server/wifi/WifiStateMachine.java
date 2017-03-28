@@ -4168,9 +4168,6 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             intent.putExtra(WifiManager.EXTRA_SCAN_AVAILABLE, WIFI_STATE_ENABLED);
             mContext.sendStickyBroadcastAsUser(intent, UserHandle.ALL);
 
-            // Enable link layer stats gathering
-            mWifiNative.setWifiLinkLayerStats("wlan0", 1);
-
             // Disable wpa_supplicant from auto reconnecting.
             mWifiNative.enableStaAutoReconnect(false);
             // STA has higher priority over P2P
