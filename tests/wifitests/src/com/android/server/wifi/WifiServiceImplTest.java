@@ -245,4 +245,22 @@ public class WifiServiceImplTest {
         when(mWifiStateMachine.syncGetWifiApConfiguration()).thenReturn(apConfig);
         assertEquals(apConfig, mWifiServiceImpl.getWifiApConfiguration());
     }
+
+    /**
+     * Verify that the call to startLocalOnlyHotspot throws the UnsupportedOperationException
+     * until the implementation is complete.
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void testStartLocalOnlyHotspotNotSupported() {
+        mWifiServiceImpl.startLocalOnlyHotspot();
+    }
+
+    /**
+     * Verify that the call to stopLocalOnlyHotspot throws the UnsupportedOperationException until
+     * the implementation is complete.
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void testStopLocalOnlyHotspotNotSupported() {
+        mWifiServiceImpl.stopLocalOnlyHotspot();
+    }
 }

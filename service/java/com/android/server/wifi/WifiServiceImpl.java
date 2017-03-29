@@ -680,9 +680,8 @@ public class WifiServiceImpl extends IWifiManager.Stub {
 
     /**
      * see {@link android.net.wifi.WifiManager#startSoftAp(WifiConfiguration)}
-     * @param wifiConfig SSID, security and channel details as
-     *        part of WifiConfiguration
-     * @return true if softap start was triggered
+     * @param wifiConfig SSID, security and channel details as part of WifiConfiguration
+     * @return {@code true} if softap start was triggered
      * @throws SecurityException if the caller does not have permission to start softap
      */
     @Override
@@ -713,7 +712,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
 
     /**
      * see {@link android.net.wifi.WifiManager#stopSoftAp()}
-     * @return true if softap stop was triggered
+     * @return {@code true} if softap stop was triggered
      * @throws SecurityException if the caller does not have permission to stop softap
      */
     @Override
@@ -734,6 +733,33 @@ public class WifiServiceImpl extends IWifiManager.Stub {
 
         mWifiController.obtainMessage(CMD_SET_AP, 0, 0).sendToTarget();
         return true;
+    }
+
+    /**
+     * see {@link WifiManager#startLocalOnlyHotspot()}
+     *
+     * @return WifiConfiguration generated temporary configuration for SoftAp mode.  Returns null if
+     * the hotspot cannot be started (incompatible mode)
+     *
+     * @throws SecurityException if the caller does not have permission to start a Local Only
+     * Hotspot.
+     */
+    @Override
+    public WifiConfiguration startLocalOnlyHotspot() {
+        throw new UnsupportedOperationException("LocalOnlyHotspot is still in development");
+    }
+
+    /**
+     * see {@link WifiManager#stopLocalOnlyHotspot()}
+     *
+     * @return {@code true} if the caller successfully unregistered their LocalOnlyHotspot request.
+     *
+     * @throws SecurityException if the caller does not have permission to stop a Local Only
+     * Hotspot.
+     */
+    @Override
+    public boolean stopLocalOnlyHotspot() {
+        throw new UnsupportedOperationException("LocalOnlyHotspot is still in development");
     }
 
     /**
