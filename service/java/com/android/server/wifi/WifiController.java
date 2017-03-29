@@ -930,4 +930,32 @@ public class WifiController extends StateMachine {
         pw.println("mIdleMillis " + mIdleMillis);
         pw.println("mSleepPolicy " + mSleepPolicy);
     }
+
+    /**
+     * Helper method so we can send messages to WifiController.
+     */
+    public void obtainMessageAndSend(int what) {
+        obtainMessage(what).sendToTarget();
+    }
+
+    /**
+     * Helper method so we can send messages to WifiController with what and arg1.
+     */
+    public void obtainMessageAndSend(int what, int arg1) {
+        obtainMessage(what, arg1).sendToTarget();
+    }
+
+    /**
+     * Helper method so we can send messages to WifiController with what, arg1 and arg2.
+     */
+    public void obtainMessageAndSend(int what, int arg1, int arg2) {
+        obtainMessage(what, arg1, arg2).sendToTarget();
+    }
+
+    /**
+     * Helper method so we can send messages to WifiController with what, arg1, arg2 and an object.
+     */
+    public void obtainMessageAndSend(int what, int arg1, int arg2, Object object) {
+        obtainMessage(what, arg1, arg2, object).sendToTarget();
+    }
 }
