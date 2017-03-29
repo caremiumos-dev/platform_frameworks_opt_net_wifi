@@ -747,6 +747,13 @@ public class WifiServiceImpl extends IWifiManager.Stub {
      */
     @Override
     public WifiConfiguration startLocalOnlyHotspot() {
+        // first check if the caller has permission to start a local only hotspot
+        // need to check for WIFI_STATE_CHANGE - and think about others
+        enforceChangePermission();
+        final int uid = Binder.getCallingUid();
+
+        mLog.trace("startLocalOnlyHotspot uid=%").c(uid).flush();
+
         throw new UnsupportedOperationException("LocalOnlyHotspot is still in development");
     }
 
@@ -761,6 +768,11 @@ public class WifiServiceImpl extends IWifiManager.Stub {
      */
     @Override
     public boolean stopLocalOnlyHotspot() {
+        // first check if the caller has permission to stop a local only hotspot
+        enforceChangePermission();
+        final int uid = Binder.getCallingUid();
+
+        mLog.trace("stopLocalOnlyHotspot uid=%").c(uid).flush();
         throw new UnsupportedOperationException("LocalOnlyHotspot is still in development");
     }
 
@@ -774,6 +786,12 @@ public class WifiServiceImpl extends IWifiManager.Stub {
      */
     @Override
     public WifiConfiguration getLocalOnlyHotspotConfig() {
+        // first check if the caller has permission to start a local only hotspot to retrieve the
+        // config
+        enforceChangePermission();
+        final int uid = Binder.getCallingUid();
+
+        mLog.trace("getLocalOnlyHotspotConfig uid=%").c(uid).flush();
         throw new UnsupportedOperationException("LocalOnlyHotspot is still in development");
     }
 
