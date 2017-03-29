@@ -16,6 +16,7 @@
 
 package com.android.server.wifi;
 
+import static com.android.server.connectivity.tethering.IControlsTethering.STATE_LOCAL_HOTSPOT;
 import static com.android.server.connectivity.tethering.IControlsTethering.STATE_TETHERED;
 import static com.android.server.wifi.WifiController.CMD_AIRPLANE_TOGGLED;
 import static com.android.server.wifi.WifiController.CMD_BATTERY_CHANGED;
@@ -82,6 +83,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Slog;
 
+import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.telephony.IccCardConstants;
 import com.android.internal.telephony.PhoneConstants;
@@ -108,7 +110,10 @@ import java.security.cert.PKIXParameters;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * WifiService handles remote WiFi operation requests by implementing
@@ -163,6 +168,11 @@ public class WifiServiceImpl extends IWifiManager.Stub {
 
     private final boolean mPermissionReviewRequired;
     private final FrameworkFacade mFrameworkFacade;
+
+    @GuardedBy("mLocalOnlyHotspotRequests")
+    private final HashMap<Integer, LocalOnlyHotspotRequestInfo> mLocalOnlyHotspotRequests;
+    @GuardedBy("mLocalOnlyHotspotRequests")
+    private WifiConfiguration mLocalOnlyHotspotConfig = null;
 
     /**
      * Handles client connections
@@ -315,6 +325,22 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         }
     }
 
+    /**
+     * Callback for use with LocalOnlyHotspot to unregister requesting applications upon death.
+     *
+     * @hide
+     */
+    public final class LocalOnlyRequestorCallback
+            implements LocalOnlyHotspotRequestInfo.RequestingApplicationDeathCallback {
+        /**
+         * Called with requesting app has died.
+         */
+        @Override
+        public void onLocalOnlyHotspotRequestorDeath(LocalOnlyHotspotRequestInfo requestor) {
+            unregisterCallingAppAndStopLocalOnlyHotspot(requestor);
+        };
+    }
+
     WifiStateMachineHandler mWifiStateMachineHandler;
     private WifiController mWifiController;
     private final WifiLockManager mWifiLockManager;
@@ -349,6 +375,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         mWifiPermissionsUtil = mWifiInjector.getWifiPermissionsUtil();
         mLog = mWifiInjector.makeLog(TAG);
         mFrameworkFacade = wifiInjector.getFrameworkFacade();
+        mLocalOnlyHotspotRequests = new HashMap<>();
         enableVerboseLoggingInternal(getVerboseLoggingLevel());
     }
 
@@ -703,9 +730,13 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         return startSoftApInternal(wifiConfig, STATE_TETHERED);
     }
 
+    /**
+     * Internal method to start softap mode. Callers of this method should have already checked
+     * proper permissions beyond the NetworkStack permission.
+     */
     private boolean startSoftApInternal(WifiConfiguration wifiConfig, int mode) {
         mLog.trace("startSoftApInternal uid=% mode=%")
-                .c(Binder.getCallingUid()).c(mode.description).flush();
+                .c(Binder.getCallingUid()).c(mode).flush();
 
         // null wifiConfig is a meaningful input for CMD_SET_AP
         if (wifiConfig == null || isValid(wifiConfig)) {
@@ -746,7 +777,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
             mLocalOnlyHotspotRequests.clear();
             mLocalOnlyHotspotConfig = null;
         }
-        mWifiController.obtainMessageAndSend(CMD_SET_AP, 0, 0);
+        mWifiController.sendMessage(CMD_SET_AP, 0, 0);
         return true;
     }
 
@@ -768,16 +799,68 @@ public class WifiServiceImpl extends IWifiManager.Stub {
 
         mLog.trace("startLocalOnlyHotspot uid=%").c(uid).flush();
 
-        // check current mode to see if we can start localOnlyHotspot
-        boolean apDisabled =
-                mWifiStateMachine.syncGetWifiApState() == WifiManager.WIFI_AP_STATE_DISABLED;
-        if (!apDisabled) {
-            // Tethering is enabled, cannot start LocalOnlyHotspot
-            mLog.trace("Cannot start localOnlyHotspot when WiFi Tethering is active.");
-            return null;
-        }
+        synchronized (mLocalOnlyHotspotRequests) {
+            mLog.trace("LocalOnlyHotspot: requestors=% config.ssid:%")
+                    .c(mLocalOnlyHotspotRequests.size())
+                    .c(mLocalOnlyHotspotConfig == null
+                            ? "NULL" : mLocalOnlyHotspotConfig.toString())
+                    .flush();
 
-        throw new UnsupportedOperationException("LocalOnlyHotspot is still in development");
+            // now make sure the call is possible given the current mode...  return null if not
+            boolean apDisabled =
+                    mWifiStateMachine.syncGetWifiApState() == WifiManager.WIFI_AP_STATE_DISABLED;
+            if (!apDisabled && mLocalOnlyHotspotRequests.isEmpty()) {
+                // Tethering is enabled, cannot start LocalOnlyHotspot
+                mLog.trace("LocalOnlyHotspot: Cannot start when WiFi Tethering is active.");
+                return null;
+            }
+
+            // sanity check on state
+            if (apDisabled && mLocalOnlyHotspotRequests.size() > 0) {
+                // softap is disabled, but we have outstanding requests...
+                mLog.trace("LocalOnlyHotspot: softap disabled but we have % requests.")
+                        .c(mLocalOnlyHotspotRequests.size()).flush();
+                Iterator<Map.Entry<Integer, LocalOnlyHotspotRequestInfo>> it =
+                                        mLocalOnlyHotspotRequests.entrySet().iterator();
+                while (it.hasNext()) {
+                    LocalOnlyHotspotRequestInfo request = it.next().getValue();
+                    request.unlinkDeathRecipient();
+                }
+                mLocalOnlyHotspotRequests.clear();
+                mLocalOnlyHotspotConfig = null;
+                return null;
+            }
+
+            // if we don't have any requests, we need to create a config
+            if (mLocalOnlyHotspotConfig == null) {
+                mLocalOnlyHotspotConfig =
+                        WifiApConfigStore.generateLocalOnlyHotspotConfig(mContext);
+            }
+            LocalOnlyHotspotRequestInfo request = mLocalOnlyHotspotRequests.get(uid);
+            if (request != null) {
+                // this caller is already registered, return the config
+                return mLocalOnlyHotspotConfig;
+            }
+
+            // add the caller to the request tracker
+            request = new LocalOnlyHotspotRequestInfo(
+                    new Binder(), new LocalOnlyRequestorCallback());
+            mLocalOnlyHotspotRequests.put(uid, request);
+
+            if (mLocalOnlyHotspotRequests.size() == 1) {
+                // we need to start up the hotspot!
+                long identity = Binder.clearCallingIdentity();
+                try {
+                    if (!startSoftApInternal(mLocalOnlyHotspotConfig, STATE_LOCAL_HOTSPOT)) {
+                        return null;
+                    }
+                } finally {
+                    Binder.restoreCallingIdentity(identity);
+                }
+            }
+            // return the config
+            return mLocalOnlyHotspotConfig;
+        } // end synchronized
     }
 
     /**
@@ -797,10 +880,41 @@ public class WifiServiceImpl extends IWifiManager.Stub {
 
         mLog.trace("stopLocalOnlyHotspot uid=%").c(uid).flush();
 
-        // will add check to see if we have an entry tracking this requestor.  If not, return false
-        // here.
+        synchronized (mLocalOnlyHotspotRequests) {
+            // was the caller already registered?  check request tracker - return false if not
+            LocalOnlyHotspotRequestInfo requestInfo = mLocalOnlyHotspotRequests.get(uid);
+            if (requestInfo == null) {
+                return false;
+            }
+            requestInfo.unlinkDeathRecipient();
+            return unregisterCallingAppAndStopLocalOnlyHotspot(requestInfo);
+        } // end synchronized
+    }
 
-        throw new UnsupportedOperationException("LocalOnlyHotspot is still in development");
+    private boolean unregisterCallingAppAndStopLocalOnlyHotspot(
+            LocalOnlyHotspotRequestInfo requestor) {
+        mLog.trace("unregisterCallingAppAndStopLocalOnlyHotspot uid=%")
+                .c(requestor.uid).flush();
+
+        synchronized (mLocalOnlyHotspotRequests) {
+            boolean removed = true;
+            if (mLocalOnlyHotspotRequests.remove(requestor.uid) == null) {
+                mLog.trace("LocalOnlyHotspotRequestInfo not found to remove");
+                removed = false;
+            }
+
+            if (mLocalOnlyHotspotRequests.isEmpty()) {
+                mLocalOnlyHotspotConfig = null;
+                // if that was the last caller, then call stopSoftAp as WifiService
+                long identity = Binder.clearCallingIdentity();
+                try {
+                    return stopSoftApInternal();
+                } finally {
+                    Binder.restoreCallingIdentity(identity);
+                }
+            }
+            return removed;
+        }
     }
 
     /**
