@@ -733,8 +733,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
 
     /**
      * see {@link android.net.wifi.WifiManager#startSoftAp(WifiConfiguration)}
-     * @param wifiConfig SSID, security and channel details as
-     *        part of WifiConfiguration
+     * @param wifiConfig SSID, security and channel details as part of WifiConfiguration
      * @return {@code true} if softap start was triggered
      * @throws SecurityException if the caller does not have permission to start softap
      */
@@ -789,6 +788,49 @@ public class WifiServiceImpl extends IWifiManager.Stub {
 
         mWifiController.sendMessage(CMD_SET_AP, 0, 0);
         return true;
+    }
+
+    /**
+     * see {@link WifiManager#startLocalOnlyHotspot(LocalOnlyHotspotCallback)}
+     *
+     * return WifiConfiguration generated temporary configuration for SoftAp mode.
+     *
+     * @throws SecurityException if the caller does not have permission to start a Local Only
+     * Hotspot.
+     * @throws IllegalStateException if the caller attempts to start the LocalOnlyHotspot while they
+     * have an outstanding request.
+     */
+    @Override
+    public WifiConfiguration startLocalOnlyHotspot() {
+        throw new UnsupportedOperationException("LocalOnlyHotspot is still in development");
+    }
+
+    /**
+     * see {@link WifiManager#stopLocalOnlyHotspot()}
+     *
+     * @throws SecurityException if the caller does not have permission to stop a Local Only
+     * Hotspot.
+     */
+    @Override
+    public void stopLocalOnlyHotspot() {
+        throw new UnsupportedOperationException("LocalOnlyHotspot is still in development");
+    }
+
+    /**
+     * see {@link WifiManager#watchLocalOnlyHotspot(LocalOnlyHotspotObserver)}
+     *
+     */
+    @Override
+    public boolean startWatchLocalOnlyHotspot() {
+        throw new UnsupportedOperationException("LocalOnlyHotspot is still in development");
+    }
+
+    /**
+     * see {@link WifiManager#unregisterLocalOnlyHotspotObserver()}
+     */
+    @Override
+    public boolean stopWatchLocalOnlyHotspot() {
+        throw new UnsupportedOperationException("LocalOnlyHotspot is still in development");
     }
 
     /**
