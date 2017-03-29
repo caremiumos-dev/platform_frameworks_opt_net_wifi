@@ -582,6 +582,32 @@ public class WifiServiceImplTest {
      */
     @Test(expected = UnsupportedOperationException.class)
     public void testStartLocalOnlyHotspotNotSupported() {
+        // allow test to proceed without a permission check failure
+        mWifiServiceImpl.startLocalOnlyHotspot(mAppMessenger, mAppBinder);
+    }
+
+    /**
+     * Verify that a call to startLocalOnlyHotspot throws a SecurityException if the caller does not
+     * have the CHANGE_WIFI_STATE permission.
+     */
+    @Test(expected = SecurityException.class)
+    public void testStartLocalOnlyHotspotThrowsSecurityExceptionWithoutCorrectPermission() {
+        doThrow(new SecurityException()).when(mContext)
+                .enforceCallingOrSelfPermission(eq(android.Manifest.permission.CHANGE_WIFI_STATE),
+                                                eq("WifiService"));
+        mWifiServiceImpl.startLocalOnlyHotspot(mAppMessenger, mAppBinder);
+    }
+
+    /**
+     * Verify that a call to startLocalOnlyHotspot throws a SecurityException if the caller does not
+     * have Location permission.
+     */
+    @Test(expected = SecurityException.class)
+    public void testStartLocalOnlyHotspotThrowsSecurityExceptionWithoutLocationPermission() {
+        when(mContext.getOpPackageName()).thenReturn(TEST_PACKAGE_NAME);
+        doThrow(new SecurityException())
+                .when(mWifiPermissionsUtil).enforceLocationPermission(eq(TEST_PACKAGE_NAME),
+                                                                      anyInt());
         mWifiServiceImpl.startLocalOnlyHotspot(mAppMessenger, mAppBinder);
     }
 
@@ -591,6 +617,19 @@ public class WifiServiceImplTest {
      */
     @Test(expected = UnsupportedOperationException.class)
     public void testStopLocalOnlyHotspotNotSupported() {
+        // allow test to proceed without a permission check failure
+        mWifiServiceImpl.stopLocalOnlyHotspot();
+    }
+
+    /**
+     * Verify that a call to stopLocalOnlyHotspot throws a SecurityException if the caller does not
+     * have the CHANGE_WIFI_STATE permission.
+     */
+    @Test(expected = SecurityException.class)
+    public void testStopLocalOnlyHotspotThrowsSecurityExceptionWithoutCorrectPermission() {
+        doThrow(new SecurityException()).when(mContext)
+                .enforceCallingOrSelfPermission(eq(android.Manifest.permission.CHANGE_WIFI_STATE),
+                                                eq("WifiService"));
         mWifiServiceImpl.stopLocalOnlyHotspot();
     }
 
