@@ -46,6 +46,30 @@
       "revId": "8bf815d79698bde8c007fa5f21593069a4bdcdb5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b6e8502_972f3a39",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2194,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-03-29T01:51:05Z",
+      "side": 1,
+      "message": "- Filed bug 36697222 to investigate the misbehavior in other modes.\n- Adopted OOB suggestion of including CMD_RSSI_POLL messages when verbose logging is enabled.",
+      "parentUuid": "efc1ce56_948beb20",
+      "range": {
+        "startLine": 2193,
+        "startChar": 12,
+        "endLine": 2194,
+        "endChar": 29
+      },
+      "revId": "8bf815d79698bde8c007fa5f21593069a4bdcdb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
