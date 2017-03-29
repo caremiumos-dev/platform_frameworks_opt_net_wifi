@@ -23,6 +23,7 @@ import static com.android.server.wifi.WifiController.CMD_WIFI_TOGGLED;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
@@ -35,6 +36,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.os.Binder;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -48,9 +50,11 @@ import android.os.test.TestLooper;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import com.android.internal.util.AsyncChannel;
+import com.android.server.wifi.WifiServiceImpl.LocalOnlyRequestorCallback;
 import com.android.server.wifi.util.WifiAsyncChannel;
 import com.android.server.wifi.util.WifiPermissionsUtil;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -75,6 +79,7 @@ public class WifiServiceImplTest {
     private static final String TEST_PACKAGE_NAME = "TestPackage";
     private static final String SETTINGS_PACKAGE_NAME = "com.android.settings";
     private static final String SYSUI_PACKAGE_NAME = "com.android.systemui";
+    private static final int TEST_UID = 6789;
 
     private WifiServiceImpl mWifiServiceImpl;
     private TestLooper mLooper;
@@ -102,8 +107,12 @@ public class WifiServiceImplTest {
     @Mock UserManager mUserManager;
     @Mock WifiConfiguration mApConfig;
     @Mock IBinder mAppBinder;
+    @Mock LocalOnlyHotspotRequestInfo mRequestInfo;
 
     @Spy FakeWifiLog mLog;
+    PowerManager mPowerManager;
+
+    int mUid;
 
     private class WifiAsyncChannelTester {
         private static final String TAG = "WifiAsyncChannelTester";
@@ -163,6 +172,7 @@ public class WifiServiceImplTest {
         mLooper = new TestLooper();
         mHandler = new Handler(mLooper.getLooper());
         mAppMessenger = new Messenger(mHandler);
+        when(mRequestInfo.getUid()).thenReturn(mUid);
 
         when(mWifiInjector.getUserManager()).thenReturn(mUserManager);
         when(mWifiInjector.getWifiController()).thenReturn(mWifiController);
@@ -171,6 +181,7 @@ public class WifiServiceImplTest {
         when(mWifiStateMachine.syncInitialize(any())).thenReturn(true);
         when(mWifiInjector.getWifiServiceHandlerThread()).thenReturn(mHandlerThread);
         when(mHandlerThread.getLooper()).thenReturn(mLooper.getLooper());
+        when(mWifiInjector.getWifiController()).thenReturn(mWifiController);
         when(mContext.getResources()).thenReturn(mResources);
         when(mContext.getContentResolver()).thenReturn(mContentResolver);
         doNothing().when(mFrameworkFacade).registerContentObserver(eq(mContext), any(),
@@ -195,6 +206,12 @@ public class WifiServiceImplTest {
         when(mWifiInjector.getWifiSettingsStore()).thenReturn(mSettingsStore);
         mWifiServiceImpl = new WifiServiceImpl(mContext, mWifiInjector, mAsyncChannel);
         mWifiServiceImpl.setWifiHandlerLogForTest(mLog);
+
+        mUid = Binder.getCallingUid();
+    }
+
+    @After public void tearDown() {
+        BinderUtil.setUid(mUid);
     }
 
     @Test
@@ -578,14 +595,65 @@ public class WifiServiceImplTest {
     }
 
     /**
-     * Verify that the call to startLocalOnlyHotspot throws the UnsupportedOperationException
-     * until the implementation is complete.
+     * Verify that the call to startLocalOnlyHotspot triggers softap mode to start if all
+     * preconditions are met and this is the first registered caller.
      */
-    @Test(expected = UnsupportedOperationException.class)
-    public void testStartLocalOnlyHotspotNotSupported() {
+    @Test
+    public void testStartLocalOnlyHotspotExpectSuccess() {
         // allow test to proceed without a permission check failure
+        when(mFrameworkFacade.makeLocalOnlyHotspotRequestInfo(any(IBinder.class),
+                  any(LocalOnlyRequestorCallback.class))).thenReturn(mRequestInfo);
         when(mWifiStateMachine.syncGetWifiApState()).thenReturn(WifiManager.WIFI_AP_STATE_DISABLED);
-        mWifiServiceImpl.startLocalOnlyHotspot(mAppMessenger, mAppBinder);
+
+        WifiConfiguration hotspotConfig = mWifiServiceImpl.startLocalOnlyHotspot(
+                mAppMessenger, mAppBinder);
+        assertNotNull(hotspotConfig);
+        verify(mWifiController).sendMessage(eq(CMD_SET_AP), eq(1), eq(0), eq(hotspotConfig));
+    }
+
+    /**
+     * A second call by the same app should return the same config, but only start hotspot once.
+     */
+    @Test
+    public void testStartLocalOnlyHotspotOnceWithMultipleCallsBySameApp() {
+        LocalOnlyHotspotRequestInfo requestInfo = mock(LocalOnlyHotspotRequestInfo.class);
+        when(mFrameworkFacade.makeLocalOnlyHotspotRequestInfo(any(IBinder.class),
+                  any(LocalOnlyRequestorCallback.class))).thenReturn(requestInfo);
+        when(mWifiStateMachine.syncGetWifiApState()).thenReturn(WifiManager.WIFI_AP_STATE_DISABLED);
+        WifiConfiguration hotspotConfig = mWifiServiceImpl.startLocalOnlyHotspot();
+        assertNotNull(hotspotConfig);
+        when(mWifiStateMachine.syncGetWifiApState()).thenReturn(WifiManager.WIFI_AP_STATE_ENABLED);
+        WifiConfiguration secondCallConfig = mWifiServiceImpl.startLocalOnlyHotspot();
+        assertNotNull(secondCallConfig);
+        verify(mWifiController).sendMessage(eq(CMD_SET_AP), eq(1), eq(0), eq(hotspotConfig));
+        // the two configs should be the same
+        assertEquals(hotspotConfig, secondCallConfig);
+    }
+
+    /**
+     * A second call by a second app should return the same config, but only start hotspot once.
+     */
+    @Test
+    public void testStartLocalOnlyHotspotOnceWithMultipleRequestingApps() {
+        LocalOnlyHotspotRequestInfo requestInfoApp1 = mock(LocalOnlyHotspotRequestInfo.class);
+        when(requestInfoApp1.getUid()).thenReturn(mUid);
+        when(mFrameworkFacade.makeLocalOnlyHotspotRequestInfo(any(IBinder.class),
+                any(LocalOnlyRequestorCallback.class))).thenReturn(requestInfoApp1);
+        when(mWifiStateMachine.syncGetWifiApState()).thenReturn(WifiManager.WIFI_AP_STATE_DISABLED);
+        WifiConfiguration hotspotConfig = mWifiServiceImpl.startLocalOnlyHotspot();
+        assertFalse(mUid == TEST_UID);
+        BinderUtil.setUid(TEST_UID);
+        LocalOnlyHotspotRequestInfo requestInfoApp2 = mock(LocalOnlyHotspotRequestInfo.class);
+        when(requestInfoApp2.getUid()).thenReturn(TEST_UID);
+        when(mFrameworkFacade.makeLocalOnlyHotspotRequestInfo(any(IBinder.class),
+                any(LocalOnlyRequestorCallback.class))).thenReturn(requestInfoApp2);
+        when(mWifiStateMachine.syncGetWifiApState()).thenReturn(WifiManager.WIFI_AP_STATE_ENABLED);
+        WifiConfiguration secondCallConfig = mWifiServiceImpl.startLocalOnlyHotspot();
+        BinderUtil.setUid(mUid);
+        assertNotNull(secondCallConfig);
+        verify(mWifiController).sendMessage(eq(CMD_SET_AP), eq(1), eq(0), eq(hotspotConfig));
+        // the two configs should be the same
+        assertEquals(hotspotConfig, secondCallConfig);
     }
 
     /**
@@ -624,13 +692,73 @@ public class WifiServiceImplTest {
     }
 
     /**
-     * Verify that the call to stopLocalOnlyHotspot throws the UnsupportedOperationException until
-     * the implementation is complete.
+     * Do not return hotspot config if we have inconsistent state with requests, but softap not
+     * active.
      */
-    @Test(expected = UnsupportedOperationException.class)
-    public void testStopLocalOnlyHotspotNotSupported() {
-        // allow test to proceed without a permission check failure
+    @Test
+    public void testConfigNotReturnedWhenStateIsInconsistent() {
+        testStartLocalOnlyHotspotExpectSuccess();
+        when(mWifiStateMachine.syncGetWifiApState()).thenReturn(WifiManager.WIFI_AP_STATE_DISABLED);
+        BinderUtil.setUid(TEST_UID);
+        WifiConfiguration secondConfig = mWifiServiceImpl.startLocalOnlyHotspot();
+        BinderUtil.setUid(mUid);
+        assertNull(secondConfig);
+    }
+
+    /**
+     * Verify that the call to stopLocalOnlyHotspot succeeds when preconditions are met.
+     */
+    @Test
+    public void testStopLocalOnlyHotspotSuccess() {
+        testStartLocalOnlyHotspotExpectSuccess();
+        doNothing().when(mRequestInfo).unlinkDeathRecipient();
+        when(mRequestInfo.getUid()).thenReturn(mUid);
         mWifiServiceImpl.stopLocalOnlyHotspot();
+        verify(mWifiController).sendMessage(eq(CMD_SET_AP), eq(0), eq(0));
+    }
+
+    /**
+     * Verify that hotspot does not stop when a request is still active.
+     */
+    @Test
+    public void testStopLocalOnlyHotspotStaysUpWithActiveRequests() {
+        testStartLocalOnlyHotspotOnceWithMultipleRequestingApps();
+        mWifiServiceImpl.stopLocalOnlyHotspot();
+        verify(mWifiController, never()).sendMessage(eq(CMD_SET_AP), eq(0), eq(0));
+    }
+
+    /**
+     * Verify that hotspot is stopped when the last requestor is done.
+     */
+    @Test
+    public void testStopLocalOnlyHotspotWhenAllRequestorsFinished() {
+        testStartLocalOnlyHotspotOnceWithMultipleRequestingApps();
+        BinderUtil.setUid(TEST_UID);
+        mWifiServiceImpl.stopLocalOnlyHotspot();
+        BinderUtil.setUid(mUid);
+        mWifiServiceImpl.stopLocalOnlyHotspot();
+        verify(mWifiController).sendMessage(eq(CMD_SET_AP), eq(0), eq(0));
+    }
+
+    /**
+     * Calls to stop local only hotspot should not stop anything if it isn't running.
+     */
+    @Test
+    public void testStopLocalOnlyHotspotReturnsFalseWhenNotStarted() {
+        mWifiServiceImpl.stopLocalOnlyHotspot();
+        verify(mWifiController, never()).sendMessage(eq(CMD_SET_AP), eq(0), eq(0));
+    }
+
+    /**
+     * Calls to stop local only hotspot should not stop anything if the caller hasn't started it.
+     */
+    @Test
+    public void testStopLocalOnlyHotspotReturnsFalseWhenNotRequested() {
+        testStartLocalOnlyHotspotExpectSuccess();
+        BinderUtil.setUid(TEST_UID);
+        mWifiServiceImpl.stopLocalOnlyHotspot();
+        BinderUtil.setUid(mUid);
+        verify(mWifiController, never()).sendMessage(eq(CMD_SET_AP), eq(0), eq(0));
     }
 
     /**
