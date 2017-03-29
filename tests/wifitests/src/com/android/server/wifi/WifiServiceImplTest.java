@@ -484,4 +484,31 @@ public class WifiServiceImplTest {
                                                 eq("WifiService"));
         mWifiServiceImpl.stopSoftAp();
     }
+
+    /**
+     * Verify that the call to startLocalOnlyHotspot throws the UnsupportedOperationException
+     * until the implementation is complete.
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void testStartLocalOnlyHotspotNotSupported() {
+        mWifiServiceImpl.startLocalOnlyHotspot();
+    }
+
+    /**
+     * Verify that the call to stopLocalOnlyHotspot throws the UnsupportedOperationException until
+     * the implementation is complete.
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void testStopLocalOnlyHotspotNotSupported() {
+        mWifiServiceImpl.stopLocalOnlyHotspot();
+    }
+
+    /**
+     * Verify that the call to stopLocalOnlyHotspot throws the UnsupportedOperationException until
+     * the implementation is complete.
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void testGetLocalOnlyHotspotConfigNotSupported() {
+        mWifiServiceImpl.getLocalOnlyHotspotConfig();
+    }
 }
