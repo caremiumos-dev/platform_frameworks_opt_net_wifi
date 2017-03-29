@@ -27,6 +27,7 @@ import android.net.ip.IpManager;
 import android.os.BatteryStats;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Messenger;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.storage.StorageManager;
@@ -34,6 +35,7 @@ import android.provider.Settings;
 import android.telephony.CarrierConfigManager;
 
 import com.android.internal.app.IBatteryStats;
+import com.android.server.wifi.WifiServiceImpl.LocalOnlyRequestorCallback;
 import com.android.server.wifi.util.WifiAsyncChannel;
 
 /**
@@ -160,5 +162,17 @@ public class FrameworkFacade {
      */
     public boolean inStorageManagerCryptKeeperBounce() {
         return StorageManager.inCryptKeeperBounce();
+    }
+
+    /**
+     * Create a new LocalOnlyHotspotRequestInfo.
+     *
+     * @param binder IBinder instance
+     * @param messenger Messenger to use for callbacks
+     * @param callback LocalOnlyHotspotCallback
+     */
+    public LocalOnlyHotspotRequestInfo makeLocalOnlyHotspotRequestInfo(IBinder binder,
+            Messenger messenger, LocalOnlyRequestorCallback callback) {
+        return new LocalOnlyHotspotRequestInfo(binder, messenger, callback);
     }
 }
