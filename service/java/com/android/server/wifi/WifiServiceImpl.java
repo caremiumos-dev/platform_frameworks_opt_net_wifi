@@ -746,6 +746,13 @@ public class WifiServiceImpl extends IWifiManager.Stub {
      */
     @Override
     public WifiConfiguration startLocalOnlyHotspot() {
+        // first check if the caller has permission to start a local only hotspot
+        // need to check for WIFI_STATE_CHANGE - and think about others
+        enforceChangePermission();
+        int uid = Binder.getCallingUid();
+
+        mLog.trace("startLocalOnlyHotspot uid=%").c(uid).flush();
+
         return null;
     }
 
@@ -759,6 +766,11 @@ public class WifiServiceImpl extends IWifiManager.Stub {
      */
     @Override
     public boolean stopLocalOnlyHotspot() {
+        // first check if the caller has permission to stop a local only hotspot
+        enforceChangePermission();
+        int uid = Binder.getCallingUid();
+
+        mLog.trace("stopLocalOnlyHotspot uid=%").c(uid).flush();
         return false;
     }
 
