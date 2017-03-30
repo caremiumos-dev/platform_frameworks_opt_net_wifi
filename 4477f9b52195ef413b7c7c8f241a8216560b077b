@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d52fff93_d113755d",
+        "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-03-30T02:29:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba53f79c_20d52d57",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 57
+      },
+      "revId": "4477f9b52195ef413b7c7c8f241a8216560b077b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f953eaf_8319b719",
         "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-29T04:00:20Z",
       "side": 1,
       "message": "Shall we have something like FAILURE_NONE? FAILURE_DEFAULT still means we have an auth failure, it is just different from the WRONG_PASSWD and EAP.",
+      "range": {
+        "startLine": 303,
+        "startChar": 36,
+        "endLine": 303,
+        "endChar": 62
+      },
+      "revId": "4477f9b52195ef413b7c7c8f241a8216560b077b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0907cd0_bdcfcfbf",
+        "filename": "service/java/com/android/server/wifi/SupplicantStateTracker.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-03-30T02:29:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f953eaf_8319b719",
       "range": {
         "startLine": 303,
         "startChar": 36,
