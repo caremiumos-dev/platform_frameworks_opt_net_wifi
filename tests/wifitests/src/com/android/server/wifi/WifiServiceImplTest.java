@@ -22,6 +22,7 @@ import static com.android.server.wifi.WifiController.CMD_WIFI_TOGGLED;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
@@ -31,6 +32,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IPowerManager;
@@ -311,6 +313,7 @@ public class WifiServiceImplTest {
     @Test(expected = UnsupportedOperationException.class)
     public void testStartLocalOnlyHotspotNotSupported() {
         // allow test to proceed without a permission check failure
+        when(mWifiStateMachine.syncGetWifiApState()).thenReturn(WifiManager.WIFI_AP_STATE_DISABLED);
         mWifiServiceImpl.startLocalOnlyHotspot();
     }
 
@@ -324,6 +327,16 @@ public class WifiServiceImplTest {
                 .enforceCallingOrSelfPermission(eq(android.Manifest.permission.CHANGE_WIFI_STATE),
                                                 eq("WifiService"));
         mWifiServiceImpl.startLocalOnlyHotspot();
+    }
+
+    /**
+     * Only start LocalOnlyHotspot if we are not tethering.
+     */
+    @Test
+    public void testHotspotDoesNotStartWhenAlreadyTethering() {
+        when(mWifiStateMachine.syncGetWifiApState()).thenReturn(WifiManager.WIFI_AP_STATE_ENABLED);
+        WifiConfiguration hotspotConfig = mWifiServiceImpl.startLocalOnlyHotspot();
+        assertNull(hotspotConfig);
     }
 
     /**
