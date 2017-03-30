@@ -16,8 +16,11 @@
 
 package com.android.server.wifi;
 
+import static com.android.server.wifi.WifiController.CMD_WIFI_TOGGLED;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
@@ -58,11 +61,13 @@ public class WifiServiceImplTest {
 
     private static final String TAG = "WifiServiceImplTest";
     private static final int DEFAULT_VERBOSE_LOGGING = 0;
+    private static final String TEST_PACKAGE_NAME = "TestPackage";
 
     @Mock Context mContext;
     @Mock WifiInjector mWifiInjector;
     WifiServiceImpl mWifiServiceImpl;
 
+    @Mock WifiController mWifiController;
     @Mock WifiTrafficPoller mWifiTrafficPoller;
     @Mock WifiStateMachine mWifiStateMachine;
     @Mock HandlerThread mHandlerThread;
@@ -77,6 +82,7 @@ public class WifiServiceImplTest {
     @Mock WifiMetrics mWifiMetrics;
     @Spy FakeWifiLog mLog;
     @Mock WifiPermissionsUtil mWifiPermissionsUtil;
+    @Mock WifiSettingsStore mSettingsStore;
 
     private class WifiAsyncChannelTester {
         private static final String TAG = "WifiAsyncChannelTester";
@@ -135,6 +141,7 @@ public class WifiServiceImplTest {
         MockitoAnnotations.initMocks(this);
         mLooper = new TestLooper();
 
+        when(mWifiInjector.getWifiController()).thenReturn(mWifiController);
         when(mWifiInjector.getWifiMetrics()).thenReturn(mWifiMetrics);
         when(mWifiInjector.getWifiStateMachine()).thenReturn(mWifiStateMachine);
         when(mWifiInjector.getWifiServiceHandlerThread()).thenReturn(mHandlerThread);
@@ -153,6 +160,7 @@ public class WifiServiceImplTest {
                 mLooper.getLooper(), "mockWlan");
         when(mWifiInjector.getWifiTrafficPoller()).thenReturn(wifiTrafficPoller);
         when(mWifiInjector.getWifiPermissionsUtil()).thenReturn(mWifiPermissionsUtil);
+        when(mWifiInjector.getWifiSettingsStore()).thenReturn(mSettingsStore);
         mWifiServiceImpl = new WifiServiceImpl(mContext, mWifiInjector, mAsyncChannel);
         mWifiServiceImpl.setWifiHandlerLogForTest(mLog);
     }
@@ -187,6 +195,73 @@ public class WifiServiceImplTest {
                 .dump(any(FileDescriptor.class), any(PrintWriter.class), any(String[].class));
         verify(mWifiStateMachine, never())
                 .dump(any(FileDescriptor.class), any(PrintWriter.class), any(String[].class));
+    }
+
+
+    /**
+     * Verify that wifi can be enabled by a caller with WIFI_STATE_CHANGE permission when wifi is
+     * off (no hotspot, no airplane mode).
+     */
+    @Test
+    public void testSetWifiEnabledSuccess() throws Exception {
+        when(mSettingsStore.handleWifiToggled(eq(true))).thenReturn(true);
+        assertTrue(mWifiServiceImpl.setWifiEnabled(TEST_PACKAGE_NAME, true));
+        verify(mWifiController).obtainMessageAndSend(eq(CMD_WIFI_TOGGLED));
+    }
+
+    /**
+     * Verify that the CMD_TOGGLE_WIFI message won't be sent if wifi is already on.
+     */
+    @Test
+    public void testSetWifiEnabledNoToggle() throws Exception {
+        when(mSettingsStore.handleWifiToggled(eq(true))).thenReturn(false);
+        assertTrue(mWifiServiceImpl.setWifiEnabled(TEST_PACKAGE_NAME, true));
+        verify(mWifiController, never()).obtainMessageAndSend(eq(CMD_WIFI_TOGGLED));
+    }
+
+    /**
+     * Verify a SecurityException is thrown if a caller does not have the correct permission to
+     * toggle wifi.
+     */
+    @Test(expected = SecurityException.class)
+    public void testSetWifiEnableWithoutPermission() throws Exception {
+        doThrow(new SecurityException()).when(mContext)
+                .enforceCallingOrSelfPermission(eq(android.Manifest.permission.CHANGE_WIFI_STATE),
+                                                eq("WifiService"));
+        mWifiServiceImpl.setWifiEnabled(TEST_PACKAGE_NAME, true);
+    }
+
+    /**
+     * Verify that wifi can be disabled by a caller with WIFI_STATE_CHANGE permission when wifi is
+     * on.
+     */
+    @Test
+    public void testSetWifiDisabledSuccess() throws Exception {
+        when(mSettingsStore.handleWifiToggled(eq(false))).thenReturn(true);
+        assertTrue(mWifiServiceImpl.setWifiEnabled(TEST_PACKAGE_NAME, false));
+        verify(mWifiController).obtainMessageAndSend(eq(CMD_WIFI_TOGGLED));
+    }
+
+    /**
+     * Verify that CMD_TOGGLE_WIFI message won't be sent if wifi is already off.
+     */
+    @Test
+    public void testSetWifiDisabledNoToggle() throws Exception {
+        when(mSettingsStore.handleWifiToggled(eq(false))).thenReturn(false);
+        assertTrue(mWifiServiceImpl.setWifiEnabled(TEST_PACKAGE_NAME, false));
+        verify(mWifiController, never()).obtainMessageAndSend(eq(CMD_WIFI_TOGGLED));
+    }
+
+    /**
+     * Verify a SecurityException is thrown if a caller does not have the correct permission to
+     * toggle wifi.
+     */
+    @Test(expected = SecurityException.class)
+    public void testSetWifiDisabledWithoutPermission() throws Exception {
+        doThrow(new SecurityException()).when(mContext)
+                .enforceCallingOrSelfPermission(eq(android.Manifest.permission.CHANGE_WIFI_STATE),
+                                                eq("WifiService"));
+        mWifiServiceImpl.setWifiEnabled(TEST_PACKAGE_NAME, false);
     }
 
     /**

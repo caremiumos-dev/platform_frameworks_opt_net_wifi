@@ -614,7 +614,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
             }
         }
 
-        mWifiController.sendMessage(CMD_WIFI_TOGGLED);
+        mWifiController.obtainMessageAndSend(CMD_WIFI_TOGGLED);
         return true;
     }
 
