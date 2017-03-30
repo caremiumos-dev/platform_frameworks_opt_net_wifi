@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6870188a_cd923341",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-30T08:32:15Z",
+      "side": 1,
+      "message": "whoops!  thanks! :)",
+      "parentUuid": "c680e014_ff240269",
+      "revId": "8b640e7f2be1c6c717666960c6e3e1b8ab3951d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee426425_28f98dfe",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-03-30T01:52:38Z",
       "side": 1,
       "message": "Maybe remove this one as well?",
+      "revId": "8b640e7f2be1c6c717666960c6e3e1b8ab3951d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63153c78_a57dee0d",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-30T08:32:15Z",
+      "side": 1,
+      "message": "thanks! :)",
+      "parentUuid": "ee426425_28f98dfe",
       "revId": "8b640e7f2be1c6c717666960c6e3e1b8ab3951d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
