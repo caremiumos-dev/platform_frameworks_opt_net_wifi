@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c402b644_ea00fb7e",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-30T05:42:53Z",
+      "side": 1,
+      "message": "need to make sure that we only let settings toggle wifi if we are in tethering or softap mode.",
+      "range": {
+        "startLine": 618,
+        "startChar": 8,
+        "endLine": 618,
+        "endChar": 13
+      },
+      "revId": "26ef05d7e6ae08eb8e7cc69c1d3307faecd11be9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
