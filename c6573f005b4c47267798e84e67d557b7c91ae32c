@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09c5af45_be60a031",
+        "filename": "service/java/com/android/server/wifi/WifiApConfigStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T17:13:30Z",
+      "side": 1,
+      "message": "Do we need to pass in some hint about the frequency ranges in use?\n\nProbably not the specific channels, but at least 0 (give me whatever) vs 2.5 vs 5 vs 60, or something?",
+      "range": {
+        "startLine": 215,
+        "startChar": 36,
+        "endLine": 215,
+        "endChar": 66
+      },
+      "revId": "c6573f005b4c47267798e84e67d557b7c91ae32c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
