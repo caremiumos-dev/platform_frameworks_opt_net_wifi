@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08c6ccc3_0373eb4f",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T17:07:55Z",
+      "side": 1,
+      "message": "Again, perhaps \"ApMode\", if \"soft\" is not integral to the concept somehow.",
+      "range": {
+        "startLine": 689,
+        "startChar": 24,
+        "endLine": 689,
+        "endChar": 30
+      },
+      "revId": "3c319788319dd3a9ad777e078797bed6e7111d42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1300a6c1_9837270f",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T17:07:55Z",
+      "side": 1,
+      "message": "This always read a bit weirdly to me, \"enabling the disallowing of tethering\".\n\nCan we just s/enabled/true/?  Or \"set\"?",
+      "range": {
+        "startLine": 702,
+        "startChar": 70,
+        "endLine": 702,
+        "endChar": 77
+      },
+      "revId": "3c319788319dd3a9ad777e078797bed6e7111d42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
