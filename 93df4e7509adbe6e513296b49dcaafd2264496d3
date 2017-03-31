@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe954504_a2a918b9",
+        "filename": "service/java/com/android/server/wifi/WifiController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T18:28:49Z",
+      "side": 1,
+      "message": "In other classes I\u0027ve seen this shorted to just \"send\".",
+      "range": {
+        "startLine": 937,
+        "startChar": 16,
+        "endLine": 937,
+        "endChar": 36
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f08d42e_f0e83249",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T18:28:49Z",
+      "side": 1,
+      "message": "What if mLocalOnlyHotspotRequests is non-empty?",
+      "range": {
+        "startLine": 736,
+        "startChar": 8,
+        "endLine": 736,
+        "endChar": 10
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "784c8cfd_89e8fe46",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T18:28:49Z",
+      "side": 1,
+      "message": "Can you just have one log line, like\n\n    mLog.trace(...).c(mLocalOnlyHotspotConfig \u003d\u003d null ? \"NULL\" : mLOHC.toString());\n\n?",
+      "range": {
+        "startLine": 811,
+        "startChar": 16,
+        "endLine": 811,
+        "endChar": 26
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae83719b_e44b043f",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T18:28:49Z",
+      "side": 1,
+      "message": ".isEmpty()",
+      "range": {
+        "startLine": 819,
+        "startChar": 57,
+        "endLine": 819,
+        "endChar": 68
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "517e3be7_55fd3166",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T18:28:49Z",
+      "side": 1,
+      "message": "Don\u0027t you want to unlink the death recipients?",
+      "range": {
+        "startLine": 830,
+        "startChar": 42,
+        "endLine": 830,
+        "endChar": 47
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1924cc1_74ed4fc7",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T18:28:49Z",
+      "side": 1,
+      "message": "I don\u0027t think this comment is entirely correct.  Maybe just remove it.",
+      "range": {
+        "startLine": 862,
+        "startChar": 15,
+        "endLine": 862,
+        "endChar": 43
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fffec86a_bfb4bcec",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T18:28:49Z",
+      "side": 1,
+      "message": "Is this necessary?  It seems to be checked in the impossiblyLongNamedPrivateMethod() version as well.",
+      "range": {
+        "startLine": 886,
+        "startChar": 16,
+        "endLine": 886,
+        "endChar": 35
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "192c6df4_38a7fdc6",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T18:28:49Z",
+      "side": 1,
+      "message": "Any shorter option available?  ;-)",
+      "range": {
+        "startLine": 894,
+        "startChar": 20,
+        "endLine": 894,
+        "endChar": 63
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34535218_84f59a71",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T18:28:49Z",
+      "side": 1,
+      "message": "isEmpty()?",
+      "range": {
+        "startLine": 906,
+        "startChar": 42,
+        "endLine": 906,
+        "endChar": 53
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f586c0e4_aec068b6",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T18:28:49Z",
+      "side": 1,
+      "message": "Is this safe to call repeatedly?  I assume so.",
+      "range": {
+        "startLine": 911,
+        "startChar": 27,
+        "endLine": 911,
+        "endChar": 45
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "325a68ef_c2dde982",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T18:28:49Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we verify not interaction?",
+      "range": {
+        "startLine": 288,
+        "startChar": 8,
+        "endLine": 288,
+        "endChar": 31
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df9b68db_e0562441",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T18:28:49Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we verify no interaction?",
+      "range": {
+        "startLine": 307,
+        "startChar": 8,
+        "endLine": 307,
+        "endChar": 31
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
