@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d334a43b_73b0bbf1",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareDataPathStateManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-31T01:06:42Z",
+      "side": 1,
+      "message": "don\u0027t look up with a null object ... do the same return as below",
+      "range": {
+        "startLine": 622,
+        "startChar": 4,
+        "endLine": 623,
+        "endChar": 13
+      },
+      "revId": "dcb1d255a5326e38a1e833e17a04e6c14ee75090",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d75ffff_5db8b179",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareDataPathStateManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-31T01:06:42Z",
+      "side": 1,
+      "message": "same - don\u0027t look up with a null object",
+      "range": {
+        "startLine": 675,
+        "startChar": 6,
+        "endLine": 677,
+        "endChar": 13
+      },
+      "revId": "dcb1d255a5326e38a1e833e17a04e6c14ee75090",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
