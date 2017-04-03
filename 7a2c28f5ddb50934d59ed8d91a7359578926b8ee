@@ -22,6 +22,30 @@
       "revId": "7a2c28f5ddb50934d59ed8d91a7359578926b8ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4057dd56_d8281e5c",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareDataPathStateManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-03T08:51:52Z",
+      "side": 1,
+      "message": "This is the kind of drawbacks I was trying to point out about having a class hierarchy: anytime NetworkSpecifier is consumed, there is going to be one of this type switch in one form or another.\n\nAt this one could be hidden on the StringNetworkSpecifier class as a static method that returns the Stirng or null from a raw NetworkSpecifier.",
+      "parentUuid": "dba859f8_9efa2016",
+      "range": {
+        "startLine": 573,
+        "startChar": 0,
+        "endLine": 583,
+        "endChar": 95
+      },
+      "revId": "7a2c28f5ddb50934d59ed8d91a7359578926b8ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
