@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63f7eaf4_b2c46357",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-04-03T14:50:43Z",
+      "side": 1,
+      "message": "2 negatives are harder to read. Maybe get if ap is enabled here since that is the |if| check being performed below.\n\nboolean apEnabled \u003d\n                mWifiStateMachine.syncGetWifiApState() !\u003d WifiManager.WIFI_AP_STATE_DISABLED;",
+      "range": {
+        "startLine": 589,
+        "startChar": 16,
+        "endLine": 589,
+        "endChar": 26
+      },
+      "revId": "8bd429f7200afa0553786900776a65903391bd70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
