@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "722d9236_7165d6ee",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-03T07:27:22Z",
+      "side": 1,
+      "message": "this needs to be implemented and tested still",
+      "range": {
+        "startLine": 935,
+        "startChar": 28,
+        "endLine": 935,
+        "endChar": 57
+      },
+      "revId": "9057bfd0124e0ae6b405a4fd9c3b5b6b80f962f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
