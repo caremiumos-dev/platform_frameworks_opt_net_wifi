@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ba87a1d_3d1abddb",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-04-03T14:48:28Z",
+      "side": 1,
+      "message": "What is the advantage of using this |obtainMessageAndSend| over |sendMessage|. We would have been able to mock event |mWifiController.sendMessage|",
+      "range": {
+        "startLine": 617,
+        "startChar": 24,
+        "endLine": 617,
+        "endChar": 44
+      },
+      "revId": "10b6e60ae376e4ae90c6dd74b3aeeb5aa5f3c9f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
