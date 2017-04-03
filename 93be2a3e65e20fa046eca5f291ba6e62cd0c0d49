@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b0795c3c_0b9068b1",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-03T07:23:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdb1fb90_f1877e07",
+      "range": {
+        "startLine": 715,
+        "startChar": 15,
+        "endLine": 715,
+        "endChar": 27
+      },
+      "revId": "93be2a3e65e20fa046eca5f291ba6e62cd0c0d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcaf53c6_8edc4e7d",
         "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-31T17:38:37Z",
       "side": 1,
       "message": "Perhaps \"if the caller\u0027s LocalOnlyHotspot request was successfully unregistered\".  Also, \"{@code false} if no registered request was found\", probably.",
+      "range": {
+        "startLine": 755,
+        "startChar": 28,
+        "endLine": 755,
+        "endChar": 98
+      },
+      "revId": "93be2a3e65e20fa046eca5f291ba6e62cd0c0d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f444024_c44700c0",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-03T07:23:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcaf53c6_8edc4e7d",
       "range": {
         "startLine": 755,
         "startChar": 28,
