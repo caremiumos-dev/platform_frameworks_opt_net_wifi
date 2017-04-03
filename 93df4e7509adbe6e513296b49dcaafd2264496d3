@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "e5e6c90f_afd88de3",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-03T07:24:29Z",
+      "side": 1,
+      "message": "This part isn\u0027t done yet...  i need to protect the calls from starttethering and also want to add in checks like making sure only settings is calling to start softap for tethering with a null config.  hm..  i guess that part will have to come later though.  we can chat about that offline.",
+      "parentUuid": "1f08d42e_f0e83249",
+      "range": {
+        "startLine": 736,
+        "startChar": 8,
+        "endLine": 736,
+        "endChar": 10
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "784c8cfd_89e8fe46",
         "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
         "patchSetId": 7
@@ -59,6 +83,30 @@
       "writtenOn": "2017-03-31T18:28:49Z",
       "side": 1,
       "message": "Can you just have one log line, like\n\n    mLog.trace(...).c(mLocalOnlyHotspotConfig \u003d\u003d null ? \"NULL\" : mLOHC.toString());\n\n?",
+      "range": {
+        "startLine": 811,
+        "startChar": 16,
+        "endLine": 811,
+        "endChar": 26
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a46134e_0fe40c4a",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-03T07:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "784c8cfd_89e8fe46",
       "range": {
         "startLine": 811,
         "startChar": 16,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "1b17e9bb_71ef55c6",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-03T07:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae83719b_e44b043f",
+      "range": {
+        "startLine": 819,
+        "startChar": 57,
+        "endLine": 819,
+        "endChar": 68
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "517e3be7_55fd3166",
         "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
         "patchSetId": 7
@@ -105,6 +177,30 @@
       "writtenOn": "2017-03-31T18:28:49Z",
       "side": 1,
       "message": "Don\u0027t you want to unlink the death recipients?",
+      "range": {
+        "startLine": 830,
+        "startChar": 42,
+        "endLine": 830,
+        "endChar": 47
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7d858be_ad4bcc19",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-03T07:24:29Z",
+      "side": 1,
+      "message": "that seems like a good idea ;)",
+      "parentUuid": "517e3be7_55fd3166",
       "range": {
         "startLine": 830,
         "startChar": 42,
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "1413ed91_c45c0ed0",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-03T07:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1924cc1_74ed4fc7",
+      "range": {
+        "startLine": 862,
+        "startChar": 15,
+        "endLine": 862,
+        "endChar": 43
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fffec86a_bfb4bcec",
         "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
         "patchSetId": 7
@@ -151,6 +271,30 @@
       "writtenOn": "2017-03-31T18:28:49Z",
       "side": 1,
       "message": "Is this necessary?  It seems to be checked in the impossiblyLongNamedPrivateMethod() version as well.",
+      "range": {
+        "startLine": 886,
+        "startChar": 16,
+        "endLine": 886,
+        "endChar": 35
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2321125_632a9d4b",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-03T07:24:29Z",
+      "side": 1,
+      "message": "if i pass the internal method this null, then i will get a NPE since i am grabbing the uid from it.  I could remove here - check the return from remove.  if it isn\u0027t null, then go ahead and check if we need to stop the hotspot.  I\u0027ll try doing that tomorrow.",
+      "parentUuid": "fffec86a_bfb4bcec",
       "range": {
         "startLine": 886,
         "startChar": 16,
@@ -186,6 +330,53 @@
     },
     {
       "key": {
+        "uuid": "d324802d_d5e8169c",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-03T07:24:29Z",
+      "side": 1,
+      "message": "this won\u0027t even get me a badge!  :)  I\u0027ll work on it",
+      "parentUuid": "192c6df4_38a7fdc6",
+      "range": {
+        "startLine": 894,
+        "startChar": 20,
+        "endLine": 894,
+        "endChar": 63
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e65bbed_2a191c0a",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-03T07:24:29Z",
+      "side": 1,
+      "message": "I should unlink from death here too.  This path isn\u0027t tested yet, so probably a patch set or two down the road.",
+      "range": {
+        "startLine": 900,
+        "startChar": 35,
+        "endLine": 901,
+        "endChar": 42
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34535218_84f59a71",
         "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
         "patchSetId": 7
@@ -197,6 +388,30 @@
       "writtenOn": "2017-03-31T18:28:49Z",
       "side": 1,
       "message": "isEmpty()?",
+      "range": {
+        "startLine": 906,
+        "startChar": 42,
+        "endLine": 906,
+        "endChar": 53
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a113c72_c19bc5f4",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-03T07:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34535218_84f59a71",
       "range": {
         "startLine": 906,
         "startChar": 42,
@@ -232,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "0f173260_72941ecd",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-03T07:24:29Z",
+      "side": 1,
+      "message": "will think on this - should be. I haven\u0027t tested the start/stop softap path yet.  will check on it when i add those tests (i think that is the first CL in this big stack)",
+      "parentUuid": "f586c0e4_aec068b6",
+      "range": {
+        "startLine": 911,
+        "startChar": 27,
+        "endLine": 911,
+        "endChar": 45
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "325a68ef_c2dde982",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
         "patchSetId": 7
@@ -255,6 +494,30 @@
     },
     {
       "key": {
+        "uuid": "f1b9510d_a072c24e",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-03T07:24:29Z",
+      "side": 1,
+      "message": "we do want one call...  the first one should start it",
+      "parentUuid": "325a68ef_c2dde982",
+      "range": {
+        "startLine": 288,
+        "startChar": 8,
+        "endLine": 288,
+        "endChar": 31
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df9b68db_e0562441",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
         "patchSetId": 7
@@ -266,6 +529,30 @@
       "writtenOn": "2017-03-31T18:28:49Z",
       "side": 1,
       "message": "Shouldn\u0027t we verify no interaction?",
+      "range": {
+        "startLine": 307,
+        "startChar": 8,
+        "endLine": 307,
+        "endChar": 31
+      },
+      "revId": "93df4e7509adbe6e513296b49dcaafd2264496d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3f52ce_ef2386a6",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-03T07:24:29Z",
+      "side": 1,
+      "message": "like above, this is once for the first caller.  I could restructure these so i clear the expectations after the first call.",
+      "parentUuid": "df9b68db_e0562441",
       "range": {
         "startLine": 307,
         "startChar": 8,
