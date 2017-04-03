@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "46660cc1_300e51fe",
+        "filename": "service/java/com/android/server/wifi/LocalOnlyHotspotRequestInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-03T07:23:13Z",
+      "side": 1,
+      "message": "good call.  i added that constructor check later :)",
+      "parentUuid": "6adf539f_904551b6",
+      "range": {
+        "startLine": 64,
+        "startChar": 12,
+        "endLine": 64,
+        "endChar": 27
+      },
+      "revId": "e4d953f36bdda0cc5312da7a09deb38f82a7ffa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdd5261a_a18d06f9",
         "filename": "service/java/com/android/server/wifi/LocalOnlyHotspotRequestInfo.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "448459d7_92516a67",
+        "filename": "service/java/com/android/server/wifi/LocalOnlyHotspotRequestInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-03T07:23:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdd5261a_a18d06f9",
+      "range": {
+        "startLine": 74,
+        "startChar": 12,
+        "endLine": 74,
+        "endChar": 29
+      },
+      "revId": "e4d953f36bdda0cc5312da7a09deb38f82a7ffa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb17f7a5_a7a26284",
         "filename": "service/java/com/android/server/wifi/LocalOnlyHotspotRequestInfo.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-03-31T17:34:12Z",
       "side": 1,
       "message": "another alternative is to just make mUid public, and call it uid, since it\u0027s final.\n\nIn fact, every final member variable could be made public, if you wanted to.",
+      "range": {
+        "startLine": 79,
+        "startChar": 15,
+        "endLine": 79,
+        "endChar": 21
+      },
+      "revId": "e4d953f36bdda0cc5312da7a09deb38f82a7ffa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "41909902_cd8b373f",
+        "filename": "service/java/com/android/server/wifi/LocalOnlyHotspotRequestInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-03T07:23:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb17f7a5_a7a26284",
       "range": {
         "startLine": 79,
         "startChar": 15,
