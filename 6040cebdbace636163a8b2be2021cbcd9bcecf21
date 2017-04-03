@@ -22,6 +22,53 @@
       "revId": "6040cebdbace636163a8b2be2021cbcd9bcecf21",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb6305b9_ae2a74c5",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-03T07:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3ecefd2_e27ec337",
+      "range": {
+        "startLine": 752,
+        "startChar": 8,
+        "endLine": 752,
+        "endChar": 11
+      },
+      "revId": "6040cebdbace636163a8b2be2021cbcd9bcecf21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff0ce016_1ef6de81",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-03T07:23:35Z",
+      "side": 1,
+      "message": "need to add this for the get config call as well.",
+      "range": {
+        "startLine": 285,
+        "startChar": 16,
+        "endLine": 285,
+        "endChar": 87
+      },
+      "revId": "6040cebdbace636163a8b2be2021cbcd9bcecf21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
