@@ -100,6 +100,8 @@ public class WifiAwareDataPathStateManagerTest {
     @Rule
     public ErrorCollector collector = new ErrorCollector();
 
+    private static final int MOCK_UID = 1000;
+
     /**
      * Initialize mocks.
      */
@@ -302,6 +304,23 @@ public class WifiAwareDataPathStateManagerTest {
         testDataPathInitiatorResponderMismatchUtility(true);
     }
 
+    /**
+     * Validate the fail flow of an Initiator (subscriber) with its UID unset
+     */
+    @Test
+    public void testDataPathInitiatorUidUnsetError() throws Exception {
+        testDataPathInitiatorResponderInvalidUidUtility(false, false);
+    }
+
+    /**
+     * Validate the fail flow of an Initiator (subscriber) with its UID set as a malicious
+     * attacker (i.e. mismatched to its requested client's UID).
+     */
+    @Test
+    public void testDataPathInitiatorUidSetIncorrectlyError() throws Exception {
+        testDataPathInitiatorResponderInvalidUidUtility(false, true);
+    }
+
     /*
      * Responder tests
      */
@@ -395,6 +414,23 @@ public class WifiAwareDataPathStateManagerTest {
         testDataPathInitiatorResponderMismatchUtility(false);
     }
 
+    /**
+     * Validate the fail flow of an Initiator (subscriber) with its UID unset
+     */
+    @Test
+    public void testDataPathResponderUidUnsetError() throws Exception {
+        testDataPathInitiatorResponderInvalidUidUtility(true, false);
+    }
+
+    /**
+     * Validate the fail flow of an Initiator (subscriber) with its UID set as a malicious
+     * attacker (i.e. mismatched to its requested client's UID).
+     */
+    @Test
+    public void testDataPathResponderUidSetIncorrectlyError() throws Exception {
+        testDataPathInitiatorResponderInvalidUidUtility(true, true);
+    }
+
     /*
      * Utilities
      */
@@ -432,6 +468,56 @@ public class WifiAwareDataPathStateManagerTest {
                 );
         nr.networkCapabilities.setNetworkSpecifier(ns);
 
+        Message reqNetworkMsg = Message.obtain();
+        reqNetworkMsg.what = NetworkFactory.CMD_REQUEST_NETWORK;
+        reqNetworkMsg.obj = nr;
+        reqNetworkMsg.arg1 = 0;
+        res.second.send(reqNetworkMsg);
+        mMockLooper.dispatchAll();
+
+        // consequences of failure:
+        //   Responder (publisher): responds with a rejection to any data-path requests
+        //   Initiator (subscribe): doesn't initiate (i.e. no HAL requests)
+        if (doPublish) {
+            // (2) get request & respond
+            mDut.onDataPathRequestNotification(pubSubId, peerDiscoveryMac, ndpId);
+            mMockLooper.dispatchAll();
+            inOrder.verify(mMockNative).respondToDataPathRequest(anyShort(), eq(false),
+                    eq(ndpId), eq(""), eq(null), eq(null), any());
+        }
+
+        verifyNoMoreInteractions(mMockNative, mMockCm);
+    }
+
+    private void testDataPathInitiatorResponderInvalidUidUtility(boolean doPublish,
+            boolean isUidSet) throws Exception {
+        final int clientId = 123;
+        final int pubSubId = 11234;
+        final int ndpId = 2;
+        final byte[] pmk = "some bytes".getBytes();
+        final PeerHandle peerHandle = new PeerHandle(1341234);
+        final byte[] peerDiscoveryMac = HexEncoding.decode("000102030405".toCharArray(), false);
+
+        InOrder inOrder = inOrder(mMockNative, mMockCm, mMockCallback, mMockSessionCallback);
+
+        // (0) initialize
+        Pair<Integer, Messenger> res = initDataPathEndPoint(clientId, pubSubId, peerHandle,
+                peerDiscoveryMac, inOrder, doPublish);
+
+        // (1) create network request
+        NetworkRequest nr = getSessionNetworkRequest(clientId, res.first, peerHandle, pmk,
+                doPublish);
+
+        // (2) corrupt request's UID
+        WifiAwareNetworkSpecifier ns =
+                (WifiAwareNetworkSpecifier) nr.networkCapabilities.getNetworkSpecifier();
+        if (isUidSet) {
+            ns.requestorUid++;
+        } else {
+            ns.requestorUidValid = false;
+        }
+
+        // (3) request network
         Message reqNetworkMsg = Message.obtain();
         reqNetworkMsg.what = NetworkFactory.CMD_REQUEST_NETWORK;
         reqNetworkMsg.obj = nr;
@@ -706,6 +792,8 @@ public class WifiAwareDataPathStateManagerTest {
         nc.setLinkDownstreamBandwidthKbps(1);
         nc.setSignalStrength(1);
 
+        ((NetworkSpecifier.UidConsumer) nc.getNetworkSpecifier()).setRequestorUid(MOCK_UID);
+
         return new NetworkRequest(nc, 0, 0, NetworkRequest.Type.NONE);
     }
 
@@ -744,6 +832,8 @@ public class WifiAwareDataPathStateManagerTest {
         nc.setLinkDownstreamBandwidthKbps(1);
         nc.setSignalStrength(1);
 
+        ((NetworkSpecifier.UidConsumer) nc.getNetworkSpecifier()).setRequestorUid(MOCK_UID);
+
         return new NetworkRequest(nc, 0, 0, NetworkRequest.Type.REQUEST);
     }
 
@@ -751,7 +841,6 @@ public class WifiAwareDataPathStateManagerTest {
             PeerHandle peerHandle, byte[] peerDiscoveryMac, InOrder inOrder,
             boolean doPublish)
             throws Exception {
-        final int uid = 1000;
         final int pid = 2000;
         final String callingPackage = "com.android.somePackage";
         final String someMsg = "some arbitrary message from peer";
@@ -790,7 +879,7 @@ public class WifiAwareDataPathStateManagerTest {
         mMockLooper.dispatchAll();
 
         // (3) create client & session & rx message
-        mDut.connect(clientId, uid, pid, callingPackage, mMockCallback, configRequest, false);
+        mDut.connect(clientId, MOCK_UID, pid, callingPackage, mMockCallback, configRequest, false);
         mMockLooper.dispatchAll();
         inOrder.verify(mMockNative).enableAndConfigure(transactionId.capture(),
                 eq(configRequest), eq(false), eq(true));
