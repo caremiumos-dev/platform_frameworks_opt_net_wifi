@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "cbc3ced9_b5d5e4c0",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5902,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-04-04T05:10:41Z",
+      "side": 1,
+      "message": "I think Rebecca\u0027s comment is, why do we single out SCAN_ONLY_WITH_WIFI_OFF_MODE here? Shouldn\u0027t we handle SCAN_ONLY_MODE and DISABLED_MODE the same way? Can we simply remove the \"if (message.arg1 \u003d\u003d SCAN_ONLY_WITH_WIFI_OFF_MODE)\" check? \n\nRebecca, please chime in if this is not what you meant.",
+      "parentUuid": "e16abfa8_54621de5",
+      "range": {
+        "startLine": 5902,
+        "startChar": 44,
+        "endLine": 5902,
+        "endChar": 72
+      },
+      "revId": "e7e9ae2f178c9eb7750c1cc0d25d020513510d37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ef07c94_3817804f",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 2
