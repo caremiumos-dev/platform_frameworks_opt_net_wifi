@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "608c5b01_cf1e100c",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-04-05T21:33:40Z",
+      "side": 1,
+      "message": "I don\u0027t understand why this existing code fails to do the job.",
+      "revId": "2d9766b84f5c4406faca2dd2418c6745febf51e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
