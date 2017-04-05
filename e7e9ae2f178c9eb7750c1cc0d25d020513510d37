@@ -90,6 +90,30 @@
     },
     {
       "key": {
+        "uuid": "36ae5bf8_c6839487",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5902,
+      "author": {
+        "id": 1106048
+      },
+      "writtenOn": "2017-04-05T04:56:44Z",
+      "side": 1,
+      "message": "Regarding DISABLED_MODE, SupplicantStartedState will handle it and transit to SupplicantStoppingState. So, the issue does not occur.\nRegarding SCAN_ONLY_MODE, WifiController invokes it only in DeviceInactiveState. In that case, there is no possibility that WifiStateMachine is RoamingState.",
+      "parentUuid": "cbc3ced9_b5d5e4c0",
+      "range": {
+        "startLine": 5902,
+        "startChar": 44,
+        "endLine": 5902,
+        "endChar": 72
+      },
+      "revId": "e7e9ae2f178c9eb7750c1cc0d25d020513510d37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ef07c94_3817804f",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 2
