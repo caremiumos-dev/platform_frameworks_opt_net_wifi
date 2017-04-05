@@ -46,6 +46,30 @@
       "revId": "c6573f005b4c47267798e84e67d557b7c91ae32c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe0056cd_baeda088",
+        "filename": "service/java/com/android/server/wifi/WifiApConfigStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-05T05:22:01Z",
+      "side": 1,
+      "message": "Per video chat discussion, we\u0027ll defer this for now.\n\nIn future, we might fetch some Settings value, and there might need to be Settings App UI for showing alerts about changing preferred bands (depending on WiFi country requirements, etc).",
+      "parentUuid": "9e9c4b6b_5a084ae8",
+      "range": {
+        "startLine": 215,
+        "startChar": 36,
+        "endLine": 215,
+        "endChar": 66
+      },
+      "revId": "c6573f005b4c47267798e84e67d557b7c91ae32c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
