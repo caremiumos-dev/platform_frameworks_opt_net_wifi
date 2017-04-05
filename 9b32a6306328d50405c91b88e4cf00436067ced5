@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e080771b_79dbcd10",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-05T13:15:38Z",
+      "side": 1,
+      "message": "Why run these two checks at all, given that anything that has NETWORK_STACK will typically also have them?",
+      "range": {
+        "startLine": 694,
+        "startChar": 0,
+        "endLine": 696,
+        "endChar": 56
+      },
+      "revId": "9b32a6306328d50405c91b88e4cf00436067ced5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
