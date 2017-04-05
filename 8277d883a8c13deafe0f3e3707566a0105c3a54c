@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69b6eadd_8d5a2458",
+        "filename": "service/java/com/android/server/wifi/LocalOnlyHotspotRequestInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-05T10:37:02Z",
+      "side": 1,
+      "message": "[nit]\n\nI think I would order either all public and then all private, or the other way around, but probably not interspersed quite like this.",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "8277d883a8c13deafe0f3e3707566a0105c3a54c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
