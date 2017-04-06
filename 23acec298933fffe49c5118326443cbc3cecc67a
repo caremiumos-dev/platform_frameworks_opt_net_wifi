@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14e21112_3d90c4a5",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareDataPathStateManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-06T05:32:20Z",
+      "side": 1,
+      "message": "I think this is safe even if networkSpecifier is null, because:\n\n    public V get(Object key) {\n        final int index \u003d indexOfKey(key);\n        return index \u003e\u003d 0 ? (V)mArray[(index\u003c\u003c1)+1] : null;\n    }\n\n    public int indexOfKey(Object key) {\n        return key \u003d\u003d null ? indexOfNull()\n                : indexOf(key, mIdentityHashCode ? System.identityHashCode(key) : key.hashCode());\n    }\n\nBut please confirm.",
+      "range": {
+        "startLine": 621,
+        "startChar": 72,
+        "endLine": 621,
+        "endChar": 93
+      },
+      "revId": "23acec298933fffe49c5118326443cbc3cecc67a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
