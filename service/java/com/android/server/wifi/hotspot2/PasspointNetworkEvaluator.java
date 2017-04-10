@@ -17,6 +17,7 @@
 package com.android.server.wifi.hotspot2;
 
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.hotspot2.PasspointConfiguration;
 import android.os.Process;
 import android.text.TextUtils;
 import android.util.LocalLog;
@@ -78,6 +79,10 @@ public class PasspointNetworkEvaluator implements WifiNetworkSelector.NetworkEva
             Pair<PasspointProvider, PasspointMatch> bestProvider =
                     mPasspointManager.matchProvider(scanDetail.getScanResult());
             if (bestProvider != null) {
+                if (bestProvider.first.isSimCredential() && !mWifiConfigManager.isSimPresent()) {
+                    // Skip if security type is EAP SIM/AKA/AKA' when SIM is not ready.
+                    continue;
+                }
                 providerList.add(Pair.create(scanDetail, bestProvider));
             }
         }
@@ -169,6 +174,16 @@ public class PasspointNetworkEvaluator implements WifiNetworkSelector.NetworkEva
         localLog("Best Passpoint network " + bestScanDetail.getSSID() + " provided by "
                 + bestProvider.getConfig().getHomeSp().getFqdn());
         return Pair.create(bestProvider, bestScanDetail);
+    }
+
+    /**
+     * Check EAP SIM method.
+     *
+     * @param config Target network.
+     * @return True if method is EAP SIM/AKA/AKA', otherwise false.
+     */
+    private boolean isEapSimMethod(PasspointConfiguration config) {
+        return config.getCredential() != null && config.getCredential().getSimCredential() != null;
     }
 
     private void localLog(String log) {
