@@ -274,6 +274,10 @@ public class WifiConfigManager {
      */
     private boolean mDeferredUserUnlockRead = false;
     /**
+     * Flag to indicate if SIM is present.
+     */
+    private boolean mSimPresent = false;
+    /**
      * This is keeping track of the next network ID to be assigned. Any new networks will be
      * assigned |mNextNetworkId| as network ID.
      */
@@ -2301,16 +2305,29 @@ public class WifiConfigManager {
     /**
      * Resets all sim networks state.
      */
-    public void resetSimNetworks() {
+    public void resetSimNetworks(boolean simPresent) {
         if (mVerboseLoggingEnabled) localLog("resetSimNetworks");
         for (WifiConfiguration config : getInternalConfiguredNetworks()) {
             if (TelephonyUtil.isSimConfig(config)) {
-                String currentIdentity = TelephonyUtil.getSimIdentity(mTelephonyManager, config);
+                String currentIdentity = null;
+                if (simPresent) {
+                    currentIdentity = TelephonyUtil.getSimIdentity(mTelephonyManager, config);
+                }
                 // Update the loaded config
                 config.enterpriseConfig.setIdentity(currentIdentity);
                 config.enterpriseConfig.setAnonymousIdentity("");
             }
         }
+        mSimPresent = simPresent;
+    }
+
+    /**
+     * Check if SIM is present.
+     *
+     * @return True if SIM is present, otherwise false.
+     */
+    public boolean isSimPresent() {
+        return mSimPresent;
     }
 
     /**
