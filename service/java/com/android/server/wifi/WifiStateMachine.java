@@ -2012,6 +2012,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
      */
     public synchronized void resetSimAuthNetworks(boolean simPresent) {
         sendMessage(CMD_RESET_SIM_NETWORKS, simPresent ? 1 : 0);
+        mWifiConfigManager.setSimReady(simPresent);
     }
 
     /**

@@ -274,6 +274,10 @@ public class WifiConfigManager {
      */
     private boolean mDeferredUserUnlockRead = false;
     /**
+     * Flag to indicate if SIM is ready.
+     */
+    private boolean mIsSimReady = false;
+    /**
      * This is keeping track of the next network ID to be assigned. Any new networks will be
      * assigned |mNextNetworkId| as network ID.
      */
@@ -2311,6 +2315,24 @@ public class WifiConfigManager {
                 config.enterpriseConfig.setAnonymousIdentity("");
             }
         }
+    }
+
+    /**
+     * Set SIM state.
+     *
+     * @param ready SIM condition.
+     */
+    public void setSimReady(boolean ready) {
+        mIsSimReady = ready;
+    }
+
+    /**
+     * Check if SIM ready.
+     *
+     * @return True if SIM is ready, otherwise false.
+     */
+    public boolean isSimReady() {
+        return mIsSimReady;
     }
 
     /**
