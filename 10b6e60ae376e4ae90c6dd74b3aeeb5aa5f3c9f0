@@ -22,6 +22,30 @@
       "revId": "10b6e60ae376e4ae90c6dd74b3aeeb5aa5f3c9f0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "542d636b_402fffa7",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-13T07:44:34Z",
+      "side": 1,
+      "message": "There isn\u0027t one other than I will not let other than WifiController won\u0027t always be a state machine. :)  I will update this later.\n\nThanks for the suggestion!",
+      "parentUuid": "9ba87a1d_3d1abddb",
+      "range": {
+        "startLine": 617,
+        "startChar": 24,
+        "endLine": 617,
+        "endChar": 44
+      },
+      "revId": "10b6e60ae376e4ae90c6dd74b3aeeb5aa5f3c9f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
