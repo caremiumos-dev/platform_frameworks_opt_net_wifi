@@ -39,7 +39,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ParceledListSlice;
 import android.database.ContentObserver;
-import android.net.ConnectivityManager;
 import android.net.DhcpInfo;
 import android.net.DhcpResults;
 import android.net.Network;
@@ -326,7 +325,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         mFacade = mWifiInjector.getFrameworkFacade();
         mWifiMetrics = mWifiInjector.getWifiMetrics();
         mTrafficPoller = mWifiInjector.getWifiTrafficPoller();
-        mUserManager = UserManager.get(mContext);
+        mUserManager = mWifiInjector.getUserManager();
         mCountryCode = mWifiInjector.getWifiCountryCode();
         mWifiStateMachine = mWifiInjector.getWifiStateMachine();
         mWifiStateMachine.enableRssiPolling(true);
@@ -651,7 +650,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
     @Override
     public void setWifiApEnabled(WifiConfiguration wifiConfig, boolean enabled) {
         enforceChangePermission();
-        ConnectivityManager.enforceTetherChangePermission(mContext);
+        mWifiPermissionsUtil.enforceTetherChangePermission(mContext);
 
         mLog.trace("setWifiApEnabled uid=% enable=%").c(Binder.getCallingUid()).c(enabled).flush();
 
@@ -660,7 +659,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         }
         // null wifiConfig is a meaningful input for CMD_SET_AP
         if (wifiConfig == null || isValid(wifiConfig)) {
-            mWifiController.obtainMessage(CMD_SET_AP, enabled ? 1 : 0, 0, wifiConfig).sendToTarget();
+            mWifiController.sendMessage(CMD_SET_AP, enabled ? 1 : 0, 0, wifiConfig);
         } else {
             Slog.e(TAG, "Invalid WifiConfiguration");
         }
