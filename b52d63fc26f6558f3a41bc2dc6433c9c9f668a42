@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92111131_be868d01",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-04-15T00:45:03Z",
+      "side": 1,
+      "message": "Don\u0027t we want to return result of two different lengths in the two cases?\n\nIn one case it should be of length hex.length()/2 + 1 , and the other case it should be hex.length()/2. That condition will not be satisfied by this code.",
+      "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2965a0ff_76a9eabc",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-04-15T00:45:03Z",
+      "side": 1,
+      "message": "Do we want to send the same parameters here and line 375-376?",
+      "range": {
+        "startLine": 318,
+        "startChar": 0,
+        "endLine": 319,
+        "endChar": 72
+      },
+      "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c809a74_3350fe31",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-04-15T00:45:03Z",
+      "side": 1,
+      "message": "Can you make this a constant and then use that constant variable here?",
+      "range": {
+        "startLine": 385,
+        "startChar": 16,
+        "endLine": 385,
+        "endChar": 18
+      },
+      "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f58f7dc_26d419bd",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-04-15T00:45:03Z",
+      "side": 1,
+      "message": "Can you make 0, 4, 8 constant variables and use them here?",
+      "range": {
+        "startLine": 390,
+        "startChar": 0,
+        "endLine": 391,
+        "endChar": 46
+      },
+      "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
