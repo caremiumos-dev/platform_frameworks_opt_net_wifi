@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5074176_d1f6debc",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-15T23:46:45Z",
+      "side": 1,
+      "message": "this will be done in a later CL where we would have local only hotspot.",
+      "range": {
+        "startLine": 749,
+        "startChar": 9,
+        "endLine": 750,
+        "endChar": 96
+      },
+      "revId": "0257bb3f0beeb5ea879907d3b9d7c875a1132304",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
