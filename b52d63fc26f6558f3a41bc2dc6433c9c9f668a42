@@ -19,6 +19,40 @@
     },
     {
       "key": {
+        "uuid": "2209d12a_29cfa5dd",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-04-15T01:27:21Z",
+      "side": 1,
+      "message": "A possibility here is that...\nall elements of the challenge text will end up in line 256 and the result will be an empty string generated from sb in line 244. How is this taken into account in WifiStateMachine which only checks for null return? Is it okay to not proceed with other app types in case they return an empty string and not a null string?",
+      "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86c03c75_18609a2c",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-04-15T01:27:21Z",
+      "side": 1,
+      "message": "Same as line 256",
+      "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2965a0ff_76a9eabc",
         "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
         "patchSetId": 2
@@ -36,6 +70,23 @@
         "endLine": 319,
         "endChar": 72
       },
+      "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "584e8329_18d4a04c",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-04-15T01:27:21Z",
+      "side": 1,
+      "message": "Same as line 256",
       "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
