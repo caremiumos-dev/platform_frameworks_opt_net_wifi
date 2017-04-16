@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2c16c7b4_adb77e1d",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-16T05:27:07Z",
+      "side": 1,
+      "message": "I believe the exception being thrown will pop out and not even check that.",
+      "parentUuid": "1ba64d30_a69133d9",
+      "range": {
+        "startLine": 548,
+        "startChar": 4,
+        "endLine": 548,
+        "endChar": 5
+      },
+      "revId": "b7c333ba6d7480d7531a2db3e84ad934187204a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de0b196d_0123ac9f",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-04-16T05:11:56Z",
       "side": 1,
       "message": "verifyZeroInteractions()?",
+      "range": {
+        "startLine": 570,
+        "startChar": 4,
+        "endLine": 570,
+        "endChar": 5
+      },
+      "revId": "b7c333ba6d7480d7531a2db3e84ad934187204a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ec2100e_18eb796e",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-16T05:27:07Z",
+      "side": 1,
+      "message": "same as above",
+      "parentUuid": "de0b196d_0123ac9f",
       "range": {
         "startLine": 570,
         "startChar": 4,
