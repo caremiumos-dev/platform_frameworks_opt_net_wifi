@@ -30,6 +30,11 @@ import com.android.server.wifi.WifiNative;
 public class TelephonyUtil {
     public static final String TAG = "TelephonyUtil";
 
+    private static final int START_SRES_POS = 0;
+    private static final int SRES_LEN = 4;
+    private static final int START_KC_POS = START_SRES_POS + SRES_LEN;
+    private static final int KC_LEN = 8;
+
     /**
      * Get the identity for the current SIM or null if the SIM is not available
      *
@@ -181,6 +186,20 @@ public class TelephonyUtil {
         return result;
     }
 
+    private static byte[] parseHexWithoutLength(String hex) {
+        byte[] tmpRes = parseHex(hex);
+        if (tmpRes.length == 0) {
+            return tmpRes;
+        }
+
+        byte[] result = new byte[tmpRes.length - 1];
+        for (int i = 0; i < tmpRes.length - 1; i++) {
+            result[i] = tmpRes[i + 1];
+        }
+
+        return result;
+    }
+
     private static String makeHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {
@@ -221,6 +240,18 @@ public class TelephonyUtil {
         return result;
     }
 
+    /**
+     * Calculate SRES and KC as 3G authentication.
+     * Standard       Cellular_auth     Type Command
+     *
+     * 3GPP TS 31.102 3G_authentication [Length][RAND][Length][AUTN]
+     *                         [Length][RES][Length][CK][Length][IK] and more
+     *
+     * @param requestData RAND data from server.
+     * @param tm the instance of TelephonyManager.
+     * @return the response data processed by SIM. If all request data is malformed, then returns
+     * empty string. If request data is invalid, then returns null.
+     */
     public static String getGsmSimAuthResponse(String[] requestData, TelephonyManager tm) {
         if (tm == null) {
             Log.e(TAG, "No valid TelephonyManager");
@@ -243,14 +274,8 @@ public class TelephonyUtil {
 
             String base64Challenge = Base64.encodeToString(rand, Base64.NO_WRAP);
 
-            // Try USIM first for authentication.
             String tmResponse = tm.getIccAuthentication(TelephonyManager.APPTYPE_USIM,
                     TelephonyManager.AUTHTYPE_EAP_SIM, base64Challenge);
-            if (tmResponse == null) {
-                // Then, in case of failure, issue may be due to sim type, retry as a simple sim
-                tmResponse = tm.getIccAuthentication(TelephonyManager.APPTYPE_SIM,
-                        TelephonyManager.AUTHTYPE_EAP_SIM, base64Challenge);
-            }
             Log.v(TAG, "Raw Response - " + tmResponse);
 
             if (tmResponse == null || tmResponse.length() <= 4) {
@@ -277,6 +302,133 @@ public class TelephonyUtil {
                 return null;
             }
             String kc = makeHex(result, 1 + kcOffset, kcLen);
+            sb.append(":" + kc + ":" + sres);
+            Log.v(TAG, "kc:" + kc + " sres:" + sres);
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * Calculate SRES and KC as 2G authentication.
+     * Standard       Cellular_auth     Type Command
+     *
+     * 3GPP TS 31.102 2G_authentication [Length][RAND]
+     *                         [Length][SRES][Length][Cipher Key Kc]
+     *
+     * @param requestData RAND data from server.
+     * @param tm the instance of TelephonyManager.
+     * @return the response data processed by SIM. If all request data is malformed, then returns
+     * empty string. If request data is invalid, then returns null.
+     */
+    public static String get2gSimpleSimAuthResponse(String[] requestData, TelephonyManager tm) {
+        if (tm == null) {
+            Log.e(TAG, "No valid TelephonyManager");
+            return null;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (String challenge : requestData) {
+            if (challenge == null || challenge.isEmpty()) {
+                continue;
+            }
+            Log.d(TAG, "RAND = " + challenge);
+
+            byte[] rand = null;
+            try {
+                rand = parseHex(challenge);
+            } catch (NumberFormatException e) {
+                Log.e(TAG, "malformed challenge");
+                continue;
+            }
+
+            String base64Challenge = Base64.encodeToString(rand, Base64.NO_WRAP);
+
+            String tmResponse = tm.getIccAuthentication(TelephonyManager.APPTYPE_SIM,
+                    TelephonyManager.AUTHTYPE_EAP_SIM, base64Challenge);
+            Log.v(TAG, "Raw Response - " + tmResponse);
+
+            if (tmResponse == null || tmResponse.length() <= 4) {
+                Log.e(TAG, "bad response - " + tmResponse);
+                return null;
+            }
+
+            byte[] result = Base64.decode(tmResponse, Base64.DEFAULT);
+            Log.v(TAG, "Hex Response -" + makeHex(result));
+            int sresLen = result[0];
+            if (sresLen >= result.length) {
+                Log.e(TAG, "malfomed response - " + tmResponse);
+                return null;
+            }
+            String sres = makeHex(result, 1, sresLen);
+            int kcOffset = 1 + sresLen;
+            if (kcOffset >= result.length) {
+                Log.e(TAG, "malfomed response - " + tmResponse);
+                return null;
+            }
+            int kcLen = result[kcOffset];
+            if (kcOffset + kcLen > result.length) {
+                Log.e(TAG, "malfomed response - " + tmResponse);
+                return null;
+            }
+            String kc = makeHex(result, 1 + kcOffset, kcLen);
+            sb.append(":" + kc + ":" + sres);
+            Log.v(TAG, "kc:" + kc + " sres:" + sres);
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * Calculate SRES and KC as 2G authentication.
+     * Standard       Cellular_auth     Type Command
+     *
+     * 3GPP TS 11.11  2G_authentication [RAND]
+     *                         [SRES][Cipher Key Kc]
+     *
+     * @param requestData RAND data from server.
+     * @param tm the instance of TelephonyManager.
+     * @return the response data processed by SIM. If all request data is malformed, then returns
+     * empty string. If request data is invalid, then returns null.
+     */
+    public static String get2gUsimAuthResponse(String[] requestData, TelephonyManager tm) {
+        if (tm == null) {
+            Log.e(TAG, "No valid TelephonyManager");
+            return null;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (String challenge : requestData) {
+            if (challenge == null || challenge.isEmpty()) {
+                continue;
+            }
+            Log.d(TAG, "RAND = " + challenge);
+
+            byte[] rand = null;
+            try {
+                rand = parseHexWithoutLength(challenge);
+            } catch (NumberFormatException e) {
+                Log.e(TAG, "malformed challenge");
+                continue;
+            }
+
+            String base64Challenge = Base64.encodeToString(rand, Base64.NO_WRAP);
+
+            String tmResponse = tm.getIccAuthentication(TelephonyManager.APPTYPE_SIM,
+                    TelephonyManager.AUTHTYPE_EAP_SIM, base64Challenge);
+            Log.v(TAG, "Raw Response - " + tmResponse);
+
+            if (tmResponse == null || tmResponse.length() <= 4) {
+                Log.e(TAG, "bad response - " + tmResponse);
+                return null;
+            }
+
+            byte[] result = Base64.decode(tmResponse, Base64.DEFAULT);
+            if (SRES_LEN + KC_LEN != result.length) {
+                Log.e(TAG, "malfomed response - " + tmResponse);
+                return null;
+            }
+            Log.v(TAG, "Hex Response -" + makeHex(result));
+            String sres = makeHex(result, START_SRES_POS, SRES_LEN);
+            String kc = makeHex(result, START_KC_POS, KC_LEN);
             sb.append(":" + kc + ":" + sres);
             Log.v(TAG, "kc:" + kc + " sres:" + sres);
         }
