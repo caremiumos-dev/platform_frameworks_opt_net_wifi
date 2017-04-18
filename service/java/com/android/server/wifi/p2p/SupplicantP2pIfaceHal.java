@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2016 The Android Open Source Project
+ * Copyright (C) 2017 Sony Mobile Communications Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,6 +13,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * NOTE: This file has been modified by Sony Mobile Communications Inc.
+ * Modifications are licensed under the License.
  */
 
 package com.android.server.wifi.p2p;
@@ -668,6 +672,7 @@ public class SupplicantP2pIfaceHal {
                 if (groupOwnerIntent < 0 || groupOwnerIntent > 15) {
                     groupOwnerIntent = DEFAULT_GROUP_OWNER_INTENT;
                 }
+                goIntent = groupOwnerIntent;
             }
 
             SupplicantResult<String> result = new SupplicantResult(
