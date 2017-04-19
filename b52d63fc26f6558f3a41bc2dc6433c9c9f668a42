@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a140c8c2_f30a3af9",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1106048
+      },
+      "writtenOn": "2017-04-19T09:27:23Z",
+      "side": 1,
+      "message": "Actually, line.187 is not executed because no one invokes parseHex() that 2nd argument is true.\nTherefore, SOMC would like to change this method without needlength argument.\ne.g. parseHexWithoutLength(String hex)\nHow do you think about it?",
+      "parentUuid": "92111131_be868d01",
+      "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57d36e97_087b9e98",
         "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-04-15T01:28:28Z",
       "side": 1,
       "message": "Add java doc",
+      "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99cba265_c8b63257",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1106048
+      },
+      "writtenOn": "2017-04-19T09:27:23Z",
+      "side": 1,
+      "message": "Got it.",
+      "parentUuid": "57d36e97_087b9e98",
       "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "aca91b1b_59ce4d46",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1106048
+      },
+      "writtenOn": "2017-04-19T09:27:23Z",
+      "side": 1,
+      "message": "SOMC will consider to check empty string at WifiStatemachine.\nAnd it’s not needed to proceed with other app types because the result is same.",
+      "parentUuid": "2209d12a_29cfa5dd",
+      "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8906150e_4a6dc99f",
         "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "2013f0d0_f554ec64",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1106048
+      },
+      "writtenOn": "2017-04-19T09:27:23Z",
+      "side": 1,
+      "message": "Got it.",
+      "parentUuid": "8906150e_4a6dc99f",
+      "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86c03c75_18609a2c",
         "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-04-15T01:27:21Z",
       "side": 1,
       "message": "Same as line 256",
+      "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97821ae6_b48c4e59",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1106048
+      },
+      "writtenOn": "2017-04-19T09:27:23Z",
+      "side": 1,
+      "message": "Same as line 256",
+      "parentUuid": "86c03c75_18609a2c",
       "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "56929d5d_814882c2",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1106048
+      },
+      "writtenOn": "2017-04-19T09:27:23Z",
+      "side": 1,
+      "message": "Yes.\nBoth cases are 2G_authentication.",
+      "parentUuid": "2965a0ff_76a9eabc",
+      "range": {
+        "startLine": 318,
+        "startChar": 0,
+        "endLine": 319,
+        "endChar": 72
+      },
+      "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c35cb0bf_46ef1094",
         "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
         "patchSetId": 2
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "6bd4d0aa_8a175623",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1106048
+      },
+      "writtenOn": "2017-04-19T09:27:23Z",
+      "side": 1,
+      "message": "Got it.",
+      "parentUuid": "c35cb0bf_46ef1094",
+      "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "584e8329_18d4a04c",
         "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
         "patchSetId": 2
@@ -138,6 +270,24 @@
       "writtenOn": "2017-04-15T01:27:21Z",
       "side": 1,
       "message": "Same as line 256",
+      "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "631073e9_f222f284",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1106048
+      },
+      "writtenOn": "2017-04-19T09:27:23Z",
+      "side": 1,
+      "message": "Same as line 256",
+      "parentUuid": "584e8329_18d4a04c",
       "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -167,6 +317,30 @@
     },
     {
       "key": {
+        "uuid": "2bc30fa2_c6d1ddb6",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1106048
+      },
+      "writtenOn": "2017-04-19T09:27:23Z",
+      "side": 1,
+      "message": "Got it.",
+      "parentUuid": "9c809a74_3350fe31",
+      "range": {
+        "startLine": 385,
+        "startChar": 16,
+        "endLine": 385,
+        "endChar": 18
+      },
+      "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f58f7dc_26d419bd",
         "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
         "patchSetId": 2
@@ -178,6 +352,30 @@
       "writtenOn": "2017-04-15T00:45:03Z",
       "side": 1,
       "message": "Can you make 0, 4, 8 constant variables and use them here?",
+      "range": {
+        "startLine": 390,
+        "startChar": 0,
+        "endLine": 391,
+        "endChar": 46
+      },
+      "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a742f598_0842ac57",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1106048
+      },
+      "writtenOn": "2017-04-19T09:27:23Z",
+      "side": 1,
+      "message": "Got it.",
+      "parentUuid": "8f58f7dc_26d419bd",
       "range": {
         "startLine": 390,
         "startChar": 0,
