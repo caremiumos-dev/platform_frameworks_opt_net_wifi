@@ -112,6 +112,7 @@ public class WifiScoreReport {
     public void reset() {
         mReport = "";
         mReportValid = false;
+        Log.d(TAG, "reset");
     }
 
     /**
@@ -148,8 +149,13 @@ public class WifiScoreReport {
                                         int aggressiveHandover, WifiMetrics wifiMetrics) {
         int score;
 
-        updateScoringState(wifiInfo, aggressiveHandover);
-        score = calculateScore(wifiInfo, aggressiveHandover);
+        if (aggressiveHandover == 0) {
+            // Use the old method
+            updateScoringState(wifiInfo, aggressiveHandover);
+            score = calculateScore(wifiInfo, aggressiveHandover);
+        } else {
+            score = scorer(wifiInfo);
+        }
 
         //sanitize boundaries
         if (score > NetworkAgent.WIFI_BASE_SCORE) {
@@ -320,4 +326,28 @@ public class WifiScoreReport {
         }
         return false;
     }
+
+    /**
+     * Experimental scorer, used when aggressive handover preference is set
+     */
+    private int scorer(WifiInfo wifiInfo) {
+        double rssi = wifiInfo.getRssi();
+        double goodRssi;
+        double badRssi;
+        if (wifiInfo.is5GHz()) {
+            goodRssi = mThresholdSaturatedRssi5;
+            badRssi = mThresholdQualifiedRssi5;
+        } else {
+            goodRssi = mThresholdSaturatedRssi24;
+            badRssi = mThresholdQualifiedRssi24;
+        }
+        double score = (rssi - badRssi) * 10.0 / (goodRssi - badRssi) + 50.0;
+        if (mHeader) {
+            Log.d(TAG, "@WSR@,rssi,lo,hi,score");
+            mHeader = false;
+        }
+        Log.d(TAG, String.format("@WSR@,%.1f,%.1f,%.1f,%.2f", rssi, badRssi, goodRssi, score));
+        return (int) Math.round(score);
+    }
+    private boolean mHeader = true;
 }
