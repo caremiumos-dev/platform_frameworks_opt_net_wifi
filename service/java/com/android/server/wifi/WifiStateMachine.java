@@ -5695,6 +5695,10 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         @Override
         public void enter() {
             WifiConfiguration currentConfig = getCurrentWifiConfiguration();
+            if (currentConfig == null) {
+                Log.wtf(TAG, "Current WifiConfiguration is null");
+                return;
+            }
             boolean isUsingStaticIp =
                     (currentConfig.getIpAssignment() == IpConfiguration.IpAssignment.STATIC);
             if (mVerboseLoggingEnabled) {
