@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f5726f2_626322d6",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-22T00:43:43Z",
+      "side": 1,
+      "message": "illegal state exception",
+      "range": {
+        "startLine": 858,
+        "startChar": 16,
+        "endLine": 858,
+        "endChar": 47
+      },
+      "revId": "4fa8d906e3fb6a3a49c1ea6c1cc81039d9eb1d64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
