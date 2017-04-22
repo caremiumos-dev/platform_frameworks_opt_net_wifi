@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4276e064_8a2ad9b0",
+        "filename": "service/java/com/android/server/wifi/WifiScoreReport.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-22T00:56:09Z",
+      "side": 1,
+      "message": "am i too sleepy for a joke or typo?",
+      "range": {
+        "startLine": 382,
+        "startChar": 32,
+        "endLine": 382,
+        "endChar": 35
+      },
+      "revId": "e78bd6a5da7bd03091e42f1859c8557ff7e873f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
