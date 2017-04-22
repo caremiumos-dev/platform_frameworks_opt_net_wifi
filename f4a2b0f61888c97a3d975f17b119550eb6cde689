@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77a12c31_70914bff",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-22T08:51:24Z",
+      "side": 1,
+      "message": "\"iface\" or \"ifname\" is fine.  no need to be too CamelCrazy  :)",
+      "range": {
+        "startLine": 718,
+        "startChar": 46,
+        "endLine": 718,
+        "endChar": 51
+      },
+      "revId": "f4a2b0f61888c97a3d975f17b119550eb6cde689",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
