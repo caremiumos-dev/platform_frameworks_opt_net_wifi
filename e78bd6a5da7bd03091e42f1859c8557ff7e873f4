@@ -22,6 +22,30 @@
       "revId": "e78bd6a5da7bd03091e42f1859c8557ff7e873f4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db317d69_7e1badcc",
+        "filename": "service/java/com/android/server/wifi/WifiScoreReport.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-04-24T15:56:51Z",
+      "side": 1,
+      "message": "typo, though I did smile when I noticed it",
+      "parentUuid": "4276e064_8a2ad9b0",
+      "range": {
+        "startLine": 382,
+        "startChar": 32,
+        "endLine": 382,
+        "endChar": 35
+      },
+      "revId": "e78bd6a5da7bd03091e42f1859c8557ff7e873f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
