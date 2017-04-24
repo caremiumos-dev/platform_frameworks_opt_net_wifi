@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd367a15_cfe6c3f7",
+        "filename": "service/java/com/android/server/wifi/WifiScoreReport.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-04-24T21:24:22Z",
+      "side": 1,
+      "message": "I find this hard to follow. A couple of thoughts on why it\u0027s hard to follow, and how we could make it better...\n\n- It seems like we\u0027re keeping the pretense that the score is something other than binary. I think this code could be simplified, if we dropped that pretense. Without the pretense, we could state the predicate explicitly, and then just map the boolean result to 49 at the point where we return.\n- If we do, for some reason, need this to be more granular than a boolean, the expression itself could be clearer. E.g.\n    double signalFraction \u003d (rssi - badRssi) / (goodRssi - badRssi);\n    double score \u003d signalFraction * 10 + 50;  // map to scale used by ConnectivityService\n  Note, however, that I\u0027d still want to see some rationale for this formula. (The rationale might, e.g., be in the form of unit tests which demonstrate the scenarios that this formula is intended to address.)",
+      "revId": "363d4c406d5624e2769a971779d7d2f45b78f46d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
