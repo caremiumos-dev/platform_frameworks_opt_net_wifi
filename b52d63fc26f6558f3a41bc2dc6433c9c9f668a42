@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f4d6e853_14cb0415",
+        "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1118893
+      },
+      "writtenOn": "2017-04-25T17:22:11Z",
+      "side": 1,
+      "message": "Yes that\u0027s a good idea",
+      "parentUuid": "a140c8c2_f30a3af9",
+      "revId": "b52d63fc26f6558f3a41bc2dc6433c9c9f668a42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57d36e97_087b9e98",
         "filename": "service/java/com/android/server/wifi/util/TelephonyUtil.java",
         "patchSetId": 2
