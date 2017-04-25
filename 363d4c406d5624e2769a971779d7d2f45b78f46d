@@ -16,6 +16,24 @@
       "revId": "363d4c406d5624e2769a971779d7d2f45b78f46d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99fcf681_b9a09620",
+        "filename": "service/java/com/android/server/wifi/WifiScoreReport.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-04-25T23:02:03Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right - that\u0027s clearer. Even better might be to just use a slope of one and ignore goodRssi, so just:\n\nscore \u003d 50 + (rssi - badRssi)\n\nfor some symbolic value of 50.",
+      "parentUuid": "bd367a15_cfe6c3f7",
+      "revId": "363d4c406d5624e2769a971779d7d2f45b78f46d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
