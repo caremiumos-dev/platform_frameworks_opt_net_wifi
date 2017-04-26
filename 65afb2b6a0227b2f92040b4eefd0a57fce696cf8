@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "129be29c_0ea3d955",
+        "filename": "service/java/com/android/server/wifi/LocalOnlyHotspotRequestInfo.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-26T06:32:15Z",
+      "side": 1,
+      "message": "If it\u0027s public you don\u0027t need \"m\", so just \"uid\" is fine.",
+      "range": {
+        "startLine": 30,
+        "startChar": 21,
+        "endLine": 30,
+        "endChar": 25
+      },
+      "revId": "65afb2b6a0227b2f92040b4eefd0a57fce696cf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "614b465c_6cb9db6b",
+        "filename": "service/java/com/android/server/wifi/LocalOnlyHotspotRequestInfo.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-26T06:32:15Z",
+      "side": 1,
+      "message": "Is this easily passed in?  If not, can it be trivially constructed from mBinder?",
+      "range": {
+        "startLine": 47,
+        "startChar": 66,
+        "endLine": 47,
+        "endChar": 75
+      },
+      "revId": "65afb2b6a0227b2f92040b4eefd0a57fce696cf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
