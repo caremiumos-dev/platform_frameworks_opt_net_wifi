@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "42ec52c4_7fad9c8e",
+        "filename": "service/java/com/android/server/wifi/LocalOnlyHotspotRequestInfo.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-26T22:46:41Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "bf03b88f_c6d2091c",
+      "range": {
+        "startLine": 30,
+        "startChar": 21,
+        "endLine": 30,
+        "endChar": 25
+      },
+      "revId": "65afb2b6a0227b2f92040b4eefd0a57fce696cf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "614b465c_6cb9db6b",
         "filename": "service/java/com/android/server/wifi/LocalOnlyHotspotRequestInfo.java",
         "patchSetId": 12
