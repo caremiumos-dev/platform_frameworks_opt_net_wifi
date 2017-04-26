@@ -108,6 +108,7 @@ import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * WifiService handles remote WiFi operation requests by implementing
@@ -166,6 +167,8 @@ public class WifiServiceImpl extends IWifiManager.Stub {
 
     private final boolean mPermissionReviewRequired;
     private final FrameworkFacade mFrameworkFacade;
+
+    private final ConcurrentHashMap<String, Integer> mIfaceIpModes;
 
     /**
      * Handles client connections
@@ -352,6 +355,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         mWifiPermissionsUtil = mWifiInjector.getWifiPermissionsUtil();
         mLog = mWifiInjector.makeLog(TAG);
         mFrameworkFacade = wifiInjector.getFrameworkFacade();
+        mIfaceIpModes = new ConcurrentHashMap<String, Integer>();
         enableVerboseLoggingInternal(getVerboseLoggingLevel());
     }
 
@@ -719,8 +723,10 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         // NETWORK_STACK is a signature only permission.
         enforceNetworkStackPermission();
 
-        Slog.d(TAG, "updateInterfaceIpState: ifaceName=" + ifaceName + " mode=" + mode);
-        // TODO: keep track of modes in a datastructure - protect it with a lock of some sort.
+        Integer previousMode = mIfaceIpModes.put(ifaceName, mode);
+        Slog.d(TAG, "updateInterfaceIpState: ifaceName=" + ifaceName + " mode=" + mode
+                + " previous mode= " + previousMode);
+
         // TODO: check the mode when startLOHS comes in in case it is already active
         // TODO: if mode == LOCAL_ONLY, trigger onStarted callbacks
     }
