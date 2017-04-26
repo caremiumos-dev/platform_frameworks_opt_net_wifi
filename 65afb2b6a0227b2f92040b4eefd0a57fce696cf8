@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "bf03b88f_c6d2091c",
+        "filename": "service/java/com/android/server/wifi/LocalOnlyHotspotRequestInfo.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-26T07:09:56Z",
+      "side": 1,
+      "message": "a getting and putting it back to private makes sense for mockito to do it\u0027s thing more easily / consistently.",
+      "parentUuid": "35e3e7b0_db69a186",
+      "range": {
+        "startLine": 30,
+        "startChar": 21,
+        "endLine": 30,
+        "endChar": 25
+      },
+      "revId": "65afb2b6a0227b2f92040b4eefd0a57fce696cf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "614b465c_6cb9db6b",
         "filename": "service/java/com/android/server/wifi/LocalOnlyHotspotRequestInfo.java",
         "patchSetId": 12
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "I passed it in so I can have a handle on it for testing.",
       "parentUuid": "614b465c_6cb9db6b",
+      "range": {
+        "startLine": 47,
+        "startChar": 66,
+        "endLine": 47,
+        "endChar": 75
+      },
+      "revId": "65afb2b6a0227b2f92040b4eefd0a57fce696cf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de75e95d_b5314c8f",
+        "filename": "service/java/com/android/server/wifi/LocalOnlyHotspotRequestInfo.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-26T07:09:56Z",
+      "side": 1,
+      "message": "makes sense",
+      "parentUuid": "0f092831_f0c3cb9f",
       "range": {
         "startLine": 47,
         "startChar": 66,
