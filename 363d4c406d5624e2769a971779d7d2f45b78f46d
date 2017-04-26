@@ -34,6 +34,24 @@
       "revId": "363d4c406d5624e2769a971779d7d2f45b78f46d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e9e4266_1426c3c5",
+        "filename": "service/java/com/android/server/wifi/WifiScoreReport.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-04-26T17:27:26Z",
+      "side": 1,
+      "message": "SGTM.",
+      "parentUuid": "99fcf681_b9a09620",
+      "revId": "363d4c406d5624e2769a971779d7d2f45b78f46d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
