@@ -22,6 +22,30 @@
       "revId": "9c4739984b04affac31238bda9bfc840a9120428",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97b92254_4cf1b6c6",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-27T06:47:49Z",
+      "side": 1,
+      "message": "it would..  i just like to remind myself what is supposed to go in there ;)\n\nI know we aren\u0027t consistent in wifi, do you know of an official stance on this?  (good to know for the future)",
+      "parentUuid": "cc632131_6254b869",
+      "range": {
+        "startLine": 358,
+        "startChar": 46,
+        "endLine": 358,
+        "endChar": 61
+      },
+      "revId": "9c4739984b04affac31238bda9bfc840a9120428",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
