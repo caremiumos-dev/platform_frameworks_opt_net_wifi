@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "850988a7_cf015c75",
+        "filename": "service/java/com/android/server/wifi/LocalOnlyHotspotRequestInfo.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-27T06:39:54Z",
+      "side": 1,
+      "message": "Probably can just delete this.",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "e5c2725d263dac463e5ceaea17d2ff9c61466a56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
