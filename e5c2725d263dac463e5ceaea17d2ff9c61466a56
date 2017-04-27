@@ -22,6 +22,52 @@
       "revId": "e5c2725d263dac463e5ceaea17d2ff9c61466a56",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a461f49e_9a45f415",
+        "filename": "service/java/com/android/server/wifi/LocalOnlyHotspotRequestInfo.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-27T06:50:02Z",
+      "side": 1,
+      "message": "could be public maybe (this saves you the getters).",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "e5c2725d263dac463e5ceaea17d2ff9c61466a56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5866a972_528c65c5",
+        "filename": "service/java/com/android/server/wifi/LocalOnlyHotspotRequestInfo.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-27T06:50:02Z",
+      "side": 1,
+      "message": "You can do:\n\nmBinder \u003d Preconditions.checkNotNull(binder);\nmMessenger \u003d Preconditions.checkNotNull(messenger);\n...",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 9
+      },
+      "revId": "e5c2725d263dac463e5ceaea17d2ff9c61466a56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
