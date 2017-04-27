@@ -70,6 +70,30 @@
       "revId": "9c4739984b04affac31238bda9bfc840a9120428",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e265109f_8ad2a3a5",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-27T07:11:33Z",
+      "side": 1,
+      "message": "sounds good!  Thanks a bunch!  (I\u0027ll upload the fix soon!)",
+      "parentUuid": "c4310949_cc86731b",
+      "range": {
+        "startLine": 358,
+        "startChar": 46,
+        "endLine": 358,
+        "endChar": 61
+      },
+      "revId": "9c4739984b04affac31238bda9bfc840a9120428",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
