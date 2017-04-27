@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0aa41eef_d8a78098",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-27T12:28:28Z",
+      "side": 1,
+      "message": "Prolly needs to be the Messenger+IBinder variant now, I\u0027m guessing.",
+      "range": {
+        "startLine": 804,
+        "startChar": 50,
+        "endLine": 804,
+        "endChar": 52
+      },
+      "revId": "3044f26da1199d4ad187cef6e5ede9fd96a48f2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
