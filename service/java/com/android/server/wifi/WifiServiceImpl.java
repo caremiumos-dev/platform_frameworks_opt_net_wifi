@@ -136,6 +136,8 @@ public class WifiServiceImpl extends IWifiManager.Stub {
     // Debug counter tracking scan requests sent by WifiManager
     private int scanRequestCounter = 0;
 
+    /* Tracks the open wi-fi network notification */
+    private WifiNotificationController mNotificationController;
     private WifiWakeupController mWifiWakeupController;
     /* Polls traffic stats and notifies clients */
     private WifiTrafficPoller mTrafficPoller;
@@ -328,6 +330,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         mAppOps = (AppOpsManager) mContext.getSystemService(Context.APP_OPS_SERVICE);
         mCertManager = mWifiInjector.getWifiCertManager();
 
+        mNotificationController = mWifiInjector.getWifiNotificationController();
         mWifiWakeupController = mWifiInjector.getWifiWakeupController();
 
         mWifiLockManager = mWifiInjector.getWifiLockManager();
@@ -1475,6 +1478,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
             pw.println("mScanPending " + mScanPending);
             mWifiController.dump(fd, pw, args);
             mSettingsStore.dump(fd, pw, args);
+            mNotificationController.dump(fd, pw, args);
             mWifiWakeupController.dump(fd, pw, args);
             mTrafficPoller.dump(fd, pw, args);
             pw.println();
