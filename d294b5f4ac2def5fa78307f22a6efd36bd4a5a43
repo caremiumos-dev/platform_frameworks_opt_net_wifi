@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0de093b1_ab514511",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-27T12:36:06Z",
+      "side": 1,
+      "message": "Do you still need this?  For that matter, do you need STATE_TETHERED as well?",
+      "range": {
+        "startLine": 19,
+        "startChar": 75,
+        "endLine": 19,
+        "endChar": 91
+      },
+      "revId": "d294b5f4ac2def5fa78307f22a6efd36bd4a5a43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
