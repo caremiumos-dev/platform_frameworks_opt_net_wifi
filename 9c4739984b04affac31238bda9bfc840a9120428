@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc632131_6254b869",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-27T06:46:02Z",
+      "side": 1,
+      "message": "short diamond notation \u003c\u003e should work here right ?",
+      "range": {
+        "startLine": 358,
+        "startChar": 46,
+        "endLine": 358,
+        "endChar": 61
+      },
+      "revId": "9c4739984b04affac31238bda9bfc840a9120428",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
