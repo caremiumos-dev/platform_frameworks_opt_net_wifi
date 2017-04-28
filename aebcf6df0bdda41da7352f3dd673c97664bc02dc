@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2929e76b_75716a81",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-28T02:51:25Z",
+      "side": 1,
+      "message": "Does this need to be public?  And the whole class is @hide, so that may not be necessary either.",
+      "range": {
+        "startLine": 339,
+        "startChar": 4,
+        "endLine": 339,
+        "endChar": 10
+      },
+      "revId": "aebcf6df0bdda41da7352f3dd673c97664bc02dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcb525f1_77ab3c9c",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-28T02:51:25Z",
+      "side": 1,
+      "message": "Could just be:\n\n    final boolean removed \u003d (mLocalOnly... \u003d\u003d null);\n    if (!removed) { ... }",
+      "range": {
+        "startLine": 954,
+        "startChar": 15,
+        "endLine": 954,
+        "endChar": 77
+      },
+      "revId": "aebcf6df0bdda41da7352f3dd673c97664bc02dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
