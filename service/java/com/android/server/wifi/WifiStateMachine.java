@@ -5147,10 +5147,26 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     // to it after a config store reload. Hence the old network Id lookups may not
                     // work, so disconnect the network and let network selector reselect a new
                     // network.
-                    if (getCurrentWifiConfiguration() != null) {
+                    config = getCurrentWifiConfiguration();
+                    if (config != null) {
                         mWifiInfo.setBSSID(mLastBssid);
                         mWifiInfo.setNetworkId(mLastNetworkId);
                         mWifiConnectivityManager.trackBssid(mLastBssid, true, reasonCode);
+                        if (config.enterpriseConfig != null
+                                && config.enterpriseConfig.getEapMethod()
+                                        != WifiEnterpriseConfig.Eap.NONE
+                                // PEAP uses anonymous identity provided by user.
+                                && config.enterpriseConfig.getEapMethod()
+                                        != WifiEnterpriseConfig.Eap.PEAP) {
+                            String anonymousIdentity = mWifiNative.getEapAnonymousIdentity();
+                            if (anonymousIdentity != null) {
+                                config.enterpriseConfig.setAnonymousIdentity(anonymousIdentity);
+                                mWifiConfigManager.addOrUpdateNetwork(config, Process.WIFI_UID);
+                            } else {
+                                Log.d(TAG, "Failed to get updated anonymous identity"
+                                        + " from supplicant");
+                            }
+                        }
                         sendNetworkStateChangeBroadcast(mLastBssid);
                         transitionTo(mObtainingIpState);
                     } else {

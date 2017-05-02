@@ -550,6 +550,16 @@ public class SupplicantStaIfaceHal {
     }
 
     /**
+     * Get the eap anonymous identity for the currently configured network.
+     *
+     * @return anonymous identity string if succeeds, null otherwise.
+     */
+    public String getCurrentNetworkEapAnonymousIdentity() {
+        if (mCurrentNetwork == null) return null;
+        return mCurrentNetwork.fetchEapAnonymousIdentity();
+    }
+
+    /**
      * Send the eap sim gsm auth response for the currently configured network.
      *
      * @param paramsStr String to send.
