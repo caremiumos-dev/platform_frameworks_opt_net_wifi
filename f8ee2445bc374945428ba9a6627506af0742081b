@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76c070f0_72e448a8",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-05-02T17:30:15Z",
+      "side": 1,
+      "message": "This check is not needed.  Passpoint network always use enterprise credential.",
+      "range": {
+        "startLine": 1205,
+        "startChar": 46,
+        "endLine": 1205,
+        "endChar": 64
+      },
+      "revId": "f8ee2445bc374945428ba9a6627506af0742081b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "808e236e_c0e82698",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4151,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-05-02T17:30:15Z",
+      "side": 1,
+      "message": "I am not sure about re-enabling after each wifi on-off.  I think the network will be re-enabled when the user tries to manually connect.  I think it might be better to wait for the user to re-enable the network since user action is most likely required to fix auth failures.",
+      "range": {
+        "startLine": 4151,
+        "startChar": 16,
+        "endLine": 4151,
+        "endChar": 73
+      },
+      "revId": "f8ee2445bc374945428ba9a6627506af0742081b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
