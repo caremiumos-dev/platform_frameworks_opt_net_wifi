@@ -622,6 +622,16 @@ public class WifiConfigManager {
             return true;
         }
 
+        // EAP-SIM or EAP-AKA network needs framework to update the pseudo identity provided
+        // by authenticator back to the WifiConfiguration object.
+        // Since it is "owned" by us, so always allow us to modify them.
+        if (config.enterpriseConfig != null
+                && config.enterpriseConfig.getEapMethod() != WifiEnterpriseConfig.Eap.NONE
+                && config.enterpriseConfig.getEapMethod() != WifiEnterpriseConfig.Eap.PEAP
+                && uid == Process.WIFI_UID) {
+            return true;
+        }
+
         final DevicePolicyManagerInternal dpmi = LocalServices.getService(
                 DevicePolicyManagerInternal.class);
 
