@@ -115,8 +115,7 @@ LOCAL_SHARED_LIBRARIES := \
     libcutils \
     liblog \
     libnl \
-    libutils \
-    libcld80211
+    libutils
 LOCAL_SRC_FILES := \
     driver_tool.cpp \
     hal_tool.cpp
