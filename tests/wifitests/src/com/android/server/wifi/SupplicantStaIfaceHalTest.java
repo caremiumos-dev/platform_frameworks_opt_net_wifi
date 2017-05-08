@@ -88,6 +88,7 @@ public class SupplicantStaIfaceHalTest {
     private static final int SUPPLICANT_NETWORK_ID = 2;
     private static final String SUPPLICANT_SSID = NETWORK_ID_TO_SSID.get(SUPPLICANT_NETWORK_ID);
     private static final int ROAM_NETWORK_ID = 4;
+    private static final int TEST_NETWORK_ID = 6;
     private static final String BSSID = "fa:45:23:23:12:12";
     private static final String WLAN_IFACE_NAME = "wlan0";
     private static final String P2P_IFACE_NAME = "p2p0";
@@ -480,7 +481,7 @@ public class SupplicantStaIfaceHalTest {
         }).when(mISupplicantStaIfaceMock).addNetwork(
                 any(ISupplicantStaIface.addNetworkCallback.class));
 
-        assertFalse(mDut.connectToNetwork(new WifiConfiguration()));
+        assertFalse(mDut.connectToNetwork(createTestWifiConfiguration()));
     }
 
     /**
@@ -494,7 +495,7 @@ public class SupplicantStaIfaceHalTest {
         when(mSupplicantStaNetworkMock.saveWifiConfiguration(any(WifiConfiguration.class)))
                 .thenReturn(false);
 
-        assertFalse(mDut.connectToNetwork(new WifiConfiguration()));
+        assertFalse(mDut.connectToNetwork(createTestWifiConfiguration()));
         // We should have removed the existing network once before connection and once more
         // on failure to save network configuration.
         verify(mISupplicantStaIfaceMock, times(2)).removeNetwork(anyInt());
@@ -512,7 +513,7 @@ public class SupplicantStaIfaceHalTest {
                 .when(mSupplicantStaNetworkMock).saveWifiConfiguration(
                         any(WifiConfiguration.class));
 
-        assertFalse(mDut.connectToNetwork(new WifiConfiguration()));
+        assertFalse(mDut.connectToNetwork(createTestWifiConfiguration()));
         // We should have removed the existing network once before connection and once more
         // on failure to save network configuration.
         verify(mISupplicantStaIfaceMock, times(2)).removeNetwork(anyInt());
@@ -528,7 +529,7 @@ public class SupplicantStaIfaceHalTest {
 
         when(mSupplicantStaNetworkMock.select()).thenReturn(false);
 
-        assertFalse(mDut.connectToNetwork(new WifiConfiguration()));
+        assertFalse(mDut.connectToNetwork(createTestWifiConfiguration()));
     }
 
     /**
@@ -1239,6 +1240,12 @@ public class SupplicantStaIfaceHalTest {
 
         assertTrue(mDut.startWpsPbc(null));
         verify(mISupplicantStaIfaceMock).startWpsPbc(eq(anyBssidBytes));
+    }
+
+    private WifiConfiguration createTestWifiConfiguration() {
+        WifiConfiguration config = new WifiConfiguration();
+        config.networkId = TEST_NETWORK_ID;
+        return config;
     }
 
     private void executeAndValidateHs20DeauthImminentCallback(boolean isEss) throws Exception {

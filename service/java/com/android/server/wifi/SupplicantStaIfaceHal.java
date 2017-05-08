@@ -66,6 +66,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -128,6 +129,7 @@ public class SupplicantStaIfaceHal {
     private SupplicantStaNetworkHal mCurrentNetwork;
     // Currently configured network's framework network Id.
     private int mFrameworkNetworkId = WifiConfiguration.INVALID_NETWORK_ID;
+    private WifiConfiguration mCachedWifiConfiguration;
     private final Context mContext;
     private final WifiMonitor mWifiMonitor;
 
@@ -394,14 +396,18 @@ public class SupplicantStaIfaceHal {
      * @return {@code true} if it succeeds, {@code false} otherwise
      */
     public boolean connectToNetwork(WifiConfiguration config) {
-        mFrameworkNetworkId = WifiConfiguration.INVALID_NETWORK_ID;
-        mCurrentNetwork = null;
         logd("connectToNetwork " + config.configKey());
-        if (!removeAllNetworks()) {
-            loge("Failed to remove existing networks");
-            return false;
+        if (!isSameNetworkSaved(config)) {
+            mFrameworkNetworkId = WifiConfiguration.INVALID_NETWORK_ID;
+            mCurrentNetwork = null;
+            if (!removeAllNetworks()) {
+                loge("Failed to remove existing networks");
+                return false;
+            }
+            mCurrentNetwork = addNetworkAndSaveConfig(config);
+        } else {
+            logd("Network is already saved, will not trigger remove and add operation.");
         }
-        mCurrentNetwork = addNetworkAndSaveConfig(config);
         if (mCurrentNetwork == null) {
             loge("Failed to add/save network configuration: " + config.configKey());
             return false;
@@ -410,6 +416,7 @@ public class SupplicantStaIfaceHal {
             loge("Failed to select network configuration: " + config.configKey());
             return false;
         }
+        mCachedWifiConfiguration = config;
         mFrameworkNetworkId = config.networkId;
         return true;
     }
@@ -512,6 +519,8 @@ public class SupplicantStaIfaceHal {
                     return false;
                 }
             }
+            mFrameworkNetworkId = WifiConfiguration.INVALID_NETWORK_ID;
+            mCachedWifiConfiguration = null;
         }
         return true;
     }
@@ -647,6 +656,42 @@ public class SupplicantStaIfaceHal {
                 return false;
             }
         }
+    }
+
+    /**
+     * Check if the same network configuration was already saved in supplicant.
+     *
+     * @return true if network is already saved.
+     *         false if network is not saved or network configuration changed.
+     */
+    private boolean isSameNetworkSaved(WifiConfiguration config) {
+        synchronized (mLock) {
+            // We didn't save any network in supplicant.
+            if (mCachedWifiConfiguration == null) {
+                return false;
+            }
+            // Ensure they have the same network id.
+            if (mFrameworkNetworkId != config.networkId) {
+                return false;
+            }
+            // Ensure they have the same SSID.
+            if (!Objects.equals(mCachedWifiConfiguration.SSID, config.SSID)) {
+                return false;
+            }
+            // Ensure they have the same network selection bssid.
+            String cachedNetworkSelectionBSSID = mCachedWifiConfiguration
+                    .getNetworkSelectionStatus().getNetworkSelectionBSSID();
+            String networkSelectionBSSID = config.getNetworkSelectionStatus()
+                    .getNetworkSelectionBSSID();
+            if (!Objects.equals(cachedNetworkSelectionBSSID, networkSelectionBSSID)) {
+                return false;
+            }
+            // Ensure the credential doesn't change.
+            if (WifiConfigurationUtil.hasCredentialChanged(mCachedWifiConfiguration, config)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
