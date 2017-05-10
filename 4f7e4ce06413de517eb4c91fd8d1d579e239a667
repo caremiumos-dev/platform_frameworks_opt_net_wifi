@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82a7ffd3_2d9fcdbb",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-05-10T21:45:36Z",
+      "side": 1,
+      "message": "I saw your reasoning why you don\u0027t want to pass scanDetails as a parameter, and do this inside of isCurrentNetworkSufficient, but!\nIf you only do this check when wifiInfo.is24GHz, you\u0027ll mitigate the \u0027performance concerns\u0027",
+      "range": {
+        "startLine": 227,
+        "startChar": 12,
+        "endLine": 227,
+        "endChar": 74
+      },
+      "revId": "4f7e4ce06413de517eb4c91fd8d1d579e239a667",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

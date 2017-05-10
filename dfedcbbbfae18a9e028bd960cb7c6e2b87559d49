@@ -70,6 +70,30 @@
       "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f31f109e_cb473e9a",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-05-10T21:45:36Z",
+      "side": 1,
+      "message": "If this check is only done when WifiInfo.is24GHz, then this doesn\u0027t add a performance cost, it subtracts it.\nThis is an O(N) method, where N is not more than 200 iirc.\nThis check allows us to skip a SavedNetworkEvaluator.evaluateNetworks call, which calls \u0027getSavedNetworkForScanDetailAndCache\u0027 for all N scanResults, and compares each of them with all M wificonfigs, O(N*M).\n\nI don\u0027t think we need metrics for this. (Although We do have metrics on the number of scan results, and number of saved networks)",
+      "parentUuid": "e19c857a_cce024cc",
+      "range": {
+        "startLine": 192,
+        "startChar": 7,
+        "endLine": 192,
+        "endChar": 62
+      },
+      "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
