@@ -69,12 +69,10 @@ public class WifiNetworkHistory {
     private static final String RSSI_KEY = "RSSI";
     private static final String FREQ_KEY = "FREQ";
     private static final String DATE_KEY = "DATE";
-    private static final String MILLI_KEY = "MILLI";
     private static final String NETWORK_ID_KEY = "ID";
     private static final String PRIORITY_KEY = "PRIORITY";
     private static final String DEFAULT_GW_KEY = "DEFAULT_GW";
     private static final String AUTH_KEY = "AUTH";
-    private static final String BSSID_STATUS_KEY = "BSSID_STATUS";
     private static final String SELF_ADDED_KEY = "SELF_ADDED";
     private static final String FAILURE_KEY = "FAILURE";
     private static final String DID_SELF_ADD_KEY = "DID_SELF_ADD";
