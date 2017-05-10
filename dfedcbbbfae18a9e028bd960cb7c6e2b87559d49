@@ -94,6 +94,30 @@
       "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c3fbb61_3f95d74f",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-05-10T22:13:41Z",
+      "side": 1,
+      "message": "It adds a cost when WifiInfo.is24GHz and there are 5GHz networks in range. You will then need to run this check which iterates through all the scan details and run evaluateNetworks().",
+      "parentUuid": "f31f109e_cb473e9a",
+      "range": {
+        "startLine": 192,
+        "startChar": 7,
+        "endLine": 192,
+        "endChar": 62
+      },
+      "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
