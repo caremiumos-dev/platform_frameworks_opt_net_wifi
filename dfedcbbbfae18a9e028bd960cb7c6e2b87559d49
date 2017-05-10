@@ -46,6 +46,30 @@
       "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e19c857a_cce024cc",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-05-10T00:05:26Z",
+      "side": 1,
+      "message": "It\u0027s a good idea to check if the device supports 5GHz. It should be light-weight once we add the support in WifiConnectivityHelper. \n\nI think we probably want to put more thoughts on whether we should check if there are any 5GHz networks in range. I am concerned about the cost of adding another loop to iterate through all the scan results. It would be helpful if we can have some metrics data. A couple of data to collect: 1) How often we run into this situation. 2) How long does it take to iterate through all the scan results to check if 5GHz is available vs. how long it takes to iterate through all the scan results for a complete network scoring.",
+      "parentUuid": "a381aeb3_fb4f1d31",
+      "range": {
+        "startLine": 192,
+        "startChar": 7,
+        "endLine": 192,
+        "endChar": 62
+      },
+      "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
