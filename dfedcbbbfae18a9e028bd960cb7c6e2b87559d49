@@ -118,6 +118,30 @@
       "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7c9e87d_c0558b61",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-05-10T22:31:29Z",
+      "side": 1,
+      "message": "The case you\u0027ve mentioned is quite common, however this method (bool checking ~200 elements in a list) has an insignificant performance cost.\nCurrently we ALWAYS iterate this scan detail list when on 2.4Ghz, and we do N*M string comparisons with WifiConfigurations, which is far more costly. This change makes it N*(M+1), and potentially reduces it to N",
+      "parentUuid": "2c3fbb61_3f95d74f",
+      "range": {
+        "startLine": 192,
+        "startChar": 7,
+        "endLine": 192,
+        "endChar": 62
+      },
+      "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
