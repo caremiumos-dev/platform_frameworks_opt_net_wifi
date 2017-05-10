@@ -142,6 +142,30 @@
       "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc95cf8e_16321519",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-05-10T22:34:57Z",
+      "side": 1,
+      "message": "There\u0027s a tradeoff to be made here:\n1) for devices that support 5GHz, this short-circuits, so we need to consider worst case for performance but average case for battery.\n2) For devices that *don\u0027t* support 5GHz, today instead of doing this loop, they go through and perform all of the network scoring and may switch networks more aggressively because of this. So for those devices, this will prevent a future loop through the same scan results that would have happened later in the code, making it not an \"extra\" but moving that loop and eliminating a bunch of other logic: this is strictly better in cases where the device decides the network is sufficient, which by design is the majority of cases.",
+      "parentUuid": "e19c857a_cce024cc",
+      "range": {
+        "startLine": 192,
+        "startChar": 7,
+        "endLine": 192,
+        "endChar": 62
+      },
+      "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
