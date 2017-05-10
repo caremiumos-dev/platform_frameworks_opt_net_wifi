@@ -213,6 +213,30 @@
       "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3f51cc0_02e3c669",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-05-10T23:18:28Z",
+      "side": 1,
+      "message": "We can do that in addition, but it\u0027s not, strictly-speaking, enough. I did look at it, that\u0027s not supported today, which makes that a performance optimization rather than a bug fix. This is a bug fix, and we are talking about vanishingly small amounts of further performance enhancement by doing that.",
+      "parentUuid": "9d193d70_b11d3183",
+      "range": {
+        "startLine": 197,
+        "startChar": 1,
+        "endLine": 197,
+        "endChar": 7
+      },
+      "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
