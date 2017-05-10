@@ -22,6 +22,30 @@
       "revId": "4f7e4ce06413de517eb4c91fd8d1d579e239a667",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "701fab47_12449039",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-05-10T22:43:04Z",
+      "side": 1,
+      "message": "I have now rearranged the deck chairs on the titanic.",
+      "parentUuid": "82a7ffd3_2d9fcdbb",
+      "range": {
+        "startLine": 227,
+        "startChar": 12,
+        "endLine": 227,
+        "endChar": 74
+      },
+      "revId": "4f7e4ce06413de517eb4c91fd8d1d579e239a667",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
