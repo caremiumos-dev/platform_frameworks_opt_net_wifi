@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c77858ba_2a9193c3",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-05-11T05:24:57Z",
+      "side": 1,
+      "message": "Oh, sorry, I probably gave you incorrect information then. Before I was under impression that Log.wtf() would cause an exception and generate stack trace. Recently I learnt that in framework it actually sends a message to Google backend service. The message will then be routed to the responsible team/engineer.",
+      "parentUuid": "9d68b48d_1bd3477d",
+      "range": {
+        "startLine": 186,
+        "startChar": 12,
+        "endLine": 186,
+        "endChar": 17
+      },
+      "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4987a2ea_1936f85c",
         "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
         "patchSetId": 2
@@ -383,6 +407,54 @@
     },
     {
       "key": {
+        "uuid": "84040070_66300666",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-05-11T05:24:57Z",
+      "side": 1,
+      "message": "Thanks. I commented on that bug just now. Do you plan to cherry-pick this CL to oc-dev and complete the implementation there?\n\nBTW, thanks for enhancing Wifi network selection.",
+      "parentUuid": "53ac2fe6_fda999cc",
+      "range": {
+        "startLine": 197,
+        "startChar": 1,
+        "endLine": 197,
+        "endChar": 7
+      },
+      "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55a65646_e331d4f7",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-05-11T05:24:57Z",
+      "side": 1,
+      "message": "BTW, for the sake of completeness, can we run the test again and measure how long it takes to execute SavedNetworkEvaluator#evaluateNetwork? So we can compare the two loops under the same set of scan results.",
+      "parentUuid": "dc9e51b7_2661285a",
+      "range": {
+        "startLine": 197,
+        "startChar": 1,
+        "endLine": 197,
+        "endChar": 7
+      },
+      "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f8e7e61_bae2e6e2",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
         "patchSetId": 2
@@ -441,6 +513,30 @@
       "side": 1,
       "message": "If I understand the test framework correctly, that\u0027s that the DummyNetworkEvaluator does. That behavior was confirmed for me because when I tried to make the tests more \"complete\" and expected it to pick the better network, it never does. It always picks the first one in the list. That\u0027s why the test only tests whether selection is run or not, rather than testing for the correct network choice. The choice is always the first network in the array.",
       "parentUuid": "221fdd22_7fea5e18",
+      "range": {
+        "startLine": 687,
+        "startChar": 8,
+        "endLine": 694,
+        "endChar": 58
+      },
+      "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83443962_045acb53",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-05-11T05:24:57Z",
+      "side": 1,
+      "message": "Ah, I forgot we are running the DummyNetworkEvaluator here. It has been a while since I wrote these tests. :-)",
+      "parentUuid": "2fe23623_56673d11",
       "range": {
         "startLine": 687,
         "startChar": 8,
