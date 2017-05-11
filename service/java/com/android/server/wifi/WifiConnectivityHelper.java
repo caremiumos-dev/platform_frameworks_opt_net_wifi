@@ -45,6 +45,23 @@ public class WifiConnectivityHelper {
     }
 
     /**
+     * Returns whether a particular feature is supported on the current firmware
+     *
+     * @return true if the feature is present, false if absent
+     */
+    private boolean hasFirmwareFeature(int feature) {
+        return ((feature & mFwFeatureSet) == feature);
+    }
+
+    /**
+     * Return whether 5GHz is supported on the current firmware
+     * @return true if supported, false if not
+     */
+    public boolean is5GHzSupported() {
+        return hasFirmwareFeature(WIFI_FEATURE_INFRA_5G);
+    }
+
+    /**
      * Query firmware if it supports
      * {@link android.net.wifi.WifiManager#WIFI_FEATURE_CONTROL_ROAMING}. If yes, get the firmware
      * roaming capabilities. If firmware roaming is supported but we fail to get the roaming
