@@ -17,6 +17,7 @@
 package com.android.server.wifi;
 
 import static android.net.wifi.WifiManager.WIFI_FEATURE_CONTROL_ROAMING;
+import static android.net.wifi.WifiManager.WIFI_FEATURE_INFRA_5G;
 
 import android.util.Log;
 
@@ -39,9 +40,28 @@ public class WifiConnectivityHelper {
     private boolean mFirmwareRoamingSupported = false;
     private int mMaxNumBlacklistBssid = INVALID_LIST_SIZE;
     private int mMaxNumWhitelistSsid = INVALID_LIST_SIZE;
+    private int mFwFeatureSet = 0;
 
     WifiConnectivityHelper(WifiNative wifiNative) {
         mWifiNative = wifiNative;
+    }
+
+    /**
+     * Returns whether a particular feature is supported on the current firmware
+     *
+     * @return true if the feature is present, false if absent
+     */
+    private boolean hasFirmwareFeature(int feature) {
+        return ((feature & mFwFeatureSet) == feature);
+    }
+
+    /**
+     * Return whether 5GHz is supported on the current firmware
+     *
+     * @return true if supported, false if not
+     */
+    public boolean is5GHzSupported() {
+        return hasFirmwareFeature(WIFI_FEATURE_INFRA_5G);
     }
 
     /**
@@ -59,10 +79,10 @@ public class WifiConnectivityHelper {
         mMaxNumBlacklistBssid = INVALID_LIST_SIZE;
         mMaxNumWhitelistSsid = INVALID_LIST_SIZE;
 
-        int fwFeatureSet = mWifiNative.getSupportedFeatureSet();
-        Log.d(TAG, "Firmware supported feature set: " + Integer.toHexString(fwFeatureSet));
+        mFwFeatureSet = mWifiNative.getSupportedFeatureSet();
 
-        if ((fwFeatureSet & WIFI_FEATURE_CONTROL_ROAMING) == 0) {
+        Log.d(TAG, "Firmware supported feature set: " + Integer.toHexString(mFwFeatureSet));
+        if (!hasFirmwareFeature(WIFI_FEATURE_CONTROL_ROAMING)) {
             Log.d(TAG, "Firmware roaming is not supported");
             return true;
         }
