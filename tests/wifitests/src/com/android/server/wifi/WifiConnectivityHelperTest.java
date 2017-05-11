@@ -17,6 +17,7 @@
 package com.android.server.wifi;
 
 import static android.net.wifi.WifiManager.WIFI_FEATURE_CONTROL_ROAMING;
+import static android.net.wifi.WifiManager.WIFI_FEATURE_INFRA_5G;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -257,5 +258,14 @@ public class WifiConnectivityHelperTest {
         verify(mWifiNative).configureRoaming(mRoamingConfigCaptor.capture());
         assertEquals(0, mRoamingConfigCaptor.getValue().blacklistBssids.size());
         assertEquals(0, mRoamingConfigCaptor.getValue().whitelistSsids.size());
+    }
+
+    @Test
+    public void verify5GHzSupported() {
+        assertFalse(mWifiConnectivityHelper.is5GHzSupported());
+        // Return firmware roaming feature as supported by default.
+        when(mWifiNative.getSupportedFeatureSet()).thenReturn(WIFI_FEATURE_INFRA_5G);
+        mWifiConnectivityHelper.getFirmwareRoamingInfo();
+        assertTrue(mWifiConnectivityHelper.is5GHzSupported());
     }
 }
