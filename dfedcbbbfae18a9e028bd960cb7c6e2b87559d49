@@ -237,6 +237,30 @@
       "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc9e51b7_2661285a",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-05-11T00:00:47Z",
+      "side": 1,
+      "message": "For fun, I ran a test to see how long this code takes to run. I did 100 scan results (all 2GHz) and ran it 100 times on Bullhead.\n\nworst case \u003d 220uS\nbest case \u003d 3uS\naverage case \u003d 22uS\n\n[195104, 184323, 217084, 188125, 185990, 184166, 182656, 185834, 183802, 213281, 5052, 6927, 3230, 3438, 3594, 3229, 3177, 3177, 3230, 3229, 3229, 3541, 3333, 3125, 3282, 3229, 3281, 3229, 3230, 3177, 3125, 3178, 3230, 3333, 3177, 3333, 3229, 3178, 3229, 3125, 3230, 3229, 3333, 3385, 3333, 3229, 3333, 3229, 3281, 3230, 3229, 3125, 3177, 3229, 3385, 3177, 3230, 3229, 3542, 3229, 3229, 3177, 3230, 3177, 3177, 3177, 3490, 3177, 3333, 3177, 3333, 3178, 3594, 3178, 3333, 3229, 3333, 3177, 3333, 3333, 3333, 3333, 3489, 3229, 3334, 3125, 3281, 3125, 3334, 3177, 3490, 3333, 3281, 3229, 3541, 3177, 3385, 3229, 3386, 3229]\n\nI have a feeling this is due to CPU frequency scaling, process affinity, or another HW optimization.",
+      "parentUuid": "b3f51cc0_02e3c669",
+      "range": {
+        "startLine": 197,
+        "startChar": 1,
+        "endLine": 197,
+        "endChar": 7
+      },
+      "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
