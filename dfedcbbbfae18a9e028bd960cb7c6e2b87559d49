@@ -354,6 +354,30 @@
       "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2fe23623_56673d11",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-05-11T00:38:12Z",
+      "side": 1,
+      "message": "If I understand the test framework correctly, that\u0027s that the DummyNetworkEvaluator does. That behavior was confirmed for me because when I tried to make the tests more \"complete\" and expected it to pick the better network, it never does. It always picks the first one in the list. That\u0027s why the test only tests whether selection is run or not, rather than testing for the correct network choice. The choice is always the first network in the array.",
+      "parentUuid": "221fdd22_7fea5e18",
+      "range": {
+        "startLine": 687,
+        "startChar": 8,
+        "endLine": 694,
+        "endChar": 58
+      },
+      "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
