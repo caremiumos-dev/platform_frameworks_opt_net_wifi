@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "57fd8258_bfc67e6f",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-05-11T00:27:36Z",
+      "side": 1,
+      "message": "Log.wtf()?",
+      "range": {
+        "startLine": 186,
+        "startChar": 12,
+        "endLine": 186,
+        "endChar": 17
+      },
+      "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4987a2ea_1936f85c",
         "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
         "patchSetId": 2
@@ -257,6 +280,76 @@
         "startChar": 1,
         "endLine": 197,
         "endChar": 7
+      },
+      "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd0a4fca_dee14975",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-05-11T00:27:36Z",
+      "side": 1,
+      "message": "I think it is worth to add that performance enhancement in this CL, given the work amount is small.",
+      "parentUuid": "dc9e51b7_2661285a",
+      "range": {
+        "startLine": 197,
+        "startChar": 1,
+        "endLine": 197,
+        "endChar": 7
+      },
+      "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f8e7e61_bae2e6e2",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-05-11T00:27:36Z",
+      "side": 1,
+      "message": "Delete this extra blank line.",
+      "range": {
+        "startLine": 528,
+        "startChar": 0,
+        "endLine": 528,
+        "endChar": 0
+      },
+      "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "221fdd22_7fea5e18",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-05-11T00:27:36Z",
+      "side": 1,
+      "message": "How do we make sure it always connects to test1?",
+      "range": {
+        "startLine": 687,
+        "startChar": 8,
+        "endLine": 694,
+        "endChar": 58
       },
       "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
