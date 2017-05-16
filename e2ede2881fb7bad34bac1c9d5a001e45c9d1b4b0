@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d31f63c_df220fdb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-05-16T19:41:11Z",
+      "side": 1,
+      "message": "The commit message doesn\u0027t match exactly what this patch does. This patch is mainly to expose an API for caller to query if the device/firmware supports WiFi 5G. Previously we didn\u0027t cache the complete feature set value because the only API is to retrieve if firmware roaming is supported, which is cached. No need to cache the complete firmware feature set at that time.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 25
+      },
+      "revId": "e2ede2881fb7bad34bac1c9d5a001e45c9d1b4b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d9fa163_0b63642c",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-05-16T19:41:11Z",
+      "side": 1,
+      "message": "Previously we only care if firmware roaming is supported. Now we also rely on this method to get and cache the complete firmware feature set value to check if other features are supported. I am thinking we probably want to rename this method or spit it up. At the minimum, let\u0027s update the java doc so it\u0027s more clear what this method provides.",
+      "range": {
+        "startLine": 77,
+        "startChar": 19,
+        "endLine": 77,
+        "endChar": 41
+      },
+      "revId": "e2ede2881fb7bad34bac1c9d5a001e45c9d1b4b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
