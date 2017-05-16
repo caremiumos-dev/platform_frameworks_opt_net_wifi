@@ -479,6 +479,30 @@
     },
     {
       "key": {
+        "uuid": "f95a3e68_69b374de",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-05-16T22:28:34Z",
+      "side": 1,
+      "message": "I did some measurements. The cost of running this check is about 1% of running the network evaluation. Once we have the query of whether the device supports 5G in place, the cost will be even smaller.",
+      "parentUuid": "55a65646_e331d4f7",
+      "range": {
+        "startLine": 197,
+        "startChar": 1,
+        "endLine": 197,
+        "endChar": 7
+      },
+      "revId": "dfedcbbbfae18a9e028bd960cb7c6e2b87559d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f8e7e61_bae2e6e2",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
         "patchSetId": 2
