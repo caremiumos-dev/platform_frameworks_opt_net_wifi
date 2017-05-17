@@ -5568,7 +5568,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     mWifiInfo.setBSSID((String) message.obj);
                     mLastNetworkId = lookupFrameworkNetworkId(message.arg1);
                     mWifiInfo.setNetworkId(mLastNetworkId);
-                    if(!mLastBssid.equals(message.obj)) {
+                    if(!TextUtils.equals(mLastBssid, (String) message.obj)) {
                         mLastBssid = (String) message.obj;
                         sendNetworkStateChangeBroadcast(mLastBssid);
                     }
