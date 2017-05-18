@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e752949_96a6ed14",
+        "filename": "tests/wifitests/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-05-18T21:47:42Z",
+      "side": 1,
+      "message": "This appears to duplicate line 52. Do we need both copies?",
+      "revId": "33f4fea8c696fbb17df86062a128adef64fc3424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e17fdbd1_fd52fdce",
+        "filename": "tests/wifitests/coverage.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-05-18T21:47:42Z",
+      "side": 1,
+      "message": "Was this for debugging purposes while authoring the CL? If yes, should we remove USE_JACK before landing the change?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 14
+      },
+      "revId": "33f4fea8c696fbb17df86062a128adef64fc3424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "756646d0_b62f7770",
+        "filename": "tests/wifitests/coverage.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-05-18T21:47:42Z",
+      "side": 1,
+      "message": "Similarly to line 18: should this be removed before landing the CL?",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 35
+      },
+      "revId": "33f4fea8c696fbb17df86062a128adef64fc3424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68756d37_36869b0e",
+        "filename": "tests/wifitests/coverage.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-05-18T21:47:42Z",
+      "side": 1,
+      "message": "Is there a bug that the TODO can reference? E.g.\n\n  # TODO(b/123456): How can we  consolidate...",
+      "revId": "33f4fea8c696fbb17df86062a128adef64fc3424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "200faa33_199bfee1",
+        "filename": "tests/wifitests/coverage.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-05-18T21:47:42Z",
+      "side": 1,
+      "message": "1) What is this intended to do? My first guess was to exclude .class files. But don\u0027t those go under out/ anyway?\n2) What if we have Foo.java and FooBar.java? Will FooBar match the exclude list? (I\u0027m thinking |Foo*| would be in the exclude list.)",
+      "revId": "33f4fea8c696fbb17df86062a128adef64fc3424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77bf442f_3860cd36",
+        "filename": "tests/wifitests/coverage.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-05-18T21:47:42Z",
+      "side": 1,
+      "message": "Do we no longer support XML/CSV reports? (This invocation of java omits the --report-type argument.)",
+      "revId": "33f4fea8c696fbb17df86062a128adef64fc3424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
