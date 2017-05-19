@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dfecde28_4aa521f6",
+        "filename": "tests/wifitests/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1137668
+      },
+      "writtenOn": "2017-05-19T21:48:15Z",
+      "side": 1,
+      "message": "Oops.",
+      "parentUuid": "8e752949_96a6ed14",
+      "revId": "33f4fea8c696fbb17df86062a128adef64fc3424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e17fdbd1_fd52fdce",
         "filename": "tests/wifitests/coverage.sh",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-05-18T21:47:42Z",
       "side": 1,
       "message": "Was this for debugging purposes while authoring the CL? If yes, should we remove USE_JACK before landing the change?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 14
+      },
+      "revId": "33f4fea8c696fbb17df86062a128adef64fc3424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a1880b0_77ad8ac0",
+        "filename": "tests/wifitests/coverage.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1137668
+      },
+      "writtenOn": "2017-05-19T21:48:15Z",
+      "side": 1,
+      "message": "It was convenient for debugging, yeah. Do you mean that we want to remove the commented-out code on line 17? If that\u0027s what you mean then I\u0027ll do that",
+      "parentUuid": "e17fdbd1_fd52fdce",
       "range": {
         "startLine": 17,
         "startChar": 0,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "4eb7dfcf_0e6f4452",
+        "filename": "tests/wifitests/coverage.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1137668
+      },
+      "writtenOn": "2017-05-19T21:48:15Z",
+      "side": 1,
+      "message": "I found it convenient for testing to be able to regenerate the report without having to also rerun the tests. My inclination is to leave it in, although I\u0027m probably not much of a stakeholder longterm. Would it be better for you if it were removed?",
+      "parentUuid": "756646d0_b62f7770",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 35
+      },
+      "revId": "33f4fea8c696fbb17df86062a128adef64fc3424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68756d37_36869b0e",
         "filename": "tests/wifitests/coverage.sh",
         "patchSetId": 1
@@ -76,6 +142,24 @@
       "writtenOn": "2017-05-18T21:47:42Z",
       "side": 1,
       "message": "Is there a bug that the TODO can reference? E.g.\n\n  # TODO(b/123456): How can we  consolidate...",
+      "revId": "33f4fea8c696fbb17df86062a128adef64fc3424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f0f7296_b6d0c80c",
+        "filename": "tests/wifitests/coverage.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1137668
+      },
+      "writtenOn": "2017-05-19T21:48:15Z",
+      "side": 1,
+      "message": "Ok. I\u0027ve now opened b/38459706",
+      "parentUuid": "68756d37_36869b0e",
       "revId": "33f4fea8c696fbb17df86062a128adef64fc3424",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "fefce3c4_45dab30e",
+        "filename": "tests/wifitests/coverage.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1137668
+      },
+      "writtenOn": "2017-05-19T21:48:15Z",
+      "side": 1,
+      "message": "1)\n\nThis tells the reporter process to exclude from the report any classes that were generated from source code in the current directory (because the current directory contains tests).\n\nI\u0027ll add a comment - unless you know of a better way to do it, in which case I\u0027ll do it your better way. What\u0027s here is the same as what\u0027s in Android.mk for jacoco_exclude (except that it uses \":\" as a separator)\n\n2) You\u0027re right. I suspect that in practice that it\u0027s not a problem, because that\u0027s the same thing that\u0027s done in Android.mk . I remember thinking this was odd myself, and then finding that there were cases where there were classes inside of other classes and that if I removed the \u0027*\u0027 then suddenly the inner classes were no longer excluded.",
+      "parentUuid": "200faa33_199bfee1",
+      "revId": "33f4fea8c696fbb17df86062a128adef64fc3424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77bf442f_3860cd36",
         "filename": "tests/wifitests/coverage.sh",
         "patchSetId": 1
@@ -110,6 +212,24 @@
       "writtenOn": "2017-05-18T21:47:42Z",
       "side": 1,
       "message": "Do we no longer support XML/CSV reports? (This invocation of java omits the --report-type argument.)",
+      "revId": "33f4fea8c696fbb17df86062a128adef64fc3424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f29507b0_d0da69d4",
+        "filename": "tests/wifitests/coverage.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1137668
+      },
+      "writtenOn": "2017-05-19T21:48:15Z",
+      "side": 1,
+      "message": "They\u0027re still supported; the syntax just changed (and actually it\u0027s changing again in the next patchset before this gets merged). Jacoco supports simultaneously generating several reports of different types, so the report type of \u0027html\u0027 is activated by the string \u0027html\u0027 in \u0027--html-out\u0027",
+      "parentUuid": "77bf442f_3860cd36",
       "revId": "33f4fea8c696fbb17df86062a128adef64fc3424",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
