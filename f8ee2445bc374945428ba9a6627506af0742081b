@@ -141,6 +141,30 @@
       "revId": "f8ee2445bc374945428ba9a6627506af0742081b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cc094a7_4687daed",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4151,
+      "author": {
+        "id": 1116403
+      },
+      "writtenOn": "2017-05-24T01:15:09Z",
+      "side": 1,
+      "message": "Hi Peter,\n\nIt based on requirement mentioned in GSMA.\n\nhttp://www.gsma.com/newsroom/all-documents/ts-22-v-5-0-recommendations-for-minimum-wi-fi-capabilities-of-terminals/\n\nTSG22_R2_CM_20\n\nA device SHALL limit the number of access retries to the same AP when it receives temporary denied access notification from that AP, according to a limit which may be defined by an operator. (e.g. 1026 notification with EAPSIM in RFC 4186 [RFC 4186])",
+      "parentUuid": "0d409c43_4a021487",
+      "range": {
+        "startLine": 4151,
+        "startChar": 16,
+        "endLine": 4151,
+        "endChar": 73
+      },
+      "revId": "f8ee2445bc374945428ba9a6627506af0742081b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
