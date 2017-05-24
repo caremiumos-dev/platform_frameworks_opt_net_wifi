@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "ad651c35_97b55d33",
+        "filename": "tests/wifitests/coverage.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-05-24T23:37:00Z",
+      "side": 1,
+      "message": "I think what I\u0027m wondering is: do we expect end-users of this script to ever want to set USE_JACK to true? If so, USE_JACK should probably be a command-line option. If not (if we don\u0027t expect end-users to want to USE_JACK), I think it would be better to remove the variable, and replace all the conditionals that depend on USE_JACK with the bodies of their false branches.",
+      "parentUuid": "0a1880b0_77ad8ac0",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 14
+      },
+      "revId": "33f4fea8c696fbb17df86062a128adef64fc3424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "756646d0_b62f7770",
         "filename": "tests/wifitests/coverage.sh",
         "patchSetId": 1
@@ -131,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "966a7bf1_794ffd99",
+        "filename": "tests/wifitests/coverage.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-05-24T23:37:00Z",
+      "side": 1,
+      "message": "Yeah, let\u0027s remove it.",
+      "parentUuid": "4eb7dfcf_0e6f4452",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 35
+      },
+      "revId": "33f4fea8c696fbb17df86062a128adef64fc3424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68756d37_36869b0e",
         "filename": "tests/wifitests/coverage.sh",
         "patchSetId": 1
@@ -160,6 +208,24 @@
       "side": 1,
       "message": "Ok. I\u0027ve now opened b/38459706",
       "parentUuid": "68756d37_36869b0e",
+      "revId": "33f4fea8c696fbb17df86062a128adef64fc3424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55d64ea3_f47703f7",
+        "filename": "tests/wifitests/coverage.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-05-24T23:37:00Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "7f0f7296_b6d0c80c",
       "revId": "33f4fea8c696fbb17df86062a128adef64fc3424",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -201,6 +267,24 @@
     },
     {
       "key": {
+        "uuid": "d22f716e_b7662682",
+        "filename": "tests/wifitests/coverage.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-05-24T23:37:00Z",
+      "side": 1,
+      "message": "Ah, ok. When I was first reading this code, I didn\u0027t realize this list was from the names of the test files. I think this is fine.",
+      "parentUuid": "fefce3c4_45dab30e",
+      "revId": "33f4fea8c696fbb17df86062a128adef64fc3424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77bf442f_3860cd36",
         "filename": "tests/wifitests/coverage.sh",
         "patchSetId": 1
@@ -230,6 +314,24 @@
       "side": 1,
       "message": "They\u0027re still supported; the syntax just changed (and actually it\u0027s changing again in the next patchset before this gets merged). Jacoco supports simultaneously generating several reports of different types, so the report type of \u0027html\u0027 is activated by the string \u0027html\u0027 in \u0027--html-out\u0027",
       "parentUuid": "77bf442f_3860cd36",
+      "revId": "33f4fea8c696fbb17df86062a128adef64fc3424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8fd96f5_d6a11c94",
+        "filename": "tests/wifitests/coverage.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-05-24T23:37:00Z",
+      "side": 1,
+      "message": "Makes sense. But I think this CL ignores the XML/CSV arguments to the script. More specifically: lines 3-7 document the arguments, and line 27 sets REPORT_TYPE. But the new code (lines 77-91) never references REPORT_TYPE.\n\nOur team only uses the HTML reports, so I\u0027m fine with having this script be HTML only. But we should updates lines 3-7 (to only check for output directory), and remove lines 26-30, so that we don\u0027t have the vestigial command-line argument sticking around.",
+      "parentUuid": "f29507b0_d0da69d4",
       "revId": "33f4fea8c696fbb17df86062a128adef64fc3424",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
