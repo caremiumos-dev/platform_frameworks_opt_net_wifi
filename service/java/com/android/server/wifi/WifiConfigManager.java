@@ -2206,7 +2206,8 @@ public class WifiConfigManager {
         Iterator<WifiConfiguration> iter = networks.iterator();
         while (iter.hasNext()) {
             WifiConfiguration config = iter.next();
-            if (config.getNetworkSelectionStatus().isNetworkPermanentlyDisabled()) {
+            if (config.getNetworkSelectionStatus().isNetworkPermanentlyDisabled() ||
+                    config.getNetworkSelectionStatus().isNetworkTemporaryDisabled()) {
                 iter.remove();
             }
         }
