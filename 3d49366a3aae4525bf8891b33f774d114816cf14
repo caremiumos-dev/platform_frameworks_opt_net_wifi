@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ce2cef6_f7e76542",
+        "filename": "OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-06-16T17:52:53Z",
+      "side": 1,
+      "message": "No longer part of the wifi team.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 15
+      },
+      "revId": "3d49366a3aae4525bf8891b33f774d114816cf14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
