@@ -73,7 +73,7 @@ public class ScanDetailCache {
     }
 
     ScanDetail getScanDetail(String bssid) {
-        return mMap.get(bssid);
+        return bssid == null ? null : mMap.get(bssid);
     }
 
     void remove(String bssid) {
