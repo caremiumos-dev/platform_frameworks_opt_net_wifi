@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcb95c1d_0fd5b49d",
+        "filename": "service/java/com/android/server/wifi/WifiNetworkSelector.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-06-29T17:03:06Z",
+      "side": 1,
+      "message": "return false;",
+      "revId": "f758f15bf1269f682d13b476d8edb61b419a15f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce80286e_e1dbddb6",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-06-29T17:03:06Z",
+      "side": 1,
+      "message": "delete extra newlines",
+      "range": {
+        "startLine": 528,
+        "startChar": 0,
+        "endLine": 528,
+        "endChar": 0
+      },
+      "revId": "f758f15bf1269f682d13b476d8edb61b419a15f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e20a5f75_2590d5b3",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-06-29T17:03:06Z",
+      "side": 1,
+      "message": "Add a javadoc explaining this util briefly. \"Sets up two networks, the first being the current connection, both appearing available in scanResults, tests whether selectNetwork makes a selection or not\"",
+      "revId": "f758f15bf1269f682d13b476d8edb61b419a15f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c93ad89_e742b2e3",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-06-29T17:03:06Z",
+      "side": 1,
+      "message": "Yo dawg, we put a real clock in your mock clock, so you could actually tell the time while pretending to tell the time.",
+      "range": {
+        "startLine": 701,
+        "startChar": 60,
+        "endLine": 701,
+        "endChar": 87
+      },
+      "revId": "f758f15bf1269f682d13b476d8edb61b419a15f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
