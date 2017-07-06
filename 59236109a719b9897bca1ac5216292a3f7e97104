@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3300362_a6e08e71",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-07-06T18:12:59Z",
+      "side": 1,
+      "message": "This was made redundant by test5GhzQualified()",
+      "range": {
+        "startLine": 311,
+        "startChar": 3,
+        "endLine": 311,
+        "endChar": 7
+      },
+      "revId": "59236109a719b9897bca1ac5216292a3f7e97104",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

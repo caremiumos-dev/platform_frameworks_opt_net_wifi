@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "fbc16f6d_48980d83",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-07-06T18:12:59Z",
+      "side": 1,
+      "message": "You really want to test \u003c vs \u003c\u003d ? I\u0027m OK with it.",
+      "parentUuid": "6035bd69_47b34059",
+      "range": {
+        "startLine": 638,
+        "startChar": 51,
+        "endLine": 638,
+        "endChar": 54
+      },
+      "revId": "e37db1c283c1a391a2b6eaeb139953d9300192c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43235a54_ce2fa0ac",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
         "patchSetId": 7
@@ -59,6 +83,30 @@
       "writtenOn": "2017-07-06T17:13:43Z",
       "side": 1,
       "message": "delete",
+      "range": {
+        "startLine": 655,
+        "startChar": 51,
+        "endLine": 655,
+        "endChar": 54
+      },
+      "revId": "e37db1c283c1a391a2b6eaeb139953d9300192c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df8e62b8_55d1db5f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-07-06T18:12:59Z",
+      "side": 1,
+      "message": "The 2G level shouldn\u0027t be checked here. I\u0027m going to fix this, but I\u0027m also going to make the 5Ghz scan result crap. The point is \"if we have 5Ghz, run this thing regardless of the levels\".",
+      "parentUuid": "43235a54_ce2fa0ac",
       "range": {
         "startLine": 655,
         "startChar": 51,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "95a1d483_69febe69",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-07-06T18:12:59Z",
+      "side": 1,
+      "message": "This value *should* be a don\u0027t-care. I\u0027m actually inclined to make it a larger negative value.",
+      "parentUuid": "03c5a285_b6e97f4c",
+      "range": {
+        "startLine": 672,
+        "startChar": 42,
+        "endLine": 672,
+        "endChar": 45
+      },
+      "revId": "e37db1c283c1a391a2b6eaeb139953d9300192c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df1dae04_9fbbee84",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
         "patchSetId": 7
@@ -105,6 +177,24 @@
       "writtenOn": "2017-07-06T17:13:43Z",
       "side": 1,
       "message": "Add two more tests for 5Ghz:\n\npublic void test5GhzNotQualifiedLowRssi() {\n    // Run Selection on 5GHz networks when RSSI is too low\n    testStayOrSwitch(mThresholdQualifiedRssi5G - 1, true, mThresholdQualifiedRssi5G - 1, true, true);\n}\npublic void test5GhzQualified() {\n    // Don\u0027t run Selection on 5Ghz networks when RSSI is high enough\n    testStayOrSwitch(mThresholdQualifiedRssi5G, true, mThresholdQualifiedRssi5G, true, false);\n}",
+      "revId": "e37db1c283c1a391a2b6eaeb139953d9300192c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "873f71f0_4a91c04c",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-07-06T18:12:59Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "df1dae04_9fbbee84",
       "revId": "e37db1c283c1a391a2b6eaeb139953d9300192c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
