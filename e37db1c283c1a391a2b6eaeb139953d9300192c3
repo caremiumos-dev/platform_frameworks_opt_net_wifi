@@ -22,6 +22,92 @@
       "revId": "e37db1c283c1a391a2b6eaeb139953d9300192c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6035bd69_47b34059",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-07-06T17:13:43Z",
+      "side": 1,
+      "message": "Delete this, take one step closer to the edge.",
+      "range": {
+        "startLine": 638,
+        "startChar": 51,
+        "endLine": 638,
+        "endChar": 54
+      },
+      "revId": "e37db1c283c1a391a2b6eaeb139953d9300192c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43235a54_ce2fa0ac",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-07-06T17:13:43Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 655,
+        "startChar": 51,
+        "endLine": 655,
+        "endChar": 54
+      },
+      "revId": "e37db1c283c1a391a2b6eaeb139953d9300192c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03c5a285_b6e97f4c",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-07-06T17:13:43Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 672,
+        "startChar": 42,
+        "endLine": 672,
+        "endChar": 45
+      },
+      "revId": "e37db1c283c1a391a2b6eaeb139953d9300192c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df1dae04_9fbbee84",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-07-06T17:13:43Z",
+      "side": 1,
+      "message": "Add two more tests for 5Ghz:\n\npublic void test5GhzNotQualifiedLowRssi() {\n    // Run Selection on 5GHz networks when RSSI is too low\n    testStayOrSwitch(mThresholdQualifiedRssi5G - 1, true, mThresholdQualifiedRssi5G - 1, true, true);\n}\npublic void test5GhzQualified() {\n    // Don\u0027t run Selection on 5Ghz networks when RSSI is high enough\n    testStayOrSwitch(mThresholdQualifiedRssi5G, true, mThresholdQualifiedRssi5G, true, false);\n}",
+      "revId": "e37db1c283c1a391a2b6eaeb139953d9300192c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
