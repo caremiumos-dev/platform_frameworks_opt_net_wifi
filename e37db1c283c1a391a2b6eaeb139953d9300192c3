@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad008005_70074795",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-07-06T02:16:32Z",
+      "side": 1,
+      "message": "By returning false in the \"aliens\" case, this test started failing. :-)",
+      "range": {
+        "startLine": 340,
+        "startChar": 7,
+        "endLine": 340,
+        "endChar": 21
+      },
+      "revId": "e37db1c283c1a391a2b6eaeb139953d9300192c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
