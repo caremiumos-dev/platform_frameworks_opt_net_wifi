@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "bc578f6c_45e387d8",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-07-06T20:20:22Z",
+      "side": 1,
+      "message": "The rssi for this test is actually important, and adding a +1 implies that the rssi must be \u003e the qualified RSSI, when it isn\u0027t.\nFurthermore, when testing threshold values if you add little offsets/comfort-factors, you miss off by one errors",
+      "parentUuid": "fbc16f6d_48980d83",
+      "range": {
+        "startLine": 638,
+        "startChar": 51,
+        "endLine": 638,
+        "endChar": 54
+      },
+      "revId": "e37db1c283c1a391a2b6eaeb139953d9300192c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43235a54_ce2fa0ac",
         "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkSelectorTest.java",
         "patchSetId": 7
