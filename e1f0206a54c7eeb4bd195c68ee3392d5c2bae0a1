@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc9b061c_dd250fe7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-07-13T05:27:27Z",
+      "side": 1,
+      "message": "signature",
+      "range": {
+        "startLine": 9,
+        "startChar": 30,
+        "endLine": 9,
+        "endChar": 40
+      },
+      "revId": "e1f0206a54c7eeb4bd195c68ee3392d5c2bae0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc48155f_55a34384",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-07-13T05:27:27Z",
+      "side": 1,
+      "message": "Conf",
+      "range": {
+        "startLine": 10,
+        "startChar": 40,
+        "endLine": 10,
+        "endChar": 44
+      },
+      "revId": "e1f0206a54c7eeb4bd195c68ee3392d5c2bae0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
