@@ -143,7 +143,9 @@ public class WifiStateMachineTest {
         }
 
         @Override
-        public void startProvisioning(IpManager.ProvisioningConfiguration config) {}
+        public boolean startProvisioning(IpManager.ProvisioningConfiguration config) {
+            return true;
+        }
 
         @Override
         public void stop() {}
