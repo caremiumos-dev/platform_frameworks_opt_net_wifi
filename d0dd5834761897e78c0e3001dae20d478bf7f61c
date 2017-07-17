@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7a294a3_70bbd4b7",
+        "filename": "service/jni/jni_helper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2017-07-17T20:34:03Z",
+      "side": 1,
+      "message": "Please move this to the header. It\u0027s super unclean to have a header use structures w/o include or forward-declare. (Forward-declare for JNI is ugly because of parts of the C nature)",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 16
+      },
+      "revId": "d0dd5834761897e78c0e3001dae20d478bf7f61c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
