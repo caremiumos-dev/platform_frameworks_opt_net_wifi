@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddb7beb8_c58e7a9c",
+        "filename": "tests/wifitests/coverage.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2017-07-17T19:38:50Z",
+      "side": 1,
+      "message": "$ANDROID_PRODUCT_OUT, or just FrameworksWifiTests and make sure jacoco-report-classes.jar gets built by that phony target?",
+      "range": {
+        "startLine": 35,
+        "startChar": 275,
+        "endLine": 35,
+        "endChar": 296
+      },
+      "revId": "9f84891f19fac32cfb10a21d23f0aa6aedd420c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae840aad_f72597b1",
+        "filename": "tests/wifitests/coverage.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2017-07-17T19:38:50Z",
+      "side": 1,
+      "message": "break up this line with \\",
+      "revId": "9f84891f19fac32cfb10a21d23f0aa6aedd420c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
