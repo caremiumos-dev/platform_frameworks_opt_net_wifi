@@ -6443,7 +6443,9 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                             transitionTo(mSupplicantStoppingState);
                         } else if (mOperationalMode == SCAN_ONLY_MODE
                                 || mOperationalMode == SCAN_ONLY_WITH_WIFI_OFF_MODE) {
-                            p2pSendMessage(CMD_DISABLE_P2P_REQ);
+                            if (mOperationalMode == SCAN_ONLY_WITH_WIFI_OFF_MODE) {
+                                p2pSendMessage(CMD_DISABLE_P2P_REQ);
+                            }
                             setWifiState(WIFI_STATE_DISABLED);
                             transitionTo(mScanModeState);
                         }
