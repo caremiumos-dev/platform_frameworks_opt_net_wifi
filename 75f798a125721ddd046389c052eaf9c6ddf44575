@@ -46,6 +46,30 @@
       "revId": "75f798a125721ddd046389c052eaf9c6ddf44575",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0308b353_bed9236f",
+        "filename": "service/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1137668
+      },
+      "writtenOn": "2017-07-31T23:11:49Z",
+      "side": 0,
+      "message": "Oh if you mean that we should set LOCAL_EMMA_INSTRUMENT :\u003d false instead then that makes sense to me. See patchset 2",
+      "parentUuid": "51ea3f39_9ff94f14",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 34
+      },
+      "revId": "75f798a125721ddd046389c052eaf9c6ddf44575",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
