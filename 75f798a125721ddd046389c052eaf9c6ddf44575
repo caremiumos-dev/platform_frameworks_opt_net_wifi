@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd001817_a12b1869",
+        "filename": "service/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1060646
+      },
+      "writtenOn": "2017-07-31T22:06:43Z",
+      "side": 0,
+      "message": "Should this be controlled with LOCAL_EMMA_INSTRUMENT instead?",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 34
+      },
+      "revId": "75f798a125721ddd046389c052eaf9c6ddf44575",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
