@@ -238,7 +238,7 @@ public class WifiConfigurationUtil {
      * Check if the provided two networks are the same.
      *
      * @param config      Configuration corresponding to a network.
-     * @param config1      Configuration corresponding to another network.
+     * @param config1     Configuration corresponding to another network.
      *
      * @return true if |config| and |config1| are the same network.
      *         false otherwise.
@@ -247,13 +247,7 @@ public class WifiConfigurationUtil {
         if (config == null && config1 == null) {
             return true;
         }
-        if (config == null || config1 == null) {
-            return false;
-        }
-        if (config.networkId != config1.networkId) {
-            return false;
-        }
-        if (!Objects.equals(config.SSID, config1.SSID)) {
+        if (!isSameNetworkInternal(config, config1)) {
             return false;
         }
         String networkSelectionBSSID = config.getNetworkSelectionStatus()
@@ -261,6 +255,57 @@ public class WifiConfigurationUtil {
         String networkSelectionBSSID1 = config1.getNetworkSelectionStatus()
                 .getNetworkSelectionBSSID();
         if (!Objects.equals(networkSelectionBSSID, networkSelectionBSSID1)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Check if the provided two networks are roaming network.
+     * Classify network as roaming network if one of these cases is matched:
+     * 1. config1's selection network BSSID equals "any".
+     * 2. config's selection network BSSID is different from config1's.
+     *
+     * @param config      Configuration corresponding to a network.
+     * @param config1     Configuration corresponding to another network.
+     *
+     * @return true if |config| and |config1| are roaming network.
+     *         false otherwise.
+     */
+    public static boolean isSameNetworkWithDifferentBssid(WifiConfiguration config,
+            WifiConfiguration config1) {
+        if (!isSameNetworkInternal(config, config1)) {
+            return false;
+        }
+        String networkSelectionBSSID = config.getNetworkSelectionStatus()
+                .getNetworkSelectionBSSID();
+        String networkSelectionBSSID1 = config1.getNetworkSelectionStatus()
+                .getNetworkSelectionBSSID();
+        if (!networkSelectionBSSID1.equals("any")
+                && Objects.equals(networkSelectionBSSID, networkSelectionBSSID1)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Check basic info of the provided two networks.
+     *
+     * @param config      Configuration corresponding to a network.
+     * @param config1     Configuration corresponding to another network.
+     *
+     * @return true if basic info of |config| and |config1| are same.
+     *         false otherwise.
+     */
+    private static boolean isSameNetworkInternal(WifiConfiguration config,
+            WifiConfiguration config1) {
+        if (config == null || config1 == null) {
+            return false;
+        }
+        if (config.networkId != config1.networkId) {
+            return false;
+        }
+        if (!Objects.equals(config.SSID, config1.SSID)) {
             return false;
         }
         if (WifiConfigurationUtil.hasCredentialChanged(config, config1)) {

@@ -405,6 +405,15 @@ public class SupplicantStaIfaceHal {
         logd("connectToNetwork " + config.configKey());
         if (WifiConfigurationUtil.isSameNetwork(config, mCurrentNetworkLocalConfig)) {
             logd("Network is already saved, will not trigger remove and add operation.");
+        } else if (WifiConfigurationUtil.isSameNetworkWithDifferentBssid(config,
+                    mCurrentNetworkLocalConfig)) {
+            logd("Network is already saved, but need to update BSSID.");
+            if (!setCurrentNetworkBssid(
+                    config.getNetworkSelectionStatus().getNetworkSelectionBSSID())) {
+                loge("Failed to set current network BSSID.");
+                return false;
+            }
+            mCurrentNetworkLocalConfig = new WifiConfiguration(config);
         } else {
             mCurrentNetworkRemoteHandle = null;
             mCurrentNetworkLocalConfig = null;
