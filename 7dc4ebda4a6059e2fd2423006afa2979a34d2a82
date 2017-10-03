@@ -22,6 +22,30 @@
       "revId": "7dc4ebda4a6059e2fd2423006afa2979a34d2a82",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f2811a8_3f99037b",
+        "filename": "libwifi_system/hostapd_manager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116403
+      },
+      "writtenOn": "2017-10-03T22:01:15Z",
+      "side": 1,
+      "message": "Hi Ningyuan Wang,\n\nThanks for your comment. Agree with you. Updated in patch set3.",
+      "parentUuid": "b86efb1c_42734bc6",
+      "range": {
+        "startLine": 109,
+        "startChar": 1,
+        "endLine": 109,
+        "endChar": 54
+      },
+      "revId": "7dc4ebda4a6059e2fd2423006afa2979a34d2a82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
