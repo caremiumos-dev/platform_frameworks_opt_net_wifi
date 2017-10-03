@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b86efb1c_42734bc6",
+        "filename": "libwifi_system/hostapd_manager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-10-03T16:32:35Z",
+      "side": 1,
+      "message": "Looks like this function is defined in the following way:\nbool RemoveFileIfExists(const std::string\u0026 path, std::string* err \u003d nullptr);\n\nSo could you instead just call:\nRemoveFileIfExists(kHostapdConfigFilePath);\nto make this more readable.",
+      "range": {
+        "startLine": 109,
+        "startChar": 1,
+        "endLine": 109,
+        "endChar": 54
+      },
+      "revId": "7dc4ebda4a6059e2fd2423006afa2979a34d2a82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
