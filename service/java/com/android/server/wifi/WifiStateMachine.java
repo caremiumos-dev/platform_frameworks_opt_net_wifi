@@ -5805,14 +5805,11 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     class ObtainingIpState extends State {
         @Override
         public void enter() {
-            WifiConfiguration currentConfig = getCurrentWifiConfiguration();
-            boolean isUsingStaticIp =
+            final WifiConfiguration currentConfig = getCurrentWifiConfiguration();
+            final boolean isUsingStaticIp =
                     (currentConfig.getIpAssignment() == IpConfiguration.IpAssignment.STATIC);
             if (mVerboseLoggingEnabled) {
-                String key = "";
-                if (getCurrentWifiConfiguration() != null) {
-                    key = getCurrentWifiConfiguration().configKey();
-                }
+                final String key = currentConfig.configKey();
                 log("enter ObtainingIpState netId=" + Integer.toString(mLastNetworkId)
                         + " " + key + " "
                         + " roam=" + mIsAutoRoaming
@@ -5847,20 +5844,24 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             if (!TextUtils.isEmpty(mTcpBufferSizes)) {
                 mIpManager.setTcpBufferSizes(mTcpBufferSizes);
             }
+            final String displayName = currentConfig.SSID;
             final IpManager.ProvisioningConfiguration prov;
             if (!isUsingStaticIp) {
                 prov = IpManager.buildProvisioningConfiguration()
                             .withPreDhcpAction()
                             .withApfCapabilities(mWifiNative.getApfCapabilities())
+                            .withDisplayName(displayName)
                             .build();
             } else {
                 StaticIpConfiguration staticIpConfig = currentConfig.getStaticIpConfiguration();
                 prov = IpManager.buildProvisioningConfiguration()
                             .withStaticConfiguration(staticIpConfig)
                             .withApfCapabilities(mWifiNative.getApfCapabilities())
+                            .withDisplayName(displayName)
                             .build();
             }
             mIpManager.startProvisioning(prov);
+            mIpManager.setNetwork(mNetworkAgent.netId);
             // Get Link layer stats so as we get fresh tx packet counters
             getWifiLinkLayerStats();
         }
