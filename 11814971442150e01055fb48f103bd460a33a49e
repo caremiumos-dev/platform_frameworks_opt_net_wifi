@@ -22,6 +22,30 @@
       "revId": "11814971442150e01055fb48f103bd460a33a49e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e1114ef_338d01eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-10-05T16:59:32Z",
+      "side": 1,
+      "message": "The merged-in field should point to the change-id for the CL in internal master. \nhttps://g3doc.corp.google.com/wireless/android/launchcontrol/pipeline_manager/g3doc/automerger.md?cl\u003dhead\n\nThe cherry-pick line below is for readability.",
+      "parentUuid": "9e1fe284_880ae6bd",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 52
+      },
+      "revId": "11814971442150e01055fb48f103bd460a33a49e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
