@@ -46,6 +46,30 @@
       "revId": "11814971442150e01055fb48f103bd460a33a49e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "129e3990_e97d088e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-10-05T17:04:17Z",
+      "side": 1,
+      "message": "Ah Understood. Line below uses \"commit-id\"",
+      "parentUuid": "3e1114ef_338d01eb",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 52
+      },
+      "revId": "11814971442150e01055fb48f103bd460a33a49e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
