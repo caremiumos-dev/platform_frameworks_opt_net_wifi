@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e1fe284_880ae6bd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-10-05T16:49:31Z",
+      "side": 1,
+      "message": "perhaps this should align with next line ? being:\n64aadb9aedb5f1bbf55f477d3ee8bf3f2dadaaf0",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 52
+      },
+      "revId": "11814971442150e01055fb48f103bd460a33a49e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
