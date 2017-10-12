@@ -5959,6 +5959,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     if (mVerboseLoggingEnabled) {
                         log("Roaming and CS doesnt want the network -> ignore");
                     }
+                    deferMessage(message);
                     return HANDLED;
                 case CMD_SET_OPERATIONAL_MODE:
                     if (message.arg1 != CONNECT_MODE) {
