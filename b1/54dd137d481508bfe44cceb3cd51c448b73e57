@@ -1,0 +1,9 @@
+Verified+1: Erik Kline <ek@google.com>
+Code-Review+2: Rebecca Silberstein <silberst@google.com>
+Autosubmit+1: Erik Kline <ek@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Wed, 18 Oct 2017 06:00:19 +0000
+Reviewed-on: https://android-review.googlesource.com/507695
+Project: platform/frameworks/opt/net/wifi
+Branch: refs/heads/master
