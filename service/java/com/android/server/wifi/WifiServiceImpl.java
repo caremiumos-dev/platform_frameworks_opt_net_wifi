@@ -61,7 +61,7 @@ import android.net.Network;
 import android.net.NetworkUtils;
 import android.net.StaticIpConfiguration;
 import android.net.Uri;
-import android.net.ip.IpManager;
+import android.net.ip.IpClient;
 import android.net.wifi.IWifiManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.ScanSettings;
@@ -2208,11 +2208,11 @@ public class WifiServiceImpl extends IWifiManager.Stub {
             // WifiMetrics proto bytes were requested. Dump only these.
             mWifiStateMachine.updateWifiMetrics();
             mWifiMetrics.dump(fd, pw, args);
-        } else if (args != null && args.length > 0 && IpManager.DUMP_ARG.equals(args[0])) {
-            // IpManager dump was requested. Pass it along and take no further action.
+        } else if (args != null && args.length > 0 && IpClient.DUMP_ARG.equals(args[0])) {
+            // IpClient dump was requested. Pass it along and take no further action.
             String[] ipManagerArgs = new String[args.length - 1];
             System.arraycopy(args, 1, ipManagerArgs, 0, ipManagerArgs.length);
-            mWifiStateMachine.dumpIpManager(fd, pw, ipManagerArgs);
+            mWifiStateMachine.dumpIpClient(fd, pw, ipManagerArgs);
         } else if (args != null && args.length > 0
                 && DUMP_ARG_SET_IPREACH_DISCONNECT.equals(args[0])) {
             if (args.length > 1) {

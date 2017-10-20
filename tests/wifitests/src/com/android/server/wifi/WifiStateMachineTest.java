@@ -46,7 +46,7 @@ import android.net.ConnectivityManager;
 import android.net.DhcpResults;
 import android.net.LinkProperties;
 import android.net.dhcp.DhcpClient;
-import android.net.ip.IpManager;
+import android.net.ip.IpClient;
 import android.net.wifi.IApInterface;
 import android.net.wifi.IClientInterface;
 import android.net.wifi.IWificond;
@@ -153,14 +153,14 @@ public class WifiStateMachineTest {
         mWsm.enableVerboseLogging(1);
     }
 
-    private class TestIpManager extends IpManager {
-        TestIpManager(Context context, String ifname, IpManager.Callback callback) {
+    private class TestIpClient extends IpClient {
+        TestIpClient(Context context, String ifname, IpClient.Callback callback) {
             // Call dependency-injection superclass constructor.
             super(context, ifname, callback, mock(INetworkManagementService.class));
         }
 
         @Override
-        public void startProvisioning(IpManager.ProvisioningConfiguration config) {}
+        public void startProvisioning(IpClient.ProvisioningConfiguration config) {}
 
         @Override
         public void stop() {}
@@ -208,12 +208,12 @@ public class WifiStateMachineTest {
         IBinder batteryStatsBinder = mockService(BatteryStats.class, IBatteryStats.class);
         when(facade.getService(BatteryStats.SERVICE_NAME)).thenReturn(batteryStatsBinder);
 
-        when(facade.makeIpManager(any(Context.class), anyString(), any(IpManager.Callback.class)))
+        when(facade.makeIpClient(any(Context.class), anyString(), any(IpClient.Callback.class)))
                 .then(new AnswerWithArguments() {
-                    public IpManager answer(
-                            Context context, String ifname, IpManager.Callback callback) {
-                        mTestIpManager = new TestIpManager(context, ifname, callback);
-                        return mTestIpManager;
+                    public IpClient answer(
+                            Context context, String ifname, IpClient.Callback callback) {
+                        mTestIpClient = new TestIpClient(context, ifname, callback);
+                        return mTestIpClient;
                     }
                 });
 
@@ -324,7 +324,7 @@ public class WifiStateMachineTest {
     AsyncChannel  mWsmAsyncChannel;
     TestAlarmManager mAlarmManager;
     MockWifiMonitor mWifiMonitor;
-    TestIpManager mTestIpManager;
+    TestIpClient mTestIpClient;
     TestLooper mLooper;
     Context mContext;
 
@@ -948,7 +948,7 @@ public class WifiStateMachineTest {
         dhcpResults.addDns("8.8.8.8");
         dhcpResults.setLeaseDuration(3600);
 
-        mTestIpManager.injectDhcpSuccess(dhcpResults);
+        mTestIpClient.injectDhcpSuccess(dhcpResults);
         mLooper.dispatchAll();
 
         assertEquals("ConnectedState", getCurrentState().getName());
@@ -986,7 +986,7 @@ public class WifiStateMachineTest {
         dhcpResults.addDns("8.8.8.8");
         dhcpResults.setLeaseDuration(3600);
 
-        mTestIpManager.injectDhcpSuccess(dhcpResults);
+        mTestIpClient.injectDhcpSuccess(dhcpResults);
         mLooper.dispatchAll();
 
         assertEquals("ConnectedState", getCurrentState().getName());
@@ -1069,7 +1069,7 @@ public class WifiStateMachineTest {
 
         assertEquals("ObtainingIpState", getCurrentState().getName());
 
-        mTestIpManager.injectDhcpFailure();
+        mTestIpClient.injectDhcpFailure();
         mLooper.dispatchAll();
 
         assertEquals("DisconnectingState", getCurrentState().getName());
