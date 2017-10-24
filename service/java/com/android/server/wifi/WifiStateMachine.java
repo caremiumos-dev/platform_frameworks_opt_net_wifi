@@ -92,6 +92,7 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.os.WorkSource;
 import android.provider.Settings;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -856,6 +857,13 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             mTelephonyManager = mWifiInjector.makeTelephonyManager();
         }
         return mTelephonyManager;
+    }
+
+    private TelephonyManager getDataTelephonyManager() {
+        TelephonyManager tm = getTelephonyManager();
+        if (tm == null) return null;
+        return tm.createForSubscriptionId(
+                SubscriptionManager.getDefaultDataSubscriptionId());
     }
 
     private final IBatteryStats mBatteryStats;
@@ -6825,8 +6833,20 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             return;
         }
 
-        String response =
-                TelephonyUtil.getGsmSimAuthResponse(requestData.data, getTelephonyManager());
+        String response = null;
+        // If data and voice subscription IDs are different, we should try the data subId first
+        if (SubscriptionManager.getDefaultDataSubscriptionId()
+                != SubscriptionManager.getDefaultVoiceSubscriptionId()) {
+            TelephonyManager dtm = getDataTelephonyManager();
+            if (dtm != null) {
+                response = TelephonyUtil.getGsmSimAuthResponse(requestData.data, dtm);
+            }
+        }
+        // If the authentication fails on the data subId or if data and voice are the same, then
+        // we will try the single/voice subId
+        if (response == null) {
+            response = TelephonyUtil.getGsmSimAuthResponse(requestData.data, getTelephonyManager());
+        }
         if (response == null) {
             mWifiNative.simAuthFailedResponse(requestData.networkId);
         } else {
@@ -6846,8 +6866,20 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             return;
         }
 
-        SimAuthResponseData response =
-                TelephonyUtil.get3GAuthResponse(requestData, getTelephonyManager());
+        SimAuthResponseData response = null;
+        // If data and voice subscription IDs are different, we should try the data subId first
+        if (SubscriptionManager.getDefaultDataSubscriptionId()
+                != SubscriptionManager.getDefaultVoiceSubscriptionId()) {
+            TelephonyManager dtm = getDataTelephonyManager();
+            if (dtm != null) {
+                response = TelephonyUtil.get3GAuthResponse(requestData, dtm);
+            }
+        }
+        // If the authentication fails on the data subId or if data and voice are the same, then
+        // we will try the single/voice subId
+        if (response == null) {
+            response = TelephonyUtil.get3GAuthResponse(requestData, getTelephonyManager());
+        }
         if (response != null) {
             mWifiNative.simAuthResponse(requestData.networkId, response.type, response.response);
         } else {
