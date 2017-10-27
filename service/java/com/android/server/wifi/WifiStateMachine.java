@@ -978,6 +978,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         mNetworkCapabilitiesFilter.addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
         mNetworkCapabilitiesFilter.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
         mNetworkCapabilitiesFilter.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
+        mNetworkCapabilitiesFilter.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING);
         mNetworkCapabilitiesFilter.setLinkUpstreamBandwidthKbps(1024 * 1024);
         mNetworkCapabilitiesFilter.setLinkDownstreamBandwidthKbps(1024 * 1024);
         // TODO - needs to be a bit more dynamic

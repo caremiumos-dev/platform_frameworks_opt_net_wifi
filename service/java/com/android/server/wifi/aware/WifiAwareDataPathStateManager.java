@@ -120,7 +120,8 @@ public class WifiAwareDataPathStateManager {
                 .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN)
                 .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED)
                 .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED)
-                .addCapability(NetworkCapabilities.NET_CAPABILITY_TRUSTED);
+                .addCapability(NetworkCapabilities.NET_CAPABILITY_TRUSTED)
+                .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING);
         mNetworkCapabilitiesFilter.setNetworkSpecifier(new MatchAllNetworkSpecifier());
         mNetworkCapabilitiesFilter.setLinkUpstreamBandwidthKbps(NETWORK_FACTORY_BANDWIDTH_AVAIL);
         mNetworkCapabilitiesFilter.setLinkDownstreamBandwidthKbps(NETWORK_FACTORY_BANDWIDTH_AVAIL);
