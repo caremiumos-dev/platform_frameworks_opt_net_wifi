@@ -8,18 +8,24 @@ import java.io.PrintWriter;
  *
  */
 public class BaseWifiDiagnostics {
+    public static final byte CONNECTION_EVENT_STARTED = 0;
+    public static final byte CONNECTION_EVENT_SUCCEEDED = 1;
+    public static final byte CONNECTION_EVENT_FAILED = 2;
+
+    protected final WifiNative mWifiNative;
 
     protected String mFirmwareVersion;
     protected String mDriverVersion;
     protected int mSupportedFeatureSet;
 
-    public BaseWifiDiagnostics() { }
+    public BaseWifiDiagnostics(WifiNative wifiNative) {
+        mWifiNative = wifiNative;
+    }
 
     public synchronized void startLogging(boolean verboseEnabled) {
-        WifiNative wifiNative = WifiNative.getWlanNativeInterface();
-        mFirmwareVersion = wifiNative.getFirmwareVersion();
-        mDriverVersion = wifiNative.getDriverVersion();
-        mSupportedFeatureSet = wifiNative.getSupportedLoggerFeatureSet();
+        mFirmwareVersion = mWifiNative.getFirmwareVersion();
+        mDriverVersion = mWifiNative.getDriverVersion();
+        mSupportedFeatureSet = mWifiNative.getSupportedLoggerFeatureSet();
     }
 
     public synchronized void startPacketLog() { }
@@ -28,7 +34,12 @@ public class BaseWifiDiagnostics {
 
     public synchronized void stopLogging() { }
 
-    synchronized void reportConnectionFailure() {}
+    /**
+     * Inform the diagnostics module of a connection event.
+     * @param connectionId A strictly increasing, non-negative, connection identifier
+     * @param event The type of connection event (see CONNECTION_EVENT_* constants)
+     */
+    synchronized void reportConnectionEvent(long connectionId, byte event) {}
 
     public synchronized void captureBugReportData(int reason) { }
 

@@ -31,14 +31,11 @@ LOCAL_SHARED_LIBRARIES += \
 	libnativehelper \
 	libcutils \
 	libutils \
-	libdl \
-	libwifi-hal \
-	libwifi-system
+	libdl
 
 LOCAL_SRC_FILES := \
 	jni/com_android_server_wifi_WifiNative.cpp \
-	jni/jni_helper.cpp \
-	jni/com_android_server_wifi_aware_WifiAwareNative.cpp
+	jni/jni_helper.cpp
 
 LOCAL_MODULE := libwifi-service
 
@@ -56,21 +53,23 @@ LOCAL_AIDL_INCLUDES := $(LOCAL_PATH)/java $(wificond_aidl_path)
 LOCAL_SRC_FILES := $(call all-java-files-under, java) \
 	$(call all-Iaidl-files-under, java) \
 	$(call all-Iaidl-files-under, $(wificond_aidl_rel_path)) \
-	$(call all-logtags-files-under, java) \
-	$(call all-proto-files-under, proto)
+	$(call all-logtags-files-under, java)
 
-LOCAL_JAVA_LIBRARIES := bouncycastle conscrypt jsr305 services
+LOCAL_JAVA_LIBRARIES := \
+	android.hidl.manager-V1.0-java \
+	bouncycastle \
+	conscrypt \
+	jsr305 \
+	services
+LOCAL_STATIC_JAVA_LIBRARIES := \
+	android.hardware.wifi-V1.0-java \
+	android.hardware.wifi-V1.1-java \
+	android.hardware.wifi.supplicant-V1.0-java
 LOCAL_REQUIRED_MODULES := services
 LOCAL_MODULE_TAGS :=
 LOCAL_MODULE := wifi-service
-LOCAL_PROTOC_OPTIMIZE_TYPE := nano
-
-ifeq ($(EMMA_INSTRUMENT_FRAMEWORK),true)
-LOCAL_EMMA_INSTRUMENT := true
-endif
-
-LOCAL_JACK_COVERAGE_INCLUDE_FILTER := com.android.server.wifi.*
+LOCAL_INIT_RC := wifi-events.rc
 
 include $(BUILD_JAVA_LIBRARY)
 
-endif
+endif  # !TARGET_BUILD_PDK

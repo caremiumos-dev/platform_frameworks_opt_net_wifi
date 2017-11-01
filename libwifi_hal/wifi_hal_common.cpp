@@ -148,8 +148,9 @@ int wifi_load_driver() {
   }
 
   if (insmod(DRIVER_MODULE_PATH, DRIVER_MODULE_ARG) < 0) return -1;
+#endif
 
-#elif defined WIFI_DRIVER_STATE_CTRL_PARAM
+#ifdef WIFI_DRIVER_STATE_CTRL_PARAM
   if (is_wifi_driver_loaded()) {
     return 0;
   }
@@ -161,6 +162,9 @@ int wifi_load_driver() {
 }
 
 int wifi_unload_driver() {
+  if (!is_wifi_driver_loaded()) {
+    return 0;
+  }
   usleep(200000); /* allow to finish interface down */
 #ifdef WIFI_DRIVER_MODULE_PATH
   if (rmmod(DRIVER_MODULE_NAME) == 0) {

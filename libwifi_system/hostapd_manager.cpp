@@ -30,10 +30,11 @@
 #include <openssl/sha.h>
 #include <private/android_filesystem_config.h>
 
-#include "wifi_system/wifi.h"
+#include "wifi_system/supplicant_manager.h"
 
 using android::base::ParseInt;
 using android::base::ReadFileToString;
+using android::base::RemoveFileIfExists;
 using android::base::StringPrintf;
 using android::base::WriteStringToFile;
 using std::string;
@@ -77,7 +78,7 @@ string GeneratePsk(const vector<uint8_t>& ssid,
 }  // namespace
 
 bool HostapdManager::StartHostapd() {
-  if (ensure_entropy_file_exists() < 0) {
+  if (!SupplicantManager::EnsureEntropyFileExists()) {
     LOG(WARNING) << "Wi-Fi entropy file was not created";
   }
 
@@ -103,12 +104,23 @@ bool HostapdManager::StopHostapd() {
 }
 
 bool HostapdManager::WriteHostapdConfig(const string& config) {
+  // Remove hostapd.conf because its file owner might be system
+  // in previous OS and chmod fails in that case.
+  RemoveFileIfExists(kHostapdConfigFilePath);
   if (!WriteStringToFile(config, kHostapdConfigFilePath,
                          S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP,
                          AID_WIFI, AID_WIFI)) {
     int error = errno;
     LOG(ERROR) << "Cannot write hostapd config to \""
                << kHostapdConfigFilePath << "\": " << strerror(error);
+    struct stat st;
+    int result = stat(kHostapdConfigFilePath, &st);
+    if (result == 0) {
+      LOG(ERROR) << "hostapd config file uid: "<< st.st_uid << ", gid: " << st.st_gid
+                 << ", mode: " << st.st_mode;
+    } else {
+      LOG(ERROR) << "Error calling stat() on hostapd config file: " << strerror(errno);
+    }
     return false;
   }
   return true;

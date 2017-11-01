@@ -22,6 +22,8 @@ import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.util.Log;
 
+import com.android.server.wifi.WifiNative;
+
 /**
  * Utilities for the Wifi Service to interact with telephony.
  */
@@ -29,9 +31,13 @@ public class TelephonyUtil {
     public static final String TAG = "TelephonyUtil";
 
     /**
-     * Get the identity for the current SIM or null if the sim is not available
+     * Get the identity for the current SIM or null if the SIM is not available
+     *
+     * @param tm TelephonyManager instance
+     * @param config WifiConfiguration that indicates what sort of authentication is necessary
+     * @return String with the identity or none if the SIM is not available or config is invalid
      */
-    public static String getSimIdentity(TelephonyManager tm, int eapMethod) {
+    public static String getSimIdentity(TelephonyManager tm, WifiConfiguration config) {
         if (tm == null) {
             Log.e(TAG, "No valid TelephonyManager");
             return null;
@@ -43,7 +49,7 @@ public class TelephonyUtil {
             mccMnc = tm.getSimOperator();
         }
 
-        return buildIdentity(eapMethod, imsi, mccMnc);
+        return buildIdentity(getSimMethodForConfig(config), imsi, mccMnc);
     }
 
     /**
@@ -56,6 +62,7 @@ public class TelephonyUtil {
      */
     private static String buildIdentity(int eapMethod, String imsi, String mccMnc) {
         if (imsi == null || imsi.isEmpty()) {
+            Log.e(TAG, "No IMSI or IMSI is null");
             return null;
         }
 
@@ -66,7 +73,8 @@ public class TelephonyUtil {
             prefix = "0";
         } else if (eapMethod == WifiEnterpriseConfig.Eap.AKA_PRIME) {
             prefix = "6";
-        } else {  // not a valide EapMethod
+        } else {
+            Log.e(TAG, "Invalid EAP method");
             return null;
         }
 
@@ -89,24 +97,49 @@ public class TelephonyUtil {
     }
 
     /**
-     * Checks if the network is a sim config.
+     * Return the associated SIM method for the configuration.
      *
-     * @param config Config corresponding to the network.
-     * @return true if it is a sim config, false otherwise.
+     * @param config WifiConfiguration corresponding to the network.
+     * @return the outer EAP method associated with this SIM configuration.
      */
-    public static boolean isSimConfig(WifiConfiguration config) {
+    private static int getSimMethodForConfig(WifiConfiguration config) {
         if (config == null || config.enterpriseConfig == null) {
-            return false;
+            return WifiEnterpriseConfig.Eap.NONE;
+        }
+        int eapMethod = config.enterpriseConfig.getEapMethod();
+        if (eapMethod == WifiEnterpriseConfig.Eap.PEAP) {
+            // Translate known inner eap methods into an equivalent outer eap method.
+            switch (config.enterpriseConfig.getPhase2Method()) {
+                case WifiEnterpriseConfig.Phase2.SIM:
+                    eapMethod = WifiEnterpriseConfig.Eap.SIM;
+                    break;
+                case WifiEnterpriseConfig.Phase2.AKA:
+                    eapMethod = WifiEnterpriseConfig.Eap.AKA;
+                    break;
+                case WifiEnterpriseConfig.Phase2.AKA_PRIME:
+                    eapMethod = WifiEnterpriseConfig.Eap.AKA_PRIME;
+                    break;
+            }
         }
 
-        return isSimEapMethod(config.enterpriseConfig.getEapMethod());
+        return isSimEapMethod(eapMethod) ? eapMethod : WifiEnterpriseConfig.Eap.NONE;
     }
 
     /**
-     * Checks if the network is a sim config.
+     * Checks if the network is a SIM config.
      *
-     * @param method
-     * @return true if it is a sim config, false otherwise.
+     * @param config Config corresponding to the network.
+     * @return true if it is a SIM config, false otherwise.
+     */
+    public static boolean isSimConfig(WifiConfiguration config) {
+        return getSimMethodForConfig(config) != WifiEnterpriseConfig.Eap.NONE;
+    }
+
+    /**
+     * Checks if the EAP outer method is SIM related.
+     *
+     * @param eapMethod WifiEnterpriseConfig Eap method.
+     * @return true if this EAP outer method is SIM-related, false otherwise.
      */
     public static boolean isSimEapMethod(int eapMethod) {
         return eapMethod == WifiEnterpriseConfig.Eap.SIM
@@ -289,7 +322,7 @@ public class TelephonyUtil {
         StringBuilder sb = new StringBuilder();
         byte[] rand = null;
         byte[] authn = null;
-        String resType = "UMTS-AUTH";
+        String resType = WifiNative.SIM_AUTH_RESP_TYPE_UMTS_AUTH;
 
         if (requestData.data.length == 2) {
             try {
@@ -334,7 +367,7 @@ public class TelephonyUtil {
                 Log.e(TAG, "synchronisation failure");
                 int autsLen = result[1];
                 String auts = makeHex(result, 2, autsLen);
-                resType = "UMTS-AUTS";
+                resType = WifiNative.SIM_AUTH_RESP_TYPE_UMTS_AUTS;
                 sb.append(":" + auts);
                 Log.v(TAG, "auts:" + auts);
                 goodReponse = true;

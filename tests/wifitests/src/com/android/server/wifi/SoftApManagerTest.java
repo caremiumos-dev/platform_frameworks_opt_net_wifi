@@ -74,6 +74,7 @@ public class SoftApManagerTest {
     @Mock IApInterface mApInterface;
     @Mock INetworkManagementService mNmService;
     @Mock WifiApConfigStore mWifiApConfigStore;
+    @Mock WifiMetrics mWifiMetrics;
     final ArgumentCaptor<DeathRecipient> mDeathListenerCaptor =
             ArgumentCaptor.forClass(DeathRecipient.class);
     final ArgumentCaptor<BaseNetworkObserver> mNetworkObserverCaptor =
@@ -105,6 +106,9 @@ public class SoftApManagerTest {
         when(mApInterface.asBinder()).thenReturn(mApInterfaceBinder);
         when(mApInterface.startHostapd()).thenReturn(true);
         when(mApInterface.stopHostapd()).thenReturn(true);
+        if (config == null) {
+            when(mWifiApConfigStore.getApConfiguration()).thenReturn(mDefaultApConfig);
+        }
         SoftApManager newSoftApManager = new SoftApManager(mLooper.getLooper(),
                                                            mWifiNative,
                                                            TEST_COUNTRY_CODE,
@@ -112,11 +116,9 @@ public class SoftApManagerTest {
                                                            mApInterface,
                                                            mNmService,
                                                            mWifiApConfigStore,
-                                                           config);
+                                                           config,
+                                                           mWifiMetrics);
         mLooper.dispatchAll();
-        if (config != null) {
-            verify(mWifiApConfigStore).setApConfiguration(config);
-        }
         return newSoftApManager;
     }
 
@@ -135,13 +137,38 @@ public class SoftApManagerTest {
         startSoftApAndVerifyEnabled(config);
     }
 
+
+    /**
+     * Verifies startSoftAp will start with the hiddenSSID param set when it is set to true in the
+     * supplied config.
+     */
+    @Test
+    public void startSoftApWithHiddenSsidTrueInConfig() throws Exception {
+        WifiConfiguration config = new WifiConfiguration();
+        config.apBand = WifiConfiguration.AP_BAND_2GHZ;
+        config.SSID = TEST_SSID;
+        config.hiddenSSID = true;
+        startSoftApAndVerifyEnabled(config);
+    }
+
     /** Tests softap startup if default config fails to load. **/
     @Test
     public void startSoftApDefaultConfigFailedToLoad() throws Exception {
-        InOrder order = inOrder(mListener);
-        mSoftApManager = createSoftApManager(null);
+        when(mApInterface.asBinder()).thenReturn(mApInterfaceBinder);
+        when(mApInterface.startHostapd()).thenReturn(true);
+        when(mApInterface.stopHostapd()).thenReturn(true);
         when(mWifiApConfigStore.getApConfiguration()).thenReturn(null);
-        mSoftApManager.start();
+        SoftApManager newSoftApManager = new SoftApManager(mLooper.getLooper(),
+                                                           mWifiNative,
+                                                           TEST_COUNTRY_CODE,
+                                                           mListener,
+                                                           mApInterface,
+                                                           mNmService,
+                                                           mWifiApConfigStore,
+                                                           null,
+                                                           mWifiMetrics);
+        mLooper.dispatchAll();
+        newSoftApManager.start();
         mLooper.dispatchAll();
         verify(mListener).onStateChanged(WifiManager.WIFI_AP_STATE_FAILED,
                 WifiManager.SAP_START_FAILURE_GENERAL);
@@ -187,6 +214,7 @@ public class SoftApManagerTest {
     /** Starts soft AP and verifies that it is enabled successfully. */
     protected void startSoftApAndVerifyEnabled(WifiConfiguration config) throws Exception {
         String expectedSSID;
+        boolean expectedHiddenSsid;
         InOrder order = inOrder(mListener, mApInterfaceBinder, mApInterface, mNmService);
 
         when(mWifiNative.isHalStarted()).thenReturn(false);
@@ -197,17 +225,19 @@ public class SoftApManagerTest {
         if (config == null) {
             when(mWifiApConfigStore.getApConfiguration()).thenReturn(mDefaultApConfig);
             expectedSSID = mDefaultApConfig.SSID;
+            expectedHiddenSsid = mDefaultApConfig.hiddenSSID;
         } else {
-            when(mWifiApConfigStore.getApConfiguration()).thenReturn(config);
             expectedSSID = config.SSID;
+            expectedHiddenSsid = config.hiddenSSID;
         }
+
         mSoftApManager.start();
         mLooper.dispatchAll();
         order.verify(mListener).onStateChanged(WifiManager.WIFI_AP_STATE_ENABLING, 0);
         order.verify(mApInterfaceBinder).linkToDeath(mDeathListenerCaptor.capture(), eq(0));
         order.verify(mNmService).registerObserver(mNetworkObserverCaptor.capture());
         order.verify(mApInterface).writeHostapdConfig(
-                eq(expectedSSID.getBytes(StandardCharsets.UTF_8)), anyBoolean(),
+                eq(expectedSSID.getBytes(StandardCharsets.UTF_8)), eq(expectedHiddenSsid),
                 anyInt(), anyInt(), any());
         order.verify(mApInterface).startHostapd();
         mNetworkObserverCaptor.getValue().interfaceLinkStateChanged(TEST_INTERFACE_NAME, true);

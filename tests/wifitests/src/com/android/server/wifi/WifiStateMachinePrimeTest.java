@@ -114,7 +114,7 @@ public class WifiStateMachinePrimeTest {
                 }).when(mWifiInjector).makeSoftApManager(any(INetworkManagementService.class),
                                                          any(SoftApManager.Listener.class),
                                                          any(IApInterface.class),
-                                                         any(WifiConfiguration.class));
+                                                         any());
         mWifiStateMachinePrime.enterSoftAPMode(wifiConfig);
         mLooper.dispatchAll();
         Log.e("WifiStateMachinePrimeTest", "check fromState: " + fromState);

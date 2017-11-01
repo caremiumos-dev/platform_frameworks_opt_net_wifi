@@ -19,10 +19,9 @@ package com.android.server.wifi.aware;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -39,10 +38,11 @@ import android.net.wifi.aware.PublishConfig;
 import android.net.wifi.aware.SubscribeConfig;
 import android.os.HandlerThread;
 import android.os.IBinder;
-import android.os.Looper;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
+
+import com.android.server.wifi.util.WifiPermissionsWrapper;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -72,11 +72,15 @@ public class WifiAwareServiceImplTest {
     @Mock
     private WifiAwareStateManager mAwareStateManagerMock;
     @Mock
+    private WifiAwareShellCommand mWifiAwareShellCommandMock;
+    @Mock
     private IBinder mBinderMock;
     @Mock
     private IWifiAwareEventCallback mCallbackMock;
     @Mock
     private IWifiAwareDiscoverySessionCallback mSessionCallbackMock;
+    @Mock private WifiAwareMetrics mAwareMetricsMock;
+    @Mock private WifiPermissionsWrapper mPermissionsWrapperMock;
 
     private HandlerThread mHandlerThread;
 
@@ -116,30 +120,10 @@ public class WifiAwareServiceImplTest {
 
         mDut = new WifiAwareServiceImplSpy(mContextMock);
         mDut.fakeUid = mDefaultUid;
-        mDut.start(mHandlerThreadMock, mAwareStateManagerMock);
-        verify(mAwareStateManagerMock).start(eq(mContextMock), any(Looper.class));
-    }
-
-    /**
-     * Validate enableUsage() function
-     */
-    @Test
-    public void testEnableUsage() {
-        mDut.enableUsage();
-
-        verify(mAwareStateManagerMock).enableUsage();
-    }
-
-    /**
-     * Validate disableUsage() function
-     */
-    @Test
-    public void testDisableUsage() throws Exception {
-        mDut.enableUsage();
-        doConnect();
-        mDut.disableUsage();
-
-        verify(mAwareStateManagerMock).disableUsage();
+        mDut.start(mHandlerThreadMock, mAwareStateManagerMock, mWifiAwareShellCommandMock,
+                mAwareMetricsMock, mPermissionsWrapperMock);
+        verify(mAwareStateManagerMock).start(eq(mContextMock), any(), eq(mAwareMetricsMock),
+                eq(mPermissionsWrapperMock));
     }
 
     /**
@@ -279,7 +263,7 @@ public class WifiAwareServiceImplTest {
         for (int i = 0; i < loopCount; ++i) {
             mDut.connect(mBinderMock, "", mCallbackMock, null, false);
             inOrder.verify(mAwareStateManagerMock).connect(clientIdCaptor.capture(), anyInt(),
-                    anyInt(), anyString(), eq(mCallbackMock), any(ConfigRequest.class), eq(false));
+                    anyInt(), any(), eq(mCallbackMock), any(), eq(false));
             int id = clientIdCaptor.getValue();
             if (i != 0) {
                 assertTrue("Client ID incrementing", id > prevId);
@@ -609,7 +593,7 @@ public class WifiAwareServiceImplTest {
         // caught by the Builder. Want to test whether service side will catch invalidly
         // constructed configs.
         PublishConfig publishConfig = new PublishConfig(serviceName.getBytes(), ssi, matchFilter,
-                PublishConfig.PUBLISH_TYPE_UNSOLICITED, 0, 0, true);
+                PublishConfig.PUBLISH_TYPE_UNSOLICITED, 0, true);
         int clientId = doConnect();
         IWifiAwareDiscoverySessionCallback mockCallback = mock(
                 IWifiAwareDiscoverySessionCallback.class);
@@ -625,8 +609,7 @@ public class WifiAwareServiceImplTest {
         // caught by the Builder. Want to test whether service side will catch invalidly
         // constructed configs.
         SubscribeConfig subscribeConfig = new SubscribeConfig(serviceName.getBytes(), ssi,
-                matchFilter, SubscribeConfig.SUBSCRIBE_TYPE_PASSIVE, 0, 0,
-                SubscribeConfig.MATCH_STYLE_ALL, true);
+                matchFilter, SubscribeConfig.SUBSCRIBE_TYPE_PASSIVE, 0, true);
         int clientId = doConnect();
         IWifiAwareDiscoverySessionCallback mockCallback = mock(
                 IWifiAwareDiscoverySessionCallback.class);
@@ -650,7 +633,7 @@ public class WifiAwareServiceImplTest {
     }
 
     private static Characteristics getCharacteristics() {
-        WifiAwareNative.Capabilities cap = new WifiAwareNative.Capabilities();
+        Capabilities cap = new Capabilities();
         cap.maxConcurrentAwareClusters = 1;
         cap.maxPublishes = 2;
         cap.maxSubscribes = 2;
@@ -658,8 +641,7 @@ public class WifiAwareServiceImplTest {
         cap.maxMatchFilterLen = MAX_LENGTH;
         cap.maxTotalMatchFilterLen = 255;
         cap.maxServiceSpecificInfoLen = MAX_LENGTH;
-        cap.maxVsaDataLen = 255;
-        cap.maxMeshDataLen = 255;
+        cap.maxExtendedServiceSpecificInfoLen = MAX_LENGTH;
         cap.maxNdiInterfaces = 1;
         cap.maxNdpSessions = 1;
         cap.maxAppInfoLen = 255;

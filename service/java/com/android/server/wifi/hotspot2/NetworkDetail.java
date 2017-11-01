@@ -255,7 +255,7 @@ public class NetworkDetail {
         mAnqpOICount = roamingConsortium.anqpOICount;
         mRoamingConsortiums = roamingConsortium.roamingConsortiums;
         mExtendedCapabilities = extendedCapabilities;
-        mANQPElements = PasspointEventHandler.parseANQPLines(anqpLines);
+        mANQPElements = null;
         //set up channel info
         mPrimaryFreq = freq;
 
@@ -293,12 +293,11 @@ public class NetworkDetail {
         } else {
             mWifiMode = 0;
             mMaxRate = 0;
-            Log.w("WifiMode", mSSID + ", Invalid SupportedRates!!!");
         }
         if (DBG) {
             Log.d(TAG, mSSID + "ChannelWidth is: " + mChannelWidth + " PrimaryFreq: " + mPrimaryFreq
                     + " mCenterfreq0: " + mCenterfreq0 + " mCenterfreq1: " + mCenterfreq1
-                    + (extendedCapabilities.is80211McRTTResponder ? "Support RTT reponder"
+                    + (extendedCapabilities.is80211McRTTResponder() ? "Support RTT responder"
                     : "Do not support RTT responder"));
             Log.v("WifiMode", mSSID
                     + ", WifiMode: " + InformationElementUtil.WifiMode.toString(mWifiMode)
@@ -370,9 +369,11 @@ public class NetworkDetail {
     }
 
     public String getTrimmedSSID() {
-        for (int n = 0; n < mSSID.length(); n++) {
-            if (mSSID.charAt(n) != 0) {
-                return mSSID;
+        if (mSSID != null) {
+            for (int n = 0; n < mSSID.length(); n++) {
+                if (mSSID.charAt(n) != 0) {
+                    return mSSID;
+                }
             }
         }
         return "";
@@ -434,10 +435,6 @@ public class NetworkDetail {
         return mRoamingConsortiums;
     }
 
-    public Long getExtendedCapabilities() {
-        return mExtendedCapabilities.extendedCapabilities;
-    }
-
     public Map<Constants.ANQPElementType, ANQPElement> getANQPElements() {
         return mANQPElements;
     }
@@ -463,7 +460,7 @@ public class NetworkDetail {
     }
 
     public boolean is80211McResponderSupport() {
-        return mExtendedCapabilities.is80211McRTTResponder;
+        return mExtendedCapabilities.is80211McRTTResponder();
     }
 
     public boolean isSSID_UTF8() {

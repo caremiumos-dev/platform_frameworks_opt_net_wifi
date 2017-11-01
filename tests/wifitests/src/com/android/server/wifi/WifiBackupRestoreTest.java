@@ -24,10 +24,13 @@ import android.os.Process;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import com.android.server.net.IpConfigStore;
+import com.android.server.wifi.util.WifiPermissionsUtil;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -48,11 +51,15 @@ import java.util.Random;
 @SmallTest
 public class WifiBackupRestoreTest {
 
-    private final WifiBackupRestore mWifiBackupRestore = new WifiBackupRestore();
+    @Mock WifiPermissionsUtil mWifiPermissionsUtil;
+    private WifiBackupRestore mWifiBackupRestore;
     private boolean mCheckDump = true;
 
     @Before
     public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+        when(mWifiPermissionsUtil.checkConfigOverridePermission(anyInt())).thenReturn(true);
+        mWifiBackupRestore = new WifiBackupRestore(mWifiPermissionsUtil);
         // Enable verbose logging before tests to check the backup data dumps.
         mWifiBackupRestore.enableVerboseLogging(1);
     }
@@ -79,6 +86,18 @@ public class WifiBackupRestoreTest {
             assertFalse("Dump: " + dumpString,
                     dumpString.contains(WifiConfigurationTestUtil.TEST_WEP_KEYS[3]));
         }
+    }
+
+    /**
+     * Verify that a null network list is serialized correctly.
+     */
+    @Test
+    public void testNullNetworkListBackup() {
+        byte[] backupData = mWifiBackupRestore.retrieveBackupDataFromConfigurations(null);
+        assertTrue(backupData != null);
+        assertEquals(backupData.length, 0);
+        // No valid data to check in dump.
+        mCheckDump = false;
     }
 
     /**
@@ -349,25 +368,34 @@ public class WifiBackupRestoreTest {
      */
     @Test
     public void testMultipleNetworksSystemAppBackupRestore() {
+        int systemAppUid = Process.SYSTEM_UID;
+        int nonSystemAppUid = Process.FIRST_APPLICATION_UID + 556;
+        when(mWifiPermissionsUtil.checkConfigOverridePermission(eq(systemAppUid)))
+                .thenReturn(true);
+        when(mWifiPermissionsUtil.checkConfigOverridePermission(eq(nonSystemAppUid)))
+                .thenReturn(false);
+
         List<WifiConfiguration> configurations = new ArrayList<>();
         List<WifiConfiguration> expectedConfigurations = new ArrayList<>();
 
         WifiConfiguration wepNetwork = WifiConfigurationTestUtil.createWepNetwork();
+        wepNetwork.creatorUid = systemAppUid;
         configurations.add(wepNetwork);
         expectedConfigurations.add(wepNetwork);
 
         // These should not be in |expectedConfigurations|.
         WifiConfiguration nonSystemAppWepNetwork = WifiConfigurationTestUtil.createWepNetwork();
-        nonSystemAppWepNetwork.creatorUid = Process.FIRST_APPLICATION_UID;
+        nonSystemAppWepNetwork.creatorUid = nonSystemAppUid;
         configurations.add(nonSystemAppWepNetwork);
 
         WifiConfiguration pskNetwork = WifiConfigurationTestUtil.createPskNetwork();
+        pskNetwork.creatorUid = systemAppUid;
         configurations.add(pskNetwork);
         expectedConfigurations.add(pskNetwork);
 
         // These should not be in |expectedConfigurations|.
         WifiConfiguration nonSystemAppPskNetwork = WifiConfigurationTestUtil.createPskNetwork();
-        nonSystemAppPskNetwork.creatorUid = Process.FIRST_APPLICATION_UID + 1;
+        nonSystemAppPskNetwork.creatorUid = nonSystemAppUid;
         configurations.add(nonSystemAppPskNetwork);
 
         WifiConfiguration openNetwork = WifiConfigurationTestUtil.createOpenNetwork();
@@ -620,6 +648,37 @@ public class WifiBackupRestoreTest {
     }
 
     /**
+     * Verifying that backup data containing some unknown keys is properly restored.
+     * The backup data used here is a PII masked version of a backup data seen in a reported bug.
+     */
+    @Test
+    public void testSingleNetworkSupplicantBackupRestoreWithUnknownEAPKey() {
+        String backupSupplicantConfNetworkBlock = "network={\n"
+                + "ssid=" + WifiConfigurationTestUtil.TEST_SSID + "\n"
+                + "psk=" + WifiConfigurationTestUtil.TEST_PSK + "\n"
+                + "key_mgmt=WPA-PSK WPA-PSK-SHA256\n"
+                + "priority=18\n"
+                + "id_str=\"%7B%22creatorUid%22%3A%221000%22%2C%22configKey"
+                + "%22%3A%22%5C%22BLAH%5C%22WPA_PSK%22%7D\"\n"
+                + "eapRetryCount=6\n";
+        byte[] supplicantData = backupSupplicantConfNetworkBlock.getBytes();
+        List<WifiConfiguration> retrievedConfigurations =
+                mWifiBackupRestore.retrieveConfigurationsFromSupplicantBackupData(
+                        supplicantData, null);
+
+        final WifiConfiguration expectedConfiguration = new WifiConfiguration();
+        expectedConfiguration.SSID = WifiConfigurationTestUtil.TEST_SSID;
+        expectedConfiguration.preSharedKey = WifiConfigurationTestUtil.TEST_PSK;
+        expectedConfiguration.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+
+        ArrayList<WifiConfiguration> expectedConfigurations = new ArrayList<WifiConfiguration>() {{
+                add(expectedConfiguration);
+            }};
+        WifiConfigurationTestUtil.assertConfigurationsEqualForBackup(
+                expectedConfigurations, retrievedConfigurations);
+    }
+
+    /**
      * Verify that any corrupted data provided by Backup/Restore is ignored correctly.
      */
     @Test
@@ -699,12 +758,11 @@ public class WifiBackupRestoreTest {
             out.write("        " + "wep_tx_keyidx=" + configuration.wepTxKeyIndex + "\n");
         }
         Map<String, String> extras = new HashMap<>();
-        extras.put(WifiSupplicantControl.ID_STRING_KEY_CONFIG_KEY, configuration.configKey());
-        extras.put(WifiSupplicantControl.ID_STRING_KEY_CREATOR_UID,
+        extras.put(SupplicantStaNetworkHal.ID_STRING_KEY_CONFIG_KEY, configuration.configKey());
+        extras.put(SupplicantStaNetworkHal.ID_STRING_KEY_CREATOR_UID,
                 Integer.toString(configuration.creatorUid));
-        String idString = WifiNative.createNetworkExtra(extras);
+        String idString = "\"" + SupplicantStaNetworkHal.createNetworkExtra(extras) + "\"";
         if (idString != null) {
-            idString = "\"" + idString + "\"";
             out.write("        " + "id_str=" + idString + "\n");
         }
         out.write("}\n");

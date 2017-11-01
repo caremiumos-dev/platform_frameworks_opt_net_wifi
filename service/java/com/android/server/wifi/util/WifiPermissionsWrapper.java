@@ -16,9 +16,15 @@
 
 package com.android.server.wifi.util;
 
+import android.Manifest;
 import android.app.ActivityManager;
+import android.app.AppGlobals;
+import android.app.admin.DevicePolicyManagerInternal;
 import android.content.Context;
+import android.os.RemoteException;
 import android.os.UserHandle;
+
+import com.android.server.LocalServices;
 
 import java.util.List;
 
@@ -70,5 +76,36 @@ public class WifiPermissionsWrapper {
      */
     public int getUidPermission(String permissionType, int uid) {
         return ActivityManager.checkUidPermission(permissionType, uid);
+    }
+
+    /**
+     * Gets the local service {link@ DevicePolicyManagerInternal}, can be null
+     */
+    public DevicePolicyManagerInternal getDevicePolicyManagerInternal() {
+        return LocalServices.getService(DevicePolicyManagerInternal.class);
+    }
+
+    /**
+     * Determines if the caller has the override wifi config permission.
+     *
+     * @param uid to check the permission for
+     * @return int representation of success or denied
+     * @throws RemoteException
+     */
+    public int getOverrideWifiConfigPermission(int uid) throws RemoteException {
+        return AppGlobals.getPackageManager().checkUidPermission(
+                android.Manifest.permission.OVERRIDE_WIFI_CONFIG, uid);
+    }
+
+    /**
+     * Determines if the caller has the change wifi config permission.
+     *
+     * @param uid to check the permission for
+     * @return int representation of success or denied
+     * @throws RemoteException
+     */
+    public int getChangeWifiConfigPermission(int uid) throws RemoteException {
+        return AppGlobals.getPackageManager().checkUidPermission(
+                Manifest.permission.CHANGE_WIFI_STATE, uid);
     }
 }

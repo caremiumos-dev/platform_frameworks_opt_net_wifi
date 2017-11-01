@@ -21,6 +21,7 @@ import android.os.HandlerThread;
 import android.util.Log;
 
 import com.android.server.SystemService;
+import com.android.server.wifi.HalDeviceManager;
 import com.android.server.wifi.WifiInjector;
 
 /**
@@ -51,13 +52,24 @@ public final class WifiAwareService extends SystemService {
                 return;
             }
 
-            HandlerThread awareHandlerThread = wifiInjector.getmWifiAwareHandlerThread();
-            WifiAwareStateManager awareStateManager = new WifiAwareStateManager();
-            WifiAwareNative awareNative = new WifiAwareNative(true);
-            awareStateManager.setNative(awareNative);
-            awareNative.setStateManager(awareStateManager);
+            HalDeviceManager halDeviceManager = wifiInjector.getHalDeviceManager();
 
-            mImpl.start(awareHandlerThread, awareStateManager);
+            WifiAwareStateManager wifiAwareStateManager = new WifiAwareStateManager();
+            WifiAwareNativeCallback wifiAwareNativeCallback = new WifiAwareNativeCallback(
+                    wifiAwareStateManager);
+            WifiAwareNativeManager wifiAwareNativeManager = new WifiAwareNativeManager(
+                    wifiAwareStateManager, halDeviceManager, wifiAwareNativeCallback);
+            WifiAwareNativeApi wifiAwareNativeApi = new WifiAwareNativeApi(wifiAwareNativeManager);
+            wifiAwareStateManager.setNative(wifiAwareNativeManager, wifiAwareNativeApi);
+            WifiAwareShellCommand wifiAwareShellCommand = new WifiAwareShellCommand();
+            wifiAwareShellCommand.register("native_api", wifiAwareNativeApi);
+            wifiAwareShellCommand.register("native_cb", wifiAwareNativeCallback);
+            wifiAwareShellCommand.register("state_mgr", wifiAwareStateManager);
+
+            HandlerThread awareHandlerThread = wifiInjector.getWifiAwareHandlerThread();
+            mImpl.start(awareHandlerThread, wifiAwareStateManager, wifiAwareShellCommand,
+                    wifiInjector.getWifiMetrics().getWifiAwareMetrics(),
+                    wifiInjector.getWifiPermissionsWrapper());
         } else if (phase == SystemService.PHASE_BOOT_COMPLETED) {
             mImpl.startLate();
         }

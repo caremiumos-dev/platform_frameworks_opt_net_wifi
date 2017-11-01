@@ -14,42 +14,6 @@
 
 LOCAL_PATH:= $(call my-dir)
 
-# Make mock HAL library
-# ============================================================
-
-include $(CLEAR_VARS)
-
-LOCAL_REQUIRED_MODULES :=
-
-LOCAL_CFLAGS += -Wall -Werror -Wextra -Wno-unused-parameter -Wno-unused-function \
-                -Wunused-variable -Winit-self -Wwrite-strings -Wshadow
-
-LOCAL_C_INCLUDES += \
-	$(JNI_H_INCLUDE) \
-	$(LOCAL_PATH)/../../service/jni \
-	$(call include-path-for, libhardware)/hardware \
-	$(call include-path-for, libhardware_legacy) \
-	packages/apps/Test/connectivity/sl4n/rapidjson/include \
-
-LOCAL_SRC_FILES := \
-	jni/wifi_hal_mock.cpp \
-	jni/wifi_aware_hal_mock.cpp
-
-LOCAL_MODULE := libwifi-hal-mock
-
-LOCAL_SHARED_LIBRARIES += \
-	libnativehelper \
-	liblog \
-	libcutils \
-	libutils \
-	libhardware \
-	libnl \
-	libdl \
-	libwifi-service \
-	libwifi-system
-
-include $(BUILD_SHARED_LIBRARY)
-
 # Make test APK
 # ============================================================
 include $(CLEAR_VARS)
@@ -85,6 +49,9 @@ jacoco_include := com.android.server.wifi.*
 LOCAL_JACK_COVERAGE_INCLUDE_FILTER := $(jacoco_include)
 LOCAL_JACK_COVERAGE_EXCLUDE_FILTER := $(jacoco_exclude)
 
+LOCAL_DX_FLAGS := --multi-dex
+LOCAL_JACK_FLAGS := --multi-dex native
+
 # wifi-service and services must be included here so that the latest changes
 # will be used when tests. Otherwise the tests would run against the installed
 # system.
@@ -101,6 +68,7 @@ LOCAL_JAVA_LIBRARIES := \
 	android.test.runner \
 	wifi-service \
 	services \
+	android.hidl.manager-V1.0-java
 
 # These must be explicitly included because they are not normally accessible
 # from apps.
@@ -134,17 +102,18 @@ LOCAL_JNI_SHARED_LIBRARIES := \
 	libstagefright_foundation \
 	libstdc++ \
 	libsync \
-	libwifi-hal \
 	libwifi-system \
 	libui \
 	libunwind \
 	libutils \
+	libvndksupport \
 
 ifdef WPA_SUPPLICANT_VERSION
 LOCAL_JNI_SHARED_LIBRARIES += libwpa_client
 endif
 
 LOCAL_PACKAGE_NAME := FrameworksWifiTests
-LOCAL_JNI_SHARED_LIBRARIES += libwifi-hal-mock
+
+LOCAL_COMPATIBILITY_SUITE := device-tests
 
 include $(BUILD_PACKAGE)

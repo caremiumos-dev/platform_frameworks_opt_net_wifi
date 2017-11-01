@@ -21,7 +21,9 @@ import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
-import android.net.NetworkScorerAppManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkScoreManager;
+import android.os.RemoteException;
 import android.os.UserManager;
 import android.provider.Settings;
 
@@ -42,19 +44,73 @@ public class WifiPermissionsUtil {
     private final AppOpsManager mAppOps;
     private final UserManager mUserManager;
     private final WifiSettingsStore mSettingsStore;
-    private final NetworkScorerAppManager mNetworkScorerAppManager;
+    private final NetworkScoreManager mNetworkScoreManager;
     private WifiLog mLog;
 
     public WifiPermissionsUtil(WifiPermissionsWrapper wifiPermissionsWrapper,
             Context context, WifiSettingsStore settingsStore, UserManager userManager,
-            NetworkScorerAppManager networkScorerAppManager) {
+            NetworkScoreManager networkScoreManager, WifiInjector wifiInjector) {
         mWifiPermissionsWrapper = wifiPermissionsWrapper;
         mContext = context;
         mUserManager = userManager;
         mAppOps = (AppOpsManager) mContext.getSystemService(Context.APP_OPS_SERVICE);
         mSettingsStore = settingsStore;
-        mLog = WifiInjector.getInstance().makeLog(TAG);
-        mNetworkScorerAppManager = networkScorerAppManager;
+        mLog = wifiInjector.makeLog(TAG);
+        mNetworkScoreManager = networkScoreManager;
+    }
+
+    /**
+     * Checks if the app has the permission to override Wi-Fi network configuration or not.
+     *
+     * @param uid uid of the app.
+     * @return true if the app does have the permission, false otherwise.
+     */
+    public boolean checkConfigOverridePermission(int uid) {
+        try {
+            int permission = mWifiPermissionsWrapper.getOverrideWifiConfigPermission(uid);
+            return (permission == PackageManager.PERMISSION_GRANTED);
+        } catch (RemoteException e) {
+            mLog.err("Error checking for permission: %").r(e.getMessage()).flush();
+            return false;
+        }
+    }
+
+    /**
+     * Checks if the app has the permission to change Wi-Fi network configuration or not.
+     *
+     * @param uid uid of the app.
+     * @return true if the app does have the permission, false otherwise.
+     */
+    public boolean checkChangePermission(int uid) {
+        try {
+            int permission = mWifiPermissionsWrapper.getChangeWifiConfigPermission(uid);
+            return (permission == PackageManager.PERMISSION_GRANTED);
+        } catch (RemoteException e) {
+            mLog.err("Error checking for permission: %").r(e.getMessage()).flush();
+            return false;
+        }
+    }
+
+    /**
+     * Check and enforce tether change permission.
+     *
+     * @param context Context object of the caller.
+     */
+    public void enforceTetherChangePermission(Context context) {
+        String pkgName = context.getOpPackageName();
+        ConnectivityManager.enforceTetherChangePermission(context, pkgName);
+    }
+
+    /**
+     * Check and enforce Location permission.
+     *
+     * @param pkgName PackageName of the application requesting access
+     * @param uid The uid of the package
+     */
+    public void enforceLocationPermission(String pkgName, int uid) {
+        if (!checkCallersLocationPermission(pkgName, uid)) {
+            throw new SecurityException("UID " + uid + " does not have Location permission");
+        }
     }
 
     /**
@@ -112,7 +168,7 @@ public class WifiPermissionsUtil {
      * Returns true if the caller is an Active Network Scorer.
      */
     private boolean isCallerActiveNwScorer(int uid) {
-        return mNetworkScorerAppManager.isCallerActiveScorer(uid);
+        return mNetworkScoreManager.isCallerActiveScorer(uid);
     }
 
     /**
@@ -199,5 +255,14 @@ public class WifiPermissionsUtil {
         // Location mode check on applications that are later than version.
         return (mSettingsStore.getLocationModeSetting(mContext)
                  != Settings.Secure.LOCATION_MODE_OFF);
+    }
+
+    /**
+     * Returns true if the |uid| holds NETWORK_SETTINGS permission.
+     */
+    public boolean checkNetworkSettingsPermission(int uid) {
+        return mWifiPermissionsWrapper.getUidPermission(
+                android.Manifest.permission.NETWORK_SETTINGS, uid)
+                == PackageManager.PERMISSION_GRANTED;
     }
 }

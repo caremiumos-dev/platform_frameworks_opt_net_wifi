@@ -59,6 +59,10 @@ import java.util.HashMap;
  *   </Sub Section 1 Header>
  *  </Section 1 Header>
  * </Document Header>
+ *
+ * Note: These utility methods are meant to be used for:
+ * 1. Backup/restore wifi network data to/from cloud.
+ * 2. Persisting wifi network data to/from disk.
  */
 public class XmlUtil {
     private static final String TAG = "WifiXmlUtil";
@@ -319,6 +323,7 @@ public class XmlUtil {
         public static final String XML_TAG_ALLOWED_GROUP_CIPHERS = "AllowedGroupCiphers";
         public static final String XML_TAG_ALLOWED_PAIRWISE_CIPHERS = "AllowedPairwiseCiphers";
         public static final String XML_TAG_SHARED = "Shared";
+        public static final String XML_TAG_STATUS = "Status";
         public static final String XML_TAG_FQDN = "FQDN";
         public static final String XML_TAG_PROVIDER_FRIENDLY_NAME = "ProviderFriendlyName";
         public static final String XML_TAG_LINKED_NETWORKS_LIST = "LinkedNetworksList";
@@ -335,6 +340,8 @@ public class XmlUtil {
         public static final String XML_TAG_LAST_UPDATE_UID = "LastUpdateUid";
         public static final String XML_TAG_LAST_UPDATE_NAME = "LastUpdateName";
         public static final String XML_TAG_LAST_CONNECT_UID = "LastConnectUid";
+        public static final String XML_TAG_IS_LEGACY_PASSPOINT_CONFIG = "IsLegacyPasspointConfig";
+        public static final String XML_TAG_ROAMING_CONSORTIUM_OIS = "RoamingConsortiumOIs";
 
         /**
          * Write WepKeys to the XML stream.
@@ -423,6 +430,7 @@ public class XmlUtil {
                 XmlSerializer out, WifiConfiguration configuration)
                 throws XmlPullParserException, IOException {
             writeCommonElementsToXml(out, configuration);
+            XmlUtil.writeNextValue(out, XML_TAG_STATUS, configuration.status);
             XmlUtil.writeNextValue(out, XML_TAG_FQDN, configuration.FQDN);
             XmlUtil.writeNextValue(
                     out, XML_TAG_PROVIDER_FRIENDLY_NAME, configuration.providerFriendlyName);
@@ -446,6 +454,11 @@ public class XmlUtil {
             XmlUtil.writeNextValue(out, XML_TAG_LAST_UPDATE_UID, configuration.lastUpdateUid);
             XmlUtil.writeNextValue(out, XML_TAG_LAST_UPDATE_NAME, configuration.lastUpdateName);
             XmlUtil.writeNextValue(out, XML_TAG_LAST_CONNECT_UID, configuration.lastConnectUid);
+            XmlUtil.writeNextValue(
+                    out, XML_TAG_IS_LEGACY_PASSPOINT_CONFIG,
+                    configuration.isLegacyPasspointConfig);
+            XmlUtil.writeNextValue(
+                    out, XML_TAG_ROAMING_CONSORTIUM_OIS, configuration.roamingConsortiumIds);
         }
 
         /**
@@ -545,6 +558,15 @@ public class XmlUtil {
                     case XML_TAG_SHARED:
                         configuration.shared = (boolean) value;
                         break;
+                    case XML_TAG_STATUS:
+                        int status = (int) value;
+                        // Any network which was CURRENT before reboot needs
+                        // to be restored to ENABLED.
+                        if (status == WifiConfiguration.Status.CURRENT) {
+                            status = WifiConfiguration.Status.ENABLED;
+                        }
+                        configuration.status = status;
+                        break;
                     case XML_TAG_FQDN:
                         configuration.FQDN = (String) value;
                         break;
@@ -592,6 +614,12 @@ public class XmlUtil {
                         break;
                     case XML_TAG_LAST_CONNECT_UID:
                         configuration.lastConnectUid = (int) value;
+                        break;
+                    case XML_TAG_IS_LEGACY_PASSPOINT_CONFIG:
+                        configuration.isLegacyPasspointConfig = (boolean) value;
+                        break;
+                    case XML_TAG_ROAMING_CONSORTIUM_OIS:
+                        configuration.roamingConsortiumIds = (long[]) value;
                         break;
                     default:
                         throw new XmlPullParserException(
@@ -944,6 +972,8 @@ public class XmlUtil {
         public static final String XML_TAG_CA_PATH = "CaPath";
         public static final String XML_TAG_EAP_METHOD = "EapMethod";
         public static final String XML_TAG_PHASE2_METHOD = "Phase2Method";
+        public static final String XML_TAG_PLMN = "PLMN";
+        public static final String XML_TAG_REALM = "Realm";
 
         /**
          * Write the WifiEnterpriseConfig data elements from the provided config to the XML
@@ -980,6 +1010,8 @@ public class XmlUtil {
                     enterpriseConfig.getFieldValue(WifiEnterpriseConfig.CA_PATH_KEY));
             XmlUtil.writeNextValue(out, XML_TAG_EAP_METHOD, enterpriseConfig.getEapMethod());
             XmlUtil.writeNextValue(out, XML_TAG_PHASE2_METHOD, enterpriseConfig.getPhase2Method());
+            XmlUtil.writeNextValue(out, XML_TAG_PLMN, enterpriseConfig.getPlmn());
+            XmlUtil.writeNextValue(out, XML_TAG_REALM, enterpriseConfig.getRealm());
         }
 
         /**
@@ -1054,6 +1086,12 @@ public class XmlUtil {
                         break;
                     case XML_TAG_PHASE2_METHOD:
                         enterpriseConfig.setPhase2Method((int) value);
+                        break;
+                    case XML_TAG_PLMN:
+                        enterpriseConfig.setPlmn((String) value);
+                        break;
+                    case XML_TAG_REALM:
+                        enterpriseConfig.setRealm((String) value);
                         break;
                     default:
                         throw new XmlPullParserException(

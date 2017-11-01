@@ -24,9 +24,13 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import com.android.server.net.IpConfigStore;
+import com.android.server.wifi.hotspot2.LegacyPasspointConfig;
+import com.android.server.wifi.hotspot2.LegacyPasspointConfigParser;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -76,14 +80,18 @@ public class WifiConfigStoreLegacy {
      * List of external dependencies for WifiConfigManager.
      */
     private final WifiNetworkHistory mWifiNetworkHistory;
-    private final WifiSupplicantControl mWifiSupplicantControl;
+    private final WifiNative mWifiNative;
     private final IpConfigStore mIpconfigStore;
 
+    private final LegacyPasspointConfigParser mPasspointConfigParser;
+
     WifiConfigStoreLegacy(WifiNetworkHistory wifiNetworkHistory,
-            WifiSupplicantControl wifiSupplicantControl, IpConfigStore ipConfigStore) {
+            WifiNative wifiNative, IpConfigStore ipConfigStore,
+            LegacyPasspointConfigParser passpointConfigParser) {
         mWifiNetworkHistory = wifiNetworkHistory;
-        mWifiSupplicantControl = wifiSupplicantControl;
+        mWifiNative = wifiNative;
         mIpconfigStore = ipConfigStore;
+        mPasspointConfigParser = passpointConfigParser;
     }
 
     /**
@@ -150,69 +158,6 @@ public class WifiConfigStoreLegacy {
     }
 
     /**
-     * Populate the provided masked fieldName for all the configurations provided from
-     * wpa_supplicant.conf file.
-     *
-     * @param fieldName        field name to be retrieved from wpa_supplicant.conf file.
-     * @param configurationMap map of configKey to WifiConfiguration object.
-     * @param setter           callback function to be invoked to set the value retrieved on each
-     *                         configuration.
-     */
-    private void populateMaskedFieldFromWpaSupplicantFile(
-            String fieldName,
-            Map<String, WifiConfiguration> configurationMap,
-            MaskedWpaSupplicantFieldSetter setter) {
-        Map<String, String> configKeyToValueMap =
-                mWifiSupplicantControl.readNetworkVariablesFromSupplicantFile(fieldName);
-        if (configKeyToValueMap == null || configKeyToValueMap.isEmpty()) {
-            Log.w(TAG, "Cannot retrieve field: " + fieldName + " values");
-            return;
-        }
-        for (Map.Entry<String, WifiConfiguration> entry : configurationMap.entrySet()) {
-            if (configKeyToValueMap.containsKey(entry.getKey())) {
-                WifiConfiguration config = entry.getValue();
-                setter.setValue(config, configKeyToValueMap.get(entry.getKey()));
-            }
-        }
-    }
-
-    /**
-     * Populate all the masked fields in all the configurations provided from wpa_supplicant.conf
-     * file.
-     * These are the fields which are populated in the method:
-     * 1. psk
-     * 2. wep_key0
-     * 3. wep_key1
-     * 4. wep_key2
-     * 5. wep_key2
-     * 6. password
-     *
-     * @param configurationMap Map of configKey to WifiConfiguration object.
-     */
-    private void populateMaskedFieldsFromWpaSupplicantFile(
-            Map<String, WifiConfiguration> configurationMap) {
-        populateMaskedFieldFromWpaSupplicantFile(
-                WifiConfiguration.pskVarName, configurationMap,
-                (WifiConfiguration config, String value) -> config.preSharedKey = value);
-        populateMaskedFieldFromWpaSupplicantFile(
-                WifiConfiguration.wepKeyVarNames[0], configurationMap,
-                (WifiConfiguration config, String value) -> config.wepKeys[0] = value);
-        populateMaskedFieldFromWpaSupplicantFile(
-                WifiConfiguration.wepKeyVarNames[1], configurationMap,
-                (WifiConfiguration config, String value) -> config.wepKeys[1] = value);
-        populateMaskedFieldFromWpaSupplicantFile(
-                WifiConfiguration.wepKeyVarNames[2], configurationMap,
-                (WifiConfiguration config, String value) -> config.wepKeys[2] = value);
-        populateMaskedFieldFromWpaSupplicantFile(
-                WifiConfiguration.wepKeyVarNames[3], configurationMap,
-                (WifiConfiguration config, String value) -> config.wepKeys[3] = value);
-        populateMaskedFieldFromWpaSupplicantFile(
-                WifiEnterpriseConfig.PASSWORD_KEY, configurationMap,
-                (WifiConfiguration config, String value) ->
-                        config.enterpriseConfig.setPassword(value));
-    }
-
-    /**
      * Helper function to load {@link WifiConfiguration} data from wpa_supplicant and populate
      * the provided configuration map and network extras.
      *
@@ -225,22 +170,93 @@ public class WifiConfigStoreLegacy {
     private void loadFromWpaSupplicant(
             Map<String, WifiConfiguration> configurationMap,
             SparseArray<Map<String, String>> networkExtras) {
-        mWifiSupplicantControl.loadNetworks(configurationMap, networkExtras);
+        if (!mWifiNative.migrateNetworksFromSupplicant(configurationMap, networkExtras)) {
+            Log.wtf(TAG, "Failed to load wifi configurations from wpa_supplicant");
+            return;
+        }
         if (configurationMap.isEmpty()) {
             Log.w(TAG, "No wifi configurations found in wpa_supplicant");
             return;
         }
-        // Now parse wpa_supplicant.conf for the masked fields.
-        populateMaskedFieldsFromWpaSupplicantFile(configurationMap);
+    }
+
+    /**
+     * Helper function to update {@link WifiConfiguration} that represents a Passpoint
+     * configuration.
+     *
+     * This method will manually parse PerProviderSubscription.conf file to retrieve missing
+     * fields: provider friendly name, roaming consortium OIs, realm, IMSI.
+     *
+     * @param configurationMap Map of configKey to WifiConfiguration object.
+     * @param networkExtras    Map of network extras parsed from wpa_supplicant.
+     */
+    private void loadFromPasspointConfigStore(
+            Map<String, WifiConfiguration> configurationMap,
+            SparseArray<Map<String, String>> networkExtras) {
+        Map<String, LegacyPasspointConfig> passpointConfigMap = null;
+        try {
+            passpointConfigMap = mPasspointConfigParser.parseConfig(PPS_FILE.getAbsolutePath());
+        } catch (IOException e) {
+            Log.w(TAG, "Failed to read/parse Passpoint config file: " + e.getMessage());
+        }
+
+        List<String> entriesToBeRemoved = new ArrayList<>();
+        for (Map.Entry<String, WifiConfiguration> entry : configurationMap.entrySet()) {
+            WifiConfiguration wifiConfig = entry.getValue();
+            // Ignore non-Enterprise network since enterprise configuration is required for
+            // Passpoint.
+            if (wifiConfig.enterpriseConfig == null || wifiConfig.enterpriseConfig.getEapMethod()
+                    == WifiEnterpriseConfig.Eap.NONE) {
+                continue;
+            }
+            // Ignore configuration without FQDN.
+            Map<String, String> extras = networkExtras.get(wifiConfig.networkId);
+            if (extras == null || !extras.containsKey(SupplicantStaNetworkHal.ID_STRING_KEY_FQDN)) {
+                continue;
+            }
+            String fqdn = networkExtras.get(wifiConfig.networkId).get(
+                    SupplicantStaNetworkHal.ID_STRING_KEY_FQDN);
+
+            // Remove the configuration if failed to find the matching configuration in the
+            // Passpoint configuration file.
+            if (passpointConfigMap == null || !passpointConfigMap.containsKey(fqdn)) {
+                entriesToBeRemoved.add(entry.getKey());
+                continue;
+            }
+
+            // Update the missing Passpoint configuration fields to this WifiConfiguration.
+            LegacyPasspointConfig passpointConfig = passpointConfigMap.get(fqdn);
+            wifiConfig.isLegacyPasspointConfig = true;
+            wifiConfig.FQDN = fqdn;
+            wifiConfig.providerFriendlyName = passpointConfig.mFriendlyName;
+            if (passpointConfig.mRoamingConsortiumOis != null) {
+                wifiConfig.roamingConsortiumIds = Arrays.copyOf(
+                        passpointConfig.mRoamingConsortiumOis,
+                        passpointConfig.mRoamingConsortiumOis.length);
+            }
+            if (passpointConfig.mImsi != null) {
+                wifiConfig.enterpriseConfig.setPlmn(passpointConfig.mImsi);
+            }
+            if (passpointConfig.mRealm != null) {
+                wifiConfig.enterpriseConfig.setRealm(passpointConfig.mRealm);
+            }
+        }
+
+        // Remove any incomplete Passpoint configurations. Should never happen, in case it does
+        // remove them to avoid maintaining any invalid Passpoint configurations.
+        for (String key : entriesToBeRemoved) {
+            Log.w(TAG, "Remove incomplete Passpoint configuration: " + key);
+            configurationMap.remove(key);
+        }
     }
 
     /**
      * Helper function to load from the different legacy stores:
-     * 1. Read the network configurations from wpa_supplicant using {@link WifiSupplicantControl}.
+     * 1. Read the network configurations from wpa_supplicant using {@link WifiNative}.
      * 2. Read the network configurations from networkHistory.txt using {@link WifiNetworkHistory}.
      * 3. Read the Ip configurations from ipconfig.txt using {@link IpConfigStore}.
      * 4. Read all the passpoint info from PerProviderSubscription.conf using
-     * {@link com.android.hotspot2.osu.OSUManager}.
+     * {@link LegacyPasspointConfigParser}.
      */
     public WifiConfigStoreDataLegacy read() {
         final Map<String, WifiConfiguration> configurationMap = new HashMap<>();
@@ -250,7 +266,7 @@ public class WifiConfigStoreLegacy {
         loadFromWpaSupplicant(configurationMap, networkExtras);
         loadFromNetworkHistory(configurationMap, deletedEphemeralSSIDs);
         loadFromIpConfigStore(configurationMap);
-        // TODO: readPasspointConfig(configurationMap, networkExtras);
+        loadFromPasspointConfigStore(configurationMap, networkExtras);
 
         // Now create config store data instance to be returned.
         return new WifiConfigStoreDataLegacy(
@@ -283,11 +299,10 @@ public class WifiConfigStoreLegacy {
     public boolean removeStores() {
         // TODO(b/29352330): Delete wpa_supplicant.conf file instead.
         // First remove all networks from wpa_supplicant and save configuration.
-        if (!mWifiSupplicantControl.removeAllNetworks()) {
+        if (!mWifiNative.removeAllNetworks()) {
             Log.e(TAG, "Removing networks from wpa_supplicant failed");
             return false;
         }
-        mWifiSupplicantControl.saveConfig();
 
         // Now remove the ipconfig.txt file.
         if (!IP_CONFIG_FILE.delete()) {
@@ -298,6 +313,11 @@ public class WifiConfigStoreLegacy {
         // Now finally remove network history.txt
         if (!NETWORK_HISTORY_FILE.delete()) {
             Log.e(TAG, "Removing networkHistory.txt failed");
+            return false;
+        }
+
+        if (!PPS_FILE.delete()) {
+            Log.e(TAG, "Removing PerProviderSubscription.conf failed");
             return false;
         }
 

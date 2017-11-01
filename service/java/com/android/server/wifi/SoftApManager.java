@@ -59,6 +59,10 @@ public class SoftApManager implements ActiveModeManager {
     private final INetworkManagementService mNwService;
     private final WifiApConfigStore mWifiApConfigStore;
 
+    private final WifiMetrics mWifiMetrics;
+
+    private WifiConfiguration mApConfig;
+
     /**
      * Listener for soft AP state changes.
      */
@@ -78,7 +82,8 @@ public class SoftApManager implements ActiveModeManager {
                          IApInterface apInterface,
                          INetworkManagementService nms,
                          WifiApConfigStore wifiApConfigStore,
-                         WifiConfiguration config) {
+                         WifiConfiguration config,
+                         WifiMetrics wifiMetrics) {
         mStateMachine = new SoftApStateMachine(looper);
 
         mWifiNative = wifiNative;
@@ -87,17 +92,19 @@ public class SoftApManager implements ActiveModeManager {
         mApInterface = apInterface;
         mNwService = nms;
         mWifiApConfigStore = wifiApConfigStore;
-        if (config != null) {
-            mWifiApConfigStore.setApConfiguration(config);
+        if (config == null) {
+            mApConfig = mWifiApConfigStore.getApConfiguration();
+        } else {
+            mApConfig = config;
         }
+        mWifiMetrics = wifiMetrics;
     }
 
     /**
-     * Start soft AP with the current saved config.
+     * Start soft AP with the supplied config.
      */
     public void start() {
-        mStateMachine.sendMessage(SoftApStateMachine.CMD_START,
-                                  mWifiApConfigStore.getApConfiguration());
+        mStateMachine.sendMessage(SoftApStateMachine.CMD_START, mApConfig);
     }
 
     /**
@@ -154,12 +161,16 @@ public class SoftApManager implements ActiveModeManager {
 
         int encryptionType = getIApInterfaceEncryptionType(localConfig);
 
+        if (localConfig.hiddenSSID) {
+            Log.d(TAG, "SoftAP is a hidden network");
+        }
+
         try {
             // Note that localConfig.SSID is intended to be either a hex string or "double quoted".
             // However, it seems that whatever is handing us these configurations does not obey
             // this convention.
             boolean success = mApInterface.writeHostapdConfig(
-                    localConfig.SSID.getBytes(StandardCharsets.UTF_8), false,
+                    localConfig.SSID.getBytes(StandardCharsets.UTF_8), localConfig.hiddenSSID,
                     localConfig.apChannel, encryptionType,
                     (localConfig.preSharedKey != null)
                             ? localConfig.preSharedKey.getBytes(StandardCharsets.UTF_8)
@@ -274,6 +285,8 @@ public class SoftApManager implements ActiveModeManager {
                             mDeathRecipient.unlinkToDeath();
                             updateApState(WifiManager.WIFI_AP_STATE_FAILED,
                                     WifiManager.SAP_START_FAILURE_GENERAL);
+                            mWifiMetrics.incrementSoftApStartResult(
+                                    false, WifiManager.SAP_START_FAILURE_GENERAL);
                             break;
                         }
 
@@ -285,6 +298,8 @@ public class SoftApManager implements ActiveModeManager {
                             unregisterObserver();
                             updateApState(WifiManager.WIFI_AP_STATE_FAILED,
                                           WifiManager.SAP_START_FAILURE_GENERAL);
+                            mWifiMetrics.incrementSoftApStartResult(
+                                    false, WifiManager.SAP_START_FAILURE_GENERAL);
                             break;
                         }
 
@@ -297,6 +312,7 @@ public class SoftApManager implements ActiveModeManager {
                             mDeathRecipient.unlinkToDeath();
                             unregisterObserver();
                             updateApState(WifiManager.WIFI_AP_STATE_FAILED, failureReason);
+                            mWifiMetrics.incrementSoftApStartResult(false, failureReason);
                             break;
                         }
 
@@ -332,6 +348,7 @@ public class SoftApManager implements ActiveModeManager {
                 if (isUp) {
                     Log.d(TAG, "SoftAp is ready for use");
                     updateApState(WifiManager.WIFI_AP_STATE_ENABLED, 0);
+                    mWifiMetrics.incrementSoftApStartResult(true, 0);
                 } else {
                     // TODO: handle the case where the interface was up, but goes down
                 }

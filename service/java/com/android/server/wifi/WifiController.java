@@ -30,7 +30,6 @@ import android.content.IntentFilter;
 import android.database.ContentObserver;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Looper;
@@ -270,13 +269,13 @@ public class WifiController extends StateMachine {
             }
         };
 
-        mContext.getContentResolver().registerContentObserver(
-                Settings.Global.getUriFor(Settings.Global.STAY_ON_WHILE_PLUGGED_IN),
-                false, contentObserver);
+        mFacade.registerContentObserver(mContext,
+                Settings.Global.getUriFor(Settings.Global.STAY_ON_WHILE_PLUGGED_IN), false,
+                contentObserver);
     }
 
     /**
-     * Observes settings changes to scan always mode.
+     * Observes settings changes to wifi idle time.
      */
     private void registerForWifiIdleTimeChange(Handler handler) {
         ContentObserver contentObserver = new ContentObserver(handler) {
@@ -286,9 +285,8 @@ public class WifiController extends StateMachine {
             }
         };
 
-        mContext.getContentResolver().registerContentObserver(
-                Settings.Global.getUriFor(Settings.Global.WIFI_IDLE_MS),
-                false, contentObserver);
+        mFacade.registerContentObserver(mContext,
+                Settings.Global.getUriFor(Settings.Global.WIFI_IDLE_MS), false, contentObserver);
     }
 
     /**
@@ -301,9 +299,9 @@ public class WifiController extends StateMachine {
                 readWifiSleepPolicy();
             }
         };
-        mContext.getContentResolver().registerContentObserver(
-                Settings.Global.getUriFor(Settings.Global.WIFI_SLEEP_POLICY),
-                false, contentObserver);
+        mFacade.registerContentObserver(mContext,
+                Settings.Global.getUriFor(Settings.Global.WIFI_SLEEP_POLICY), false,
+                contentObserver);
     }
 
     /**
@@ -458,6 +456,11 @@ public class WifiController extends StateMachine {
                             break;
                         }
                         if (mDeviceIdle == false) {
+                            // wifi is toggled, we need to explicitly tell WifiStateMachine that we
+                            // are headed to connect mode before going to the DeviceActiveState
+                            // since that will start supplicant and WifiStateMachine may not know
+                            // what state to head to (it might go to scan mode).
+                            mWifiStateMachine.setOperationalMode(WifiStateMachine.CONNECT_MODE);
                             transitionTo(mDeviceActiveState);
                         } else {
                             checkLocksAndTransitionWhenDeviceIdle();
@@ -476,7 +479,7 @@ public class WifiController extends StateMachine {
                         if (msg.arg2 == 0) { // previous wifi state has not been saved yet
                             mSettingsStore.setWifiSavedState(WifiSettingsStore.WIFI_DISABLED);
                         }
-                        mWifiStateMachine.setHostApRunning((WifiConfiguration) msg.obj,
+                        mWifiStateMachine.setHostApRunning((SoftApModeConfiguration) msg.obj,
                                 true);
                         transitionTo(mApEnabledState);
                     }

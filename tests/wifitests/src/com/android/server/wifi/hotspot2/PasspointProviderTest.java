@@ -28,7 +28,7 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiEnterpriseConfig;
 import android.net.wifi.hotspot2.PasspointConfiguration;
 import android.net.wifi.hotspot2.pps.Credential;
-import android.net.wifi.hotspot2.pps.HomeSP;
+import android.net.wifi.hotspot2.pps.HomeSp;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.util.Base64;
 
@@ -67,10 +67,13 @@ import java.util.Set;
 @SmallTest
 public class PasspointProviderTest {
     private static final long PROVIDER_ID = 12L;
-    private static final String CA_CERTIFICATE_ALIAS = "CACERT_HS2_12";
-    private static final String CLIENT_CERTIFICATE_ALIAS = "USRCERT_HS2_12";
-    private static final String CLIENT_PRIVATE_KEY_ALIAS = "USRPKEY_HS2_12";
-    private static final String ALIAS_SUFFIX = "HS2_12";
+    private static final int CREATOR_UID = 1234;
+    private static final String CA_CERTIFICATE_NAME = "CACERT_HS2_12";
+    private static final String CLIENT_CERTIFICATE_NAME = "USRCERT_HS2_12";
+    private static final String CLIENT_PRIVATE_KEY_NAME = "USRPKEY_HS2_12";
+    private static final String CA_CERTIFICATE_ALIAS = "HS2_12";
+    private static final String CLIENT_CERTIFICATE_ALIAS = "HS2_12";
+    private static final String CLIENT_PRIVATE_KEY_ALIAS = "HS2_12";
 
     @Mock WifiKeyStore mKeyStore;
     @Mock SIMAccessor mSimAccessor;
@@ -89,7 +92,7 @@ public class PasspointProviderTest {
      * @return {@link com.android.server.wifi.hotspot2.PasspointProvider}
      */
     private PasspointProvider createProvider(PasspointConfiguration config) {
-        return new PasspointProvider(config, mKeyStore, mSimAccessor, PROVIDER_ID);
+        return new PasspointProvider(config, mKeyStore, mSimAccessor, PROVIDER_ID, CREATOR_UID);
     }
 
     /**
@@ -171,16 +174,18 @@ public class PasspointProviderTest {
     public void verifyModifyOriginalConfig() throws Exception {
         // Create a dummy PasspointConfiguration.
         PasspointConfiguration config = new PasspointConfiguration();
-        config.homeSp = new HomeSP();
-        config.homeSp.fqdn = "test1";
-        config.credential = new Credential();
-        config.credential.userCredential = new Credential.UserCredential();
+        HomeSp homeSp = new HomeSp();
+        homeSp.setFqdn("test1");
+        config.setHomeSp(homeSp);
+        Credential credential = new Credential();
+        credential.setUserCredential(new Credential.UserCredential());
+        config.setCredential(credential);
         mProvider = createProvider(config);
         verifyInstalledConfig(config, true);
 
         // Modify the original configuration, the configuration maintained by the provider
         // should be unchanged.
-        config.homeSp.fqdn = "test2";
+        config.getHomeSp().setFqdn("test2");
         verifyInstalledConfig(config, false);
     }
 
@@ -194,17 +199,19 @@ public class PasspointProviderTest {
     public void verifyModifyRetrievedConfig() throws Exception {
         // Create a dummy PasspointConfiguration.
         PasspointConfiguration config = new PasspointConfiguration();
-        config.homeSp = new HomeSP();
-        config.homeSp.fqdn = "test1";
-        config.credential = new Credential();
-        config.credential.userCredential = new Credential.UserCredential();
+        HomeSp homeSp = new HomeSp();
+        homeSp.setFqdn("test1");
+        config.setHomeSp(homeSp);
+        Credential credential = new Credential();
+        credential.setUserCredential(new Credential.UserCredential());
+        config.setCredential(credential);
         mProvider = createProvider(config);
         verifyInstalledConfig(config, true);
 
         // Modify the retrieved configuration, verify the configuration maintained by the
         // provider should be unchanged.
         PasspointConfiguration retrievedConfig = mProvider.getConfig();
-        retrievedConfig.homeSp.fqdn = "test2";
+        retrievedConfig.getHomeSp().setFqdn("test2");
         verifyInstalledConfig(retrievedConfig, false);
     }
 
@@ -217,30 +224,32 @@ public class PasspointProviderTest {
     public void installCertsAndKeysSuccess() throws Exception {
         // Create a dummy configuration with certificate credential.
         PasspointConfiguration config = new PasspointConfiguration();
-        config.credential = new Credential();
-        config.credential.certCredential = new Credential.CertificateCredential();
-        config.credential.certCredential.certSha256FingerPrint =
-                MessageDigest.getInstance("SHA-256").digest(FakeKeys.CLIENT_CERT.getEncoded());
-        config.credential.caCertificate = FakeKeys.CA_CERT0;
-        config.credential.clientPrivateKey = FakeKeys.RSA_KEY1;
-        config.credential.clientCertificateChain = new X509Certificate[] {FakeKeys.CLIENT_CERT};
+        Credential credential = new Credential();
+        Credential.CertificateCredential certCredential = new Credential.CertificateCredential();
+        certCredential.setCertSha256Fingerprint(
+                MessageDigest.getInstance("SHA-256").digest(FakeKeys.CLIENT_CERT.getEncoded()));
+        credential.setCertCredential(certCredential);
+        credential.setCaCertificate(FakeKeys.CA_CERT0);
+        credential.setClientPrivateKey(FakeKeys.RSA_KEY1);
+        credential.setClientCertificateChain(new X509Certificate[] {FakeKeys.CLIENT_CERT});
+        config.setCredential(credential);
         mProvider = createProvider(config);
 
         // Install client certificate and key to the keystore successfully.
-        when(mKeyStore.putCertInKeyStore(CA_CERTIFICATE_ALIAS, FakeKeys.CA_CERT0))
+        when(mKeyStore.putCertInKeyStore(CA_CERTIFICATE_NAME, FakeKeys.CA_CERT0))
                 .thenReturn(true);
-        when(mKeyStore.putKeyInKeyStore(CLIENT_PRIVATE_KEY_ALIAS, FakeKeys.RSA_KEY1))
+        when(mKeyStore.putKeyInKeyStore(CLIENT_PRIVATE_KEY_NAME, FakeKeys.RSA_KEY1))
                 .thenReturn(true);
-        when(mKeyStore.putCertInKeyStore(CLIENT_CERTIFICATE_ALIAS, FakeKeys.CLIENT_CERT))
+        when(mKeyStore.putCertInKeyStore(CLIENT_CERTIFICATE_NAME, FakeKeys.CLIENT_CERT))
                 .thenReturn(true);
         assertTrue(mProvider.installCertsAndKeys());
 
         // Verify client certificate and key in the configuration gets cleared and aliases
         // are set correctly.
         PasspointConfiguration curConfig = mProvider.getConfig();
-        assertTrue(curConfig.credential.caCertificate == null);
-        assertTrue(curConfig.credential.clientPrivateKey == null);
-        assertTrue(curConfig.credential.clientCertificateChain == null);
+        assertTrue(curConfig.getCredential().getCaCertificate() == null);
+        assertTrue(curConfig.getCredential().getClientPrivateKey() == null);
+        assertTrue(curConfig.getCredential().getClientCertificateChain() == null);
         assertTrue(mProvider.getCaCertificateAlias().equals(CA_CERTIFICATE_ALIAS));
         assertTrue(mProvider.getClientPrivateKeyAlias().equals(CLIENT_PRIVATE_KEY_ALIAS));
         assertTrue(mProvider.getClientCertificateAlias().equals(CLIENT_CERTIFICATE_ALIAS));
@@ -255,30 +264,32 @@ public class PasspointProviderTest {
     public void installCertsAndKeysFailure() throws Exception {
         // Create a dummy configuration with certificate credential.
         PasspointConfiguration config = new PasspointConfiguration();
-        config.credential = new Credential();
-        config.credential.certCredential = new Credential.CertificateCredential();
-        config.credential.certCredential.certSha256FingerPrint =
-                MessageDigest.getInstance("SHA-256").digest(FakeKeys.CLIENT_CERT.getEncoded());
-        config.credential.caCertificate = FakeKeys.CA_CERT0;
-        config.credential.clientPrivateKey = FakeKeys.RSA_KEY1;
-        config.credential.clientCertificateChain = new X509Certificate[] {FakeKeys.CLIENT_CERT};
+        Credential credential = new Credential();
+        Credential.CertificateCredential certCredential = new Credential.CertificateCredential();
+        certCredential.setCertSha256Fingerprint(
+                MessageDigest.getInstance("SHA-256").digest(FakeKeys.CLIENT_CERT.getEncoded()));
+        credential.setCertCredential(certCredential);
+        credential.setCaCertificate(FakeKeys.CA_CERT0);
+        credential.setClientPrivateKey(FakeKeys.RSA_KEY1);
+        credential.setClientCertificateChain(new X509Certificate[] {FakeKeys.CLIENT_CERT});
+        config.setCredential(credential);
         mProvider = createProvider(config);
 
         // Failed to install client certificate to the keystore.
-        when(mKeyStore.putCertInKeyStore(CA_CERTIFICATE_ALIAS, FakeKeys.CA_CERT0))
+        when(mKeyStore.putCertInKeyStore(CA_CERTIFICATE_NAME, FakeKeys.CA_CERT0))
                 .thenReturn(true);
-        when(mKeyStore.putKeyInKeyStore(CLIENT_PRIVATE_KEY_ALIAS, FakeKeys.RSA_KEY1))
+        when(mKeyStore.putKeyInKeyStore(CLIENT_PRIVATE_KEY_NAME, FakeKeys.RSA_KEY1))
                 .thenReturn(true);
-        when(mKeyStore.putCertInKeyStore(CLIENT_CERTIFICATE_ALIAS, FakeKeys.CLIENT_CERT))
+        when(mKeyStore.putCertInKeyStore(CLIENT_CERTIFICATE_NAME, FakeKeys.CLIENT_CERT))
                 .thenReturn(false);
         assertFalse(mProvider.installCertsAndKeys());
 
         // Verify certificates and key in the configuration are not cleared and aliases
         // are not set.
         PasspointConfiguration curConfig = mProvider.getConfig();
-        assertTrue(curConfig.credential.caCertificate != null);
-        assertTrue(curConfig.credential.clientCertificateChain != null);
-        assertTrue(curConfig.credential.clientPrivateKey != null);
+        assertTrue(curConfig.getCredential().getCaCertificate() != null);
+        assertTrue(curConfig.getCredential().getClientCertificateChain() != null);
+        assertTrue(curConfig.getCredential().getClientPrivateKey() != null);
         assertTrue(mProvider.getCaCertificateAlias() == null);
         assertTrue(mProvider.getClientPrivateKeyAlias() == null);
         assertTrue(mProvider.getClientCertificateAlias() == null);
@@ -291,21 +302,23 @@ public class PasspointProviderTest {
     public void uninstallCertsAndKeys() throws Exception {
         // Create a dummy configuration with certificate credential.
         PasspointConfiguration config = new PasspointConfiguration();
-        config.credential = new Credential();
-        config.credential.certCredential = new Credential.CertificateCredential();
-        config.credential.certCredential.certSha256FingerPrint =
-                MessageDigest.getInstance("SHA-256").digest(FakeKeys.CLIENT_CERT.getEncoded());
-        config.credential.caCertificate = FakeKeys.CA_CERT0;
-        config.credential.clientPrivateKey = FakeKeys.RSA_KEY1;
-        config.credential.clientCertificateChain = new X509Certificate[] {FakeKeys.CLIENT_CERT};
+        Credential credential = new Credential();
+        Credential.CertificateCredential certCredential = new Credential.CertificateCredential();
+        certCredential.setCertSha256Fingerprint(
+                MessageDigest.getInstance("SHA-256").digest(FakeKeys.CLIENT_CERT.getEncoded()));
+        credential.setCertCredential(certCredential);
+        credential.setCaCertificate(FakeKeys.CA_CERT0);
+        credential.setClientPrivateKey(FakeKeys.RSA_KEY1);
+        credential.setClientCertificateChain(new X509Certificate[] {FakeKeys.CLIENT_CERT});
+        config.setCredential(credential);
         mProvider = createProvider(config);
 
         // Install client certificate and key to the keystore successfully.
-        when(mKeyStore.putCertInKeyStore(CA_CERTIFICATE_ALIAS, FakeKeys.CA_CERT0))
+        when(mKeyStore.putCertInKeyStore(CA_CERTIFICATE_NAME, FakeKeys.CA_CERT0))
                 .thenReturn(true);
-        when(mKeyStore.putKeyInKeyStore(CLIENT_PRIVATE_KEY_ALIAS, FakeKeys.RSA_KEY1))
+        when(mKeyStore.putKeyInKeyStore(CLIENT_PRIVATE_KEY_NAME, FakeKeys.RSA_KEY1))
                 .thenReturn(true);
-        when(mKeyStore.putCertInKeyStore(CLIENT_CERTIFICATE_ALIAS, FakeKeys.CLIENT_CERT))
+        when(mKeyStore.putCertInKeyStore(CLIENT_CERTIFICATE_NAME, FakeKeys.CLIENT_CERT))
                 .thenReturn(true);
         assertTrue(mProvider.installCertsAndKeys());
         assertTrue(mProvider.getCaCertificateAlias().equals(CA_CERTIFICATE_ALIAS));
@@ -314,9 +327,9 @@ public class PasspointProviderTest {
 
         // Uninstall certificates and key from the keystore.
         mProvider.uninstallCertsAndKeys();
-        verify(mKeyStore).removeEntryFromKeyStore(CA_CERTIFICATE_ALIAS);
-        verify(mKeyStore).removeEntryFromKeyStore(CLIENT_CERTIFICATE_ALIAS);
-        verify(mKeyStore).removeEntryFromKeyStore(CLIENT_PRIVATE_KEY_ALIAS);
+        verify(mKeyStore).removeEntryFromKeyStore(CA_CERTIFICATE_NAME);
+        verify(mKeyStore).removeEntryFromKeyStore(CLIENT_CERTIFICATE_NAME);
+        verify(mKeyStore).removeEntryFromKeyStore(CLIENT_PRIVATE_KEY_NAME);
         assertTrue(mProvider.getCaCertificateAlias() == null);
         assertTrue(mProvider.getClientPrivateKeyAlias() == null);
         assertTrue(mProvider.getClientCertificateAlias() == null);
@@ -334,11 +347,14 @@ public class PasspointProviderTest {
 
         // Setup test provider.
         PasspointConfiguration config = new PasspointConfiguration();
-        config.homeSp = new HomeSP();
-        config.homeSp.fqdn = testDomain;
-        config.credential = new Credential();
-        config.credential.userCredential = new Credential.UserCredential();
-        config.credential.userCredential.nonEapInnerMethod = "MS-CHAP-V2";
+        HomeSp homeSp = new HomeSp();
+        homeSp.setFqdn(testDomain);
+        config.setHomeSp(homeSp);
+        Credential credential = new Credential();
+        Credential.UserCredential userCredential = new Credential.UserCredential();
+        userCredential.setNonEapInnerMethod(Credential.UserCredential.AUTH_METHOD_MSCHAPV2);
+        credential.setUserCredential(userCredential);
+        config.setCredential(credential);
         mProvider = createProvider(config);
 
         // Setup ANQP elements.
@@ -362,12 +378,15 @@ public class PasspointProviderTest {
 
         // Setup test provider.
         PasspointConfiguration config = new PasspointConfiguration();
-        config.homeSp = new HomeSP();
-        config.homeSp.fqdn = testDomain;
-        config.credential = new Credential();
-        config.credential.realm = testRealm;
-        config.credential.userCredential = new Credential.UserCredential();
-        config.credential.userCredential.nonEapInnerMethod = "MS-CHAP-V2";
+        HomeSp homeSp = new HomeSp();
+        homeSp.setFqdn(testDomain);
+        config.setHomeSp(homeSp);
+        Credential credential = new Credential();
+        credential.setRealm(testRealm);
+        Credential.UserCredential userCredential = new Credential.UserCredential();
+        userCredential.setNonEapInnerMethod(Credential.UserCredential.AUTH_METHOD_MSCHAPV2);
+        credential.setUserCredential(userCredential);
+        config.setCredential(credential);
         mProvider = createProvider(config);
 
         // Setup Domain Name ANQP element.
@@ -395,12 +414,15 @@ public class PasspointProviderTest {
 
         // Setup test provider.
         PasspointConfiguration config = new PasspointConfiguration();
-        config.homeSp = new HomeSP();
-        config.homeSp.fqdn = testDomain;
-        config.credential = new Credential();
-        config.credential.realm = testRealm;
-        config.credential.userCredential = new Credential.UserCredential();
-        config.credential.userCredential.nonEapInnerMethod = "MS-CHAP-V2";
+        HomeSp homeSp = new HomeSp();
+        homeSp.setFqdn(testDomain);
+        config.setHomeSp(homeSp);
+        Credential credential = new Credential();
+        credential.setRealm(testRealm);
+        Credential.UserCredential userCredential = new Credential.UserCredential();
+        userCredential.setNonEapInnerMethod(Credential.UserCredential.AUTH_METHOD_MSCHAPV2);
+        credential.setUserCredential(userCredential);
+        config.setCredential(credential);
         mProvider = createProvider(config);
 
         // Setup Domain Name ANQP element.
@@ -425,10 +447,12 @@ public class PasspointProviderTest {
 
         // Setup test provider.
         PasspointConfiguration config = new PasspointConfiguration();
-        config.homeSp = new HomeSP();
-        config.credential = new Credential();
-        config.credential.simCredential = new Credential.SimCredential();
-        config.credential.simCredential.imsi = testImsi;
+        config.setHomeSp(new HomeSp());
+        Credential credential = new Credential();
+        Credential.SimCredential simCredential = new Credential.SimCredential();
+        simCredential.setImsi(testImsi);
+        credential.setSimCredential(simCredential);
+        config.setCredential(credential);
         when(mSimAccessor.getMatchingImsis(new IMSIParameter(testImsi, false)))
                 .thenReturn(Arrays.asList(new String[] {testImsi}));
         mProvider = createProvider(config);
@@ -454,11 +478,14 @@ public class PasspointProviderTest {
 
         // Setup test provider.
         PasspointConfiguration config = new PasspointConfiguration();
-        config.homeSp = new HomeSP();
-        config.homeSp.roamingConsortiumOIs = providerRCOIs;
-        config.credential = new Credential();
-        config.credential.userCredential = new Credential.UserCredential();
-        config.credential.userCredential.nonEapInnerMethod = "MS-CHAP-V2";
+        HomeSp homeSp = new HomeSp();
+        homeSp.setRoamingConsortiumOis(providerRCOIs);
+        config.setHomeSp(homeSp);
+        Credential credential = new Credential();
+        Credential.UserCredential userCredential = new Credential.UserCredential();
+        userCredential.setNonEapInnerMethod(Credential.UserCredential.AUTH_METHOD_MSCHAPV2);
+        credential.setUserCredential(userCredential);
+        config.setCredential(credential);
         mProvider = createProvider(config);
 
         // Setup Roaming Consortium ANQP element.
@@ -481,10 +508,12 @@ public class PasspointProviderTest {
 
         // Setup test provider.
         PasspointConfiguration config = new PasspointConfiguration();
-        config.homeSp = new HomeSP();
-        config.credential = new Credential();
-        config.credential.simCredential = new Credential.SimCredential();
-        config.credential.simCredential.imsi = testImsi;
+        config.setHomeSp(new HomeSp());
+        Credential credential = new Credential();
+        Credential.SimCredential simCredential = new Credential.SimCredential();
+        simCredential.setImsi(testImsi);
+        credential.setSimCredential(simCredential);
+        config.setCredential(credential);
         when(mSimAccessor.getMatchingImsis(new IMSIParameter(testImsi, false)))
                 .thenReturn(Arrays.asList(new String[] {testImsi}));
         mProvider = createProvider(config);
@@ -509,11 +538,13 @@ public class PasspointProviderTest {
 
         // Setup test provider.
         PasspointConfiguration config = new PasspointConfiguration();
-        config.homeSp = new HomeSP();
-        config.credential = new Credential();
-        config.credential.realm = testRealm;
-        config.credential.userCredential = new Credential.UserCredential();
-        config.credential.userCredential.nonEapInnerMethod = "MS-CHAP-V2";
+        config.setHomeSp(new HomeSp());
+        Credential credential = new Credential();
+        credential.setRealm(testRealm);
+        Credential.UserCredential userCredential = new Credential.UserCredential();
+        userCredential.setNonEapInnerMethod(Credential.UserCredential.AUTH_METHOD_MSCHAPV2);
+        credential.setUserCredential(userCredential);
+        config.setCredential(credential);
         mProvider = createProvider(config);
 
         // Setup NAI Realm ANQP element.
@@ -542,12 +573,15 @@ public class PasspointProviderTest {
 
         // Setup test provider.
         PasspointConfiguration config = new PasspointConfiguration();
-        config.homeSp = new HomeSP();
-        config.homeSp.fqdn = testDomain;
-        config.homeSp.roamingConsortiumOIs = providerRCOIs;
-        config.credential = new Credential();
-        config.credential.simCredential = new Credential.SimCredential();
-        config.credential.simCredential.imsi = testImsi;
+        HomeSp homeSp = new HomeSp();
+        homeSp.setFqdn(testDomain);
+        homeSp.setRoamingConsortiumOis(providerRCOIs);
+        config.setHomeSp(homeSp);
+        Credential credential = new Credential();
+        Credential.SimCredential simCredential = new Credential.SimCredential();
+        simCredential.setImsi(testImsi);
+        credential.setSimCredential(simCredential);
+        config.setCredential(credential);
         when(mSimAccessor.getMatchingImsis(new IMSIParameter(testImsi, false)))
                 .thenReturn(Arrays.asList(new String[] {testImsi}));
         mProvider = createProvider(config);
@@ -585,21 +619,24 @@ public class PasspointProviderTest {
 
         // Create provider.
         PasspointConfiguration config = new PasspointConfiguration();
-        config.homeSp = new HomeSP();
-        config.homeSp.fqdn = fqdn;
-        config.homeSp.friendlyName = friendlyName;
-        config.homeSp.roamingConsortiumOIs = rcOIs;
-        config.credential = new Credential();
-        config.credential.realm = realm;
-        config.credential.userCredential = new Credential.UserCredential();
-        config.credential.userCredential.username = username;
-        config.credential.userCredential.password = encodedPasswordStr;
-        config.credential.userCredential.nonEapInnerMethod = "MS-CHAP-V2";
-        config.credential.caCertificate = FakeKeys.CA_CERT0;
+        HomeSp homeSp = new HomeSp();
+        homeSp.setFqdn(fqdn);
+        homeSp.setFriendlyName(friendlyName);
+        homeSp.setRoamingConsortiumOis(rcOIs);
+        config.setHomeSp(homeSp);
+        Credential credential = new Credential();
+        credential.setRealm(realm);
+        Credential.UserCredential userCredential = new Credential.UserCredential();
+        userCredential.setUsername(username);
+        userCredential.setPassword(encodedPasswordStr);
+        userCredential.setNonEapInnerMethod(Credential.UserCredential.AUTH_METHOD_MSCHAPV2);
+        credential.setUserCredential(userCredential);
+        credential.setCaCertificate(FakeKeys.CA_CERT0);
+        config.setCredential(credential);
         mProvider = createProvider(config);
 
         // Install certificate.
-        when(mKeyStore.putCertInKeyStore(CA_CERTIFICATE_ALIAS, FakeKeys.CA_CERT0))
+        when(mKeyStore.putCertInKeyStore(CA_CERTIFICATE_NAME, FakeKeys.CA_CERT0))
                 .thenReturn(true);
         assertTrue(mProvider.installCertsAndKeys());
 
@@ -614,12 +651,13 @@ public class PasspointProviderTest {
         assertTrue(wifiConfig.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.WPA_EAP));
         assertTrue(wifiConfig.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.IEEE8021X));
         assertEquals(realm, wifiEnterpriseConfig.getRealm());
+        assertEquals(fqdn, wifiEnterpriseConfig.getDomainSuffixMatch());
         assertEquals("anonymous@" + realm, wifiEnterpriseConfig.getAnonymousIdentity());
         assertEquals(WifiEnterpriseConfig.Eap.TTLS, wifiEnterpriseConfig.getEapMethod());
         assertEquals(WifiEnterpriseConfig.Phase2.MSCHAPV2, wifiEnterpriseConfig.getPhase2Method());
         assertEquals(username, wifiEnterpriseConfig.getIdentity());
         assertEquals(password, wifiEnterpriseConfig.getPassword());
-        assertEquals(ALIAS_SUFFIX, wifiEnterpriseConfig.getCaCertificateAlias());
+        assertEquals(CA_CERTIFICATE_ALIAS, wifiEnterpriseConfig.getCaCertificateAlias());
     }
 
     /**
@@ -638,26 +676,29 @@ public class PasspointProviderTest {
 
         // Create provider.
         PasspointConfiguration config = new PasspointConfiguration();
-        config.homeSp = new HomeSP();
-        config.homeSp.fqdn = fqdn;
-        config.homeSp.friendlyName = friendlyName;
-        config.homeSp.roamingConsortiumOIs = rcOIs;
-        config.credential = new Credential();
-        config.credential.realm = realm;
-        config.credential.certCredential = new Credential.CertificateCredential();
-        config.credential.certCredential.certSha256FingerPrint =
-                MessageDigest.getInstance("SHA-256").digest(FakeKeys.CLIENT_CERT.getEncoded());
-        config.credential.caCertificate = FakeKeys.CA_CERT0;
-        config.credential.clientPrivateKey = FakeKeys.RSA_KEY1;
-        config.credential.clientCertificateChain = new X509Certificate[] {FakeKeys.CLIENT_CERT};
+        HomeSp homeSp = new HomeSp();
+        homeSp.setFqdn(fqdn);
+        homeSp.setFriendlyName(friendlyName);
+        homeSp.setRoamingConsortiumOis(rcOIs);
+        config.setHomeSp(homeSp);
+        Credential credential = new Credential();
+        credential.setRealm(realm);
+        Credential.CertificateCredential certCredential = new Credential.CertificateCredential();
+        certCredential.setCertSha256Fingerprint(
+                MessageDigest.getInstance("SHA-256").digest(FakeKeys.CLIENT_CERT.getEncoded()));
+        credential.setCertCredential(certCredential);
+        credential.setCaCertificate(FakeKeys.CA_CERT0);
+        credential.setClientPrivateKey(FakeKeys.RSA_KEY1);
+        credential.setClientCertificateChain(new X509Certificate[] {FakeKeys.CLIENT_CERT});
+        config.setCredential(credential);
         mProvider = createProvider(config);
 
         // Install certificate.
-        when(mKeyStore.putCertInKeyStore(CA_CERTIFICATE_ALIAS, FakeKeys.CA_CERT0))
+        when(mKeyStore.putCertInKeyStore(CA_CERTIFICATE_NAME, FakeKeys.CA_CERT0))
                 .thenReturn(true);
-        when(mKeyStore.putKeyInKeyStore(CLIENT_PRIVATE_KEY_ALIAS, FakeKeys.RSA_KEY1))
+        when(mKeyStore.putKeyInKeyStore(CLIENT_PRIVATE_KEY_NAME, FakeKeys.RSA_KEY1))
                 .thenReturn(true);
-        when(mKeyStore.putCertInKeyStore(CLIENT_CERTIFICATE_ALIAS, FakeKeys.CLIENT_CERT))
+        when(mKeyStore.putCertInKeyStore(CLIENT_CERTIFICATE_NAME, FakeKeys.CLIENT_CERT))
                 .thenReturn(true);
         assertTrue(mProvider.installCertsAndKeys());
 
@@ -672,10 +713,11 @@ public class PasspointProviderTest {
         assertTrue(wifiConfig.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.WPA_EAP));
         assertTrue(wifiConfig.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.IEEE8021X));
         assertEquals(realm, wifiEnterpriseConfig.getRealm());
+        assertEquals(fqdn, wifiEnterpriseConfig.getDomainSuffixMatch());
         assertEquals("anonymous@" + realm, wifiEnterpriseConfig.getAnonymousIdentity());
         assertEquals(WifiEnterpriseConfig.Eap.TLS, wifiEnterpriseConfig.getEapMethod());
-        assertEquals(ALIAS_SUFFIX, wifiEnterpriseConfig.getClientCertificateAlias());
-        assertEquals(ALIAS_SUFFIX, wifiEnterpriseConfig.getCaCertificateAlias());
+        assertEquals(CLIENT_CERTIFICATE_ALIAS, wifiEnterpriseConfig.getClientCertificateAlias());
+        assertEquals(CA_CERTIFICATE_ALIAS, wifiEnterpriseConfig.getCaCertificateAlias());
     }
 
     /**
@@ -695,15 +737,18 @@ public class PasspointProviderTest {
 
         // Create provider.
         PasspointConfiguration config = new PasspointConfiguration();
-        config.homeSp = new HomeSP();
-        config.homeSp.fqdn = fqdn;
-        config.homeSp.friendlyName = friendlyName;
-        config.homeSp.roamingConsortiumOIs = rcOIs;
-        config.credential = new Credential();
-        config.credential.realm = realm;
-        config.credential.simCredential = new Credential.SimCredential();
-        config.credential.simCredential.imsi = imsi;
-        config.credential.simCredential.eapType = EAPConstants.EAP_SIM;
+        HomeSp homeSp = new HomeSp();
+        homeSp.setFqdn(fqdn);
+        homeSp.setFriendlyName(friendlyName);
+        homeSp.setRoamingConsortiumOis(rcOIs);
+        config.setHomeSp(homeSp);
+        Credential credential = new Credential();
+        credential.setRealm(realm);
+        Credential.SimCredential simCredential = new Credential.SimCredential();
+        simCredential.setImsi(imsi);
+        simCredential.setEapType(EAPConstants.EAP_SIM);
+        credential.setSimCredential(simCredential);
+        config.setCredential(credential);
         mProvider = createProvider(config);
 
         // Retrieve the WifiConfiguration associated with the provider, and verify the content of
@@ -717,7 +762,228 @@ public class PasspointProviderTest {
         assertTrue(wifiConfig.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.WPA_EAP));
         assertTrue(wifiConfig.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.IEEE8021X));
         assertEquals(realm, wifiEnterpriseConfig.getRealm());
+        assertEquals(fqdn, wifiEnterpriseConfig.getDomainSuffixMatch());
         assertEquals(WifiEnterpriseConfig.Eap.SIM, wifiEnterpriseConfig.getEapMethod());
         assertEquals(imsi, wifiEnterpriseConfig.getPlmn());
+    }
+
+    /**
+     * Verify that an expected {@link PasspointConfiguration} will be returned when converting
+     * from a {@link WifiConfiguration} containing an user credential.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void convertFromWifiConfigWithUserCredential() throws Exception {
+        // Test data.
+        String fqdn = "test.com";
+        String friendlyName = "Friendly Name";
+        long[] rcOIs = new long[] {0x1234L, 0x2345L};
+        String realm = "realm.com";
+        String username = "username";
+        String password = "password";
+        byte[] base64EncodedPw =
+                Base64.encode(password.getBytes(StandardCharsets.UTF_8), Base64.DEFAULT);
+        String encodedPasswordStr = new String(base64EncodedPw, StandardCharsets.UTF_8);
+
+        // Setup WifiConfiguration for legacy Passpoint configuraiton.
+        WifiConfiguration wifiConfig = new WifiConfiguration();
+        wifiConfig.FQDN = fqdn;
+        wifiConfig.providerFriendlyName = friendlyName;
+        wifiConfig.roamingConsortiumIds = rcOIs;
+        wifiConfig.enterpriseConfig.setIdentity(username);
+        wifiConfig.enterpriseConfig.setPassword(password);
+        wifiConfig.enterpriseConfig.setRealm(realm);
+        wifiConfig.enterpriseConfig.setEapMethod(WifiEnterpriseConfig.Eap.TTLS);
+        wifiConfig.enterpriseConfig.setPhase2Method(WifiEnterpriseConfig.Phase2.PAP);
+
+        // Setup expected {@link PasspointConfiguration}
+        PasspointConfiguration passpointConfig = new PasspointConfiguration();
+        HomeSp homeSp = new HomeSp();
+        homeSp.setFqdn(fqdn);
+        homeSp.setFriendlyName(friendlyName);
+        homeSp.setRoamingConsortiumOis(rcOIs);
+        passpointConfig.setHomeSp(homeSp);
+        Credential credential = new Credential();
+        Credential.UserCredential userCredential = new Credential.UserCredential();
+        userCredential.setUsername(username);
+        userCredential.setPassword(encodedPasswordStr);
+        userCredential.setEapType(EAPConstants.EAP_TTLS);
+        userCredential.setNonEapInnerMethod("PAP");
+        credential.setUserCredential(userCredential);
+        credential.setRealm(realm);
+        passpointConfig.setCredential(credential);
+
+        assertEquals(passpointConfig, PasspointProvider.convertFromWifiConfig(wifiConfig));
+    }
+
+    /**
+     * Verify that an expected {@link PasspointConfiguration} will be returned when converting
+     * from a {@link WifiConfiguration} containing a SIM credential.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void convertFromWifiConfigWithSimCredential() throws Exception {
+        // Test data.
+        String fqdn = "test.com";
+        String friendlyName = "Friendly Name";
+        long[] rcOIs = new long[] {0x1234L, 0x2345L};
+        String realm = "realm.com";
+        String imsi = "1234";
+
+        // Setup WifiConfiguration for legacy Passpoint configuraiton.
+        WifiConfiguration wifiConfig = new WifiConfiguration();
+        wifiConfig.FQDN = fqdn;
+        wifiConfig.providerFriendlyName = friendlyName;
+        wifiConfig.roamingConsortiumIds = rcOIs;
+        wifiConfig.enterpriseConfig.setRealm(realm);
+        wifiConfig.enterpriseConfig.setEapMethod(WifiEnterpriseConfig.Eap.SIM);
+        wifiConfig.enterpriseConfig.setPlmn(imsi);
+
+        // Setup expected {@link PasspointConfiguration}
+        PasspointConfiguration passpointConfig = new PasspointConfiguration();
+        HomeSp homeSp = new HomeSp();
+        homeSp.setFqdn(fqdn);
+        homeSp.setFriendlyName(friendlyName);
+        homeSp.setRoamingConsortiumOis(rcOIs);
+        passpointConfig.setHomeSp(homeSp);
+        Credential credential = new Credential();
+        Credential.SimCredential simCredential = new Credential.SimCredential();
+        simCredential.setEapType(EAPConstants.EAP_SIM);
+        simCredential.setImsi(imsi);
+        credential.setSimCredential(simCredential);
+        credential.setRealm(realm);
+        passpointConfig.setCredential(credential);
+
+        assertEquals(passpointConfig, PasspointProvider.convertFromWifiConfig(wifiConfig));
+    }
+
+    /**
+     * Verify that an expected {@link PasspointConfiguration} will be returned when converting
+     * from a {@link WifiConfiguration} containing a certificate credential.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void convertFromWifiConfigWithCertCredential() throws Exception {
+        // Test data.
+        String fqdn = "test.com";
+        String friendlyName = "Friendly Name";
+        long[] rcOIs = new long[] {0x1234L, 0x2345L};
+        String realm = "realm.com";
+
+        // Setup WifiConfiguration for legacy Passpoint configuraiton.
+        WifiConfiguration wifiConfig = new WifiConfiguration();
+        wifiConfig.FQDN = fqdn;
+        wifiConfig.providerFriendlyName = friendlyName;
+        wifiConfig.roamingConsortiumIds = rcOIs;
+        wifiConfig.enterpriseConfig.setRealm(realm);
+        wifiConfig.enterpriseConfig.setEapMethod(WifiEnterpriseConfig.Eap.TLS);
+
+        // Setup expected {@link PasspointConfiguration}
+        PasspointConfiguration passpointConfig = new PasspointConfiguration();
+        HomeSp homeSp = new HomeSp();
+        homeSp.setFqdn(fqdn);
+        homeSp.setFriendlyName(friendlyName);
+        homeSp.setRoamingConsortiumOis(rcOIs);
+        passpointConfig.setHomeSp(homeSp);
+        Credential credential = new Credential();
+        Credential.CertificateCredential certCredential = new Credential.CertificateCredential();
+        certCredential.setCertType(Credential.CertificateCredential.CERT_TYPE_X509V3);
+        credential.setCertCredential(certCredential);
+        credential.setRealm(realm);
+        passpointConfig.setCredential(credential);
+
+        assertEquals(passpointConfig, PasspointProvider.convertFromWifiConfig(wifiConfig));
+    }
+
+    /**
+     * Verify that {@link PasspointProvider#isSimCredential} will return true for provider that's
+     * backed by a SIM credential.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void providerBackedBySimCredential() throws Exception {
+        // Test data.
+        String fqdn = "test.com";
+        String friendlyName = "Friendly Name";
+        long[] rcOIs = new long[] {0x1234L, 0x2345L};
+        String realm = "realm.com";
+        String imsi = "1234*";
+
+        // Create provider with SIM credential.
+        PasspointConfiguration config = new PasspointConfiguration();
+        HomeSp homeSp = new HomeSp();
+        homeSp.setFqdn(fqdn);
+        homeSp.setFriendlyName(friendlyName);
+        homeSp.setRoamingConsortiumOis(rcOIs);
+        config.setHomeSp(homeSp);
+        Credential credential = new Credential();
+        credential.setRealm(realm);
+        Credential.SimCredential simCredential = new Credential.SimCredential();
+        simCredential.setImsi(imsi);
+        simCredential.setEapType(EAPConstants.EAP_SIM);
+        credential.setSimCredential(simCredential);
+        config.setCredential(credential);
+        mProvider = createProvider(config);
+
+        assertTrue(mProvider.isSimCredential());
+    }
+
+    /**
+     * Verify that {@link PasspointProvider#isSimCredential} will return false for provider that's
+     * not backed by a SIM credential.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void providerNotBackedBySimCredential() throws Exception {
+        // Test data.
+        String fqdn = "test.com";
+        String friendlyName = "Friendly Name";
+        long[] rcOIs = new long[] {0x1234L, 0x2345L};
+        String realm = "realm.com";
+
+        // Create provider with certificate credential.
+        PasspointConfiguration config = new PasspointConfiguration();
+        HomeSp homeSp = new HomeSp();
+        homeSp.setFqdn(fqdn);
+        homeSp.setFriendlyName(friendlyName);
+        homeSp.setRoamingConsortiumOis(rcOIs);
+        config.setHomeSp(homeSp);
+        Credential credential = new Credential();
+        Credential.CertificateCredential certCredential = new Credential.CertificateCredential();
+        certCredential.setCertType(Credential.CertificateCredential.CERT_TYPE_X509V3);
+        credential.setCertCredential(certCredential);
+        credential.setRealm(realm);
+        config.setCredential(credential);
+        mProvider = createProvider(config);
+
+        assertFalse(mProvider.isSimCredential());
+    }
+
+    /**
+     * Verify that hasEverConnected flag is set correctly using
+     * {@link PasspointProvider#setHasEverConnected}.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void setHasEverConnected() throws Exception {
+        PasspointConfiguration config = new PasspointConfiguration();
+        HomeSp homeSp = new HomeSp();
+        homeSp.setFqdn("test1");
+        config.setHomeSp(homeSp);
+        Credential credential = new Credential();
+        credential.setUserCredential(new Credential.UserCredential());
+        config.setCredential(credential);
+        mProvider = createProvider(config);
+        verifyInstalledConfig(config, true);
+
+        assertFalse(mProvider.getHasEverConnected());
+        mProvider.setHasEverConnected(true);
+        assertTrue(mProvider.getHasEverConnected());
     }
 }

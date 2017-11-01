@@ -17,9 +17,10 @@
 package com.android.server.wifi.scanner;
 
 import static com.android.server.wifi.ScanTestUtil.*;
+import static com.android.server.wifi.scanner.WifiScanningServiceImpl.WifiSingleScanStateMachine
+        .CACHED_SCAN_RESULTS_MAX_AGE_IN_MILLIS;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import android.app.test.MockAnswerUtil.AnswerWithArguments;
@@ -34,7 +35,6 @@ import android.net.wifi.WifiScanner;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.os.RemoteException;
 import android.os.UserHandle;
@@ -49,12 +49,15 @@ import com.android.internal.util.Protocol;
 import com.android.internal.util.test.BidirectionalAsyncChannel;
 import com.android.server.wifi.Clock;
 import com.android.server.wifi.FakeWifiLog;
+import com.android.server.wifi.FrameworkFacade;
 import com.android.server.wifi.ScanResults;
 import com.android.server.wifi.TestUtil;
 import com.android.server.wifi.WifiInjector;
 import com.android.server.wifi.WifiMetrics;
-import com.android.server.wifi.WifiMetricsProto;
 import com.android.server.wifi.WifiNative;
+import com.android.server.wifi.aware.WifiAwareMetrics;
+import com.android.server.wifi.nano.WifiMetricsProto;
+import com.android.server.wifi.util.WifiAsyncChannel;
 
 import org.junit.After;
 import org.junit.Before;
@@ -64,7 +67,7 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-import org.mockito.internal.matchers.CapturingMatcher;
+import org.mockito.compat.CapturingMatcher;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -90,6 +93,7 @@ public class WifiScanningServiceTest {
     @Mock WifiScannerImpl.WifiScannerImplFactory mWifiScannerImplFactory;
     @Mock IBatteryStats mBatteryStats;
     @Mock WifiInjector mWifiInjector;
+    @Mock FrameworkFacade mFrameworkFacade;
     @Mock Clock mClock;
     @Spy FakeWifiLog mLog;
     WifiMetrics mWifiMetrics;
@@ -104,7 +108,6 @@ public class WifiScanningServiceTest {
         mAlarmManager = new TestAlarmManager();
         when(mContext.getSystemService(Context.ALARM_SERVICE))
                 .thenReturn(mAlarmManager.getAlarmManager());
-        mWifiMetrics = new WifiMetrics(mClock);
 
         ChannelHelper channelHelper = new PresetKnownBandsChannelHelper(
                 new int[]{2400, 2450},
@@ -112,12 +115,18 @@ public class WifiScanningServiceTest {
                 new int[]{5600, 5650, 5660});
 
         mLooper = new TestLooper();
+        mWifiMetrics = new WifiMetrics(mClock, mLooper.getLooper(), new WifiAwareMetrics(mClock));
         when(mWifiScannerImplFactory
-                .create(any(Context.class), any(Looper.class), any(Clock.class)))
+                .create(any(), any(), any()))
                 .thenReturn(mWifiScannerImpl);
         when(mWifiScannerImpl.getChannelHelper()).thenReturn(channelHelper);
         when(mWifiInjector.getWifiMetrics()).thenReturn(mWifiMetrics);
         when(mWifiInjector.makeLog(anyString())).thenReturn(mLog);
+        WifiAsyncChannel mWifiAsyncChannel = new WifiAsyncChannel("ScanningServiceTest");
+        mWifiAsyncChannel.setWifiLog(mLog);
+        when(mFrameworkFacade.makeWifiAsyncChannel(anyString())).thenReturn(mWifiAsyncChannel);
+        when(mWifiInjector.getFrameworkFacade()).thenReturn(mFrameworkFacade);
+        when(mWifiInjector.getClock()).thenReturn(mClock);
         mWifiScanningServiceImpl = new WifiScanningServiceImpl(mContext, mLooper.getLooper(),
                 mWifiScannerImplFactory, mBatteryStats, mWifiInjector);
     }
@@ -156,7 +165,7 @@ public class WifiScanningServiceTest {
     private static Message verifyHandleMessageAndGetMessage(InOrder order, Handler handler,
             final int what) {
         CapturingMatcher<Message> messageMatcher = new CapturingMatcher<Message>() {
-            public boolean matches(Object argument) {
+            public boolean matchesObject(Object argument) {
                 Message message = (Message) argument;
                 return message.what == what;
             }
@@ -350,8 +359,6 @@ public class WifiScanningServiceTest {
                             capabilities.max_ap_cache_per_scan = MAX_AP_PER_SCAN;
                             capabilities.max_rssi_sample_size = 8;
                             capabilities.max_scan_reporting_threshold = 10;
-                            capabilities.max_hotlist_bssids = 0;
-                            capabilities.max_significant_wifi_change_aps = 0;
                             return true;
                         }
                     });
@@ -403,6 +410,7 @@ public class WifiScanningServiceTest {
     @Test
     public void startService() throws Exception {
         mWifiScanningServiceImpl.startService();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
         verifyNoMoreInteractions(mWifiScannerImplFactory);
 
         Handler handler = mock(Handler.class);
@@ -416,7 +424,7 @@ public class WifiScanningServiceTest {
     @Test
     public void disconnectClientBeforeWifiEnabled() throws Exception {
         mWifiScanningServiceImpl.startService();
-
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
         BidirectionalAsyncChannel controlChannel = connectChannel(mock(Handler.class));
         mLooper.dispatchAll();
 
@@ -427,8 +435,9 @@ public class WifiScanningServiceTest {
     @Test
     public void loadDriver() throws Exception {
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
         verify(mWifiScannerImplFactory, times(1))
-                .create(any(Context.class), any(Looper.class), any(Clock.class));
+                .create(any(), any(), any());
 
         Handler handler = mock(Handler.class);
         BidirectionalAsyncChannel controlChannel = connectChannel(handler);
@@ -444,7 +453,7 @@ public class WifiScanningServiceTest {
     @Test
     public void disconnectClientAfterStartingWifi() throws Exception {
         mWifiScanningServiceImpl.startService();
-
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
         BidirectionalAsyncChannel controlChannel = connectChannel(mock(Handler.class));
         mLooper.dispatchAll();
 
@@ -457,6 +466,7 @@ public class WifiScanningServiceTest {
     @Test
     public void connectAndDisconnectClientAfterStartingWifi() throws Exception {
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
 
         BidirectionalAsyncChannel controlChannel = connectChannel(mock(Handler.class));
         mLooper.dispatchAll();
@@ -467,6 +477,7 @@ public class WifiScanningServiceTest {
     @Test
     public void sendInvalidCommand() throws Exception {
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
 
         Handler handler = mock(Handler.class);
         BidirectionalAsyncChannel controlChannel = connectChannel(handler);
@@ -480,6 +491,8 @@ public class WifiScanningServiceTest {
     @Test
     public void rejectBackgroundScanRequestWhenHalReturnsInvalidCapabilities() throws Exception {
         mWifiScanningServiceImpl.startService();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
+
         setupAndLoadDriver(0);
 
         Handler handler = mock(Handler.class);
@@ -495,6 +508,7 @@ public class WifiScanningServiceTest {
         int requestId = 12;
         WorkSource workSource = new WorkSource(2292);
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
 
         Handler handler = mock(Handler.class);
         BidirectionalAsyncChannel controlChannel = connectChannel(handler);
@@ -517,7 +531,11 @@ public class WifiScanningServiceTest {
         mLooper.dispatchAll();
         verifyScanResultsReceived(order, handler, requestId, results.getScanData());
         verifySingleScanCompletedReceived(order, handler, requestId);
-        verify(mContext).sendBroadcastAsUser(any(Intent.class), eq(UserHandle.ALL));
+        if (results.getScanData().isAllChannelsScanned()) {
+            verify(mContext).sendBroadcastAsUser(any(Intent.class), eq(UserHandle.ALL));
+        } else {
+            verify(mContext, never()).sendBroadcastAsUser(any(Intent.class), eq(UserHandle.ALL));
+        }
         verifyNoMoreInteractions(handler);
         verify(mBatteryStats).noteWifiScanStoppedFromSource(eq(workSource));
         assertDumpContainsRequestLog("addSingleScanRequest", requestId);
@@ -597,6 +615,7 @@ public class WifiScanningServiceTest {
         int requestId = 33;
 
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
 
         Handler handler = mock(Handler.class);
         BidirectionalAsyncChannel controlChannel = connectChannel(handler);
@@ -634,6 +653,7 @@ public class WifiScanningServiceTest {
         WorkSource workSource = new WorkSource(Binder.getCallingUid()); // don't explicitly set
 
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
 
         Handler handler = mock(Handler.class);
         BidirectionalAsyncChannel controlChannel = connectChannel(handler);
@@ -675,6 +695,7 @@ public class WifiScanningServiceTest {
         int requestId = 2293;
 
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
 
         when(mWifiScannerImpl.startSingleScan(any(WifiNative.ScanSettings.class),
                         any(WifiNative.ScanEventHandler.class))).thenReturn(true);
@@ -716,6 +737,7 @@ public class WifiScanningServiceTest {
         int listenerRequestId = 2295;
 
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
 
         when(mWifiScannerImpl.startSingleScan(any(WifiNative.ScanSettings.class),
                         any(WifiNative.ScanEventHandler.class))).thenReturn(true);
@@ -763,16 +785,17 @@ public class WifiScanningServiceTest {
         WifiScanner.ScanSettings requestSettings1 = createRequest(channelsToSpec(2400), 0,
                 0, 20, WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN);
         int requestId1 = 12;
-        ScanResults results1 = ScanResults.create(0, 2400);
+        ScanResults results1 = ScanResults.create(0, true, 2400);
 
 
         WifiScanner.ScanSettings requestSettings2 = createRequest(channelsToSpec(2450, 5175), 0,
                 0, 20, WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN);
         int requestId2 = 13;
-        ScanResults results2 = ScanResults.create(0, 2450);
+        ScanResults results2 = ScanResults.create(0, true, 2450);
 
 
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
 
         when(mWifiScannerImpl.startSingleScan(any(WifiNative.ScanSettings.class),
                         any(WifiNative.ScanEventHandler.class))).thenReturn(true);
@@ -833,15 +856,16 @@ public class WifiScanningServiceTest {
         WifiScanner.ScanSettings requestSettings1 = createRequest(channelsToSpec(2400), 0,
                 0, 20, WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN);
         int requestId1 = 12;
-        ScanResults results1 = ScanResults.create(0, 2400);
+        ScanResults results1 = ScanResults.create(0, true, 2400);
 
         WifiScanner.ScanSettings requestSettings2 = createRequest(channelsToSpec(2450, 5175), 0,
                 0, 20, WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN);
         int requestId2 = 13;
-        ScanResults results2 = ScanResults.create(0, 2450);
+        ScanResults results2 = ScanResults.create(0, true, 2450);
 
 
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
 
         when(mWifiScannerImpl.startSingleScan(any(WifiNative.ScanSettings.class),
                         any(WifiNative.ScanEventHandler.class))).thenReturn(true);
@@ -902,19 +926,19 @@ public class WifiScanningServiceTest {
                 0, 20, WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN);
         int requestId1 = 12;
         WorkSource workSource1 = new WorkSource(1121);
-        ScanResults results1 = ScanResults.create(0, 2400);
+        ScanResults results1 = ScanResults.create(0, false, 2400);
 
         WifiScanner.ScanSettings requestSettings2 = createRequest(channelsToSpec(2450, 5175), 0,
                 0, 20, WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN);
         int requestId2 = 13;
         WorkSource workSource2 = new WorkSource(Binder.getCallingUid()); // don't explicitly set
-        ScanResults results2 = ScanResults.create(0, 2450, 5175, 2450);
+        ScanResults results2 = ScanResults.create(0, false, 2450, 5175, 2450);
 
         WifiScanner.ScanSettings requestSettings3 = createRequest(channelsToSpec(5150), 0,
                 0, 20, WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN);
         int requestId3 = 15;
         WorkSource workSource3 = new WorkSource(2292);
-        ScanResults results3 = ScanResults.create(0, 5150, 5150, 5150, 5150);
+        ScanResults results3 = ScanResults.create(0, false, 5150, 5150, 5150, 5150);
 
         WifiNative.ScanSettings nativeSettings2and3 = createSingleScanNativeSettingsForChannels(
                 WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN, channelsToSpec(2450, 5175, 5150));
@@ -925,6 +949,7 @@ public class WifiScanningServiceTest {
 
 
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
 
         when(mWifiScannerImpl.startSingleScan(any(WifiNative.ScanSettings.class),
                         any(WifiNative.ScanEventHandler.class))).thenReturn(true);
@@ -963,7 +988,7 @@ public class WifiScanningServiceTest {
         mLooper.dispatchAll();
         verifyScanResultsReceived(handlerOrder, handler, requestId1, results1.getScanData());
         verifySingleScanCompletedReceived(handlerOrder, handler, requestId1);
-        verify(mContext).sendBroadcastAsUser(any(Intent.class), eq(UserHandle.ALL));
+        verify(mContext, never()).sendBroadcastAsUser(any(Intent.class), eq(UserHandle.ALL));
         verify(mBatteryStats).noteWifiScanStoppedFromSource(eq(workSource1));
         verify(mBatteryStats).noteWifiScanStartedFromSource(eq(workSource2and3));
 
@@ -1020,6 +1045,7 @@ public class WifiScanningServiceTest {
 
 
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
 
         when(mWifiScannerImpl.startSingleScan(any(WifiNative.ScanSettings.class),
                         any(WifiNative.ScanEventHandler.class))).thenReturn(true);
@@ -1087,6 +1113,7 @@ public class WifiScanningServiceTest {
         ScanResults results3 = results2400;
 
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
 
         when(mWifiScannerImpl.startSingleScan(any(WifiNative.ScanSettings.class),
                         any(WifiNative.ScanEventHandler.class))).thenReturn(true);
@@ -1142,7 +1169,7 @@ public class WifiScanningServiceTest {
 
         verifyScanResultsReceived(handlerOrder, handler, requestId2, results2.getScanData());
         verifySingleScanCompletedReceived(handlerOrder, handler, requestId2);
-        verify(mContext, times(2)).sendBroadcastAsUser(any(Intent.class), eq(UserHandle.ALL));
+        verify(mContext, never()).sendBroadcastAsUser(any(Intent.class), eq(UserHandle.ALL));
         assertEquals(mWifiMetrics.getOneshotScanCount(), 3);
         assertEquals(mWifiMetrics.getScanReturnEntry(WifiMetricsProto.WifiLog.SCAN_SUCCESS), 3);
 
@@ -1222,6 +1249,7 @@ public class WifiScanningServiceTest {
     @Test
     public void retrieveSingleScanResultsBeforeAnySingleScans() throws Exception {
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
         Handler handler = mock(Handler.class);
         BidirectionalAsyncChannel controlChannel = connectChannel(handler);
         InOrder order = inOrder(handler, mWifiScannerImpl);
@@ -1237,10 +1265,10 @@ public class WifiScanningServiceTest {
     }
 
     /**
-     * Verify that the newest scan results are returned by WifiService.getSingleScanResults.
+     * Verify that the newest full scan results are returned by WifiService.getSingleScanResults.
      */
     @Test
-    public void retrieveMostRecentSingleScanResults() throws Exception {
+    public void retrieveMostRecentFullSingleScanResults() throws Exception {
         WifiScanner.ScanSettings requestSettings = createRequest(WifiScanner.WIFI_BAND_BOTH, 0,
                 0, 20, WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN);
         ScanResults expectedResults = ScanResults.create(0, true, 2400, 5150, 5175);
@@ -1289,6 +1317,106 @@ public class WifiScanningServiceTest {
         List<ScanResult> results2 = Arrays.asList(
                 ((WifiScanner.ParcelableScanResults) response2.obj).getResults());
         assertEquals(results2.size(), expectedSingleResult.getRawScanResults().length);
+    }
+
+    /**
+     * Verify that the newest partial scan results are not returned by
+     * WifiService.getSingleScanResults.
+     */
+    @Test
+    public void doesNotRetrieveMostRecentPartialSingleScanResults() throws Exception {
+        WifiScanner.ScanSettings fullRequestSettings = createRequest(WifiScanner.WIFI_BAND_BOTH, 0,
+                0, 20, WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN);
+        ScanResults expectedFullResults = ScanResults.create(0, true, 2400, 5150, 5175);
+        doSuccessfulSingleScan(fullRequestSettings,
+                computeSingleScanNativeSettings(fullRequestSettings),
+                expectedFullResults);
+
+        Handler handler = mock(Handler.class);
+        BidirectionalAsyncChannel controlChannel = connectChannel(handler);
+        InOrder order = inOrder(handler, mWifiScannerImpl);
+
+        controlChannel.sendMessage(
+                Message.obtain(null, WifiScanner.CMD_GET_SINGLE_SCAN_RESULTS, 0));
+        mLooper.dispatchAll();
+        Message response = verifyHandleMessageAndGetMessage(order, handler);
+
+        List<ScanResult> results = Arrays.asList(
+                ((WifiScanner.ParcelableScanResults) response.obj).getResults());
+        assertEquals(results.size(), expectedFullResults.getRawScanResults().length);
+
+        // now update with a new scan that only has one result
+        int secondScanRequestId = 35;
+        WifiScanner.ScanSettings partialRequestSettings = createRequest(WifiScanner.WIFI_BAND_BOTH,
+                0, 0, 20, WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN);
+        ScanResults expectedPartialResults = ScanResults.create(0, false, 5150);
+        sendSingleScanRequest(controlChannel, secondScanRequestId, partialRequestSettings, null);
+
+        mLooper.dispatchAll();
+        WifiNative.ScanEventHandler eventHandler = verifyStartSingleScan(order,
+                computeSingleScanNativeSettings(partialRequestSettings));
+        verifySuccessfulResponse(order, handler, secondScanRequestId);
+
+        // dispatch scan 2 results
+        when(mWifiScannerImpl.getLatestSingleScanResults())
+                .thenReturn(expectedPartialResults.getScanData());
+        eventHandler.onScanStatus(WifiNative.WIFI_SCAN_RESULTS_AVAILABLE);
+
+        mLooper.dispatchAll();
+        verifyScanResultsReceived(order, handler, secondScanRequestId,
+                expectedPartialResults.getScanData());
+        verifySingleScanCompletedReceived(order, handler, secondScanRequestId);
+
+        controlChannel.sendMessage(
+                Message.obtain(null, WifiScanner.CMD_GET_SINGLE_SCAN_RESULTS, 0));
+        mLooper.dispatchAll();
+        Message response2 = verifyHandleMessageAndGetMessage(order, handler);
+
+        List<ScanResult> results2 = Arrays.asList(
+                ((WifiScanner.ParcelableScanResults) response2.obj).getResults());
+        assertEquals(results2.size(), expectedFullResults.getRawScanResults().length);
+    }
+
+    /**
+     * Verify that the scan results returned by WifiService.getSingleScanResults are not older
+     * than {@link com.android.server.wifi.scanner.WifiScanningServiceImpl
+     * .WifiSingleScanStateMachine#CACHED_SCAN_RESULTS_MAX_AGE_IN_MILLIS}.
+     */
+    @Test
+    public void doesNotRetrieveStaleScanResultsFromLastFullSingleScan() throws Exception {
+        WifiScanner.ScanSettings requestSettings = createRequest(WifiScanner.WIFI_BAND_BOTH, 0,
+                0, 20, WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN);
+        ScanResults scanResults = ScanResults.create(0, true, 2400, 5150, 5175);
+
+        // Out of the 3 scan results, modify the timestamp of 2 of them to be within the expiration
+        // age and 1 out of it.
+        long currentTimeInMillis = CACHED_SCAN_RESULTS_MAX_AGE_IN_MILLIS * 2;
+        when(mClock.getElapsedSinceBootMillis()).thenReturn(currentTimeInMillis);
+        scanResults.getRawScanResults()[0].timestamp = (currentTimeInMillis - 1) * 1000;
+        scanResults.getRawScanResults()[1].timestamp = (currentTimeInMillis - 2) * 1000;
+        scanResults.getRawScanResults()[2].timestamp =
+                (currentTimeInMillis - CACHED_SCAN_RESULTS_MAX_AGE_IN_MILLIS) * 1000;
+        List<ScanResult> expectedResults = new ArrayList<ScanResult>() {{
+                add(scanResults.getRawScanResults()[0]);
+                add(scanResults.getRawScanResults()[1]);
+            }};
+
+        doSuccessfulSingleScan(requestSettings,
+                computeSingleScanNativeSettings(requestSettings), scanResults);
+
+        Handler handler = mock(Handler.class);
+        BidirectionalAsyncChannel controlChannel = connectChannel(handler);
+        InOrder order = inOrder(handler, mWifiScannerImpl);
+
+        controlChannel.sendMessage(
+                Message.obtain(null, WifiScanner.CMD_GET_SINGLE_SCAN_RESULTS, 0));
+        mLooper.dispatchAll();
+        Message response = verifyHandleMessageAndGetMessage(order, handler);
+
+        List<ScanResult> results = Arrays.asList(
+                ((WifiScanner.ParcelableScanResults) response.obj).getResults());
+        assertScanResultsEquals(expectedResults.toArray(new ScanResult[expectedResults.size()]),
+                results.toArray(new ScanResult[results.size()]));
     }
 
     /**
@@ -1344,6 +1472,7 @@ public class WifiScanningServiceTest {
         int listenerRequestId = 13;
 
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
 
         Handler handler = mock(Handler.class);
         BidirectionalAsyncChannel controlChannel = connectChannel(handler);
@@ -1370,7 +1499,7 @@ public class WifiScanningServiceTest {
         verifyScanResultsReceived(order, handler, requestId, results.getScanData());
         verifySingleScanCompletedReceived(order, handler, requestId);
         verifyScanResultsReceived(order, handler, listenerRequestId, results.getScanData());
-        verify(mContext).sendBroadcastAsUser(any(Intent.class), eq(UserHandle.ALL));
+        verify(mContext, never()).sendBroadcastAsUser(any(Intent.class), eq(UserHandle.ALL));
         verifyNoMoreInteractions(handler);
 
         assertDumpContainsRequestLog("registerScanListener", listenerRequestId);
@@ -1392,6 +1521,7 @@ public class WifiScanningServiceTest {
         int listenerRequestId = 13;
 
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
 
         Handler handler = mock(Handler.class);
         BidirectionalAsyncChannel controlChannel = connectChannel(handler);
@@ -1420,7 +1550,7 @@ public class WifiScanningServiceTest {
         mLooper.dispatchAll();
         verifyScanResultsReceived(order, handler, requestId, results.getScanData());
         verifySingleScanCompletedReceived(order, handler, requestId);
-        verify(mContext).sendBroadcastAsUser(any(Intent.class), eq(UserHandle.ALL));
+        verify(mContext, never()).sendBroadcastAsUser(any(Intent.class), eq(UserHandle.ALL));
         verifyNoMoreInteractions(handler);
 
         assertDumpContainsRequestLog("registerScanListener", listenerRequestId);
@@ -1456,6 +1586,7 @@ public class WifiScanningServiceTest {
 
 
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
 
         when(mWifiScannerImpl.startSingleScan(any(WifiNative.ScanSettings.class),
                         any(WifiNative.ScanEventHandler.class))).thenReturn(true);
@@ -1498,7 +1629,7 @@ public class WifiScanningServiceTest {
         verifyScanResultsReceived(handlerOrder, handler, requestId1, results1.getScanData());
         verifySingleScanCompletedReceived(handlerOrder, handler, requestId1);
         verifyScanResultsReceived(handlerOrder, handler, listenerRequestId, results1.getScanData());
-        verify(mContext).sendBroadcastAsUser(any(Intent.class), eq(UserHandle.ALL));
+        verify(mContext, never()).sendBroadcastAsUser(any(Intent.class), eq(UserHandle.ALL));
 
         // now that the first scan completed we expect the second and third ones to start
         WifiNative.ScanEventHandler eventHandler2and3 = verifyStartSingleScan(nativeOrder,
@@ -1525,6 +1656,7 @@ public class WifiScanningServiceTest {
     private void doSuccessfulBackgroundScan(WifiScanner.ScanSettings requestSettings,
             WifiNative.ScanSettings nativeSettings) {
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
 
         Handler handler = mock(Handler.class);
         BidirectionalAsyncChannel controlChannel = connectChannel(handler);
@@ -1756,12 +1888,13 @@ public class WifiScanningServiceTest {
     }
 
     /**
-     * Tests Supplicant PNO scan when the PNO scan results contain IE info. This ensures that the
+     * Tests wificond PNO scan when the PNO scan results contain IE info. This ensures that the
      * PNO scan results are plumbed back to the client as a PNO network found event.
      */
     @Test
     public void testSuccessfulHwPnoScanWithNoBackgroundScan() throws Exception {
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
         Handler handler = mock(Handler.class);
         BidirectionalAsyncChannel controlChannel = connectChannel(handler);
         InOrder order = inOrder(handler, mWifiScannerImpl);
@@ -1786,6 +1919,7 @@ public class WifiScanningServiceTest {
     @Test
     public void testSuccessfulHwPnoScanWithBackgroundScan() throws Exception {
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
         Handler handler = mock(Handler.class);
         BidirectionalAsyncChannel controlChannel = connectChannel(handler);
         InOrder order = inOrder(handler, mWifiScannerImpl);
@@ -1810,6 +1944,7 @@ public class WifiScanningServiceTest {
     @Test
     public void testSuccessfulHwPnoScanWithBackgroundScanWithNoIE() throws Exception {
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
         Handler handler = mock(Handler.class);
         BidirectionalAsyncChannel controlChannel = connectChannel(handler);
         InOrder order = inOrder(handler, mWifiScannerImpl);
@@ -1840,6 +1975,7 @@ public class WifiScanningServiceTest {
     @Test
     public void testSuccessfulSwPnoScan() throws Exception {
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
         Handler handler = mock(Handler.class);
         BidirectionalAsyncChannel controlChannel = connectChannel(handler);
         InOrder order = inOrder(handler, mWifiScannerImpl);
@@ -1863,6 +1999,7 @@ public class WifiScanningServiceTest {
     @Test
     public void processSingleScanRequestAfterDisconnect() throws Exception {
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
         BidirectionalAsyncChannel controlChannel = connectChannel(mock(Handler.class));
         mLooper.dispatchAll();
 
@@ -1901,6 +2038,7 @@ public class WifiScanningServiceTest {
         int requestId = 9;
 
         startServiceAndLoadDriver();
+        mWifiScanningServiceImpl.setWifiHandlerLogForTest(mLog);
         Handler handler = mock(Handler.class);
         BidirectionalAsyncChannel controlChannel = connectChannel(handler);
         mLooper.dispatchAll();

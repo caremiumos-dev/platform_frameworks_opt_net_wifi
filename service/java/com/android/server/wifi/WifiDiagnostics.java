@@ -101,25 +101,28 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
     private WifiNative.RingBufferStatus[] mRingBuffers;
     private WifiNative.RingBufferStatus mPerPacketRingBuffer;
     private WifiStateMachine mWifiStateMachine;
-    private final WifiNative mWifiNative;
     private final BuildProperties mBuildProperties;
+    private final WifiLog mLog;
+    private final LastMileLogger mLastMileLogger;
+    private final Runtime mJavaRuntime;
     private int mMaxRingBufferSizeBytes;
-    private WifiLog mLog;
 
     public WifiDiagnostics(Context context, WifiInjector wifiInjector,
                            WifiStateMachine wifiStateMachine, WifiNative wifiNative,
-                           BuildProperties buildProperties) {
+                           BuildProperties buildProperties, LastMileLogger lastMileLogger) {
+        super(wifiNative);
         RING_BUFFER_BYTE_LIMIT_SMALL = context.getResources().getInteger(
                 R.integer.config_wifi_logger_ring_buffer_default_size_limit_kb) * 1024;
         RING_BUFFER_BYTE_LIMIT_LARGE = context.getResources().getInteger(
                 R.integer.config_wifi_logger_ring_buffer_verbose_size_limit_kb) * 1024;
 
         mWifiStateMachine = wifiStateMachine;
-        mWifiNative = wifiNative;
         mBuildProperties = buildProperties;
         mIsLoggingEventHandlerRegistered = false;
         mMaxRingBufferSizeBytes = RING_BUFFER_BYTE_LIMIT_SMALL;
         mLog = wifiInjector.makeLog(TAG);
+        mLastMileLogger = lastMileLogger;
+        mJavaRuntime = wifiInjector.getJavaRuntime();
     }
 
     @Override
@@ -196,8 +199,11 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
     }
 
     @Override
-    synchronized void reportConnectionFailure() {
-        mPacketFatesForLastFailure = fetchPacketFates();
+    synchronized void reportConnectionEvent(long connectionId, byte event) {
+        mLastMileLogger.reportConnectionEvent(connectionId, event);
+        if (event == CONNECTION_EVENT_FAILED) {
+            mPacketFatesForLastFailure = fetchPacketFates();
+        }
     }
 
     @Override
@@ -232,11 +238,9 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
         }
 
         dumpPacketFates(pw);
-        pw.println("--------------------------------------------------------------------");
+        mLastMileLogger.dump(pw);
 
-        pw.println("WifiNative - Log Begin ----");
-        mWifiNative.getLocalLog().dump(fd, pw, args);
-        pw.println("WifiNative - Log End ----");
+        pw.println("--------------------------------------------------------------------");
     }
 
     /* private methods and data */
@@ -409,6 +413,11 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
     }
 
     private boolean fetchRingBuffers() {
+        if (mBuildProperties.isUserBuild()) {
+            mRingBuffers = null;
+            return false;
+        }
+
         if (mRingBuffers != null) return true;
 
         mRingBuffers = mWifiNative.getRingBufferStatus();
@@ -488,7 +497,8 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
     }
 
     private boolean enableVerboseLoggingForDogfood() {
-        return false;
+        return true;
+
     }
 
     private BugReport captureBugreport(int errorCode, boolean captureFWDump) {
@@ -568,7 +578,7 @@ class WifiDiagnostics extends BaseWifiDiagnostics {
     private ArrayList<String> getLogcat(int maxLines) {
         ArrayList<String> lines = new ArrayList<String>(maxLines);
         try {
-            Process process = Runtime.getRuntime().exec(String.format("logcat -t %d", maxLines));
+            Process process = mJavaRuntime.exec(String.format("logcat -t %d", maxLines));
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(process.getInputStream()));
             String line;

@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.BitSet;
 
 public class InformationElementUtil {
+    private static final String TAG = "InformationElementUtil";
 
     public static InformationElement[] parseInformationElements(byte[] bytes) {
         if (bytes == null) {
@@ -63,6 +64,71 @@ public class InformationElementUtil {
         return infoElements.toArray(new InformationElement[infoElements.size()]);
     }
 
+    /**
+     * Parse and retrieve the Roaming Consortium Information Element from the list of IEs.
+     *
+     * @param ies List of IEs to retrieve from
+     * @return {@link RoamingConsortium}
+     */
+    public static RoamingConsortium getRoamingConsortiumIE(InformationElement[] ies) {
+        RoamingConsortium roamingConsortium = new RoamingConsortium();
+        if (ies != null) {
+            for (InformationElement ie : ies) {
+                if (ie.id == InformationElement.EID_ROAMING_CONSORTIUM) {
+                    try {
+                        roamingConsortium.from(ie);
+                    } catch (RuntimeException e) {
+                        Log.e(TAG, "Failed to parse Roaming Consortium IE: " + e.getMessage());
+                    }
+                }
+            }
+        }
+        return roamingConsortium;
+    }
+
+    /**
+     * Parse and retrieve the Hotspot 2.0 Vendor Specific Information Element from the list of IEs.
+     *
+     * @param ies List of IEs to retrieve from
+     * @return {@link Vsa}
+     */
+    public static Vsa getHS2VendorSpecificIE(InformationElement[] ies) {
+        Vsa vsa = new Vsa();
+        if (ies != null) {
+            for (InformationElement ie : ies) {
+                if (ie.id == InformationElement.EID_VSA) {
+                    try {
+                        vsa.from(ie);
+                    } catch (RuntimeException e) {
+                        Log.e(TAG, "Failed to parse Vendor Specific IE: " + e.getMessage());
+                    }
+                }
+            }
+        }
+        return vsa;
+    }
+
+    /**
+     * Parse and retrieve the Interworking information element from the list of IEs.
+     *
+     * @param ies List of IEs to retrieve from
+     * @return {@link Interworking}
+     */
+    public static Interworking getInterworkingIE(InformationElement[] ies) {
+        Interworking interworking = new Interworking();
+        if (ies != null) {
+            for (InformationElement ie : ies) {
+                if (ie.id == InformationElement.EID_INTERWORKING) {
+                    try {
+                        interworking.from(ie);
+                    } catch (RuntimeException e) {
+                        Log.e(TAG, "Failed to parse Interworking IE: " + e.getMessage());
+                    }
+                }
+            }
+        }
+        return interworking;
+    }
 
     public static class BssLoad {
         public int stationCount = 0;
@@ -261,37 +327,52 @@ public class InformationElementUtil {
         }
     }
 
+    /**
+     * This IE contained a bit field indicating the capabilities being advertised by the STA.
+     * The size of the bit field (number of bytes) is indicated by the |Length| field in the IE.
+     *
+     * Refer to Section 8.4.2.29 in IEEE 802.11-2012 Spec for capability associated with each
+     * bit.
+     *
+     * Here is the wire format of this IE:
+     * | Element ID | Length | Capabilities |
+     *       1           1          n
+     */
     public static class ExtendedCapabilities {
         private static final int RTT_RESP_ENABLE_BIT = 70;
-        private static final long SSID_UTF8_BIT = 0x0001000000000000L;
+        private static final int SSID_UTF8_BIT = 48;
 
-        public Long extendedCapabilities = null;
-        public boolean is80211McRTTResponder = false;
+        public BitSet capabilitiesBitSet;
+
+        /**
+         * @return true if SSID should be interpreted using UTF-8 encoding
+         */
+        public boolean isStrictUtf8() {
+            return capabilitiesBitSet.get(SSID_UTF8_BIT);
+        }
+
+        /**
+         * @return true if 802.11 MC RTT Response is enabled
+         */
+        public boolean is80211McRTTResponder() {
+            return capabilitiesBitSet.get(RTT_RESP_ENABLE_BIT);
+        }
 
         public ExtendedCapabilities() {
+            capabilitiesBitSet = new BitSet();
         }
 
         public ExtendedCapabilities(ExtendedCapabilities other) {
-            extendedCapabilities = other.extendedCapabilities;
-            is80211McRTTResponder = other.is80211McRTTResponder;
+            capabilitiesBitSet = other.capabilitiesBitSet;
         }
 
-        public boolean isStrictUtf8() {
-            return extendedCapabilities != null && (extendedCapabilities & SSID_UTF8_BIT) != 0;
-        }
-
+        /**
+         * Parse an ExtendedCapabilities from the IE containing raw bytes.
+         *
+         * @param ie The Information element data
+         */
         public void from(InformationElement ie) {
-            ByteBuffer data = ByteBuffer.wrap(ie.bytes).order(ByteOrder.LITTLE_ENDIAN);
-            extendedCapabilities =
-                    ByteBufferReader.readInteger(data, ByteOrder.LITTLE_ENDIAN, ie.bytes.length);
-
-            int index = RTT_RESP_ENABLE_BIT / 8;
-            byte offset = RTT_RESP_ENABLE_BIT % 8;
-            if (ie.bytes.length < index + 1) {
-                is80211McRTTResponder = false;
-            } else {
-                is80211McRTTResponder = (ie.bytes[index] & ((byte) 0x1 << offset)) != 0;
-            }
+            capabilitiesBitSet = BitSet.valueOf(ie.bytes);
         }
     }
 
@@ -308,6 +389,7 @@ public class InformationElementUtil {
         private static final int CAP_PRIVACY_BIT_OFFSET = 4;
 
         private static final int WPA_VENDOR_OUI_TYPE_ONE = 0x01f25000;
+        private static final int WPS_VENDOR_OUI_TYPE = 0x04f25000;
         private static final short WPA_VENDOR_OUI_VERSION = 0x0001;
         private static final short RSNE_VERSION = 0x0001;
 
@@ -330,12 +412,13 @@ public class InformationElementUtil {
         private static final int RSN_CIPHER_CCMP = 0x04ac0f00;
         private static final int RSN_CIPHER_NO_GROUP_ADDRESSED = 0x07ac0f00;
 
-        public int protocol;
-        public ArrayList<Integer> keyManagement;
-        public ArrayList<Integer> pairwiseCipher;
-        public int groupCipher;
+        public ArrayList<Integer> protocol;
+        public ArrayList<ArrayList<Integer>> keyManagement;
+        public ArrayList<ArrayList<Integer>> pairwiseCipher;
+        public ArrayList<Integer> groupCipher;
         public boolean isESS;
         public boolean isPrivacy;
+        public boolean isWPS;
 
         public Capabilities() {
         }
@@ -364,42 +447,45 @@ public class InformationElementUtil {
                 }
 
                 // found the RSNE IE, hence start building the capability string
-                protocol = ScanResult.PROTOCOL_WPA2;
+                protocol.add(ScanResult.PROTOCOL_WPA2);
 
                 // group data cipher suite
-                groupCipher = parseRsnCipher(buf.getInt());
+                groupCipher.add(parseRsnCipher(buf.getInt()));
 
                 // pairwise cipher suite count
                 short cipherCount = buf.getShort();
+                ArrayList<Integer> rsnPairwiseCipher = new ArrayList<>();
                 // pairwise cipher suite list
                 for (int i = 0; i < cipherCount; i++) {
-                    pairwiseCipher.add(parseRsnCipher(buf.getInt()));
+                    rsnPairwiseCipher.add(parseRsnCipher(buf.getInt()));
                 }
+                pairwiseCipher.add(rsnPairwiseCipher);
 
                 // AKM
                 // AKM suite count
                 short akmCount = buf.getShort();
+                ArrayList<Integer> rsnKeyManagement = new ArrayList<>();
 
                 for (int i = 0; i < akmCount; i++) {
                     int akm = buf.getInt();
                     switch (akm) {
                         case WPA2_AKM_EAP:
-                            keyManagement.add(ScanResult.KEY_MGMT_EAP);
+                            rsnKeyManagement.add(ScanResult.KEY_MGMT_EAP);
                             break;
                         case WPA2_AKM_PSK:
-                            keyManagement.add(ScanResult.KEY_MGMT_PSK);
+                            rsnKeyManagement.add(ScanResult.KEY_MGMT_PSK);
                             break;
                         case WPA2_AKM_FT_EAP:
-                            keyManagement.add(ScanResult.KEY_MGMT_FT_EAP);
+                            rsnKeyManagement.add(ScanResult.KEY_MGMT_FT_EAP);
                             break;
                         case WPA2_AKM_FT_PSK:
-                            keyManagement.add(ScanResult.KEY_MGMT_FT_PSK);
+                            rsnKeyManagement.add(ScanResult.KEY_MGMT_FT_PSK);
                             break;
                         case WPA2_AKM_EAP_SHA256:
-                            keyManagement.add(ScanResult.KEY_MGMT_EAP_SHA256);
+                            rsnKeyManagement.add(ScanResult.KEY_MGMT_EAP_SHA256);
                             break;
                         case WPA2_AKM_PSK_SHA256:
-                            keyManagement.add(ScanResult.KEY_MGMT_PSK_SHA256);
+                            rsnKeyManagement.add(ScanResult.KEY_MGMT_PSK_SHA256);
                             break;
                         default:
                             // do nothing
@@ -407,9 +493,10 @@ public class InformationElementUtil {
                     }
                 }
                 // Default AKM
-                if (keyManagement.isEmpty()) {
-                    keyManagement.add(ScanResult.KEY_MGMT_EAP);
+                if (rsnKeyManagement.isEmpty()) {
+                    rsnKeyManagement.add(ScanResult.KEY_MGMT_EAP);
                 }
+                keyManagement.add(rsnKeyManagement);
             } catch (BufferUnderflowException e) {
                 Log.e("IE_Capabilities", "Couldn't parse RSNE, buffer underflow");
             }
@@ -444,6 +531,17 @@ public class InformationElementUtil {
                     Log.w("IE_Capabilities", "Unknown RSN cipher suite: "
                             + Integer.toHexString(cipher));
                     return ScanResult.CIPHER_NONE;
+            }
+        }
+
+        private static boolean isWpsElement(InformationElement ie) {
+            ByteBuffer buf = ByteBuffer.wrap(ie.bytes).order(ByteOrder.LITTLE_ENDIAN);
+            try {
+                // WPS OUI and type
+                return (buf.getInt() == WPS_VENDOR_OUI_TYPE);
+            } catch (BufferUnderflowException e) {
+                Log.e("IE_Capabilities", "Couldn't parse VSA IE, buffer underflow");
+                return false;
             }
         }
 
@@ -488,31 +586,34 @@ public class InformationElementUtil {
                 }
 
                 // start building the string
-                protocol = ScanResult.PROTOCOL_WPA;
+                protocol.add(ScanResult.PROTOCOL_WPA);
 
                 // group data cipher suite
-                groupCipher = parseWpaCipher(buf.getInt());
+                groupCipher.add(parseWpaCipher(buf.getInt()));
 
                 // pairwise cipher suite count
                 short cipherCount = buf.getShort();
+                ArrayList<Integer> wpaPairwiseCipher = new ArrayList<>();
                 // pairwise chipher suite list
                 for (int i = 0; i < cipherCount; i++) {
-                    pairwiseCipher.add(parseWpaCipher(buf.getInt()));
+                    wpaPairwiseCipher.add(parseWpaCipher(buf.getInt()));
                 }
+                pairwiseCipher.add(wpaPairwiseCipher);
 
                 // AKM
                 // AKM suite count
                 short akmCount = buf.getShort();
+                ArrayList<Integer> wpaKeyManagement = new ArrayList<>();
 
                 // AKM suite list
                 for (int i = 0; i < akmCount; i++) {
                     int akm = buf.getInt();
                     switch (akm) {
                         case WPA_AKM_EAP:
-                            keyManagement.add(ScanResult.KEY_MGMT_EAP);
+                            wpaKeyManagement.add(ScanResult.KEY_MGMT_EAP);
                             break;
                         case WPA_AKM_PSK:
-                            keyManagement.add(ScanResult.KEY_MGMT_PSK);
+                            wpaKeyManagement.add(ScanResult.KEY_MGMT_PSK);
                             break;
                         default:
                             // do nothing
@@ -520,9 +621,10 @@ public class InformationElementUtil {
                     }
                 }
                 // Default AKM
-                if (keyManagement.isEmpty()) {
-                    keyManagement.add(ScanResult.KEY_MGMT_EAP);
+                if (wpaKeyManagement.isEmpty()) {
+                    wpaKeyManagement.add(ScanResult.KEY_MGMT_EAP);
                 }
+                keyManagement.add(wpaKeyManagement);
             } catch (BufferUnderflowException e) {
                 Log.e("IE_Capabilities", "Couldn't parse type 1 WPA, buffer underflow");
             }
@@ -537,12 +639,10 @@ public class InformationElementUtil {
          */
 
         public void from(InformationElement[] ies, BitSet beaconCap) {
-            protocol = ScanResult.PROTOCOL_NONE;
-            keyManagement = new ArrayList<Integer>();
-            groupCipher = ScanResult.CIPHER_NONE;
-            pairwiseCipher = new ArrayList<Integer>();
-            boolean rsneFound = false;
-            boolean wpaFound = false;
+            protocol = new ArrayList<Integer>();
+            keyManagement = new ArrayList<ArrayList<Integer>>();
+            groupCipher = new ArrayList<Integer>();
+            pairwiseCipher = new ArrayList<ArrayList<Integer>>();
 
             if (ies == null || beaconCap == null) {
                 return;
@@ -551,14 +651,16 @@ public class InformationElementUtil {
             isPrivacy = beaconCap.get(CAP_PRIVACY_BIT_OFFSET);
             for (InformationElement ie : ies) {
                 if (ie.id == InformationElement.EID_RSN) {
-                    rsneFound = true;
                     parseRsnElement(ie);
                 }
 
                 if (ie.id == InformationElement.EID_VSA) {
                     if (isWpaOneElement(ie)) {
-                        wpaFound = true;
                         parseWpaOneElement(ie);
+                    }
+                    if (isWpsElement(ie)) {
+                        // TODO(b/62134557): parse WPS IE to provide finer granularity information.
+                        isWPS = true;
                     }
                 }
             }
@@ -619,22 +721,34 @@ public class InformationElementUtil {
         public String generateCapabilitiesString() {
             String capabilities = "";
             // private Beacon without an RSNE or WPA IE, hence WEP0
-            boolean isWEP = (protocol == ScanResult.PROTOCOL_NONE) && isPrivacy;
+            boolean isWEP = (protocol.isEmpty()) && isPrivacy;
 
-            if (protocol != ScanResult.PROTOCOL_NONE || isWEP) {
-                capabilities += "[" + (isWEP ? "WEP" : protocolToString(protocol));
-                for (int i = 0; i < keyManagement.size(); i++) {
-                    capabilities += ((i == 0) ? "-" : "+")
-                        + keyManagementToString(keyManagement.get(i));
+            if (isWEP) {
+                capabilities += "[WEP]";
+            }
+            for (int i = 0; i < protocol.size(); i++) {
+                capabilities += "[" + protocolToString(protocol.get(i));
+                if (i < keyManagement.size()) {
+                    for (int j = 0; j < keyManagement.get(i).size(); j++) {
+                        capabilities += ((j == 0) ? "-" : "+")
+                                + keyManagementToString(keyManagement.get(i).get(j));
+                    }
                 }
-                for (int i = 0; i < pairwiseCipher.size(); i++) {
-                    capabilities += ((i == 0) ? "-" : "+") + cipherToString(pairwiseCipher.get(i));
+                if (i < pairwiseCipher.size()) {
+                    for (int j = 0; j < pairwiseCipher.get(i).size(); j++) {
+                        capabilities += ((j == 0) ? "-" : "+")
+                                + cipherToString(pairwiseCipher.get(i).get(j));
+                    }
                 }
                 capabilities += "]";
             }
             if (isESS) {
                 capabilities += "[ESS]";
             }
+            if (isWPS) {
+                capabilities += "[WPS]";
+            }
+
             return capabilities;
         }
     }

@@ -42,6 +42,21 @@ public class PasspointNetworkEvaluator implements WifiNetworkSelector.NetworkEva
     private final WifiConfigManager mWifiConfigManager;
     private final LocalLog mLocalLog;
 
+    /**
+     * Contained information for a Passpoint network candidate.
+     */
+    private class PasspointNetworkCandidate {
+        PasspointNetworkCandidate(PasspointProvider provider, PasspointMatch matchStatus,
+                ScanDetail scanDetail) {
+            mProvider = provider;
+            mMatchStatus = matchStatus;
+            mScanDetail = scanDetail;
+        }
+        PasspointProvider mProvider;
+        PasspointMatch mMatchStatus;
+        ScanDetail mScanDetail;
+    }
+
     public PasspointNetworkEvaluator(PasspointManager passpointManager,
             WifiConfigManager wifiConfigManager, LocalLog localLog) {
         mPasspointManager = passpointManager;
@@ -62,45 +77,51 @@ public class PasspointNetworkEvaluator implements WifiNetworkSelector.NetworkEva
                     WifiConfiguration currentNetwork, String currentBssid,
                     boolean connected, boolean untrustedNetworkAllowed,
                     List<Pair<ScanDetail, WifiConfiguration>> connectableNetworks) {
+        // Sweep the ANQP cache to remove any expired ANQP entries.
+        mPasspointManager.sweepCache();
+
         // Go through each ScanDetail and find the best provider for each ScanDetail.
-        List<Pair<ScanDetail, Pair<PasspointProvider, PasspointMatch>>> providerList =
-                new ArrayList<>();
+        List<PasspointNetworkCandidate> candidateList = new ArrayList<>();
         for (ScanDetail scanDetail : scanDetails) {
             // Skip non-Passpoint APs.
             if (!scanDetail.getNetworkDetail().isInterworking()) {
                 continue;
             }
 
-            List<Pair<PasspointProvider, PasspointMatch>> matchedProviders =
-                    mPasspointManager.matchProvider(scanDetail);
-
             // Find the best provider for this ScanDetail.
             Pair<PasspointProvider, PasspointMatch> bestProvider =
-                    findBestProvider(matchedProviders);
+                    mPasspointManager.matchProvider(scanDetail.getScanResult());
             if (bestProvider != null) {
-                providerList.add(Pair.create(scanDetail, bestProvider));
+                if (bestProvider.first.isSimCredential() && !mWifiConfigManager.isSimPresent()) {
+                    // Skip providers backed by SIM credential when SIM is not present.
+                    continue;
+                }
+                candidateList.add(new PasspointNetworkCandidate(
+                        bestProvider.first, bestProvider.second, scanDetail));
             }
         }
 
-        // Done if no matching provider is found.
-        if (providerList.isEmpty()) {
+        // Done if no candidate is found.
+        if (candidateList.isEmpty()) {
+            localLog("No suitable Passpoint network found");
             return null;
         }
 
-        // Find the best Passpoint network among all matches.
-        Pair<PasspointProvider, ScanDetail> bestNetwork = findBestNetwork(providerList,
-                currentNetwork == null ? null : currentNetwork.SSID);
+        // Find the best Passpoint network among all candidates.
+        PasspointNetworkCandidate bestNetwork =
+                findBestNetwork(candidateList, currentNetwork == null ? null : currentNetwork.SSID);
 
         // Return the configuration for the current connected network if it is the best network.
         if (currentNetwork != null && TextUtils.equals(currentNetwork.SSID,
-                ScanResultUtil.createQuotedSSID(bestNetwork.second.getSSID()))) {
-            connectableNetworks.add(Pair.create(bestNetwork.second, currentNetwork));
+                ScanResultUtil.createQuotedSSID(bestNetwork.mScanDetail.getSSID()))) {
+            localLog("Staying with current Passpoint network " + currentNetwork.SSID);
+            connectableNetworks.add(Pair.create(bestNetwork.mScanDetail, currentNetwork));
             return currentNetwork;
         }
 
-        WifiConfiguration config =
-                createWifiConfigForProvider(bestNetwork.first, bestNetwork.second);
-        connectableNetworks.add(Pair.create(bestNetwork.second, config));
+        WifiConfiguration config = createWifiConfigForProvider(bestNetwork);
+        connectableNetworks.add(Pair.create(bestNetwork.mScanDetail, config));
+        localLog("Passpoint network to connect to: " + config.SSID);
         return config;
     }
 
@@ -108,14 +129,15 @@ public class PasspointNetworkEvaluator implements WifiNetworkSelector.NetworkEva
      * Create and return a WifiConfiguration for the given ScanDetail and PasspointProvider.
      * The newly created WifiConfiguration will also be added to WifiConfigManager.
      *
-     * @param provider The provider to create WifiConfiguration from
-     * @param scanDetail The ScanDetail to create WifiConfiguration from
+     * @param networkInfo Contained information for the Passpoint network to connect to
      * @return {@link WifiConfiguration}
      */
-    private WifiConfiguration createWifiConfigForProvider(PasspointProvider provider,
-            ScanDetail scanDetail) {
-        WifiConfiguration config = provider.getWifiConfig();
-        config.SSID = ScanResultUtil.createQuotedSSID(scanDetail.getSSID());
+    private WifiConfiguration createWifiConfigForProvider(PasspointNetworkCandidate networkInfo) {
+        WifiConfiguration config = networkInfo.mProvider.getWifiConfig();
+        config.SSID = ScanResultUtil.createQuotedSSID(networkInfo.mScanDetail.getSSID());
+        if (networkInfo.mMatchStatus == PasspointMatch.HomeProvider) {
+            config.isHomeProviderNetwork = true;
+        }
 
         // Add the newly created WifiConfiguration to WifiConfigManager.
         NetworkUpdateResult result =
@@ -124,36 +146,12 @@ public class PasspointNetworkEvaluator implements WifiNetworkSelector.NetworkEva
             localLog("Failed to add passpoint network");
             return null;
         }
+        mWifiConfigManager.enableNetwork(result.getNetworkId(), false, Process.WIFI_UID);
         mWifiConfigManager.setNetworkCandidateScanResult(result.getNetworkId(),
-                scanDetail.getScanResult(), 0);
+                networkInfo.mScanDetail.getScanResult(), 0);
+        mWifiConfigManager.updateScanDetailForNetwork(
+                result.getNetworkId(), networkInfo.mScanDetail);
         return mWifiConfigManager.getConfiguredNetwork(result.getNetworkId());
-    }
-
-    /**
-     * Given a list of provider associated with a ScanDetail, determine and return the best
-     * provider from the list.
-     *
-     * Currently the only criteria is to prefer home provider over roaming provider.  Additional
-     * criteria will be added when Hotspot 2.0 Release 2 support is added.
-     *
-     * A null will be returned if no match is found (providerList is empty).
-     *
-     * @param providerList The list of matched providers
-     * @return Pair of {@link PasspointProvider} with its matching status
-     */
-    private Pair<PasspointProvider, PasspointMatch> findBestProvider(
-            List<Pair<PasspointProvider, PasspointMatch>> providerList) {
-        Pair<PasspointProvider, PasspointMatch> bestMatch = null;
-        for (Pair<PasspointProvider, PasspointMatch> providerMatch : providerList) {
-            if (providerMatch.second == PasspointMatch.HomeProvider) {
-                // Home provider found, done.
-                bestMatch = providerMatch;
-                break;
-            } else if (bestMatch == null) {
-                bestMatch = providerMatch;
-            }
-        }
-        return bestMatch;
     }
 
     /**
@@ -163,36 +161,33 @@ public class PasspointNetworkEvaluator implements WifiNetworkSelector.NetworkEva
      *
      * @param networkList List of Passpoint networks
      * @param currentNetworkSsid The SSID of the currently connected network, null if not connected
-     * @return {@link PasspointProvider} and {@link ScanDetail} associated with the network
+     * @return {@link PasspointNetworkCandidate}
      */
-    private Pair<PasspointProvider, ScanDetail> findBestNetwork(
-            List<Pair<ScanDetail, Pair<PasspointProvider, PasspointMatch>>> networkList,
-            String currentNetworkSsid) {
-        ScanDetail bestScanDetail = null;
-        PasspointProvider bestProvider = null;
+    private PasspointNetworkCandidate findBestNetwork(
+            List<PasspointNetworkCandidate> networkList, String currentNetworkSsid) {
+        PasspointNetworkCandidate bestCandidate = null;
         int bestScore = Integer.MIN_VALUE;
-        for (Pair<ScanDetail, Pair<PasspointProvider, PasspointMatch>> candidate : networkList) {
-            ScanDetail scanDetail = candidate.first;
-            PasspointProvider provider = candidate.second.first;
-            PasspointMatch match = candidate.second.second;
+        for (PasspointNetworkCandidate candidate : networkList) {
+            ScanDetail scanDetail = candidate.mScanDetail;
+            PasspointMatch match = candidate.mMatchStatus;
 
             boolean isActiveNetwork = TextUtils.equals(currentNetworkSsid,
                     ScanResultUtil.createQuotedSSID(scanDetail.getSSID()));
             int score = PasspointNetworkScore.calculateScore(match == PasspointMatch.HomeProvider,
-                    scanDetail, isActiveNetwork);
+                    scanDetail, mPasspointManager.getANQPElements(scanDetail.getScanResult()),
+                    isActiveNetwork);
 
             if (score > bestScore) {
-                bestScanDetail = scanDetail;
-                bestProvider = provider;
+                bestCandidate = candidate;
                 bestScore = score;
             }
         }
-        return Pair.create(bestProvider, bestScanDetail);
+        localLog("Best Passpoint network " + bestCandidate.mScanDetail.getSSID() + " provided by "
+                + bestCandidate.mProvider.getConfig().getHomeSp().getFqdn());
+        return bestCandidate;
     }
 
     private void localLog(String log) {
-        if (mLocalLog != null) {
-            mLocalLog.log(log);
-        }
+        mLocalLog.log(log);
     }
 }

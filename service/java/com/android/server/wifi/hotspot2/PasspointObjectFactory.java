@@ -49,8 +49,21 @@ public class PasspointObjectFactory{
      * @return {@link PasspointProvider}
      */
     public PasspointProvider makePasspointProvider(PasspointConfiguration config,
-            WifiKeyStore keyStore, SIMAccessor simAccessor, long providerId) {
-        return new PasspointProvider(config, keyStore, simAccessor, providerId);
+            WifiKeyStore keyStore, SIMAccessor simAccessor, long providerId, int creatorUid) {
+        return new PasspointProvider(config, keyStore, simAccessor, providerId, creatorUid);
+    }
+
+    /**
+     * Create a {@link PasspointConfigStoreData} instance.
+     *
+     * @param keyStore Instance of {@link WifiKeyStore}
+     * @param simAccessor Instance of {@link SIMAccessor}
+     * @param dataSource Passpoint configuration data source
+     * @return {@link PasspointConfigStoreData}
+     */
+    public PasspointConfigStoreData makePasspointConfigStoreData(WifiKeyStore keyStore,
+            SIMAccessor simAccessor, PasspointConfigStoreData.DataSource dataSource) {
+        return new PasspointConfigStoreData(keyStore, simAccessor, dataSource);
     }
 
     /**
@@ -72,5 +85,14 @@ public class PasspointObjectFactory{
      */
     public ANQPRequestManager makeANQPRequestManager(PasspointEventHandler handler, Clock clock) {
         return new ANQPRequestManager(handler, clock);
+    }
+
+    /**
+     * Create an instance of {@link CertificateVerifier}.
+     *
+     * @return {@link CertificateVerifier}
+     */
+    public CertificateVerifier makeCertificateVerifier() {
+        return new CertificateVerifier();
     }
 }

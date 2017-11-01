@@ -37,7 +37,9 @@ import android.text.TextUtils;
 import com.android.server.wifi.util.ScanResultUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Helper for WifiNetworkSelector unit tests.
@@ -132,7 +134,7 @@ public class WifiNetworkSelectorTestUtil {
 
     /**
      * Generate an array of {@link android.net.wifi.WifiConfiguration} based on the caller
-     * supplied network SSID and sencurity information.
+     * supplied network SSID and security information.
      *
      * @param ssids an array of SSIDs
      * @param securities an array of the network's security setting
@@ -145,10 +147,23 @@ public class WifiNetworkSelectorTestUtil {
             return null;
         }
 
+        Map<String, Integer> netIdMap = new HashMap<>();
+        int netId = 0;
+
         WifiConfiguration[] configs = new WifiConfiguration[ssids.length];
         for (int index = 0; index < ssids.length; index++) {
-            configs[index] = generateWifiConfig(index, 0, ssids[index], false, true, null, null,
-                    securities[index]);
+            String configKey = ssids[index] + Integer.toString(securities[index]);
+            Integer id;
+
+            id = netIdMap.get(configKey);
+            if (id == null) {
+                id = new Integer(netId);
+                netIdMap.put(configKey, id);
+                netId++;
+            }
+
+            configs[index] = generateWifiConfig(id.intValue(), 0, ssids[index], false, true, null,
+                    null, securities[index]);
         }
 
         return configs;
@@ -162,24 +177,25 @@ public class WifiNetworkSelectorTestUtil {
      * @param wifiConfigManager the mocked WifiConfigManager
      * @param configs input configuration need to be added to WifiConfigureStore
      */
-    private static void prepareConfigStore(WifiConfigManager wifiConfigManager,
+    private static void prepareConfigStore(final WifiConfigManager wifiConfigManager,
                 final WifiConfiguration[] configs) {
         when(wifiConfigManager.getConfiguredNetwork(anyInt()))
                 .then(new AnswerWithArguments() {
                     public WifiConfiguration answer(int netId) {
-                        if (netId >= 0 && netId < configs.length) {
-                            return new WifiConfiguration(configs[netId]);
-                        } else {
-                            return null;
+                        for (WifiConfiguration config : configs) {
+                            if (netId == config.networkId) {
+                                return new WifiConfiguration(config);
+                            }
                         }
+                        return null;
                     }
                 });
         when(wifiConfigManager.getConfiguredNetwork(anyString()))
                 .then(new AnswerWithArguments() {
                     public WifiConfiguration answer(String configKey) {
-                        for (int netId = 0; netId < configs.length; netId++) {
-                            if (TextUtils.equals(configs[netId].configKey(), configKey)) {
-                                return new WifiConfiguration(configs[netId]);
+                        for (WifiConfiguration config : configs) {
+                            if (TextUtils.equals(config.configKey(), configKey)) {
+                                return new WifiConfiguration(config);
                             }
                         }
                         return null;
@@ -276,19 +292,19 @@ public class WifiNetworkSelectorTestUtil {
         if (scanDetails.size() <= configs.length) {
             for (int i = 0; i < scanDetails.size(); i++) {
                 ScanDetail scanDetail = scanDetails.get(i);
-                when(wifiConfigManager.getSavedNetworkForScanDetailAndCache(eq(scanDetail)))
+                when(wifiConfigManager.getConfiguredNetworkForScanDetailAndCache(eq(scanDetail)))
                         .thenReturn(configs[i]);
             }
         } else {
             for (int i = 0; i < configs.length; i++) {
                 ScanDetail scanDetail = scanDetails.get(i);
-                when(wifiConfigManager.getSavedNetworkForScanDetailAndCache(eq(scanDetail)))
+                when(wifiConfigManager.getConfiguredNetworkForScanDetailAndCache(eq(scanDetail)))
                         .thenReturn(configs[i]);
             }
 
             // associated the remaining scan details with a NULL config.
             for (int i = configs.length; i < scanDetails.size(); i++) {
-                when(wifiConfigManager.getSavedNetworkForScanDetailAndCache(
+                when(wifiConfigManager.getConfiguredNetworkForScanDetailAndCache(
                         eq(scanDetails.get(i)))).thenReturn(null);
             }
         }
@@ -340,18 +356,22 @@ public class WifiNetworkSelectorTestUtil {
      *
      * @param wifiConfigManager WifiConfigManager mock
      * @param networkId         ID of the ephemeral network
-     * @param scanResult        scanResult of the ephemeral network
+     * @param scanDetail        scanDetail of the ephemeral network
      * @param meteredHint       flag to indidate if the network has meteredHint
      */
     public static WifiConfiguration setupEphemeralNetwork(WifiConfigManager wifiConfigManager,
-            int networkId, ScanResult scanResult, boolean meteredHint) {
+            int networkId, ScanDetail scanDetail, boolean meteredHint) {
         // Return the correct networkID for ephemeral network addition.
         when(wifiConfigManager.addOrUpdateNetwork(any(WifiConfiguration.class), anyInt()))
                 .thenReturn(new NetworkUpdateResult(networkId));
-        final WifiConfiguration config = ScanResultUtil.createNetworkFromScanResult(scanResult);
+        final WifiConfiguration config =
+                ScanResultUtil.createNetworkFromScanResult(scanDetail.getScanResult());
+        config.ephemeral = true;
         config.networkId = networkId;
         config.meteredHint = meteredHint;
 
+        when(wifiConfigManager.getConfiguredNetworkForScanDetailAndCache(eq(scanDetail)))
+                .thenReturn(new WifiConfiguration(config));
         when(wifiConfigManager.getConfiguredNetwork(eq(networkId)))
                 .then(new AnswerWithArguments() {
                     public WifiConfiguration answer(int netId) {
@@ -366,6 +386,15 @@ public class WifiNetworkSelectorTestUtil {
                         config.getNetworkSelectionStatus().setCandidateScore(score);
                         config.getNetworkSelectionStatus()
                                 .setSeenInLastQualifiedNetworkSelection(true);
+                        return true;
+                    }
+                });
+        when(wifiConfigManager.updateNetworkSelectionStatus(eq(networkId),
+                eq(WifiConfiguration.NetworkSelectionStatus.NETWORK_SELECTION_ENABLE)))
+                .then(new AnswerWithArguments() {
+                    public boolean answer(int netId, int status) {
+                        config.getNetworkSelectionStatus().setNetworkSelectionStatus(
+                                WifiConfiguration.NetworkSelectionStatus.NETWORK_SELECTION_ENABLE);
                         return true;
                     }
                 });

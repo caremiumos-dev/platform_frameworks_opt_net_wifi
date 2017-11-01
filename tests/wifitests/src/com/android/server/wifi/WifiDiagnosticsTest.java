@@ -33,7 +33,6 @@ import static org.mockito.Mockito.when;
 import android.app.test.MockAnswerUtil.AnswerWithArguments;
 import android.content.Context;
 import android.test.suitebuilder.annotation.SmallTest;
-import android.util.LocalLog;
 
 import com.android.internal.R;
 
@@ -43,6 +42,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -59,13 +59,16 @@ public class WifiDiagnosticsTest {
     @Mock Context mContext;
     @Mock WifiInjector mWifiInjector;
     @Spy FakeWifiLog mLog;
+    @Mock LastMileLogger mLastMileLogger;
+    @Mock Runtime mJavaRuntime;
+    @Mock Process mExternalProcess;
     WifiDiagnostics mWifiDiagnostics;
 
     private static final String FAKE_RING_BUFFER_NAME = "fake-ring-buffer";
     private static final int SMALL_RING_BUFFER_SIZE_KB = 32;
     private static final int LARGE_RING_BUFFER_SIZE_KB = 1024;
     private static final int BYTES_PER_KBYTE = 1024;
-    private LocalLog mWifiNativeLocalLog;
+    private static final long FAKE_CONNECTION_ID = 1;
 
     private WifiNative.RingBufferStatus mFakeRbs;
     /**
@@ -89,14 +92,15 @@ public class WifiDiagnosticsTest {
         WifiNative.RingBufferStatus[] ringBufferStatuses = new WifiNative.RingBufferStatus[] {
                 mFakeRbs
         };
-        mWifiNativeLocalLog = new LocalLog(8192);
 
         when(mWifiNative.getRingBufferStatus()).thenReturn(ringBufferStatuses);
         when(mWifiNative.readKernelLog()).thenReturn("");
-        when(mWifiNative.getLocalLog()).thenReturn(mWifiNativeLocalLog);
         when(mBuildProperties.isEngBuild()).thenReturn(false);
         when(mBuildProperties.isUserdebugBuild()).thenReturn(false);
         when(mBuildProperties.isUserBuild()).thenReturn(true);
+        when(mExternalProcess.getInputStream()).thenReturn(new ByteArrayInputStream(new byte[0]));
+        when(mExternalProcess.getErrorStream()).thenReturn(new ByteArrayInputStream(new byte[0]));
+        when(mJavaRuntime.exec(anyString())).thenReturn(mExternalProcess);
 
         MockResources resources = new MockResources();
         resources.setInteger(R.integer.config_wifi_logger_ring_buffer_default_size_limit_kb,
@@ -105,9 +109,10 @@ public class WifiDiagnosticsTest {
                 LARGE_RING_BUFFER_SIZE_KB);
         when(mContext.getResources()).thenReturn(resources);
         when(mWifiInjector.makeLog(anyString())).thenReturn(mLog);
+        when(mWifiInjector.getJavaRuntime()).thenReturn(mJavaRuntime);
 
         mWifiDiagnostics = new WifiDiagnostics(
-                mContext, mWifiInjector, mWsm, mWifiNative, mBuildProperties);
+                mContext, mWifiInjector, mWsm, mWifiNative, mBuildProperties, mLastMileLogger);
         mWifiNative.enableVerboseLogging(0);
     }
 
@@ -163,6 +168,7 @@ public class WifiDiagnosticsTest {
     @Test
     public void startLoggingStopsAndRestartsRingBufferLogging() throws Exception {
         final boolean verbosityToggle = false;
+        setBuildPropertiesToEnableRingBuffers();
         mWifiDiagnostics.startLogging(verbosityToggle);
         verify(mWifiNative).startLoggingRingBuffer(
                 eq(WifiDiagnostics.VERBOSE_NO_LOG), anyInt(), anyInt(), anyInt(),
@@ -170,6 +176,14 @@ public class WifiDiagnosticsTest {
         verify(mWifiNative).startLoggingRingBuffer(
                 eq(WifiDiagnostics.VERBOSE_NORMAL_LOG), anyInt(), anyInt(), anyInt(),
                 eq(FAKE_RING_BUFFER_NAME));
+    }
+
+    @Test
+    public void startLoggingDoesNotStartRingBuffersOnUserBuilds() throws Exception {
+        final boolean verbosityToggle = true;
+        mWifiDiagnostics.startLogging(verbosityToggle);
+        verify(mWifiNative, never()).startLoggingRingBuffer(
+                anyInt(), anyInt(), anyInt(), anyInt(), anyString());
     }
 
     /** Verifies that, if a log handler was registered, then stopLogging() resets it. */
@@ -217,6 +231,7 @@ public class WifiDiagnosticsTest {
     @Test
     public void canCaptureAndStoreRingBufferData() throws Exception {
         final boolean verbosityToggle = false;
+        setBuildPropertiesToEnableRingBuffers();
         mWifiDiagnostics.startLogging(verbosityToggle);
 
         final byte[] data = new byte[SMALL_RING_BUFFER_SIZE_KB * BYTES_PER_KBYTE];
@@ -231,9 +246,10 @@ public class WifiDiagnosticsTest {
     /**
      * Verifies that we discard extraneous ring-buffer data.
      */
-    @Test
+    // TODO(b/36811399): re-enabled this @Test
     public void loggerDiscardsExtraneousData() throws Exception {
         final boolean verbosityToggle = false;
+        setBuildPropertiesToEnableRingBuffers();
         mWifiDiagnostics.startLogging(verbosityToggle);
 
         final byte[] data1 = new byte[SMALL_RING_BUFFER_SIZE_KB * BYTES_PER_KBYTE];
@@ -279,14 +295,15 @@ public class WifiDiagnosticsTest {
     }
 
     /**
-     * Verifies that, when verbose mode is not enabled, reportConnectionFailure() still
-     * fetches packet fates.
+     * Verifies that, when verbose mode is not enabled,
+     * reportConnectionEvent(WifiDiagnostics.CONNECTION_EVENT_FAILED) still fetches packet fates.
      */
     @Test
     public void reportConnectionFailureIsIgnoredWithoutVerboseMode() {
         final boolean verbosityToggle = false;
         mWifiDiagnostics.startLogging(verbosityToggle);
-        mWifiDiagnostics.reportConnectionFailure();
+        mWifiDiagnostics.reportConnectionEvent(
+                FAKE_CONNECTION_ID, WifiDiagnostics.CONNECTION_EVENT_FAILED);
         verify(mWifiNative).getTxPktFates(anyObject());
         verify(mWifiNative).getRxPktFates(anyObject());
     }
@@ -298,9 +315,40 @@ public class WifiDiagnosticsTest {
     public void reportConnectionFailureFetchesFatesInVerboseMode() {
         final boolean verbosityToggle = true;
         mWifiDiagnostics.startLogging(verbosityToggle);
-        mWifiDiagnostics.reportConnectionFailure();
+        mWifiDiagnostics.reportConnectionEvent(
+                FAKE_CONNECTION_ID, WifiDiagnostics.CONNECTION_EVENT_FAILED);
         verify(mWifiNative).getTxPktFates(anyObject());
         verify(mWifiNative).getRxPktFates(anyObject());
+    }
+
+    @Test
+    public void reportConnectionEventPropagatesStartToLastMileLogger() {
+        final boolean verbosityToggle = false;
+        mWifiDiagnostics.startLogging(verbosityToggle);
+        mWifiDiagnostics.reportConnectionEvent(
+                FAKE_CONNECTION_ID, WifiDiagnostics.CONNECTION_EVENT_STARTED);
+        verify(mLastMileLogger).reportConnectionEvent(
+                FAKE_CONNECTION_ID, WifiDiagnostics.CONNECTION_EVENT_STARTED);
+    }
+
+    @Test
+    public void reportConnectionEventPropagatesSuccessToLastMileLogger() {
+        final boolean verbosityToggle = false;
+        mWifiDiagnostics.startLogging(verbosityToggle);
+        mWifiDiagnostics.reportConnectionEvent(
+                FAKE_CONNECTION_ID, WifiDiagnostics.CONNECTION_EVENT_SUCCEEDED);
+        verify(mLastMileLogger).reportConnectionEvent(
+                FAKE_CONNECTION_ID, WifiDiagnostics.CONNECTION_EVENT_SUCCEEDED);
+    }
+
+    @Test
+    public void reportConnectionEventPropagatesFailureToLastMileLogger() {
+        final boolean verbosityToggle = false;
+        mWifiDiagnostics.startLogging(verbosityToggle);
+        mWifiDiagnostics.reportConnectionEvent(
+                FAKE_CONNECTION_ID, WifiDiagnostics.CONNECTION_EVENT_FAILED);
+        verify(mLastMileLogger).reportConnectionEvent(
+                FAKE_CONNECTION_ID, WifiDiagnostics.CONNECTION_EVENT_FAILED);
     }
 
     /**
@@ -311,7 +359,8 @@ public class WifiDiagnosticsTest {
         final boolean verbosityToggle = true;
         when(mWifiNative.getRxPktFates(anyObject())).thenReturn(false);
         mWifiDiagnostics.startLogging(verbosityToggle);
-        mWifiDiagnostics.reportConnectionFailure();
+        mWifiDiagnostics.reportConnectionEvent(
+                FAKE_CONNECTION_ID, WifiDiagnostics.CONNECTION_EVENT_FAILED);
         verify(mWifiNative).getTxPktFates(anyObject());
         verify(mWifiNative).getRxPktFates(anyObject());
     }
@@ -324,7 +373,8 @@ public class WifiDiagnosticsTest {
         final boolean verbosityToggle = true;
         when(mWifiNative.getTxPktFates(anyObject())).thenReturn(false);
         mWifiDiagnostics.startLogging(verbosityToggle);
-        mWifiDiagnostics.reportConnectionFailure();
+        mWifiDiagnostics.reportConnectionEvent(
+                FAKE_CONNECTION_ID, WifiDiagnostics.CONNECTION_EVENT_FAILED);
         verify(mWifiNative).getTxPktFates(anyObject());
         verify(mWifiNative).getRxPktFates(anyObject());
     }
@@ -366,7 +416,8 @@ public class WifiDiagnosticsTest {
     public void dumpSucceedsWhenFatesHaveBeenFetchedButAreEmpty() {
         final boolean verbosityToggle = true;
         mWifiDiagnostics.startLogging(verbosityToggle);
-        mWifiDiagnostics.reportConnectionFailure();
+        mWifiDiagnostics.reportConnectionEvent(
+                FAKE_CONNECTION_ID, WifiDiagnostics.CONNECTION_EVENT_FAILED);
         verify(mWifiNative).getTxPktFates(anyObject());
         verify(mWifiNative).getRxPktFates(anyObject());
 
@@ -410,7 +461,8 @@ public class WifiDiagnosticsTest {
                 return true;
             }
         });
-        mWifiDiagnostics.reportConnectionFailure();
+        mWifiDiagnostics.reportConnectionEvent(
+                FAKE_CONNECTION_ID, WifiDiagnostics.CONNECTION_EVENT_FAILED);
 
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
@@ -535,7 +587,8 @@ public class WifiDiagnosticsTest {
                 return true;
             }
         });
-        mWifiDiagnostics.reportConnectionFailure();
+        mWifiDiagnostics.reportConnectionEvent(
+                FAKE_CONNECTION_ID, WifiDiagnostics.CONNECTION_EVENT_FAILED);
         verify(mWifiNative).getTxPktFates(anyObject());
         verify(mWifiNative).getRxPktFates(anyObject());
 
@@ -551,8 +604,20 @@ public class WifiDiagnosticsTest {
         assertFalse(fateDumpString.contains("Frame bytes"));
     }
 
-    /** Verifies that the default size of our ring buffers is small. */
     @Test
+    public void dumpSucceedsEvenIfRingBuffersAreDisabled() {
+        final boolean verbosityToggle = true;
+        mWifiDiagnostics.startLogging(verbosityToggle);
+        verify(mWifiNative, never()).startLoggingRingBuffer(
+                anyInt(), anyInt(), anyInt(), anyInt(), anyString());
+
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        mWifiDiagnostics.dump(new FileDescriptor(), pw, new String[]{"bogus", "args"});
+    }
+
+    /** Verifies that the default size of our ring buffers is small. */
+    // TODO(b/36811399): re-enable this @Test
     public void ringBufferSizeIsSmallByDefault() throws Exception {
         final boolean verbosityToggle = false;
         mWifiDiagnostics.startLogging(verbosityToggle);
@@ -563,7 +628,7 @@ public class WifiDiagnosticsTest {
     }
 
     /** Verifies that we use small ring buffers by default, on userdebug builds. */
-    @Test
+    // TODO(b/36811399): re-enable this @Test
     public void ringBufferSizeIsSmallByDefaultOnUserdebugBuilds() throws Exception {
         final boolean verbosityToggle = false;
         when(mBuildProperties.isUserdebugBuild()).thenReturn(true);
@@ -577,7 +642,7 @@ public class WifiDiagnosticsTest {
     }
 
     /** Verifies that we use small ring buffers by default, on eng builds. */
-    @Test
+    // TODO(b/36811399): re-enable this @Test
     public void ringBufferSizeIsSmallByDefaultOnEngBuilds() throws Exception {
         final boolean verbosityToggle = false;
         when(mBuildProperties.isEngBuild()).thenReturn(true);
@@ -594,6 +659,8 @@ public class WifiDiagnosticsTest {
     @Test
     public void ringBufferSizeIsLargeInVerboseMode() throws Exception {
         final boolean verbosityToggle = true;
+        setBuildPropertiesToEnableRingBuffers();
+
         mWifiDiagnostics.startLogging(verbosityToggle);
         mWifiDiagnostics.onRingBufferData(
                 mFakeRbs, new byte[LARGE_RING_BUFFER_SIZE_KB * BYTES_PER_KBYTE]);
@@ -604,6 +671,8 @@ public class WifiDiagnosticsTest {
     /** Verifies that we use large ring buffers when switched from normal to verbose mode. */
     @Test
     public void startLoggingGrowsRingBuffersIfNeeded() throws Exception {
+        setBuildPropertiesToEnableRingBuffers();
+
         mWifiDiagnostics.startLogging(false  /* verbose disabled */);
         mWifiDiagnostics.startLogging(true  /* verbose enabled */);
         mWifiDiagnostics.onRingBufferData(
@@ -613,8 +682,10 @@ public class WifiDiagnosticsTest {
     }
 
     /** Verifies that we use small ring buffers when switched from verbose to normal mode. */
-    @Test
+    // TODO(b/36811399): re-enabled this @Test
     public void startLoggingShrinksRingBuffersIfNeeded() throws Exception {
+        setBuildPropertiesToEnableRingBuffers();
+
         mWifiDiagnostics.startLogging(true  /* verbose enabled */);
         mWifiDiagnostics.onRingBufferData(
                 mFakeRbs, new byte[SMALL_RING_BUFFER_SIZE_KB * BYTES_PER_KBYTE + 1]);
@@ -738,16 +809,16 @@ public class WifiDiagnosticsTest {
         assertFalse(sw.toString().contains(WifiDiagnostics.FIRMWARE_DUMP_SECTION_HEADER));
     }
 
-    /** Verifies that the dump() includes contents of WifiNative's LocalLog. */
     @Test
-    public void dumpIncludesContentOfWifiNativeLocalLog() {
-        final String wifiNativeLogMessage = "This is a message";
-        mWifiNativeLocalLog.log(wifiNativeLogMessage);
+    public void dumpRequestsLastMileLoggerDump() {
+        mWifiDiagnostics.dump(
+                new FileDescriptor(), new PrintWriter(new StringWriter()), new String[]{});
+        verify(mLastMileLogger).dump(anyObject());
+    }
 
-        mWifiDiagnostics.startLogging(false  /* verbose disabled */);
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        mWifiDiagnostics.dump(new FileDescriptor(), pw, new String[]{});
-        assertTrue(sw.toString().contains(wifiNativeLogMessage));
+    private void setBuildPropertiesToEnableRingBuffers() {
+        when(mBuildProperties.isEngBuild()).thenReturn(false);
+        when(mBuildProperties.isUserdebugBuild()).thenReturn(true);
+        when(mBuildProperties.isUserBuild()).thenReturn(false);
     }
 }

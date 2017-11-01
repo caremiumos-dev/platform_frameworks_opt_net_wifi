@@ -25,6 +25,7 @@ import static org.mockito.Mockito.*;
 import android.app.test.MockAnswerUtil.AnswerWithArguments;
 import android.app.test.TestAlarmManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.NetworkScoreManager;
 import android.net.wifi.ScanResult;
@@ -44,20 +45,25 @@ import android.os.SystemClock;
 import android.os.WorkSource;
 import android.os.test.TestLooper;
 import android.test.suitebuilder.annotation.SmallTest;
+import android.util.LocalLog;
 
 import com.android.internal.R;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * Unit tests for {@link com.android.server.wifi.WifiConnectivityManager}.
@@ -73,15 +79,22 @@ public class WifiConnectivityManagerTest {
         mResource = mockResource();
         mAlarmManager = new TestAlarmManager();
         mContext = mockContext();
+        mLocalLog = new LocalLog(512);
         mWifiStateMachine = mockWifiStateMachine();
         mWifiConfigManager = mockWifiConfigManager();
         mWifiInfo = getWifiInfo();
         mScanData = mockScanData();
         mWifiScanner = mockWifiScanner();
+        mWifiConnectivityHelper = mockWifiConnectivityHelper();
         mWifiNS = mockWifiNetworkSelector();
         mWifiConnectivityManager = createConnectivityManager();
+        verify(mWifiConfigManager).setOnSavedNetworkUpdateListener(anyObject());
         mWifiConnectivityManager.setWifiEnabled(true);
         when(mClock.getElapsedSinceBootMillis()).thenReturn(SystemClock.elapsedRealtime());
+        mFullScanMaxTxPacketRate = mResource.getInteger(
+                R.integer.config_wifi_framework_max_tx_rate_for_full_scan);
+        mFullScanMaxRxPacketRate = mResource.getInteger(
+                R.integer.config_wifi_framework_max_rx_rate_for_full_scan);
     }
 
     /**
@@ -101,22 +114,32 @@ public class WifiConnectivityManagerTest {
     private WifiNetworkSelector mWifiNS;
     private WifiStateMachine mWifiStateMachine;
     private WifiScanner mWifiScanner;
+    private WifiConnectivityHelper mWifiConnectivityHelper;
     private ScanData mScanData;
     private WifiConfigManager mWifiConfigManager;
     private WifiInfo mWifiInfo;
+    private LocalLog mLocalLog;
     @Mock private FrameworkFacade mFrameworkFacade;
     @Mock private NetworkScoreManager mNetworkScoreManager;
     @Mock private Clock mClock;
     @Mock private WifiLastResortWatchdog mWifiLastResortWatchdog;
+    @Mock private WifiNotificationController mWifiNotificationController;
     @Mock private WifiMetrics mWifiMetrics;
     @Mock private WifiNetworkScoreCache mScoreCache;
+    @Captor ArgumentCaptor<ScanResult> mCandidateScanResultCaptor;
+    @Captor ArgumentCaptor<ArrayList<String>> mBssidBlacklistCaptor;
+    @Captor ArgumentCaptor<ArrayList<String>> mSsidWhitelistCaptor;
     private MockResources mResources;
+    private int mFullScanMaxTxPacketRate;
+    private int mFullScanMaxRxPacketRate;
 
     private static final int CANDIDATE_NETWORK_ID = 0;
     private static final String CANDIDATE_SSID = "\"AnSsid\"";
     private static final String CANDIDATE_BSSID = "6c:f3:7f:ae:8c:f3";
-    private static final String TAG = "WifiConnectivityManager Unit Test";
+    private static final String INVALID_SCAN_RESULT_BSSID = "6c:f3:7f:ae:8c:f4";
     private static final long CURRENT_SYSTEM_TIME_MS = 1000;
+    private static final int MAX_BSSID_BLACKLIST_SIZE = 16;
+
 
     Resources mockResource() {
         Resources resource = mock(Resources.class);
@@ -129,8 +152,11 @@ public class WifiConnectivityManagerTest {
                 R.integer.config_wifi_framework_wifi_score_good_rssi_threshold_24GHz))
                 .thenReturn(-60);
         when(resource.getInteger(
-                R.integer.config_wifi_framework_current_network_boost))
-                .thenReturn(16);
+                R.integer.config_wifi_framework_current_network_boost)).thenReturn(16);
+        when(resource.getInteger(
+                R.integer.config_wifi_framework_max_tx_rate_for_full_scan)).thenReturn(8);
+        when(resource.getInteger(
+                R.integer.config_wifi_framework_max_rx_rate_for_full_scan)).thenReturn(16);
         return resource;
     }
 
@@ -140,6 +166,7 @@ public class WifiConnectivityManagerTest {
         when(context.getResources()).thenReturn(mResource);
         when(context.getSystemService(Context.ALARM_SERVICE)).thenReturn(
                 mAlarmManager.getAlarmManager());
+        when(context.getPackageManager()).thenReturn(mock(PackageManager.class));
 
         return context;
     }
@@ -164,17 +191,17 @@ public class WifiConnectivityManagerTest {
 
         // do a synchronous answer for the ScanListener callbacks
         doAnswer(new AnswerWithArguments() {
-                public void answer(ScanSettings settings, ScanListener listener,
-                        WorkSource workSource) throws Exception {
-                    listener.onResults(scanDatas);
-                }}).when(scanner).startBackgroundScan(anyObject(), anyObject(), anyObject());
+            public void answer(ScanSettings settings, ScanListener listener,
+                    WorkSource workSource) throws Exception {
+                listener.onResults(scanDatas);
+            }}).when(scanner).startBackgroundScan(anyObject(), anyObject(), anyObject());
 
         doAnswer(new AnswerWithArguments() {
-                public void answer(ScanSettings settings, ScanListener listener,
-                        WorkSource workSource) throws Exception {
-                    listener.onResults(scanDatas);
-                    allSingleScanListenerCaptor.getValue().onResults(scanDatas);
-                }}).when(scanner).startScan(anyObject(), anyObject(), anyObject());
+            public void answer(ScanSettings settings, ScanListener listener,
+                    WorkSource workSource) throws Exception {
+                listener.onResults(scanDatas);
+                allSingleScanListenerCaptor.getValue().onResults(scanDatas);
+            }}).when(scanner).startScan(anyObject(), anyObject(), anyObject());
 
         // This unfortunately needs to be a somewhat valid scan result, otherwise
         // |ScanDetailUtil.toScanDetail| raises exceptions.
@@ -186,7 +213,7 @@ public class WifiConnectivityManagerTest {
         scanResults[0].informationElements[0] = new InformationElement();
         scanResults[0].informationElements[0].id = InformationElement.EID_SSID;
         scanResults[0].informationElements[0].bytes =
-                CANDIDATE_SSID.getBytes(StandardCharsets.UTF_8);
+            CANDIDATE_SSID.getBytes(StandardCharsets.UTF_8);
 
         doAnswer(new AnswerWithArguments() {
             public void answer(ScanSettings settings, PnoSettings pnoSettings,
@@ -201,6 +228,15 @@ public class WifiConnectivityManagerTest {
             }}).when(scanner).startConnectedPnoScan(anyObject(), anyObject(), anyObject());
 
         return scanner;
+    }
+
+    WifiConnectivityHelper mockWifiConnectivityHelper() {
+        WifiConnectivityHelper connectivityHelper = mock(WifiConnectivityHelper.class);
+
+        when(connectivityHelper.isFirmwareRoamingSupported()).thenReturn(false);
+        when(connectivityHelper.getMaxNumBlacklistBssid()).thenReturn(MAX_BSSID_BLACKLIST_SIZE);
+
+        return connectivityHelper;
     }
 
     WifiStateMachine mockWifiStateMachine() {
@@ -219,14 +255,14 @@ public class WifiConnectivityManagerTest {
 
         WifiConfiguration candidate = generateWifiConfig(
                 0, CANDIDATE_NETWORK_ID, CANDIDATE_SSID, false, true, null, null);
-        candidate.BSSID = CANDIDATE_BSSID;
+        candidate.BSSID = WifiStateMachine.SUPPLICANT_BSSID_ANY;
         ScanResult candidateScanResult = new ScanResult();
         candidateScanResult.SSID = CANDIDATE_SSID;
         candidateScanResult.BSSID = CANDIDATE_BSSID;
         candidate.getNetworkSelectionStatus().setCandidate(candidateScanResult);
 
-        when(ns.selectNetwork(anyObject(), anyObject(), anyBoolean(), anyBoolean(),
-              anyBoolean())).thenReturn(candidate);
+        when(ns.selectNetwork(anyObject(), anyObject(), anyObject(), anyBoolean(),
+                anyBoolean(), anyBoolean())).thenReturn(candidate);
         return ns;
     }
 
@@ -257,9 +293,9 @@ public class WifiConnectivityManagerTest {
 
     WifiConnectivityManager createConnectivityManager() {
         return new WifiConnectivityManager(mContext, mWifiStateMachine, mWifiScanner,
-                mWifiConfigManager, mWifiInfo, mWifiNS,
-                mWifiLastResortWatchdog, mWifiMetrics, mLooper.getLooper(), mClock, true,
-                mFrameworkFacade, null, null, null);
+                mWifiConfigManager, mWifiInfo, mWifiNS, mWifiConnectivityHelper,
+                mWifiLastResortWatchdog, mWifiNotificationController, mWifiMetrics,
+                mLooper.getLooper(), mClock, mLocalLog, true, mFrameworkFacade, null, null, null);
     }
 
     /**
@@ -278,8 +314,7 @@ public class WifiConnectivityManagerTest {
         mWifiConnectivityManager.handleConnectionStateChanged(
                 WifiConnectivityManager.WIFI_STATE_DISCONNECTED);
 
-        verify(mWifiStateMachine).startConnectToNetwork(
-                CANDIDATE_NETWORK_ID, CANDIDATE_BSSID);
+        verify(mWifiStateMachine).startConnectToNetwork(CANDIDATE_NETWORK_ID, CANDIDATE_BSSID);
     }
 
     /**
@@ -298,8 +333,7 @@ public class WifiConnectivityManagerTest {
         mWifiConnectivityManager.handleConnectionStateChanged(
                 WifiConnectivityManager.WIFI_STATE_CONNECTED);
 
-        verify(mWifiStateMachine).startConnectToNetwork(
-                CANDIDATE_NETWORK_ID, CANDIDATE_BSSID);
+        verify(mWifiStateMachine).startConnectToNetwork(CANDIDATE_NETWORK_ID, CANDIDATE_BSSID);
     }
 
     /**
@@ -476,6 +510,7 @@ public class WifiConnectivityManagerTest {
         }
 
         mWifiConnectivityManager.setUserConnectChoice(CANDIDATE_NETWORK_ID);
+        mWifiConnectivityManager.prepareForForcedConnection(CANDIDATE_NETWORK_ID);
 
         for (int attempt = 0; attempt < maxAttemptRate; attempt++) {
             currentTimeStamp += connectionAttemptIntervals;
@@ -499,10 +534,9 @@ public class WifiConnectivityManagerTest {
      * because of their low RSSI values.
      */
     @Test
-    @Ignore("b/32977707")
     public void pnoRetryForLowRssiNetwork() {
-        when(mWifiNS.selectNetwork(anyObject(), anyObject(), anyBoolean(), anyBoolean(),
-              anyBoolean())).thenReturn(null);
+        when(mWifiNS.selectNetwork(anyObject(), anyObject(), anyObject(), anyBoolean(),
+                anyBoolean(), anyBoolean())).thenReturn(null);
 
         // Set screen to off
         mWifiConnectivityManager.handleScreenStateChanged(false);
@@ -531,7 +565,6 @@ public class WifiConnectivityManagerTest {
      * a candidate while watchdog single scan did.
      */
     @Test
-    @Ignore("b/32977707")
     public void watchdogBitePnoBadIncrementsMetrics() {
         // Set screen to off
         mWifiConnectivityManager.handleScreenStateChanged(false);
@@ -555,11 +588,10 @@ public class WifiConnectivityManagerTest {
      * a candidate which was the same with watchdog single scan.
      */
     @Test
-    @Ignore("b/32977707")
     public void watchdogBitePnoGoodIncrementsMetrics() {
         // Qns returns no candidate after watchdog single scan.
-        when(mWifiNS.selectNetwork(anyObject(), anyObject(), anyBoolean(), anyBoolean(),
-              anyBoolean())).thenReturn(null);
+        when(mWifiNS.selectNetwork(anyObject(), anyObject(), anyObject(), anyBoolean(),
+                anyBoolean(), anyBoolean())).thenReturn(null);
 
         // Set screen to off
         mWifiConnectivityManager.handleScreenStateChanged(false);
@@ -574,6 +606,90 @@ public class WifiConnectivityManagerTest {
 
         verify(mWifiMetrics).incrementNumConnectivityWatchdogPnoGood();
         verify(mWifiMetrics, never()).incrementNumConnectivityWatchdogPnoBad();
+    }
+
+    /**
+     * {@link WifiNotificationController} handles scan results on network selection.
+     *
+     * Expected behavior: ONA handles scan results
+     */
+    @Test
+    public void wifiDisconnected_noConnectionCandidate_openNetworkNotificationScanResultsHandled() {
+        // no connection candidate selected
+        when(mWifiNS.selectNetwork(anyObject(), anyObject(), anyObject(), anyBoolean(),
+                anyBoolean(), anyBoolean())).thenReturn(null);
+
+        List<ScanDetail> expectedOpenNetworks = new ArrayList<>();
+        expectedOpenNetworks.add(
+                new ScanDetail(
+                        new ScanResult(WifiSsid.createFromAsciiEncoded(CANDIDATE_SSID),
+                                CANDIDATE_SSID, CANDIDATE_BSSID, 1245, 0, "some caps", -78, 2450,
+                                1025, 22, 33, 20, 0, 0, true), null));
+
+        when(mWifiNS.getFilteredScanDetailsForOpenUnsavedNetworks())
+                .thenReturn(expectedOpenNetworks);
+
+        // Set WiFi to disconnected state to trigger PNO scan
+        mWifiConnectivityManager.handleConnectionStateChanged(
+                WifiConnectivityManager.WIFI_STATE_DISCONNECTED);
+
+        verify(mWifiNotificationController).handleScanResults(expectedOpenNetworks);
+    }
+
+    /**
+     * When wifi is connected, {@link WifiNotificationController} tries to clear the pending
+     * notification and does not reset notification repeat delay.
+     *
+     * Expected behavior: ONA clears pending notification and does not reset repeat delay.
+     */
+    @Test
+    public void wifiConnected_openNetworkNotificationClearsPendingNotification() {
+        // Set WiFi to connected state
+        mWifiConnectivityManager.handleConnectionStateChanged(
+                WifiConnectivityManager.WIFI_STATE_CONNECTED);
+
+        verify(mWifiNotificationController).clearPendingNotification(false /* isRepeatDelayReset*/);
+    }
+
+    /**
+     * When wifi is connected, {@link WifiNotificationController} handles connection state
+     * change.
+     *
+     * Expected behavior: ONA does not clear pending notification.
+     */
+    @Test
+    public void wifiDisconnected_openNetworkNotificationDoesNotClearPendingNotification() {
+        // Set WiFi to disconnected state
+        mWifiConnectivityManager.handleConnectionStateChanged(
+                WifiConnectivityManager.WIFI_STATE_DISCONNECTED);
+
+        verify(mWifiNotificationController, never()).clearPendingNotification(anyBoolean());
+    }
+
+    /**
+     * When Wi-Fi is disabled, clear the pending notification and reset notification repeat delay.
+     *
+     * Expected behavior: clear pending notification and reset notification repeat delay
+     * */
+    @Test
+    public void openNetworkNotificationControllerToggledOnWifiStateChanges() {
+        mWifiConnectivityManager.setWifiEnabled(false);
+
+        verify(mWifiNotificationController).clearPendingNotification(true /* isRepeatDelayReset */);
+    }
+
+    /**
+     * Verify that the ONA controller tracks screen state changes.
+     */
+    @Test
+    public void openNetworkNotificationControllerTracksScreenStateChanges() {
+        mWifiConnectivityManager.handleScreenStateChanged(false);
+
+        verify(mWifiNotificationController).handleScreenStateChanged(false);
+
+        mWifiConnectivityManager.handleScreenStateChanged(true);
+
+        verify(mWifiNotificationController).handleScreenStateChanged(true);
     }
 
     /**
@@ -602,8 +718,8 @@ public class WifiConnectivityManagerTest {
 
         // Get the first periodic scan interval
         long firstIntervalMs = mAlarmManager
-                    .getTriggerTimeMillis(WifiConnectivityManager.PERIODIC_SCAN_TIMER_TAG)
-                    - currentTimeStamp;
+                .getTriggerTimeMillis(WifiConnectivityManager.PERIODIC_SCAN_TIMER_TAG)
+                - currentTimeStamp;
         assertEquals(firstIntervalMs, WifiConnectivityManager.PERIODIC_SCAN_INTERVAL_MS);
 
         currentTimeStamp += firstIntervalMs;
@@ -615,8 +731,8 @@ public class WifiConnectivityManagerTest {
 
         // Get the second periodic scan interval
         long secondIntervalMs = mAlarmManager
-                    .getTriggerTimeMillis(WifiConnectivityManager.PERIODIC_SCAN_TIMER_TAG)
-                    - currentTimeStamp;
+                .getTriggerTimeMillis(WifiConnectivityManager.PERIODIC_SCAN_TIMER_TAG)
+                - currentTimeStamp;
 
         // Verify the intervals are exponential back off
         assertEquals(firstIntervalMs * 2, secondIntervalMs);
@@ -665,8 +781,8 @@ public class WifiConnectivityManagerTest {
 
         // Get the first periodic scan interval
         long firstIntervalMs = mAlarmManager
-                    .getTriggerTimeMillis(WifiConnectivityManager.PERIODIC_SCAN_TIMER_TAG)
-                    - currentTimeStamp;
+                .getTriggerTimeMillis(WifiConnectivityManager.PERIODIC_SCAN_TIMER_TAG)
+                - currentTimeStamp;
         assertEquals(firstIntervalMs, WifiConnectivityManager.PERIODIC_SCAN_INTERVAL_MS);
 
         currentTimeStamp += firstIntervalMs;
@@ -678,8 +794,8 @@ public class WifiConnectivityManagerTest {
 
         // Get the second periodic scan interval
         long secondIntervalMs = mAlarmManager
-                    .getTriggerTimeMillis(WifiConnectivityManager.PERIODIC_SCAN_TIMER_TAG)
-                    - currentTimeStamp;
+                .getTriggerTimeMillis(WifiConnectivityManager.PERIODIC_SCAN_TIMER_TAG)
+                - currentTimeStamp;
 
         // Verify the intervals are exponential back off
         assertEquals(firstIntervalMs * 2, secondIntervalMs);
@@ -703,14 +819,14 @@ public class WifiConnectivityManagerTest {
     }
 
     /**
-     *  When screen on trigger two connection state change events back to back to
-     *  verify that the minium scan interval is enforced.
+     *  When screen on trigger a disconnected state change event then a connected state
+     *  change event back to back to verify that the minium scan interval is enforced.
      *
      * Expected behavior: WifiConnectivityManager start the second periodic single
      * scan PERIODIC_SCAN_INTERVAL_MS after the first one.
      */
     @Test
-    public void checkMinimumPeriodicScanIntervalWhenScreenOn() {
+    public void checkMinimumPeriodicScanIntervalWhenScreenOnAndConnected() {
         long currentTimeStamp = CURRENT_SYSTEM_TIME_MS;
         when(mClock.getElapsedSinceBootMillis()).thenReturn(currentTimeStamp);
 
@@ -720,30 +836,79 @@ public class WifiConnectivityManagerTest {
         // Wait for MAX_PERIODIC_SCAN_INTERVAL_MS so that any impact triggered
         // by screen state change can settle
         currentTimeStamp += WifiConnectivityManager.MAX_PERIODIC_SCAN_INTERVAL_MS;
-        long firstScanTimeStamp = currentTimeStamp;
+        long scanForDisconnectedTimeStamp = currentTimeStamp;
+        when(mClock.getElapsedSinceBootMillis()).thenReturn(currentTimeStamp);
+
+        // Set WiFi to disconnected state which triggers a scan immediately
+        mWifiConnectivityManager.handleConnectionStateChanged(
+                WifiConnectivityManager.WIFI_STATE_DISCONNECTED);
+        verify(mWifiScanner, times(1)).startScan(anyObject(), anyObject(), anyObject());
+
+        // Set up time stamp for when entering CONNECTED state
+        currentTimeStamp += 2000;
+        when(mClock.getElapsedSinceBootMillis()).thenReturn(currentTimeStamp);
+
+        // Set WiFi to connected state to trigger its periodic scan
+        mWifiConnectivityManager.handleConnectionStateChanged(
+                WifiConnectivityManager.WIFI_STATE_CONNECTED);
+
+        // The very first scan triggered for connected state is actually via the alarm timer
+        // and it obeys the minimum scan interval
+        long firstScanForConnectedTimeStamp = mAlarmManager
+                .getTriggerTimeMillis(WifiConnectivityManager.PERIODIC_SCAN_TIMER_TAG);
+
+        // Verify that the first scan for connected state is scheduled PERIODIC_SCAN_INTERVAL_MS
+        // after the scan for disconnected state
+        assertEquals(firstScanForConnectedTimeStamp, scanForDisconnectedTimeStamp
+                + WifiConnectivityManager.PERIODIC_SCAN_INTERVAL_MS);
+    }
+
+    /**
+     *  When screen on trigger a connected state change event then a disconnected state
+     *  change event back to back to verify that a scan is fired immediately for the
+     *  disconnected state change event.
+     *
+     * Expected behavior: WifiConnectivityManager directly starts the periodic immediately
+     * for the disconnected state change event. The second scan for disconnected state is
+     * via alarm timer.
+     */
+    @Test
+    public void scanImmediatelyWhenScreenOnAndDisconnected() {
+        long currentTimeStamp = CURRENT_SYSTEM_TIME_MS;
+        when(mClock.getElapsedSinceBootMillis()).thenReturn(currentTimeStamp);
+
+        // Set screen to ON
+        mWifiConnectivityManager.handleScreenStateChanged(true);
+
+        // Wait for MAX_PERIODIC_SCAN_INTERVAL_MS so that any impact triggered
+        // by screen state change can settle
+        currentTimeStamp += WifiConnectivityManager.MAX_PERIODIC_SCAN_INTERVAL_MS;
+        long scanForConnectedTimeStamp = currentTimeStamp;
         when(mClock.getElapsedSinceBootMillis()).thenReturn(currentTimeStamp);
 
         // Set WiFi to connected state to trigger the periodic scan
         mWifiConnectivityManager.handleConnectionStateChanged(
                 WifiConnectivityManager.WIFI_STATE_CONNECTED);
+        verify(mWifiScanner, times(1)).startScan(anyObject(), anyObject(), anyObject());
 
-        // Set the second scan attempt time stamp.
+        // Set up the time stamp for when entering DISCONNECTED state
         currentTimeStamp += 2000;
+        long enteringDisconnectedStateTimeStamp = currentTimeStamp;
         when(mClock.getElapsedSinceBootMillis()).thenReturn(currentTimeStamp);
 
-        // Set WiFi to disconnected state to trigger another periodic scan
+        // Set WiFi to disconnected state to trigger its periodic scan
         mWifiConnectivityManager.handleConnectionStateChanged(
                 WifiConnectivityManager.WIFI_STATE_DISCONNECTED);
 
-        // Get the second periodic scan actual time stamp
-        long secondScanTimeStamp = mAlarmManager
-                    .getTriggerTimeMillis(WifiConnectivityManager.PERIODIC_SCAN_TIMER_TAG);
+        // Verify the very first scan for DISCONNECTED state is fired immediately
+        verify(mWifiScanner, times(2)).startScan(anyObject(), anyObject(), anyObject());
+        long secondScanForDisconnectedTimeStamp = mAlarmManager
+                .getTriggerTimeMillis(WifiConnectivityManager.PERIODIC_SCAN_TIMER_TAG);
 
-        // Verify that the second scan is scheduled PERIODIC_SCAN_INTERVAL_MS after the
-        // very first scan.
-        assertEquals(secondScanTimeStamp, firstScanTimeStamp
-                       + WifiConnectivityManager.PERIODIC_SCAN_INTERVAL_MS);
-
+        // Verify that the second scan is scheduled PERIODIC_SCAN_INTERVAL_MS after
+        // entering DISCONNECTED state.
+        assertEquals(secondScanForDisconnectedTimeStamp, enteringDisconnectedStateTimeStamp
+                + WifiConnectivityManager.PERIODIC_SCAN_INTERVAL_MS);
     }
 
     /**
@@ -806,8 +971,8 @@ public class WifiConnectivityManagerTest {
 
         when(mWifiStateMachine.getCurrentWifiConfiguration())
                 .thenReturn(new WifiConfiguration());
-        when(mWifiConfigManager.fetchChannelSetForNetworkForPartialScan(anyInt(), anyInt(),
-              anyInt())).thenReturn(channelList);
+        when(mWifiConfigManager.fetchChannelSetForNetworkForPartialScan(anyInt(), anyLong(),
+                anyInt())).thenReturn(channelList);
 
         doAnswer(new AnswerWithArguments() {
             public void answer(ScanSettings settings, ScanListener listener,
@@ -835,8 +1000,8 @@ public class WifiConnectivityManagerTest {
      */
     @Test
     public void checkSingleScanSettingsWhenConnectedWithHighDataRate() {
-        mWifiInfo.txSuccessRate = WifiConnectivityManager.MAX_TX_PACKET_FOR_FULL_SCANS * 2;
-        mWifiInfo.rxSuccessRate = WifiConnectivityManager.MAX_RX_PACKET_FOR_FULL_SCANS * 2;
+        mWifiInfo.txSuccessRate = mFullScanMaxTxPacketRate * 2;
+        mWifiInfo.rxSuccessRate = mFullScanMaxRxPacketRate * 2;
 
         final HashSet<Integer> channelList = new HashSet<>();
         channelList.add(1);
@@ -845,7 +1010,7 @@ public class WifiConnectivityManagerTest {
 
         when(mWifiStateMachine.getCurrentWifiConfiguration())
                 .thenReturn(new WifiConfiguration());
-        when(mWifiConfigManager.fetchChannelSetForNetworkForPartialScan(anyInt(), anyInt(),
+        when(mWifiConfigManager.fetchChannelSetForNetworkForPartialScan(anyInt(), anyLong(),
                 anyInt())).thenReturn(channelList);
 
         doAnswer(new AnswerWithArguments() {
@@ -877,14 +1042,14 @@ public class WifiConnectivityManagerTest {
      */
     @Test
     public void checkSingleScanSettingsWhenConnectedWithHighDataRateNotInCache() {
-        mWifiInfo.txSuccessRate = WifiConnectivityManager.MAX_TX_PACKET_FOR_FULL_SCANS * 2;
-        mWifiInfo.rxSuccessRate = WifiConnectivityManager.MAX_RX_PACKET_FOR_FULL_SCANS * 2;
+        mWifiInfo.txSuccessRate = mFullScanMaxTxPacketRate * 2;
+        mWifiInfo.rxSuccessRate = mFullScanMaxRxPacketRate * 2;
 
         final HashSet<Integer> channelList = new HashSet<>();
 
         when(mWifiStateMachine.getCurrentWifiConfiguration())
                 .thenReturn(new WifiConfiguration());
-        when(mWifiConfigManager.fetchChannelSetForNetworkForPartialScan(anyInt(), anyInt(),
+        when(mWifiConfigManager.fetchChannelSetForNetworkForPartialScan(anyInt(), anyLong(),
                 anyInt())).thenReturn(channelList);
 
         doAnswer(new AnswerWithArguments() {
@@ -958,8 +1123,7 @@ public class WifiConnectivityManagerTest {
 
         // Verify that WCM receives the scan results and initiates a connection
         // to the network.
-        verify(mWifiStateMachine).startConnectToNetwork(
-                CANDIDATE_NETWORK_ID, CANDIDATE_BSSID);
+        verify(mWifiStateMachine).startConnectToNetwork(CANDIDATE_NETWORK_ID, CANDIDATE_BSSID);
     }
 
     /**
@@ -995,7 +1159,508 @@ public class WifiConnectivityManagerTest {
         mWifiConnectivityManager.forceConnectivityScan();
 
         // Roaming attempt because full band scan results are available.
+        verify(mWifiStateMachine).startConnectToNetwork(CANDIDATE_NETWORK_ID, CANDIDATE_BSSID);
+    }
+
+    /**
+     *  Verify the BSSID blacklist implementation.
+     *
+     * Expected behavior: A BSSID gets blacklisted after being disabled
+     * for 3 times, and becomes available after being re-enabled. Firmware
+     * controlled roaming is supported, its roaming configuration needs to be
+     * updated as well.
+     */
+    @Test
+    public void blacklistAndReenableBssid() {
+        String bssid = "6c:f3:7f:ae:8c:f3";
+
+        when(mWifiConnectivityHelper.isFirmwareRoamingSupported()).thenReturn(true);
+        // Verify that a BSSID gets blacklisted only after being disabled
+        // for BSSID_BLACKLIST_THRESHOLD times for reasons other than
+        // REASON_CODE_AP_UNABLE_TO_HANDLE_NEW_STA.
+        for (int i = 0; i < WifiConnectivityManager.BSSID_BLACKLIST_THRESHOLD; i++) {
+            assertFalse(mWifiConnectivityManager.isBssidDisabled(bssid));
+            mWifiConnectivityManager.trackBssid(bssid, false, 1);
+        }
+
+        // Verify the BSSID is now blacklisted.
+        assertTrue(mWifiConnectivityManager.isBssidDisabled(bssid));
+        // Verify the BSSID gets sent to firmware.
+        verify(mWifiConnectivityHelper).setFirmwareRoamingConfiguration(
+                mBssidBlacklistCaptor.capture(), mSsidWhitelistCaptor.capture());
+        assertTrue(mBssidBlacklistCaptor.getValue().contains(bssid));
+        assertTrue(mSsidWhitelistCaptor.getValue().isEmpty());
+
+        // Re-enable the bssid.
+        mWifiConnectivityManager.trackBssid(bssid, true, 1);
+
+        // Verify the bssid is no longer blacklisted.
+        assertFalse(mWifiConnectivityManager.isBssidDisabled(bssid));
+        // Verify the BSSID gets cleared from firmware.
+        verify(mWifiConnectivityHelper, times(2)).setFirmwareRoamingConfiguration(
+                mBssidBlacklistCaptor.capture(), mSsidWhitelistCaptor.capture());
+        assertFalse(mBssidBlacklistCaptor.getValue().contains(bssid));
+        assertTrue(mSsidWhitelistCaptor.getValue().isEmpty());
+    }
+
+    /**
+     *  Verify that a network gets blacklisted immediately if it is unable
+     *  to handle new stations.
+     */
+    @Test
+    public void blacklistNetworkImmediatelyIfApHasNoCapacityForNewStation() {
+        String bssid = "6c:f3:7f:ae:8c:f3";
+
+        when(mWifiConnectivityHelper.isFirmwareRoamingSupported()).thenReturn(true);
+        // Blacklist the BSSID
+        mWifiConnectivityManager.trackBssid(bssid, false,
+                WifiConnectivityManager.REASON_CODE_AP_UNABLE_TO_HANDLE_NEW_STA);
+
+        // Verify the BSSID is now blacklisted.
+        assertTrue(mWifiConnectivityManager.isBssidDisabled(bssid));
+        // Verify the BSSID gets sent to firmware.
+        verify(mWifiConnectivityHelper).setFirmwareRoamingConfiguration(
+                mBssidBlacklistCaptor.capture(), mSsidWhitelistCaptor.capture());
+        assertTrue(mBssidBlacklistCaptor.getValue().contains(bssid));
+        assertTrue(mSsidWhitelistCaptor.getValue().isEmpty());
+    }
+
+    /**
+     *  Verify that a blacklisted BSSID becomes available only after
+     *  BSSID_BLACKLIST_EXPIRE_TIME_MS.
+     */
+    @Test
+    public void verifyBlacklistRefreshedAfterScanResults() {
+        String bssid = "6c:f3:7f:ae:8c:f3";
+
+        when(mWifiConnectivityHelper.isFirmwareRoamingSupported()).thenReturn(true);
+        // Blacklist the BSSID.
+        mWifiConnectivityManager.trackBssid(bssid, false,
+                WifiConnectivityManager.REASON_CODE_AP_UNABLE_TO_HANDLE_NEW_STA);
+
+        // Verify the BSSID is now blacklisted.
+        assertTrue(mWifiConnectivityManager.isBssidDisabled(bssid));
+        // Verify the BSSID gets sent to firmware.
+        verify(mWifiConnectivityHelper).setFirmwareRoamingConfiguration(
+                mBssidBlacklistCaptor.capture(), mSsidWhitelistCaptor.capture());
+        assertTrue(mBssidBlacklistCaptor.getValue().contains(bssid));
+        assertTrue(mSsidWhitelistCaptor.getValue().isEmpty());
+
+        // Force a connectivity scan in less than BSSID_BLACKLIST_EXPIRE_TIME_MS.
+        // Arrival of scan results will trigger WifiConnectivityManager to refresh its
+        // BSSID blacklist. Verify that the blacklisted BSSId is not freed because
+        // its blacklist expiration time hasn't reached yet.
+        when(mClock.getElapsedSinceBootMillis()).thenReturn(SystemClock.elapsedRealtime()
+                + WifiConnectivityManager.BSSID_BLACKLIST_EXPIRE_TIME_MS / 2);
+        mWifiConnectivityManager.forceConnectivityScan();
+        assertTrue(mWifiConnectivityManager.isBssidDisabled(bssid));
+
+        // Force another connectivity scan at BSSID_BLACKLIST_EXPIRE_TIME_MS from when the
+        // BSSID was blacklisted. Verify that the blacklisted BSSId is freed.
+        when(mClock.getElapsedSinceBootMillis()).thenReturn(SystemClock.elapsedRealtime()
+                + WifiConnectivityManager.BSSID_BLACKLIST_EXPIRE_TIME_MS);
+        mWifiConnectivityManager.forceConnectivityScan();
+
+        // Verify the BSSID is no longer blacklisted.
+        assertFalse(mWifiConnectivityManager.isBssidDisabled(bssid));
+        // Verify the BSSID gets cleared from firmware.
+        verify(mWifiConnectivityHelper, times(2)).setFirmwareRoamingConfiguration(
+                mBssidBlacklistCaptor.capture(), mSsidWhitelistCaptor.capture());
+        assertFalse(mBssidBlacklistCaptor.getValue().contains(bssid));
+        assertTrue(mSsidWhitelistCaptor.getValue().isEmpty());
+    }
+
+    /**
+     *  Verify that BSSID blacklist gets cleared when exiting Wifi client mode.
+     */
+    @Test
+    public void clearBssidBlacklistWhenExitingWifiClientMode() {
+        String bssid = "6c:f3:7f:ae:8c:f3";
+
+        when(mWifiConnectivityHelper.isFirmwareRoamingSupported()).thenReturn(true);
+
+        // Blacklist the BSSID.
+        mWifiConnectivityManager.trackBssid(bssid, false,
+                WifiConnectivityManager.REASON_CODE_AP_UNABLE_TO_HANDLE_NEW_STA);
+
+        // Verify the BSSID is now blacklisted.
+        assertTrue(mWifiConnectivityManager.isBssidDisabled(bssid));
+        // Verify the BSSID gets sent to firmware.
+        verify(mWifiConnectivityHelper).setFirmwareRoamingConfiguration(
+                mBssidBlacklistCaptor.capture(), mSsidWhitelistCaptor.capture());
+        assertTrue(mBssidBlacklistCaptor.getValue().contains(bssid));
+        assertTrue(mSsidWhitelistCaptor.getValue().isEmpty());
+
+        // Exit Wifi client mode.
+        mWifiConnectivityManager.setWifiEnabled(false);
+
+        // Verify the BSSID blacklist is empty.
+        assertFalse(mWifiConnectivityManager.isBssidDisabled(bssid));
+        verify(mWifiConnectivityHelper, times(2)).setFirmwareRoamingConfiguration(
+                mBssidBlacklistCaptor.capture(), mSsidWhitelistCaptor.capture());
+        assertTrue(mBssidBlacklistCaptor.getValue().isEmpty());
+        assertTrue(mSsidWhitelistCaptor.getValue().isEmpty());
+    }
+
+    /**
+     *  Verify that BSSID blacklist gets cleared when preparing for a forced connection
+     *  initiated by user/app.
+     */
+    @Test
+    public void clearBssidBlacklistWhenPreparingForForcedConnection() {
+        String bssid = "6c:f3:7f:ae:8c:f3";
+
+        when(mWifiConnectivityHelper.isFirmwareRoamingSupported()).thenReturn(true);
+
+        // Blacklist the BSSID.
+        mWifiConnectivityManager.trackBssid(bssid, false,
+                WifiConnectivityManager.REASON_CODE_AP_UNABLE_TO_HANDLE_NEW_STA);
+
+        // Verify the BSSID is now blacklisted.
+        assertTrue(mWifiConnectivityManager.isBssidDisabled(bssid));
+        // Verify the BSSID gets sent to firmware.
+        verify(mWifiConnectivityHelper).setFirmwareRoamingConfiguration(
+                mBssidBlacklistCaptor.capture(), mSsidWhitelistCaptor.capture());
+        assertTrue(mBssidBlacklistCaptor.getValue().contains(bssid));
+        assertTrue(mSsidWhitelistCaptor.getValue().isEmpty());
+
+        // Prepare for a forced connection attempt.
+        mWifiConnectivityManager.prepareForForcedConnection(1);
+
+        // Verify the BSSID blacklist is empty.
+        assertFalse(mWifiConnectivityManager.isBssidDisabled(bssid));
+        verify(mWifiConnectivityHelper, times(2)).setFirmwareRoamingConfiguration(
+                mBssidBlacklistCaptor.capture(), mSsidWhitelistCaptor.capture());
+        assertTrue(mBssidBlacklistCaptor.getValue().isEmpty());
+        assertTrue(mSsidWhitelistCaptor.getValue().isEmpty());
+    }
+
+    /**
+    /**
+     *  Verify that BSSID blacklist gets trimmed down to fit firmware capability.
+     */
+    @Test
+    public void trimDownBssidBlacklistForFirmware() {
+        when(mWifiConnectivityHelper.isFirmwareRoamingSupported()).thenReturn(true);
+
+        // Blacklist more than MAX_BSSID_BLACKLIST_SIZE BSSIDs.
+        for (int i = 0; i < MAX_BSSID_BLACKLIST_SIZE + 6; i++) {
+            StringBuilder bssid = new StringBuilder("55:44:33:22:11:00");
+            bssid.setCharAt(16, (char) ('0' + i));
+            mWifiConnectivityManager.trackBssid(bssid.toString(), false,
+                    WifiConnectivityManager.REASON_CODE_AP_UNABLE_TO_HANDLE_NEW_STA);
+            // Verify that up to MAX_BSSID_BLACKLIST_SIZE BSSIDs gets sent to firmware.
+            verify(mWifiConnectivityHelper, times(i + 1)).setFirmwareRoamingConfiguration(
+                    mBssidBlacklistCaptor.capture(), mSsidWhitelistCaptor.capture());
+            assertEquals((i + 1) <  MAX_BSSID_BLACKLIST_SIZE ? (i + 1) : MAX_BSSID_BLACKLIST_SIZE,
+                    mBssidBlacklistCaptor.getValue().size());
+            assertTrue(mSsidWhitelistCaptor.getValue().isEmpty());
+        }
+    }
+
+    /**
+     * When WifiConnectivityManager is on and Wifi client mode is enabled, framework
+     * queries firmware via WifiConnectivityHelper to check if firmware roaming is
+     * supported and its capability.
+     *
+     * Expected behavior: WifiConnectivityManager#setWifiEnabled calls into
+     * WifiConnectivityHelper#getFirmwareRoamingInfo
+     */
+    @Test
+    public void verifyGetFirmwareRoamingInfoIsCalledWhenEnableWiFiAndWcmOn() {
+        reset(mWifiConnectivityHelper);
+        // WifiConnectivityManager is on by default
+        mWifiConnectivityManager.setWifiEnabled(true);
+        verify(mWifiConnectivityHelper).getFirmwareRoamingInfo();
+    }
+
+    /**
+     * When WifiConnectivityManager is off,  verify that framework does not
+     * query firmware via WifiConnectivityHelper to check if firmware roaming is
+     * supported and its capability when enabling Wifi client mode.
+     *
+     * Expected behavior: WifiConnectivityManager#setWifiEnabled does not call into
+     * WifiConnectivityHelper#getFirmwareRoamingInfo
+     */
+    @Test
+    public void verifyGetFirmwareRoamingInfoIsNotCalledWhenEnableWiFiAndWcmOff() {
+        reset(mWifiConnectivityHelper);
+        mWifiConnectivityManager.enable(false);
+        mWifiConnectivityManager.setWifiEnabled(true);
+        verify(mWifiConnectivityHelper, times(0)).getFirmwareRoamingInfo();
+    }
+
+    /*
+     * Firmware supports controlled roaming.
+     * Connect to a network which doesn't have a config specified BSSID.
+     *
+     * Expected behavior: WifiConnectivityManager calls
+     * WifiStateMachine.startConnectToNetwork() with the
+     * expected candidate network ID, and the BSSID value should be
+     * 'any' since firmware controls the roaming.
+     */
+    @Test
+    public void useAnyBssidToConnectWhenFirmwareRoamingOnAndConfigHasNoBssidSpecified() {
+        // Firmware controls roaming
+        when(mWifiConnectivityHelper.isFirmwareRoamingSupported()).thenReturn(true);
+
+        // Set screen to on
+        mWifiConnectivityManager.handleScreenStateChanged(true);
+
+        // Set WiFi to disconnected state
+        mWifiConnectivityManager.handleConnectionStateChanged(
+                WifiConnectivityManager.WIFI_STATE_DISCONNECTED);
+
         verify(mWifiStateMachine).startConnectToNetwork(
+                CANDIDATE_NETWORK_ID, WifiStateMachine.SUPPLICANT_BSSID_ANY);
+    }
+
+    /*
+     * Firmware supports controlled roaming.
+     * Connect to a network which has a config specified BSSID.
+     *
+     * Expected behavior: WifiConnectivityManager calls
+     * WifiStateMachine.startConnectToNetwork() with the
+     * expected candidate network ID, and the BSSID value should be
+     * the config specified one.
+     */
+    @Test
+    public void useConfigSpecifiedBssidToConnectWhenFirmwareRoamingOn() {
+        // Firmware controls roaming
+        when(mWifiConnectivityHelper.isFirmwareRoamingSupported()).thenReturn(true);
+
+        // Set up the candidate configuration such that it has a BSSID specified.
+        WifiConfiguration candidate = generateWifiConfig(
+                0, CANDIDATE_NETWORK_ID, CANDIDATE_SSID, false, true, null, null);
+        candidate.BSSID = CANDIDATE_BSSID; // config specified
+        ScanResult candidateScanResult = new ScanResult();
+        candidateScanResult.SSID = CANDIDATE_SSID;
+        candidateScanResult.BSSID = CANDIDATE_BSSID;
+        candidate.getNetworkSelectionStatus().setCandidate(candidateScanResult);
+
+        when(mWifiNS.selectNetwork(anyObject(), anyObject(), anyObject(), anyBoolean(),
+                anyBoolean(), anyBoolean())).thenReturn(candidate);
+
+        // Set screen to on
+        mWifiConnectivityManager.handleScreenStateChanged(true);
+
+        // Set WiFi to disconnected state
+        mWifiConnectivityManager.handleConnectionStateChanged(
+                WifiConnectivityManager.WIFI_STATE_DISCONNECTED);
+
+        verify(mWifiStateMachine).startConnectToNetwork(CANDIDATE_NETWORK_ID, CANDIDATE_BSSID);
+    }
+
+    /*
+     * Firmware does not support controlled roaming.
+     * Connect to a network which doesn't have a config specified BSSID.
+     *
+     * Expected behavior: WifiConnectivityManager calls
+     * WifiStateMachine.startConnectToNetwork() with the expected candidate network ID,
+     * and the BSSID value should be the candidate scan result specified.
+     */
+    @Test
+    public void useScanResultBssidToConnectWhenFirmwareRoamingOffAndConfigHasNoBssidSpecified() {
+        // Set screen to on
+        mWifiConnectivityManager.handleScreenStateChanged(true);
+
+        // Set WiFi to disconnected state
+        mWifiConnectivityManager.handleConnectionStateChanged(
+                WifiConnectivityManager.WIFI_STATE_DISCONNECTED);
+
+        verify(mWifiStateMachine).startConnectToNetwork(CANDIDATE_NETWORK_ID, CANDIDATE_BSSID);
+    }
+
+    /*
+     * Firmware does not support controlled roaming.
+     * Connect to a network which has a config specified BSSID.
+     *
+     * Expected behavior: WifiConnectivityManager calls
+     * WifiStateMachine.startConnectToNetwork() with the expected candidate network ID,
+     * and the BSSID value should be the config specified one.
+     */
+    @Test
+    public void useConfigSpecifiedBssidToConnectionWhenFirmwareRoamingOff() {
+        // Set up the candidate configuration such that it has a BSSID specified.
+        WifiConfiguration candidate = generateWifiConfig(
+                0, CANDIDATE_NETWORK_ID, CANDIDATE_SSID, false, true, null, null);
+        candidate.BSSID = CANDIDATE_BSSID; // config specified
+        ScanResult candidateScanResult = new ScanResult();
+        candidateScanResult.SSID = CANDIDATE_SSID;
+        candidateScanResult.BSSID = CANDIDATE_BSSID;
+        candidate.getNetworkSelectionStatus().setCandidate(candidateScanResult);
+
+        when(mWifiNS.selectNetwork(anyObject(), anyObject(), anyObject(), anyBoolean(),
+                anyBoolean(), anyBoolean())).thenReturn(candidate);
+
+        // Set screen to on
+        mWifiConnectivityManager.handleScreenStateChanged(true);
+
+        // Set WiFi to disconnected state
+        mWifiConnectivityManager.handleConnectionStateChanged(
+                WifiConnectivityManager.WIFI_STATE_DISCONNECTED);
+
+        verify(mWifiStateMachine).startConnectToNetwork(CANDIDATE_NETWORK_ID, CANDIDATE_BSSID);
+    }
+
+    /**
+     * Firmware does not support controlled roaming.
+     * WiFi in connected state, framework triggers roaming.
+     *
+     * Expected behavior: WifiConnectivityManager invokes
+     * WifiStateMachine.startRoamToNetwork().
+     */
+    @Test
+    public void frameworkInitiatedRoaming() {
+        // Mock the currently connected network which has the same networkID and
+        // SSID as the one to be selected.
+        WifiConfiguration currentNetwork = generateWifiConfig(
+                0, CANDIDATE_NETWORK_ID, CANDIDATE_SSID, false, true, null, null);
+        when(mWifiConfigManager.getConfiguredNetwork(anyInt())).thenReturn(currentNetwork);
+
+        // Set WiFi to connected state
+        mWifiConnectivityManager.handleConnectionStateChanged(
+                WifiConnectivityManager.WIFI_STATE_CONNECTED);
+
+        // Set screen to on
+        mWifiConnectivityManager.handleScreenStateChanged(true);
+
+        verify(mWifiStateMachine).startRoamToNetwork(eq(CANDIDATE_NETWORK_ID),
+                mCandidateScanResultCaptor.capture());
+        assertEquals(mCandidateScanResultCaptor.getValue().BSSID, CANDIDATE_BSSID);
+    }
+
+    /**
+     * Firmware supports controlled roaming.
+     * WiFi in connected state, framework does not trigger roaming
+     * as it's handed off to the firmware.
+     *
+     * Expected behavior: WifiConnectivityManager doesn't invoke
+     * WifiStateMachine.startRoamToNetwork().
+     */
+    @Test
+    public void noFrameworkRoamingIfConnectedAndFirmwareRoamingSupported() {
+        // Mock the currently connected network which has the same networkID and
+        // SSID as the one to be selected.
+        WifiConfiguration currentNetwork = generateWifiConfig(
+                0, CANDIDATE_NETWORK_ID, CANDIDATE_SSID, false, true, null, null);
+        when(mWifiConfigManager.getConfiguredNetwork(anyInt())).thenReturn(currentNetwork);
+
+        // Firmware controls roaming
+        when(mWifiConnectivityHelper.isFirmwareRoamingSupported()).thenReturn(true);
+
+        // Set WiFi to connected state
+        mWifiConnectivityManager.handleConnectionStateChanged(
+                WifiConnectivityManager.WIFI_STATE_CONNECTED);
+
+        // Set screen to on
+        mWifiConnectivityManager.handleScreenStateChanged(true);
+
+        verify(mWifiStateMachine, times(0)).startRoamToNetwork(anyInt(), anyObject());
+    }
+
+    /*
+     * Wifi in disconnected state. Drop the connection attempt if the recommended
+     * network configuration has a BSSID specified but the scan result BSSID doesn't
+     * match it.
+     *
+     * Expected behavior: WifiConnectivityManager doesn't invoke
+     * WifiStateMachine.startConnectToNetwork().
+     */
+    @Test
+    public void dropConnectAttemptIfConfigSpecifiedBssidDifferentFromScanResultBssid() {
+        // Set up the candidate configuration such that it has a BSSID specified.
+        WifiConfiguration candidate = generateWifiConfig(
+                0, CANDIDATE_NETWORK_ID, CANDIDATE_SSID, false, true, null, null);
+        candidate.BSSID = CANDIDATE_BSSID; // config specified
+        ScanResult candidateScanResult = new ScanResult();
+        candidateScanResult.SSID = CANDIDATE_SSID;
+        // Set up the scan result BSSID to be different from the config specified one.
+        candidateScanResult.BSSID = INVALID_SCAN_RESULT_BSSID;
+        candidate.getNetworkSelectionStatus().setCandidate(candidateScanResult);
+
+        when(mWifiNS.selectNetwork(anyObject(), anyObject(), anyObject(), anyBoolean(),
+                anyBoolean(), anyBoolean())).thenReturn(candidate);
+
+        // Set screen to on
+        mWifiConnectivityManager.handleScreenStateChanged(true);
+
+        // Set WiFi to disconnected state
+        mWifiConnectivityManager.handleConnectionStateChanged(
+                WifiConnectivityManager.WIFI_STATE_DISCONNECTED);
+
+        verify(mWifiStateMachine, times(0)).startConnectToNetwork(
                 CANDIDATE_NETWORK_ID, CANDIDATE_BSSID);
+    }
+
+    /*
+     * Wifi in connected state. Drop the roaming attempt if the recommended
+     * network configuration has a BSSID specified but the scan result BSSID doesn't
+     * match it.
+     *
+     * Expected behavior: WifiConnectivityManager doesn't invoke
+     * WifiStateMachine.startRoamToNetwork().
+     */
+    @Test
+    public void dropRoamingAttemptIfConfigSpecifiedBssidDifferentFromScanResultBssid() {
+        // Mock the currently connected network which has the same networkID and
+        // SSID as the one to be selected.
+        WifiConfiguration currentNetwork = generateWifiConfig(
+                0, CANDIDATE_NETWORK_ID, CANDIDATE_SSID, false, true, null, null);
+        when(mWifiConfigManager.getConfiguredNetwork(anyInt())).thenReturn(currentNetwork);
+
+        // Set up the candidate configuration such that it has a BSSID specified.
+        WifiConfiguration candidate = generateWifiConfig(
+                0, CANDIDATE_NETWORK_ID, CANDIDATE_SSID, false, true, null, null);
+        candidate.BSSID = CANDIDATE_BSSID; // config specified
+        ScanResult candidateScanResult = new ScanResult();
+        candidateScanResult.SSID = CANDIDATE_SSID;
+        // Set up the scan result BSSID to be different from the config specified one.
+        candidateScanResult.BSSID = INVALID_SCAN_RESULT_BSSID;
+        candidate.getNetworkSelectionStatus().setCandidate(candidateScanResult);
+
+        when(mWifiNS.selectNetwork(anyObject(), anyObject(), anyObject(), anyBoolean(),
+                anyBoolean(), anyBoolean())).thenReturn(candidate);
+
+        // Set WiFi to connected state
+        mWifiConnectivityManager.handleConnectionStateChanged(
+                WifiConnectivityManager.WIFI_STATE_CONNECTED);
+
+        // Set screen to on
+        mWifiConnectivityManager.handleScreenStateChanged(true);
+
+        verify(mWifiStateMachine, times(0)).startRoamToNetwork(anyInt(), anyObject());
+    }
+
+    /**
+     *  Dump local log buffer.
+     *
+     * Expected behavior: Logs dumped from WifiConnectivityManager.dump()
+     * contain the message we put in mLocalLog.
+     */
+    @Test
+    public void dumpLocalLog() {
+        final String localLogMessage = "This is a message from the test";
+        mLocalLog.log(localLogMessage);
+
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        mWifiConnectivityManager.dump(new FileDescriptor(), pw, new String[]{});
+        assertTrue(sw.toString().contains(localLogMessage));
+    }
+
+    /**
+     *  Dump ONA controller.
+     *
+     * Expected behavior: {@link WifiNotificationController#dump(FileDescriptor, PrintWriter,
+     * String[])} is invoked.
+     */
+    @Test
+    public void dumpNotificationController() {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        mWifiConnectivityManager.dump(new FileDescriptor(), pw, new String[]{});
+
+        verify(mWifiNotificationController).dump(any(), any(), any());
     }
 }
