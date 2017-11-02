@@ -46,6 +46,30 @@
       "revId": "c4d0de0346332a43155580c28097c3bdc9976875",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e09f140_2d98b491",
+        "filename": "service/java/com/android/server/wifi/WifiApConfigStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1245053
+      },
+      "writtenOn": "2017-11-02T04:13:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "97c76e81_3e46f1c2",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 54
+      },
+      "revId": "c4d0de0346332a43155580c28097c3bdc9976875",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
