@@ -1807,6 +1807,27 @@ public class SupplicantP2pIfaceHal {
                     continue;
                 }
 
+                SupplicantResult<Boolean> resultIsPersistent =
+                        new SupplicantResult("isPersistent(" + networkId + ")");
+                try {
+                    network.isPersistent(
+                            (SupplicantStatus status, boolean isPersistent) -> {
+                                resultIsPersistent.setResult(status, isPersistent);
+                            });
+                } catch (RemoteException e) {
+                    Log.e(TAG, "ISupplicantP2pIface exception: " + e);
+                    supplicantServiceDiedHandler();
+                }
+                if (!resultIsPersistent.isSuccess() || !resultIsPersistent.getResult()) {
+                    /*
+                     * The unused profile is sometimes remained when the p2p group formation is failed.
+                     * So, we clean up the p2p group here.
+                     */
+                    if (DBG) logd("clean up the unused persistent group. netId=" + networkId);
+                    removeNetwork(networkId);
+                    continue;
+                }
+
                 WifiP2pGroup group = new WifiP2pGroup();
                 group.setNetworkId(networkId);
 
