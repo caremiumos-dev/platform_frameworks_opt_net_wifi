@@ -647,6 +647,11 @@ public class WifiConfigManager {
      * @param ignoreLockdown Ignore the configuration lockdown checks for connection attempts.
      */
     private boolean canModifyNetwork(WifiConfiguration config, int uid, boolean ignoreLockdown) {
+        // System internals can always update networks.
+        if (uid == Process.SYSTEM_UID) {
+            return true;
+        }
+
         // Passpoint configurations are generated and managed by PasspointManager. They can be
         // added by either PasspointNetworkEvaluator (for auto connection) or Settings app
         // (for manual connection), and need to be removed once the connection is completed.
