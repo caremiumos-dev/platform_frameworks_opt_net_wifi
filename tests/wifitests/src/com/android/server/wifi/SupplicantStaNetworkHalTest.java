@@ -602,7 +602,7 @@ public class SupplicantStaNetworkHalTest {
         doAnswer(new AnswerWithArguments() {
             public SupplicantStatus answer(ArrayList<Byte> identity)
                     throws RemoteException {
-                assertEquals(identityStr, NativeUtil.stringFromByteArrayList(identity));
+                assertEquals(identityStr, NativeUtil.stringFromByteList(identity));
                 return mStatusSuccess;
             }
         }).when(mISupplicantStaNetworkMock).sendNetworkEapIdentityResponse(any(ArrayList.class));

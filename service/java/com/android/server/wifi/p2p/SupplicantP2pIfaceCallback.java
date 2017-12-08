@@ -30,7 +30,6 @@ import android.util.Log;
 import com.android.server.wifi.p2p.WifiP2pServiceImpl.P2pStatus;
 import com.android.server.wifi.util.NativeUtil;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -253,7 +252,7 @@ public class SupplicantP2pIfaceCallback extends ISupplicantP2pIfaceCallback.Stub
      * @param goDeviceAddress MAC Address of the owner of this group.
      * @param isPersistent Whether this group is persisted or not.
      */
-    public void onGroupStarted(String groupIfName, boolean isGo, ArrayList<Byte> ssid,
+    public void onGroupStarted(String groupIfName, boolean isGo, List<Byte> ssid,
             int frequency, byte[] psk, String passphrase, byte[] goDeviceAddress,
             boolean isPersistent) {
         if (groupIfName == null) {
@@ -438,7 +437,7 @@ public class SupplicantP2pIfaceCallback extends ISupplicantP2pIfaceCallback.Stub
      * @param tlvs Refer to section 3.1.3.1 of Wifi P2P Technical specification v1.2.
      */
     public void onServiceDiscoveryResponse(byte[] srcAddress, short updateIndicator,
-            ArrayList<Byte> tlvs) {
+            List<Byte> tlvs) {
         List<WifiP2pServiceResponse> response = null;
 
         logd("Service discovery response received on " + mInterface);
@@ -446,7 +445,7 @@ public class SupplicantP2pIfaceCallback extends ISupplicantP2pIfaceCallback.Stub
             String srcAddressStr = NativeUtil.macAddressFromByteArray(srcAddress);
             // updateIndicator is not used
             response = WifiP2pServiceResponse.newInstance(srcAddressStr,
-                    NativeUtil.byteArrayFromArrayList(tlvs));
+                    NativeUtil.byteArrayFromList(tlvs));
         } catch (Exception e) {
             Log.e(TAG, "Could not process service discovery response.", e);
             return;
