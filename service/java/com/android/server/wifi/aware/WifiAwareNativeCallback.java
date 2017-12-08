@@ -37,8 +37,8 @@ import org.json.JSONObject;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Manages the callbacks from Wi-Fi Aware HIDL (HAL).
@@ -509,7 +509,7 @@ public class WifiAwareNativeCallback extends IWifiNanIfaceEventCallback.Stub imp
      *
      * @return A newly allocated byte[].
      */
-    private byte[] convertArrayListToNativeByteArray(ArrayList<Byte> from) {
+    private byte[] convertArrayListToNativeByteArray(List<Byte> from) {
         if (from == null) {
             return null;
         }

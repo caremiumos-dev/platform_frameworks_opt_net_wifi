@@ -488,7 +488,7 @@ public class HalDeviceManager {
     private class WifiChipInfo {
         public IWifiChip chip;
         public int chipId;
-        public ArrayList<IWifiChip.ChipMode> availableModes;
+        public List<IWifiChip.ChipMode> availableModes;
         public boolean currentModeIdValid;
         public int currentModeId;
         public WifiIfaceInfo[][] ifaces = new WifiIfaceInfo[IFACE_TYPES_BY_PRIORITY.length][];
@@ -700,10 +700,10 @@ public class HalDeviceManager {
         synchronized (mLock) {
             try {
                 MutableBoolean statusOk = new MutableBoolean(false);
-                Mutable<ArrayList<Integer>> chipIdsResp = new Mutable<>();
+                Mutable<List<Integer>> chipIdsResp = new Mutable<>();
 
                 // get all chip IDs
-                mWifi.getChipIds((WifiStatus status, ArrayList<Integer> chipIds) -> {
+                mWifi.getChipIds((WifiStatus status, List<Integer> chipIds) -> {
                     statusOk.value = status.code == WifiStatusCode.SUCCESS;
                     if (statusOk.value) {
                         chipIdsResp.value = chipIds;
@@ -765,13 +765,13 @@ public class HalDeviceManager {
                                 @Override
                                 public void onDebugRingBufferDataAvailable(
                                         WifiDebugRingBufferStatus status,
-                                        ArrayList<Byte> data) throws RemoteException {
+                                        List<Byte> data) throws RemoteException {
                                     Log.d(TAG, "onDebugRingBufferDataAvailable");
                                 }
 
                                 @Override
                                 public void onDebugErrorAlert(int errorCode,
-                                        ArrayList<Byte> debugData)
+                                        List<Byte> debugData)
                                         throws RemoteException {
                                     Log.d(TAG, "onDebugErrorAlert");
                                 }
@@ -808,10 +808,10 @@ public class HalDeviceManager {
 
             try {
                 MutableBoolean statusOk = new MutableBoolean(false);
-                Mutable<ArrayList<Integer>> chipIdsResp = new Mutable<>();
+                Mutable<List<Integer>> chipIdsResp = new Mutable<>();
 
                 // get all chip IDs
-                mWifi.getChipIds((WifiStatus status, ArrayList<Integer> chipIds) -> {
+                mWifi.getChipIds((WifiStatus status, List<Integer> chipIds) -> {
                     statusOk.value = status.code == WifiStatusCode.SUCCESS;
                     if (statusOk.value) {
                         chipIdsResp.value = chipIds;
@@ -846,9 +846,9 @@ public class HalDeviceManager {
                         return null;
                     }
 
-                    Mutable<ArrayList<IWifiChip.ChipMode>> availableModesResp = new Mutable<>();
+                    Mutable<List<IWifiChip.ChipMode>> availableModesResp = new Mutable<>();
                     chipResp.value.getAvailableModes(
-                            (WifiStatus status, ArrayList<IWifiChip.ChipMode> modes) -> {
+                            (WifiStatus status, List<IWifiChip.ChipMode> modes) -> {
                                 statusOk.value = status.code == WifiStatusCode.SUCCESS;
                                 if (statusOk.value) {
                                     availableModesResp.value = modes;
@@ -877,11 +877,11 @@ public class HalDeviceManager {
                         return null;
                     }
 
-                    Mutable<ArrayList<String>> ifaceNamesResp = new Mutable<>();
+                    Mutable<List<String>> ifaceNamesResp = new Mutable<>();
                     MutableInt ifaceIndex = new MutableInt(0);
 
                     chipResp.value.getStaIfaceNames(
-                            (WifiStatus status, ArrayList<String> ifnames) -> {
+                            (WifiStatus status, List<String> ifnames) -> {
                                 statusOk.value = status.code == WifiStatusCode.SUCCESS;
                                 if (statusOk.value) {
                                     ifaceNamesResp.value = ifnames;
@@ -914,7 +914,7 @@ public class HalDeviceManager {
 
                     ifaceIndex.value = 0;
                     chipResp.value.getApIfaceNames(
-                            (WifiStatus status, ArrayList<String> ifnames) -> {
+                            (WifiStatus status, List<String> ifnames) -> {
                                 statusOk.value = status.code == WifiStatusCode.SUCCESS;
                                 if (statusOk.value) {
                                     ifaceNamesResp.value = ifnames;
@@ -947,7 +947,7 @@ public class HalDeviceManager {
 
                     ifaceIndex.value = 0;
                     chipResp.value.getP2pIfaceNames(
-                            (WifiStatus status, ArrayList<String> ifnames) -> {
+                            (WifiStatus status, List<String> ifnames) -> {
                                 statusOk.value = status.code == WifiStatusCode.SUCCESS;
                                 if (statusOk.value) {
                                     ifaceNamesResp.value = ifnames;
@@ -980,7 +980,7 @@ public class HalDeviceManager {
 
                     ifaceIndex.value = 0;
                     chipResp.value.getNanIfaceNames(
-                            (WifiStatus status, ArrayList<String> ifnames) -> {
+                            (WifiStatus status, List<String> ifnames) -> {
                                 statusOk.value = status.code == WifiStatusCode.SUCCESS;
                                 if (statusOk.value) {
                                     ifaceNamesResp.value = ifnames;

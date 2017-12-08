@@ -235,7 +235,7 @@ public class SupplicantP2pIfaceHal {
             final ArrayList<ISupplicant.IfaceInfo> supplicantIfaces = new ArrayList();
             try {
                 mISupplicant.listInterfaces((SupplicantStatus status,
-                        ArrayList<ISupplicant.IfaceInfo> ifaces) -> {
+                        List<ISupplicant.IfaceInfo> ifaces) -> {
                     if (status.code != SupplicantStatusCode.SUCCESS) {
                         Log.e(TAG, "Getting Supplicant Interfaces failed: " + status.code);
                         return;
@@ -933,7 +933,7 @@ public class SupplicantP2pIfaceHal {
                     new SupplicantResult("getSsid(" + address + ")");
             try {
                 mISupplicantP2pIface.getSsid(
-                        macAddress, (SupplicantStatus status, ArrayList<Byte> ssid) -> {
+                        macAddress, (SupplicantStatus status, List<Byte> ssid) -> {
                             String ssidString = null;
                             if (ssid != null) {
                                 try {
@@ -1727,10 +1727,10 @@ public class SupplicantP2pIfaceHal {
     private List<Integer> listNetworks() {
         synchronized (mLock) {
             if (!checkSupplicantP2pIfaceAndLogFailure("listNetworks")) return null;
-            SupplicantResult<ArrayList> result = new SupplicantResult("listNetworks()");
+            SupplicantResult<List> result = new SupplicantResult("listNetworks()");
             try {
                 mISupplicantP2pIface.listNetworks(
-                        (SupplicantStatus status, ArrayList<Integer> networkIds) -> {
+                        (SupplicantStatus status, List<Integer> networkIds) -> {
                             result.setResult(status, networkIds);
                         });
             } catch (RemoteException e) {
@@ -1811,11 +1811,11 @@ public class SupplicantP2pIfaceHal {
                 group.setNetworkId(networkId);
 
                 // Now get the ssid, bssid and other flags for this network.
-                SupplicantResult<ArrayList> resultSsid =
+                SupplicantResult<List> resultSsid =
                         new SupplicantResult("getSsid(" + networkId + ")");
                 try {
                     network.getSsid(
-                            (SupplicantStatus status, ArrayList<Byte> ssid) -> {
+                            (SupplicantStatus status, List<Byte> ssid) -> {
                                 resultSsid.setResult(status, ssid);
                             });
                 } catch (RemoteException e) {
@@ -1964,11 +1964,11 @@ public class SupplicantP2pIfaceHal {
     public String getNfcHandoverRequest() {
         synchronized (mLock) {
             if (!checkSupplicantP2pIfaceAndLogFailure("getNfcHandoverRequest")) return null;
-            SupplicantResult<ArrayList> result = new SupplicantResult(
+            SupplicantResult<List> result = new SupplicantResult(
                     "getNfcHandoverRequest()");
             try {
                 mISupplicantP2pIface.createNfcHandoverRequestMessage(
-                        (SupplicantStatus status, ArrayList<Byte> message) -> {
+                        (SupplicantStatus status, List<Byte> message) -> {
                             result.setResult(status, message);
                         });
             } catch (RemoteException e) {
@@ -1980,7 +1980,7 @@ public class SupplicantP2pIfaceHal {
 
             }
             return NativeUtil.hexStringFromByteArray(
-                    NativeUtil.byteArrayFromArrayList(result.getResult()));
+                    NativeUtil.byteArrayFromList(result.getResult()));
         }
     }
 
@@ -1992,11 +1992,11 @@ public class SupplicantP2pIfaceHal {
     public String getNfcHandoverSelect() {
         synchronized (mLock) {
             if (!checkSupplicantP2pIfaceAndLogFailure("getNfcHandoverSelect")) return null;
-            SupplicantResult<ArrayList> result = new SupplicantResult(
+            SupplicantResult<List> result = new SupplicantResult(
                     "getNfcHandoverSelect()");
             try {
                 mISupplicantP2pIface.createNfcHandoverSelectMessage(
-                        (SupplicantStatus status, ArrayList<Byte> message) -> {
+                        (SupplicantStatus status, List<Byte> message) -> {
                             result.setResult(status, message);
                         });
             } catch (RemoteException e) {
@@ -2008,7 +2008,7 @@ public class SupplicantP2pIfaceHal {
 
             }
             return NativeUtil.hexStringFromByteArray(
-                    NativeUtil.byteArrayFromArrayList(result.getResult()));
+                    NativeUtil.byteArrayFromList(result.getResult()));
         }
     }
 
@@ -2116,11 +2116,11 @@ public class SupplicantP2pIfaceHal {
                 Log.e(TAG, "Invalid network id ");
                 return null;
             }
-            SupplicantResult<ArrayList> result = new SupplicantResult(
+            SupplicantResult<List> result = new SupplicantResult(
                     "getClientList(" + networkId + ")");
             try {
                 network.getClientList(
-                        (SupplicantStatus status, ArrayList<byte[]> clients) -> {
+                        (SupplicantStatus status, List<byte[]> clients) -> {
                             result.setResult(status, clients);
                         });
             } catch (RemoteException e) {
@@ -2130,7 +2130,7 @@ public class SupplicantP2pIfaceHal {
             if (!result.isSuccess()) {
                 return null;
             }
-            ArrayList<byte[]> clients = result.getResult();
+            List<byte[]> clients = result.getResult();
             return clients.stream()
                     .map(NativeUtil::macAddressFromByteArray)
                     .collect(Collectors.joining(" "));

@@ -31,6 +31,7 @@ import java.nio.charset.CharsetDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Provide utility functions for native interfacing modules.
@@ -65,7 +66,7 @@ public class NativeUtil {
      * @return the string decoded from UTF_8 byte values in byteArrayList.
      * @throws IllegalArgumentException if a null byte array list is sent.
      */
-    public static String stringFromByteArrayList(ArrayList<Byte> byteArrayList) {
+    public static String stringFromByteList(List<Byte> byteArrayList) {
         if (byteArrayList == null) {
             throw new IllegalArgumentException("null byte array list");
         }
@@ -239,11 +240,11 @@ public class NativeUtil {
      * @param bytes List of bytes for ssid.
      * @throws IllegalArgumentException for null bytes.
      */
-    public static String bytesToHexOrQuotedString(ArrayList<Byte> bytes) {
+    public static String bytesToHexOrQuotedString(List<Byte> bytes) {
         if (bytes == null) {
             throw new IllegalArgumentException("null ssid bytes");
         }
-        byte[] byteArray = byteArrayFromArrayList(bytes);
+        byte[] byteArray = byteArrayFromList(bytes);
         // Check for 0's in the byte stream in which case we cannot convert this into a string.
         if (!bytes.contains(Byte.valueOf((byte) 0))) {
             CharsetDecoder decoder = StandardCharsets.UTF_8.newDecoder();
@@ -279,7 +280,7 @@ public class NativeUtil {
      * @param ssidBytes List of bytes for ssid.
      * @throws IllegalArgumentException for null bytes.
      */
-    public static String encodeSsid(ArrayList<Byte> ssidBytes) {
+    public static String encodeSsid(List<Byte> ssidBytes) {
         return bytesToHexOrQuotedString(ssidBytes);
     }
 
@@ -297,7 +298,7 @@ public class NativeUtil {
     /**
      * Convert from an array list of Byte to an array of primitive bytes.
      */
-    public static byte[] byteArrayFromArrayList(ArrayList<Byte> bytes) {
+    public static byte[] byteArrayFromList(List<Byte> bytes) {
         byte[] byteArray = new byte[bytes.size()];
         int i = 0;
         for (Byte b : bytes) {

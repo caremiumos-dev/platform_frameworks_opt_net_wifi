@@ -46,6 +46,7 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -944,20 +945,25 @@ public class WifiAwareNativeApi implements WifiAwareShellCommand.DelegatedShellC
      *
      * @return A newly allocated ArrayList<> if 'to' is null, otherwise null.
      */
-    private ArrayList<Byte> convertNativeByteArrayToArrayList(byte[] from, ArrayList<Byte> to) {
+    private ArrayList<Byte> convertNativeByteArrayToArrayList(byte[] from, List<Byte> to) {
         if (from == null) {
             from = new byte[0];
         }
 
+        ArrayList<Byte> result = new ArrayList<Byte>();
+
         if (to == null) {
-            to = new ArrayList<>(from.length);
-        } else {
-            to.ensureCapacity(from.length);
+            to = result;
+        }
+        result.ensureCapacity(from.length + to.size());
+
+        for (int i = 0; i < to.size(); ++i) {
+            result.add(to.get(i));
         }
         for (int i = 0; i < from.length; ++i) {
-            to.add(from[i]);
+            result.add(from[i]);
         }
-        return to;
+        return result;
     }
 
     private void copyArray(byte[] from, byte[] to) {

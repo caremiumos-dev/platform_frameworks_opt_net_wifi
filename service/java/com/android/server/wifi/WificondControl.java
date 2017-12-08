@@ -432,7 +432,7 @@ public class WificondControl {
             for (String ssid : hiddenNetworkSSIDs) {
                 HiddenNetwork network = new HiddenNetwork();
                 try {
-                    network.ssid = NativeUtil.byteArrayFromArrayList(NativeUtil.decodeSsid(ssid));
+                    network.ssid = NativeUtil.byteArrayFromList(NativeUtil.decodeSsid(ssid));
                 } catch (IllegalArgumentException e) {
                     Log.e(TAG, "Illegal argument " + ssid, e);
                     continue;
@@ -471,7 +471,7 @@ public class WificondControl {
                         & WifiScanner.PnoSettings.PnoNetwork.FLAG_DIRECTED_SCAN) != 0;
                 try {
                     condNetwork.ssid =
-                            NativeUtil.byteArrayFromArrayList(NativeUtil.decodeSsid(network.ssid));
+                            NativeUtil.byteArrayFromList(NativeUtil.decodeSsid(network.ssid));
                 } catch (IllegalArgumentException e) {
                     Log.e(TAG, "Illegal argument " + network.ssid, e);
                     continue;

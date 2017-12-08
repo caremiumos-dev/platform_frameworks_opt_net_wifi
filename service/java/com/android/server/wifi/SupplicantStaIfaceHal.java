@@ -284,7 +284,7 @@ public class SupplicantStaIfaceHal {
             final ArrayList<ISupplicant.IfaceInfo> supplicantIfaces = new ArrayList<>();
             try {
                 mISupplicant.listInterfaces((SupplicantStatus status,
-                        ArrayList<ISupplicant.IfaceInfo> ifaces) -> {
+                        List<ISupplicant.IfaceInfo> ifaces) -> {
                     if (status.code != SupplicantStatusCode.SUCCESS) {
                         Log.e(TAG, "Getting Supplicant Interfaces failed: " + status.code);
                         return;
@@ -567,7 +567,7 @@ public class SupplicantStaIfaceHal {
      */
     public boolean removeAllNetworks() {
         synchronized (mLock) {
-            ArrayList<Integer> networks = listNetworks();
+            List<Integer> networks = listNetworks();
             if (networks == null) {
                 Log.e(TAG, "removeAllNetworks failed, got null networks");
                 return false;
@@ -814,14 +814,14 @@ public class SupplicantStaIfaceHal {
      * @return a list of SupplicantNetworkID ints for all networks controlled by supplicant, returns
      * null if the call fails
      */
-    private java.util.ArrayList<Integer> listNetworks() {
+    private java.util.List<Integer> listNetworks() {
         synchronized (mLock) {
             final String methodStr = "listNetworks";
-            Mutable<ArrayList<Integer>> networkIdList = new Mutable<>();
+            Mutable<List<Integer>> networkIdList = new Mutable<>();
             if (!checkSupplicantStaIfaceAndLogFailure(methodStr)) return null;
             try {
                 mISupplicantStaIface.listNetworks((SupplicantStatus status,
-                        java.util.ArrayList<Integer> networkIds) -> {
+                        java.util.List<Integer> networkIds) -> {
                     if (checkStatusAndLogFailure(status, methodStr)) {
                         networkIdList.value = networkIds;
                     }
@@ -1933,14 +1933,14 @@ public class SupplicantStaIfaceHal {
          * @return AnqpElement instance on success, null on failure.
          */
         private ANQPElement parseAnqpElement(Constants.ANQPElementType infoID,
-                                             ArrayList<Byte> payload) {
+                                             List<Byte> payload) {
             synchronized (mLock) {
                 try {
                     return Constants.getANQPElementID(infoID) != null
                             ? ANQPParser.parseElement(
-                            infoID, ByteBuffer.wrap(NativeUtil.byteArrayFromArrayList(payload)))
+                            infoID, ByteBuffer.wrap(NativeUtil.byteArrayFromList(payload)))
                             : ANQPParser.parseHS20Element(
-                            infoID, ByteBuffer.wrap(NativeUtil.byteArrayFromArrayList(payload)));
+                            infoID, ByteBuffer.wrap(NativeUtil.byteArrayFromList(payload)));
                 } catch (IOException | BufferUnderflowException e) {
                     Log.e(TAG, "Failed parsing ANQP element payload: " + infoID, e);
                     return null;
@@ -1957,7 +1957,7 @@ public class SupplicantStaIfaceHal {
          */
         private void addAnqpElementToMap(Map<Constants.ANQPElementType, ANQPElement> elementsMap,
                                          Constants.ANQPElementType infoID,
-                                         ArrayList<Byte> payload) {
+                                         List<Byte> payload) {
             synchronized (mLock) {
                 if (payload == null || payload.isEmpty()) return;
                 ANQPElement element = parseAnqpElement(infoID, payload);
@@ -1983,12 +1983,12 @@ public class SupplicantStaIfaceHal {
 
         @Override
         public void onStateChanged(int newState, byte[/* 6 */] bssid, int id,
-                                   ArrayList<Byte> ssid) {
+                                   List<Byte> ssid) {
             synchronized (mLock) {
                 logCallback("onStateChanged");
                 SupplicantState newSupplicantState = supplicantHidlStateToFrameworkState(newState);
                 WifiSsid wifiSsid =
-                        WifiSsid.createFromByteArray(NativeUtil.byteArrayFromArrayList(ssid));
+                        WifiSsid.createFromByteArray(NativeUtil.byteArrayFromList(ssid));
                 String bssidStr = NativeUtil.macAddressFromByteArray(bssid);
                 mStateIsFourway = (newState == ISupplicantStaIfaceCallback.State.FOURWAY_HANDSHAKE);
                 if (newSupplicantState == SupplicantState.COMPLETED) {
@@ -2025,13 +2025,13 @@ public class SupplicantStaIfaceHal {
 
         @Override
         public void onHs20IconQueryDone(byte[/* 6 */] bssid, String fileName,
-                                        ArrayList<Byte> data) {
+                                        List<Byte> data) {
             synchronized (mLock) {
                 logCallback("onHs20IconQueryDone");
                 mWifiMonitor.broadcastIconDoneEvent(
                         mIfaceName,
                         new IconEvent(NativeUtil.macAddressToLong(bssid), fileName, data.size(),
-                                NativeUtil.byteArrayFromArrayList(data)));
+                                NativeUtil.byteArrayFromList(data)));
             }
         }
 

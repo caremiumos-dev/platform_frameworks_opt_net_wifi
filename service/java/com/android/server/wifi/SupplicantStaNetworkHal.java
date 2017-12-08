@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -98,7 +99,7 @@ public class SupplicantStaNetworkHal {
 
     // Network variables read from wpa_supplicant.
     private int mNetworkId;
-    private ArrayList<Byte> mSsid;
+    private List<Byte> mSsid;
     private byte[/* 6 */] mBssid;
     private boolean mScanSsid;
     private int mKeyMgmtMask;
@@ -108,15 +109,15 @@ public class SupplicantStaNetworkHal {
     private int mPairwiseCipherMask;
     private String mPskPassphrase;
     private byte[] mPsk;
-    private ArrayList<Byte> mWepKey;
+    private List<Byte> mWepKey;
     private int mWepTxKeyIdx;
     private boolean mRequirePmf;
     private String mIdStr;
     private int mEapMethod;
     private int mEapPhase2Method;
-    private ArrayList<Byte> mEapIdentity;
-    private ArrayList<Byte> mEapAnonymousIdentity;
-    private ArrayList<Byte> mEapPassword;
+    private List<Byte> mEapIdentity;
+    private List<Byte> mEapAnonymousIdentity;
+    private List<Byte> mEapPassword;
     private String mEapCACert;
     private String mEapCAPath;
     private String mEapClientCert;
@@ -421,19 +422,19 @@ public class SupplicantStaNetworkHal {
             if (getEapIdentity() && !ArrayUtils.isEmpty(mEapIdentity)) {
                 eapConfig.setFieldValue(
                         WifiEnterpriseConfig.IDENTITY_KEY,
-                        NativeUtil.stringFromByteArrayList(mEapIdentity));
+                        NativeUtil.stringFromByteList(mEapIdentity));
             }
             /** EAP Anonymous Identity */
             if (getEapAnonymousIdentity() && !ArrayUtils.isEmpty(mEapAnonymousIdentity)) {
                 eapConfig.setFieldValue(
                         WifiEnterpriseConfig.ANON_IDENTITY_KEY,
-                        NativeUtil.stringFromByteArrayList(mEapAnonymousIdentity));
+                        NativeUtil.stringFromByteList(mEapAnonymousIdentity));
             }
             /** EAP Password */
             if (getEapPassword() && !ArrayUtils.isEmpty(mEapPassword)) {
                 eapConfig.setFieldValue(
                         WifiEnterpriseConfig.PASSWORD_KEY,
-                        NativeUtil.stringFromByteArrayList(mEapPassword));
+                        NativeUtil.stringFromByteList(mEapPassword));
             }
             /** EAP Client Cert */
             if (getEapClientCert() && !TextUtils.isEmpty(mEapClientCert)) {
@@ -1424,7 +1425,7 @@ public class SupplicantStaNetworkHal {
             try {
                 MutableBoolean statusOk = new MutableBoolean(false);
                 mISupplicantStaNetwork.getSsid((SupplicantStatus status,
-                        java.util.ArrayList<Byte> ssidValue) -> {
+                        java.util.List<Byte> ssidValue) -> {
                     statusOk.value = status.code == SupplicantStatusCode.SUCCESS;
                     if (statusOk.value) {
                         this.mSsid = ssidValue;
@@ -1652,7 +1653,7 @@ public class SupplicantStaNetworkHal {
             try {
                 MutableBoolean statusOk = new MutableBoolean(false);
                 mISupplicantStaNetwork.getWepKey(keyIdx, (SupplicantStatus status,
-                        java.util.ArrayList<Byte> wepKeyValue) -> {
+                        java.util.List<Byte> wepKeyValue) -> {
                     statusOk.value = status.code == SupplicantStatusCode.SUCCESS;
                     if (statusOk.value) {
                         this.mWepKey = wepKeyValue;
@@ -1767,7 +1768,7 @@ public class SupplicantStaNetworkHal {
             try {
                 MutableBoolean statusOk = new MutableBoolean(false);
                 mISupplicantStaNetwork.getEapIdentity((SupplicantStatus status,
-                        ArrayList<Byte> identityValue) -> {
+                        List<Byte> identityValue) -> {
                     statusOk.value = status.code == SupplicantStatusCode.SUCCESS;
                     if (statusOk.value) {
                         this.mEapIdentity = identityValue;
@@ -1790,7 +1791,7 @@ public class SupplicantStaNetworkHal {
             try {
                 MutableBoolean statusOk = new MutableBoolean(false);
                 mISupplicantStaNetwork.getEapAnonymousIdentity((SupplicantStatus status,
-                        ArrayList<Byte> identityValue) -> {
+                        List<Byte> identityValue) -> {
                     statusOk.value = status.code == SupplicantStatusCode.SUCCESS;
                     if (statusOk.value) {
                         this.mEapAnonymousIdentity = identityValue;
@@ -1817,7 +1818,7 @@ public class SupplicantStaNetworkHal {
             if (!getEapAnonymousIdentity()) {
                 return null;
             }
-            return NativeUtil.stringFromByteArrayList(mEapAnonymousIdentity);
+            return NativeUtil.stringFromByteList(mEapAnonymousIdentity);
         }
     }
 
@@ -1829,7 +1830,7 @@ public class SupplicantStaNetworkHal {
             try {
                 MutableBoolean statusOk = new MutableBoolean(false);
                 mISupplicantStaNetwork.getEapPassword((SupplicantStatus status,
-                        ArrayList<Byte> passwordValue) -> {
+                        List<Byte> passwordValue) -> {
                     statusOk.value = status.code == SupplicantStatusCode.SUCCESS;
                     if (statusOk.value) {
                         this.mEapPassword = passwordValue;
@@ -2349,23 +2350,23 @@ public class SupplicantStaNetworkHal {
      */
     public String getWpsNfcConfigurationToken() {
         synchronized (mLock) {
-            ArrayList<Byte> token = getWpsNfcConfigurationTokenInternal();
+            List<Byte> token = getWpsNfcConfigurationTokenInternal();
             if (token == null) {
                 return null;
             }
-            return NativeUtil.hexStringFromByteArray(NativeUtil.byteArrayFromArrayList(token));
+            return NativeUtil.hexStringFromByteArray(NativeUtil.byteArrayFromList(token));
         }
     }
 
     /** See ISupplicantStaNetwork.hal for documentation */
-    private ArrayList<Byte> getWpsNfcConfigurationTokenInternal() {
+    private List<Byte> getWpsNfcConfigurationTokenInternal() {
         synchronized (mLock) {
             final String methodStr = "getWpsNfcConfigurationToken";
             if (!checkISupplicantStaNetworkAndLogFailure(methodStr)) return null;
-            final Mutable<ArrayList<Byte>> gotToken = new Mutable<>();
+            final Mutable<List<Byte>> gotToken = new Mutable<>();
             try {
                 mISupplicantStaNetwork.getWpsNfcConfigurationToken(
-                        (SupplicantStatus status, ArrayList<Byte> token) -> {
+                        (SupplicantStatus status, List<Byte> token) -> {
                             if (checkStatusAndLogFailure(status, methodStr)) {
                                 gotToken.value = token;
                             }

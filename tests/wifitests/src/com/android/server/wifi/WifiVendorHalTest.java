@@ -767,7 +767,7 @@ public class WifiVendorHalTest {
    /**
      * Populate radio stats with non-negative random values
      */
-    private static void randomizeRadioStats(Random r, ArrayList<StaLinkLayerRadioStats> rstats) {
+    private static void randomizeRadioStats(Random r, List<StaLinkLayerRadioStats> rstats) {
         StaLinkLayerRadioStats rstat = new StaLinkLayerRadioStats();
         rstat.onTimeInMs = r.nextInt() & 0xFFFFFF;
         rstat.txTimeInMs = r.nextInt() & 0xFFFFFF;

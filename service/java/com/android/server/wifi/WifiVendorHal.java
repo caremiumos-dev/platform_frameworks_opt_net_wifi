@@ -77,6 +77,7 @@ import com.android.server.wifi.util.BitMask;
 import com.android.server.wifi.util.NativeUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -970,7 +971,7 @@ public class WifiVendorHal {
     private class RttEventCallback extends IWifiRttControllerEventCallback.Stub {
 
         @Override
-        public void onResults(int cmdId, java.util.ArrayList<RttResult> results) {
+        public void onResults(int cmdId, java.util.List<RttResult> results) {
             WifiNative.RttEventHandler eventHandler;
             synchronized (sLock) {
                 if (cmdId != mRttCmdId || mRttEventHandler == null) return;
@@ -1031,7 +1032,7 @@ public class WifiVendorHal {
         if (ie == null) return null;
         RttManager.WifiInformationElement ans = new RttManager.WifiInformationElement();
         ans.id = ie.id;
-        ans.data = NativeUtil.byteArrayFromArrayList(ie.data);
+        ans.data = NativeUtil.byteArrayFromList(ie.data);
         return ans;
     }
 
@@ -1476,7 +1477,7 @@ public class WifiVendorHal {
                         }
                         if (!ok(status)) return;
                         mChannelsForBandSupport = true;
-                        box.value = intArrayFromArrayList(frequencies);
+                        box.value = intArrayFromList(frequencies);
                     });
                 } else if (mIWifiApIface != null) {
                     mIWifiApIface.getValidFrequenciesForBand(hb, (status, frequencies) -> {
@@ -1485,7 +1486,7 @@ public class WifiVendorHal {
                         }
                         if (!ok(status)) return;
                         mChannelsForBandSupport = true;
-                        box.value = intArrayFromArrayList(frequencies);
+                        box.value = intArrayFromList(frequencies);
                     });
                 }
                 return box.value;
@@ -1496,7 +1497,7 @@ public class WifiVendorHal {
         }
     }
 
-    private int[] intArrayFromArrayList(ArrayList<Integer> in) {
+    private int[] intArrayFromList(List<Integer> in) {
         int[] ans = new int[in.size()];
         int i = 0;
         for (Integer e : in) ans[i++] = e;
@@ -1780,7 +1781,7 @@ public class WifiVendorHal {
      * Creates array of RingBufferStatus from the Hal version
      */
     private static WifiNative.RingBufferStatus[] makeRingBufferStatusArray(
-            ArrayList<WifiDebugRingBufferStatus> ringBuffers) {
+            List<WifiDebugRingBufferStatus> ringBuffers) {
         WifiNative.RingBufferStatus[] ans = new WifiNative.RingBufferStatus[ringBuffers.size()];
         int i = 0;
         for (WifiDebugRingBufferStatus b : ringBuffers) {
@@ -1842,7 +1843,7 @@ public class WifiVendorHal {
             try {
                 mIWifiChip.requestFirmwareDebugDump((status, blob) -> {
                     if (!ok(status)) return;
-                    ans.value = NativeUtil.byteArrayFromArrayList(blob);
+                    ans.value = NativeUtil.byteArrayFromList(blob);
                 });
             } catch (RemoteException e) {
                 handleRemoteException(e);
@@ -1865,7 +1866,7 @@ public class WifiVendorHal {
             try {
                 mIWifiChip.requestDriverDebugDump((status, blob) -> {
                     if (!ok(status)) return;
-                    ans.value = NativeUtil.byteArrayFromArrayList(blob);
+                    ans.value = NativeUtil.byteArrayFromList(blob);
                 });
             } catch (RemoteException e) {
                 handleRemoteException(e);
@@ -1988,7 +1989,7 @@ public class WifiVendorHal {
                                 byte type =
                                         halToFrameworkPktFateFrameType(fate.frameInfo.frameType);
                                 byte[] frame =
-                                        NativeUtil.byteArrayFromArrayList(
+                                        NativeUtil.byteArrayFromList(
                                                 fate.frameInfo.frameContent);
                                 reportBufs[i++] =
                                         new WifiNative.TxFateReport(code, us, type, frame);
@@ -2028,7 +2029,7 @@ public class WifiVendorHal {
                                 byte type =
                                         halToFrameworkPktFateFrameType(fate.frameInfo.frameType);
                                 byte[] frame =
-                                        NativeUtil.byteArrayFromArrayList(
+                                        NativeUtil.byteArrayFromList(
                                                 fate.frameInfo.frameContent);
                                 reportBufs[i++] =
                                         new WifiNative.RxFateReport(code, us, type, frame);
@@ -2163,7 +2164,7 @@ public class WifiVendorHal {
     }
 
     //TODO - belongs in NativeUtil
-    private static int[] intsFromArrayList(ArrayList<Integer> a) {
+    private static int[] intsFromList(List<Integer> a) {
         if (a == null) return null;
         int[] b = new int[a.size()];
         int i = 0;
@@ -2195,8 +2196,8 @@ public class WifiVendorHal {
         ans.ipv4RxMulticast = h.rxMulticastPkWakeDetails.ipv4RxMulticastAddrCnt;
         ans.ipv6Multicast = h.rxMulticastPkWakeDetails.ipv6RxMulticastAddrCnt;
         ans.otherRxMulticast = h.rxMulticastPkWakeDetails.otherRxMulticastAddrCnt;
-        ans.cmdEventWakeCntArray = intsFromArrayList(h.cmdEventWakeCntPerType);
-        ans.driverFWLocalWakeCntArray = intsFromArrayList(h.driverFwLocalWakeCntPerType);
+        ans.cmdEventWakeCntArray = intsFromList(h.cmdEventWakeCntPerType);
+        ans.driverFWLocalWakeCntArray = intsFromList(h.driverFwLocalWakeCntPerType);
         return ans;
     }
 
@@ -2417,14 +2418,14 @@ public class WifiVendorHal {
 
     // This creates a blob of IE elements from the array received.
     // TODO: This ugly conversion can be removed if we put IE elements in ScanResult.
-    private static byte[] hidlIeArrayToFrameworkIeBlob(ArrayList<WifiInformationElement> ies) {
+    private static byte[] hidlIeArrayToFrameworkIeBlob(List<WifiInformationElement> ies) {
         if (ies == null || ies.isEmpty()) return new byte[0];
         ArrayList<Byte> ieBlob = new ArrayList<>();
         for (WifiInformationElement ie : ies) {
             ieBlob.add(ie.id);
             ieBlob.addAll(ie.data);
         }
-        return NativeUtil.byteArrayFromArrayList(ieBlob);
+        return NativeUtil.byteArrayFromList(ieBlob);
     }
 
     // This is only filling up the fields of Scan Result used by Gscan clients.
@@ -2433,7 +2434,7 @@ public class WifiVendorHal {
         ScanResult frameworkScanResult = new ScanResult();
         frameworkScanResult.SSID = NativeUtil.encodeSsid(scanResult.ssid);
         frameworkScanResult.wifiSsid =
-                WifiSsid.createFromByteArray(NativeUtil.byteArrayFromArrayList(scanResult.ssid));
+                WifiSsid.createFromByteArray(NativeUtil.byteArrayFromList(scanResult.ssid));
         frameworkScanResult.BSSID = NativeUtil.macAddressFromByteArray(scanResult.bssid);
         frameworkScanResult.level = scanResult.rssi;
         frameworkScanResult.frequency = scanResult.frequency;
@@ -2442,7 +2443,7 @@ public class WifiVendorHal {
         return frameworkScanResult;
     }
 
-    private static ScanResult[] hidlToFrameworkScanResults(ArrayList<StaScanResult> scanResults) {
+    private static ScanResult[] hidlToFrameworkScanResults(List<StaScanResult> scanResults) {
         if (scanResults == null || scanResults.isEmpty()) return new ScanResult[0];
         ScanResult[] frameworkScanResults = new ScanResult[scanResults.size()];
         int i = 0;
@@ -2464,7 +2465,7 @@ public class WifiVendorHal {
     }
 
     private static WifiScanner.ScanData[] hidlToFrameworkScanDatas(
-            int cmdId, ArrayList<StaScanData> scanDatas) {
+            int cmdId, List<StaScanData> scanDatas) {
         if (scanDatas == null || scanDatas.isEmpty()) return new WifiScanner.ScanData[0];
         WifiScanner.ScanData[] frameworkScanDatas = new WifiScanner.ScanData[scanDatas.size()];
         int i = 0;
@@ -2506,7 +2507,7 @@ public class WifiVendorHal {
         }
 
         @Override
-        public void onBackgroundScanResults(int cmdId, ArrayList<StaScanData> scanDatas) {
+        public void onBackgroundScanResults(int cmdId, List<StaScanData> scanDatas) {
             mVerboseLog.d("onBackgroundScanResults " + cmdId);
             WifiNative.ScanEventHandler eventHandler;
             // WifiScanner currently uses the results callback to fetch the scan results.
@@ -2557,7 +2558,7 @@ public class WifiVendorHal {
 
         @Override
         public void onDebugRingBufferDataAvailable(
-                WifiDebugRingBufferStatus status, java.util.ArrayList<Byte> data) {
+                WifiDebugRingBufferStatus status, List<Byte> data) {
             //TODO(b/35875078) Reinstate logging when execessive callbacks are fixed
             // mVerboseLog.d("onDebugRingBufferDataAvailable " + status);
             mHalEventHandler.post(() -> {
@@ -2583,12 +2584,12 @@ public class WifiVendorHal {
                 // If, for example, T2.2 executes between T1.2 and 1.4, then T1 and T2
                 // will be deadlocked.
                 eventHandler.onRingBufferData(
-                        ringBufferStatus(status), NativeUtil.byteArrayFromArrayList(data));
+                        ringBufferStatus(status), NativeUtil.byteArrayFromList(data));
             });
         }
 
         @Override
-        public void onDebugErrorAlert(int errorCode, java.util.ArrayList<Byte> debugData) {
+        public void onDebugErrorAlert(int errorCode, List<Byte> debugData) {
             mVerboseLog.d("onDebugErrorAlert " + errorCode);
             mHalEventHandler.post(() -> {
                 WifiNative.WifiLoggerEventHandler eventHandler;
@@ -2599,7 +2600,7 @@ public class WifiVendorHal {
                 // See comment in onDebugRingBufferDataAvailable(), for an explanation
                 // of why this callback is invoked without |sLock| held.
                 eventHandler.onWifiAlert(
-                        errorCode, NativeUtil.byteArrayFromArrayList(debugData));
+                        errorCode, NativeUtil.byteArrayFromList(debugData));
             });
         }
     }
