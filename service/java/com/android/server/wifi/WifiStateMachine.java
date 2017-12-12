@@ -3503,24 +3503,23 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
 
     private void handleSuccessfulIpConfiguration() {
         mLastSignalLevel = -1; // Force update of signal strength
-        WifiConfiguration c = getCurrentWifiConfiguration();
-        if (c != null) {
-            // Reset IP failure tracking
-            c.getNetworkSelectionStatus().clearDisableReasonCounter(
-                    WifiConfiguration.NetworkSelectionStatus.DISABLED_DHCP_FAILURE);
+        final WifiConfiguration c = getCurrentWifiConfiguration();
+        if (c == null) return;
 
-            // Tell the framework whether the newly connected network is trusted or untrusted.
-            updateCapabilities(c);
-        }
-        if (c != null) {
-            ScanResult result = getCurrentScanResult();
-            if (result == null) {
-                logd("WifiStateMachine: handleSuccessfulIpConfiguration and no scan results" +
-                        c.configKey());
-            } else {
-                // Clear the per BSSID failure count
-                result.numIpConfigFailures = 0;
-            }
+        // Reset IP failure tracking
+        c.getNetworkSelectionStatus().clearDisableReasonCounter(
+                WifiConfiguration.NetworkSelectionStatus.DISABLED_DHCP_FAILURE);
+
+        // Tell the framework whether the newly connected network is trusted or untrusted.
+        updateCapabilities(c);
+
+        final ScanResult result = getCurrentScanResult();
+        if (result != null) {
+            // Clear the per BSSID failure count
+            result.numIpConfigFailures = 0;
+        } else {
+            logd("WifiStateMachine: handleSuccessfulIpConfiguration and no scan results"
+                    + c.configKey());
         }
     }
 
