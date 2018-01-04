@@ -5125,10 +5125,8 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     }
                     if (!identitySent) {
                         // Supplicant lacks credentials to connect to that network, hence black list
-                        ssid = (String) message.obj;
-                        if (targetWificonfiguration != null && ssid != null
-                                && targetWificonfiguration.SSID != null
-                                && targetWificonfiguration.SSID.equals("\"" + ssid + "\"")) {
+                        if (targetWificonfiguration != null
+                                && targetWificonfiguration.networkId == netId) {
                             mWifiConfigManager.updateNetworkSelectionStatus(
                                     targetWificonfiguration.networkId,
                                     WifiConfiguration.NetworkSelectionStatus
