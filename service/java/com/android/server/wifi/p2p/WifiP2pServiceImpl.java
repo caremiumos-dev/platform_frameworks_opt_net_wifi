@@ -51,6 +51,7 @@ import android.net.wifi.p2p.nsd.WifiP2pServiceResponse;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.INetworkManagementService;
@@ -139,6 +140,9 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
 
     // Idle time after a peer is gone when the group is torn down
     private static final int GROUP_IDLE_TIME_S = 10;
+
+    // Time to remove P2P Invitation dialog
+    private static final int P2P_INVITATION_WAIT_TIME_MS = 30 * 1000;
 
     private static final int BASE = Protocol.BASE_WIFI_P2P_SERVICE;
 
@@ -233,6 +237,12 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
 
     // The empty device address set by wpa_supplicant.
     private static final String EMPTY_DEVICE_ADDRESS = "00:00:00:00:00:00";
+
+    // Handler to remove P2p invitation dialog automatically
+    private Handler mHandler;
+
+    // Runnable to remove P2p invitation dialog automatically
+    private Runnable mDialogDismiss;
 
     /**
      * Error code definition.
@@ -399,6 +409,7 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
         mClientHandler = new ClientHandler(TAG, wifiP2pThread.getLooper());
         mP2pStateMachine = new P2pStateMachine(TAG, wifiP2pThread.getLooper(), mP2pSupported);
         mP2pStateMachine.start();
+        mHandler = new Handler();
     }
 
     /**
@@ -2646,6 +2657,7 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
             AlertDialog dialog = new AlertDialog.Builder(mContext)
                     .setTitle(r.getString(R.string.wifi_p2p_invitation_to_connect_title))
                     .setView(textEntryView)
+                    .setMessage(r.getString(R.string.wifi_p2p_invitation_disappear_messaege))
                     .setPositiveButton(r.getString(R.string.accept), new OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 if (wps.setup == WpsInfo.KEYPAD) {
@@ -2653,6 +2665,7 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                                 }
                                 if (DBG) logd(getName() + " accept invitation " + mSavedPeerConfig);
                                 sendMessage(PEER_CONNECTION_USER_ACCEPT);
+                                mHandler.removeCallbacks(mDialogDismiss);
                             }
                         })
                     .setNegativeButton(r.getString(R.string.decline), new OnClickListener() {
@@ -2660,6 +2673,7 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                             public void onClick(DialogInterface dialog, int which) {
                                 if (DBG) logd(getName() + " ignore connect");
                                 sendMessage(PEER_CONNECTION_USER_REJECT);
+                                mHandler.removeCallbacks(mDialogDismiss);
                             }
                         })
                     .setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -2667,6 +2681,7 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                             public void onCancel(DialogInterface arg0) {
                                 if (DBG) logd(getName() + " ignore connect");
                                 sendMessage(PEER_CONNECTION_USER_REJECT);
+                                mHandler.removeCallbacks(mDialogDismiss);
                             }
                         })
                     .create();
@@ -2711,6 +2726,15 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
             attrs.privateFlags = WindowManager.LayoutParams.PRIVATE_FLAG_SHOW_FOR_ALL_USERS;
             dialog.getWindow().setAttributes(attrs);
             dialog.show();
+
+            mDialogDismiss = new Runnable() {
+                @Override
+                public void run() {
+                    dialog.dismiss();
+                    sendMessage(PEER_CONNECTION_USER_REJECT);
+                }
+            };
+            mHandler.postDelayed(mDialogDismiss, P2P_INVITATION_WAIT_TIME_MS);
         }
 
         /**
