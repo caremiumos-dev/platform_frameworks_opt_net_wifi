@@ -30,6 +30,7 @@ import android.os.BatteryStats;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.os.PersistableBundle;
 import android.os.ServiceManager;
 import android.os.storage.StorageManager;
 import android.provider.Settings;
@@ -111,8 +112,11 @@ public class FrameworkFacade {
        CarrierConfigManager configManager = (CarrierConfigManager) context
                .getSystemService(Context.CARRIER_CONFIG_SERVICE);
        if (configManager != null) {
-           return configManager.getConfig().getBoolean(
-               CarrierConfigManager.KEY_CONFIG_WIFI_DISABLE_IN_ECBM);
+           PersistableBundle config = configManager.getConfig();
+           if (config != null) {
+               return config.getBoolean(
+                       CarrierConfigManager.KEY_CONFIG_WIFI_DISABLE_IN_ECBM);
+           }
        }
        /* Default to TRUE */
        return true;
