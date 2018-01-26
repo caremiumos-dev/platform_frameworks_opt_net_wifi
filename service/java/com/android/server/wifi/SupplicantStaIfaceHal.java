@@ -536,6 +536,12 @@ public class SupplicantStaIfaceHal {
                 networkExtras.put(networkId, networkExtra);
                 String configKey =
                         networkExtra.get(SupplicantStaNetworkHal.ID_STRING_KEY_CONFIG_KEY);
+                if (configKey == null) {
+                    // Set config key if it doesn't exist. This happens if network block is
+                    // created by WPS. If multiple network blocks are created, one of them
+                    // is lost due to the duplicate entry check with null config keys.
+                    configKey = config.configKey();
+                }
                 final WifiConfiguration duplicateConfig = configs.put(configKey, config);
                 if (duplicateConfig != null) {
                     // The network is already known. Overwrite the duplicate entry.
