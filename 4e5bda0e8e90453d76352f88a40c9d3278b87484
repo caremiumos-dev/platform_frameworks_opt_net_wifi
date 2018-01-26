@@ -22,6 +22,30 @@
       "revId": "4e5bda0e8e90453d76352f88a40c9d3278b87484",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c45bbd30_d3100de0",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiBackupRestoreTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1112054
+      },
+      "writtenOn": "2018-01-26T02:07:47Z",
+      "side": 1,
+      "message": "Hey Roshan, we changed format of the key. It is used to be integer, now it is string. Config store has notion of the version, so it is backward compatible.\nI had to change this invocation just to emulate write in old format.",
+      "parentUuid": "f2b4cf2d_5390b391",
+      "range": {
+        "startLine": 777,
+        "startChar": 0,
+        "endLine": 788,
+        "endChar": 32
+      },
+      "revId": "4e5bda0e8e90453d76352f88a40c9d3278b87484",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
