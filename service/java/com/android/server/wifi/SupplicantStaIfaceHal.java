@@ -536,6 +536,9 @@ public class SupplicantStaIfaceHal {
                 networkExtras.put(networkId, networkExtra);
                 String configKey =
                         networkExtra.get(SupplicantStaNetworkHal.ID_STRING_KEY_CONFIG_KEY);
+                if (configKey == null) {
+                    configKey = config.configKey();
+                }
                 final WifiConfiguration duplicateConfig = configs.put(configKey, config);
                 if (duplicateConfig != null) {
                     // The network is already known. Overwrite the duplicate entry.
