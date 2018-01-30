@@ -51,6 +51,7 @@ import com.android.server.wifi.hotspot2.PasspointManager;
 import com.android.server.wifi.util.TelephonyUtil;
 import com.android.server.wifi.util.WifiPermissionsUtil;
 import com.android.server.wifi.util.WifiPermissionsWrapper;
+import com.android.server.wifi.util.NativeUtil;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -753,7 +754,8 @@ public class WifiConfigManager {
     private void mergeWithInternalWifiConfiguration(
             WifiConfiguration internalConfig, WifiConfiguration externalConfig) {
         if (externalConfig.SSID != null) {
-            internalConfig.SSID = externalConfig.SSID;
+            internalConfig.SSID = NativeUtil.addEnclosingQuotes(
+                            NativeUtil.removeEnclosingQuotes(externalConfig.SSID));
         }
         if (externalConfig.BSSID != null) {
             internalConfig.BSSID = externalConfig.BSSID.toLowerCase();
