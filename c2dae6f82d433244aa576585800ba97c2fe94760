@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c5a1318_1fa7c30b",
+        "filename": "libwifi_hal/wifi_hal_common.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1005718
+      },
+      "writtenOn": "2018-02-20T16:19:10Z",
+      "side": 1,
+      "message": "should be just \"W_OK\" since we only want to write to the node.",
+      "range": {
+        "startLine": 95,
+        "startChar": 50,
+        "endLine": 95,
+        "endChar": 54
+      },
+      "revId": "c2dae6f82d433244aa576585800ba97c2fe94760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
