@@ -1,0 +1,8 @@
+Verified+1: hansson <hansson@google.com>
+Code-Review+2: Etan Cohen <etancohen@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: hansson <hansson@google.com>
+Submitted-at: Fri, 23 Feb 2018 07:16:20 +0000
+Reviewed-on: https://android-review.googlesource.com/624468
+Project: platform/frameworks/opt/net/wifi
+Branch: refs/heads/master
