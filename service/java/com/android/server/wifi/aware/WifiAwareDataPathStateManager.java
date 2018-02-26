@@ -60,6 +60,8 @@ import java.net.SocketException;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -193,6 +195,7 @@ public class WifiAwareDataPathStateManager {
      */
     public void deleteAllInterfaces() {
         if (VDBG) Log.v(TAG, "deleteAllInterfaces");
+        onAwareDownCleanupDataPaths();
 
         if (mMgr.getCapabilities() == null) {
             Log.e(TAG, "deleteAllInterfaces: capabilities aren't initialized yet!");
@@ -292,7 +295,6 @@ public class WifiAwareDataPathStateManager {
                     + nnri.state);
         }
 
-        mNetworkRequestsCache.remove(networkSpecifier);
         mAwareMetrics.recordNdpStatus(reason, networkSpecifier.isOutOfBand(), nnri.startTimestamp);
     }
 
@@ -353,14 +355,6 @@ public class WifiAwareDataPathStateManager {
                 Log.d(TAG, "onDataPathRequest: network request cache = " + mNetworkRequestsCache);
             }
             mMgr.respondToDataPathRequest(false, ndpId, "", null, null, false);
-            return null;
-        }
-
-        if (nnri.state != AwareNetworkRequestInformation.STATE_RESPONDER_WAIT_FOR_REQUEST) {
-            Log.w(TAG, "onDataPathRequest: request " + networkSpecifier + " is incorrect state="
-                    + nnri.state);
-            mMgr.respondToDataPathRequest(false, ndpId, "", null, null, false);
-            mNetworkRequestsCache.remove(networkSpecifier);
             return null;
         }
 
@@ -576,10 +570,12 @@ public class WifiAwareDataPathStateManager {
     public void onAwareDownCleanupDataPaths() {
         if (VDBG) Log.v(TAG, "onAwareDownCleanupDataPaths");
 
-        for (AwareNetworkRequestInformation nnri : mNetworkRequestsCache.values()) {
-            tearDownInterfaceIfPossible(nnri);
+        Iterator<Map.Entry<WifiAwareNetworkSpecifier, AwareNetworkRequestInformation>> it =
+                mNetworkRequestsCache.entrySet().iterator();
+        while (it.hasNext()) {
+            tearDownInterfaceIfPossible(it.next().getValue());
+            it.remove();
         }
-        mNetworkRequestsCache.clear();
     }
 
     /**
