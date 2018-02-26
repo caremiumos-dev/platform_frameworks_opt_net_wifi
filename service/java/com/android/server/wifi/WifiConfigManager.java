@@ -303,6 +303,10 @@ public class WifiConfigManager {
      */
     private boolean mDeferredUserUnlockRead = false;
     /**
+     * Flag to indicate if the resetting SIM networks was deferred until the store load occurs.
+     */
+    private boolean mDeferredResetSimNetworks = false;
+    /**
      * Flag to indicate if SIM is present.
      */
     private boolean mSimPresent = false;
@@ -2463,6 +2467,12 @@ public class WifiConfigManager {
      */
     public void resetSimNetworks(boolean simPresent) {
         if (mVerboseLoggingEnabled) localLog("resetSimNetworks");
+        if (mPendingStoreRead) {
+            Log.w(TAG, "Ignore resetting SIM networks until store is read!");
+            mDeferredResetSimNetworks = true;
+            mSimPresent = simPresent;
+            return;
+        }
         for (WifiConfiguration config : getInternalConfiguredNetworks()) {
             if (TelephonyUtil.isSimConfig(config)) {
                 Pair<String, String> currentIdentity = null;
@@ -2734,6 +2744,10 @@ public class WifiConfigManager {
         }
         sendConfiguredNetworksChangedBroadcast();
         mPendingStoreRead = false;
+        if (mDeferredResetSimNetworks) {
+            resetSimNetworks(mSimPresent);
+            mDeferredResetSimNetworks = false;
+        }
     }
 
     /**
@@ -2801,6 +2815,10 @@ public class WifiConfigManager {
             if (!mWifiConfigStoreLegacy.areStoresPresent()) {
                 // No legacy store files either, so reset the pending store read flag.
                 mPendingStoreRead = false;
+                if (mDeferredResetSimNetworks) {
+                    resetSimNetworks(mSimPresent);
+                    mDeferredResetSimNetworks = false;
+                }
             }
             return true;
         }
