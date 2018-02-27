@@ -2377,6 +2377,7 @@ public class WifiConfigManagerTest {
      * and {@link WifiConfigManager#handleUserUnlock(int)} and ensures that the new store is not
      * read until the user is unlocked.
      */
+    @Test
     public void testHandleUserSwitchWhenLocked() throws Exception {
         int user1 = TEST_DEFAULT_USER;
         int user2 = TEST_DEFAULT_USER + 1;
@@ -2415,6 +2416,8 @@ public class WifiConfigManagerTest {
         int user2 = TEST_DEFAULT_USER + 1;
         setupUserProfiles(user2);
 
+        // Set up the internal data first.
+        assertTrue(mWifiConfigManager.loadFromStore());
         // Try stopping background user2 first, this should not do anything.
         when(mUserManager.isUserUnlockingOrUnlocked(user2)).thenReturn(false);
         mWifiConfigManager.handleUserStop(user2);
