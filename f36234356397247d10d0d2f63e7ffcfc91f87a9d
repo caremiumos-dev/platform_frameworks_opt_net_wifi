@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ef0a4bc_db38b0ba",
+        "filename": "libwifi_hal/wifi_hal_common.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2018-03-05T23:10:31Z",
+      "side": 1,
+      "message": "This looks like device-specific logic, which wouldn\u0027t be appropriate for wifi_hal_common.cpp.\n\nInstead, we\u0027re going to expand the wifi_hal_fn definition, to add a function to wait for the driver to be ready.\n\nWhen that\u0027s available, your HAL can place this logic in the newly defined function.",
+      "revId": "f36234356397247d10d0d2f63e7ffcfc91f87a9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
