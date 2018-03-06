@@ -16,6 +16,24 @@
       "revId": "f36234356397247d10d0d2f63e7ffcfc91f87a9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed60b041_b2f12d6a",
+        "filename": "libwifi_hal/wifi_hal_common.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1247308
+      },
+      "writtenOn": "2018-03-06T01:00:57Z",
+      "side": 1,
+      "message": "Thanks for your comment. Understood.",
+      "parentUuid": "3ef0a4bc_db38b0ba",
+      "revId": "f36234356397247d10d0d2f63e7ffcfc91f87a9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
