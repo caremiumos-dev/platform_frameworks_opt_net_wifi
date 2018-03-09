@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2b3e847_84b9f1cf",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5730,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2018-03-09T18:21:40Z",
+      "side": 1,
+      "message": "Seems like a driver bug. I don\u0027t think a framework change is the right way to address that.",
+      "revId": "31d535fe5079d04323d6c51bf3cb6c70e66f3ada",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
