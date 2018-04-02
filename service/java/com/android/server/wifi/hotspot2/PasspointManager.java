@@ -355,7 +355,7 @@ public class PasspointManager {
         Pair<PasspointProvider, PasspointMatch> bestMatch = null;
         for (Map.Entry<String, PasspointProvider> entry : mProviders.entrySet()) {
             PasspointProvider provider = entry.getValue();
-            PasspointMatch matchStatus = provider.match(anqpEntry.getElements());
+            PasspointMatch matchStatus = provider.match(anqpEntry.getElements(), roamingConsortium);
             if (matchStatus == PasspointMatch.HomeProvider) {
                 bestMatch = Pair.create(provider, matchStatus);
                 break;
