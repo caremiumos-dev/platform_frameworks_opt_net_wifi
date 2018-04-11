@@ -3309,6 +3309,8 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         } else {
             mWifiInfo.setNetworkId(WifiConfiguration.INVALID_NETWORK_ID);
         }
+        // SSID might have been updated, so call updateCapabilities
+        updateCapabilities();
 
         mWifiInfo.setBSSID(stateChangeResult.BSSID);
         mWifiInfo.setSSID(stateChangeResult.wifiSsid);
@@ -5549,6 +5551,10 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     }
 
     private void updateCapabilities(WifiConfiguration config) {
+        if (mNetworkAgent == null) {
+            return;
+        }
+
         final NetworkCapabilities result = new NetworkCapabilities(mDfltNetworkCapabilities);
 
         if (mWifiInfo != null && !mWifiInfo.isEphemeral()) {
@@ -5569,9 +5575,13 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             result.setSignalStrength(NetworkCapabilities.SIGNAL_STRENGTH_UNSPECIFIED);
         }
 
-        if (mNetworkAgent != null) {
-            mNetworkAgent.sendNetworkCapabilities(result);
+        if (mWifiInfo != null && !mWifiInfo.getSSID().equals(WifiSsid.NONE)) {
+            result.setSSID(mWifiInfo.getSSID());
+        } else {
+            result.setSSID(null);
         }
+
+        mNetworkAgent.sendNetworkCapabilities(result);
     }
 
     /**
