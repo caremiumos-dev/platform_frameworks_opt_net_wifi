@@ -4743,8 +4743,9 @@ public class ClientModeImpl extends StateMachine {
 
     private class WifiNetworkAgent extends NetworkAgent {
         WifiNetworkAgent(Looper l, Context c, String tag, NetworkInfo ni,
-                NetworkCapabilities nc, LinkProperties lp, int score, NetworkMisc misc) {
-            super(l, c, tag, ni, nc, lp, score, misc);
+                NetworkCapabilities nc, LinkProperties lp, int score, NetworkMisc misc,
+                int factorySerialNumber) {
+            super(l, c, tag, ni, nc, lp, score, misc, factorySerialNumber);
         }
         private int mLastNetworkStatus = -1; // To detect when the status really changes
 
@@ -4936,7 +4937,8 @@ public class ClientModeImpl extends StateMachine {
             final NetworkCapabilities nc = getCapabilities(getCurrentWifiConfiguration());
             synchronized (mNetworkAgentLock) {
                 mNetworkAgent = new WifiNetworkAgent(getHandler().getLooper(), mContext,
-                    "WifiNetworkAgent", mNetworkInfo, nc, mLinkProperties, 60, mNetworkMisc);
+                    "WifiNetworkAgent", mNetworkInfo, nc, mLinkProperties, 60, mNetworkMisc,
+                    mNetworkFactory.getSerialNumber());
             }
 
             // We must clear the config BSSID, as the wifi chipset may decide to roam

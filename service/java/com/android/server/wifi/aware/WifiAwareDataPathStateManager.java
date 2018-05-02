@@ -650,7 +650,7 @@ public class WifiAwareDataPathStateManager {
                     AGENT_TAG_PREFIX + nnri.ndpId,
                     new NetworkInfo(ConnectivityManager.TYPE_NONE, 0, NETWORK_TAG, ""),
                     networkCapabilities, linkProperties, NETWORK_FACTORY_SCORE_AVAIL,
-                    nnri);
+                    mNetworkFactory.getSerialNumber(), nnri);
             nnri.startValidationTimestamp = mClock.getElapsedSinceBootMillis();
             handleAddressValidation(nnri, linkProperties, networkInfo, ndpId,
                     networkSpecifier.isOutOfBand());
@@ -1027,9 +1027,9 @@ public class WifiAwareDataPathStateManager {
         private AwareNetworkRequestInformation mAwareNetworkRequestInfo;
 
         WifiAwareNetworkAgent(Looper looper, Context context, String logTag, NetworkInfo ni,
-                NetworkCapabilities nc, LinkProperties lp, int score,
+                NetworkCapabilities nc, LinkProperties lp, int score, int factorySerialNumber,
                 AwareNetworkRequestInformation anri) {
-            super(looper, context, logTag, ni, nc, lp, score);
+            super(looper, context, logTag, ni, nc, lp, score, factorySerialNumber);
 
             mNetworkInfo = ni;
             mAwareNetworkRequestInfo = anri;

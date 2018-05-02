@@ -43,6 +43,7 @@ import android.net.LinkProperties;
 import android.net.MacAddress;
 import android.net.NetworkAgent;
 import android.net.NetworkCapabilities;
+import android.net.NetworkFactory;
 import android.net.NetworkInfo;
 import android.net.NetworkMisc;
 import android.net.NetworkSpecifier;
@@ -144,6 +145,10 @@ public class ClientModeImplTest {
     private static final int PASSPOINT_NETWORK_ID = 1;
     private static final int TEST_RSSI = -54;
     private static final int TEST_NETWORK_ID = 54;
+    private static final int WIFI_NETWORK_FACTORY_SERIAL_NUMBER =
+            NetworkFactory.SerialNumber.nextSerialNumber();
+    private static final int OUTSCORING_NETWORK_FACTORY_SERIAL_NUMBER =
+            NetworkFactory.SerialNumber.nextSerialNumber();
     private static final int WPS_SUPPLICANT_NETWORK_ID = 5;
     private static final int WPS_FRAMEWORK_NETWORK_ID = 10;
     private static final String DEFAULT_TEST_SSID = "\"GoogleGuest\"";
@@ -460,9 +465,13 @@ public class ClientModeImplTest {
         when(mWifiNetworkFactory.hasConnectionRequests()).thenReturn(true);
         when(mUntrustedWifiNetworkFactory.hasConnectionRequests()).thenReturn(true);
 
+        when(mWifiNetworkFactory.getSerialNumber())
+                .thenReturn(WIFI_NETWORK_FACTORY_SERIAL_NUMBER);
+        when(mUntrustedWifiNetworkFactory.getSerialNumber())
+                .thenReturn(WIFI_NETWORK_FACTORY_SERIAL_NUMBER);
+
         mFrameworkFacade = getFrameworkFacade();
         mContext = getContext();
-
         mResources = getMockResources();
         mResources.setBoolean(R.bool.config_wifi_connected_mac_randomization_supported, true);
         when(mContext.getResources()).thenReturn(mResources);
@@ -2318,7 +2327,7 @@ public class ClientModeImplTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class), anyInt());
+                anyInt(), any(NetworkMisc.class), eq(WIFI_NETWORK_FACTORY_SERIAL_NUMBER));
 
         registerAsyncChannel((x) -> {
             mNetworkAgentAsyncChannel = x;
@@ -2415,7 +2424,7 @@ public class ClientModeImplTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class), anyInt());
+                anyInt(), any(NetworkMisc.class), eq(WIFI_NETWORK_FACTORY_SERIAL_NUMBER));
 
         ArrayList<Integer> thresholdsArray = new ArrayList<>();
         thresholdsArray.add(RSSI_THRESHOLD_MAX);
@@ -2874,7 +2883,7 @@ public class ClientModeImplTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class), anyInt());
+                anyInt(), any(NetworkMisc.class), eq(WIFI_NETWORK_FACTORY_SERIAL_NUMBER));
 
         Message message = new Message();
         message.what = NetworkAgent.CMD_REPORT_NETWORK_STATUS;
@@ -3082,7 +3091,7 @@ public class ClientModeImplTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class), anyInt());
+                anyInt(), any(NetworkMisc.class), eq(WIFI_NETWORK_FACTORY_SERIAL_NUMBER));
 
         WifiConfiguration currentNetwork = new WifiConfiguration();
         currentNetwork.networkId = FRAMEWORK_NETWORK_ID;
@@ -3116,7 +3125,7 @@ public class ClientModeImplTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class), anyInt());
+                anyInt(), any(NetworkMisc.class), eq(WIFI_NETWORK_FACTORY_SERIAL_NUMBER));
 
         WifiConfiguration currentNetwork = new WifiConfiguration();
         currentNetwork.networkId = FRAMEWORK_NETWORK_ID;
@@ -3151,7 +3160,7 @@ public class ClientModeImplTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class), anyInt());
+                anyInt(), any(NetworkMisc.class), eq(WIFI_NETWORK_FACTORY_SERIAL_NUMBER));
 
         WifiConfiguration currentNetwork = new WifiConfiguration();
         currentNetwork.networkId = FRAMEWORK_NETWORK_ID;
@@ -3184,7 +3193,7 @@ public class ClientModeImplTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class), anyInt());
+                anyInt(), any(NetworkMisc.class), eq(WIFI_NETWORK_FACTORY_SERIAL_NUMBER));
 
         when(mWifiConfigManager.getLastSelectedNetwork()).thenReturn(FRAMEWORK_NETWORK_ID + 1);
 
@@ -3217,7 +3226,7 @@ public class ClientModeImplTest {
         verify(mConnectivityManager).registerNetworkAgent(any(Messenger.class),
                 any(NetworkInfo.class), any(LinkProperties.class),
                 networkCapabilitiesCaptor.capture(), anyInt(), any(NetworkMisc.class),
-                anyInt());
+                eq(WIFI_NETWORK_FACTORY_SERIAL_NUMBER));
 
         NetworkCapabilities networkCapabilities = networkCapabilitiesCaptor.getValue();
         assertNotNull(networkCapabilities);
