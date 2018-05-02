@@ -820,7 +820,7 @@ public class WifiAwareDataPathStateManager {
         WifiAwareNetworkAgent(Looper looper, Context context, String logTag, NetworkInfo ni,
                 NetworkCapabilities nc, LinkProperties lp, int score,
                 AwareNetworkRequestInformation anri) {
-            super(looper, context, logTag, ni, nc, lp, score);
+            super(looper, context, logTag, ni, nc, lp, score, mNetworkFactory.getSerialNumber());
 
             mNetworkInfo = ni;
             mAwareNetworkRequestInfo = anri;

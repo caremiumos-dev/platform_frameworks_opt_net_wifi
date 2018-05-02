@@ -5596,7 +5596,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     private class WifiNetworkAgent extends NetworkAgent {
         public WifiNetworkAgent(Looper l, Context c, String TAG, NetworkInfo ni,
                 NetworkCapabilities nc, LinkProperties lp, int score, NetworkMisc misc) {
-            super(l, c, TAG, ni, nc, lp, score, misc);
+            super(l, c, TAG, ni, nc, lp, score, misc, mNetworkFactory.getSerialNumber());
         }
 
         @Override
