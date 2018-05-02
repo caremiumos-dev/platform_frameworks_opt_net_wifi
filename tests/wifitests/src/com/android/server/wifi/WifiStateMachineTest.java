@@ -141,6 +141,10 @@ public class WifiStateMachineTest {
     private static final int TEST_NETWORK_ID = 54;
     private static final int TEST_VALID_NETWORK_SCORE = 54;
     private static final int TEST_OUTSCORED_NETWORK_SCORE = 100;
+    private static final int WIFI_NETWORK_FACTORY_SERIAL_NUMBER =
+            NetworkFactory.SerialNumber.nextSerialNumber();
+    private static final int OUTSCORING_NETWORK_FACTORY_SERIAL_NUMBER =
+            NetworkFactory.SerialNumber.nextSerialNumber();
     private static final int WPS_SUPPLICANT_NETWORK_ID = 5;
     private static final int WPS_FRAMEWORK_NETWORK_ID = 10;
     private static final String DEFAULT_TEST_SSID = "\"GoogleGuest\"";
@@ -421,6 +425,9 @@ public class WifiStateMachineTest {
         when(mWifiNative.setupInterfaceForClientMode(anyBoolean(), any()))
                 .thenReturn(WIFI_IFACE_NAME);
         when(mWifiNative.initialize()).thenReturn(true);
+
+        when(mConnectivityManager.registerNetworkFactory(any(), any()))
+                .thenReturn(WIFI_NETWORK_FACTORY_SERIAL_NUMBER);
 
         mFrameworkFacade = getFrameworkFacade();
         mContext = getContext();
@@ -2134,7 +2141,7 @@ public class WifiStateMachineTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class), anyInt());
+                anyInt(), any(NetworkMisc.class), eq(WIFI_NETWORK_FACTORY_SERIAL_NUMBER));
 
         ArrayList<Integer> thresholdsArray = new ArrayList();
         thresholdsArray.add(RSSI_THRESHOLD_MAX);
@@ -2463,7 +2470,7 @@ public class WifiStateMachineTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class), anyInt());
+                anyInt(), any(NetworkMisc.class), eq(WIFI_NETWORK_FACTORY_SERIAL_NUMBER));
 
         WifiConfiguration currentNetwork = new WifiConfiguration();
         currentNetwork.networkId = FRAMEWORK_NETWORK_ID;
@@ -2497,7 +2504,8 @@ public class WifiStateMachineTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class), anyInt());
+                anyInt(), any(NetworkMisc.class), eq(WIFI_NETWORK_FACTORY_SERIAL_NUMBER));
+
 
         WifiConfiguration currentNetwork = new WifiConfiguration();
         currentNetwork.networkId = FRAMEWORK_NETWORK_ID;
@@ -2532,7 +2540,7 @@ public class WifiStateMachineTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class), anyInt());
+                anyInt(), any(NetworkMisc.class), eq(WIFI_NETWORK_FACTORY_SERIAL_NUMBER));
 
         WifiConfiguration currentNetwork = new WifiConfiguration();
         currentNetwork.networkId = FRAMEWORK_NETWORK_ID;
@@ -2565,7 +2573,7 @@ public class WifiStateMachineTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class), anyInt());
+                anyInt(), any(NetworkMisc.class), eq(WIFI_NETWORK_FACTORY_SERIAL_NUMBER));
 
         when(mWifiConfigManager.getLastSelectedNetwork()).thenReturn(FRAMEWORK_NETWORK_ID + 1);
 
