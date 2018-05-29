@@ -281,6 +281,10 @@ public class SupplicantStaNetworkHal {
                         return false;
                     }
                 } else {
+                    if (config.preSharedKey.length() != 64) {
+                        Log.e(TAG, "preSharedKey length is not valid");
+                        return false;
+                    }
                     if (!setPsk(NativeUtil.hexStringToByteArray(config.preSharedKey))) {
                         Log.e(TAG, "failed to set psk");
                         return false;
