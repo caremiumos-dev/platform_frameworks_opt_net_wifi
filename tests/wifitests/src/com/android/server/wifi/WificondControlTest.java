@@ -143,8 +143,8 @@ public class WificondControlTest {
     private static final String TEST_QUOTED_SSID_1 = "\"testSsid1\"";
     private static final String TEST_QUOTED_SSID_2 = "\"testSsid2\"";
 
-    private static final Set<String> SCAN_HIDDEN_NETWORK_SSID_SET =
-            new HashSet<String>() {{
+    private static final List<String> SCAN_HIDDEN_NETWORK_SSID_SET =
+            new ArrayList<String>() {{
                 add(TEST_QUOTED_SSID_1);
                 add(TEST_QUOTED_SSID_2);
             }};
@@ -1116,8 +1116,8 @@ public class WificondControlTest {
     private class ScanMatcher implements ArgumentMatcher<SingleScanSettings> {
         int mExpectedScanType;
         private final Set<Integer> mExpectedFreqs;
-        private final Set<String> mExpectedSsids;
-        ScanMatcher(int expectedScanType, Set<Integer> expectedFreqs, Set<String> expectedSsids) {
+        private final List<String> mExpectedSsids;
+        ScanMatcher(int expectedScanType, Set<Integer> expectedFreqs, List<String> expectedSsids) {
             this.mExpectedScanType = expectedScanType;
             this.mExpectedFreqs = expectedFreqs;
             this.mExpectedSsids = expectedSsids;
@@ -1145,7 +1145,7 @@ public class WificondControlTest {
             }
 
             if (mExpectedSsids != null) {
-                Set<String> ssidSet = new HashSet<String>();
+                List<String> ssidSet = new ArrayList<String>();
                 for (HiddenNetwork network : hiddenNetworks) {
                     ssidSet.add(NativeUtil.encodeSsid(
                             NativeUtil.byteArrayToArrayList(network.ssid)));

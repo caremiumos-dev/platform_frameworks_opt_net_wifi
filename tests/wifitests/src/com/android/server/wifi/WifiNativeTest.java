@@ -35,7 +35,9 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -127,8 +129,8 @@ public class WifiNativeTest {
             }};
     private static final String TEST_QUOTED_SSID_1 = "\"testSsid1\"";
     private static final String TEST_QUOTED_SSID_2 = "\"testSsid2\"";
-    private static final Set<String> SCAN_HIDDEN_NETWORK_SSID_SET =
-            new HashSet<String>() {{
+    private static final List<String> SCAN_HIDDEN_NETWORK_SSID_SET =
+            new ArrayList<String>() {{
                 add(TEST_QUOTED_SSID_1);
                 add(TEST_QUOTED_SSID_2);
             }};
