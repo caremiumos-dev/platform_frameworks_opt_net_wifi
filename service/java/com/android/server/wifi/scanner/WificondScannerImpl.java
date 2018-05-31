@@ -338,7 +338,7 @@ public class WificondScannerImpl extends WifiScannerImpl implements Handler.Call
             }
 
             ChannelCollection allFreqs = mChannelHelper.createChannelCollection();
-            Set<String> hiddenNetworkSSIDSet = new HashSet<>();
+            List<String> hiddenNetworkSSIDSet = new ArrayList<>();
             final LastScanSettings newScanSettings =
                     new LastScanSettings(mClock.getElapsedSinceBootMillis());
 

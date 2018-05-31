@@ -48,6 +48,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -218,7 +219,7 @@ public class WifiNative {
      * @param hiddenNetworkSSIDs List of hidden networks to be scanned for.
      * @return Returns true on success.
      */
-    public boolean scan(Set<Integer> freqs, Set<String> hiddenNetworkSSIDs) {
+    public boolean scan(Set<Integer> freqs, List<String> hiddenNetworkSSIDs) {
         return mWificondControl.scan(freqs, hiddenNetworkSSIDs);
     }
 
