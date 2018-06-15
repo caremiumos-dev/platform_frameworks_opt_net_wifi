@@ -2433,6 +2433,10 @@ public class SupplicantStaIfaceHal {
                     mWifiMonitor.broadcastAuthenticationFailureEvent(
                             mIfaceName, WifiManager.ERROR_AUTH_FAILURE_WRONG_PSWD, -1);
                 }
+                if (reasonCode == ReasonCode.IEEE_802_1X_AUTH_FAILED) {
+                    mWifiMonitor.broadcastAuthenticationFailureEvent(
+                            mIfaceName, WifiManager.ERROR_AUTH_FAILURE_EAP_FAILURE, -1);
+                }
                 mWifiMonitor.broadcastNetworkDisconnectionEvent(
                         mIfaceName, locallyGenerated ? 1 : 0, reasonCode,
                         NativeUtil.macAddressFromByteArray(bssid));

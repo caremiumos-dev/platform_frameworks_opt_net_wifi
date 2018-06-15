@@ -1225,7 +1225,7 @@ public class SupplicantStaIfaceHalTest {
     }
 
     /**
-     * Tests the handling of eap failure during disconnect.
+     * Tests the handling of eap failure during disconnect with reason code 23.
      */
     @Test
     public void testEapFailure() throws Exception {
@@ -1235,8 +1235,8 @@ public class SupplicantStaIfaceHalTest {
         int reasonCode = ISupplicantStaIfaceCallback.ReasonCode.IEEE_802_1X_AUTH_FAILED;
         mISupplicantStaIfaceCallback.onDisconnected(
                 NativeUtil.macAddressToByteArray(BSSID), false, reasonCode);
-        verify(mWifiMonitor, times(0)).broadcastAuthenticationFailureEvent(any(), anyInt(),
-                anyInt());
+        verify(mWifiMonitor).broadcastAuthenticationFailureEvent(eq(WLAN0_IFACE_NAME),
+                eq(WifiManager.ERROR_AUTH_FAILURE_EAP_FAILURE), eq(-1));
     }
 
     /**
