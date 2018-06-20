@@ -104,6 +104,14 @@ public class PasspointNetworkScore {
                 PERSONAL_OR_EMERGENCY_NETWORK_AWARDS);
         NETWORK_TYPE_SCORES.put(NetworkDetail.Ant.Wildcard, 0);
         NETWORK_TYPE_SCORES.put(NetworkDetail.Ant.TestOrExperimental, 0);
+        NETWORK_TYPE_SCORES.put(NetworkDetail.Ant.Resvd6, 0);
+        NETWORK_TYPE_SCORES.put(NetworkDetail.Ant.Resvd7, 0);
+        NETWORK_TYPE_SCORES.put(NetworkDetail.Ant.Resvd8, 0);
+        NETWORK_TYPE_SCORES.put(NetworkDetail.Ant.Resvd9, 0);
+        NETWORK_TYPE_SCORES.put(NetworkDetail.Ant.Resvd10, 0);
+        NETWORK_TYPE_SCORES.put(NetworkDetail.Ant.Resvd11, 0);
+        NETWORK_TYPE_SCORES.put(NetworkDetail.Ant.Resvd12, 0);
+        NETWORK_TYPE_SCORES.put(NetworkDetail.Ant.Resvd13, 0);
 
         IPV4_SCORES.put(IPAddressTypeAvailabilityElement.IPV4_NOT_AVAILABLE, 0);
         IPV4_SCORES.put(IPAddressTypeAvailabilityElement.IPV4_PORT_RESTRICTED,
