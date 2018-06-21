@@ -177,6 +177,12 @@ public class WifiStateMachinePrime {
      */
     public void enterSoftAPMode(@NonNull SoftApModeConfiguration wifiConfig) {
         mHandler.post(() -> {
+            for (ActiveModeManager manager : mActiveModeManagers) {
+                if (manager instanceof SoftApManager) {
+                    Log.d(TAG, "Ignore enterSoftAPMode request since soft ap already started");
+                    return;
+                }
+            }
             startSoftAp(wifiConfig);
         });
     }
