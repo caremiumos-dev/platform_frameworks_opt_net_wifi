@@ -3563,6 +3563,25 @@ public class WifiConfigManagerTest {
         assertEquals(newMac, retrievedConfig.getRandomizedMacAddress());
     }
 
+    /**
+     * Verifies that the method resetSimNetworks updates SIM presence status if
+     * getSimIdentity returns null.
+     */
+    @Test
+    public void testResetSimNetworksWithNullIdentity() {
+        WifiConfiguration eapSimNetwork = WifiConfigurationTestUtil.createEapNetwork(
+                WifiEnterpriseConfig.Eap.SIM, WifiEnterpriseConfig.Phase2.NONE);
+        verifyAddNetworkToWifiConfigManager(eapSimNetwork);
+
+        assertFalse(mWifiConfigManager.isSimPresent());
+
+        mWifiConfigManager.resetSimNetworks(true);
+        assertTrue(mWifiConfigManager.isSimPresent());
+
+        mWifiConfigManager.resetSimNetworks(false);
+        assertFalse(mWifiConfigManager.isSimPresent());
+    }
+
     private NetworkUpdateResult verifyAddOrUpdateNetworkWithProxySettingsAndPermissions(
             boolean withNetworkSettings,
             boolean withProfileOwnerPolicy,
