@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdb20b6b_19a54eff",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2240,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2018-07-02T09:09:09Z",
+      "side": 1,
+      "message": "Actually, why is this call here at all?  I\u0027m not sure this is correct...",
+      "range": {
+        "startLine": 2240,
+        "startChar": 43,
+        "endLine": 2240,
+        "endChar": 69
+      },
+      "revId": "062203dc24be0b88f4e3b1feef0d2d00ef9979dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
