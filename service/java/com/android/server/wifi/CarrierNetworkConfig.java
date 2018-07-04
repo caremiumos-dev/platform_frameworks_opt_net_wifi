@@ -129,7 +129,7 @@ public class CarrierNetworkConfig {
         for (SubscriptionInfo subInfo : subInfoList) {
             processNetworkConfig(
                     carrierConfigManager.getConfigForSubId(subInfo.getSubscriptionId()),
-                    subInfo.getDisplayName().toString());
+                    subInfo.getDisplayName());
         }
     }
 
@@ -143,7 +143,7 @@ public class CarrierNetworkConfig {
      * @param carrierConfig The bundle containing the carrier configuration
      * @param carrierName The display name of the associated carrier
      */
-    private void processNetworkConfig(PersistableBundle carrierConfig, String carrierName) {
+    private void processNetworkConfig(PersistableBundle carrierConfig, CharSequence carrierName) {
         if (carrierConfig == null) {
             return;
         }
@@ -168,7 +168,7 @@ public class CarrierNetworkConfig {
                     Log.e(TAG, "Invalid EAP type: " + configArr[EAP_TYPE_INDEX]);
                     continue;
                 }
-                mCarrierNetworkMap.put(ssid, new NetworkInfo(eapType, carrierName));
+                mCarrierNetworkMap.put(ssid, new NetworkInfo(eapType, carrierName != null ? carrierName.toString() : ""));
             } catch (NumberFormatException e) {
                 Log.e(TAG, "Failed to parse EAP type: " + e.getMessage());
             } catch (IllegalArgumentException e) {
