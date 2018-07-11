@@ -19,6 +19,7 @@ package com.android.server.wifi.util;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiEnterpriseConfig;
 import android.telephony.ImsiEncryptionInfo;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.util.Log;
@@ -77,7 +78,7 @@ public class TelephonyUtil {
         String mccMnc = "";
 
         if (tm.getSimState() == TelephonyManager.SIM_STATE_READY) {
-            mccMnc = tm.getSimOperator();
+            mccMnc = tm.getSimOperator(SubscriptionManager.getDefaultSubscriptionId());
         }
 
         ImsiEncryptionInfo imsiEncryptionInfo;

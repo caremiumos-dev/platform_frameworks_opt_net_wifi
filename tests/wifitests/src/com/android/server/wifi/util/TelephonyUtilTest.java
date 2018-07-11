@@ -50,7 +50,7 @@ public class TelephonyUtilTest {
 
         when(tm.getSubscriberId()).thenReturn("3214561234567890");
         when(tm.getSimState()).thenReturn(TelephonyManager.SIM_STATE_READY);
-        when(tm.getSimOperator()).thenReturn("321456");
+        when(tm.getSimOperator(anyInt())).thenReturn("321456");
         when(tm.getCarrierInfoForImsiEncryption(anyInt())).thenReturn(null);
 
         assertEquals(expectedIdentity, TelephonyUtil.getSimIdentity(tm, telephonyUtil,
@@ -70,7 +70,7 @@ public class TelephonyUtilTest {
         when(tm.getSubscriberId()).thenReturn("3214561234567890");
 
         when(tm.getSimState()).thenReturn(TelephonyManager.SIM_STATE_READY);
-        when(tm.getSimOperator()).thenReturn("321456");
+        when(tm.getSimOperator(anyInt())).thenReturn("321456");
         when(tm.getCarrierInfoForImsiEncryption(anyInt())).thenReturn(null);
 
         assertEquals(expectedIdentity, TelephonyUtil.getSimIdentity(tm, telephonyUtil,
@@ -90,7 +90,7 @@ public class TelephonyUtilTest {
 
         when(tm.getSubscriberId()).thenReturn("3214561234567890");
         when(tm.getSimState()).thenReturn(TelephonyManager.SIM_STATE_READY);
-        when(tm.getSimOperator()).thenReturn("321456");
+        when(tm.getSimOperator(anyInt())).thenReturn("321456");
         when(tm.getCarrierInfoForImsiEncryption(anyInt())).thenReturn(null);
 
         assertEquals(expectedIdentity, TelephonyUtil.getSimIdentity(tm, telephonyUtil,
@@ -119,7 +119,7 @@ public class TelephonyUtilTest {
 
         when(tm.getSubscriberId()).thenReturn("3214561234567890");
         when(tm.getSimState()).thenReturn(TelephonyManager.SIM_STATE_READY);
-        when(tm.getSimOperator()).thenReturn("321456");
+        when(tm.getSimOperator(anyInt())).thenReturn("321456");
         ImsiEncryptionInfo info = new ImsiEncryptionInfo("321", "456",
                 TelephonyManager.KEY_TYPE_WLAN, null, key, null);
         when(tm.getCarrierInfoForImsiEncryption(eq(TelephonyManager.KEY_TYPE_WLAN)))
@@ -152,7 +152,7 @@ public class TelephonyUtilTest {
 
         when(tm.getSubscriberId()).thenReturn("3214561234567890");
         when(tm.getSimState()).thenReturn(TelephonyManager.SIM_STATE_READY);
-        when(tm.getSimOperator()).thenReturn("321456");
+        when(tm.getSimOperator(anyInt())).thenReturn("321456");
         ImsiEncryptionInfo info = new ImsiEncryptionInfo("321", "456",
                 TelephonyManager.KEY_TYPE_WLAN, keyIdentifier, key, null);
         when(tm.getCarrierInfoForImsiEncryption(eq(TelephonyManager.KEY_TYPE_WLAN)))
@@ -181,7 +181,7 @@ public class TelephonyUtilTest {
 
         when(tm.getSubscriberId()).thenReturn("3214561234567890");
         when(tm.getSimState()).thenReturn(TelephonyManager.SIM_STATE_READY);
-        when(tm.getSimOperator()).thenReturn("321456");
+        when(tm.getSimOperator(anyInt())).thenReturn("321456");
         ImsiEncryptionInfo info = new ImsiEncryptionInfo("321", "456",
                 TelephonyManager.KEY_TYPE_WLAN, null, key, null);
         when(tm.getCarrierInfoForImsiEncryption(eq(TelephonyManager.KEY_TYPE_WLAN)))
@@ -203,7 +203,7 @@ public class TelephonyUtilTest {
 
         when(tm.getSubscriberId()).thenReturn("321560123456789");
         when(tm.getSimState()).thenReturn(TelephonyManager.SIM_STATE_READY);
-        when(tm.getSimOperator()).thenReturn("32156");
+        when(tm.getSimOperator(anyInt())).thenReturn("32156");
         when(tm.getCarrierInfoForImsiEncryption(anyInt())).thenReturn(null);
 
         assertEquals(expectedIdentity, TelephonyUtil.getSimIdentity(tm, telephonyUtil,
@@ -220,7 +220,7 @@ public class TelephonyUtilTest {
 
         when(tm.getSubscriberId()).thenReturn("3214560123456789");
         when(tm.getSimState()).thenReturn(TelephonyManager.SIM_STATE_UNKNOWN);
-        when(tm.getSimOperator()).thenReturn(null);
+        when(tm.getSimOperator(anyInt())).thenReturn(null);
         when(tm.getCarrierInfoForImsiEncryption(anyInt())).thenReturn(null);
 
         assertEquals(expectedIdentity, TelephonyUtil.getSimIdentity(tm, telephonyUtil,
@@ -241,7 +241,7 @@ public class TelephonyUtilTest {
         TelephonyUtil telephonyUtil = mock(TelephonyUtil.class);
         when(tm.getSubscriberId()).thenReturn("321560123456789");
         when(tm.getSimState()).thenReturn(TelephonyManager.SIM_STATE_READY);
-        when(tm.getSimOperator()).thenReturn("32156");
+        when(tm.getSimOperator(anyInt())).thenReturn("32156");
         assertEquals(null, TelephonyUtil.getSimIdentity(tm, telephonyUtil,
                 WifiConfigurationTestUtil.createEapNetwork(
                         WifiEnterpriseConfig.Eap.TTLS, WifiEnterpriseConfig.Phase2.SIM)));

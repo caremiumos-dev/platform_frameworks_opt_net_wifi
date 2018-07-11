@@ -3571,7 +3571,7 @@ public class WifiConfigManagerTest {
         String expectedIdentity = "13214561234567890@wlan.mnc456.mcc321.3gppnetwork.org";
         when(mTelephonyManager.getSubscriberId()).thenReturn("3214561234567890");
         when(mTelephonyManager.getSimState()).thenReturn(TelephonyManager.SIM_STATE_READY);
-        when(mTelephonyManager.getSimOperator()).thenReturn("321456");
+        when(mTelephonyManager.getSimOperator(anyInt())).thenReturn("321456");
         when(mTelephonyManager.getCarrierInfoForImsiEncryption(anyInt())).thenReturn(null);
 
         WifiConfiguration network = WifiConfigurationTestUtil.createEapNetwork();
@@ -3656,7 +3656,7 @@ public class WifiConfigManagerTest {
         String expectedIdentity = "13214561234567890@wlan.mnc456.mcc321.3gppnetwork.org";
         when(mTelephonyManager.getSubscriberId()).thenReturn("3214561234567890");
         when(mTelephonyManager.getSimState()).thenReturn(TelephonyManager.SIM_STATE_READY);
-        when(mTelephonyManager.getSimOperator()).thenReturn("321456");
+        when(mTelephonyManager.getSimOperator(anyInt())).thenReturn("321456");
         when(mTelephonyManager.getCarrierInfoForImsiEncryption(anyInt())).thenReturn(null);
 
         WifiConfiguration simNetwork = WifiConfigurationTestUtil.createEapNetwork(
