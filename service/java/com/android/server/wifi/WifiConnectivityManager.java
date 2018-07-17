@@ -521,6 +521,7 @@ public class WifiConnectivityManager {
         @Override
         public void onSavedNetworkTemporarilyDisabled(int networkId) {
             mConnectivityHelper.removeNetworkIfCurrent(networkId);
+            updatePnoScan();
         }
         @Override
         public void onSavedNetworkPermanentlyDisabled(int networkId) {
