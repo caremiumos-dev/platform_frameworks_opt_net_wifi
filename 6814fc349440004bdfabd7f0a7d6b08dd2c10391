@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df65ee27_0376af72",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3313,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2018-07-23T08:25:39Z",
+      "side": 1,
+      "message": "This is before mWifiInfo.setSSID, but updateCapabilities() looks at the SSID in mWifiInfo. In go/ag/3887835, updateCapabilities() is called after the SSID is set. Is this intentional ?",
+      "range": {
+        "startLine": 3313,
+        "startChar": 8,
+        "endLine": 3313,
+        "endChar": 26
+      },
+      "revId": "6814fc349440004bdfabd7f0a7d6b08dd2c10391",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
