@@ -247,6 +247,10 @@ public class SupplicantP2pIfaceHal {
                 ifaceHwBinder = getIfaceV1_0(ifaceName);
             }
             if (ifaceHwBinder == null) {
+                Log.e(TAG, "initSupplicantP2pIface getIfaceV1_0");
+                ifaceHwBinder = getIfaceV1_0(ifaceName);
+            }
+            if (ifaceHwBinder == null) {
                 Log.e(TAG, "initSupplicantP2pIface got null iface");
                 return false;
             }

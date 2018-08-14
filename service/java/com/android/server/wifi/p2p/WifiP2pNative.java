@@ -184,27 +184,29 @@ public class WifiP2pNative {
             mIWifiP2pIface = mHalDeviceManager.createP2pIface(mInterfaceDestroyedListener, handler);
             if (mIWifiP2pIface == null) {
                 Log.e(TAG, "Failed to create P2p iface in HalDeviceManager");
-                return null;
+                //return null;
             }
             if (!waitForSupplicantConnection()) {
                 Log.e(TAG, "Failed to connect to supplicant");
                 teardownInterface();
                 return null;
             }
+            /*
             String ifaceName = HalDeviceManager.getName(mIWifiP2pIface);
             if (TextUtils.isEmpty(ifaceName)) {
                 Log.e(TAG, "Failed to get p2p iface name");
                 teardownInterface();
                 return null;
-            }
-            if (!mSupplicantP2pIfaceHal.setupIface(ifaceName)) {
+            }*/
+            if (!mSupplicantP2pIfaceHal.setupIface("p2p0")) {
                 Log.e(TAG, "Failed to setup P2p iface in supplicant");
                 teardownInterface();
-                return null;
+                //return null;
             }
             Log.i(TAG, "P2P interface setup completed");
         }
-        return HalDeviceManager.getName(mIWifiP2pIface);
+        /*return HalDeviceManager.getName(mIWifiP2pIface);*/
+        return "p2p0";
     }
 
     /**

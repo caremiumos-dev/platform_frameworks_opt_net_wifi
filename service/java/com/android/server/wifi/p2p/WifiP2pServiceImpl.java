@@ -730,6 +730,7 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                         int wifistate = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,
                                 WifiManager.WIFI_STATE_UNKNOWN);
                         if (wifistate == WifiManager.WIFI_STATE_ENABLED) {
+                            mIsInterfaceAvailable = true;
                             mIsWifiEnabled = true;
                             checkAndReEnableP2p();
                         } else {
