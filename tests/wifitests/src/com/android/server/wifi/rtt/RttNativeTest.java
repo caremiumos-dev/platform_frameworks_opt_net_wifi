@@ -72,6 +72,9 @@ public class RttNativeTest {
     private ArgumentCaptor<List> mRttResultCaptor = ArgumentCaptor.forClass(List.class);
     private ArgumentCaptor<HalDeviceManager.ManagerStatusListener> mHdmStatusListener =
             ArgumentCaptor.forClass(HalDeviceManager.ManagerStatusListener.class);
+    private ArgumentCaptor<HalDeviceManager.InterfaceRttControllerLifecycleCallback>
+            mRttLifecycleCbCaptor = ArgumentCaptor.forClass(
+            HalDeviceManager.InterfaceRttControllerLifecycleCallback.class);
     private ArgumentCaptor<IWifiRttController.getCapabilitiesCallback> mGetCapCbCatpr =
             ArgumentCaptor.forClass(IWifiRttController.getCapabilitiesCallback.class);
 
@@ -92,7 +95,6 @@ public class RttNativeTest {
         MockitoAnnotations.initMocks(this);
 
         when(mockHalDeviceManager.isStarted()).thenReturn(true);
-        when(mockHalDeviceManager.createRttController()).thenReturn(mockRttController);
 
         mStatusSuccess = new WifiStatus();
         mStatusSuccess.code = WifiStatusCode.SUCCESS;
@@ -107,7 +109,10 @@ public class RttNativeTest {
 
         mDut = new RttNative(mockRttServiceImpl, mockHalDeviceManager);
         mDut.start(null);
-        verify(mockHalDeviceManager).registerStatusListener(mHdmStatusListener.capture(), any());
+        verify(mockHalDeviceManager).initialize();
+        verify(mockHalDeviceManager).registerRttControllerLifecycleCallback(
+                mRttLifecycleCbCaptor.capture(), any());
+        mRttLifecycleCbCaptor.getValue().onNewRttController(mockRttController);
         verify(mockRttController).registerEventCallback(any());
         verify(mockRttServiceImpl).enableIfPossible();
         verify(mockRttController).getCapabilities(mGetCapCbCatpr.capture());
@@ -332,18 +337,36 @@ public class RttNativeTest {
         int cmdId = 55;
         RangingRequest request = RttTestUtils.getDummyRangingRequest((byte) 0);
 
-        InOrder order = inOrder(mockRttServiceImpl);
-
-        // (1) configure Wi-Fi down and send a status change indication
-        when(mockHalDeviceManager.isStarted()).thenReturn(false);
-        mHdmStatusListener.getValue().onStatusChanged();
-        order.verify(mockRttServiceImpl).disable();
+        // (1) simulate Wi-Fi down and send a status change indication
+        mRttLifecycleCbCaptor.getValue().onRttControllerDestroyed();
+        verify(mockRttServiceImpl).disable();
         assertFalse(mDut.isReady());
 
         // (2) issue range request
         mDut.rangeRequest(cmdId, request, true);
 
         order.verify(mockRttServiceImpl).disable(); // due to re-init attempt
+        verifyNoMoreInteractions(mockRttServiceImpl, mockRttController);
+    }
+
+    /**
+     * Validate that we react correctly (i.e. enable/disable global RTT availability) when
+     * notified that the RTT controller has disappear and appeared.
+     */
+    @Test
+    public void testRttControllerLifecycle() throws Exception {
+        // RTT controller disappears
+        mRttLifecycleCbCaptor.getValue().onRttControllerDestroyed();
+        verify(mockRttServiceImpl).disable();
+        assertFalse(mDut.isReady());
+
+        // RTT controller re-appears (verification is x2 since 1st time is in setup())
+        mRttLifecycleCbCaptor.getValue().onNewRttController(mockRttController);
+        verify(mockRttController, times(2)).registerEventCallback(any());
+        verify(mockRttServiceImpl, times(2)).enableIfPossible();
+        verify(mockRttController, times(2)).getCapabilities(mGetCapCbCatpr.capture());
+        assertTrue(mDut.isReady());
+
         verifyNoMoreInteractions(mockRttServiceImpl, mockRttController);
     }
 
