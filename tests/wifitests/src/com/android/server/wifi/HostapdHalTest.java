@@ -53,6 +53,7 @@ public class HostapdHalTest {
     private @Mock Context mContext;
     private @Mock IServiceManager mServiceManagerMock;
     private @Mock IHostapd mIHostapdMock;
+    private android.hardware.wifi.hostapd.V1_1.IHostapd mIHostapdMockV1_1;
     private @Mock WifiNative.HostapdDeathEventHandler mHostapdHalDeathHandler;
     private MockResources mResources;
     HostapdStatus mStatusSuccess;
@@ -66,6 +67,9 @@ public class HostapdHalTest {
             ArgumentCaptor.forClass(IServiceNotification.Stub.class);
     private ArgumentCaptor<IHostapd.IfaceParams> mIfaceParamsCaptor =
             ArgumentCaptor.forClass(IHostapd.IfaceParams.class);
+    private ArgumentCaptor<android.hardware.wifi.hostapd.V1_1.IHostapd.IfaceParams>
+            mIfaceParamsCaptorV1_1 =
+            ArgumentCaptor.forClass(android.hardware.wifi.hostapd.V1_1.IHostapd.IfaceParams.class);
     private ArgumentCaptor<IHostapd.NetworkParams> mNetworkParamsCaptor =
             ArgumentCaptor.forClass(IHostapd.NetworkParams.class);
     private InOrder mInOrder;
@@ -84,6 +88,12 @@ public class HostapdHalTest {
         protected IHostapd getHostapdMockable() throws RemoteException {
             return mIHostapdMock;
         }
+
+        @Override
+        protected android.hardware.wifi.hostapd.V1_1.IHostapd getHostapdMockableV1_1()
+                throws RemoteException {
+            return mIHostapdMockV1_1;
+        }
     }
 
     @Before
@@ -92,6 +102,7 @@ public class HostapdHalTest {
         mResources = new MockResources();
         mResources.setBoolean(R.bool.config_wifi_softap_acs_supported, false);
         mResources.setBoolean(R.bool.config_wifi_softap_ieee80211ac_supported, false);
+        mResources.setString(R.string.config_wifi_softap_acs_supported_channel_list, "");
 
         mStatusSuccess = createHostapdStatus(HostapdStatusCode.SUCCESS);
         mStatusFailure = createHostapdStatus(HostapdStatusCode.FAILURE_UNKNOWN);
@@ -393,6 +404,50 @@ public class HostapdHalTest {
         assertEquals(IHostapd.Band.BAND_2_4_GHZ,
                 mIfaceParamsCaptor.getValue().channelParams.band);
         assertFalse(mIfaceParamsCaptor.getValue().channelParams.enableAcs);
+
+        assertEquals(NativeUtil.stringToByteArrayList(NETWORK_SSID),
+                mNetworkParamsCaptor.getValue().ssid);
+        assertFalse(mNetworkParamsCaptor.getValue().isHidden);
+        assertEquals(IHostapd.EncryptionType.WPA2, mNetworkParamsCaptor.getValue().encryptionType);
+        assertEquals(NETWORK_PSK, mNetworkParamsCaptor.getValue().pskPassphrase);
+    }
+
+    /**
+     * Verifies the successful addition of access point.
+     * Verifies that channel info for ACS is handled.
+     */
+    @Test
+    public void testAddAccessPointSuccess_Psk_BandAny_WithACS_AcsChannels() throws Exception {
+        mIHostapdMockV1_1 = mock(android.hardware.wifi.hostapd.V1_1.IHostapd.class);
+        // Enable ACS and set available channels in the config.
+        final String acsChannels = "1-11";
+        mResources.setBoolean(R.bool.config_wifi_softap_acs_supported, true);
+        mResources.setString(R.string.config_wifi_softap_acs_supported_channel_list, acsChannels);
+        mHostapdHal = new HostapdHalSpy();
+
+        when(mIHostapdMockV1_1.addAccessPoint_1_1(
+                mIfaceParamsCaptorV1_1.capture(), mNetworkParamsCaptor.capture()))
+                .thenReturn(mStatusSuccess);
+
+        executeAndValidateInitializationSequence();
+
+        WifiConfiguration configuration = new WifiConfiguration();
+        configuration.SSID = NETWORK_SSID;
+        configuration.hiddenSSID = false;
+        configuration.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA2_PSK);
+        configuration.preSharedKey = NETWORK_PSK;
+        configuration.apBand = WifiConfiguration.AP_BAND_ANY;
+
+        assertTrue(mHostapdHal.addAccessPoint(IFACE_NAME, configuration));
+        verify(mIHostapdMockV1_1).addAccessPoint_1_1(any(), any());
+
+        assertEquals(IFACE_NAME, mIfaceParamsCaptorV1_1.getValue().ifaceName);
+        assertTrue(mIfaceParamsCaptorV1_1.getValue().hwModeParams.enable80211N);
+        assertFalse(mIfaceParamsCaptorV1_1.getValue().hwModeParams.enable80211AC);
+        assertEquals(IHostapd.Band.BAND_ANY, mIfaceParamsCaptorV1_1.getValue().channelParams.band);
+        assertTrue(mIfaceParamsCaptorV1_1.getValue().channelParams.enableAcs);
+        assertTrue(mIfaceParamsCaptorV1_1.getValue().channelParams.acsShouldExcludeDfs);
+        assertEquals(acsChannels, mIfaceParamsCaptorV1_1.getValue().channelParams.acsChannels);
 
         assertEquals(NativeUtil.stringToByteArrayList(NETWORK_SSID),
                 mNetworkParamsCaptor.getValue().ssid);

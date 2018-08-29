@@ -33,6 +33,8 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.server.wifi.WifiNative.HostapdDeathEventHandler;
 import com.android.server.wifi.util.NativeUtil;
 
+import java.util.NoSuchElementException;
+
 import javax.annotation.concurrent.ThreadSafe;
 
 /**
@@ -47,6 +49,7 @@ public class HostapdHal {
     private boolean mVerboseLoggingEnabled = false;
     private final boolean mEnableAcs;
     private final boolean mEnableIeee80211AC;
+    private final String mAcsChannels;
 
     // Hostapd HAL interface objects
     private IServiceManager mIServiceManager = null;
@@ -91,6 +94,8 @@ public class HostapdHal {
         mEnableAcs = context.getResources().getBoolean(R.bool.config_wifi_softap_acs_supported);
         mEnableIeee80211AC =
                 context.getResources().getBoolean(R.bool.config_wifi_softap_ieee80211ac_supported);
+        mAcsChannels = context.getResources().getString(
+                R.string.config_wifi_softap_acs_supported_channel_list);
     }
 
     /**
@@ -216,6 +221,34 @@ public class HostapdHal {
         return true;
     }
 
+    protected android.hardware.wifi.hostapd.V1_1.IHostapd getHostapdMockableV1_1()
+            throws RemoteException {
+        synchronized (mLock) {
+            try {
+                return android.hardware.wifi.hostapd.V1_1.IHostapd.castFrom(
+                        IHostapd.getService());
+            } catch (NoSuchElementException e) {
+                Log.e(TAG, "Failed to get IHostapd", e);
+                return null;
+            }
+        }
+    }
+
+    /**
+     * Check if the device is running V1_1 hostapd service.
+     */
+    private boolean isV1_1() {
+        synchronized (mLock) {
+            try {
+                return (getHostapdMockableV1_1() != null);
+            } catch (RemoteException e) {
+                Log.e(TAG, "IHostapd.getService exception: " + e);
+                handleRemoteException(e, "getHostapdMockableV1_1");
+                return false;
+            }
+        }
+    }
+
     /**
      * Add and start a new access point.
      *
@@ -224,8 +257,24 @@ public class HostapdHal {
      * @return true on success, false otherwise.
      */
     public boolean addAccessPoint(@NonNull String ifaceName, @NonNull WifiConfiguration config) {
+        if (isV1_1()) {
+            return addAccessPointV1_1(ifaceName, config);
+        } else {
+            return addAccessPointV1_0(ifaceName, config);
+        }
+    }
+
+    /**
+     * Add and start a new access point for V1_0 hostapd.
+     *
+     * @param ifaceName Name of the interface.
+     * @param config Configuration to use for the AP.
+     * @return true on success, false otherwise.
+     */
+    private boolean addAccessPointV1_0(
+            @NonNull String ifaceName, @NonNull WifiConfiguration config) {
         synchronized (mLock) {
-            final String methodStr = "addAccessPoint";
+            final String methodStr = "addAccessPointV1_0";
             IHostapd.IfaceParams ifaceParams = new IHostapd.IfaceParams();
             ifaceParams.ifaceName = ifaceName;
             ifaceParams.hwModeParams.enable80211N = true;
@@ -264,6 +313,66 @@ public class HostapdHal {
             if (!checkHostapdAndLogFailure(methodStr)) return false;
             try {
                 HostapdStatus status = mIHostapd.addAccessPoint(ifaceParams, nwParams);
+                return checkStatusAndLogFailure(status, methodStr);
+            } catch (RemoteException e) {
+                handleRemoteException(e, methodStr);
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Add and start a new access point for V1_1 hostapd.
+     *
+     * @param ifaceName Name of the interface.
+     * @param config Configuration to use for the AP.
+     * @return true on success, false otherwise.
+     */
+    private boolean addAccessPointV1_1(
+            @NonNull String ifaceName, @NonNull WifiConfiguration config) {
+        synchronized (mLock) {
+            final String methodStr = "addAccessPoint_1_1";
+            android.hardware.wifi.hostapd.V1_1.IHostapd.IfaceParams ifaceParams =
+                    new android.hardware.wifi.hostapd.V1_1.IHostapd.IfaceParams();
+            ifaceParams.ifaceName = ifaceName;
+            ifaceParams.hwModeParams.enable80211N = true;
+            ifaceParams.hwModeParams.enable80211AC = mEnableIeee80211AC;
+            try {
+                ifaceParams.channelParams.band = getBand(config);
+            } catch (IllegalArgumentException e) {
+                Log.e(TAG, "Unrecognized apBand " + config.apBand);
+                return false;
+            }
+            if (mEnableAcs) {
+                ifaceParams.channelParams.enableAcs = true;
+                ifaceParams.channelParams.acsShouldExcludeDfs = true;
+                ifaceParams.channelParams.acsChannels = mAcsChannels;
+            } else {
+                // Downgrade IHostapd.Band.BAND_ANY to IHostapd.Band.BAND_2_4_GHZ if ACS
+                // is not supported.
+                // We should remove this workaround once channel selection is moved from
+                // ApConfigUtil to here.
+                if (ifaceParams.channelParams.band == IHostapd.Band.BAND_ANY) {
+                    Log.d(TAG, "ACS is not supported on this device, using 2.4 GHz band.");
+                    ifaceParams.channelParams.band = IHostapd.Band.BAND_2_4_GHZ;
+                }
+                ifaceParams.channelParams.enableAcs = false;
+                ifaceParams.channelParams.channel = config.apChannel;
+            }
+
+            IHostapd.NetworkParams nwParams = new IHostapd.NetworkParams();
+            // TODO(b/67745880) Note that config.SSID is intended to be either a
+            // hex string or "double quoted".
+            // However, it seems that whatever is handing us these configurations does not obey
+            // this convention.
+            nwParams.ssid.addAll(NativeUtil.stringToByteArrayList(config.SSID));
+            nwParams.isHidden = config.hiddenSSID;
+            nwParams.encryptionType = getEncryptionType(config);
+            nwParams.pskPassphrase = (config.preSharedKey != null) ? config.preSharedKey : "";
+            if (!checkHostapdAndLogFailure(methodStr)) return false;
+            try {
+                HostapdStatus status =
+                        getHostapdMockableV1_1().addAccessPoint_1_1(ifaceParams, nwParams);
                 return checkStatusAndLogFailure(status, methodStr);
             } catch (RemoteException e) {
                 handleRemoteException(e, methodStr);
