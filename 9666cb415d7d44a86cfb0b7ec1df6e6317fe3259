@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69b98653_e5f49bda",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2476,
+      "author": {
+        "id": 1247308
+      },
+      "writtenOn": "2018-08-30T08:46:00Z",
+      "side": 0,
+      "message": "Due to this \u0027return\u0027, \u0027mSimPresent \u003d simPresent\u0027 at L.2484 never runs.",
+      "range": {
+        "startLine": 2476,
+        "startChar": 20,
+        "endLine": 2476,
+        "endChar": 27
+      },
+      "revId": "9666cb415d7d44a86cfb0b7ec1df6e6317fe3259",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
