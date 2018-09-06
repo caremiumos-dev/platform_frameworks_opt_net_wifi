@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30e37d35_94074025",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2473,
+      "author": {
+        "id": 1141796
+      },
+      "writtenOn": "2018-09-06T20:52:02Z",
+      "side": 1,
+      "message": "can we move out mSimPresent \u003d\u003d simPresent of if (mPendingStoread) ?\n\nI think we need to update the Sim present status regardless of mPendingStoreRead.\n\nWhat if we call resetSimNetworks with true and resetSimNetowrks with false in a row before we load the config store?",
+      "revId": "93abf0997773779e9a7eaa70a4e226c0927ca4b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
