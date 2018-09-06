@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "617f71b2_42317e75",
+        "filename": "libwifi_hal/driver_tool.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2018-09-06T19:34:34Z",
+      "side": 1,
+      "message": "maybe log?",
+      "revId": "bb08b8c308cf2260f7dafd3b1d8239452dcda07f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
