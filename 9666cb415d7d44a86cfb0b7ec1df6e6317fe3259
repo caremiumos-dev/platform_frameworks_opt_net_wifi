@@ -46,6 +46,30 @@
       "revId": "9666cb415d7d44a86cfb0b7ec1df6e6317fe3259",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58a855b0_eb18c989",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2476,
+      "author": {
+        "id": 1247308
+      },
+      "writtenOn": "2018-09-07T07:05:10Z",
+      "side": 0,
+      "message": "Yes, your proposal works fine. The reason why I am suggesting this is that entering for-loop is a waste logic if SIM is not present. So \"if (simPresent) {\" is now out side of the for-loop in our CL.",
+      "parentUuid": "f065f0ce_e8d4ea0b",
+      "range": {
+        "startLine": 2476,
+        "startChar": 20,
+        "endLine": 2476,
+        "endChar": 27
+      },
+      "revId": "9666cb415d7d44a86cfb0b7ec1df6e6317fe3259",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
