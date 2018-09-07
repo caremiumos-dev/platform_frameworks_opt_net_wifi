@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b609de1_080246c9",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConfigManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3566,
+      "author": {
+        "id": 1141796
+      },
+      "writtenOn": "2018-09-07T18:37:13Z",
+      "side": 1,
+      "message": "could we add the case for validIdentity as well?\nand check if the config is reset  properly.",
+      "revId": "2fe7f7cbdc5721b396c89a1fa9b0caad228ab903",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
