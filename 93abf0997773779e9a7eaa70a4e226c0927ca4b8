@@ -16,6 +16,24 @@
       "revId": "93abf0997773779e9a7eaa70a4e226c0927ca4b8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "123487e2_7fc2a69b",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2473,
+      "author": {
+        "id": 1247308
+      },
+      "writtenOn": "2018-09-10T08:42:37Z",
+      "side": 1,
+      "message": "I just noticed that there might be an small issue in current CL. mSimPresent should not be updated (e.g. to true) until store read is completed. This is because NetworkEvaluator(s) might access configs after store read is completed and before resetSimNetworks is called. In this case, resetting for SIM configs are not yet completed.\n\nThis might be a corner case but let me consider to fix. Probably just adding a new variable to hold latest simPresent value could be fine. (Please let me know if you don\u0027t want to fix this small issue with adding new field variable.)\n\n\u003e What if we call resetSimNetworks with true and resetSimNetowrks with false in a row before we load the config store?\n\nThere is no problem. Just reflecting latest sim present status should be ok.",
+      "parentUuid": "30e37d35_94074025",
+      "revId": "93abf0997773779e9a7eaa70a4e226c0927ca4b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
