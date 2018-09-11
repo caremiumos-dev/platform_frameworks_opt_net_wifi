@@ -16,6 +16,24 @@
       "revId": "184435faad87a11bf7d67db4e0a0ed45480d8207",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21bd27a_3c5a90dd",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2472,
+      "author": {
+        "id": 1247308
+      },
+      "writtenOn": "2018-09-11T01:35:33Z",
+      "side": 1,
+      "message": "Sure",
+      "parentUuid": "eda934f7_b48d1d8e",
+      "revId": "184435faad87a11bf7d67db4e0a0ed45480d8207",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
