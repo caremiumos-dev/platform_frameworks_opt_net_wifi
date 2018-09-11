@@ -34,6 +34,24 @@
       "revId": "93abf0997773779e9a7eaa70a4e226c0927ca4b8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b6a264c_1251ee28",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2473,
+      "author": {
+        "id": 1141796
+      },
+      "writtenOn": "2018-09-11T01:46:54Z",
+      "side": 1,
+      "message": "I think adding more variable to protect something is not good idea.\nLet me discuss it internally and update you.",
+      "parentUuid": "123487e2_7fc2a69b",
+      "revId": "93abf0997773779e9a7eaa70a4e226c0927ca4b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
