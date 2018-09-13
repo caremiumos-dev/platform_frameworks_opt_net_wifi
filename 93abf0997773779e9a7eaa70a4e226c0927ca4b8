@@ -52,6 +52,24 @@
       "revId": "93abf0997773779e9a7eaa70a4e226c0927ca4b8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c24fa256_631faf72",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2473,
+      "author": {
+        "id": 1141796
+      },
+      "writtenOn": "2018-09-13T00:02:13Z",
+      "side": 1,
+      "message": "WifiScanner and WifiStateMachine are using same looper(WifiStateMachineHandlerThread.getlooper()).\n\nSo, I think there should be no problem to handling mSimPresent between resetSimNetworks and networkEvaluator.\nmSimPresent should be updated with current status.",
+      "parentUuid": "0b6a264c_1251ee28",
+      "revId": "93abf0997773779e9a7eaa70a4e226c0927ca4b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
