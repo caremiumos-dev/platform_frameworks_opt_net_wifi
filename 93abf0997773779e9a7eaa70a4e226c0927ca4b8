@@ -70,6 +70,24 @@
       "revId": "93abf0997773779e9a7eaa70a4e226c0927ca4b8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f317c1_b5b77685",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2473,
+      "author": {
+        "id": 1247308
+      },
+      "writtenOn": "2018-09-18T13:39:59Z",
+      "side": 1,
+      "message": "Thanks for your feedback. I checked the code again and you are right.",
+      "parentUuid": "c24fa256_631faf72",
+      "revId": "93abf0997773779e9a7eaa70a4e226c0927ca4b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
