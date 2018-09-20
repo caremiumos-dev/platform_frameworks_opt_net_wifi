@@ -88,6 +88,24 @@
       "revId": "93abf0997773779e9a7eaa70a4e226c0927ca4b8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef57d372_a157fc55",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2473,
+      "author": {
+        "id": 1141796
+      },
+      "writtenOn": "2018-09-20T04:23:12Z",
+      "side": 1,
+      "message": "please move \"mSimPresent \u003d simPresent\" out of if (mPendingStoread).",
+      "parentUuid": "11f317c1_b5b77685",
+      "revId": "93abf0997773779e9a7eaa70a4e226c0927ca4b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
