@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6bd68e9_8d7cf6a2",
+        "filename": "service/java/com/android/server/wifi/WifiConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2737,
+      "author": {
+        "id": 1247308
+      },
+      "writtenOn": "2018-09-20T09:02:42Z",
+      "side": 1,
+      "message": "Just adding one line can solve the issue.\n\nCase-1(normal): loadFromStore -\u003e resetSimNetworks(false)* -\u003e ...SIM event... -\u003e resetSimNetworks(true)\n\nCase-2(issue case): SIM event... -\u003e resetSimNetworks(true)* -\u003e ...BOOT event... -\u003e loadFromStore -\u003e resetSimNetworks(true)\n\n*) Only update |mSimPresent| flag. In |true| argument case, there is no network exist(not loaded yet).",
+      "revId": "d2f873f0b74aef8da222c59e2081beaf2bbaf110",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
