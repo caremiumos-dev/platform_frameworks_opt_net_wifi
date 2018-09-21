@@ -400,7 +400,9 @@ public class WifiStateMachine extends StateMachine {
     @GuardedBy("mWifiReqCountLock")
     private int mUntrustedReqCount = 0;
     private UntrustedWifiNetworkFactory mUntrustedNetworkFactory;
+    @GuardedBy("mNetworkAgentLock")
     private WifiNetworkAgent mNetworkAgent;
+    private final Object mNetworkAgentLock = new Object();
     private final Object mWifiReqCountLock = new Object();
 
     private byte[] mRssiRanges;
@@ -1787,10 +1789,12 @@ public class WifiStateMachine extends StateMachine {
      * @return Network object of current wifi network
      */
     public Network getCurrentNetwork() {
-        if (mNetworkAgent != null) {
-            return new Network(mNetworkAgent.netId);
-        } else {
-            return null;
+        synchronized (mNetworkAgentLock) {
+            if (mNetworkAgent != null) {
+                return new Network(mNetworkAgent.netId);
+            } else {
+                return null;
+            }
         }
     }
 
@@ -2767,9 +2771,11 @@ public class WifiStateMachine extends StateMachine {
         mIsAutoRoaming = false;
 
         setNetworkDetailedState(DetailedState.DISCONNECTED);
-        if (mNetworkAgent != null) {
-            mNetworkAgent.sendNetworkInfo(mNetworkInfo);
-            mNetworkAgent = null;
+        synchronized (mNetworkAgentLock) {
+            if (mNetworkAgent != null) {
+                mNetworkAgent.sendNetworkInfo(mNetworkInfo);
+                mNetworkAgent = null;
+            }
         }
 
         /* Clear network properties */
@@ -4724,8 +4730,10 @@ public class WifiStateMachine extends StateMachine {
             } else {
                 nc = mNetworkCapabilitiesFilter;
             }
-            mNetworkAgent = new WifiNetworkAgent(getHandler().getLooper(), mContext,
-                    "WifiNetworkAgent", mNetworkInfo, nc, mLinkProperties, 60, mNetworkMisc);
+            synchronized (mNetworkAgentLock) {
+                mNetworkAgent = new WifiNetworkAgent(getHandler().getLooper(), mContext,
+                        "WifiNetworkAgent", mNetworkInfo, nc, mLinkProperties, 60, mNetworkMisc);
+            }
 
             // We must clear the config BSSID, as the wifi chipset may decide to roam
             // from this point on and having the BSSID specified in the network block would
