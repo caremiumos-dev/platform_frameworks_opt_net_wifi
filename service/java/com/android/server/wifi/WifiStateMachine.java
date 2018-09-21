@@ -1788,7 +1788,8 @@ public class WifiStateMachine extends StateMachine {
      */
     public Network getCurrentNetwork() {
         if (mNetworkAgent != null) {
-            return new Network(mNetworkAgent.netId);
+            int netId = mNetworkAgent.netId;
+            return new Network(netId);
         } else {
             return null;
         }
