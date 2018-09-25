@@ -63,6 +63,7 @@ public class HalDeviceManager {
     private static final boolean DBG = false;
 
     private static final int START_HAL_RETRY_INTERVAL_MS = 20;
+    private static final int INITIALIZE_HAL_WAIT_TIME_MS = 5000;
     // Number of attempts a start() is re-tried. A value of 0 means no retries after a single
     // attempt.
     @VisibleForTesting
@@ -122,7 +123,9 @@ public class HalDeviceManager {
      * the registerStatusListener() to listener for status changes.
      */
     public boolean isReady() {
-        return mWifi != null;
+        synchronized (mLock) {
+            return mWifi != null;
+        }
     }
 
     /**
@@ -534,6 +537,24 @@ public class HalDeviceManager {
         initIServiceManagerIfNecessary();
         if (isSupportedInternal()) {
             initIWifiIfNecessary();
+            Log.i(TAG, "initializeInternal isReady() before wait: " + isReady());
+            // if the WifiHal is not yet initialized,
+            // try to wait for onRegistration notification from ServiceManager
+            synchronized (mLock) {
+                if (!isReady()) {
+                    try {
+                        Log.i(TAG, "initializeInternal waiting for WifiHal started");
+                        mLock.wait(INITIALIZE_HAL_WAIT_TIME_MS);
+                    } catch (InterruptedException e) {
+                        Log.e(TAG, "initializeInternal waiting for WifiHal interrupted");
+                    }
+                }
+            }
+            if (!isReady()) {
+                Log.e(TAG, "initializeInternal WifiHal not initialized");
+            } else {
+                Log.i(TAG, "initializeInternal WifiHal initialized");
+            }
         }
     }
 
@@ -565,6 +586,7 @@ public class HalDeviceManager {
                             + ", name=" + name + ", preexisting=" + preexisting);
                     synchronized (mLock) {
                         initIWifiIfNecessary();
+                        mLock.notify();
                     }
                 }
             };
