@@ -201,7 +201,7 @@ public class WifiInjector {
         mTrafficPoller = new WifiTrafficPoller(mContext, mWifiServiceHandlerThread.getLooper(),
                 mWifiNative);
         mCountryCode = new WifiCountryCode(mWifiNative,
-                SystemProperties.get(BOOT_DEFAULT_WIFI_COUNTRY_CODE),
+                SystemProperties.get(BOOT_DEFAULT_WIFI_COUNTRY_CODE, "00"),
                 mContext.getResources()
                         .getBoolean(R.bool.config_wifi_revert_country_code_on_cellular_loss));
         mWifiApConfigStore = new WifiApConfigStore(mContext, mBackupManagerProxy);
