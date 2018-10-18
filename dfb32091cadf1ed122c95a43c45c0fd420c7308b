@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb6f5935_e5f9076b",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiApConfigStoreTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1240997
+      },
+      "writtenOn": "2018-10-18T23:59:54Z",
+      "side": 1,
+      "message": "please use assertFalse instead",
+      "revId": "dfb32091cadf1ed122c95a43c45c0fd420c7308b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
