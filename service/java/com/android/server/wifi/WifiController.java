@@ -308,11 +308,7 @@ public class WifiController extends StateMachine {
                     break;
                 case CMD_EMERGENCY_CALL_STATE_CHANGED:
                 case CMD_EMERGENCY_MODE_CHANGED:
-                    boolean configWiFiDisableInECBM =
-                            mFacade.getConfigWiFiDisableInECBM(mContext);
-                    log("WifiController msg " + msg + " getConfigWiFiDisableInECBM "
-                            + configWiFiDisableInECBM);
-                    if ((msg.arg1 == 1) && configWiFiDisableInECBM) {
+                    if (msg.arg1 == 1) {
                         transitionTo(mEcmState);
                     }
                     break;
@@ -540,9 +536,13 @@ public class WifiController extends StateMachine {
                     sendMessage((Message)(msg.obj));
                     break;
                 case CMD_AP_START_FAILURE:
-                case CMD_AP_STOPPED:
                     // already in a wifi mode, no need to check where we should go with softap
                     // stopped
+                    break;
+                case CMD_AP_STOPPED:
+                    if (mSettingsStore.isWifiToggleEnabled()) {
+                        transitionTo(mDeviceActiveState);
+                    }
                     break;
                 case CMD_SCANNING_STOPPED:
                     // stopped due to interface destruction - return to disabled and wait
@@ -598,8 +598,15 @@ public class WifiController extends StateMachine {
         private int mEcmEntryCount;
         @Override
         public void enter() {
-            mWifiStateMachinePrime.shutdownWifi();
-            mWifiStateMachine.clearANQPCache();
+            mWifiStateMachinePrime.stopSoftAPMode();
+            boolean configWiFiDisableInECBM =
+                    mFacade.getConfigWiFiDisableInECBM(mContext);
+            log("WifiController msg getConfigWiFiDisableInECBM "
+                    + configWiFiDisableInECBM);
+            if (configWiFiDisableInECBM) {
+                mWifiStateMachinePrime.shutdownWifi();
+                mWifiStateMachine.clearANQPCache();
+            }
             mEcmEntryCount = 1;
         }
 
