@@ -909,7 +909,7 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
             channels.fillBucketSettings(bucketSettings, Integer.MAX_VALUE);
 
             settings.buckets = new WifiNative.BucketSettings[] {bucketSettings};
-            if (mScannerImpl.startSingleScan(settings, this)) {
+            if (mScannerImpl != null && mScannerImpl.startSingleScan(settings, this)) {
                 // store the active scan settings
                 mActiveScanSettings = settings;
                 // swap pending and active scan requests
@@ -1749,8 +1749,12 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
         private void removeHwPnoScanRequest(ClientInfo ci, int handler) {
             if (ci != null) {
                 Pair<PnoSettings, ScanSettings> settings = removePnoScanRequest(ci, handler);
-                logScanRequest("removeHwPnoScanRequest", ci, handler, null,
-                        settings.second, settings.first);
+                if (null != settings) {
+                    logScanRequest("removeHwPnoScanRequest", ci, handler, null,
+                            settings.second, settings.first);
+                } else {
+                    Log.d(TAG, "removeHwPnoScanRequest: settings is null" );
+                }
             }
         }
 

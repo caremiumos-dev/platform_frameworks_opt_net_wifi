@@ -214,7 +214,6 @@ public class WifiServiceImpl extends IWifiManager.Stub {
     // TODO: (b/71714381) Remove mWifiApState and broadcast mechanism, keep mSoftApState as the only
     //       field to store soft AP state. Then rename mSoftApState and mSoftApNumClients to
     //       mWifiApState and mWifiApNumClients, to match the constants (i.e. WIFI_AP_STATE_*)
-    private int mWifiApState = WifiManager.WIFI_AP_STATE_DISABLED;
     private int mSoftApState = WifiManager.WIFI_AP_STATE_DISABLED;
     private int mSoftApNumClients = 0;
 
@@ -628,7 +627,9 @@ public class WifiServiceImpl extends IWifiManager.Stub {
             }
         }
         try {
-            mWifiPermissionsUtil.enforceCanAccessScanResults(packageName, callingUid);
+            if (null != packageName && 0 != packageName.length()) {
+                mWifiPermissionsUtil.enforceCanAccessScanResults(packageName, callingUid);
+            }
             Mutable<Boolean> scanSuccess = new Mutable<>();
             boolean runWithScissorsSuccess = mWifiInjector.getWifiStateMachineHandler()
                     .runWithScissors(() -> {
@@ -825,7 +826,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         }
 
         // If SoftAp is enabled, only Settings is allowed to toggle wifi
-        boolean apEnabled = mWifiApState == WifiManager.WIFI_AP_STATE_ENABLED;
+        boolean apEnabled = (mSoftApState == WifiManager.WIFI_AP_STATE_ENABLED) || (mSoftApState == WifiManager.WIFI_AP_STATE_ENABLING);
 
         if (apEnabled && !isFromSettings) {
             mLog.info("setWifiEnabled SoftAp not disabled: only Settings can enable wifi").flush();
@@ -905,7 +906,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         // hand off work to our handler thread
         MutableInt apState = new MutableInt(WifiManager.WIFI_AP_STATE_DISABLED);
         mClientHandler.runWithScissors(() -> {
-            apState.value = mWifiApState;
+            apState.value = mSoftApState;
         }, RUN_WITH_SCISSORS_TIMEOUT_MILLIS);
         return apState.value;
     }
@@ -1226,7 +1227,6 @@ public class WifiServiceImpl extends IWifiManager.Stub {
                 + " ifaceName=" + ifaceName + " mode=" + mode);
 
         // update the tracking ap state variable
-        mWifiApState = currentState;
 
         // check if we have a failure - since it is possible (worst case scenario where
         // WifiController and WifiStateMachine are out of sync wrt modes) to get two FAILED
@@ -1580,6 +1580,21 @@ public class WifiServiceImpl extends IWifiManager.Stub {
             Slog.e(TAG, "Invalid WifiConfiguration");
             return false;
         }
+    }
+
+    /**
+     * Method used to inform user of Ap Configuration conversion due to hardware.
+     */
+    @Override
+    public void notifyUserOfApBandConversion(String packageName) {
+        enforceNetworkSettingsPermission();
+
+        if (mVerboseLoggingEnabled) {
+            mLog.info("notifyUserOfApBandConversion uid=% packageName=%")
+                    .c(Binder.getCallingUid()).c(packageName).flush();
+        }
+
+        mWifiApConfigStore.notifyUserOfApBandConversion(packageName);
     }
 
     /**
