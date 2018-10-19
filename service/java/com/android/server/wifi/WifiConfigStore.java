@@ -534,7 +534,8 @@ public class WifiConfigStore {
          * even when an exception is encountered.
          */
         public void writeBufferedRawData() throws IOException {
-            if (mWriteData == null) {
+            byte[] writeData = mWriteData;
+            if (writeData == null) {
                 Log.w(TAG, "No data stored for writing to file: " + mFileName);
                 return;
             }
@@ -543,7 +544,7 @@ public class WifiConfigStore {
             try {
                 out = mAtomicFile.startWrite();
                 FileUtils.setPermissions(mFileName, FILE_MODE, -1, -1);
-                out.write(mWriteData);
+                out.write(writeData);
                 mAtomicFile.finishWrite(out);
             } catch (IOException e) {
                 if (out != null) {

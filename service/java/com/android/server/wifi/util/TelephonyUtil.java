@@ -385,7 +385,7 @@ public class TelephonyUtil {
             byte[] result = Base64.decode(tmResponse, Base64.DEFAULT);
             Log.v(TAG, "Hex Response -" + makeHex(result));
             int sresLen = result[0];
-            if (sresLen >= result.length) {
+            if (sresLen >= result.length || sresLen < 0) {
                 Log.e(TAG, "malfomed response - " + tmResponse);
                 return null;
             }

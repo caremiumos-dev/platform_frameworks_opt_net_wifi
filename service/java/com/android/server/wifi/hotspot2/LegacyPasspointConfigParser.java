@@ -193,11 +193,24 @@ public class LegacyPasspointConfigParser {
     public Map<String, LegacyPasspointConfig> parseConfig(String fileName)
             throws IOException {
         Map<String, LegacyPasspointConfig> configs = new HashMap<>();
-        BufferedReader in = new BufferedReader(new FileReader(fileName));
-        in.readLine();      // Ignore the first line which contained the header.
+        BufferedReader in = null;
+        Node root = null;
+        try {
+            in = new BufferedReader(new FileReader(fileName));
+            in.readLine();      // Ignore the first line which contained the header.
 
-        // Convert the configuration data to a management tree represented by a root {@link Node}.
-        Node root = buildNode(in);
+            // Convert the configuration data to a management tree represented by a root {@link Node}.
+            root = buildNode(in);
+        } finally {
+            if (null != in) {
+                try {
+                    in.close();
+                    in = null;
+                } catch(IOException e) {
+                    Log.e(TAG, "IOException occurs when close in stream");
+                }
+            }
+        }
 
         if (root == null || root.getChildren() == null) {
             Log.d(TAG, "Empty configuration data");

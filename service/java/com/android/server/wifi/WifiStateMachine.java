@@ -4244,13 +4244,17 @@ public class WifiStateMachine extends StateMachine {
                                         getCurrentWifiConfiguration().getHttpProxy());
                             }
                             if (result.hasIpChanged()) {
-                                // The current connection configuration was changed
-                                // We switched from DHCP to static or from static to DHCP, or the
-                                // static IP address has changed.
-                                log("Reconfiguring IP on connection");
-                                // TODO(b/36576642): clear addresses and disable IPv6
-                                // to simplify obtainingIpState.
-                                transitionTo(mObtainingIpState);
+                                if (isConnected()) {
+                                    // The current connection configuration was changed
+                                    // We switched from DHCP to static or from static to DHCP, or the
+                                    // static IP address has changed.
+                                    log("Reconfiguring IP on connection");
+                                    // TODO(b/36576642): clear addresses and disable IPv6
+                                    // to simplify obtainingIpState.
+                                    transitionTo(mObtainingIpState);
+                                } else {
+                                    Log.d(TAG, "ignore reconfiguring IP because current state != mConnectedState");
+                                }
                             }
                         }
                     }
@@ -4961,9 +4965,12 @@ public class WifiStateMachine extends StateMachine {
         public void enter() {
             final WifiConfiguration currentConfig = getCurrentWifiConfiguration();
             final boolean isUsingStaticIp =
-                    (currentConfig.getIpAssignment() == IpConfiguration.IpAssignment.STATIC);
+                    currentConfig != null ? (currentConfig.getIpAssignment() == IpConfiguration.IpAssignment.STATIC) : false;
             if (mVerboseLoggingEnabled) {
-                final String key = currentConfig.configKey();
+                String key = null;
+                if (currentConfig != null) {
+                    key = currentConfig.configKey();
+                }
                 log("enter ObtainingIpState netId=" + Integer.toString(mLastNetworkId)
                         + " " + key + " "
                         + " roam=" + mIsAutoRoaming
@@ -5000,7 +5007,7 @@ public class WifiStateMachine extends StateMachine {
                             .withPreDhcpAction()
                             .withApfCapabilities(mWifiNative.getApfCapabilities(mInterfaceName))
                             .withNetwork(getCurrentNetwork())
-                            .withDisplayName(currentConfig.SSID)
+                            .withDisplayName(currentConfig != null ? currentConfig.SSID : "")
                             .withRandomMacAddress()
                             .build();
             } else {

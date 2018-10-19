@@ -52,7 +52,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
+import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * This class manages all the connectivity related scanning activities.
  *
@@ -438,7 +438,7 @@ public class WifiConnectivityManager {
     // PNO scan results listener for both disconected and connected PNO scanning.
     // A PNO scan is initiated when screen is off.
     private class PnoScanListener implements WifiScanner.PnoScanListener {
-        private List<ScanDetail> mScanDetails = new ArrayList<ScanDetail>();
+        private List<ScanDetail> mScanDetails = new CopyOnWriteArrayList<ScanDetail>();
         private int mLowRssiNetworkRetryDelay =
                 LOW_RSSI_NETWORK_RETRY_START_DELAY_MS;
 
