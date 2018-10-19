@@ -533,8 +533,8 @@ public class PasspointManager {
      * @return {@link WifiConfiguration}
      */
     public WifiConfiguration getMatchingWifiConfig(ScanResult scanResult) {
-        if (scanResult == null) {
-            Log.e(TAG, "Attempt to get matching config for a null ScanResult");
+        if (scanResult == null || null == scanResult.BSSID) {
+            Log.e(TAG, "Attempt to get matching config for a null ScanResult/BSSID");
             return null;
         }
         if (!scanResult.isPasspointNetwork()) {

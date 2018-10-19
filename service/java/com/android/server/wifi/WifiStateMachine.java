@@ -4961,9 +4961,12 @@ public class WifiStateMachine extends StateMachine {
         public void enter() {
             final WifiConfiguration currentConfig = getCurrentWifiConfiguration();
             final boolean isUsingStaticIp =
-                    (currentConfig.getIpAssignment() == IpConfiguration.IpAssignment.STATIC);
+                    currentConfig != null ? (currentConfig.getIpAssignment() == IpConfiguration.IpAssignment.STATIC) : false;
             if (mVerboseLoggingEnabled) {
-                final String key = currentConfig.configKey();
+                String key = null;
+                if (currentConfig != null) {
+                    key = currentConfig.configKey();
+                }
                 log("enter ObtainingIpState netId=" + Integer.toString(mLastNetworkId)
                         + " " + key + " "
                         + " roam=" + mIsAutoRoaming
@@ -5000,7 +5003,7 @@ public class WifiStateMachine extends StateMachine {
                             .withPreDhcpAction()
                             .withApfCapabilities(mWifiNative.getApfCapabilities(mInterfaceName))
                             .withNetwork(getCurrentNetwork())
-                            .withDisplayName(currentConfig.SSID)
+                            .withDisplayName(currentConfig != null ? currentConfig.SSID : "")
                             .withRandomMacAddress()
                             .build();
             } else {
