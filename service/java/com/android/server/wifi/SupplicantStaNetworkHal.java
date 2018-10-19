@@ -292,7 +292,11 @@ public class SupplicantStaNetworkHal {
             boolean hasSetKey = false;
             if (config.wepKeys != null) {
                 for (int i = 0; i < config.wepKeys.length; i++) {
-                    if (config.wepKeys[i] != null) {
+                    if (config.wepKeys[i] != null && config.allowedAuthAlgorithms.get(WifiConfiguration.AuthAlgorithm.SHARED)) {
+                        if (TextUtils.isEmpty(config.wepKeys[i])) {
+                            Log.e(TAG, "index " + i + " key is empty");
+                            continue;
+                        }
                         if (!setWepKey(
                                 i, NativeUtil.hexOrQuotedStringToBytes(config.wepKeys[i]))) {
                             Log.e(TAG, "failed to set wep_key " + i);
