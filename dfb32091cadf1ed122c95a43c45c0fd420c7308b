@@ -34,6 +34,24 @@
       "revId": "dfb32091cadf1ed122c95a43c45c0fd420c7308b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32949e28_67c0f39b",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiApConfigStoreTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1247308
+      },
+      "writtenOn": "2018-10-19T03:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "564775af_86a4421f",
+      "revId": "dfb32091cadf1ed122c95a43c45c0fd420c7308b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
