@@ -126,6 +126,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.Comparator;
+import java.util.Collections;
+/* END PN:DTS2017081709618 add by chencailong/00192729 2017/08/21 */
 
 /**
  * WifiService handles remote WiFi operation requests by implementing
@@ -214,7 +217,6 @@ public class WifiServiceImpl extends IWifiManager.Stub {
     // TODO: (b/71714381) Remove mWifiApState and broadcast mechanism, keep mSoftApState as the only
     //       field to store soft AP state. Then rename mSoftApState and mSoftApNumClients to
     //       mWifiApState and mWifiApNumClients, to match the constants (i.e. WIFI_AP_STATE_*)
-    private int mWifiApState = WifiManager.WIFI_AP_STATE_DISABLED;
     private int mSoftApState = WifiManager.WIFI_AP_STATE_DISABLED;
     private int mSoftApNumClients = 0;
 
@@ -222,6 +224,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
      * Power profile
      */
     PowerProfile mPowerProfile;
+    private static final int SCANRESULTS_COUNT_MAX = 200;
 
     /**
      * Callback for use with LocalOnlyHotspot to unregister requesting applications upon death.
@@ -628,7 +631,9 @@ public class WifiServiceImpl extends IWifiManager.Stub {
             }
         }
         try {
-            mWifiPermissionsUtil.enforceCanAccessScanResults(packageName, callingUid);
+            if (null != packageName && 0 != packageName.length()) {
+                mWifiPermissionsUtil.enforceCanAccessScanResults(packageName, callingUid);
+            }
             Mutable<Boolean> scanSuccess = new Mutable<>();
             boolean runWithScissorsSuccess = mWifiInjector.getWifiStateMachineHandler()
                     .runWithScissors(() -> {
@@ -825,7 +830,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         }
 
         // If SoftAp is enabled, only Settings is allowed to toggle wifi
-        boolean apEnabled = mWifiApState == WifiManager.WIFI_AP_STATE_ENABLED;
+        boolean apEnabled = (mSoftApState == WifiManager.WIFI_AP_STATE_ENABLED) || (mSoftApState == WifiManager.WIFI_AP_STATE_ENABLING);
 
         if (apEnabled && !isFromSettings) {
             mLog.info("setWifiEnabled SoftAp not disabled: only Settings can enable wifi").flush();
@@ -905,7 +910,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         // hand off work to our handler thread
         MutableInt apState = new MutableInt(WifiManager.WIFI_AP_STATE_DISABLED);
         mClientHandler.runWithScissors(() -> {
-            apState.value = mWifiApState;
+            apState.value = mSoftApState;
         }, RUN_WITH_SCISSORS_TIMEOUT_MILLIS);
         return apState.value;
     }
@@ -1226,7 +1231,6 @@ public class WifiServiceImpl extends IWifiManager.Stub {
                 + " ifaceName=" + ifaceName + " mode=" + mode);
 
         // update the tracking ap state variable
-        mWifiApState = currentState;
 
         // check if we have a failure - since it is possible (worst case scenario where
         // WifiController and WifiStateMachine are out of sync wrt modes) to get two FAILED
@@ -1580,6 +1584,21 @@ public class WifiServiceImpl extends IWifiManager.Stub {
             Slog.e(TAG, "Invalid WifiConfiguration");
             return false;
         }
+    }
+
+    /**
+     * Method used to inform user of Ap Configuration conversion due to hardware.
+     */
+    @Override
+    public void notifyUserOfApBandConversion(String packageName) {
+        enforceNetworkSettingsPermission();
+
+        if (mVerboseLoggingEnabled) {
+            mLog.info("notifyUserOfApBandConversion uid=% packageName=%")
+                    .c(Binder.getCallingUid()).c(packageName).flush();
+        }
+
+        mWifiApConfigStore.notifyUserOfApBandConversion(packageName);
     }
 
     /**
@@ -2043,7 +2062,25 @@ public class WifiServiceImpl extends IWifiManager.Stub {
             if (!success) {
                 Log.e(TAG, "Failed to post runnable to fetch scan results");
             }
-            return scanResults;
+            List<ScanResult> scanResultsList = scanResults;
+            Collections.sort(scanResultsList, new Comparator<ScanResult>(){
+                @Override
+                public int compare(ScanResult o1, ScanResult o2) {
+                    if (o1.timestamp > o2.timestamp) {
+                        return -1;
+                    } else if (o1.timestamp < o2.timestamp) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+            });
+
+            if(scanResultsList.size() > SCANRESULTS_COUNT_MAX) {
+                Log.d(TAG, "ScanResults exceed the max count. size = " + scanResultsList.size());
+                scanResultsList = scanResultsList.subList(0, SCANRESULTS_COUNT_MAX);
+            }
+            return scanResultsList;
         } catch (SecurityException e) {
             return new ArrayList<ScanResult>();
         } finally {
