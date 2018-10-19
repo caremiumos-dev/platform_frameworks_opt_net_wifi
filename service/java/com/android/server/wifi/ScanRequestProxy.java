@@ -323,7 +323,8 @@ public class ScanRequestProxy {
      */
     private boolean shouldScanRequestBeThrottledForApp(int callingUid, String packageName) {
         boolean isThrottled;
-        if (isRequestFromBackground(callingUid, packageName)) {
+        if (null != packageName && 0 != packageName.length()
+                && isRequestFromBackground(callingUid, packageName)) {
             isThrottled = shouldScanRequestBeThrottledForBackgroundApp();
             if (isThrottled) {
                 if (mVerboseLoggingEnabled) {
