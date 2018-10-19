@@ -161,18 +161,23 @@ public class WifiNative {
         private int mNextId;
         /** Map of the id to the iface structure */
         private HashMap<Integer, Iface> mIfaces = new HashMap<>();
+        private Object mIfaceLock = new Object();
 
         /** Allocate a new iface for the given type */
         private Iface allocateIface(@Iface.IfaceType  int type) {
-            Iface iface = new Iface(mNextId, type);
-            mIfaces.put(mNextId, iface);
-            mNextId++;
-            return iface;
+            synchronized (mIfaceLock) {
+                Iface iface = new Iface(mNextId, type);
+                mIfaces.put(mNextId, iface);
+                mNextId++;
+                return iface;
+            }
         }
 
         /** Remove the iface using the provided id */
         private Iface removeIface(int id) {
-            return mIfaces.remove(id);
+            synchronized (mIfaceLock) {
+                return mIfaces.remove(id);
+            }
         }
 
         /** Lookup the iface using the provided id */
@@ -182,9 +187,11 @@ public class WifiNative {
 
         /** Lookup the iface using the provided name */
         private Iface getIface(@NonNull String ifaceName) {
-            for (Iface iface : mIfaces.values()) {
-                if (TextUtils.equals(iface.name, ifaceName)) {
-                    return iface;
+            synchronized (mIfaceLock) {
+                for (Iface iface : mIfaces.values()) {
+                    if (TextUtils.equals(iface.name, ifaceName)) {
+                        return iface;
+                    }
                 }
             }
             return null;
@@ -202,9 +209,11 @@ public class WifiNative {
 
         /** Checks if there are any iface of the given type active. */
         private boolean hasAnyIfaceOfType(@Iface.IfaceType int type) {
-            for (Iface iface : mIfaces.values()) {
-                if (iface.type == type) {
-                    return true;
+            synchronized (mIfaceLock) {
+                for (Iface iface : mIfaces.values()) {
+                    if (iface.type == type) {
+                        return true;
+                    }
                 }
             }
             return false;
@@ -212,9 +221,11 @@ public class WifiNative {
 
         /** Checks if there are any iface of the given type active. */
         private Iface findAnyIfaceOfType(@Iface.IfaceType int type) {
-            for (Iface iface : mIfaces.values()) {
-                if (iface.type == type) {
-                    return iface;
+            synchronized (mIfaceLock) {
+                for (Iface iface : mIfaces.values()) {
+                    if (iface.type == type) {
+                        return iface;
+                    }
                 }
             }
             return null;
@@ -248,20 +259,22 @@ public class WifiNative {
 
         /** Removes the existing iface that does not match the provided id. */
         public Iface removeExistingIface(int newIfaceId) {
-            Iface removedIface = null;
-            // The number of ifaces in the database could be 1 existing & 1 new at the max.
-            if (mIfaces.size() > 2) {
-                Log.wtf(TAG, "More than 1 existing interface found");
-            }
-            Iterator<Map.Entry<Integer, Iface>> iter = mIfaces.entrySet().iterator();
-            while (iter.hasNext()) {
-                Map.Entry<Integer, Iface> entry = iter.next();
-                if (entry.getKey() != newIfaceId) {
-                    removedIface = entry.getValue();
-                    iter.remove();
+            synchronized (mIfaceLock) {
+                Iface removedIface = null;
+                // The number of ifaces in the database could be 1 existing & 1 new at the max.
+                if (mIfaces.size() > 2) {
+                    Log.wtf(TAG, "More than 1 existing interface found");
                 }
+                Iterator<Map.Entry<Integer, Iface>> iter = mIfaces.entrySet().iterator();
+                while (iter.hasNext()) {
+                    Map.Entry<Integer, Iface> entry = iter.next();
+                    if (entry.getKey() != newIfaceId) {
+                        removedIface = entry.getValue();
+                        iter.remove();
+                    }
+                }
+                return removedIface;
             }
-            return removedIface;
         }
     }
 
@@ -2820,21 +2833,14 @@ public class WifiNative {
     }
 
     /**
-     * Tx power level scenarios that can be selected.
-     */
-    public static final int TX_POWER_SCENARIO_NORMAL = 0;
-    public static final int TX_POWER_SCENARIO_VOICE_CALL = 1;
-
-    /**
-     * Select one of the pre-configured TX power level scenarios or reset it back to normal.
-     * Primarily used for meeting SAR requirements during voice calls.
+     * Select one of the pre-configured transmit power level scenarios or reset it back to normal.
+     * Primarily used for meeting SAR requirements.
      *
-     * @param scenario Should be one {@link #TX_POWER_SCENARIO_NORMAL} or
-     *        {@link #TX_POWER_SCENARIO_VOICE_CALL}.
+     * @param sarInfo The collection of inputs used to select the SAR scenario.
      * @return true for success; false for failure or if the HAL version does not support this API.
      */
-    public boolean selectTxPowerScenario(int scenario) {
-        return mWifiVendorHal.selectTxPowerScenario(scenario);
+    public boolean selectTxPowerScenario(SarInfo sarInfo) {
+        return mWifiVendorHal.selectTxPowerScenario(sarInfo);
     }
 
     /********************************************************
