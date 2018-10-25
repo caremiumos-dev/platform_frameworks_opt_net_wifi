@@ -57,6 +57,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
+import java.util.BitSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -693,6 +694,8 @@ public class PasspointProviderTest {
         byte[] base64EncodedPw =
                 Base64.encode(password.getBytes(StandardCharsets.UTF_8), Base64.DEFAULT);
         String encodedPasswordStr = new String(base64EncodedPw, StandardCharsets.UTF_8);
+        BitSet allowedProtocols = new BitSet();
+        allowedProtocols.set(WifiConfiguration.Protocol.RSN);
 
         // Create provider.
         PasspointConfiguration config = new PasspointConfiguration();
@@ -727,6 +730,7 @@ public class PasspointProviderTest {
         assertTrue(Arrays.equals(rcOIs, wifiConfig.roamingConsortiumIds));
         assertTrue(wifiConfig.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.WPA_EAP));
         assertTrue(wifiConfig.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.IEEE8021X));
+        assertEquals(allowedProtocols, wifiConfig.allowedProtocols);
         assertFalse(wifiConfig.shared);
         assertEquals(realm, wifiEnterpriseConfig.getRealm());
         assertEquals(fqdn, wifiEnterpriseConfig.getDomainSuffixMatch());
@@ -751,6 +755,8 @@ public class PasspointProviderTest {
         String friendlyName = "Friendly Name";
         long[] rcOIs = new long[] {0x1234L, 0x2345L};
         String realm = "realm.com";
+        BitSet allowedProtocols = new BitSet();
+        allowedProtocols.set(WifiConfiguration.Protocol.RSN);
 
         // Create provider.
         PasspointConfiguration config = new PasspointConfiguration();
@@ -790,6 +796,7 @@ public class PasspointProviderTest {
         assertTrue(Arrays.equals(rcOIs, wifiConfig.roamingConsortiumIds));
         assertTrue(wifiConfig.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.WPA_EAP));
         assertTrue(wifiConfig.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.IEEE8021X));
+        assertEquals(allowedProtocols, wifiConfig.allowedProtocols);
         assertFalse(wifiConfig.shared);
         assertEquals(realm, wifiEnterpriseConfig.getRealm());
         assertEquals(fqdn, wifiEnterpriseConfig.getDomainSuffixMatch());
@@ -813,6 +820,8 @@ public class PasspointProviderTest {
         long[] rcOIs = new long[] {0x1234L, 0x2345L};
         String realm = "realm.com";
         String imsi = "1234*";
+        BitSet allowedProtocols = new BitSet();
+        allowedProtocols.set(WifiConfiguration.Protocol.RSN);
 
         // Create provider.
         PasspointConfiguration config = new PasspointConfiguration();
@@ -840,6 +849,7 @@ public class PasspointProviderTest {
         assertTrue(Arrays.equals(rcOIs, wifiConfig.roamingConsortiumIds));
         assertTrue(wifiConfig.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.WPA_EAP));
         assertTrue(wifiConfig.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.IEEE8021X));
+        assertEquals(allowedProtocols, wifiConfig.allowedProtocols);
         assertFalse(wifiConfig.shared);
         assertEquals(realm, wifiEnterpriseConfig.getRealm());
         assertEquals(fqdn, wifiEnterpriseConfig.getDomainSuffixMatch());
