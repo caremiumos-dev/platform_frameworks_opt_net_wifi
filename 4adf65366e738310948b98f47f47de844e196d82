@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5808451_b5b2ae93",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1247308
+      },
+      "writtenOn": "2018-11-03T01:44:05Z",
+      "side": 1,
+      "message": "Removed unnecessary line.",
+      "revId": "4adf65366e738310948b98f47f47de844e196d82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
