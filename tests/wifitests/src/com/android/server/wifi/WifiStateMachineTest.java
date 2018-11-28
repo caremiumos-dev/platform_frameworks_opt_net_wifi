@@ -539,7 +539,8 @@ public class WifiStateMachineTest {
      */
     private void sendDefaultNetworkRequest(int score) {
         mNetworkFactoryChannel.sendMessage(
-                NetworkFactory.CMD_REQUEST_NETWORK, score, 0, mDefaultNetworkRequest);
+                NetworkFactory.CMD_REQUEST_NETWORK, score, NetworkFactory.SerialNumber.NONE,
+                mDefaultNetworkRequest);
         mLooper.dispatchAll();
     }
 
@@ -1026,7 +1027,7 @@ public class WifiStateMachineTest {
         config.networkId = FRAMEWORK_NETWORK_ID + 1;
         setupAndStartConnectSequence(config);
         validateSuccessfulConnectSequence(config);
-        verify(mWifiPermissionsUtil, times(4)).checkNetworkSettingsPermission(anyInt());
+        verify(mWifiPermissionsUtil, atLeastOnce()).checkNetworkSettingsPermission(anyInt());
     }
 
     /**
@@ -2123,7 +2124,7 @@ public class WifiStateMachineTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class));
+                anyInt(), any(NetworkMisc.class), anyInt());
 
         ArrayList<Integer> thresholdsArray = new ArrayList();
         thresholdsArray.add(RSSI_THRESHOLD_MAX);
@@ -2452,7 +2453,7 @@ public class WifiStateMachineTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class));
+                anyInt(), any(NetworkMisc.class), anyInt());
 
         WifiConfiguration currentNetwork = new WifiConfiguration();
         currentNetwork.networkId = FRAMEWORK_NETWORK_ID;
@@ -2486,7 +2487,7 @@ public class WifiStateMachineTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class));
+                anyInt(), any(NetworkMisc.class), anyInt());
 
         WifiConfiguration currentNetwork = new WifiConfiguration();
         currentNetwork.networkId = FRAMEWORK_NETWORK_ID;
@@ -2521,7 +2522,7 @@ public class WifiStateMachineTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class));
+                anyInt(), any(NetworkMisc.class), anyInt());
 
         WifiConfiguration currentNetwork = new WifiConfiguration();
         currentNetwork.networkId = FRAMEWORK_NETWORK_ID;
@@ -2554,7 +2555,7 @@ public class WifiStateMachineTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class));
+                anyInt(), any(NetworkMisc.class), anyInt());
 
         when(mWifiConfigManager.getLastSelectedNetwork()).thenReturn(FRAMEWORK_NETWORK_ID + 1);
 
