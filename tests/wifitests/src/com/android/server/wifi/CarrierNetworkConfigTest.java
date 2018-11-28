@@ -58,7 +58,7 @@ public class CarrierNetworkConfigTest {
     private static final String TEST_CARRIER_NAME = "Test Carrier";
     private static final SubscriptionInfo TEST_SUBSCRIPTION_INFO =
             new SubscriptionInfo(TEST_SUBSCRIPTION_ID, null, 0, TEST_CARRIER_NAME, null, 0, 0,
-                    null, 0, null, "0", "0", null, false, null, null);
+                    null, 0, null, "0", "0", null, false, null, null, 0);
 
     @Mock Context mContext;
     @Mock CarrierConfigManager mCarrierConfigManager;
@@ -193,7 +193,7 @@ public class CarrierNetworkConfigTest {
         String updatedCarrierName = "Updated Carrier";
         SubscriptionInfo updatedSubscriptionInfo = new SubscriptionInfo(TEST_SUBSCRIPTION_ID,
                 null, 0, updatedCarrierName, null, 0, 0, null, 0, null, "0", "0", null,
-                false, null, null);
+                false, null, null, 0);
         when(mSubscriptionManager.getActiveSubscriptionInfoList())
                 .thenReturn(Arrays.asList(new SubscriptionInfo[] {updatedSubscriptionInfo}));
         when(mCarrierConfigManager.getConfigForSubId(TEST_SUBSCRIPTION_ID))
