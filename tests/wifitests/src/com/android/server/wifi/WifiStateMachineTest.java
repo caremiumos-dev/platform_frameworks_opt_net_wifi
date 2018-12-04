@@ -46,8 +46,8 @@ import android.net.NetworkFactory;
 import android.net.NetworkInfo;
 import android.net.NetworkMisc;
 import android.net.NetworkRequest;
-import android.net.dhcp.DhcpClient;
-import android.net.ip.IpClient;
+import android.net.dhcp.DhcpClientConstants;
+import android.net.ip.IpClientProxy;
 import android.net.wifi.ScanResult;
 import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiConfiguration;
@@ -203,10 +203,10 @@ public class WifiStateMachineTest {
         IBinder batteryStatsBinder = mockService(BatteryStats.class, IBatteryStats.class);
         when(facade.getService(BatteryStats.SERVICE_NAME)).thenReturn(batteryStatsBinder);
 
-        when(facade.makeIpClient(any(Context.class), anyString(), any(IpClient.Callback.class)))
+        when(facade.makeIpClient(any(Context.class), anyString(), any(IpClientProxy.Callback.class)))
                 .then(new AnswerWithArguments() {
-                    public IpClient answer(
-                            Context context, String ifname, IpClient.Callback callback) {
+                    public IpClientProxy answer(
+                            Context context, String ifname, IpClientProxy.Callback callback) {
                         mIpClientCallback = callback;
                         return mIpClient;
                     }
@@ -333,7 +333,7 @@ public class WifiStateMachineTest {
     Context mContext;
     MockResources mResources;
     FrameworkFacade mFrameworkFacade;
-    IpClient.Callback mIpClientCallback;
+    IpClientProxy.Callback mIpClientCallback;
     PhoneStateListener mPhoneStateListener;
     NetworkRequest mDefaultNetworkRequest;
     OsuProvider mOsuProvider;
@@ -358,7 +358,8 @@ public class WifiStateMachineTest {
     @Mock PasspointManager mPasspointManager;
     @Mock SelfRecovery mSelfRecovery;
     @Mock WifiPermissionsUtil mWifiPermissionsUtil;
-    @Mock IpClient mIpClient;
+    @Mock
+    IpClientProxy mIpClient;
     @Mock TelephonyManager mTelephonyManager;
     @Mock WrongPasswordNotifier mWrongPasswordNotifier;
     @Mock Clock mClock;
@@ -1304,7 +1305,7 @@ public class WifiStateMachineTest {
         assertEquals("CMD_CHANNEL_HALF_CONNECTED", mWsm.smToString(
                 AsyncChannel.CMD_CHANNEL_HALF_CONNECTED));
         assertEquals("CMD_PRE_DHCP_ACTION", mWsm.smToString(
-                DhcpClient.CMD_PRE_DHCP_ACTION));
+                DhcpClientConstants.CMD_PRE_DHCP_ACTION));
         assertEquals("CMD_IP_REACHABILITY_LOST", mWsm.smToString(
                 WifiStateMachine.CMD_IP_REACHABILITY_LOST));
     }

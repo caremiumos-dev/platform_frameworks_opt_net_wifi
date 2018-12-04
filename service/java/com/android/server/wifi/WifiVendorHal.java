@@ -1723,6 +1723,7 @@ public class WifiVendorHal {
      * @param ifaceName Name of the interface.
      * @return APF capabilities object.
      */
+    // TODO: figure out what to do with this
     public ApfCapabilities getApfCapabilities(@NonNull String ifaceName) {
         class AnswerBox {
             public ApfCapabilities value = sNoApfCapabilities;
