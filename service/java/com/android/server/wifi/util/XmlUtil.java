@@ -742,7 +742,7 @@ public class XmlUtil {
                             ipConfiguration.httpProxy.getPort());
                     XmlUtil.writeNextValue(
                             out, XML_TAG_PROXY_EXCLUSION_LIST,
-                            ipConfiguration.httpProxy.getExclusionListAsString());
+                            ipConfiguration.httpProxy.getExclusionList());
                     break;
                 case PAC:
                     XmlUtil.writeNextValue(
