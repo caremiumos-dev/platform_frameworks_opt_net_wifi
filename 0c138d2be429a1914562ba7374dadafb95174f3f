@@ -22,6 +22,30 @@
       "revId": "0c138d2be429a1914562ba7374dadafb95174f3f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "febd6363_070e2013",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2018-12-18T20:12:43Z",
+      "side": 1,
+      "message": "I have just ran \"atest FrameworksWifiTests\". All test passes",
+      "parentUuid": "84f09113_64c4e631",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 7
+      },
+      "revId": "0c138d2be429a1914562ba7374dadafb95174f3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
