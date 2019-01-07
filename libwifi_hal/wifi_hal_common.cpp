@@ -220,6 +220,7 @@ int wifi_change_fw_path(const char *fwpath) {
     PLOG(ERROR) << "Failed to open wlan fw path param";
     return -1;
   }
+
   len = strlen(fwpath) + 1;
   if (TEMP_FAILURE_RETRY(write(fd, fwpath, len)) != len) {
     PLOG(ERROR) << "Failed to write wlan fw path param";
