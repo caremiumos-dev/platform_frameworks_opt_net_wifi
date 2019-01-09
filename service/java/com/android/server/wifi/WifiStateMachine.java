@@ -633,6 +633,12 @@ public class WifiStateMachine extends StateMachine {
     /* Read the APF program & data buffer */
     static final int CMD_READ_PACKET_FILTER                             = BASE + 208;
 
+    /** Used to add packet filter to apf. */
+    static final int CMD_ADD_KEEPALIVE_PACKET_FILTER_TO_APF = BASE + 209;
+
+    /** Used to remove packet filter from apf. */
+    static final int CMD_REMOVE_KEEPALIVE_PACKET_FILTER_FROM_APF = BASE + 210;
+
     /* Indicates that diagnostics should time out a connection start event. */
     private static final int CMD_DIAGS_CONNECT_TIMEOUT                  = BASE + 252;
 
@@ -3457,12 +3463,9 @@ public class WifiStateMachine extends StateMachine {
                     deferMessage(message);
                     break;
                 case CMD_START_IP_PACKET_OFFLOAD:
-                    if (mNetworkAgent != null) {
-                        mNetworkAgent.onSocketKeepaliveEvent(
-                                message.arg1, SocketKeepalive.ERROR_INVALID_NETWORK);
-                    }
-                    break;
                 case CMD_STOP_IP_PACKET_OFFLOAD:
+                case CMD_ADD_KEEPALIVE_PACKET_FILTER_TO_APF:
+                case CMD_REMOVE_KEEPALIVE_PACKET_FILTER_FROM_APF:
                     if (mNetworkAgent != null) {
                         mNetworkAgent.onSocketKeepaliveEvent(
                                 message.arg1, SocketKeepalive.ERROR_INVALID_NETWORK);
@@ -4603,6 +4606,18 @@ public class WifiStateMachine extends StateMachine {
         }
 
         @Override
+        protected void addKeepalivePacketFilter(Message msg) {
+            WifiStateMachine.this.sendMessage(
+                    CMD_ADD_KEEPALIVE_PACKET_FILTER_TO_APF, msg.arg1, msg.arg2, msg.obj);
+        }
+
+        @Override
+        protected void removeKeepalivePacketFilter(Message msg) {
+            WifiStateMachine.this.sendMessage(
+                    CMD_REMOVE_KEEPALIVE_PACKET_FILTER_FROM_APF, msg.arg1, msg.arg2, msg.obj);
+        }
+
+        @Override
         protected void setSignalStrengthThresholds(int[] thresholds) {
             // 0. If there are no thresholds, or if the thresholds are invalid, stop RSSI monitoring.
             // 1. Tell the hardware to start RSSI monitoring here, possibly adding MIN_VALUE and
@@ -5422,6 +5437,18 @@ public class WifiStateMachine extends StateMachine {
                     int result = startWifiIPPacketOffload(slot, pkt, intervalSeconds);
                     if (mNetworkAgent != null) {
                         mNetworkAgent.onSocketKeepaliveEvent(slot, result);
+                    }
+                    break;
+                }
+                case CMD_ADD_KEEPALIVE_PACKET_FILTER_TO_APF: {
+                    if (mIpClient != null) {
+                        mIpClient.addKeepalivePacketFilter(message);
+                    }
+                    break;
+                }
+                case CMD_REMOVE_KEEPALIVE_PACKET_FILTER_FROM_APF: {
+                    if (mIpClient != null) {
+                        mIpClient.removeKeepalivePacketFilter(message);
                     }
                     break;
                 }
