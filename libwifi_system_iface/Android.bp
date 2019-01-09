@@ -31,6 +31,7 @@ cc_library {
     vendor_available: true,
     vndk: {
         enabled: true,
+        must_use_vendor_variant: true,
     },
     cflags: wifi_system_iface_cflags,
     local_include_dirs: ["include"],
