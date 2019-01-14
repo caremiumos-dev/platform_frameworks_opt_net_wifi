@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54db1a69_8ed75536",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1797,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2019-01-14T17:00:27Z",
+      "side": 1,
+      "message": "Cam we instead send a message to state machine to retrieve a copy of  mNetworkAgent? That is the pattern we\u0027ve been following in this file.\n\n        Message resultMsg \u003d channel.sendMessageSynchronously(CMD_GET_CURRENT_NETWORK);\n        Network network \u003d resultMsg.obj;\n        resultMsg.recycle();\n        return network;",
+      "range": {
+        "startLine": 1791,
+        "startChar": 0,
+        "endLine": 1797,
+        "endChar": 13
+      },
+      "revId": "bc6cbaad5f9000070eb7e50b4e9a439eeedde2a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
