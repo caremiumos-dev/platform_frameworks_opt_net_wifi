@@ -64,8 +64,7 @@ LOCAL_JAVA_LIBRARIES := \
 	android.test.runner \
 	android.hidl.manager-V1.0-java \
 	android.test.base \
-	android.test.mock \
-	conscrypt
+	android.test.mock
 
 # These must be explicitly included because they are not normally accessible
 # from apps.
@@ -78,6 +77,7 @@ LOCAL_JNI_SHARED_LIBRARIES := \
 	libbacktrace \
 	libbase \
 	libbinder \
+	libbinderthreadstate \
 	libc++ \
 	libcamera_client \
 	libcamera_metadata \
@@ -85,8 +85,7 @@ LOCAL_JNI_SHARED_LIBRARIES := \
 	libexpat \
 	libgui \
 	libhardware \
-	libicui18n \
-	libicuuc \
+	libandroidicu \
 	liblzma \
 	libmedia \
 	libnativehelper \

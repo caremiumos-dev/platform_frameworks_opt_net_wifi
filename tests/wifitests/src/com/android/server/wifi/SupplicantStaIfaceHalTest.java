@@ -25,6 +25,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
+import android.annotation.NonNull;
 import android.app.test.MockAnswerUtil;
 import android.content.Context;
 import android.hardware.wifi.supplicant.V1_0.ISupplicant;
@@ -53,8 +54,6 @@ import com.android.server.wifi.hotspot2.AnqpEvent;
 import com.android.server.wifi.hotspot2.IconEvent;
 import com.android.server.wifi.hotspot2.WnmData;
 import com.android.server.wifi.util.NativeUtil;
-
-import libcore.util.NonNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -1199,6 +1198,30 @@ public class SupplicantStaIfaceHalTest {
 
         verify(mWifiMonitor, times(2)).broadcastAuthenticationFailureEvent(eq(WLAN0_IFACE_NAME),
                 eq(WifiManager.ERROR_AUTH_FAILURE_WRONG_PSWD), eq(-1));
+    }
+
+    /**
+     * Tests the handling of incorrect network passwords, edge case.
+     *
+     * If the network is removed during 4-way handshake, do not call it a password mismatch.
+     */
+    @Test
+    public void testNetworkRemovedDuring4way() throws Exception {
+        executeAndValidateInitializationSequence();
+        assertNotNull(mISupplicantStaIfaceCallback);
+
+        int reasonCode = 3;
+
+        mISupplicantStaIfaceCallback.onStateChanged(
+                ISupplicantStaIfaceCallback.State.FOURWAY_HANDSHAKE,
+                NativeUtil.macAddressToByteArray(BSSID),
+                SUPPLICANT_NETWORK_ID,
+                NativeUtil.decodeSsid(SUPPLICANT_SSID));
+        mISupplicantStaIfaceCallback.onNetworkRemoved(SUPPLICANT_NETWORK_ID);
+        mISupplicantStaIfaceCallback.onDisconnected(
+                NativeUtil.macAddressToByteArray(BSSID), true, reasonCode);
+        verify(mWifiMonitor, times(0)).broadcastAuthenticationFailureEvent(any(), anyInt(),
+                anyInt());
     }
 
      /**
