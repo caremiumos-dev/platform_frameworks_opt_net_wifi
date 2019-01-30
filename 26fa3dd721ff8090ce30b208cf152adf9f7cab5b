@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3532df08_675bb66a",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3482,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-30T00:57:13Z",
+      "side": 1,
+      "message": "So IIUC what this here means is that we\u0027ll reply \"Invalid network\" for any request that comes on a network that\u0027s not currently in the \"connected\" state, including networks currently attempting to roam. This is not visible to ConnectivityService and other parts of the network stack, and IIUC means in practice they can encounter errors that (from their point of view) are spurious when trying to setup keepalive.\n\nWell I suppose this is not any worse than it is for packet offload, and it\u0027s been this way for a about three years apparently, so it may be fine, but raising it just in case. In particular I think if this is new API accessible to apps, and offload used to only be available to the system, this may be a problem as the apps may see these spurious errors. Maybe we can handle this as a bugfix or gloss over it entirely on premises that only privileged apps can use this...\n\nMaybe +lorenzo@ has an opinion on this?",
+      "range": {
+        "startLine": 3482,
+        "startChar": 21,
+        "endLine": 3482,
+        "endChar": 64
+      },
+      "revId": "26fa3dd721ff8090ce30b208cf152adf9f7cab5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
