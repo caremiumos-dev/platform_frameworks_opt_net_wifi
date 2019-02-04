@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aa21470_e4b07342",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5504,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2019-02-04T17:37:36Z",
+      "side": 1,
+      "message": "Bugid on TODO, please.\n\nIs there a reason not to do this right away?",
+      "range": {
+        "startLine": 5504,
+        "startChar": 0,
+        "endLine": 5504,
+        "endChar": 90
+      },
+      "revId": "2ea2880f9fb808f63bab4186c2a97c047a37e192",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a855aee3_aa0b4dda",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5506,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2019-02-04T17:37:36Z",
+      "side": 1,
+      "message": "Is this talking about framework roaming or firmware roaming?",
+      "range": {
+        "startLine": 5506,
+        "startChar": 26,
+        "endLine": 5506,
+        "endChar": 43
+      },
+      "revId": "2ea2880f9fb808f63bab4186c2a97c047a37e192",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
