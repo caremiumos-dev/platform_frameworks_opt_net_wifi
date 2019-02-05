@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0b54d3af_5a164f74",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5504,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-05T14:39:18Z",
+      "side": 1,
+      "message": "I was thinking it\u0027s a bit dangerous because IP_PACKET_OFFLOAD is done here currently, but if you\u0027re happy with moving that sure.",
+      "parentUuid": "5aa21470_e4b07342",
+      "range": {
+        "startLine": 5504,
+        "startChar": 0,
+        "endLine": 5504,
+        "endChar": 90
+      },
+      "revId": "2ea2880f9fb808f63bab4186c2a97c047a37e192",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a855aee3_aa0b4dda",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "2ea2880f9fb808f63bab4186c2a97c047a37e192",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eb37023_1288646c",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5506,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-05T14:39:18Z",
+      "side": 1,
+      "message": "Framework : this is about WifiStateMachine being in mRoamingState.",
+      "parentUuid": "a855aee3_aa0b4dda",
+      "range": {
+        "startLine": 5506,
+        "startChar": 26,
+        "endLine": 5506,
+        "endChar": 43
+      },
+      "revId": "2ea2880f9fb808f63bab4186c2a97c047a37e192",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
