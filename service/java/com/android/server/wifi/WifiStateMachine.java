@@ -1479,6 +1479,11 @@ public class WifiStateMachine extends StateMachine {
      * mark network agent as disconnected and stop the ip client.
      */
     public void handleIfaceDestroyed() {
+        mSupplicantStateTracker.sendMessage(WifiMonitor.SUPPLICANT_STATE_CHANGE_EVENT, 0, 0,
+                new StateChangeResult(WifiConfiguration.INVALID_NETWORK_ID,
+                        WifiSsid.createFromByteArray(null),
+                        null,
+                        SupplicantState.DISCONNECTED));
         handleNetworkDisconnect();
     }
 
