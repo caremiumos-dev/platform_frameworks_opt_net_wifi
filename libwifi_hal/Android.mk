@@ -101,10 +101,10 @@ else ifeq ($(BOARD_WLAN_DEVICE), MediaTek)
   LIB_WIFI_HAL := libwifi-hal-mt66xx
 endif
 
-# The WiFi HAL that you should be linking.
+# Static libwifi-hal for VTS.
 # ============================================================
 include $(CLEAR_VARS)
-LOCAL_MODULE := libwifi-hal
+LOCAL_MODULE := libwifi-hal_static
 LOCAL_PROPRIETARY_MODULE := true
 LOCAL_CFLAGS := $(wifi_hal_cflags)
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
@@ -123,6 +123,24 @@ LOCAL_SRC_FILES := \
     driver_tool.cpp \
     hal_tool.cpp
 LOCAL_WHOLE_STATIC_LIBRARIES := $(LIB_WIFI_HAL) libwifi-hal-common
+include $(BUILD_STATIC_LIBRARY)
+
+# The WiFi HAL that you should be linking.
+# ============================================================
+include $(CLEAR_VARS)
+LOCAL_MODULE := libwifi-hal
+LOCAL_PROPRIETARY_MODULE := true
+LOCAL_EXPORT_C_INCLUDE_DIRS := \
+    $(LOCAL_PATH)/include
+LOCAL_EXPORT_HEADER_LIBRARY_HEADERS := libhardware_legacy_headers
+LOCAL_SHARED_LIBRARIES := \
+    libbase \
+    libcutils \
+    liblog \
+    libnl \
+    libutils \
+    $(VENDOR_LOCAL_SHARED_LIBRARIES)
+LOCAL_WHOLE_STATIC_LIBRARIES := libwifi-hal_static
 include $(BUILD_SHARED_LIBRARY)
 
 # Test utilities (e.g. mock classes) for libwifi-hal
