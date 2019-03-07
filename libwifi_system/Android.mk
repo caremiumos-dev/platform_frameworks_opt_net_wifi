@@ -25,10 +25,10 @@ wifi_system_cflags := \
     -Wunused-variable \
     -Wwrite-strings
 
-# Device independent wifi system logic.
+# Static libwifi-system for VTS.
 # ============================================================
 include $(CLEAR_VARS)
-LOCAL_MODULE := libwifi-system
+LOCAL_MODULE := libwifi-system_static
 LOCAL_CFLAGS := $(wifi_system_cflags)
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
 LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include
@@ -42,7 +42,20 @@ LOCAL_SRC_FILES := \
     hostapd_manager.cpp \
     interface_tool.cpp \
     supplicant_manager.cpp
+include $(BUILD_STATIC_LIBRARY)
+
+# Device independent wifi system logic.
+include $(CLEAR_VARS)
+LOCAL_MODULE := libwifi-system
+LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include
+LOCAL_EXPORT_SHARED_LIBRARY_HEADERS := libbase
+LOCAL_SHARED_LIBRARIES := \
+    libbase \
+    libcrypto \
+    libcutils
+LOCAL_WHOLE_STATIC_LIBRARIES := libwifi-system_static
 include $(BUILD_SHARED_LIBRARY)
+
 
 # Test utilities (e.g. mock classes) for libwifi-system
 # ============================================================
