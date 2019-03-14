@@ -5908,22 +5908,22 @@ public class WifiStateMachine extends StateMachine {
 
     private static String getLinkPropertiesSummary(LinkProperties lp) {
         List<String> attributes = new ArrayList<>(6);
-        if (lp.hasIPv4Address()) {
+        if (lp.hasIpv4Address()) {
             attributes.add("v4");
         }
-        if (lp.hasIPv4DefaultRoute()) {
+        if (lp.hasIpv4DefaultRoute()) {
             attributes.add("v4r");
         }
-        if (lp.hasIPv4DnsServer()) {
+        if (lp.hasIpv4DnsServer()) {
             attributes.add("v4dns");
         }
-        if (lp.hasGlobalIPv6Address()) {
+        if (lp.hasGlobalIpv6Address()) {
             attributes.add("v6");
         }
-        if (lp.hasIPv6DefaultRoute()) {
+        if (lp.hasIpv6DefaultRoute()) {
             attributes.add("v6r");
         }
-        if (lp.hasIPv6DnsServer()) {
+        if (lp.hasIpv6DnsServer()) {
             attributes.add("v6dns");
         }
 
