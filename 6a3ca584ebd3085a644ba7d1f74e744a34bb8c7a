@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9b6aaa37_4721b593",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2019-03-27T23:05:16Z",
+      "side": 1,
+      "message": "I think that is fine. As long as the HAL is returning an identifiable error code in this case (WifiStatusCode.ERROR_INVALID_ARGS does not sound like an appropriate error code, but we can\u0027t change the HAL now).\n\nYou can add a ERROR_TYPE in WifiNative \u0026 return it from WifiVendorHal.",
+      "parentUuid": "00b18422_7d844178",
+      "revId": "6a3ca584ebd3085a644ba7d1f74e744a34bb8c7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40053e52_101c7fb8",
         "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
         "patchSetId": 1
