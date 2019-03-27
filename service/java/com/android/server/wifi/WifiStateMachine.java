@@ -1354,7 +1354,9 @@ public class WifiStateMachine extends StateMachine {
         if (ret != 0) {
             loge("startWifiIPPacketOffload(" + slot + ", " + intervalSeconds +
                     "): hardware error " + ret);
-            return SocketKeepalive.ERROR_HARDWARE_ERROR;
+            // Unconditionally return ERROR_INSUFFICIENT_RESOURCES here due to in practice the fail
+            // happens when there are too many started offloaded packets.
+            return SocketKeepalive.ERROR_INSUFFICIENT_RESOURCES;
         } else {
             return SocketKeepalive.SUCCESS;
         }
