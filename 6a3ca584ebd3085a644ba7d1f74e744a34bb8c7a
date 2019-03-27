@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c880ce7b_aad872b3",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-27T13:17:45Z",
+      "side": 1,
+      "message": "By looking at startSendingOffloadedPacket,\nit looks like WifiStatusCode.ERROR_INVALID_ARGS would be returned when 7-th keepalive was created, which is still not enough to identify insufficient resources.\nThus, I\u0027m not sure if modifying startSendingOffloadedPacket to distinguish error code will be better.\nE.g. return 0 for success, -1 for ERROR_INVALID_ARGS, -2 for other errors.",
+      "revId": "6a3ca584ebd3085a644ba7d1f74e744a34bb8c7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
