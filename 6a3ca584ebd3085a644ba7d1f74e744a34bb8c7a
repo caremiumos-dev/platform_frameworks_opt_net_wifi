@@ -16,6 +16,47 @@
       "revId": "6a3ca584ebd3085a644ba7d1f74e744a34bb8c7a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00b18422_7d844178",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-27T22:20:05Z",
+      "side": 1,
+      "message": "Ideally yes if it\u0027s not too hard and WiFi folks like this suggestion",
+      "parentUuid": "c880ce7b_aad872b3",
+      "revId": "6a3ca584ebd3085a644ba7d1f74e744a34bb8c7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40053e52_101c7fb8",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-27T22:20:05Z",
+      "side": 1,
+      "message": "since",
+      "range": {
+        "startLine": 1357,
+        "startChar": 72,
+        "endLine": 1357,
+        "endChar": 78
+      },
+      "revId": "6a3ca584ebd3085a644ba7d1f74e744a34bb8c7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
