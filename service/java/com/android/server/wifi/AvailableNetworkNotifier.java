@@ -312,15 +312,16 @@ public class AvailableNetworkNotifier {
         for (ScanDetail scanDetail : networks) {
             ScanResult scanResult = scanDetail.getScanResult();
 
+            if (blacklistedSsids.contains(scanResult.SSID)) {
+                continue;
+            }
+
             if (scanResult.level > highestRssi) {
                 result = scanResult;
                 highestRssi = scanResult.level;
             }
         }
 
-        if (result != null && blacklistedSsids.contains(result.SSID)) {
-            result = null;
-        }
         return result;
     }
 
