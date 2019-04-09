@@ -100,6 +100,7 @@ import com.android.internal.util.MessageUtils;
 import com.android.internal.util.Protocol;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
+import com.android.internal.util.TrafficStatsConstants;
 import com.android.server.wifi.hotspot2.AnqpEvent;
 import com.android.server.wifi.hotspot2.IconEvent;
 import com.android.server.wifi.hotspot2.NetworkDetail;
@@ -2599,7 +2600,7 @@ public class WifiStateMachine extends StateMachine {
                     /* The gateway's MAC address is known */
                     if ((address == null) && (timeout > 0)) {
                         boolean reachable = false;
-                        TrafficStats.setThreadStatsTag(TrafficStats.TAG_SYSTEM_PROBE);
+                        TrafficStats.setThreadStatsTag(TrafficStatsConstants.TAG_SYSTEM_PROBE);
                         try {
                             reachable = gateway.isReachable(timeout);
                         } catch (Exception e) {
