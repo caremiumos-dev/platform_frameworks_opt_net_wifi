@@ -290,7 +290,8 @@ public class WifiInjector {
                 new WakeupLock(mWifiConfigManager, mWifiMetrics.getWakeupMetrics(), mClock),
                 WakeupEvaluator.fromContext(mContext), wakeupOnboarding, mWifiConfigManager,
                 mWifiConfigStore, mWifiMetrics.getWakeupMetrics(), this, mFrameworkFacade);
-        mLockManager = new WifiLockManager(mContext, BatteryStatsService.getService());
+        mLockManager = new WifiLockManager(mContext, BatteryStatsService.getService(),
+                mWifiStateMachine);
         mWifiController = new WifiController(mContext, mWifiStateMachine, wifiStateMachineLooper,
                 mSettingsStore, mWifiServiceHandlerThread.getLooper(), mFrameworkFacade,
                 mWifiStateMachinePrime);
@@ -326,6 +327,7 @@ public class WifiInjector {
         mHalDeviceManager.enableVerboseLogging(verbose);
         mScanRequestProxy.enableVerboseLogging(verbose);
         mWakeupController.enableVerboseLogging(verbose);
+        mCarrierNetworkConfig.enableVerboseLogging(verbose);
         LogcatLog.enableVerboseLogging(verbose);
     }
 

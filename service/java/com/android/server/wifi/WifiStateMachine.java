@@ -2832,7 +2832,7 @@ public class WifiStateMachine extends StateMachine {
         // power settings when we control suspend mode optimizations.
         // TODO: Remove this comment when the driver is fixed.
         setSuspendOptimizationsNative(SUSPEND_DUE_TO_DHCP, false);
-        mWifiNative.setPowerSave(mInterfaceName, false);
+        setPowerSave(false);
 
         // Update link layer stats
         getWifiLinkLayerStats();
@@ -2854,13 +2854,33 @@ public class WifiStateMachine extends StateMachine {
     void handlePostDhcpSetup() {
         /* Restore power save and suspend optimizations */
         setSuspendOptimizationsNative(SUSPEND_DUE_TO_DHCP, true);
-        mWifiNative.setPowerSave(mInterfaceName, true);
+        setPowerSave(true);
 
         p2pSendMessage(WifiP2pServiceImpl.BLOCK_DISCOVERY, WifiP2pServiceImpl.DISABLED);
 
         // Set the coexistence mode back to its default value
         mWifiNative.setBluetoothCoexistenceMode(
                 mInterfaceName, WifiNative.BLUETOOTH_COEXISTENCE_MODE_SENSE);
+    }
+
+    /**
+     * Set power save mode
+     *
+     * @param ps true to enable power save (default behavior)
+     *           false to disable power save.
+     * @return true for success, false for failure
+     */
+    public boolean setPowerSave(boolean ps) {
+        if (mInterfaceName != null) {
+            if (mVerboseLoggingEnabled) {
+                Log.d(TAG, "Setting power save for: " + mInterfaceName + " to: " + ps);
+            }
+            mWifiNative.setPowerSave(mInterfaceName, ps);
+        } else {
+            Log.e(TAG, "Failed to setPowerSave, interfaceName is null");
+            return false;
+        }
+        return true;
     }
 
     private static final long DIAGS_CONNECT_TIMEOUT_MILLIS = 60 * 1000;
@@ -3732,7 +3752,7 @@ public class WifiStateMachine extends StateMachine {
         mWifiNative.setSuspendOptimizations(mInterfaceName, mSuspendOptNeedsDisabled == 0
                 && mUserWantsSuspendOpt.get());
 
-        mWifiNative.setPowerSave(mInterfaceName, true);
+        setPowerSave(true);
 
         if (mP2pSupported) {
             p2pSendMessage(WifiStateMachine.CMD_ENABLE_P2P);
@@ -3860,6 +3880,7 @@ public class WifiStateMachine extends StateMachine {
             mWifiConnectivityManager.setWifiEnabled(true);
             // Inform metrics that Wifi is Enabled (but not yet connected)
             mWifiMetrics.setWifiState(WifiMetricsProto.WifiLog.WIFI_DISCONNECTED);
+            mWifiMetrics.logStaEvent(StaEvent.TYPE_WIFI_ENABLED);
             // Inform p2p service that wifi is up and ready when applicable
             p2pSendMessage(WifiStateMachine.CMD_ENABLE_P2P);
             // Inform sar manager that wifi is Enabled
@@ -3877,6 +3898,7 @@ public class WifiStateMachine extends StateMachine {
             mWifiConnectivityManager.setWifiEnabled(false);
             // Inform metrics that Wifi is being disabled (Toggled, airplane enabled, etc)
             mWifiMetrics.setWifiState(WifiMetricsProto.WifiLog.WIFI_DISABLED);
+            mWifiMetrics.logStaEvent(StaEvent.TYPE_WIFI_DISABLED);
             // Inform sar manager that wifi is being disabled
             mSarManager.setClientWifiState(WifiManager.WIFI_STATE_DISABLED);
 
@@ -4077,6 +4099,7 @@ public class WifiStateMachine extends StateMachine {
                         Pair<String, String> identityPair =
                                 TelephonyUtil.getSimIdentity(getTelephonyManager(),
                                         new TelephonyUtil(), targetWificonfiguration);
+                        Log.i(TAG, "SUP_REQUEST_IDENTITY: identityPair=" + identityPair);
                         if (identityPair != null && identityPair.first != null) {
                             mWifiNative.simIdentityResponse(mInterfaceName, netId,
                                     identityPair.first, identityPair.second);
@@ -4919,7 +4942,9 @@ public class WifiStateMachine extends StateMachine {
                     break;
                 case CMD_RSSI_POLL:
                     if (message.arg1 == mRssiPollToken) {
-                        getWifiLinkLayerStats();
+                        WifiLinkLayerStats stats = getWifiLinkLayerStats();
+                        mWifiMetrics.incrementWifiLinkLayerUsageStats(stats);
+
                         // Get Info and continue polling
                         fetchRssiLinkSpeedAndFrequencyNative();
                         // Send the update score to network agent.

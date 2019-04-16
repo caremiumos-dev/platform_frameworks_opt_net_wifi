@@ -97,6 +97,7 @@ import com.android.internal.util.StateMachine;
 import com.android.server.wifi.hotspot2.NetworkDetail;
 import com.android.server.wifi.hotspot2.PasspointManager;
 import com.android.server.wifi.hotspot2.PasspointProvisioningTestUtil;
+import com.android.server.wifi.nano.WifiMetricsProto;
 import com.android.server.wifi.nano.WifiMetricsProto.StaEvent;
 import com.android.server.wifi.p2p.WifiP2pServiceImpl;
 import com.android.server.wifi.util.WifiPermissionsUtil;
@@ -539,7 +540,8 @@ public class WifiStateMachineTest {
      */
     private void sendDefaultNetworkRequest(int score) {
         mNetworkFactoryChannel.sendMessage(
-                NetworkFactory.CMD_REQUEST_NETWORK, score, 0, mDefaultNetworkRequest);
+                NetworkFactory.CMD_REQUEST_NETWORK, score, NetworkFactory.SerialNumber.NONE,
+                mDefaultNetworkRequest);
         mLooper.dispatchAll();
     }
 
@@ -1026,7 +1028,7 @@ public class WifiStateMachineTest {
         config.networkId = FRAMEWORK_NETWORK_ID + 1;
         setupAndStartConnectSequence(config);
         validateSuccessfulConnectSequence(config);
-        verify(mWifiPermissionsUtil, times(4)).checkNetworkSettingsPermission(anyInt());
+        verify(mWifiPermissionsUtil, atLeastOnce()).checkNetworkSettingsPermission(anyInt());
     }
 
     /**
@@ -1840,6 +1842,7 @@ public class WifiStateMachineTest {
     public void testWifiInfoCleanedUpEnteringExitingConnectModeState() throws Exception {
         InOrder inOrder = inOrder(mWifiConnectivityManager);
         InOrder inOrderSarMgr = inOrder(mSarManager);
+        InOrder inOrderMetrics = inOrder(mWifiMetrics);
         Log.i(TAG, mWsm.getCurrentState().getName());
         String initialBSSID = "aa:bb:cc:dd:ee:ff";
         WifiInfo wifiInfo = mWsm.getWifiInfo();
@@ -1851,6 +1854,9 @@ public class WifiStateMachineTest {
         assertEquals(WifiManager.WIFI_STATE_ENABLED, mWsm.syncGetWifiState());
         inOrder.verify(mWifiConnectivityManager).setWifiEnabled(eq(true));
         inOrderSarMgr.verify(mSarManager).setClientWifiState(WifiManager.WIFI_STATE_ENABLED);
+        inOrderMetrics.verify(mWifiMetrics)
+                .setWifiState(WifiMetricsProto.WifiLog.WIFI_DISCONNECTED);
+        inOrderMetrics.verify(mWifiMetrics).logStaEvent(StaEvent.TYPE_WIFI_ENABLED);
         assertNull(wifiInfo.getBSSID());
 
         // Send a SUPPLICANT_STATE_CHANGE_EVENT, verify WifiInfo is updated
@@ -1871,6 +1877,8 @@ public class WifiStateMachineTest {
         assertEquals(WifiManager.WIFI_STATE_DISABLED, mWsm.syncGetWifiState());
         inOrder.verify(mWifiConnectivityManager).setWifiEnabled(eq(false));
         inOrderSarMgr.verify(mSarManager).setClientWifiState(WifiManager.WIFI_STATE_DISABLED);
+        inOrderMetrics.verify(mWifiMetrics).setWifiState(WifiMetricsProto.WifiLog.WIFI_DISABLED);
+        inOrderMetrics.verify(mWifiMetrics).logStaEvent(StaEvent.TYPE_WIFI_DISABLED);
         assertNull(wifiInfo.getBSSID());
         assertEquals(SupplicantState.DISCONNECTED, wifiInfo.getSupplicantState());
 
@@ -1892,6 +1900,9 @@ public class WifiStateMachineTest {
         assertEquals(WifiManager.WIFI_STATE_ENABLED, mWsm.syncGetWifiState());
         inOrder.verify(mWifiConnectivityManager).setWifiEnabled(eq(true));
         inOrderSarMgr.verify(mSarManager).setClientWifiState(WifiManager.WIFI_STATE_ENABLED);
+        inOrderMetrics.verify(mWifiMetrics)
+                .setWifiState(WifiMetricsProto.WifiLog.WIFI_DISCONNECTED);
+        inOrderMetrics.verify(mWifiMetrics).logStaEvent(StaEvent.TYPE_WIFI_ENABLED);
         assertEquals("DisconnectedState", getCurrentState().getName());
         assertEquals(SupplicantState.DISCONNECTED, wifiInfo.getSupplicantState());
         assertNull(wifiInfo.getBSSID());
@@ -2123,7 +2134,7 @@ public class WifiStateMachineTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class));
+                anyInt(), any(NetworkMisc.class), anyInt());
 
         ArrayList<Integer> thresholdsArray = new ArrayList();
         thresholdsArray.add(RSSI_THRESHOLD_MAX);
@@ -2452,7 +2463,7 @@ public class WifiStateMachineTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class));
+                anyInt(), any(NetworkMisc.class), anyInt());
 
         WifiConfiguration currentNetwork = new WifiConfiguration();
         currentNetwork.networkId = FRAMEWORK_NETWORK_ID;
@@ -2486,7 +2497,7 @@ public class WifiStateMachineTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class));
+                anyInt(), any(NetworkMisc.class), anyInt());
 
         WifiConfiguration currentNetwork = new WifiConfiguration();
         currentNetwork.networkId = FRAMEWORK_NETWORK_ID;
@@ -2521,7 +2532,7 @@ public class WifiStateMachineTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class));
+                anyInt(), any(NetworkMisc.class), anyInt());
 
         WifiConfiguration currentNetwork = new WifiConfiguration();
         currentNetwork.networkId = FRAMEWORK_NETWORK_ID;
@@ -2554,7 +2565,7 @@ public class WifiStateMachineTest {
         ArgumentCaptor<Messenger> messengerCaptor = ArgumentCaptor.forClass(Messenger.class);
         verify(mConnectivityManager).registerNetworkAgent(messengerCaptor.capture(),
                 any(NetworkInfo.class), any(LinkProperties.class), any(NetworkCapabilities.class),
-                anyInt(), any(NetworkMisc.class));
+                anyInt(), any(NetworkMisc.class), anyInt());
 
         when(mWifiConfigManager.getLastSelectedNetwork()).thenReturn(FRAMEWORK_NETWORK_ID + 1);
 
@@ -2569,5 +2580,39 @@ public class WifiStateMachineTest {
                 .setNetworkValidatedInternetAccess(FRAMEWORK_NETWORK_ID, true);
         verify(mWifiConfigManager).updateNetworkSelectionStatus(
                 FRAMEWORK_NETWORK_ID, NETWORK_SELECTION_ENABLE);
+    }
+
+    /**
+     * Verify that when ordered to setPowerSave(true) while Interface is created,
+     * WifiNative is called with the right powerSave mode.
+     */
+    @Test
+    public void verifySetPowerSaveTrueSuccess() throws Exception {
+        mWsm.setOperationalMode(WifiStateMachine.CONNECT_MODE, WIFI_IFACE_NAME);
+        assertTrue(mWsm.setPowerSave(true));
+        verify(mWifiNative).setPowerSave(WIFI_IFACE_NAME, true);
+    }
+
+    /**
+     * Verify that when ordered to setPowerSave(false) while Interface is created,
+     * WifiNative is called with the right powerSave mode.
+     */
+    @Test
+    public void verifySetPowerSaveFalseSuccess() throws Exception {
+        mWsm.setOperationalMode(WifiStateMachine.CONNECT_MODE, WIFI_IFACE_NAME);
+        assertTrue(mWsm.setPowerSave(false));
+        verify(mWifiNative).setPowerSave(WIFI_IFACE_NAME, false);
+    }
+
+    /**
+     * Verify that when interface is not created yet (InterfaceName is null),
+     * then setPowerSave() returns with error and no call in WifiNative happens.
+     */
+    @Test
+    public void verifySetPowerSaveFailure() throws Exception {
+        boolean powerSave = true;
+        mWsm.setOperationalMode(WifiStateMachine.DISABLED_MODE, null);
+        assertFalse(mWsm.setPowerSave(powerSave));
+        verify(mWifiNative, never()).setPowerSave(anyString(), anyBoolean());
     }
 }
