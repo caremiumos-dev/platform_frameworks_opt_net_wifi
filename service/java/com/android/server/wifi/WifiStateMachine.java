@@ -39,6 +39,7 @@ import android.net.IpConfiguration;
 import android.net.KeepalivePacketData;
 import android.net.LinkProperties;
 import android.net.MacAddress;
+import android.net.NattKeepalivePacketData;
 import android.net.Network;
 import android.net.NetworkAgent;
 import android.net.NetworkCapabilities;
@@ -100,6 +101,7 @@ import com.android.internal.util.MessageUtils;
 import com.android.internal.util.Protocol;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
+import com.android.server.connectivity.KeepaliveTracker.KeepaliveInfo;
 import com.android.server.wifi.hotspot2.AnqpEvent;
 import com.android.server.wifi.hotspot2.IconEvent;
 import com.android.server.wifi.hotspot2.NetworkDetail;
@@ -5052,9 +5054,19 @@ public class WifiStateMachine extends StateMachine {
                 case CMD_ADD_KEEPALIVE_PACKET_FILTER_TO_APF: {
                     if (mIpClient != null) {
                         final int slot = message.arg1;
-                        final TcpKeepalivePacketData pkt = (TcpKeepalivePacketData) message.obj;
+                        final int type = message.arg2;
                         try {
-                            mIpClient.addKeepalivePacketFilter(slot, pkt.toStableParcelable());
+                            if (type == KeepaliveInfo.TYPE_NATT) {
+                                final NattKeepalivePacketData pkt =
+                                        (NattKeepalivePacketData) message.obj;
+                                mIpClient.addNattKeepalivePacketFilter(slot, type,
+                                        pkt.toStableParcelable());
+                            } else {
+                                final TcpKeepalivePacketData pkt =
+                                        (TcpKeepalivePacketData) message.obj;
+                                mIpClient.addTcpKeepalivePacketFilter(slot, type,
+                                        pkt.toStableParcelable());
+                            }
                         } catch (RemoteException e) {
                             loge("Error adding Keepalive Packet Filter ", e);
                         }
