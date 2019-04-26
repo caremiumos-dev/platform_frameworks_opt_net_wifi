@@ -38,7 +38,8 @@ set -x # print commands
 adb root
 adb wait-for-device
 
-adb install -r -g "$OUT/data/app/FrameworksWifiTests/FrameworksWifiTests.apk"
+TARGET_ARCH=$($ANDROID_BUILD_TOP/build/soong/soong_ui.bash --dumpvar-mode TARGET_ARCH)
+adb install -r -g "$OUT/testcases/FrameworksWifiTests/$TARGET_ARCH/FrameworksWifiTests.apk"
 
 adb shell am instrument --no-hidden-api-checks -w "$@" \
   'com.android.server.wifi.test/com.android.server.wifi.CustomTestRunner'
