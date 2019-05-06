@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f36afe67_a363bb27",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5055,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2019-05-06T22:13:14Z",
+      "side": 0,
+      "message": "Can we just change this to cast to the base class (i.e KeepAlivePacketData)? The wifi stack doesn\u0027t really care about what type of keep alive is being sent. Otherwise, you will need to keep changing this piece of code for any new types you add.",
+      "range": {
+        "startLine": 5055,
+        "startChar": 24,
+        "endLine": 5055,
+        "endChar": 96
+      },
+      "revId": "7ced6bc007ee8d15dee9095277ca7b53051c8312",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
