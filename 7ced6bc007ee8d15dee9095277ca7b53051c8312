@@ -70,6 +70,30 @@
       "revId": "7ced6bc007ee8d15dee9095277ca7b53051c8312",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0dc19b_6c1833c0",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5055,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-07T07:44:31Z",
+      "side": 0,
+      "message": "FWIW, I do agree with Roshan\u0027s comment that it would be better to avoid the instanceof here. It seems like we could make this better in the future by having an IpClient client library, but given that wifi currently directly uses the IIpClient AIDL interface, we can\u0027t do that at the moment.",
+      "parentUuid": "fba2a412_a594c9c8",
+      "range": {
+        "startLine": 5055,
+        "startChar": 24,
+        "endLine": 5055,
+        "endChar": 96
+      },
+      "revId": "7ced6bc007ee8d15dee9095277ca7b53051c8312",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
