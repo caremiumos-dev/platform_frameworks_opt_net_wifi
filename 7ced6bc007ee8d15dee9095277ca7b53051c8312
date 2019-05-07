@@ -46,6 +46,30 @@
       "revId": "7ced6bc007ee8d15dee9095277ca7b53051c8312",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fba2a412_a594c9c8",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5055,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-07T07:24:20Z",
+      "side": 0,
+      "message": "Unfortunately the underlying objects are stable AIDL parcelables which cannot inherit from each other.",
+      "parentUuid": "add90df4_1a417de3",
+      "range": {
+        "startLine": 5055,
+        "startChar": 24,
+        "endLine": 5055,
+        "endChar": 96
+      },
+      "revId": "7ced6bc007ee8d15dee9095277ca7b53051c8312",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
