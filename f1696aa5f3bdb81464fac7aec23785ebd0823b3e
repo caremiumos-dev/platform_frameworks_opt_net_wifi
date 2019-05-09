@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6465ef2a_3a778d6f",
+        "filename": "service/java/com/android/server/wifi/WifiStateMachine.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5019,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-09T04:03:20Z",
+      "side": 1,
+      "message": "You will probably want to rebase on top of aosp/947863.",
+      "range": {
+        "startLine": 5019,
+        "startChar": 34,
+        "endLine": 5019,
+        "endChar": 58
+      },
+      "revId": "f1696aa5f3bdb81464fac7aec23785ebd0823b3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
