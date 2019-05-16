@@ -22,6 +22,7 @@ import android.hardware.wifi.supplicant.V1_0.SupplicantStatus;
 import android.hardware.wifi.supplicant.V1_0.SupplicantStatusCode;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiEnterpriseConfig;
+import android.net.wifi.WifiManager;
 import android.os.HidlSupport.Mutable;
 import android.os.RemoteException;
 import android.text.TextUtils;
@@ -48,7 +49,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.annotation.concurrent.ThreadSafe;
-
 
 /**
  * Wrapper class for ISupplicantStaNetwork HAL calls. Gets and sets supplicant sta network variables
@@ -293,12 +293,16 @@ public class SupplicantStaNetworkHal {
                         if (!setSaePassword(
                                 NativeUtil.removeEnclosingQuotes(config.preSharedKey))) {
                             Log.e(TAG, "failed to set sae password");
+                            mWifiMonitor.broadcastAuthenticationFailureEvent(
+                                    mIfaceName, WifiManager.ERROR_AUTH_FAILURE_WRONG_PSWD, -1);
                             return false;
                         }
                     } else {
                         if (!setPskPassphrase(
                                 NativeUtil.removeEnclosingQuotes(config.preSharedKey))) {
                             Log.e(TAG, "failed to set psk passphrase");
+                            mWifiMonitor.broadcastAuthenticationFailureEvent(
+                                    mIfaceName, WifiManager.ERROR_AUTH_FAILURE_WRONG_PSWD, -1);
                             return false;
                         }
                     }
