@@ -5110,7 +5110,6 @@ public class WifiStateMachine extends StateMachine {
             logStateAndMessage(message, this);
 
             switch(message.what) {
-                case CMD_START_CONNECT:
                 case CMD_START_ROAM:
                     messageHandlingStatus = MESSAGE_HANDLING_STATUS_DISCARD;
                     break;
