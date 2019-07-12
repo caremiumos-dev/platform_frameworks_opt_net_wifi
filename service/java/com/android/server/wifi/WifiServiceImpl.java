@@ -127,6 +127,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.android.server.net.BaseNetworkObserver;
+import android.os.INetworkManagementService;
+import android.content.ContentResolver;
 /**
  * WifiService handles remote WiFi operation requests by implementing
  * the IWifiManager interface.
@@ -222,6 +225,10 @@ public class WifiServiceImpl extends IWifiManager.Stub {
      * Power profile
      */
     PowerProfile mPowerProfile;
+    private INetworkManagementService mNwService;
+    private final PropertyService mPropertyService = new SystemPropertyService();
+    private boolean wifiIfaceRemove =false;
+    private boolean wifiIfaceAdd =false;
 
     /**
      * Callback for use with LocalOnlyHotspot to unregister requesting applications upon death.
@@ -483,6 +490,89 @@ public class WifiServiceImpl extends IWifiManager.Stub {
 
         mWifiInjector.getWifiStateMachinePrime().registerSoftApCallback(new SoftApCallbackImpl());
         mPowerProfile = mWifiInjector.getPowerProfile();
+        IBinder b = mFacade.getService(Context.NETWORKMANAGEMENT_SERVICE);
+        mNwService = INetworkManagementService.Stub.asInterface(b);
+        WifiInterfaceObserver   mWifiInterfaceObserver = new WifiInterfaceObserver();
+        try {
+                mNwService.registerObserver(mWifiInterfaceObserver);
+        } catch (RemoteException e) {
+                Log.e("WifiService", "Could not register InterfaceObserver " + e);
+        }
+    }
+    private class WifiInterfaceObserver extends BaseNetworkObserver {
+        private boolean interfaceUp = true;
+        @Override
+        public void interfaceLinkStateChanged(String iface, boolean up) {
+            if(iface.equals("wlan0"))
+            {
+                Slog.e(TAG,"XXXXX WifiInterfaceObserver interfaceLinkStateChanged " + iface
+                        +  " up=" +up);
+                interfaceUp = up;
+            }
+        }
+
+        @Override
+        public void interfaceAdded(String iface) {
+            if(iface.equals("wlan0"))
+            {
+                Slog.d(TAG,"XXXXX WifiInterfaceObserver interfaceAdded " + iface);
+                
+                while(wifiIfaceRemove)
+                {
+                    wifiIfaceRemove = false;
+                    wifiIfaceAdd = true;
+                }
+    
+                int isWifiEnable = 1;
+                int isScanAlwaysEnabled = 0;
+                final ContentResolver cr = mContext.getContentResolver();
+                try{
+                    isWifiEnable = Settings.Global.getInt(cr, Settings.Global.WIFI_ON);
+                    isScanAlwaysEnabled = Settings.Global.getInt(cr,
+                            Settings.Global.WIFI_SCAN_ALWAYS_AVAILABLE,0);
+                } catch (Settings.SettingNotFoundException e) {
+                    Slog.e(TAG,"getwifi setting state error");
+                }
+                Slog.d(TAG,"XXXXX getwifi setting state is "
+                        + " WifiEnable=" + isWifiEnable
+                        + " isScanAlwaysEnabled=" + isScanAlwaysEnabled);
+                if(isWifiEnable == 1 && wifiIfaceAdd == true)
+                {
+                    wifiIfaceAdd = false;
+                    try{
+                        setWifiEnabled(mContext.getOpPackageName(),false);
+                        try{
+                            Thread.sleep(200);
+                        }catch (InterruptedException e){
+                        }
+                        setWifiEnabled(mContext.getOpPackageName(),true);
+                    }catch (RemoteException e){
+    
+                    }
+                }else if(isWifiEnable == 0 && isScanAlwaysEnabled == 1 && wifiIfaceAdd == true){
+                        Slog.d(TAG,"XXXXX restart supplicant for wifi-off-scanalways-on,due to EU cut down power of wifi ");
+                        wifiIfaceAdd = false;
+                        mPropertyService.set("ctl.stop","wpa_supplicant");
+                        try{
+                            Thread.sleep(200);
+                        }catch (InterruptedException e){
+                        }
+                        mPropertyService.set("ctl.start","wpa_supplicant");
+                }else{
+                        Slog.d(TAG,"XXXXX restart wifi do nothing ");
+                }
+            }
+        }
+
+        @Override
+        public void interfaceRemoved(String iface) {
+            if(iface.equals("wlan0"))
+            {
+                wifiIfaceRemove = true;
+                Slog.d(TAG,"XXXXX WifiInterfaceObserver interface " + iface
+                    + "wifiIfaceRemove" + wifiIfaceRemove);
+            }
+        }
     }
 
     /**
