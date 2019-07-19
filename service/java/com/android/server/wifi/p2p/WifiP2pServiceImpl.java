@@ -28,8 +28,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.DhcpResults;
-import android.net.InterfaceConfiguration;
-import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.NetworkInfo;
 import android.net.NetworkUtils;
@@ -1998,11 +1996,13 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                             // better before adding a time out in future
                             // Set group idle timeout of 10 sec, to avoid GO beaconing incase of any
                             // failure during 4-way Handshake.
+                            // Tethering service listens
+                            // WifiP2pManager#WIFI_P2P_CONNECTION_CHANGED_ACTION
+                            // and starts DHCP server for Group Owner.
                             if (!mAutonomousGroup) {
                                 mWifiNative.setP2pGroupIdle(mGroup.getInterface(),
                                         GROUP_IDLE_TIME_S);
                             }
-                            startDhcpServer(mGroup.getInterface());
                         } else {
                             mWifiNative.setP2pGroupIdle(mGroup.getInterface(), GROUP_IDLE_TIME_S);
                             startIpClient(mGroup.getInterface(), getHandler());
@@ -2609,51 +2609,6 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
             mContext.sendStickyBroadcastAsUser(intent, UserHandle.ALL);
         }
 
-        private void startDhcpServer(String intf) {
-            InterfaceConfiguration ifcg = null;
-            try {
-                ifcg = mNwService.getInterfaceConfig(intf);
-                ifcg.setLinkAddress(new LinkAddress(NetworkUtils.numericToInetAddress(
-                            SERVER_ADDRESS), 24));
-                ifcg.setInterfaceUp();
-                mNwService.setInterfaceConfig(intf, ifcg);
-                // This starts the dnsmasq server
-                ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(
-                        Context.CONNECTIVITY_SERVICE);
-                String[] tetheringDhcpRanges = cm.getTetheredDhcpRanges();
-                if (mNwService.isTetheringStarted()) {
-                    if (DBG) logd("Stop existing tethering and restart it");
-                    mNwService.stopTethering();
-                }
-                mNwService.tetherInterface(intf);
-                mNwService.startTethering(tetheringDhcpRanges);
-            } catch (Exception e) {
-                loge("Error configuring interface " + intf + ", :" + e);
-                return;
-            }
-
-            logd("Started Dhcp server on " + intf);
-        }
-
-        private void stopDhcpServer(String intf) {
-            try {
-                mNwService.untetherInterface(intf);
-                for (String temp : mNwService.listTetheredInterfaces()) {
-                    logd("List all interfaces " + temp);
-                    if (temp.compareTo(intf) != 0) {
-                        logd("Found other tethering interfaces, so keep tethering alive");
-                        return;
-                    }
-                }
-                mNwService.stopTethering();
-            } catch (Exception e) {
-                loge("Error stopping Dhcp server" + e);
-                return;
-            } finally {
-                logd("Stopped Dhcp server");
-            }
-        }
-
         private void notifyP2pEnableFailure() {
             Resources r = Resources.getSystem();
             AlertDialog dialog = new AlertDialog.Builder(mContext)
@@ -3161,9 +3116,9 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
         }
 
         private void handleGroupRemoved() {
-            if (mGroup.isGroupOwner()) {
-                stopDhcpServer(mGroup.getInterface());
-            } else {
+            // Tethering service listens WifiP2pManager#WIFI_P2P_CONNECTION_CHANGED_ACTION
+            // and stops DHCP server for Group Owner.
+            if (!mGroup.isGroupOwner()) {
                 if (DBG) logd("stop IpClient");
                 stopIpClient();
                 try {
