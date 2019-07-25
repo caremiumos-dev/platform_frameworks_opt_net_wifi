@@ -1106,7 +1106,7 @@ public class ClientModeImpl extends StateMachine {
         setSupplicantLogLevel();
         mCountryCode.enableVerboseLogging(verbose);
         mWifiScoreReport.enableVerboseLogging(mVerboseLoggingEnabled);
-        mWifiDiagnostics.startLogging(mVerboseLoggingEnabled);
+        mWifiDiagnostics.enableVerboseLogging(mVerboseLoggingEnabled);
         mWifiMonitor.enableVerboseLogging(verbose);
         mWifiNative.enableVerboseLogging(verbose);
         mWifiConfigManager.enableVerboseLogging(verbose);
@@ -3765,7 +3765,9 @@ public class ClientModeImpl extends StateMachine {
         setRandomMacOui();
         mCountryCode.setReadyForChange(true);
 
-        mWifiDiagnostics.startLogging(mVerboseLoggingEnabled);
+        mWifiDiagnostics.startPktFateMonitoring(mInterfaceName);
+        mWifiDiagnostics.startLogging(mInterfaceName);
+
         mIsRunning = true;
         updateBatteryWorkSource(null);
 
@@ -3803,7 +3805,7 @@ public class ClientModeImpl extends StateMachine {
      */
     private void stopClientMode() {
         // exiting supplicant started state is now only applicable to client mode
-        mWifiDiagnostics.stopLogging();
+        mWifiDiagnostics.stopLogging(mInterfaceName);
 
         mIsRunning = false;
         updateBatteryWorkSource(null);
