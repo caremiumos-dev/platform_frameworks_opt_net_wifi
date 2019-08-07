@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f136ca2f_5b44eaee",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1241863
+      },
+      "writtenOn": "2019-08-07T14:14:06Z",
+      "side": 1,
+      "message": "I recommend these to be boolean instead of int",
+      "range": {
+        "startLine": 526,
+        "startChar": 16,
+        "endLine": 527,
+        "endChar": 44
+      },
+      "revId": "19222d39258a476d5861a7f2c75057007a929ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
