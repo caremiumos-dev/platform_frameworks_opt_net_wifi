@@ -336,10 +336,10 @@ public class WifiStateMachinePrime {
 
             @Override
             public boolean processMessage(Message message) {
-                Log.d(TAG, "received a message in WifiDisabledState: " + message);
                 if (checkForAndHandleModeChange(message)) {
                     return HANDLED;
                 }
+                Log.d(TAG, "Unhandled message in WifiDisabledState: " + message);
                 return NOT_HANDLED;
             }
 
@@ -398,10 +398,6 @@ public class WifiStateMachinePrime {
 
             @Override
             public boolean processMessage(Message message) {
-                if (checkForAndHandleModeChange(message)) {
-                    return HANDLED;
-                }
-
                 switch(message.what) {
                     case CMD_START_CLIENT_MODE:
                         Log.d(TAG, "Received CMD_START_CLIENT_MODE when active - drop");
@@ -428,7 +424,7 @@ public class WifiStateMachinePrime {
                         mModeStateMachine.transitionTo(mWifiDisabledState);
                         break;
                     default:
-                        return NOT_HANDLED;
+                        return checkForAndHandleModeChange(message);
                 }
                 return NOT_HANDLED;
             }
@@ -482,10 +478,6 @@ public class WifiStateMachinePrime {
 
             @Override
             public boolean processMessage(Message message) {
-                if (checkForAndHandleModeChange(message)) {
-                    return HANDLED;
-                }
-
                 switch(message.what) {
                     case CMD_START_SCAN_ONLY_MODE:
                         Log.d(TAG, "Received CMD_START_SCAN_ONLY_MODE when active - drop");
@@ -513,7 +505,7 @@ public class WifiStateMachinePrime {
                         mModeStateMachine.transitionTo(mWifiDisabledState);
                         break;
                     default:
-                        return NOT_HANDLED;
+                        return checkForAndHandleModeChange(message);
                 }
                 return HANDLED;
             }
