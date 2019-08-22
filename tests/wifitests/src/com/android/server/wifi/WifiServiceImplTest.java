@@ -64,6 +64,7 @@ import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.net.NetworkStack;
 import android.net.Uri;
 import android.net.wifi.ISoftApCallback;
 import android.net.wifi.ScanResult;
@@ -998,9 +999,10 @@ public class WifiServiceImplTest {
      */
     @Test(expected = SecurityException.class)
     public void testStartSoftApWithoutPermissionThrowsException() throws Exception {
-        doThrow(new SecurityException()).when(mContext)
-                .enforceCallingOrSelfPermission(eq(android.Manifest.permission.NETWORK_STACK),
-                                                eq("WifiService"));
+        doReturn(PackageManager.PERMISSION_DENIED).when(mContext)
+                .checkCallingOrSelfPermission(eq(android.Manifest.permission.NETWORK_STACK));
+        doReturn(PackageManager.PERMISSION_DENIED).when(mContext)
+                .checkCallingOrSelfPermission(eq(NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK));
         mWifiServiceImpl.startSoftAp(null);
     }
 
@@ -1020,9 +1022,10 @@ public class WifiServiceImplTest {
      */
     @Test(expected = SecurityException.class)
     public void testStopSoftApWithoutPermissionThrowsException() throws Exception {
-        doThrow(new SecurityException()).when(mContext)
-                .enforceCallingOrSelfPermission(eq(android.Manifest.permission.NETWORK_STACK),
-                                                eq("WifiService"));
+        doReturn(PackageManager.PERMISSION_DENIED).when(mContext)
+                .checkCallingOrSelfPermission(eq(android.Manifest.permission.NETWORK_STACK));
+        doReturn(PackageManager.PERMISSION_DENIED).when(mContext)
+                .checkCallingOrSelfPermission(eq(NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK));
         mWifiServiceImpl.stopSoftAp();
     }
 
@@ -2533,14 +2536,14 @@ public class WifiServiceImplTest {
 
     /**
      * Verify that setCountryCode() fails and doesn't call WifiCountryCode object
-     * if the caller doesn't have CONNECTIVITY_INTERNAL permission.
+     * if the caller doesn't have NETWORK_STACK permission.
      */
     @Test(expected = SecurityException.class)
-    public void testSetCountryCodeFailsWithoutConnectivityInternalPermission() throws Exception {
-        doThrow(new SecurityException()).when(mContext)
-                .enforceCallingOrSelfPermission(
-                        eq(android.Manifest.permission.CONNECTIVITY_INTERNAL),
-                        eq("ConnectivityService"));
+    public void testSetCountryCodeFailsWithoutNetworkStackPermission() throws Exception {
+        doReturn(PackageManager.PERMISSION_DENIED).when(mContext)
+                .checkCallingOrSelfPermission(eq(android.Manifest.permission.NETWORK_STACK));
+        doReturn(PackageManager.PERMISSION_DENIED).when(mContext)
+                .checkCallingOrSelfPermission(eq(NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK));
         mWifiServiceImpl.setCountryCode(TEST_COUNTRY_CODE);
         verify(mWifiCountryCode, never()).setCountryCode(TEST_COUNTRY_CODE);
     }
