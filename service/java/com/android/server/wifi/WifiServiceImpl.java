@@ -55,6 +55,7 @@ import android.database.ContentObserver;
 import android.net.DhcpInfo;
 import android.net.DhcpResults;
 import android.net.Network;
+import android.net.NetworkStack;
 import android.net.NetworkUtils;
 import android.net.Uri;
 import android.net.ip.IpClientUtil;
@@ -673,7 +674,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
     @Override
     public String getCurrentNetworkWpsNfcConfigurationToken() {
         // while CLs are in flight, return null here, will be removed (b/72423090)
-        enforceConnectivityInternalPermission();
+        NetworkStack.checkNetworkStackPermission(mContext);
         if (mVerboseLoggingEnabled) {
             mLog.info("getCurrentNetworkWpsNfcConfigurationToken uid=%")
                     .c(Binder.getCallingUid()).flush();
@@ -713,11 +714,6 @@ public class WifiServiceImpl extends IWifiManager.Stub {
 
     private void enforceNetworkSettingsPermission() {
         mContext.enforceCallingOrSelfPermission(android.Manifest.permission.NETWORK_SETTINGS,
-                "WifiService");
-    }
-
-    private void enforceNetworkStackPermission() {
-        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.NETWORK_STACK,
                 "WifiService");
     }
 
@@ -766,12 +762,6 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         mContext.enforceCallingOrSelfPermission(
                 android.Manifest.permission.CHANGE_WIFI_MULTICAST_STATE,
                 "WifiService");
-    }
-
-    private void enforceConnectivityInternalPermission() {
-        mContext.enforceCallingOrSelfPermission(
-                android.Manifest.permission.CONNECTIVITY_INTERNAL,
-                "ConnectivityService");
     }
 
     private void enforceLocationPermission(String pkgName, int uid) {
@@ -925,7 +915,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
     @Override
     public void updateInterfaceIpState(String ifaceName, int mode) {
         // NETWORK_STACK is a signature only permission.
-        enforceNetworkStackPermission();
+        NetworkStack.checkNetworkStackPermission(mContext);
         mLog.info("updateInterfaceIpState uid=%").c(Binder.getCallingUid()).flush();
 
         // hand off the work to our handler thread
@@ -1003,7 +993,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
     @Override
     public boolean startSoftAp(WifiConfiguration wifiConfig) {
         // NETWORK_STACK is a signature only permission.
-        enforceNetworkStackPermission();
+        NetworkStack.checkNetworkStackPermission(mContext);
 
         mLog.info("startSoftAp uid=%").c(Binder.getCallingUid()).flush();
 
@@ -1043,7 +1033,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
     @Override
     public boolean stopSoftAp() {
         // NETWORK_STACK is a signature only permission.
-        enforceNetworkStackPermission();
+        NetworkStack.checkNetworkStackPermission(mContext);
 
         // only permitted callers are allowed to this point - they must have gone through
         // connectivity service since this method is protected with the NETWORK_STACK PERMISSION
@@ -2172,7 +2162,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
     @Override
     public void setCountryCode(String countryCode) {
         Slog.i(TAG, "WifiService trying to set country code to " + countryCode);
-        enforceConnectivityInternalPermission();
+        NetworkStack.checkNetworkStackPermission(mContext);
         mLog.info("setCountryCode uid=%").c(Binder.getCallingUid()).flush();
         final long token = Binder.clearCallingIdentity();
         mCountryCode.setCountryCode(countryCode);
@@ -2187,7 +2177,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
      */
     @Override
     public String getCountryCode() {
-        enforceConnectivityInternalPermission();
+        NetworkStack.checkNetworkStackPermission(mContext);
         if (mVerboseLoggingEnabled) {
             mLog.info("getCountryCode uid=%").c(Binder.getCallingUid()).flush();
         }
@@ -2669,7 +2659,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
 
     @Override
     public void factoryReset(String packageName) {
-        enforceConnectivityInternalPermission();
+        NetworkStack.checkNetworkStackPermission(mContext);
         if (enforceChangePermission(packageName) != MODE_ALLOWED) {
             return;
         }
@@ -2732,7 +2722,7 @@ public class WifiServiceImpl extends IWifiManager.Stub {
      */
     @Override
     public void enableWifiConnectivityManager(boolean enabled) {
-        enforceConnectivityInternalPermission();
+        NetworkStack.checkNetworkStackPermission(mContext);
         mLog.info("enableWifiConnectivityManager uid=% enabled=%")
                 .c(Binder.getCallingUid())
                 .c(enabled).flush();
