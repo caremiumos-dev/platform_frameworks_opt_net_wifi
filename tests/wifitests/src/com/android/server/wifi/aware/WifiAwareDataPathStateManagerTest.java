@@ -178,7 +178,7 @@ public class WifiAwareDataPathStateManagerTest {
         when(mMockPowerManager.isDeviceIdleMode()).thenReturn(false);
         when(mMockPowerManager.isInteractive()).thenReturn(true);
 
-        when(mPermissionsWrapperMock.getUidPermission(eq(Manifest.permission.CONNECTIVITY_INTERNAL),
+        when(mPermissionsWrapperMock.getUidPermission(eq(Manifest.permission.NETWORK_STACK),
                 anyInt())).thenReturn(PackageManager.PERMISSION_GRANTED);
 
         mDut.mDataPathMgr.mNwService = mMockNwMgt;
@@ -287,7 +287,7 @@ public class WifiAwareDataPathStateManagerTest {
         InOrder inOrder = inOrder(mMockNative, mMockCm, mMockCallback, mMockSessionCallback);
         InOrder inOrderM = inOrder(mAwareMetricsMock);
 
-        when(mPermissionsWrapperMock.getUidPermission(eq(Manifest.permission.CONNECTIVITY_INTERNAL),
+        when(mPermissionsWrapperMock.getUidPermission(eq(Manifest.permission.NETWORK_STACK),
                 anyInt())).thenReturn(PackageManager.PERMISSION_DENIED);
 
         // (0) initialize
@@ -1315,7 +1315,7 @@ public class WifiAwareDataPathStateManagerTest {
 
         if (!providePmk) {
             when(mPermissionsWrapperMock.getUidPermission(
-                    eq(Manifest.permission.CONNECTIVITY_INTERNAL), anyInt())).thenReturn(
+                    eq(Manifest.permission.NETWORK_STACK), anyInt())).thenReturn(
                     PackageManager.PERMISSION_DENIED);
         }
 
@@ -1477,7 +1477,7 @@ public class WifiAwareDataPathStateManagerTest {
 
         if (providePmk) {
             when(mPermissionsWrapperMock.getUidPermission(
-                    eq(Manifest.permission.CONNECTIVITY_INTERNAL), anyInt())).thenReturn(
+                    eq(Manifest.permission.NETWORK_STACK), anyInt())).thenReturn(
                     PackageManager.PERMISSION_GRANTED);
         }
 
