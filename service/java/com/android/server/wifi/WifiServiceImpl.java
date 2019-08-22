@@ -687,7 +687,7 @@ public class WifiServiceImpl extends BaseWifiService {
     @Override
     public String getCurrentNetworkWpsNfcConfigurationToken() {
         // while CLs are in flight, return null here, will be removed (b/72423090)
-        enforceConnectivityInternalPermission();
+        enforceNetworkStackPermission();
         if (mVerboseLoggingEnabled) {
             mLog.info("getCurrentNetworkWpsNfcConfigurationToken uid=%")
                     .c(Binder.getCallingUid()).flush();
@@ -981,7 +981,7 @@ public class WifiServiceImpl extends BaseWifiService {
     @Override
     public void updateInterfaceIpState(String ifaceName, int mode) {
         // NETWORK_STACK is a signature only permission.
-        enforceNetworkStackPermission();
+        NetworkStack.checkNetworkStackPermission(mContext);
         mLog.info("updateInterfaceIpState uid=%").c(Binder.getCallingUid()).flush();
 
         // hand off the work to our handler thread
@@ -2955,7 +2955,7 @@ public class WifiServiceImpl extends BaseWifiService {
 
     @Override
     public void factoryReset(String packageName) {
-        enforceConnectivityInternalPermission();
+        enforceNetworkSettingsPermission();
         if (enforceChangePermission(packageName) != MODE_ALLOWED) {
             return;
         }
@@ -3047,7 +3047,7 @@ public class WifiServiceImpl extends BaseWifiService {
      */
     @Override
     public void enableWifiConnectivityManager(boolean enabled) {
-        enforceConnectivityInternalPermission();
+        enforceNetworkSettingsPermission();
         mLog.info("enableWifiConnectivityManager uid=% enabled=%")
                 .c(Binder.getCallingUid())
                 .c(enabled).flush();
