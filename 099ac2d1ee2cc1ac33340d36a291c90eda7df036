@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "095f22cf_f135d31d",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-09-03T13:09:13Z",
+      "side": 1,
+      "message": "You should able to replace with \nNetworkStack.checkNetworkStackPermissionOr(mContext,android.Manifest.permission.LOCATION_HARDWARE)\n\nAnd remove checkNetworkStackPermission() and checkLocationHardwarePermission() if no other place needs them.",
+      "range": {
+        "startLine": 439,
+        "startChar": 8,
+        "endLine": 442,
+        "endChar": 9
+      },
+      "revId": "099ac2d1ee2cc1ac33340d36a291c90eda7df036",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
