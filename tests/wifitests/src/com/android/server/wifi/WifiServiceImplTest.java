@@ -3124,29 +3124,6 @@ public class WifiServiceImplTest {
                 WifiManager.RSSI_PKTCNT_FETCH, new Object());
     }
 
-    /**
-     * Verify that setCountryCode() calls WifiCountryCode object on succeess.
-     */
-    @Test
-    public void testSetCountryCode() throws Exception {
-        mWifiServiceImpl.setCountryCode(TEST_COUNTRY_CODE);
-        verify(mWifiCountryCode).setCountryCode(TEST_COUNTRY_CODE);
-    }
-
-    /**
-     * Verify that setCountryCode() fails and doesn't call WifiCountryCode object
-     * if the caller doesn't have NETWORK_STACK permission.
-     */
-    @Test(expected = SecurityException.class)
-    public void testSetCountryCodeFailsWithoutNetworkStackPermission() throws Exception {
-        when(mContext.checkCallingOrSelfPermission(android.Manifest.permission.NETWORK_STACK))
-                .thenReturn(PackageManager.PERMISSION_DENIED);
-        doThrow(new SecurityException()).when(mContext).enforceCallingOrSelfPermission(
-                eq(NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK), any());
-        mWifiServiceImpl.setCountryCode(TEST_COUNTRY_CODE);
-        verify(mWifiCountryCode, never()).setCountryCode(TEST_COUNTRY_CODE);
-    }
-
     private void setupClientModeImplHandlerForPost() {
         when(mWifiInjector.getClientModeImplHandler()).thenReturn(mHandler);
     }
