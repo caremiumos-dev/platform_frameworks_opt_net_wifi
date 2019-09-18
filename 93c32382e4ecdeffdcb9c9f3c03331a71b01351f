@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0318ada9_dd122411",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2662,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-18T12:10:47Z",
+      "side": 1,
+      "message": "Welp, I checked and Settings holds NETWORK_SETTINGS which is signature only. So it could hold NETWORK_STACK, but I think it\u0027s better to protect this with NETWORK_SETTINGS.",
+      "parentUuid": "8c2839bb_c1e03387",
+      "range": {
+        "startLine": 2662,
+        "startChar": 21,
+        "endLine": 2662,
+        "endChar": 48
+      },
+      "revId": "93c32382e4ecdeffdcb9c9f3c03331a71b01351f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cd5f8eb_4dca45b6",
         "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2019-09-18T12:04:32Z",
       "side": 1,
       "message": "Likewise. Happy with this if it works, but maybe WRITE_SECURE_SETTINGS if it doesn\u0027t.",
+      "range": {
+        "startLine": 2725,
+        "startChar": 21,
+        "endLine": 2725,
+        "endChar": 48
+      },
+      "revId": "93c32382e4ecdeffdcb9c9f3c03331a71b01351f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca3167f1_6ffd442e",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2725,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-18T12:10:47Z",
+      "side": 1,
+      "message": "Likewise, NETWORK_SETTINGS ?",
+      "parentUuid": "5cd5f8eb_4dca45b6",
       "range": {
         "startLine": 2725,
         "startChar": 21,
