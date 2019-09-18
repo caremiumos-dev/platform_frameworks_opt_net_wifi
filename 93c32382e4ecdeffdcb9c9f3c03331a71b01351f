@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c2839bb_c1e03387",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2662,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-18T12:04:32Z",
+      "side": 1,
+      "message": "I think this is actually coming from Settings, which presumably does not have the NETWORK_STACK permission. Can you check this works ?\n\nIf it doesn\u0027t then presumably the right permission is WRITE_SECURE_SETTINGS.",
+      "range": {
+        "startLine": 2662,
+        "startChar": 21,
+        "endLine": 2662,
+        "endChar": 48
+      },
+      "revId": "93c32382e4ecdeffdcb9c9f3c03331a71b01351f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cd5f8eb_4dca45b6",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2725,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-18T12:04:32Z",
+      "side": 1,
+      "message": "Likewise. Happy with this if it works, but maybe WRITE_SECURE_SETTINGS if it doesn\u0027t.",
+      "range": {
+        "startLine": 2725,
+        "startChar": 21,
+        "endLine": 2725,
+        "endChar": 48
+      },
+      "revId": "93c32382e4ecdeffdcb9c9f3c03331a71b01351f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
