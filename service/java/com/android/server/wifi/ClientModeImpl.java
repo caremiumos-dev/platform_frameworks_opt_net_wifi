@@ -56,6 +56,11 @@ import android.net.TcpKeepalivePacketData;
 import android.net.ip.IIpClient;
 import android.net.ip.IpClientCallbacks;
 import android.net.ip.IpClientManager;
+import android.net.netlink.NetlinkConstants;
+import android.net.netlink.NetlinkMessage;
+import android.net.netlink.NetlinkSocket;
+import android.net.netlink.RtNetlinkNeighborMessage;
+import android.net.netlink.StructNlMsgHdr;
 import android.net.shared.ProvisioningConfiguration;
 import android.net.wifi.INetworkRequestMatchCallback;
 import android.net.wifi.RssiPacketCountInfo;
@@ -86,6 +91,7 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.os.WorkSource;
 import android.provider.Settings;
+import android.system.ErrnoException;
 import android.system.OsConstants;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
@@ -126,10 +132,13 @@ import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InterruptedIOException;
 import java.io.PrintWriter;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.SocketException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -1277,8 +1286,13 @@ public class ClientModeImpl extends StateMachine {
         try {
             InetAddress gateway = RouteInfo.selectBestRoute(
                     mLinkProperties.getRoutes(), packetData.dstAddress).getGateway();
-            String dstMacStr = macAddressFromRoute(gateway.getHostAddress());
-            return NativeUtil.macAddressToByteArray(dstMacStr);
+            if (packetData.dstAddress instanceof Inet4Address) {
+                String dstMacStr = macAddressFromRoute(gateway.getHostAddress());
+                return NativeUtil.macAddressToByteArray(dstMacStr);
+            } else {
+                byte[] dstMacStr = macAddressFromRtNetlink(gateway.getHostAddress());
+                return dstMacStr;
+            }
         } catch (NullPointerException | IllegalArgumentException e) {
             throw new InvalidPacketException(SocketKeepalive.ERROR_INVALID_IP_ADDRESS);
         }
@@ -3312,6 +3326,54 @@ public class ClientModeImpl extends StateMachine {
         }
         return macAddress;
 
+    }
+
+    /**
+     * Read a MAC address by rtnetlink with type RTM_GETNEIGH,
+     */
+    private byte[] macAddressFromRtNetlink(String ipAddress) {
+        byte[] macAddress = null;
+        byte[] reqNlMsg = RtNetlinkNeighborMessage.newGetNeighborsRequest(1);
+        final long timeout = 500;
+
+        try {
+            final FileDescriptor fd = NetlinkSocket.forProto(OsConstants.NETLINK_ROUTE);
+            NetlinkSocket.connectToKernel(fd);
+            NetlinkSocket.sendMessage(fd, reqNlMsg, 0, reqNlMsg.length, timeout);
+
+            boolean done = false;
+            while (!done) {
+                ByteBuffer resNlMsg = NetlinkSocket.recvMessage(fd,
+                        NetlinkSocket.DEFAULT_RECV_BUFSIZE, timeout);
+                while (resNlMsg.remaining() > 0) {
+                    final NetlinkMessage msg = NetlinkMessage.parse(resNlMsg);
+                    final StructNlMsgHdr hdr = msg.getHeader();
+
+                    if (hdr.nlmsg_type == NetlinkConstants.NLMSG_DONE) {
+                        done = true;
+                        break;
+                    }
+
+                    if (msg instanceof RtNetlinkNeighborMessage) {
+                        final RtNetlinkNeighborMessage rtNlMsg = (RtNetlinkNeighborMessage) msg;
+
+                        if (ipAddress.equals((rtNlMsg.getDestination()).getHostAddress())) {
+                            macAddress = rtNlMsg.getLinkLayerAddress();
+                            done = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (macAddress == null) {
+                loge("Could not get remote address " + ipAddress + " by neighbor netlink message.");
+            }
+        } catch (ErrnoException | IllegalArgumentException | InterruptedIOException
+                | SocketException e) {
+            loge("Could not get MAC address by neighbor netlink message.");
+        }
+        return macAddress;
     }
 
     /**
