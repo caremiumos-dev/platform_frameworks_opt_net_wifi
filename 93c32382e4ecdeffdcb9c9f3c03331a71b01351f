@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d521ac1f_6ea19186",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2662,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-09-19T08:04:58Z",
+      "side": 1,
+      "message": "NETWORK_SETTINGS permission alreay checked on enforceChangePermission() below. I think we can just remove the enforceConnectivityInternalPermission() here.",
+      "parentUuid": "0318ada9_dd122411",
+      "range": {
+        "startLine": 2662,
+        "startChar": 21,
+        "endLine": 2662,
+        "endChar": 48
+      },
+      "revId": "93c32382e4ecdeffdcb9c9f3c03331a71b01351f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cd5f8eb_4dca45b6",
         "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
         "patchSetId": 2
@@ -93,6 +117,30 @@
       "revId": "93c32382e4ecdeffdcb9c9f3c03331a71b01351f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d5dbf2_2aabccb8",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2725,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-09-19T08:04:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ca3167f1_6ffd442e",
+      "range": {
+        "startLine": 2725,
+        "startChar": 21,
+        "endLine": 2725,
+        "endChar": 48
+      },
+      "revId": "93c32382e4ecdeffdcb9c9f3c03331a71b01351f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
