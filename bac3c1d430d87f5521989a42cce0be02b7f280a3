@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87901acb_5e1854fb",
+        "filename": "tests/wifitests/src/com/android/server/wifi/ClientModeImplTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2438,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-09-23T10:13:10Z",
+      "side": 1,
+      "message": "Nit: maybe not for this CL.\nCan this be replaced by \nexpectRegisterNetworkAgent()\nwith mNetworkAgentHandler.sendMessage(message) ?",
+      "range": {
+        "startLine": 2424,
+        "startChar": 8,
+        "endLine": 2438,
+        "endChar": 30
+      },
+      "revId": "bac3c1d430d87f5521989a42cce0be02b7f280a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
