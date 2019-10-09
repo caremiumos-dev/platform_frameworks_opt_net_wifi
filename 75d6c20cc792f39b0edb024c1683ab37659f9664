@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d1f89b1e_27e7271f",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-10-09T03:36:57Z",
+      "side": 1,
+      "message": "Seems only QCT modules will use this class. Suppose that should be no app to use this API due to it\u0027s hide API. Hence, I think it\u0027s fine to check networkstack permission here.",
+      "parentUuid": "74c82f05_a5e3dc72",
+      "range": {
+        "startLine": 654,
+        "startChar": 21,
+        "endLine": 654,
+        "endChar": 48
+      },
+      "revId": "75d6c20cc792f39b0edb024c1683ab37659f9664",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8cfe2edf_b2a6a2c8",
         "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareDataPathStateManagerTest.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "75d6c20cc792f39b0edb024c1683ab37659f9664",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a0750ae_95ea2171",
+        "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareDataPathStateManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-10-09T03:36:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cfe2edf_b2a6a2c8",
+      "range": {
+        "startLine": 182,
+        "startChar": 16,
+        "endLine": 182,
+        "endChar": 22
+      },
+      "revId": "75d6c20cc792f39b0edb024c1683ab37659f9664",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
