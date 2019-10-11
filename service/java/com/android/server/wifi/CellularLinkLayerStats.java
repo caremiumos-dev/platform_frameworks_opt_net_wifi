@@ -20,6 +20,8 @@ import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.telephony.TelephonyManager.NetworkType;
 
+import java.util.Objects;
+
 /**
  * A class representing the link layer statistics of the primary registered cell
  * of cellular network
@@ -71,6 +73,22 @@ public class CellularLinkLayerStats {
 
     public int getSignalStrengthDbm() {
         return mSignalStrengthDbm;
+    }
+
+    @Override
+    public boolean equals(Object rhs) {
+        if (!(rhs instanceof CellularLinkLayerStats)) return false;
+        CellularLinkLayerStats clls = (CellularLinkLayerStats) rhs;
+        return mIsSameRegisteredCell == clls.mIsSameRegisteredCell
+                && mSignalStrengthDbm == clls.mSignalStrengthDbm
+                && mSignalStrengthDb == clls.mSignalStrengthDb
+                && mDataNetworkType == clls.mDataNetworkType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                mIsSameRegisteredCell, mSignalStrengthDbm, mSignalStrengthDb, mDataNetworkType);
     }
 
     @Override
