@@ -46,6 +46,30 @@
       "revId": "c9b20bdb4245eb967a0fae57cd8481807b1cd56f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f784af8_f30580f4",
+        "filename": "tests/wifitests/src/com/android/server/wifi/ClientModeImplTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-10-16T02:28:10Z",
+      "side": 1,
+      "message": "nit1: maybe choose a non-trivial number?\nnit2: maybe name it with TEST_ prefix?",
+      "parentUuid": "afdfc98f_b3e7dc85",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 59
+      },
+      "revId": "c9b20bdb4245eb967a0fae57cd8481807b1cd56f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
