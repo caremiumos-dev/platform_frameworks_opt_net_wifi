@@ -1947,7 +1947,9 @@ public class WifiMetrics {
                 return;
         }
         if (logEvent) {
-            addStaEvent(event);
+            synchronized (mLock) {
+                addStaEvent(event);
+            }
         }
     }
     /**
@@ -2006,7 +2008,9 @@ public class WifiMetrics {
             event.frameworkDisconnectReason = frameworkDisconnectReason;
         }
         event.configInfo = createConfigInfo(config);
-        addStaEvent(event);
+        synchronized (mLock) {
+            addStaEvent(event);
+        }
     }
 
     private void addStaEvent(StaEvent staEvent) {
