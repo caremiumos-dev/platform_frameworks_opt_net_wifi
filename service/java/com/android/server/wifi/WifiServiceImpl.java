@@ -56,10 +56,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ParceledListSlice;
 import android.database.ContentObserver;
 import android.net.DhcpInfo;
-import android.net.DhcpResults;
 import android.net.Network;
 import android.net.NetworkStack;
-import android.net.NetworkUtils;
 import android.net.Uri;
 import android.net.ip.IpClientUtil;
 import android.net.wifi.IDppCallback;
@@ -125,8 +123,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.Inet4Address;
-import java.net.InetAddress;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.security.cert.CertPath;
@@ -2462,38 +2458,7 @@ public class WifiServiceImpl extends BaseWifiService {
         if (mVerboseLoggingEnabled) {
             mLog.info("getDhcpInfo uid=%").c(Binder.getCallingUid()).flush();
         }
-        DhcpResults dhcpResults = mClientModeImpl.syncGetDhcpResults();
-
-        DhcpInfo info = new DhcpInfo();
-
-        if (dhcpResults.ipAddress != null &&
-                dhcpResults.ipAddress.getAddress() instanceof Inet4Address) {
-            info.ipAddress = NetworkUtils.inetAddressToInt(
-                    (Inet4Address) dhcpResults.ipAddress.getAddress());
-        }
-
-        if (dhcpResults.gateway != null) {
-            info.gateway = NetworkUtils.inetAddressToInt((Inet4Address) dhcpResults.gateway);
-        }
-
-        int dnsFound = 0;
-        for (InetAddress dns : dhcpResults.dnsServers) {
-            if (dns instanceof Inet4Address) {
-                if (dnsFound == 0) {
-                    info.dns1 = NetworkUtils.inetAddressToInt((Inet4Address)dns);
-                } else {
-                    info.dns2 = NetworkUtils.inetAddressToInt((Inet4Address)dns);
-                }
-                if (++dnsFound > 1) break;
-            }
-        }
-        Inet4Address serverAddress = dhcpResults.serverAddress;
-        if (serverAddress != null) {
-            info.serverAddress = NetworkUtils.inetAddressToInt(serverAddress);
-        }
-        info.leaseDuration = dhcpResults.leaseDuration;
-
-        return info;
+        return mClientModeImpl.syncGetDhcpInfo();
     }
 
     /**

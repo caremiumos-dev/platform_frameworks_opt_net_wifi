@@ -29,12 +29,13 @@ import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
-import android.net.DhcpResults;
+import android.net.DhcpInfo;
 import android.net.InterfaceConfiguration;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.NetworkInfo;
 import android.net.NetworkUtils;
+import android.net.StaticIpConfiguration;
 import android.net.ip.IIpClient;
 import android.net.ip.IpClientCallbacks;
 import android.net.ip.IpClientUtil;
@@ -126,7 +127,7 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
     INetworkManagementService mNwService;
     private IIpClient mIpClient;
     private int mIpClientStartIndex = 0;
-    private DhcpResults mDhcpResults;
+    private DhcpInfo mDhcpInfo;
 
     private P2pStateMachine mP2pStateMachine;
     private AsyncChannel mReplyChannel = new WifiAsyncChannel(TAG);
@@ -513,7 +514,7 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
             }
             mIpClient = null;
         }
-        mDhcpResults = null;
+        mDhcpInfo = null;
     }
 
     private void startIpClient(String ifname, Handler smHandler) {
@@ -564,8 +565,8 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
             mP2pStateMachine.sendMessage(IPC_POST_DHCP_ACTION);
         }
         @Override
-        public void onNewDhcpResults(DhcpResults dhcpResults) {
-            mP2pStateMachine.sendMessage(IPC_DHCP_RESULTS, dhcpResults);
+        public void onNewDhcpInfo(DhcpInfo dhcpInfo) {
+            mP2pStateMachine.sendMessage(IPC_DHCP_RESULTS, dhcpInfo);
         }
         @Override
         public void onProvisioningSuccess(LinkProperties newLp) {
@@ -2654,19 +2655,24 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                         mWifiNative.setP2pPowerSave(mGroup.getInterface(), true);
                         break;
                     case IPC_DHCP_RESULTS:
-                        mDhcpResults = (DhcpResults) message.obj;
+                        mDhcpInfo = (DhcpInfo) message.obj;
                         break;
                     case IPC_PROVISIONING_SUCCESS:
-                        if (mVerboseLoggingEnabled) logd("mDhcpResults: " + mDhcpResults);
-                        if (mDhcpResults != null) {
-                            setWifiP2pInfoOnGroupFormation(mDhcpResults.serverAddress);
+                        if (mVerboseLoggingEnabled) logd("mDhcpInfo: " + mDhcpInfo);
+                        if (mDhcpInfo != null) {
+                            setWifiP2pInfoOnGroupFormation(
+                                    NetworkUtils.intToInetAddress(mDhcpInfo.serverAddress));
                         }
                         sendP2pConnectionChangedBroadcast();
                         try {
                             final String ifname = mGroup.getInterface();
-                            if (mDhcpResults != null) {
+                            // This is the simplest way to get the routes,
+                            // but not really super clean.
+                            final StaticIpConfiguration config =
+                                    getStaticIpConfiguration(mDhcpInfo);
+                            if (mDhcpInfo != null) {
                                 mNwService.addInterfaceToLocalNetwork(
-                                        ifname, mDhcpResults.getRoutes(ifname));
+                                        ifname, config.getRoutes(ifname));
                             }
                         } catch (Exception e) {
                             loge("Failed to add iface to local network " + e);
@@ -4150,6 +4156,22 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                 clearServiceRequests(c.mMessenger);
             }
         }
+    }
+
+    private StaticIpConfiguration getStaticIpConfiguration(DhcpInfo info) {
+        final ArrayList<InetAddress> dnsServers = new ArrayList<>();
+
+        dnsServers.add(NetworkUtils.intToInetAddress(info.dns1));
+        dnsServers.add(NetworkUtils.intToInetAddress(info.dns2));
+
+        StaticIpConfiguration config = new StaticIpConfiguration.Builder()
+                .setIpAddress(new LinkAddress(
+                            NetworkUtils.intToInetAddress(info.ipAddress).getHostAddress()))
+                .setGateway(NetworkUtils.intToInetAddress(info.gateway))
+                .setDnsServers(dnsServers)
+                .setDomains(info.domains)
+                .build();
+        return config;
     }
 
     /**
