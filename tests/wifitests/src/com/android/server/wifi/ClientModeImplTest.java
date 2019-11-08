@@ -38,7 +38,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.hardware.wifi.supplicant.V1_0.ISupplicantStaIfaceCallback;
 import android.net.ConnectivityManager;
-import android.net.DhcpResults;
+import android.net.DhcpInfo;
+import android.net.InetAddresses;
 import android.net.LinkProperties;
 import android.net.MacAddress;
 import android.net.NetworkAgent;
@@ -48,6 +49,7 @@ import android.net.NetworkMisc;
 import android.net.NetworkSpecifier;
 import android.net.ip.IIpClient;
 import android.net.ip.IpClientCallbacks;
+import android.net.shared.Inet4AddressUtils;
 import android.net.wifi.ScanResult;
 import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiConfiguration;
@@ -120,6 +122,7 @@ import java.io.PrintWriter;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -306,13 +309,13 @@ public class ClientModeImplTest {
         return list;
     }
 
-    private void injectDhcpSuccess(DhcpResults dhcpResults) {
-        mIpClientCallback.onNewDhcpResults(dhcpResults);
+    private void injectDhcpSuccess(DhcpInfo dhcpInfo) {
+        mIpClientCallback.onNewDhcpInfo(dhcpInfo);
         mIpClientCallback.onProvisioningSuccess(new LinkProperties());
     }
 
     private void injectDhcpFailure() {
-        mIpClientCallback.onNewDhcpResults(null);
+        mIpClientCallback.onNewDhcpInfo(null);
         mIpClientCallback.onProvisioningFailure(new LinkProperties());
     }
 
@@ -1006,13 +1009,13 @@ public class ClientModeImplTest {
 
         assertEquals("ObtainingIpState", getCurrentState().getName());
 
-        DhcpResults dhcpResults = new DhcpResults();
-        dhcpResults.setGateway("1.2.3.4");
-        dhcpResults.setIpAddress("192.168.1.100", 0);
-        dhcpResults.addDns("8.8.8.8");
-        dhcpResults.setLeaseDuration(3600);
+        DhcpInfo dhcpInfo = new DhcpInfo();
+        dhcpInfo.ipAddress = addrStringToInt("192.168.1.100");
+        dhcpInfo.gateway = addrStringToInt("1.2.3.4");
+        dhcpInfo.dns1 = addrStringToInt("8.8.8.8");
+        dhcpInfo.leaseDuration = 3600;
 
-        injectDhcpSuccess(dhcpResults);
+        injectDhcpSuccess(dhcpInfo);
         mLooper.dispatchAll();
 
         WifiInfo wifiInfo = mCmi.getWifiInfo();
@@ -1029,6 +1032,11 @@ public class ClientModeImplTest {
         verify(mWifiStateTracker).updateState(eq(WifiStateTracker.CONNECTED));
         assertEquals("ConnectedState", getCurrentState().getName());
         verify(mWifiLockManager).updateWifiClientConnected(true);
+    }
+
+    private int addrStringToInt(String addrStr) {
+        return Inet4AddressUtils.inet4AddressToIntHTL(
+                (Inet4Address) InetAddresses.parseNumericAddress(addrStr));
     }
 
     /**
@@ -2010,13 +2018,13 @@ public class ClientModeImplTest {
 
         when(mWifiConfigManager.getConfiguredNetwork(FRAMEWORK_NETWORK_ID)).thenReturn(null);
 
-        DhcpResults dhcpResults = new DhcpResults();
-        dhcpResults.setGateway("1.2.3.4");
-        dhcpResults.setIpAddress("192.168.1.100", 0);
-        dhcpResults.addDns("8.8.8.8");
-        dhcpResults.setLeaseDuration(3600);
+        DhcpInfo dhcpInfo = new DhcpInfo();
+        dhcpInfo.ipAddress = addrStringToInt("192.168.1.100");
+        dhcpInfo.gateway = addrStringToInt("1.2.3.4");
+        dhcpInfo.dns1 = addrStringToInt("8.8.8.8");
+        dhcpInfo.leaseDuration = 3600;
 
-        injectDhcpSuccess(dhcpResults);
+        injectDhcpSuccess(dhcpInfo);
         mLooper.dispatchAll();
 
         assertEquals("DisconnectingState", getCurrentState().getName());
