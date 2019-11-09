@@ -616,6 +616,9 @@ public class RttServiceImplTest {
         mDut.startRanging(mockIbinder, mPackageName, worksourceRequest, request, mockCallback);
         mMockLooper.dispatchAll();
 
+        // verify metrics
+        verify(mockMetrics).recordRequest(eq(worksourceRequest), eq(request));
+
         // (2) verify that request issued to native
         verify(mockNative).rangeRequest(mIntCaptor.capture(), eq(request), eq(true));
         verifyWakeupSet(true, 0);
@@ -630,9 +633,6 @@ public class RttServiceImplTest {
         // (4) send results back from native
         mDut.onRangingResults(mIntCaptor.getValue(), results.first);
         mMockLooper.dispatchAll();
-
-        // verify metrics
-        verify(mockMetrics).recordRequest(eq(worksourceRequest), eq(request));
 
         verify(mockNative, atLeastOnce()).isReady();
         verifyNoMoreInteractions(mockNative, mockMetrics, mockCallback,
@@ -661,6 +661,9 @@ public class RttServiceImplTest {
         // (1) request ranging operation
         mDut.startRanging(mockIbinder, mPackageName, worksourceRequest, request, mockCallback);
         mMockLooper.dispatchAll();
+
+        // verify metrics
+        verify(mockMetrics).recordRequest(eq(worksourceRequest), eq(request));
 
         // (2) verify that request issued to native
         verify(mockNative).rangeRequest(mIntCaptor.capture(), eq(request), eq(true));
