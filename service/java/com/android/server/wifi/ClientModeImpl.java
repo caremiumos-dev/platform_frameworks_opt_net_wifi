@@ -16,6 +16,7 @@
 
 package com.android.server.wifi;
 
+import static android.net.InvalidPacketException.ERROR_INVALID_IP_ADDRESS;
 import static android.net.wifi.WifiManager.WIFI_STATE_DISABLED;
 import static android.net.wifi.WifiManager.WIFI_STATE_DISABLING;
 import static android.net.wifi.WifiManager.WIFI_STATE_ENABLED;
@@ -35,6 +36,7 @@ import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.net.ConnectivityManager;
 import android.net.DhcpResults;
+import android.net.InvalidPacketException;
 import android.net.IpConfiguration;
 import android.net.KeepalivePacketData;
 import android.net.LinkProperties;
@@ -50,7 +52,6 @@ import android.net.NetworkMisc;
 import android.net.NetworkUtils;
 import android.net.RouteInfo;
 import android.net.SocketKeepalive;
-import android.net.SocketKeepalive.InvalidPacketException;
 import android.net.StaticIpConfiguration;
 import android.net.TcpKeepalivePacketData;
 import android.net.ip.IIpClient;
@@ -1282,7 +1283,7 @@ public class ClientModeImpl extends StateMachine {
             String dstMacStr = macAddressFromRoute(gateway.getHostAddress());
             return NativeUtil.macAddressToByteArray(dstMacStr);
         } catch (NullPointerException | IllegalArgumentException e) {
-            throw new InvalidPacketException(SocketKeepalive.ERROR_INVALID_IP_ADDRESS);
+            throw new InvalidPacketException(ERROR_INVALID_IP_ADDRESS);
         }
     }
 
@@ -1293,7 +1294,7 @@ public class ClientModeImpl extends StateMachine {
         } else if (packetData.dstAddress instanceof Inet6Address) {
             return OsConstants.ETH_P_IPV6;
         } else {
-            throw new InvalidPacketException(SocketKeepalive.ERROR_INVALID_IP_ADDRESS);
+            throw new InvalidPacketException(ERROR_INVALID_IP_ADDRESS);
         }
     }
 
