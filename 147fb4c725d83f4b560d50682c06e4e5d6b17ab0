@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c52ac97_02641df0",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2453,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-25T07:40:46Z",
+      "side": 1,
+      "message": "Normally you just return mClientModeImpl.getSyncDhcpInfo.\n\nIf you really want to introduce a local make it final.",
+      "range": {
+        "startLine": 2452,
+        "startChar": 8,
+        "endLine": 2453,
+        "endChar": 24
+      },
+      "revId": "147fb4c725d83f4b560d50682c06e4e5d6b17ab0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23af8122_a58a9466",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2670,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-25T07:40:46Z",
+      "side": 1,
+      "message": "I don\u0027t think this configuration is really static. What you suggest works, but it\u0027s a bit heavy and it\u0027s not really proper. The additional processing is not really a problem (after all it\u0027s only on provisioning success, I doubt anyone can measure the difference) but maybe you can at least add a comment explaining this is the simplest way to get the routes, but not really super clean ?\n\nOr if you want to fix it for good, maybe you want to move some of the code in StaticIpConfiguration#getRoutes to a common place and call that from here with the values from the DhcpInfo object.",
+      "range": {
+        "startLine": 2669,
+        "startChar": 28,
+        "endLine": 2670,
+        "endChar": 72
+      },
+      "revId": "147fb4c725d83f4b560d50682c06e4e5d6b17ab0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
