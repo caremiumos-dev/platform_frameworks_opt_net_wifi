@@ -23,6 +23,8 @@ import android.hardware.wifi.V1_0.NanDataPathChannelCfg;
 import android.hardware.wifi.V1_0.NanStatusType;
 import android.hardware.wifi.V1_2.NanDataPathChannelInfo;
 import android.net.ConnectivityManager;
+import android.net.INetd;
+import android.net.InterfaceConfigurationParcel;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
@@ -44,11 +46,10 @@ import android.net.wifi.aware.WifiAwareUtils;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.INetworkManagementService;
 import android.os.Looper;
-import android.os.ServiceManager;
 import android.text.TextUtils;
 import android.util.ArrayMap;
+import android.util.ArraySet;
 import android.util.Log;
 import android.util.Pair;
 
@@ -118,7 +119,8 @@ public class WifiAwareDataPathStateManager {
     private Looper mLooper;
     private Handler mHandler;
     private WifiAwareNetworkFactory mNetworkFactory;
-    public INetworkManagementService mNwService;
+    //public INetworkManagementService mNwService;
+    public INetd mNetd;
 
     // internal debug flag to override API check
     /* package */ boolean mAllowNdpResponderFromAnyOverride = false;
@@ -161,8 +163,9 @@ public class WifiAwareDataPathStateManager {
         mNetworkFactory.setScoreFilter(NETWORK_FACTORY_SCORE_AVAIL);
         mNetworkFactory.register();
 
-        IBinder b = ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE);
-        mNwService = INetworkManagementService.Stub.asInterface(b);
+        //IBinder b = ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE);
+        //mNwService = INetworkManagementService.Stub.asInterface(b);
+        mNetd = INetd.Stub.asInterface((IBinder) mContext.getSystemService(Context.NETD_SERVICE));
     }
 
     private Map.Entry<WifiAwareNetworkSpecifier, AwareNetworkRequestInformation>
@@ -569,8 +572,15 @@ public class WifiAwareDataPathStateManager {
             boolean interfaceUsedByAnotherNdp = isInterfaceUpAndUsedByAnotherNdp(nnri);
             if (!interfaceUsedByAnotherNdp) {
                 try {
-                    mNwService.setInterfaceUp(nnri.interfaceName);
-                    mNwService.enableIpv6(nnri.interfaceName);
+                    final InterfaceConfigurationParcel ifcg =
+                            mNetd.interfaceGetCfg(nnri.interfaceName);
+                    ArraySet<String> interfaceFlags = new ArraySet<>();
+                    for (String flag : ifcg.flags) interfaceFlags.add(flag);
+                    interfaceFlags.remove(INetd.IF_STATE_DOWN);
+                    interfaceFlags.add(INetd.IF_STATE_UP);
+                    //mNwService.setInterfaceUp(nnri.interfaceName);
+                    //mNwService.enableIpv6(nnri.interfaceName);
+                    mNetd.interfaceSetEnableIPv6(nnri.interfaceName, true);
                 } catch (Exception e) { // NwService throws runtime exceptions for errors
                     Log.e(TAG, "onDataPathConfirm: ACCEPT nnri=" + nnri
                             + ": can't configure network - "
@@ -1071,7 +1081,13 @@ public class WifiAwareDataPathStateManager {
                 }
             } else {
                 try {
-                    mNwService.setInterfaceDown(nnri.interfaceName);
+                    final InterfaceConfigurationParcel ifcg =
+                            mNetd.interfaceGetCfg(nnri.interfaceName);
+                    ArraySet<String> interfaceFlags = new ArraySet<>();
+                    for (String flag : ifcg.flags) interfaceFlags.add(flag);
+                    interfaceFlags.remove(INetd.IF_STATE_UP);
+                    interfaceFlags.add(INetd.IF_STATE_DOWN);
+                     //mNwService.setInterfaceDown(nnri.interfaceName);
                 } catch (Exception e) { // NwService throws runtime exceptions for errors
                     Log.e(TAG, "tearDownInterfaceIfPossible: nnri=" + nnri
                             + ": can't bring interface down - " + e);

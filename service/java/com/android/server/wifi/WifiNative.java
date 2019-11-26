@@ -18,7 +18,8 @@ package com.android.server.wifi;
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
-import android.net.InterfaceConfiguration;
+import android.net.INetd;
+import android.net.InterfaceConfigurationParcel;
 import android.net.MacAddress;
 import android.net.TrafficStats;
 import android.net.apf.ApfCapabilities;
@@ -26,10 +27,10 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiScanner;
 import android.os.Handler;
-import android.os.INetworkManagementService;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.text.TextUtils;
+import android.util.ArraySet;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -77,7 +78,9 @@ public class WifiNative {
     private final WifiVendorHal mWifiVendorHal;
     private final WificondControl mWificondControl;
     private final WifiMonitor mWifiMonitor;
-    private final INetworkManagementService mNwManagementService;
+    private final INetd mNetd;
+    // TODO: remove
+    //private final INetworkManagementService mNwManagementService;
     private final PropertyService mPropertyService;
     private final WifiMetrics mWifiMetrics;
     private final Handler mHandler;
@@ -87,7 +90,8 @@ public class WifiNative {
     public WifiNative(WifiVendorHal vendorHal,
                       SupplicantStaIfaceHal staIfaceHal, HostapdHal hostapdHal,
                       WificondControl condControl, WifiMonitor wifiMonitor,
-                      INetworkManagementService nwService,
+                      //INetworkManagementService nwService,
+                      INetd netd,
                       PropertyService propertyService, WifiMetrics wifiMetrics,
                       Handler handler, Random random) {
         mWifiVendorHal = vendorHal;
@@ -95,7 +99,8 @@ public class WifiNative {
         mHostapdHal = hostapdHal;
         mWificondControl = condControl;
         mWifiMonitor = wifiMonitor;
-        mNwManagementService = nwService;
+        //mNwManagementService = nwService;
+        mNetd = netd;
         mPropertyService = propertyService;
         mWifiMetrics = wifiMetrics;
         mHandler = handler;
@@ -432,25 +437,31 @@ public class WifiNative {
 
     /** Helper method to register a network observer and return it */
     private boolean registerNetworkObserver(NetworkObserverInternal observer) {
-        if (observer == null) return false;
+/*
+      if (observer == null) return false;
         try {
-            mNwManagementService.registerObserver(observer);
+          // TODO
+          //  mNwManagementService.registerObserver(observer);
         } catch (RemoteException | IllegalStateException e) {
             Log.e(TAG, "Unable to register observer", e);
             return false;
         }
+*/
         return true;
     }
 
     /** Helper method to unregister a network observer */
     private boolean unregisterNetworkObserver(NetworkObserverInternal observer) {
+/*
         if (observer == null) return false;
         try {
-            mNwManagementService.unregisterObserver(observer);
+          // TODO
+          //  mNwManagementService.unregisterObserver(observer);
         } catch (RemoteException | IllegalStateException e) {
             Log.e(TAG, "Unable to unregister observer", e);
             return false;
         }
+*/
         return true;
     }
 
@@ -897,16 +908,20 @@ public class WifiNative {
             // IP addresses configured, and this affects
             // connectivity when supplicant starts up.
             // Ensure we have no IP addresses before a supplicant start.
-            mNwManagementService.clearInterfaceAddresses(ifaceName);
+
+            //mNwManagementService.clearInterfaceAddresses(ifaceName);
+            mNetd.interfaceClearAddrs(ifaceName);
 
             // Set privacy extensions
-            mNwManagementService.setInterfaceIpv6PrivacyExtensions(ifaceName, true);
+            //mNwManagementService.setInterfaceIpv6PrivacyExtensions(ifaceName, true);
+            mNetd.interfaceSetIPv6PrivacyExtensions(ifaceName, true);
 
             // IPv6 is enabled only as long as access point is connected since:
             // - IPv6 addresses and routes stick around after disconnection
             // - kernel is unaware when connected and fails to start IPv6 negotiation
             // - kernel can start autoconfiguration when 802.1x is not complete
-            mNwManagementService.disableIpv6(ifaceName);
+            //mNwManagementService.disableIpv6(ifaceName);
+            mNetd.interfaceSetEnableIPv6(ifaceName, false);
         } catch (RemoteException | IllegalStateException e) {
             Log.e(TAG, "Unable to change interface settings", e);
         }
@@ -1100,16 +1115,22 @@ public class WifiNative {
                 Log.e(TAG, "Trying to get iface state on invalid iface=" + ifaceName);
                 return false;
             }
-            InterfaceConfiguration config = null;
+            InterfaceConfigurationParcel config = null;
             try {
-                config = mNwManagementService.getInterfaceConfig(ifaceName);
+                //config = mNwManagementService.getInterfaceConfig(ifaceName);
+                config = mNetd.interfaceGetCfg(ifaceName);
             } catch (RemoteException | IllegalStateException e) {
                 Log.e(TAG, "Unable to get interface config", e);
             }
             if (config == null) {
                 return false;
             }
-            return config.isUp();
+
+            ArraySet<String> interfaceFlags = new ArraySet<>();
+            for (String flag : config.flags) interfaceFlags.add(flag);
+            boolean isUp = interfaceFlags.contains(INetd.IF_STATE_UP);
+            //return config.isUp();
+            return isUp;
         }
     }
 

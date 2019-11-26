@@ -23,6 +23,7 @@ import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.SystemSensorManager;
+import android.net.INetd;
 import android.net.IpMemoryStore;
 import android.net.NetworkCapabilities;
 import android.net.NetworkKey;
@@ -36,7 +37,6 @@ import android.os.BatteryStats;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
-import android.os.INetworkManagementService;
 import android.os.Looper;
 import android.os.ServiceManager;
 import android.os.SystemProperties;
@@ -142,7 +142,8 @@ public class WifiInjector {
     private final WifiStateTracker mWifiStateTracker;
     private final SelfRecovery mSelfRecovery;
     private final WakeupController mWakeupController;
-    private final INetworkManagementService mNwManagementService;
+    //private final INetworkManagementService mNwManagementService;
+    private final INetd mNetd;
     private final ScanRequestProxy mScanRequestProxy;
     private final SarManager mSarManager;
     private final BaseWifiDiagnostics mWifiDiagnostics;
@@ -214,11 +215,12 @@ public class WifiInjector {
         mWificondControl = new WificondControl(this, mWifiMonitor, mCarrierNetworkConfig,
                 (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE),
                 clientModeImplLooper, mClock);
-        mNwManagementService = INetworkManagementService.Stub.asInterface(
-                ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE));
+        //mNwManagementService = INetworkManagementService.Stub.asInterface(
+        //        ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE));
+        mNetd = INetd.Stub.asInterface((IBinder) mContext.getSystemService(Context.NETD_SERVICE));
         mWifiNative = new WifiNative(
                 mWifiVendorHal, mSupplicantStaIfaceHal, mHostapdHal, mWificondControl,
-                mWifiMonitor, mNwManagementService, mPropertyService, mWifiMetrics,
+                mWifiMonitor, mNetd, mPropertyService, mWifiMetrics,
                 new Handler(mWifiCoreHandlerThread.getLooper()), new Random());
         mWifiP2pMonitor = new WifiP2pMonitor(this);
         mSupplicantP2pIfaceHal = new SupplicantP2pIfaceHal(mWifiP2pMonitor);
