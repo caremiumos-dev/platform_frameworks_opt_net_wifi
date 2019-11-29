@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d303a42c_157a0926",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-11-29T13:42:57Z",
+      "side": 1,
+      "message": "you should add a Merged-In: line with the Change-Id of the original change from internal master.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 6
+      },
+      "revId": "352e96f272ef849fc6d773312fda5262e3ed8037",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
