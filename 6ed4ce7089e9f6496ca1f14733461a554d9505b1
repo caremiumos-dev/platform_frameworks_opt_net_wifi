@@ -22,6 +22,30 @@
       "revId": "6ed4ce7089e9f6496ca1f14733461a554d9505b1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37a3ce2b_abed3c47",
+        "filename": "service/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2019-12-03T13:22:56Z",
+      "side": 1,
+      "message": "Hmm, this is in fact a blind (and incorrect) copy-paste. Thank you for spotting it.\n\nRemoving it revealed another error: the path to frameworks/base/services/art-profile in Soong needs to be \"exported\" in order to access it in another package, so I had to add another (small) change in frameworks/base/.",
+      "parentUuid": "ea99fb8b_b5d1d3cb",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 6
+      },
+      "revId": "6ed4ce7089e9f6496ca1f14733461a554d9505b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
