@@ -1,0 +1,8 @@
+Code-Review+1: Nicolas Geoffray <ngeoffray@google.com>
+Code-Review+2: Etan Cohen <etancohen@google.com>
+Presubmit-Verified-1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Ulyana Trafimovich <skvadrik@google.com>
+Submitted-at: Wed, 04 Dec 2019 11:08:44 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/opt/net/wifi/+/1178272
+Project: platform/frameworks/opt/net/wifi
+Branch: refs/heads/master
