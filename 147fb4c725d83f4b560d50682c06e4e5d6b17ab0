@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "53f0a6db_7d996a9b",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2453,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-05T17:58:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c52ac97_02641df0",
+      "range": {
+        "startLine": 2452,
+        "startChar": 8,
+        "endLine": 2453,
+        "endChar": 24
+      },
+      "revId": "147fb4c725d83f4b560d50682c06e4e5d6b17ab0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23af8122_a58a9466",
         "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "147fb4c725d83f4b560d50682c06e4e5d6b17ab0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2211f4a3_18003adf",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2670,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-05T17:58:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23af8122_a58a9466",
+      "range": {
+        "startLine": 2669,
+        "startChar": 28,
+        "endLine": 2670,
+        "endChar": 72
+      },
+      "revId": "147fb4c725d83f4b560d50682c06e4e5d6b17ab0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
