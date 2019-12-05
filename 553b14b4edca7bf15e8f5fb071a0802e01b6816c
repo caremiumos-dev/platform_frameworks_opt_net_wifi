@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e19fade_15116cf3",
+        "filename": "service/java/com/android/server/wifi/ClientModeImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-05T14:53:25Z",
+      "side": 1,
+      "message": "Nit: because this is wifi code, it would probably be better not to have this static import, and instead import android.net.InvalidPacketException below.\n\nThen, in the code, you would do something like:\n\n    throw new InvalidPacketException(InvalidPacketException.ERROR_INVALID_IP_ADDRESS);\n\nThat might be easier for wifi folks to understand. But LGTM either way.",
+      "range": {
+        "startLine": 19,
+        "startChar": 26,
+        "endLine": 19,
+        "endChar": 73
+      },
+      "revId": "553b14b4edca7bf15e8f5fb071a0802e01b6816c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
