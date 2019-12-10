@@ -3032,7 +3032,6 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                     if (mVerboseLoggingEnabled) logd("Stop existing tethering and restart it");
                     mNwService.stopTethering();
                 }
-                mNwService.tetherInterface(intf);
                 mNwService.startTethering(tetheringDhcpRanges);
             } catch (Exception e) {
                 loge("Error configuring interface " + intf + ", :" + e);
