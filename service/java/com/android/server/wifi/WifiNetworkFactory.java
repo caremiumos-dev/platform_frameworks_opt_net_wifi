@@ -370,7 +370,7 @@ public class WifiNetworkFactory extends NetworkFactory {
         }
     }
 
-    public WifiNetworkFactory(Looper looper, Context context, NetworkCapabilities nc,
+    public WifiNetworkFactory(Context context, Looper looper, NetworkCapabilities nc,
                               ActivityManager activityManager, AlarmManager alarmManager,
                               AppOpsManager appOpsManager,
                               Clock clock, WifiInjector wifiInjector,
@@ -379,7 +379,7 @@ public class WifiNetworkFactory extends NetworkFactory {
                               WifiConfigStore configStore,
                               WifiPermissionsUtil wifiPermissionsUtil,
                               WifiMetrics wifiMetrics) {
-        super(looper, context, TAG, nc);
+        super(context, looper, TAG, nc);
         mContext = context;
         mActivityManager = activityManager;
         mAlarmManager = alarmManager;
@@ -582,7 +582,7 @@ public class WifiNetworkFactory extends NetworkFactory {
      * the incoming request.
      */
     @Override
-    protected void needNetworkFor(NetworkRequest networkRequest, int score) {
+    public void needNetworkFor(NetworkRequest networkRequest, int score) {
         NetworkSpecifier ns = networkRequest.networkCapabilities.getNetworkSpecifier();
         if (ns == null) {
             // Generic wifi request. Turn on auto-join if necessary.
@@ -620,7 +620,7 @@ public class WifiNetworkFactory extends NetworkFactory {
     }
 
     @Override
-    protected void releaseNetworkFor(NetworkRequest networkRequest) {
+    public void releaseNetworkFor(NetworkRequest networkRequest) {
         NetworkSpecifier ns = networkRequest.networkCapabilities.getNetworkSpecifier();
         if (ns == null) {
             // Generic wifi request. Turn off auto-join if necessary.

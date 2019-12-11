@@ -627,7 +627,7 @@ public class WifiInjector {
     public WifiNetworkFactory makeWifiNetworkFactory(
             NetworkCapabilities nc, WifiConnectivityManager wifiConnectivityManager) {
         return new WifiNetworkFactory(
-                mWifiCoreHandlerThread.getLooper(), mContext, nc,
+                mContext, mWifiCoreHandlerThread.getLooper(), nc,
                 (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE),
                 (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE),
                 (AppOpsManager) mContext.getSystemService(Context.APP_OPS_SERVICE),
@@ -650,7 +650,7 @@ public class WifiInjector {
     public UntrustedWifiNetworkFactory makeUntrustedWifiNetworkFactory(
             NetworkCapabilities nc, WifiConnectivityManager wifiConnectivityManager) {
         return new UntrustedWifiNetworkFactory(
-                mWifiCoreHandlerThread.getLooper(), mContext, nc, wifiConnectivityManager);
+                mContext, mWifiCoreHandlerThread.getLooper(), nc, wifiConnectivityManager);
     }
 
     /**

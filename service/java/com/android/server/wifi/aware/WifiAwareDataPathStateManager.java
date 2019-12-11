@@ -157,7 +157,7 @@ public class WifiAwareDataPathStateManager {
         sNetworkCapabilitiesFilter.setLinkDownstreamBandwidthKbps(NETWORK_FACTORY_BANDWIDTH_AVAIL);
         sNetworkCapabilitiesFilter.setSignalStrength(NETWORK_FACTORY_SIGNAL_STRENGTH_AVAIL);
 
-        mNetworkFactory = new WifiAwareNetworkFactory(looper, context, sNetworkCapabilitiesFilter);
+        mNetworkFactory = new WifiAwareNetworkFactory(context, looper, sNetworkCapabilitiesFilter);
         mNetworkFactory.setScoreFilter(NETWORK_FACTORY_SCORE_AVAIL);
         mNetworkFactory.register();
 
@@ -802,8 +802,8 @@ public class WifiAwareDataPathStateManager {
         // (NDP) is in the process of being terminated
         private boolean mWaitingForTermination = false;
 
-        WifiAwareNetworkFactory(Looper looper, Context context, NetworkCapabilities filter) {
-            super(looper, context, NETWORK_TAG, filter);
+        WifiAwareNetworkFactory(Context context, Looper looper, NetworkCapabilities filter) {
+            super(context, looper, NETWORK_TAG, filter);
         }
 
         public void tickleConnectivityIfWaiting() {
@@ -899,7 +899,7 @@ public class WifiAwareDataPathStateManager {
         }
 
         @Override
-        protected void needNetworkFor(NetworkRequest networkRequest, int score) {
+        public void needNetworkFor(NetworkRequest networkRequest, int score) {
             if (VDBG) {
                 Log.v(TAG, "WifiAwareNetworkFactory.needNetworkFor: networkRequest="
                         + networkRequest + ", score=" + score);
@@ -952,7 +952,7 @@ public class WifiAwareDataPathStateManager {
         }
 
         @Override
-        protected void releaseNetworkFor(NetworkRequest networkRequest) {
+        public void releaseNetworkFor(NetworkRequest networkRequest) {
             if (VDBG) {
                 Log.v(TAG, "WifiAwareNetworkFactory.releaseNetworkFor: networkRequest="
                         + networkRequest);
