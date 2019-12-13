@@ -133,6 +133,12 @@ public class WifiAwareDataPathStateManagerTest {
     @Rule
     public ErrorCollector collector = new ErrorCollector();
 
+    enum SpecifierCorruptionType {
+        SPECIFIER_CORRUPTION_NONE,
+        SPECIFIER_CORRUPTION_UID,
+        SPECIFIER_CORRUPTION_ROLE
+    }
+
     /**
      * Initialize mocks.
      */
@@ -1182,26 +1188,10 @@ public class WifiAwareDataPathStateManagerTest {
         DataPathEndPointInfo res = initDataPathEndPoint(true, clientId, pubSubId, requestorId,
                 peerDiscoveryMac, inOrder, inOrderM, doPublish);
 
-        // (1) request network
-        NetworkRequest nr = getSessionNetworkRequest(clientId, res.mSessionId, res.mPeerHandle, pmk,
-                null, doPublish, 0);
-
-        // corrupt the network specifier: reverse the role (so it's mis-matched)
-        WifiAwareNetworkSpecifier ns =
-                (WifiAwareNetworkSpecifier) nr.networkCapabilities.getNetworkSpecifier();
-        ns = new WifiAwareNetworkSpecifier(
-                ns.type,
-                1 - ns.role, // corruption hack
-                ns.clientId,
-                ns.sessionId,
-                ns.peerId,
-                ns.peerMac,
-                ns.pmk,
-                ns.passphrase,
-                0,
-                0,
-                ns.requestorUid);
-        nr.networkCapabilities.setNetworkSpecifier(ns);
+        // (1) request network with a corrupt role (so it's mis-matched)
+        NetworkRequest nr = getSessionNetworkRequestEvenMore(clientId, res.mSessionId,
+                res.mPeerHandle, pmk, null, doPublish, 0 /* requestId */, 0 /* port */,
+                -1 /* transportProtocol */, SpecifierCorruptionType.SPECIFIER_CORRUPTION_ROLE);
 
         Message reqNetworkMsg = Message.obtain();
         reqNetworkMsg.what = NetworkFactory.CMD_REQUEST_NETWORK;
@@ -1241,28 +1231,12 @@ public class WifiAwareDataPathStateManagerTest {
         DataPathEndPointInfo res = initDataPathEndPoint(true, clientId, pubSubId, requestorId,
                 peerDiscoveryMac, inOrder, inOrderM, doPublish);
 
-        // (1) create network request
-        NetworkRequest nr = getSessionNetworkRequest(clientId, res.mSessionId, res.mPeerHandle, pmk,
-                null, doPublish, 0);
+        // (1) create network request with a corrupt UID
+        NetworkRequest nr = getSessionNetworkRequestEvenMore(clientId, res.mSessionId,
+                res.mPeerHandle, pmk, null, doPublish, 0 /* requestId */, 0 /* port */,
+                -1 /* transportProtocol */, SpecifierCorruptionType.SPECIFIER_CORRUPTION_UID);
 
-        // (2) corrupt request's UID
-        WifiAwareNetworkSpecifier ns =
-                (WifiAwareNetworkSpecifier) nr.networkCapabilities.getNetworkSpecifier();
-        ns = new WifiAwareNetworkSpecifier(
-                ns.type,
-                ns.role,
-                ns.clientId,
-                ns.sessionId,
-                ns.peerId,
-                ns.peerMac,
-                ns.pmk,
-                ns.passphrase,
-                0,
-                0,
-                ns.requestorUid + 1); // corruption hack
-        nr.networkCapabilities.setNetworkSpecifier(ns);
-
-        // (3) request network
+        // (2) request network
         Message reqNetworkMsg = Message.obtain();
         reqNetworkMsg.what = NetworkFactory.CMD_REQUEST_NETWORK;
         reqNetworkMsg.obj = nr;
@@ -1275,7 +1249,7 @@ public class WifiAwareDataPathStateManagerTest {
         //   Initiator (subscribe): doesn't initiate (i.e. no HAL requests)
         verifyUnfullfillableDispatched(res.mReverseMessenger);
         if (doPublish) {
-            // (2) get request & respond
+            // (3) get request & respond
             mDut.onDataPathRequestNotification(pubSubId, peerDiscoveryMac, ndpId, null);
             mMockLooper.dispatchAll();
             inOrder.verify(mMockNative).respondToDataPathRequest(anyShort(), eq(false),
@@ -1591,6 +1565,15 @@ public class WifiAwareDataPathStateManagerTest {
             PeerHandle peerHandle, byte[] pmk, String passphrase, boolean doPublish, int requestId,
             int port, int transportProtocol)
             throws Exception {
+        return getSessionNetworkRequestEvenMore(clientId, sessionId, peerHandle, pmk, passphrase,
+                doPublish, requestId, port, transportProtocol,
+                SpecifierCorruptionType.SPECIFIER_CORRUPTION_NONE);
+    }
+
+    private NetworkRequest getSessionNetworkRequestEvenMore(int clientId, int sessionId,
+            PeerHandle peerHandle, byte[] pmk, String passphrase, boolean doPublish, int requestId,
+            int port, int transportProtocol, SpecifierCorruptionType specifierCorruptionType)
+            throws Exception {
         final IWifiAwareManager mockAwareService = mock(IWifiAwareManager.class);
         final WifiAwareManager mgr = new WifiAwareManager(mMockContext, mockAwareService);
         final ConfigRequest configRequest = new ConfigRequest.Builder().build();
@@ -1640,7 +1623,7 @@ public class WifiAwareDataPathStateManagerTest {
                     (SubscribeDiscoverySession) discoverySession.capture());
         }
 
-        NetworkSpecifier ns;
+        WifiAwareNetworkSpecifier ns;
         if (pmk == null && passphrase == null) {
             ns = createNetworkSpecifier(clientId,
                     doPublish ? WifiAwareManager.WIFI_AWARE_DATA_PATH_ROLE_RESPONDER
@@ -1656,6 +1639,24 @@ public class WifiAwareDataPathStateManagerTest {
                     doPublish ? WifiAwareManager.WIFI_AWARE_DATA_PATH_ROLE_RESPONDER
                             : WifiAwareManager.WIFI_AWARE_DATA_PATH_ROLE_INITIATOR, sessionId,
                     peerHandle, null, passphrase, port, transportProtocol);
+        }
+        if (specifierCorruptionType != SpecifierCorruptionType.SPECIFIER_CORRUPTION_NONE) {
+            int role = specifierCorruptionType == SpecifierCorruptionType.SPECIFIER_CORRUPTION_ROLE
+                    ? 1 - ns.role : ns.role;
+            int uid = specifierCorruptionType == SpecifierCorruptionType.SPECIFIER_CORRUPTION_UID
+                    ? ns.requestorUid + 1 : ns.requestorUid;
+            ns = new WifiAwareNetworkSpecifier(
+                    ns.type,
+                    role,
+                    ns.clientId,
+                    ns.sessionId,
+                    ns.peerId,
+                    ns.peerMac,
+                    ns.pmk,
+                    ns.passphrase,
+                    0,
+                    0,
+                    uid);
         }
 
         NetworkCapabilities nc = new NetworkCapabilities();
@@ -1849,7 +1850,7 @@ public class WifiAwareDataPathStateManagerTest {
      * Copy of DiscoverySession.createNetworkSpecifier - but without any checks! Allows creating
      * network requests which may not be valid (e.g. for the API level).
      */
-    public NetworkSpecifier createNetworkSpecifier(int clientId, int role, int sessionId,
+    public WifiAwareNetworkSpecifier createNetworkSpecifier(int clientId, int role, int sessionId,
             PeerHandle peerHandle, byte[] pmk, String passphrase, int port, int transportProtocol) {
         return new WifiAwareNetworkSpecifier(
                 (peerHandle == null) ? WifiAwareNetworkSpecifier.NETWORK_SPECIFIER_TYPE_IB_ANY_PEER

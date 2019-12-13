@@ -835,8 +835,7 @@ public class WifiAwareDataPathStateManager {
                 return false;
             }
 
-            NetworkSpecifier networkSpecifierBase =
-                    request.networkCapabilities.getNetworkSpecifier();
+            NetworkSpecifier networkSpecifierBase = request.getNetworkSpecifier();
             if (!(networkSpecifierBase instanceof WifiAwareNetworkSpecifier)) {
                 Log.w(TAG, "WifiAwareNetworkFactory.acceptRequest: request=" + request
                         + " - not a WifiAwareNetworkSpecifier");
@@ -905,8 +904,7 @@ public class WifiAwareDataPathStateManager {
                         + networkRequest + ", score=" + score);
             }
 
-            NetworkSpecifier networkSpecifierObj =
-                    networkRequest.networkCapabilities.getNetworkSpecifier();
+            NetworkSpecifier networkSpecifierObj = networkRequest.getNetworkSpecifier();
             WifiAwareNetworkSpecifier networkSpecifier = null;
             if (networkSpecifierObj instanceof WifiAwareNetworkSpecifier) {
                 networkSpecifier = (WifiAwareNetworkSpecifier) networkSpecifierObj;
@@ -958,8 +956,7 @@ public class WifiAwareDataPathStateManager {
                         + networkRequest);
             }
 
-            NetworkSpecifier networkSpecifierObj =
-                    networkRequest.networkCapabilities.getNetworkSpecifier();
+            NetworkSpecifier networkSpecifierObj = networkRequest.getNetworkSpecifier();
             WifiAwareNetworkSpecifier networkSpecifier = null;
             if (networkSpecifierObj instanceof WifiAwareNetworkSpecifier) {
                 networkSpecifier = (WifiAwareNetworkSpecifier) networkSpecifierObj;
@@ -1218,7 +1215,7 @@ public class WifiAwareDataPathStateManager {
             NetworkCapabilities nc = new NetworkCapabilities(sNetworkCapabilitiesFilter);
             nc.setNetworkSpecifier(
                     new WifiAwareAgentNetworkSpecifier(equivalentRequests.stream().map(
-                            nr -> nr.networkCapabilities.getNetworkSpecifier()).collect(
+                            nr -> nr.getNetworkSpecifier()).collect(
                             Collectors.toList()).toArray(new WifiAwareNetworkSpecifier[0])));
             if (peerIpv6 != null) {
                 nc.setTransportInfo(
@@ -1526,7 +1523,7 @@ public class WifiAwareDataPathStateManager {
 
             networkCapabilities.setNetworkSpecifier(
                     new WifiAwareAgentNetworkSpecifier(networkRequests.stream().map(
-                            nr -> nr.networkCapabilities.getNetworkSpecifier()).collect(
+                            nr -> nr.getNetworkSpecifier()).collect(
                             Collectors.toList()).toArray(new WifiAwareNetworkSpecifier[0])));
 
             linkProperties.setInterfaceName(nnri.interfaceName);
