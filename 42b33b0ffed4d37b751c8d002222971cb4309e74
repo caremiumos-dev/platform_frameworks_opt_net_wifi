@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22e8b22c_44ec6abb",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-16T01:47:34Z",
+      "side": 1,
+      "message": "Let\u0027s not leave dead code in the codebase ; if this is not needed any more we should remove the method.",
+      "range": {
+        "startLine": 440,
+        "startChar": 0,
+        "endLine": 440,
+        "endChar": 2
+      },
+      "revId": "42b33b0ffed4d37b751c8d002222971cb4309e74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ab4715_6afe618a",
+        "filename": "service/java/com/android/server/wifi/WifiNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-16T01:47:34Z",
+      "side": 1,
+      "message": "Can\u0027t we just say something like\n\n  for (String flag : config.flags) {\n    if (INetd.IF_STATE_UP.equals(flag) return true;\n  }\n  return false;\n\nor even\n\n  import com.android.internal.util.ArrayUtils;\n\n  return ArrayUtils.contains(config.flags, INetd.IF_STATE_UP);\n\n? This will even !\u003d null for you.",
+      "range": {
+        "startLine": 1129,
+        "startChar": 12,
+        "endLine": 1131,
+        "endChar": 70
+      },
+      "revId": "42b33b0ffed4d37b751c8d002222971cb4309e74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46322f78_65d64308",
+        "filename": "service/java/com/android/server/wifi/aware/WifiAwareDataPathStateManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-16T01:47:34Z",
+      "side": 1,
+      "message": "Now that InterfaceController does this I think we should be using InterfaceController#setInterfaceConfiguration\n\nhttps://android-review.googlesource.com/c/platform/packages/modules/NetworkStack/+/1175311/6/common/moduleutils/src/android/net/ip/InterfaceController.java#57",
+      "range": {
+        "startLine": 575,
+        "startChar": 26,
+        "endLine": 575,
+        "endChar": 54
+      },
+      "revId": "42b33b0ffed4d37b751c8d002222971cb4309e74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
