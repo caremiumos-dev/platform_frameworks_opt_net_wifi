@@ -125,8 +125,8 @@ public class WifiAwareNativeManager {
                 mReferenceCount++;
                 return;
             }
-            if (mHalDeviceManager == null) {
-                Log.e(TAG, "tryToGetAware: mHalDeviceManager is null!?");
+            if (mHalDeviceManager == null || mHandler == null) {
+                Log.e(TAG, "tryToGetAware: mHalDeviceManager is null or mHandler is null!?");
                 awareIsDown();
                 return;
             }
