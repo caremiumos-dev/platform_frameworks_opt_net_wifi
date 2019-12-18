@@ -4026,8 +4026,13 @@ public class ClientModeImpl extends StateMachine {
                                 .DISABLED_AUTHENTICATION_NO_SUBSCRIPTION;
                         }
                     }
-                    mWifiConfigManager.updateNetworkSelectionStatus(
-                            mTargetNetworkId, disableReason);
+                    if (reasonCode == WifiManager.ERROR_AUTH_FAILURE_WRONG_PSWD) {
+                        mWifiConfigManager.updateNetworkSelectionStatus(
+                                mTargetNetworkId, disableReason, reasonCode);
+                    } else {
+                        mWifiConfigManager.updateNetworkSelectionStatus(
+                                mTargetNetworkId, disableReason);
+                    }
                     mWifiConfigManager.clearRecentFailureReason(mTargetNetworkId);
 
                     //If failure occurred while Metrics is tracking a ConnnectionEvent, end it.

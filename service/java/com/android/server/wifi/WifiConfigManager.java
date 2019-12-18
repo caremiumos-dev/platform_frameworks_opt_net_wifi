@@ -1577,6 +1577,42 @@ public class WifiConfigManager {
     }
 
     /**
+     * Update a network's status according to the update reason, resoncode and
+     * its current state.
+     *
+     * @param networkId network ID of the network that needs the update.
+     * @param reason reason code for update.
+     * @param reasonCode reasonCode for this reason
+     * @return true if the networkId corresponding config has been updated, false otherwise.
+     */
+    public boolean updateNetworkSelectionStatus(int networkId, int reason, int reasonCode) {
+        WifiConfiguration config = getInternalConfiguredNetwork(networkId);
+        if (config == null) {
+            return false;
+        }
+        NetworkSelectionStatus networkStatus = config.getNetworkSelectionStatus();
+        if (reason == NetworkSelectionStatus.DISABLED_AUTHENTICATION_FAILURE
+                && reasonCode == WifiManager.ERROR_AUTH_FAILURE_WRONG_PSWD) {
+            networkStatus.incrementDisableReasonCounter(reason);
+            // For network disable reasons, we should only update the status if we cross the
+            // threshold.
+            int disableReasonCounter = networkStatus.getDisableReasonCounter(reason);
+            int disableReasonThreshold = NETWORK_SELECTION_DISABLE_THRESHOLD[reason];
+            if (disableReasonCounter < disableReasonThreshold) {
+                if (mVerboseLoggingEnabled) {
+                    Log.v(TAG, "Disable counter for network " + config.getPrintableSsid()
+                            + " for reason "
+                            + NetworkSelectionStatus.getNetworkDisableReasonString(reason) + " is "
+                            + networkStatus.getDisableReasonCounter(reason) + " and threshold is "
+                            + disableReasonThreshold);
+                }
+                return true;
+            }
+        }
+        return setNetworkSelectionStatus(config, reason);
+    }
+
+    /**
      * Update a network's status (both internal and public) according to the update reason and
      * its current state.
      *
