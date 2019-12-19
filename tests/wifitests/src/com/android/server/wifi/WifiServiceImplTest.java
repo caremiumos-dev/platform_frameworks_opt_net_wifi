@@ -354,8 +354,7 @@ public class WifiServiceImplTest {
         when(mContext.getResources()).thenReturn(mResources);
         when(mContext.getContentResolver()).thenReturn(mContentResolver);
         when(mContext.getPackageManager()).thenReturn(mPackageManager);
-        when(mPackageManager.getApplicationInfoAsUser(any(), anyInt(), anyInt()))
-                .thenReturn(mApplicationInfo);
+        when(mPackageManager.getApplicationInfo(any(), anyInt())).thenReturn(mApplicationInfo);
         when(mWifiInjector.getWifiApConfigStore()).thenReturn(mWifiApConfigStore);
         doNothing().when(mFrameworkFacade).registerContentObserver(eq(mContext), any(),
                 anyBoolean(), any());
@@ -550,7 +549,7 @@ public class WifiServiceImplTest {
         doReturn(AppOpsManager.MODE_ALLOWED).when(mAppOpsManager)
                 .noteOp(AppOpsManager.OPSTR_CHANGE_WIFI_STATE, Process.myUid(), TEST_PACKAGE_NAME);
         when(mWifiPermissionsUtil.isTargetSdkLessThan(anyString(),
-                eq(Build.VERSION_CODES.Q), anyInt())).thenReturn(true);
+                eq(Build.VERSION_CODES.Q))).thenReturn(true);
         when(mSettingsStore.handleWifiToggled(anyBoolean())).thenReturn(true);
         when(mSettingsStore.isAirplaneModeOn()).thenReturn(false);
 
@@ -569,7 +568,7 @@ public class WifiServiceImplTest {
         doReturn(AppOpsManager.MODE_ALLOWED).when(mAppOpsManager)
                 .noteOp(AppOpsManager.OPSTR_CHANGE_WIFI_STATE, Process.myUid(), TEST_PACKAGE_NAME);
         when(mWifiPermissionsUtil.isTargetSdkLessThan(anyString(),
-                eq(Build.VERSION_CODES.Q), anyInt())).thenReturn(false);
+                eq(Build.VERSION_CODES.Q))).thenReturn(false);
         when(mSettingsStore.handleWifiToggled(eq(true))).thenReturn(true);
         when(mSettingsStore.isAirplaneModeOn()).thenReturn(false);
 
@@ -606,26 +605,6 @@ public class WifiServiceImplTest {
     }
 
     /**
-     * Verify that wifi can be enabled by the DO apps targeting Q SDK.
-     */
-    @Test
-    public void testSetWifiEnabledSuccessForDOAppsTargetingQSDK() throws Exception {
-        doReturn(AppOpsManager.MODE_ALLOWED).when(mAppOpsManager)
-                .noteOp(AppOpsManager.OPSTR_CHANGE_WIFI_STATE, Process.myUid(), TEST_PACKAGE_NAME);
-        when(mWifiPermissionsUtil.isTargetSdkLessThan(anyString(),
-                eq(Build.VERSION_CODES.Q), anyInt())).thenReturn(false);
-        when(mDevicePolicyManagerInternal.isActiveAdminWithPolicy(
-                Process.myUid(), DeviceAdminInfo.USES_POLICY_DEVICE_OWNER))
-                .thenReturn(true);
-
-        when(mSettingsStore.handleWifiToggled(eq(true))).thenReturn(true);
-        when(mSettingsStore.isAirplaneModeOn()).thenReturn(false);
-        assertTrue(mWifiServiceImpl.setWifiEnabled(TEST_PACKAGE_NAME, true));
-
-        verify(mWifiController).sendMessage(eq(CMD_WIFI_TOGGLED));
-    }
-
-    /**
      * Verify that wifi can be enabled by the system apps targeting Q SDK.
      */
     @Test
@@ -633,7 +612,7 @@ public class WifiServiceImplTest {
         doReturn(AppOpsManager.MODE_ALLOWED).when(mAppOpsManager)
                 .noteOp(AppOpsManager.OPSTR_CHANGE_WIFI_STATE, Process.myUid(), TEST_PACKAGE_NAME);
         when(mWifiPermissionsUtil.isTargetSdkLessThan(anyString(),
-                eq(Build.VERSION_CODES.Q), anyInt())).thenReturn(false);
+                eq(Build.VERSION_CODES.Q))).thenReturn(false);
         mApplicationInfo.flags = ApplicationInfo.FLAG_SYSTEM;
 
         when(mSettingsStore.handleWifiToggled(eq(true))).thenReturn(true);
@@ -651,27 +630,13 @@ public class WifiServiceImplTest {
         doReturn(AppOpsManager.MODE_ALLOWED).when(mAppOpsManager)
                 .noteOp(AppOpsManager.OPSTR_CHANGE_WIFI_STATE, Process.myUid(), TEST_PACKAGE_NAME);
         when(mWifiPermissionsUtil.isTargetSdkLessThan(anyString(),
-                eq(Build.VERSION_CODES.Q), anyInt())).thenReturn(true);
+                eq(Build.VERSION_CODES.Q))).thenReturn(true);
 
         when(mSettingsStore.handleWifiToggled(eq(true))).thenReturn(true);
         when(mSettingsStore.isAirplaneModeOn()).thenReturn(false);
         assertTrue(mWifiServiceImpl.setWifiEnabled(TEST_PACKAGE_NAME, true));
 
         verify(mWifiController).sendMessage(eq(CMD_WIFI_TOGGLED));
-    }
-
-    /**
-     * Verify that wifi is not enabled when wificontroller is not started.
-     */
-    @Test
-    public void testSetWifiEnabledFailureWhenInCryptDebounce() throws Exception {
-        when(mFrameworkFacade.inStorageManagerCryptKeeperBounce()).thenReturn(true);
-        when(mContext.checkPermission(eq(android.Manifest.permission.NETWORK_SETTINGS),
-                anyInt(), anyInt())).thenReturn(PackageManager.PERMISSION_GRANTED);
-        when(mSettingsStore.handleWifiToggled(eq(true))).thenReturn(true);
-        when(mSettingsStore.isAirplaneModeOn()).thenReturn(false);
-        assertFalse(mWifiServiceImpl.setWifiEnabled(TEST_PACKAGE_NAME, true));
-        verifyZeroInteractions(mWifiController);
     }
 
     /**
@@ -682,7 +647,7 @@ public class WifiServiceImplTest {
         doReturn(AppOpsManager.MODE_ALLOWED).when(mAppOpsManager)
                 .noteOp(AppOpsManager.OPSTR_CHANGE_WIFI_STATE, Process.myUid(), TEST_PACKAGE_NAME);
         when(mWifiPermissionsUtil.isTargetSdkLessThan(anyString(),
-                eq(Build.VERSION_CODES.Q), anyInt())).thenReturn(false);
+                eq(Build.VERSION_CODES.Q))).thenReturn(false);
 
         when(mSettingsStore.handleWifiToggled(eq(true))).thenReturn(true);
         when(mSettingsStore.isAirplaneModeOn()).thenReturn(false);
@@ -699,7 +664,7 @@ public class WifiServiceImplTest {
         doThrow(new SecurityException()).when(mAppOpsManager)
                 .noteOp(AppOpsManager.OPSTR_CHANGE_WIFI_STATE, Process.myUid(), TEST_PACKAGE_NAME);
         when(mWifiPermissionsUtil.isTargetSdkLessThan(anyString(),
-                eq(Build.VERSION_CODES.Q), anyInt())).thenReturn(true);
+                eq(Build.VERSION_CODES.Q))).thenReturn(true);
         when(mSettingsStore.handleWifiToggled(eq(true))).thenReturn(true);
         try {
             mWifiServiceImpl.setWifiEnabled(TEST_PACKAGE_NAME, true);
@@ -719,7 +684,7 @@ public class WifiServiceImplTest {
         doReturn(AppOpsManager.MODE_IGNORED).when(mAppOpsManager)
                 .noteOp(AppOpsManager.OPSTR_CHANGE_WIFI_STATE, Process.myUid(), TEST_PACKAGE_NAME);
         when(mWifiPermissionsUtil.isTargetSdkLessThan(anyString(),
-                eq(Build.VERSION_CODES.Q), anyInt())).thenReturn(true);
+                eq(Build.VERSION_CODES.Q))).thenReturn(true);
         when(mSettingsStore.handleWifiToggled(eq(true))).thenReturn(true);
 
         mWifiServiceImpl.setWifiEnabled(TEST_PACKAGE_NAME, true);
@@ -751,7 +716,7 @@ public class WifiServiceImplTest {
         doReturn(AppOpsManager.MODE_ALLOWED).when(mAppOpsManager)
                 .noteOp(AppOpsManager.OPSTR_CHANGE_WIFI_STATE, Process.myUid(), TEST_PACKAGE_NAME);
         when(mWifiPermissionsUtil.isTargetSdkLessThan(anyString(),
-                eq(Build.VERSION_CODES.Q), anyInt())).thenReturn(true);
+                eq(Build.VERSION_CODES.Q))).thenReturn(true);
         when(mSettingsStore.handleWifiToggled(eq(true))).thenReturn(true);
         when(mSettingsStore.isAirplaneModeOn()).thenReturn(true);
         when(mContext.checkPermission(
@@ -795,7 +760,7 @@ public class WifiServiceImplTest {
         doReturn(AppOpsManager.MODE_ALLOWED).when(mAppOpsManager)
                 .noteOp(AppOpsManager.OPSTR_CHANGE_WIFI_STATE, Process.myUid(), TEST_PACKAGE_NAME);
         when(mWifiPermissionsUtil.isTargetSdkLessThan(anyString(),
-                eq(Build.VERSION_CODES.Q), anyInt())).thenReturn(true);
+                eq(Build.VERSION_CODES.Q))).thenReturn(true);
         when(mSettingsStore.isWifiToggleEnabled()).thenReturn(false);
         mWifiServiceImpl.checkAndStartWifi();
 
@@ -870,26 +835,6 @@ public class WifiServiceImplTest {
     }
 
     /**
-     * Verify that wifi can be disabled by the PO apps targeting Q SDK.
-     */
-    @Test
-    public void testSetWifiDisabledSuccessForPOAppsTargetingQSDK() throws Exception {
-        doReturn(AppOpsManager.MODE_ALLOWED).when(mAppOpsManager)
-                .noteOp(AppOpsManager.OPSTR_CHANGE_WIFI_STATE, Process.myUid(), TEST_PACKAGE_NAME);
-        when(mWifiPermissionsUtil.isTargetSdkLessThan(anyString(),
-                eq(Build.VERSION_CODES.Q), anyInt())).thenReturn(false);
-        when(mDevicePolicyManagerInternal.isActiveAdminWithPolicy(
-                Process.myUid(), DeviceAdminInfo.USES_POLICY_PROFILE_OWNER))
-                .thenReturn(true);
-
-        when(mSettingsStore.handleWifiToggled(eq(false))).thenReturn(true);
-        when(mSettingsStore.isAirplaneModeOn()).thenReturn(false);
-        assertTrue(mWifiServiceImpl.setWifiEnabled(TEST_PACKAGE_NAME, false));
-
-        verify(mWifiController).sendMessage(eq(CMD_WIFI_TOGGLED));
-    }
-
-    /**
      * Verify that wifi can be disabled by the system apps targeting Q SDK.
      */
     @Test
@@ -897,7 +842,7 @@ public class WifiServiceImplTest {
         doReturn(AppOpsManager.MODE_ALLOWED).when(mAppOpsManager)
                 .noteOp(AppOpsManager.OPSTR_CHANGE_WIFI_STATE, Process.myUid(), TEST_PACKAGE_NAME);
         when(mWifiPermissionsUtil.isTargetSdkLessThan(anyString(),
-                eq(Build.VERSION_CODES.Q), anyInt())).thenReturn(false);
+                eq(Build.VERSION_CODES.Q))).thenReturn(false);
         mApplicationInfo.flags = ApplicationInfo.FLAG_SYSTEM;
 
         when(mSettingsStore.handleWifiToggled(eq(false))).thenReturn(true);
@@ -916,27 +861,13 @@ public class WifiServiceImplTest {
         doReturn(AppOpsManager.MODE_ALLOWED).when(mAppOpsManager)
                 .noteOp(AppOpsManager.OPSTR_CHANGE_WIFI_STATE, Process.myUid(), TEST_PACKAGE_NAME);
         when(mWifiPermissionsUtil.isTargetSdkLessThan(anyString(),
-                eq(Build.VERSION_CODES.Q), anyInt())).thenReturn(true);
+                eq(Build.VERSION_CODES.Q))).thenReturn(true);
 
         when(mSettingsStore.handleWifiToggled(eq(false))).thenReturn(true);
         when(mSettingsStore.isAirplaneModeOn()).thenReturn(false);
         assertTrue(mWifiServiceImpl.setWifiEnabled(TEST_PACKAGE_NAME, false));
 
         verify(mWifiController).sendMessage(eq(CMD_WIFI_TOGGLED));
-    }
-
-    /**
-     * Verify that wifi is not disabled when wificontroller is not started.
-     */
-    @Test
-    public void testSetWifiDisabledFailureWhenInCryptDebounce() throws Exception {
-        when(mFrameworkFacade.inStorageManagerCryptKeeperBounce()).thenReturn(true);
-        when(mContext.checkPermission(eq(android.Manifest.permission.NETWORK_SETTINGS),
-                anyInt(), anyInt())).thenReturn(PackageManager.PERMISSION_GRANTED);
-        when(mSettingsStore.handleWifiToggled(eq(false))).thenReturn(false);
-        when(mSettingsStore.isAirplaneModeOn()).thenReturn(false);
-        assertFalse(mWifiServiceImpl.setWifiEnabled(TEST_PACKAGE_NAME, false));
-        verifyZeroInteractions(mWifiController);
     }
 
     /**
@@ -947,7 +878,7 @@ public class WifiServiceImplTest {
         doReturn(AppOpsManager.MODE_ALLOWED).when(mAppOpsManager)
                 .noteOp(AppOpsManager.OPSTR_CHANGE_WIFI_STATE, Process.myUid(), TEST_PACKAGE_NAME);
         when(mWifiPermissionsUtil.isTargetSdkLessThan(anyString(),
-                eq(Build.VERSION_CODES.Q), anyInt())).thenReturn(false);
+                eq(Build.VERSION_CODES.Q))).thenReturn(false);
 
         when(mSettingsStore.handleWifiToggled(eq(false))).thenReturn(true);
         when(mSettingsStore.isAirplaneModeOn()).thenReturn(false);
@@ -1196,19 +1127,6 @@ public class WifiServiceImplTest {
     }
 
     /**
-     * Verify does not start softap when wificontroller is not started.
-     */
-    @Test
-    public void testStartSoftApWhenInCryptDebounce() {
-        when(mFrameworkFacade.inStorageManagerCryptKeeperBounce()).thenReturn(true);
-
-        WifiConfiguration config = createValidSoftApConfiguration();
-        boolean result = mWifiServiceImpl.startSoftAp(config);
-        assertFalse(result);
-        verifyZeroInteractions(mWifiController);
-    }
-
-    /**
      * Verify a SecurityException is thrown when a caller without the correct permission attempts to
      * start softap.
      */
@@ -1230,18 +1148,6 @@ public class WifiServiceImplTest {
         assertTrue(result);
         verify(mWifiController).sendMessage(eq(CMD_SET_AP), eq(0),
                 eq(WifiManager.IFACE_IP_MODE_TETHERED));
-    }
-
-    /**
-     * Verify does not stop softap when wificontroller is not started.
-     */
-    @Test
-    public void testStopSoftApWhenInCryptDebounce() {
-        when(mFrameworkFacade.inStorageManagerCryptKeeperBounce()).thenReturn(true);
-
-        boolean result = mWifiServiceImpl.stopSoftAp();
-        assertFalse(result);
-        verifyZeroInteractions(mWifiController);
     }
 
     /**
@@ -1600,19 +1506,6 @@ public class WifiServiceImplTest {
     }
 
     /**
-     * Only start LocalOnlyHotspot if device is in crypt debounce mode.
-     */
-    @Test
-    public void testStartLocalOnlyHotspotFailsIfInCryptDebounce() throws Exception {
-        when(mWifiPermissionsUtil.isLocationModeEnabled()).thenReturn(true);
-        when(mFrameworkFacade.isAppForeground(anyInt())).thenReturn(true);
-        when(mFrameworkFacade.inStorageManagerCryptKeeperBounce()).thenReturn(true);
-        int result = mWifiServiceImpl.startLocalOnlyHotspot(mAppMessenger, mAppBinder,
-                TEST_PACKAGE_NAME);
-        assertEquals(LocalOnlyHotspotCallback.ERROR_INCOMPATIBLE_MODE, result);
-    }
-
-    /**
      * Only start LocalOnlyHotspot if we are not tethering.
      */
     @Test
@@ -1630,6 +1523,7 @@ public class WifiServiceImplTest {
 
         // Start another session without a stop, that should fail.
         assertFalse(mWifiServiceImpl.startSoftAp(createValidSoftApConfiguration()));
+
         verifyNoMoreInteractions(mWifiController);
     }
 
@@ -2676,9 +2570,9 @@ public class WifiServiceImplTest {
         PackageManager pm = mock(PackageManager.class);
         when(pm.hasSystemFeature(PackageManager.FEATURE_WIFI_PASSPOINT)).thenReturn(true);
         when(mContext.getPackageManager()).thenReturn(pm);
-        when(pm.getApplicationInfoAsUser(any(), anyInt(), anyInt())).thenReturn(mApplicationInfo);
+        when(pm.getApplicationInfo(any(), anyInt())).thenReturn(mApplicationInfo);
         when(mWifiPermissionsUtil.isTargetSdkLessThan(anyString(),
-                eq(Build.VERSION_CODES.Q), anyInt())).thenReturn(true);
+                eq(Build.VERSION_CODES.Q))).thenReturn(true);
 
         when(mClientModeImpl.syncAddOrUpdatePasspointConfig(any(),
                 any(PasspointConfiguration.class), anyInt(), eq(TEST_PACKAGE_NAME))).thenReturn(
@@ -2840,7 +2734,7 @@ public class WifiServiceImplTest {
         when(mWifiPermissionsUtil.checkNetworkSettingsPermission(anyInt())).thenReturn(false);
         when(mWifiPermissionsUtil.checkNetworkSetupWizardPermission(anyInt())).thenReturn(false);
         when(mWifiPermissionsUtil.isTargetSdkLessThan(eq(TEST_PACKAGE_NAME),
-                eq(Build.VERSION_CODES.Q), anyInt())).thenReturn(true);
+                eq(Build.VERSION_CODES.Q))).thenReturn(true);
 
         List<PasspointConfiguration> result = mWifiServiceImpl.getPasspointConfigurations(
                 TEST_PACKAGE_NAME);
@@ -2873,7 +2767,7 @@ public class WifiServiceImplTest {
         when(mWifiPermissionsUtil.checkNetworkCarrierProvisioningPermission(anyInt())).thenReturn(
                 false);
         when(mWifiPermissionsUtil.isTargetSdkLessThan(isNull(),
-                eq(Build.VERSION_CODES.Q), anyInt())).thenReturn(true);
+                eq(Build.VERSION_CODES.Q))).thenReturn(true);
 
         assertFalse(mWifiServiceImpl.removePasspointConfiguration(null, null));
     }
@@ -3751,7 +3645,7 @@ public class WifiServiceImplTest {
                 .noteOp(AppOpsManager.OPSTR_CHANGE_WIFI_STATE, Process.myUid(), TEST_PACKAGE_NAME);
         when(mClientModeImpl.syncAddOrUpdateNetwork(any(), any())).thenReturn(0);
         when(mWifiPermissionsUtil.isTargetSdkLessThan(anyString(),
-                eq(Build.VERSION_CODES.Q), anyInt())).thenReturn(true);
+                eq(Build.VERSION_CODES.Q))).thenReturn(true);
 
         WifiConfiguration config = WifiConfigurationTestUtil.createOpenNetwork();
         assertEquals(0, mWifiServiceImpl.addOrUpdateNetwork(config, TEST_PACKAGE_NAME));
@@ -3894,7 +3788,7 @@ public class WifiServiceImplTest {
         doReturn(AppOpsManager.MODE_ALLOWED).when(mAppOpsManager)
                 .noteOp(AppOpsManager.OPSTR_CHANGE_WIFI_STATE, Process.myUid(), TEST_PACKAGE_NAME);
         when(mWifiPermissionsUtil.isTargetSdkLessThan(anyString(),
-                eq(Build.VERSION_CODES.Q), anyInt())).thenReturn(true);
+                eq(Build.VERSION_CODES.Q))).thenReturn(true);
 
         mWifiServiceImpl.enableNetwork(TEST_NETWORK_ID, true, TEST_PACKAGE_NAME);
 

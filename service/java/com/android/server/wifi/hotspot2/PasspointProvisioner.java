@@ -366,7 +366,7 @@ public class PasspointProvisioner {
                 return;
             }
             if (!mOsuServerConnection.validateProvider(
-                    mOsuProvider.getFriendlyNameList())) {
+                    Locale.getDefault(), mOsuProvider.getFriendlyName())) {
                 Log.e(TAG,
                         "OSU Server certificate does not have the one matched with the selected "
                                 + "Service Name: "

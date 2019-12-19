@@ -124,11 +124,10 @@ public class WifiPermissionsUtil {
     /**
      * Checks whether than the target SDK of the package is less than the specified version code.
      */
-    public boolean isTargetSdkLessThan(String packageName, int versionCode, int callingUid) {
+    public boolean isTargetSdkLessThan(String packageName, int versionCode) {
         long ident = Binder.clearCallingIdentity();
         try {
-            if (mContext.getPackageManager().getApplicationInfoAsUser(
-                    packageName, 0, UserHandle.getUserId(callingUid)).targetSdkVersion
+            if (mContext.getPackageManager().getApplicationInfo(packageName, 0).targetSdkVersion
                     < versionCode) {
                 return true;
             }
@@ -154,7 +153,7 @@ public class WifiPermissionsUtil {
      */
     public boolean checkCallersLocationPermission(String pkgName, int uid,
             boolean coarseForTargetSdkLessThanQ) {
-        boolean isTargetSdkLessThanQ = isTargetSdkLessThan(pkgName, Build.VERSION_CODES.Q, uid);
+        boolean isTargetSdkLessThanQ = isTargetSdkLessThan(pkgName, Build.VERSION_CODES.Q);
 
         String permissionType = Manifest.permission.ACCESS_FINE_LOCATION;
         if (coarseForTargetSdkLessThanQ && isTargetSdkLessThanQ) {

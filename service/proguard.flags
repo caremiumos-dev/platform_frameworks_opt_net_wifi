@@ -1,2 +1,0 @@
-# Prevent proguard from stripping out any wifi-service classes.
--keep class com.android.server.wifi.** { *; }

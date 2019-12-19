@@ -916,14 +916,11 @@ public class WifiConnectivityManager {
         settings.reportEvents = WifiScanner.REPORT_EVENT_FULL_SCAN_RESULT
                             | WifiScanner.REPORT_EVENT_AFTER_EACH_SCAN;
         settings.numBssidsPerScan = 0;
-        // retrieve the list of hidden network SSIDs from saved network to scan for
+
         List<ScanSettings.HiddenNetwork> hiddenNetworkList =
-                new ArrayList<>(mConfigManager.retrieveHiddenNetworkList());
-        // retrieve the list of hidden network SSIDs from Network suggestion to scan for
-        hiddenNetworkList.addAll(
-                mWifiInjector.getWifiNetworkSuggestionsManager().retrieveHiddenNetworkList());
+                mConfigManager.retrieveHiddenNetworkList();
         settings.hiddenNetworks =
-                hiddenNetworkList.toArray(new ScanSettings.HiddenNetwork[0]);
+                hiddenNetworkList.toArray(new ScanSettings.HiddenNetwork[hiddenNetworkList.size()]);
 
         SingleScanListener singleScanListener =
                 new SingleScanListener(isFullBandScan);

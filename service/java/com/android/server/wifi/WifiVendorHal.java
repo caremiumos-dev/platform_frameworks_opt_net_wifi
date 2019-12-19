@@ -2884,7 +2884,6 @@ public class WifiVendorHal {
                 mLog.e("Unexpected number of iface info in list " + numIfacesOnEachRadio);
                 return;
             }
-            Runnable runnable = null;
             // 2 ifaces simultaneous on 2 radios.
             if (radioModeInfoList.size() == 2 && numIfacesOnEachRadio == 1) {
                 // Iface on radio0 should be different from the iface on radio1 for DBS & SBS.
@@ -2893,31 +2892,22 @@ public class WifiVendorHal {
                     return;
                 }
                 if (radioModeInfo0.bandInfo != radioModeInfo1.bandInfo) {
-                    runnable = () -> {
-                        handler.onDbs();
-                    };
+                    handler.onDbs();
                 } else {
-                    runnable = () -> {
-                        handler.onSbs(radioModeInfo0.bandInfo);
-                    };
+                    handler.onSbs(radioModeInfo0.bandInfo);
                 }
             // 2 ifaces time sharing on 1 radio.
             } else if (radioModeInfoList.size() == 1 && numIfacesOnEachRadio == 2) {
                 IfaceInfo ifaceInfo0 = radioModeInfo0.ifaceInfos.get(0);
                 IfaceInfo ifaceInfo1 = radioModeInfo0.ifaceInfos.get(1);
                 if (ifaceInfo0.channel != ifaceInfo1.channel) {
-                    runnable = () -> {
-                        handler.onMcc(radioModeInfo0.bandInfo);
-                    };
+                    handler.onMcc(radioModeInfo0.bandInfo);
                 } else {
-                    runnable = () -> {
-                        handler.onScc(radioModeInfo0.bandInfo);
-                    };
+                    handler.onScc(radioModeInfo0.bandInfo);
                 }
             } else {
                 // Not concurrency scenario, uninteresting...
             }
-            if (runnable != null) mHalEventHandler.post(runnable);
         }
     }
 

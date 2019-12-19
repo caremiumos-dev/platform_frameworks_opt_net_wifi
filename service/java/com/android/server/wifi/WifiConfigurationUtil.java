@@ -602,14 +602,12 @@ public class WifiConfigurationUtil {
         if (config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.OWE)) {
             // PMF mandatory for OWE networks
             if (!config.requirePMF) {
-                Log.e(TAG, "PMF must be enabled for OWE networks");
                 return false;
             }
         }
         if (config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.SAE)) {
             // PMF mandatory for WPA3-Personal networks
             if (!config.requirePMF) {
-                Log.e(TAG, "PMF must be enabled for SAE networks");
                 return false;
             }
             if (!validatePassword(config.preSharedKey, isAdd, true)) {
@@ -619,7 +617,6 @@ public class WifiConfigurationUtil {
         if (config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.SUITE_B_192)) {
             // PMF mandatory for WPA3-Enterprise networks
             if (!config.requirePMF) {
-                Log.e(TAG, "PMF must be enabled for Suite-B 192-bit networks");
                 return false;
             }
         }
