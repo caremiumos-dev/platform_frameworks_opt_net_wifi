@@ -5354,6 +5354,15 @@ public class ClientModeImpl extends StateMachine {
                     mIpClient.setTcpBufferSizes(mTcpBufferSizes);
                 }
             }
+
+            WifiConfiguration config = getCurrentWifiConfiguration();
+            ScanDetailCache scanDetailCache =
+                    mWifiConfigManager.getScanDetailCacheForNetwork(config.networkId);
+            ScanResult scanResult = null;
+            if (scanDetailCache != null && mLastBssid != null) {
+                scanResult = scanDetailCache.getScanResult(mLastBssid);
+            }
+
             final ProvisioningConfiguration prov;
             if (!isUsingStaticIp) {
                 prov = new ProvisioningConfiguration.Builder()
@@ -5362,6 +5371,7 @@ public class ClientModeImpl extends StateMachine {
                             .withNetwork(getCurrentNetwork())
                             .withDisplayName(currentConfig.SSID)
                             .withRandomMacAddress()
+                            .withScanResult(scanResult)
                             .build();
             } else {
                 StaticIpConfiguration staticIpConfig = currentConfig.getStaticIpConfiguration();
