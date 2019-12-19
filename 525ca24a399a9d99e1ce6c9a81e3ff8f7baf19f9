@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03e7dd6e_9af9adc7",
+        "filename": "service/java/com/android/server/wifi/ClientModeImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3171,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-19T15:31:32Z",
+      "side": 1,
+      "message": "Inet4AddressUtils.intToInet4AddressHTL here too ?",
+      "range": {
+        "startLine": 3171,
+        "startChar": 35,
+        "endLine": 3171,
+        "endChar": 53
+      },
+      "revId": "525ca24a399a9d99e1ce6c9a81e3ff8f7baf19f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b75e28f3_15b187b0",
+        "filename": "service/java/com/android/server/wifi/ClientModeImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3177,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-19T15:31:32Z",
+      "side": 1,
+      "message": "This is deprecated: use Inet4AddressUtils.intToInet4AddressHTL instead",
+      "range": {
+        "startLine": 3177,
+        "startChar": 34,
+        "endLine": 3177,
+        "endChar": 63
+      },
+      "revId": "525ca24a399a9d99e1ce6c9a81e3ff8f7baf19f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4e3aca4_1d7b69c5",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2670,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-19T15:31:32Z",
+      "side": 1,
+      "message": "This is not very useful as a comment unless you mention how you think this could be improved.\nBy extracting a static method to do that for example, as Jean mentioned ?",
+      "range": {
+        "startLine": 2669,
+        "startChar": 28,
+        "endLine": 2670,
+        "endChar": 58
+      },
+      "revId": "525ca24a399a9d99e1ce6c9a81e3ff8f7baf19f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
