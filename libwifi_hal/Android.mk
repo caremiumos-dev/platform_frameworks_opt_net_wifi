@@ -85,9 +85,10 @@ include $(BUILD_STATIC_LIBRARY)
 
 # Pick a vendor provided HAL implementation library.
 # ============================================================
-LIB_WIFI_HAL := libwifi-hal-fallback
 VENDOR_LOCAL_SHARED_LIBRARIES :=
-ifeq ($(BOARD_WLAN_DEVICE), bcmdhd)
+ifeq ($(BOARD_WLAN_DEVICE), )
+  LIB_WIFI_HAL := libwifi-hal-fallback
+else ifeq ($(BOARD_WLAN_DEVICE), bcmdhd)
   LIB_WIFI_HAL := libwifi-hal-bcm
 else ifeq ($(BOARD_WLAN_DEVICE), qcwcn)
   LIB_WIFI_HAL := libwifi-hal-qcom
@@ -104,6 +105,8 @@ else ifeq ($(BOARD_WLAN_DEVICE), realtek)
   LIB_WIFI_HAL := libwifi-hal-rtk
 else ifeq ($(BOARD_WLAN_DEVICE), emulator)
   LIB_WIFI_HAL := libwifi-hal-emu
+else
+  LIB_WIFI_HAL := libwifi-hal-$(BOARD_WLAN_DEVICE)
 endif
 
 # The WiFi HAL that you should be linking.
