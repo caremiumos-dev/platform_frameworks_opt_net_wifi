@@ -1224,7 +1224,12 @@ public class WifiServiceImpl extends BaseWifiService {
             throw new IllegalArgumentException("Callback must not be null");
         }
 
-        enforceNetworkSettingsPermission();
+        if (mContext.checkCallingOrSelfPermission(android.Manifest.permission.NETWORK_SETTINGS)
+                != PERMISSION_GRANTED) {
+            mContext.enforceCallingOrSelfPermission(
+                    NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, "WifiService");
+        }
+
         if (mVerboseLoggingEnabled) {
             mLog.info("registerSoftApCallback uid=%").c(Binder.getCallingUid()).flush();
         }
@@ -1256,7 +1261,12 @@ public class WifiServiceImpl extends BaseWifiService {
     @Override
     public void unregisterSoftApCallback(int callbackIdentifier) {
 
-        enforceNetworkSettingsPermission();
+        if (mContext.checkCallingOrSelfPermission(android.Manifest.permission.NETWORK_SETTINGS)
+                != PERMISSION_GRANTED) {
+            mContext.enforceCallingOrSelfPermission(
+                    NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, "WifiService");
+        }
+
         if (mVerboseLoggingEnabled) {
             mLog.info("unregisterSoftApCallback uid=%").c(Binder.getCallingUid()).flush();
         }
