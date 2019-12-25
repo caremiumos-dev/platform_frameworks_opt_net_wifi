@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff6bae5d_659fab9f",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-25T03:14:38Z",
+      "side": 1,
+      "message": "This will not throw with the right message; it will probably tell callers that they need MAINLINE_NETWORK_STACK, even though most callers would need NETWORK_SETTINGS.\nI think you can either change the message here, or use if (!mContext.check... \u0026\u0026 !mContext.check...) { throw new SecurityException(...) }",
+      "range": {
+        "startLine": 1230,
+        "startChar": 68,
+        "endLine": 1230,
+        "endChar": 81
+      },
+      "revId": "c46daac610f83970ba278dd38c6c5ecf31371f68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
