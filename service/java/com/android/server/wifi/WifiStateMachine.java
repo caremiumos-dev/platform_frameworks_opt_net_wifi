@@ -4850,7 +4850,7 @@ public class WifiStateMachine extends StateMachine {
                     mLastNetworkId = message.arg1;
                     mWifiInfo.setNetworkId(mLastNetworkId);
                     mWifiInfo.setMacAddress(mWifiNative.getMacAddress(mInterfaceName));
-                    if(!mLastBssid.equals(message.obj)) {
+                    if(!(mLastBssid != null && mLastBssid.equals(message.obj))) {
                         mLastBssid = (String) message.obj;
                         sendNetworkStateChangeBroadcast(mLastBssid);
                     }
