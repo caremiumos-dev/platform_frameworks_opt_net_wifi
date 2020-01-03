@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Verified+1: SzuWei Lin <szuweilin@google.com>
+Code-Review+2: Hung-ying Tyan <tyanh@google.com>
+DrNo-Review+1: Hung-ying Tyan <tyanh@google.com>
+Presubmit-Verified-1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Hung-ying Tyan <tyanh@google.com>
+Submitted-at: Fri, 03 Jan 2020 02:17:17 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/opt/net/wifi/+/1199003
+Project: platform/frameworks/opt/net/wifi
+Branch: refs/heads/android10-gsi
