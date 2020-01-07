@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "14bba402_8bc2c1c3",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T04:50:54Z",
+      "side": 1,
+      "message": "Can we at least make a method to check this, similar to enforceNetworkStackPermission",
+      "range": {
+        "startLine": 1227,
+        "startChar": 21,
+        "endLine": 1227,
+        "endChar": 49
+      },
+      "revId": "c46daac610f83970ba278dd38c6c5ecf31371f68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff6bae5d_659fab9f",
         "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
         "patchSetId": 1
