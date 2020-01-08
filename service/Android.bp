@@ -87,6 +87,7 @@ java_library {
         "libprotobuf-java-lite",
         "jsr305",
         "services",
+        "framework-telephony",
     ],
     static_libs: [
         "android.hardware.wifi-V1.0-java",
