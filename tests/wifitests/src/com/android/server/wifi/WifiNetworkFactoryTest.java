@@ -63,7 +63,6 @@ import android.test.suitebuilder.annotation.SmallTest;
 import android.util.Pair;
 import android.util.Xml;
 
-import com.android.internal.util.AsyncChannel;
 import com.android.internal.util.FastXmlSerializer;
 import com.android.server.wifi.WifiNetworkFactory.AccessPoint;
 import com.android.server.wifi.nano.WifiMetricsProto;
@@ -197,17 +196,13 @@ public class WifiNetworkFactoryTest {
         assertNotNull(mDataSource);
         mNetworkRequestStoreData = new NetworkRequestStoreData(mDataSource);
 
-        // Register and establish full connection to connectivity manager.
+        // Register with connectivity manager.
         mWifiNetworkFactory.register();
-        ArgumentCaptor<Messenger> messengerArgumentCaptor =
-                ArgumentCaptor.forClass(Messenger.class);
+        ArgumentCaptor<NetworkProvider> networkProviderArgumentCaptor =
+                ArgumentCaptor.forClass(NetworkProvider.class);
         verify(mConnectivityManager).registerNetworkFactory(
-                messengerArgumentCaptor.capture(), anyString());
-        assertNotNull(messengerArgumentCaptor.getValue());
-        Message fullConnectionMsg = Message.obtain();
-        fullConnectionMsg.what = AsyncChannel.CMD_CHANNEL_FULL_CONNECTION;
-        fullConnectionMsg.replyTo = mConnectivityMessenger;
-        messengerArgumentCaptor.getValue().send(fullConnectionMsg);
+                networkProviderArgumentCaptor.capture(), anyString());
+        assertNotNull(networkProviderArgumentCaptor.getValue());
         mLooper.dispatchAll();
 
         mNetworkRequest = new NetworkRequest.Builder()
