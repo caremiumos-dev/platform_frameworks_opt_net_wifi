@@ -109,7 +109,6 @@ import android.util.Slog;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.os.PowerProfile;
-import com.android.internal.telephony.IccCardConstants;
 import com.android.internal.telephony.PhoneConstants;
 import com.android.internal.telephony.TelephonyIntents;
 import com.android.internal.util.AsyncChannel;
@@ -542,11 +541,11 @@ public class WifiServiceImpl extends BaseWifiService {
                 new BroadcastReceiver() {
                     @Override
                     public void onReceive(Context context, Intent intent) {
-                        String state = intent.getStringExtra(IccCardConstants.INTENT_KEY_ICC_STATE);
-                        if (IccCardConstants.INTENT_VALUE_ICC_ABSENT.equals(state)) {
+                        String state = intent.getStringExtra(Intent.EXTRA_SIM_STATE);
+                        if (Intent.SIM_STATE_ABSENT.equals(state)) {
                             Log.d(TAG, "resetting networks because SIM was removed");
                             mClientModeImpl.resetSimAuthNetworks(false);
-                        } else if (IccCardConstants.INTENT_VALUE_ICC_LOADED.equals(state)) {
+                        } else if (Intent.SIM_STATE_LOADED.equals(state)) {
                             Log.d(TAG, "resetting networks because SIM was loaded");
                             mClientModeImpl.resetSimAuthNetworks(true);
                         }
