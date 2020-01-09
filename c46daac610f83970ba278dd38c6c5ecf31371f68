@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22ec42fd_4f5d8a96",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-01-09T06:35:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14bba402_8bc2c1c3",
+      "range": {
+        "startLine": 1227,
+        "startChar": 21,
+        "endLine": 1227,
+        "endChar": 49
+      },
+      "revId": "c46daac610f83970ba278dd38c6c5ecf31371f68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff6bae5d_659fab9f",
         "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "c46daac610f83970ba278dd38c6c5ecf31371f68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7652ee57_ea531631",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-01-09T06:35:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff6bae5d_659fab9f",
+      "range": {
+        "startLine": 1230,
+        "startChar": 68,
+        "endLine": 1230,
+        "endChar": 81
+      },
+      "revId": "c46daac610f83970ba278dd38c6c5ecf31371f68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
