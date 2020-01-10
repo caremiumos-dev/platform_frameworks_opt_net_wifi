@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd06dffc_b1c46dcf",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkFactoryTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-10T07:23:17Z",
+      "side": 1,
+      "message": "Provider (and remove anyString())\n\nDoes this pass the tests ?",
+      "range": {
+        "startLine": 203,
+        "startChar": 52,
+        "endLine": 203,
+        "endChar": 59
+      },
+      "revId": "77eb1f24fab780c07240a5c3d666d8cd399c4fcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37a19d7f_ea860119",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiNetworkFactoryTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-10T07:23:17Z",
+      "side": 1,
+      "message": "Do you want to also add a check that the messenger and/or the serial numbers are set ?",
+      "range": {
+        "startLine": 205,
+        "startChar": 8,
+        "endLine": 205,
+        "endChar": 21
+      },
+      "revId": "77eb1f24fab780c07240a5c3d666d8cd399c4fcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
