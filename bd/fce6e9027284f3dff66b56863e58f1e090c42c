@@ -1,0 +1,10 @@
+Code-Review+2: Chalard Jean <jchalard@google.com>
+Code-Review+1: Roshan Pius <rpius@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Fri, 10 Jan 2020 14:28:26 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/opt/net/wifi/+/1205708
+Project: platform/frameworks/opt/net/wifi
+Branch: refs/heads/master
