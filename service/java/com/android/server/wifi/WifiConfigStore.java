@@ -465,10 +465,14 @@ public class WifiConfigStore {
         stopBufferedWriteAlarm();
 
         long writeStartTime = mClock.getElapsedSinceBootMillis();
-        mSharedStore.writeBufferedRawData();
+        synchronized(mSharedStore) {
+            mSharedStore.writeBufferedRawData();
+        }
         if (mUserStores != null) {
-            for (StoreFile userStoreFile : mUserStores) {
-                userStoreFile.writeBufferedRawData();
+            synchronized(mUserStores) {
+                for (StoreFile userStoreFile : mUserStores) {
+                    userStoreFile.writeBufferedRawData();
+                }
             }
         }
         long writeTime = mClock.getElapsedSinceBootMillis() - writeStartTime;
