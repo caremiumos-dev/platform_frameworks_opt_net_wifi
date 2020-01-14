@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "d972898c_390cbcac",
+        "filename": "service/java/com/android/server/wifi/p2p/WifiP2pServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-01-14T11:16:51Z",
+      "side": 1,
+      "message": "After checked, only WifiDisplayController will call this method. It should be internal using only. \nAnd just found this method also checked CONFIGURE_WIFI_DISPLAY permission below which is signature permission as well, this permission should be enough to limit the usage. So I think we can simplely remove the CONNECTIVITY_INTERNAL check here.",
+      "parentUuid": "0ebf31de_f5d7fc1a",
+      "range": {
+        "startLine": 654,
+        "startChar": 21,
+        "endLine": 654,
+        "endChar": 48
+      },
+      "revId": "75d6c20cc792f39b0edb024c1683ab37659f9664",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8cfe2edf_b2a6a2c8",
         "filename": "tests/wifitests/src/com/android/server/wifi/aware/WifiAwareDataPathStateManagerTest.java",
         "patchSetId": 3
