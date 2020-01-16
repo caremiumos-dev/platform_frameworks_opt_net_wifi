@@ -3614,4 +3614,27 @@ public class WifiServiceImpl extends BaseWifiService {
                 () -> mClientModeImpl.updateWifiUsabilityScore(seqNum, score,
                         predictionHorizonSec));
     }
+
+    /**
+     * @return true if the device supports secure ADB over Wi-Fi.
+     * @hide
+     */
+    public boolean isAdbDebugSupported() {
+        mContext.enforceCallingPermission(
+                android.Manifest.permission.MANAGE_DEBUGGING, "WifiService");
+        return mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI);
+    }
+
+    /**
+     * @return true if the device supports secure ADB over Wi-Fi and device pairing by
+     * QR code.
+     * @hide
+     */
+    @Override
+    public boolean isAdbDebugQrSupported() {
+        mContext.enforceCallingPermission(
+                android.Manifest.permission.MANAGE_DEBUGGING, "WifiService");
+        return isAdbDebugSupported() && mContext.getPackageManager().hasSystemFeature(
+                PackageManager.FEATURE_CAMERA_ANY);
+    }
 }
