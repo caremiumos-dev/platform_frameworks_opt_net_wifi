@@ -4129,6 +4129,40 @@ public class WifiServiceImplTest {
     }
 
     /**
+     * Verify that a call to isAdbDebugSupported throws a SecurityException if
+     * the caller does not have MANAGE_DEBUGGING permission.
+     */
+    @Test
+    public void testAdbDebugSupportedThrowsSecurityExceptionOnMissingPermissions() {
+        doThrow(new SecurityException()).when(mContext)
+                .enforceCallingPermission(
+                        eq(android.Manifest.permission.MANAGE_DEBUGGING),
+                        eq("WifiService"));
+        try {
+            mWifiServiceImpl.isAdbDebugSupported();
+            fail("expected SecurityException");
+        } catch (SecurityException expected) {
+        }
+    }
+
+    /**
+     * Verify that a call to isAdbDebugQrSupported throws a SecurityException if
+     * the caller does not have MANAGE_DEBUGGING permission.
+     */
+    @Test
+    public void testAdbDebugQrSupportedThrowsSecurityExceptionOnMissingPermissions() {
+        doThrow(new SecurityException()).when(mContext)
+                .enforceCallingPermission(
+                        eq(android.Manifest.permission.MANAGE_DEBUGGING),
+                        eq("WifiService"));
+        try {
+            mWifiServiceImpl.isAdbDebugQrSupported();
+            fail("expected SecurityException");
+        } catch (SecurityException expected) {
+        }
+    }
+
+    /**
      * Verify that addOnWifiUsabilityStatsListener adds listener to {@link WifiMetrics}.
      */
     @Test
