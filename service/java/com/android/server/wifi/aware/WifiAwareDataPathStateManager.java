@@ -1520,7 +1520,6 @@ public class WifiAwareDataPathStateManager {
             }
 
             // configure agent
-            networkInfo.setIsAvailable(true);
             networkInfo.setDetailedState(NetworkInfo.DetailedState.CONNECTED, null, null);
 
             networkCapabilities.setNetworkSpecifier(new WifiAwareAgentNetworkSpecifier(
