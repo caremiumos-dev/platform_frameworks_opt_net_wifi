@@ -2434,16 +2434,16 @@ public class ClientModeImplTest {
 
         connect();
         expectRegisterNetworkAgent((agentConfig) -> {
-            assertTrue(agentConfig.explicitlySelected);
-            assertTrue(agentConfig.acceptUnvalidated);
+            assertFalse(agentConfig.explicitlySelected);
+            assertFalse(agentConfig.acceptUnvalidated);
             assertTrue(agentConfig.acceptPartialConnectivity);
         });
     }
 
     /**
      * Verify that when a network is explicitly selected, and noInternetAccessExpected is true,
-     * {@link NetworkAgent#explicitlySelected} is called with explicitlySelected=true and
-     * acceptUnvalidated=true.
+     * the {@link NetworkAgentConfig} contains the right values of explicitlySelected,
+     * acceptUnvalidated and acceptPartialConnectivity.
      */
     @Test
     public void testExplicitlySelected_ExplicitNoInternetExpected() throws Exception {
@@ -2453,9 +2453,11 @@ public class ClientModeImplTest {
         mConnectedNetwork.noInternetAccessExpected = true;
 
         connect();
-        expectRegisterNetworkAgent();
-        expectNetworkAgentMessage(NetworkAgent.EVENT_SET_EXPLICITLY_SELECTED,
-                1 /* explicitlySelected */, 1 /* acceptUnvalidated */, null);
+        expectRegisterNetworkAgent((agentConfig) -> {
+            assertTrue(agentConfig.explicitlySelected);
+            assertTrue(agentConfig.acceptUnvalidated);
+            assertTrue(agentConfig.acceptPartialConnectivity);
+        });
     }
 
     /**
