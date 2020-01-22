@@ -18,6 +18,7 @@ package com.android.server.wifi;
 
 import android.net.Network;
 import android.net.NetworkAgent;
+import android.net.NetworkScore;
 import android.net.wifi.WifiInfo;
 import android.util.Log;
 
@@ -78,6 +79,11 @@ public class WifiScoreReport {
      */
     public void enableVerboseLogging(boolean enable) {
         mVerboseLoggingEnabled = enable;
+    }
+
+    NetworkScore getNetworkScoreForLegacyInt(int legacyScore) {
+        // STOPSHIP (b/148055573) : use a real NetworkScore when it's done
+        return new NetworkScore.Builder().setLegacyScore(legacyScore).build();
     }
 
     /**
@@ -169,7 +175,7 @@ public class WifiScoreReport {
             }
             wifiInfo.score = score;
             if (networkAgent != null) {
-                networkAgent.sendNetworkScore(score);
+                networkAgent.sendNetworkScore(getNetworkScoreForLegacyInt(score));
             }
         }
 
