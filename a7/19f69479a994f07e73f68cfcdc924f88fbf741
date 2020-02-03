@@ -1,0 +1,6 @@
+Code-Review+2: Automerger Merge Worker <android-build-automerger-merge-worker@system.gserviceaccount.com>
+Submitted-by: Automerger Merge Worker <android-build-automerger-merge-worker@system.gserviceaccount.com>
+Submitted-at: Mon, 03 Feb 2020 19:32:44 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/opt/net/wifi/+/1225141
+Project: platform/frameworks/opt/net/wifi
+Branch: refs/heads/android10-gsi
