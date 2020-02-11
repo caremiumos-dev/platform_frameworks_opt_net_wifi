@@ -35,6 +35,7 @@ import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.net.ConnectivityManager;
 import android.net.DhcpResults;
+import android.net.InvalidPacketException;
 import android.net.IpConfiguration;
 import android.net.KeepalivePacketData;
 import android.net.LinkProperties;
@@ -43,14 +44,13 @@ import android.net.MatchAllNetworkSpecifier;
 import android.net.NattKeepalivePacketData;
 import android.net.Network;
 import android.net.NetworkAgent;
+import android.net.NetworkAgentConfig;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
-import android.net.NetworkMisc;
 import android.net.NetworkUtils;
 import android.net.RouteInfo;
 import android.net.SocketKeepalive;
-import android.net.SocketKeepalive.InvalidPacketException;
 import android.net.StaticIpConfiguration;
 import android.net.TcpKeepalivePacketData;
 import android.net.ip.IIpClient;
@@ -163,7 +163,7 @@ public class ClientModeImpl extends StateMachine {
     private static final String EXTRA_UID = "uid";
     private static final String EXTRA_PACKAGE_NAME = "PackageName";
     private static final String EXTRA_PASSPOINT_CONFIGURATION = "PasspointConfiguration";
-    private static final int IPCLIENT_TIMEOUT_MS = 10_000;
+    private static final int IPCLIENT_TIMEOUT_MS = 60_000;
 
     private boolean mVerboseLoggingEnabled = false;
     private final WifiPermissionsWrapper mWifiPermissionsWrapper;
@@ -420,7 +420,7 @@ public class ClientModeImpl extends StateMachine {
     private final NetworkCapabilities mNetworkCapabilitiesFilter = new NetworkCapabilities();
 
     // Provide packet filter capabilities to ConnectivityService.
-    private final NetworkMisc mNetworkMisc = new NetworkMisc();
+    private final NetworkAgentConfig mNetworkAgentConfig = new NetworkAgentConfig();
 
     /* The base for wifi message types */
     static final int BASE = Protocol.BASE_WIFI;
@@ -765,6 +765,11 @@ public class ClientModeImpl extends StateMachine {
     private final WrongPasswordNotifier mWrongPasswordNotifier;
     private WifiNetworkSuggestionsManager mWifiNetworkSuggestionsManager;
     private boolean mConnectedMacRandomzationSupported;
+    // Maximum duration to continue to log Wifi usability stats after a data stall is triggered.
+    @VisibleForTesting
+    public static final long DURATION_TO_WAIT_ADD_STATS_AFTER_DATA_STALL_MS = 30 * 1000;
+    private long mDataStallTriggerTimeMs = -1;
+    private int mLastStatusDataStall = WifiIsUnusableEvent.TYPE_UNKNOWN;
 
     public ClientModeImpl(Context context, FrameworkFacade facade, Looper looper,
                             UserManager userManager, WifiInjector wifiInjector,
@@ -959,6 +964,8 @@ public class ClientModeImpl extends StateMachine {
                 mWifiMetrics.getHandler());
         mWifiMonitor.registerHandler(mInterfaceName, CMD_TARGET_BSSID,
                 mWifiMetrics.getHandler());
+        mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.NETWORK_CONNECTION_EVENT,
+                mWifiInjector.getWifiLastResortWatchdog().getHandler());
     }
 
     private void setMulticastFilter(boolean enabled) {
@@ -1106,7 +1113,7 @@ public class ClientModeImpl extends StateMachine {
         setSupplicantLogLevel();
         mCountryCode.enableVerboseLogging(verbose);
         mWifiScoreReport.enableVerboseLogging(mVerboseLoggingEnabled);
-        mWifiDiagnostics.startLogging(mVerboseLoggingEnabled);
+        mWifiDiagnostics.enableVerboseLogging(mVerboseLoggingEnabled);
         mWifiMonitor.enableVerboseLogging(verbose);
         mWifiNative.enableVerboseLogging(verbose);
         mWifiConfigManager.enableVerboseLogging(verbose);
@@ -1280,7 +1287,7 @@ public class ClientModeImpl extends StateMachine {
             String dstMacStr = macAddressFromRoute(gateway.getHostAddress());
             return NativeUtil.macAddressToByteArray(dstMacStr);
         } catch (NullPointerException | IllegalArgumentException e) {
-            throw new InvalidPacketException(SocketKeepalive.ERROR_INVALID_IP_ADDRESS);
+            throw new InvalidPacketException(InvalidPacketException.ERROR_INVALID_IP_ADDRESS);
         }
     }
 
@@ -1291,7 +1298,7 @@ public class ClientModeImpl extends StateMachine {
         } else if (packetData.dstAddress instanceof Inet6Address) {
             return OsConstants.ETH_P_IPV6;
         } else {
-            throw new InvalidPacketException(SocketKeepalive.ERROR_INVALID_IP_ADDRESS);
+            throw new InvalidPacketException(InvalidPacketException.ERROR_INVALID_IP_ADDRESS);
         }
     }
 
@@ -1928,7 +1935,7 @@ public class ClientModeImpl extends StateMachine {
     public Network getCurrentNetwork() {
         synchronized (mNetworkAgentLock) {
             if (mNetworkAgent != null) {
-                return new Network(mNetworkAgent.netId);
+                return mNetworkAgent.network;
             } else {
                 return null;
             }
@@ -3765,7 +3772,9 @@ public class ClientModeImpl extends StateMachine {
         setRandomMacOui();
         mCountryCode.setReadyForChange(true);
 
-        mWifiDiagnostics.startLogging(mVerboseLoggingEnabled);
+        mWifiDiagnostics.startPktFateMonitoring(mInterfaceName);
+        mWifiDiagnostics.startLogging(mInterfaceName);
+
         mIsRunning = true;
         updateBatteryWorkSource(null);
 
@@ -3803,7 +3812,7 @@ public class ClientModeImpl extends StateMachine {
      */
     private void stopClientMode() {
         // exiting supplicant started state is now only applicable to client mode
-        mWifiDiagnostics.stopLogging();
+        mWifiDiagnostics.stopLogging(mInterfaceName);
 
         mIsRunning = false;
         updateBatteryWorkSource(null);
@@ -4287,10 +4296,12 @@ public class ClientModeImpl extends StateMachine {
                             && TextUtils.isEmpty(config.enterpriseConfig.getAnonymousIdentity())) {
                         String anonAtRealm = TelephonyUtil.getAnonymousIdentityWith3GppRealm(
                                 getTelephonyManager());
+                        // Use anonymous@<realm> when pseudonym is not available
                         config.enterpriseConfig.setAnonymousIdentity(anonAtRealm);
                     }
 
                     if (mWifiNative.connectToNetwork(mInterfaceName, config)) {
+                        mWifiInjector.getWifiLastResortWatchdog().noteStartConnectTime();
                         mWifiMetrics.logStaEvent(StaEvent.TYPE_CMD_START_CONNECT, config);
                         mLastConnectAttemptTimestamp = mClock.getWallClockMillis();
                         mTargetWifiConfiguration = config;
@@ -4450,21 +4461,17 @@ public class ClientModeImpl extends StateMachine {
                         // We need to get the updated pseudonym from supplicant for EAP-SIM/AKA/AKA'
                         if (config.enterpriseConfig != null
                                 && TelephonyUtil.isSimEapMethod(
-                                        config.enterpriseConfig.getEapMethod())
-                                // if using anonymous@<realm>, do not use pseudonym identity on
-                                // reauthentication. Instead, use full authentication using
-                                // anonymous@<realm> followed by encrypted IMSI every time.
-                                // This is because the encrypted IMSI spec does not specify its
-                                // compatibility with the pseudonym identity specified by EAP-AKA.
-                                && !TelephonyUtil.isAnonymousAtRealmIdentity(
-                                        config.enterpriseConfig.getAnonymousIdentity())) {
+                                        config.enterpriseConfig.getEapMethod())) {
                             String anonymousIdentity =
                                     mWifiNative.getEapAnonymousIdentity(mInterfaceName);
                             if (mVerboseLoggingEnabled) {
                                 log("EAP Pseudonym: " + anonymousIdentity);
                             }
-                            config.enterpriseConfig.setAnonymousIdentity(anonymousIdentity);
-                            mWifiConfigManager.addOrUpdateNetwork(config, Process.WIFI_UID);
+                            if (!TelephonyUtil.isAnonymousAtRealmIdentity(anonymousIdentity)) {
+                                // Save the pseudonym only if it is a real one
+                                config.enterpriseConfig.setAnonymousIdentity(anonymousIdentity);
+                                mWifiConfigManager.addOrUpdateNetwork(config, Process.WIFI_UID);
+                            }
                         }
                         sendNetworkStateChangeBroadcast(mLastBssid);
                         transitionTo(mObtainingIpState);
@@ -4743,8 +4750,8 @@ public class ClientModeImpl extends StateMachine {
 
     private class WifiNetworkAgent extends NetworkAgent {
         WifiNetworkAgent(Looper l, Context c, String tag, NetworkInfo ni,
-                NetworkCapabilities nc, LinkProperties lp, int score, NetworkMisc misc) {
-            super(l, c, tag, ni, nc, lp, score, misc);
+                NetworkCapabilities nc, LinkProperties lp, int score, NetworkAgentConfig config) {
+            super(l, c, tag, ni, nc, lp, score, config);
         }
         private int mLastNetworkStatus = -1; // To detect when the status really changes
 
@@ -4936,7 +4943,7 @@ public class ClientModeImpl extends StateMachine {
             final NetworkCapabilities nc = getCapabilities(getCurrentWifiConfiguration());
             synchronized (mNetworkAgentLock) {
                 mNetworkAgent = new WifiNetworkAgent(getHandler().getLooper(), mContext,
-                    "WifiNetworkAgent", mNetworkInfo, nc, mLinkProperties, 60, mNetworkMisc);
+                    "WifiNetworkAgent", mNetworkInfo, nc, mLinkProperties, 60, mNetworkAgentConfig);
             }
 
             // We must clear the config BSSID, as the wifi chipset may decide to roam
@@ -4945,7 +4952,7 @@ public class ClientModeImpl extends StateMachine {
             clearTargetBssid("L2ConnectedState");
             mCountryCode.setReadyForChange(false);
             mWifiMetrics.setWifiState(WifiMetricsProto.WifiLog.WIFI_ASSOCIATED);
-            mWifiScoreCard.noteNetworkAgentCreated(mWifiInfo, mNetworkAgent.netId);
+            mWifiScoreCard.noteNetworkAgentCreated(mWifiInfo, mNetworkAgent.network.netId);
         }
 
         @Override
@@ -5107,11 +5114,24 @@ public class ClientModeImpl extends StateMachine {
                             }
                             mWifiScoreReport.noteIpCheck();
                         }
-                        int statusDataStall =
-                                mWifiDataStall.checkForDataStall(mLastLinkLayerStats, stats);
-                        if (statusDataStall != WifiIsUnusableEvent.TYPE_UNKNOWN) {
-                            mWifiMetrics.addToWifiUsabilityStatsList(WifiUsabilityStats.LABEL_BAD,
-                                    convertToUsabilityStatsTriggerType(statusDataStall), -1);
+                        int statusDataStall = mWifiDataStall.checkForDataStall(
+                                mLastLinkLayerStats, stats, mWifiInfo);
+                        if (mDataStallTriggerTimeMs == -1
+                                && statusDataStall != WifiIsUnusableEvent.TYPE_UNKNOWN) {
+                            mDataStallTriggerTimeMs = mClock.getElapsedSinceBootMillis();
+                            mLastStatusDataStall = statusDataStall;
+                        }
+                        if (mDataStallTriggerTimeMs != -1) {
+                            long elapsedTime =  mClock.getElapsedSinceBootMillis()
+                                    - mDataStallTriggerTimeMs;
+                            if (elapsedTime >= DURATION_TO_WAIT_ADD_STATS_AFTER_DATA_STALL_MS) {
+                                mDataStallTriggerTimeMs = -1;
+                                mWifiMetrics.addToWifiUsabilityStatsList(
+                                        WifiUsabilityStats.LABEL_BAD,
+                                        convertToUsabilityStatsTriggerType(mLastStatusDataStall),
+                                        -1);
+                                mLastStatusDataStall = WifiIsUnusableEvent.TYPE_UNKNOWN;
+                            }
                         }
                         mWifiMetrics.incrementWifiLinkLayerUsageStats(stats);
                         mLastLinkLayerStats = stats;

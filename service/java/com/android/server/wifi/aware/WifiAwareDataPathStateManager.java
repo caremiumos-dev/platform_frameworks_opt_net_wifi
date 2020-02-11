@@ -1286,7 +1286,7 @@ public class WifiAwareDataPathStateManager {
             // Note: checks are done on the manager. This is a backup for apps which bypass the
             // check.
             if (!allowNdpResponderFromAnyOverride && !wifiPermissionsUtil.isTargetSdkLessThan(
-                    client.getCallingPackage(), Build.VERSION_CODES.P)) {
+                    client.getCallingPackage(), Build.VERSION_CODES.P, uid)) {
                 if (ns.type != WifiAwareNetworkSpecifier.NETWORK_SPECIFIER_TYPE_IB
                         && ns.type != WifiAwareNetworkSpecifier.NETWORK_SPECIFIER_TYPE_OOB) {
                     Log.e(TAG, "processNetworkSpecifier: networkSpecifier=" + ns
@@ -1369,7 +1369,7 @@ public class WifiAwareDataPathStateManager {
 
             // validate permission if PMK is used (SystemApi)
             if (ns.pmk != null && ns.pmk.length != 0) {
-                if (permissionWrapper.getUidPermission(Manifest.permission.CONNECTIVITY_INTERNAL,
+                if (permissionWrapper.getUidPermission(Manifest.permission.NETWORK_STACK,
                         ns.requestorUid) != PackageManager.PERMISSION_GRANTED) {
                     Log.e(TAG, "processNetworkSpecifier: networkSpecifier=" + ns.toString()
                             + " -- UID doesn't have permission to use PMK API");
