@@ -56,6 +56,7 @@ import android.net.TcpKeepalivePacketData;
 import android.net.ip.IIpClient;
 import android.net.ip.IpClientCallbacks;
 import android.net.ip.IpClientManager;
+import android.net.shared.Layer2Information;
 import android.net.shared.ProvisioningConfiguration;
 import android.net.shared.ProvisioningConfiguration.ScanResultInfo;
 import android.net.wifi.INetworkRequestMatchCallback;
@@ -4088,7 +4089,10 @@ public class ClientModeImpl extends StateMachine {
                     // interest (e.g. routers); harmless if none are configured.
                     if (state == SupplicantState.COMPLETED) {
                         if (mIpClient != null) {
-                            mIpClient.confirmConfiguration();
+                            final Layer2Information l2Information = new Layer2Information(
+                                    mLastL2KeyAndGroupHint.first, mLastL2KeyAndGroupHint.second,
+                                    mLastBssid);
+                            mIpClient.updateLayer2Information(l2Information);
                         }
                         mWifiScoreReport.noteIpCheck();
                     }
@@ -5374,7 +5378,8 @@ public class ClientModeImpl extends StateMachine {
                             new ScanResultInfo.InformationElement(ie.getId(), ie.getBytes());
                     ies.add(scanResultInfoIe);
                 }
-                scanResultInfo = new ProvisioningConfiguration.ScanResultInfo(scanResult.SSID, ies);
+                scanResultInfo = new ProvisioningConfiguration.ScanResultInfo(scanResult.SSID,
+                        scanResult.BSSID, ies);
             }
 
             if (!isUsingStaticIp) {
