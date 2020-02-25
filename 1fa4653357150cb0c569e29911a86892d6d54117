@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "465424f2_28e19295",
+        "filename": "service/java/com/android/server/wifi/ClientModeImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-25T06:10:08Z",
+      "side": 1,
+      "message": "This member is now unused. It wasn\u0027t useful, but it should be removed now.\n(it did not exist in master)",
+      "revId": "1fa4653357150cb0c569e29911a86892d6d54117",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1c72275_ee30ff6a",
+        "filename": "service/java/com/android/server/wifi/ClientModeImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2869,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-25T06:10:08Z",
+      "side": 1,
+      "message": "Here the original change has the following code :\n\n  if (hidden || state \u003d\u003d mNetworkAgentState) return;\n  mNetworkAgentState \u003d state;\n\nWhy this difference ? Importantly I don\u0027t think the code works without the assignment ; did you run the tests ?",
+      "range": {
+        "startLine": 2869,
+        "startChar": 7,
+        "endLine": 2869,
+        "endChar": 9
+      },
+      "revId": "1fa4653357150cb0c569e29911a86892d6d54117",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf74b1d_f78e3ec1",
+        "filename": "tests/wifitests/src/com/android/server/wifi/ClientModeImplTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2437,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-25T06:10:08Z",
+      "side": 1,
+      "message": "We should expect false here and on the next line. The comment is clear that this network is not explicitly selected.",
+      "range": {
+        "startLine": 2437,
+        "startChar": 18,
+        "endLine": 2437,
+        "endChar": 22
+      },
+      "revId": "1fa4653357150cb0c569e29911a86892d6d54117",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "851441e2_26b2007f",
+        "filename": "tests/wifitests/src/com/android/server/wifi/ClientModeImplTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2458,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-25T06:10:08Z",
+      "side": 1,
+      "message": "This test was updated in the original change. Why does this change not update it ?",
+      "range": {
+        "startLine": 2457,
+        "startChar": 9,
+        "endLine": 2458,
+        "endChar": 77
+      },
+      "revId": "1fa4653357150cb0c569e29911a86892d6d54117",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
