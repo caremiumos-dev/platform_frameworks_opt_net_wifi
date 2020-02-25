@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2910a779_fed1936c",
+        "filename": "service/java/com/android/server/wifi/ClientModeImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-02-25T11:42:31Z",
+      "side": 1,
+      "message": "add aosp/1243492 before this CL.",
+      "parentUuid": "5bfffb2e_ba7f906b",
+      "revId": "1fa4653357150cb0c569e29911a86892d6d54117",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1c72275_ee30ff6a",
         "filename": "service/java/com/android/server/wifi/ClientModeImpl.java",
         "patchSetId": 3
