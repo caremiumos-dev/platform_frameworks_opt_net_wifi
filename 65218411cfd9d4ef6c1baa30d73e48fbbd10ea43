@@ -46,6 +46,53 @@
       "revId": "65218411cfd9d4ef6c1baa30d73e48fbbd10ea43",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdba123e_b7805d5d",
+        "filename": "service/java/com/android/server/wifi/ClientModeImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4095,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2020-02-27T18:41:01Z",
+      "side": 1,
+      "message": "setL2KeyAndGroupHint was called just a few lines above, in handleSupplicantStateChange.\nThe only difference is that the state change message has been sent since then, and I don\u0027t think that there were other interactions with ipClient.\n\nIs it a bug that in IpClient#RunningState CMD_UPDATE_L2KEY_GROUPHINT is not implemented?",
+      "parentUuid": "68c54fc8_eb9ed4b7",
+      "range": {
+        "startLine": 4092,
+        "startChar": 0,
+        "endLine": 4095,
+        "endChar": 77
+      },
+      "revId": "65218411cfd9d4ef6c1baa30d73e48fbbd10ea43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b5e06c8_03519478",
+        "filename": "service/java/com/android/server/wifi/ClientModeImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5382,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2020-02-27T18:41:01Z",
+      "side": 1,
+      "message": "Roshan, is this always right?",
+      "range": {
+        "startLine": 5382,
+        "startChar": 24,
+        "endLine": 5382,
+        "endChar": 40
+      },
+      "revId": "65218411cfd9d4ef6c1baa30d73e48fbbd10ea43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
