@@ -93,6 +93,30 @@
       "revId": "65218411cfd9d4ef6c1baa30d73e48fbbd10ea43",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "559b5855_fee6102f",
+        "filename": "service/java/com/android/server/wifi/ClientModeImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5382,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-02-27T18:47:56Z",
+      "side": 1,
+      "message": "Yeah, i think this is ok. This should give you the first connected bssid.",
+      "parentUuid": "2b5e06c8_03519478",
+      "range": {
+        "startLine": 5382,
+        "startChar": 24,
+        "endLine": 5382,
+        "endChar": 40
+      },
+      "revId": "65218411cfd9d4ef6c1baa30d73e48fbbd10ea43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
