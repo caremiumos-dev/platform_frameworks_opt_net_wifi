@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4bdfe3f4_2b26dbe3",
+        "filename": "service/java/com/android/server/wifi/ClientModeImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4095,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2020-02-28T09:34:50Z",
+      "side": 1,
+      "message": "Yes, the concern depends on whether updateLayer2Information should take L2key and grouphint parameters or not.\n   - If updateLayer2Information() only take bssid as parameter, yes, we can add CMD_UPDATE_L2KEY_GROUPHINT in IpClient#RunningState and update the mL2key and mGroupHint. However, this requires that setL2KeyAndGroupHint() always binds with updateLayer2Information() as a pair calling. Sometimes caller might forget to call setL2KeyAndGroupHint() firstly, then l2key and grouphint won\u0027t be updated.\n\n   - If updateLayer2Information takes Layer2InformationParcelable as parameter, it already includes bssid, l2key and grouphint. We don\u0027t need to care about the calling order as mentioned above.\n\nThought?",
+      "parentUuid": "cdba123e_b7805d5d",
+      "range": {
+        "startLine": 4092,
+        "startChar": 0,
+        "endLine": 4095,
+        "endChar": 77
+      },
+      "revId": "65218411cfd9d4ef6c1baa30d73e48fbbd10ea43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b5e06c8_03519478",
         "filename": "service/java/com/android/server/wifi/ClientModeImpl.java",
         "patchSetId": 1
