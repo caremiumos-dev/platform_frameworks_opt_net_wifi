@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "eb839b23_e253d9b5",
+        "filename": "service/java/com/android/server/wifi/ClientModeImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4095,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2020-02-28T18:26:35Z",
+      "side": 1,
+      "message": "Could we just always use updateLayer2Information instead of setL2KeyAndGroupHint? We must have the BSSID anyway in order to compute the L2 key.\n\noptional: use a MacAddress instead of a String in Layer2Information.",
+      "parentUuid": "4bdfe3f4_2b26dbe3",
+      "range": {
+        "startLine": 4092,
+        "startChar": 0,
+        "endLine": 4095,
+        "endChar": 77
+      },
+      "revId": "65218411cfd9d4ef6c1baa30d73e48fbbd10ea43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b5e06c8_03519478",
         "filename": "service/java/com/android/server/wifi/ClientModeImpl.java",
         "patchSetId": 1
