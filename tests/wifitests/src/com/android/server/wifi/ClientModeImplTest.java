@@ -3414,6 +3414,9 @@ public class ClientModeImplTest {
                         Process.INVALID_UID, "");
         assertEquals(expectedWifiNetworkAgentSpecifier, wifiNetworkAgentSpecifier);
         assertEquals(mConnectedNetwork.creatorUid, networkCapabilities.getOwnerUid());
+        assertEquals(
+                Arrays.asList(mConnectedNetwork.creatorUid),
+                networkCapabilities.getAdministratorUids());
     }
 
     /**
