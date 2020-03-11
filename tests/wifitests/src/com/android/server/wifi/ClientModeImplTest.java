@@ -3413,6 +3413,9 @@ public class ClientModeImplTest {
                 new WifiNetworkAgentSpecifier(mCmi.getCurrentWifiConfiguration(),
                         Process.INVALID_UID, "");
         assertEquals(expectedWifiNetworkAgentSpecifier, wifiNetworkAgentSpecifier);
+        assertEquals(
+                Arrays.asList(mConnectedNetwork.creatorUid),
+                networkCapabilities.getAdministratorUids());
     }
 
     /**

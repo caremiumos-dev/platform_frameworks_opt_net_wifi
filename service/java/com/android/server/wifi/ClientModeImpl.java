@@ -4659,6 +4659,8 @@ public class ClientModeImpl extends StateMachine {
             result.addCapability(NetworkCapabilities.NET_CAPABILITY_TRUSTED);
         }
 
+        result.setAdministratorUids(Arrays.asList(currentWifiConfiguration.creatorUid));
+
         if (!WifiConfiguration.isMetered(currentWifiConfiguration, mWifiInfo)) {
             result.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
         } else {
