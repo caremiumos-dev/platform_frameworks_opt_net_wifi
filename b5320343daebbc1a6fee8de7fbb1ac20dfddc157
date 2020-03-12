@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5759f2a0_c8e802d9",
+        "filename": "service/java/com/android/server/wifi/ClientModeImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4662,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-03-12T04:06:17Z",
+      "side": 1,
+      "message": "I\u0027m not seeing where owner UIDs are set in this method; should this be somewhere else? or are owner UIDs not being set?",
+      "range": {
+        "startLine": 4662,
+        "startChar": 15,
+        "endLine": 4662,
+        "endChar": 35
+      },
+      "revId": "b5320343daebbc1a6fee8de7fbb1ac20dfddc157",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
