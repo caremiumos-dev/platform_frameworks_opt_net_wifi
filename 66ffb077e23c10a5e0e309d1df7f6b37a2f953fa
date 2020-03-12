@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c7f8166_3db9d118",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-03-12T15:24:09Z",
+      "side": 1,
+      "message": "This should probably have the same Change-Id and Merged-In tags as the internal CL (Id83cca080e1b7b03699a2dadf6d92c52f298730c)",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 13,
+        "endChar": 52
+      },
+      "revId": "66ffb077e23c10a5e0e309d1df7f6b37a2f953fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
