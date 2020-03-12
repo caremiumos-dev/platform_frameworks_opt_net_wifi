@@ -22,6 +22,30 @@
       "revId": "b5320343daebbc1a6fee8de7fbb1ac20dfddc157",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d4dc7da_05f75e2e",
+        "filename": "service/java/com/android/server/wifi/ClientModeImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4662,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-03-12T06:22:21Z",
+      "side": 1,
+      "message": "Apologies for the confusion - this is done in aosp/1255494 (being cherry-picked to master). including a copy below this to give a more complete view of the change.",
+      "parentUuid": "5759f2a0_c8e802d9",
+      "range": {
+        "startLine": 4662,
+        "startChar": 15,
+        "endLine": 4662,
+        "endChar": 35
+      },
+      "revId": "b5320343daebbc1a6fee8de7fbb1ac20dfddc157",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
