@@ -189,6 +189,30 @@
       "revId": "65218411cfd9d4ef6c1baa30d73e48fbbd10ea43",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f595032b_cc3c4db8",
+        "filename": "service/java/com/android/server/wifi/ClientModeImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5382,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2020-03-17T22:01:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "559b5855_fee6102f",
+      "range": {
+        "startLine": 5382,
+        "startChar": 24,
+        "endLine": 5382,
+        "endChar": 40
+      },
+      "revId": "65218411cfd9d4ef6c1baa30d73e48fbbd10ea43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
