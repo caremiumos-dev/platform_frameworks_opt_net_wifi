@@ -110,7 +110,6 @@ import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.os.PowerProfile;
 import com.android.internal.telephony.IccCardConstants;
-import com.android.internal.telephony.PhoneConstants;
 import com.android.internal.telephony.TelephonyIntents;
 import com.android.internal.util.AsyncChannel;
 import com.android.server.wifi.hotspot2.PasspointProvider;
@@ -530,10 +529,6 @@ public class WifiServiceImpl extends BaseWifiService {
                         if (mSettingsStore.handleAirplaneModeToggled()) {
                             mWifiController.sendMessage(CMD_AIRPLANE_TOGGLED);
                         }
-                        if (mSettingsStore.isAirplaneModeOn()) {
-                            Log.d(TAG, "resetting country code because Airplane mode is ON");
-                            mCountryCode.airplaneModeEnabled();
-                        }
                     }
                 },
                 new IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED));
@@ -687,7 +682,7 @@ public class WifiServiceImpl extends BaseWifiService {
     @Override
     public String getCurrentNetworkWpsNfcConfigurationToken() {
         // while CLs are in flight, return null here, will be removed (b/72423090)
-        enforceConnectivityInternalPermission();
+        enforceNetworkStackPermission();
         if (mVerboseLoggingEnabled) {
             mLog.info("getCurrentNetworkWpsNfcConfigurationToken uid=%")
                     .c(Binder.getCallingUid()).flush();
@@ -785,6 +780,28 @@ public class WifiServiceImpl extends BaseWifiService {
     private void enforceNetworkSettingsPermission() {
         mContext.enforceCallingOrSelfPermission(android.Manifest.permission.NETWORK_SETTINGS,
                 "WifiService");
+    }
+
+    private boolean checkAnyPermissionOf(String... permissions) {
+        for (String permission : permissions) {
+            if (mContext.checkCallingOrSelfPermission(permission) == PERMISSION_GRANTED) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void enforceAnyPermissionOf(String... permissions) {
+        if (!checkAnyPermissionOf(permissions)) {
+            throw new SecurityException("Requires one of the following permissions: "
+                    + String.join(", ", permissions) + ".");
+        }
+    }
+
+    private void enforceNetworkStackOrSettingsPermission() {
+        enforceAnyPermissionOf(
+                android.Manifest.permission.NETWORK_SETTINGS,
+                NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK);
     }
 
     private void enforceNetworkStackPermission() {
@@ -1224,7 +1241,8 @@ public class WifiServiceImpl extends BaseWifiService {
             throw new IllegalArgumentException("Callback must not be null");
         }
 
-        enforceNetworkSettingsPermission();
+        enforceNetworkStackOrSettingsPermission();
+
         if (mVerboseLoggingEnabled) {
             mLog.info("registerSoftApCallback uid=%").c(Binder.getCallingUid()).flush();
         }
@@ -1255,8 +1273,8 @@ public class WifiServiceImpl extends BaseWifiService {
      */
     @Override
     public void unregisterSoftApCallback(int callbackIdentifier) {
+        enforceNetworkStackOrSettingsPermission();
 
-        enforceNetworkSettingsPermission();
         if (mVerboseLoggingEnabled) {
             mLog.info("unregisterSoftApCallback uid=%").c(Binder.getCallingUid()).flush();
         }
@@ -2318,18 +2336,16 @@ public class WifiServiceImpl extends BaseWifiService {
     @Override
     public boolean removePasspointConfiguration(String fqdn, String packageName) {
         final int uid = Binder.getCallingUid();
-        if (!mWifiPermissionsUtil.checkNetworkSettingsPermission(uid)
-                && !mWifiPermissionsUtil.checkNetworkCarrierProvisioningPermission(uid)) {
-            if (mWifiPermissionsUtil.isTargetSdkLessThan(packageName, Build.VERSION_CODES.Q, uid)) {
-                return false;
-            }
-            throw new SecurityException(TAG + ": Permission denied");
+        boolean privileged = false;
+        if (mWifiPermissionsUtil.checkNetworkSettingsPermission(uid)
+                || mWifiPermissionsUtil.checkNetworkCarrierProvisioningPermission(uid)) {
+            privileged = true;
         }
         mLog.info("removePasspointConfiguration uid=%").c(Binder.getCallingUid()).flush();
         if (!mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI_PASSPOINT)) {
             return false;
         }
-        return mClientModeImpl.syncRemovePasspointConfig(mClientModeImplChannel, fqdn);
+        return mClientModeImpl.syncRemovePasspointConfig(mClientModeImplChannel, privileged, fqdn);
     }
 
     /**
@@ -2342,13 +2358,10 @@ public class WifiServiceImpl extends BaseWifiService {
     @Override
     public List<PasspointConfiguration> getPasspointConfigurations(String packageName) {
         final int uid = Binder.getCallingUid();
-        mAppOps.checkPackage(uid, packageName);
-        if (!mWifiPermissionsUtil.checkNetworkSettingsPermission(uid)
-                && !mWifiPermissionsUtil.checkNetworkSetupWizardPermission(uid)) {
-            if (mWifiPermissionsUtil.isTargetSdkLessThan(packageName, Build.VERSION_CODES.Q, uid)) {
-                return new ArrayList<>();
-            }
-            throw new SecurityException(TAG + ": Permission denied");
+        boolean privileged = false;
+        if (mWifiPermissionsUtil.checkNetworkSettingsPermission(uid)
+                || mWifiPermissionsUtil.checkNetworkSetupWizardPermission(uid)) {
+            privileged = true;
         }
         if (mVerboseLoggingEnabled) {
             mLog.info("getPasspointConfigurations uid=%").c(Binder.getCallingUid()).flush();
@@ -2357,7 +2370,7 @@ public class WifiServiceImpl extends BaseWifiService {
                 PackageManager.FEATURE_WIFI_PASSPOINT)) {
             return new ArrayList<>();
         }
-        return mClientModeImpl.syncGetPasspointConfigs(mClientModeImplChannel);
+        return mClientModeImpl.syncGetPasspointConfigs(mClientModeImplChannel, privileged);
     }
 
     /**
@@ -2406,7 +2419,7 @@ public class WifiServiceImpl extends BaseWifiService {
     @Override
     public void setCountryCode(String countryCode) {
         Slog.i(TAG, "WifiService trying to set country code to " + countryCode);
-        enforceConnectivityInternalPermission();
+        enforceNetworkStackPermission();
         mLog.info("setCountryCode uid=%").c(Binder.getCallingUid()).flush();
         final long token = Binder.clearCallingIdentity();
         mCountryCode.setCountryCode(countryCode);
@@ -2421,7 +2434,7 @@ public class WifiServiceImpl extends BaseWifiService {
      */
     @Override
     public String getCountryCode() {
-        enforceConnectivityInternalPermission();
+        enforceNetworkStackPermission();
         if (mVerboseLoggingEnabled) {
             mLog.info("getCountryCode uid=%").c(Binder.getCallingUid()).flush();
         }
@@ -2659,10 +2672,12 @@ public class WifiServiceImpl extends BaseWifiService {
                         BluetoothAdapter.STATE_DISCONNECTED);
                 mClientModeImpl.sendBluetoothAdapterStateChange(state);
             } else if (action.equals(TelephonyIntents.ACTION_EMERGENCY_CALLBACK_MODE_CHANGED)) {
-                boolean emergencyMode = intent.getBooleanExtra("phoneinECMState", false);
+                boolean emergencyMode = intent.getBooleanExtra(
+                        TelephonyManager.EXTRA_PHONE_IN_ECM_STATE, false);
                 mWifiController.sendMessage(CMD_EMERGENCY_MODE_CHANGED, emergencyMode ? 1 : 0, 0);
             } else if (action.equals(TelephonyIntents.ACTION_EMERGENCY_CALL_STATE_CHANGED)) {
-                boolean inCall = intent.getBooleanExtra(PhoneConstants.PHONE_IN_EMERGENCY_CALL, false);
+                boolean inCall = intent.getBooleanExtra(
+                        TelephonyManager.EXTRA_PHONE_IN_EMERGENCY_CALL, false);
                 mWifiController.sendMessage(CMD_EMERGENCY_CALL_STATE_CHANGED, inCall ? 1 : 0, 0);
             } else if (action.equals(PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED)) {
                 handleIdleModeChanged();
@@ -2841,6 +2856,10 @@ public class WifiServiceImpl extends BaseWifiService {
         WorkSource updatedWs = (ws == null || ws.isEmpty())
                 ? new WorkSource(Binder.getCallingUid()) : ws;
 
+        if (!WifiLockManager.isValidLockMode(lockMode)) {
+            throw new IllegalArgumentException("lockMode =" + lockMode);
+        }
+
         Mutable<Boolean> lockSuccess = new Mutable<>();
         boolean runWithScissorsSuccess = mWifiInjector.getClientModeImplHandler().runWithScissors(
                 () -> {
@@ -2955,7 +2974,7 @@ public class WifiServiceImpl extends BaseWifiService {
 
     @Override
     public void factoryReset(String packageName) {
-        enforceConnectivityInternalPermission();
+        enforceNetworkSettingsPermission();
         if (enforceChangePermission(packageName) != MODE_ALLOWED) {
             return;
         }
@@ -2984,7 +3003,7 @@ public class WifiServiceImpl extends BaseWifiService {
                 if (mContext.getPackageManager().hasSystemFeature(
                         PackageManager.FEATURE_WIFI_PASSPOINT)) {
                     List<PasspointConfiguration> configs = mClientModeImpl.syncGetPasspointConfigs(
-                            mClientModeImplChannel);
+                            mClientModeImplChannel, true);
                     if (configs != null) {
                         for (PasspointConfiguration config : configs) {
                             removePasspointConfiguration(config.getHomeSp().getFqdn(), packageName);
