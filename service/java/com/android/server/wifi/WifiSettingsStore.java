@@ -45,9 +45,6 @@ public class WifiSettingsStore {
 
     private final Context mContext;
 
-    /* Tracks if we have checked the saved wi-fi state after boot */
-    private boolean mCheckSavedStateAtBoot = false;
-
     WifiSettingsStore(Context context) {
         mContext = context;
         mAirplaneModeOn = getPersistedAirplaneModeOn();
@@ -56,11 +53,6 @@ public class WifiSettingsStore {
     }
 
     public synchronized boolean isWifiToggleEnabled() {
-        if (!mCheckSavedStateAtBoot) {
-            mCheckSavedStateAtBoot = true;
-            if (testAndClearWifiSavedState()) return true;
-        }
-
         if (mAirplaneModeOn) {
             return mPersistWifiState == WIFI_ENABLED_AIRPLANE_OVERRIDE;
         } else {
@@ -116,8 +108,7 @@ public class WifiSettingsStore {
             }
         } else {
             /* On airplane mode disable, restore wifi state if necessary */
-            if (testAndClearWifiSavedState() ||
-                    mPersistWifiState == WIFI_ENABLED_AIRPLANE_OVERRIDE
+            if (mPersistWifiState == WIFI_ENABLED_AIRPLANE_OVERRIDE
                     || mPersistWifiState == WIFI_DISABLED_AIRPLANE_ON) {
                 persistWifiState(WIFI_ENABLED);
             }
