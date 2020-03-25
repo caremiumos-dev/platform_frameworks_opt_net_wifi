@@ -77,6 +77,9 @@ public class WifiControllerTest {
         Log.d(TAG, "ClientModeImpl state -" + stream.toString());
     }
 
+    final ArgumentCaptor<BroadcastReceiver> mBroadcastReceiverCaptor =
+            ArgumentCaptor.forClass(BroadcastReceiver.class);
+
     private IState getCurrentState() throws Exception {
         Method method = StateMachine.class.getDeclaredMethod("getCurrentState");
         method.setAccessible(true);
@@ -1122,5 +1125,33 @@ public class WifiControllerTest {
         mWifiController.sendMessage(CMD_RECOVERY_RESTART_WIFI);
         mLooper.dispatchAll();
         verify(mActiveModeWarden).shutdownWifi();
+    }
+
+    /**
+     * Test to verify Wifi off when turn off Wifi in AP mode.
+     * Steps: Enter AP mode, turn off wifi, enter then exit airplanie mode
+     * <p>
+     * Expected: Wifi is in off state
+     */
+    @Test
+    public void testWifiOffStartSoftApTurnOffWifi() throws Exception {
+        mWifiController.obtainMessage(CMD_SET_AP, 1).sendToTarget();
+        mLooper.dispatchAll();
+        verify(mActiveModeWarden).enterSoftAPMode(any());
+
+        when(mSettingsStore.isWifiToggleEnabled()).thenReturn(true);
+        mWifiController.sendMessage(CMD_WIFI_TOGGLED);
+        mLooper.dispatchAll();
+        assertEquals("StaDisabledState", getCurrentState().getName());
+
+        when(mSettingsStore.isAirplaneModeOn()).thenReturn(true);
+        verify(mContext).registerReceiver(mBroadcastReceiverCaptor.capture(),
+                (IntentFilter) argThat((IntentFilter filter) ->
+                        filter.hasAction(Intent.ACTION_AIRPLANE_MODE_CHANGED)));
+        // Send the broadcast
+        Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+        mBroadcastReceiverCaptor.getValue().onReceive(mContext, intent);
+
+        assertEquals("StaDisabledState", getCurrentState().getName());
     }
 }

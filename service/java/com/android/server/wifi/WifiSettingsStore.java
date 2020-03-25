@@ -45,9 +45,6 @@ public class WifiSettingsStore {
 
     private final Context mContext;
 
-    /* Tracks if we have checked the saved wi-fi state after boot */
-    private boolean mCheckSavedStateAtBoot = false;
-
     WifiSettingsStore(Context context) {
         mContext = context;
         mAirplaneModeOn = getPersistedAirplaneModeOn();
@@ -56,11 +53,6 @@ public class WifiSettingsStore {
     }
 
     public synchronized boolean isWifiToggleEnabled() {
-        if (!mCheckSavedStateAtBoot) {
-            mCheckSavedStateAtBoot = true;
-            if (testAndClearWifiSavedState()) return true;
-        }
-
         if (mAirplaneModeOn) {
             return mPersistWifiState == WIFI_ENABLED_AIRPLANE_OVERRIDE;
         } else {
@@ -116,8 +108,7 @@ public class WifiSettingsStore {
             }
         } else {
             /* On airplane mode disable, restore wifi state if necessary */
-            if (testAndClearWifiSavedState() ||
-                    mPersistWifiState == WIFI_ENABLED_AIRPLANE_OVERRIDE
+            if (mPersistWifiState == WIFI_ENABLED_AIRPLANE_OVERRIDE
                     || mPersistWifiState == WIFI_DISABLED_AIRPLANE_ON) {
                 persistWifiState(WIFI_ENABLED);
             }
@@ -154,22 +145,6 @@ public class WifiSettingsStore {
                 Settings.Global.AIRPLANE_MODE_TOGGLEABLE_RADIOS);
         return toggleableRadios != null
                 && toggleableRadios.contains(Settings.Global.RADIO_WIFI);
-    }
-
-    /**
-     * After a reboot, we restore wi-fi to be on if it was turned off temporarily for tethering.
-     * The settings app tracks the saved state, but the framework has to check it at boot to
-     * make sure the wi-fi is turned on in case it was turned off for the purpose of tethering.
-     *
-     * Note that this is not part of the regular WIFI_ON setting because this only needs to
-     * be controlled through the settings app and not the Wi-Fi public API.
-     */
-    private boolean testAndClearWifiSavedState() {
-        int wifiSavedState = getWifiSavedState();
-        if (wifiSavedState == WIFI_ENABLED) {
-            setWifiSavedState(WIFI_DISABLED);
-        }
-        return (wifiSavedState == WIFI_ENABLED);
     }
 
     /**
