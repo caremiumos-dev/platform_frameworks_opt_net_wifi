@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc52118a_8720f148",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2020-03-27T20:21:27Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem like a minor cleanup, but a significant logic change.",
+      "range": {
+        "startLine": 7,
+        "startChar": 19,
+        "endLine": 7,
+        "endChar": 33
+      },
+      "revId": "56d10b8703ac8ae0f13f0f2da037b42945242efb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8e8423_4ad5fbb1",
+        "filename": "service/java/com/android/server/wifi/WifiSettingsStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2020-03-27T20:21:27Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be used anymore.",
+      "range": {
+        "startLine": 158,
+        "startChar": 20,
+        "endLine": 158,
+        "endChar": 46
+      },
+      "revId": "56d10b8703ac8ae0f13f0f2da037b42945242efb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
