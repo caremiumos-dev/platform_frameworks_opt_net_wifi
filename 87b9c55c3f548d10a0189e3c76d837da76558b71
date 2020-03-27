@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6142e8d6_4f6e770c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1072623
+      },
+      "writtenOn": "2020-03-27T15:35:00Z",
+      "side": 1,
+      "message": "Nit: can you fix the commit message to match the history of this file?\n\nExample:\n  https://android.googlesource.com/platform/frameworks/opt/net/wifi/+/ebf8acdbe44fe70d070e5c9911c50d6f0e5e89c0%5E%21/#F3",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "87b9c55c3f548d10a0189e3c76d837da76558b71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
