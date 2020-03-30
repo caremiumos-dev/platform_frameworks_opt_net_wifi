@@ -50,7 +50,6 @@ import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkProvider;
 import android.net.NetworkUtils;
-import android.net.RouteInfo;
 import android.net.SocketKeepalive;
 import android.net.StaticIpConfiguration;
 import android.net.TcpKeepalivePacketData;
@@ -59,6 +58,7 @@ import android.net.ip.IpClientCallbacks;
 import android.net.ip.IpClientManager;
 import android.net.shared.ProvisioningConfiguration;
 import android.net.shared.ProvisioningConfiguration.ScanResultInfo;
+import android.net.util.NetUtils;
 import android.net.wifi.INetworkRequestMatchCallback;
 import android.net.wifi.RssiPacketCountInfo;
 import android.net.wifi.ScanResult;
@@ -1285,8 +1285,8 @@ public class ClientModeImpl extends StateMachine {
     private byte[] getDstMacForKeepalive(KeepalivePacketData packetData)
             throws InvalidPacketException {
         try {
-            InetAddress gateway = RouteInfo.selectBestRoute(
-                    mLinkProperties.getRoutes(), packetData.dstAddress).getGateway();
+            InetAddress gateway = NetUtils.selectBestRoute(
+                    mLinkProperties.getRoutes(), packetData.getDstAddress()).getGateway();
             String dstMacStr = macAddressFromRoute(gateway.getHostAddress());
             return NativeUtil.macAddressToByteArray(dstMacStr);
         } catch (NullPointerException | IllegalArgumentException e) {
@@ -1296,9 +1296,9 @@ public class ClientModeImpl extends StateMachine {
 
     private static int getEtherProtoForKeepalive(KeepalivePacketData packetData)
             throws InvalidPacketException {
-        if (packetData.dstAddress instanceof Inet4Address) {
+        if (packetData.getDstAddress() instanceof Inet4Address) {
             return OsConstants.ETH_P_IP;
-        } else if (packetData.dstAddress instanceof Inet6Address) {
+        } else if (packetData.getDstAddress() instanceof Inet6Address) {
             return OsConstants.ETH_P_IPV6;
         } else {
             throw new InvalidPacketException(InvalidPacketException.ERROR_INVALID_IP_ADDRESS);
@@ -1316,7 +1316,7 @@ public class ClientModeImpl extends StateMachine {
             dstMac = getDstMacForKeepalive(packetData);
             proto = getEtherProtoForKeepalive(packetData);
         } catch (InvalidPacketException e) {
-            return e.error;
+            return e.getError();
         }
 
         int ret = mWifiNative.startSendingOffloadedPacket(
@@ -4659,6 +4659,9 @@ public class ClientModeImpl extends StateMachine {
             result.addCapability(NetworkCapabilities.NET_CAPABILITY_TRUSTED);
         }
 
+        result.setOwnerUid(currentWifiConfiguration.creatorUid);
+        result.setAdministratorUids(new int[] {currentWifiConfiguration.creatorUid});
+
         if (!WifiConfiguration.isMetered(currentWifiConfiguration, mWifiInfo)) {
             result.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
         } else {
@@ -5388,8 +5391,25 @@ public class ClientModeImpl extends StateMachine {
             ScanDetailCache scanDetailCache =
                     mWifiConfigManager.getScanDetailCacheForNetwork(config.networkId);
             ScanResult scanResult = null;
-            if (scanDetailCache != null && mLastBssid != null) {
-                scanResult = scanDetailCache.getScanResult(mLastBssid);
+            if (mLastBssid != null) {
+                if (scanDetailCache != null) {
+                    scanResult = scanDetailCache.getScanResult(mLastBssid);
+                }
+
+                // The cached scan result of connected network would be null at the first
+                // connection, try to check full scan result list again to look up matched
+                // scan result associated to the current SSID and BSSID.
+                if (scanResult == null) {
+                    ScanRequestProxy scanRequestProxy = mWifiInjector.getScanRequestProxy();
+                    List<ScanResult> scanResults = scanRequestProxy.getScanResults();
+                    for (ScanResult result : scanResults) {
+                        if (result.SSID.equals(WifiInfo.removeDoubleQuotes(config.SSID))
+                                && result.BSSID.equals(mLastBssid)) {
+                            scanResult = result;
+                            break;
+                        }
+                    }
+                }
             }
 
             final ProvisioningConfiguration prov;
