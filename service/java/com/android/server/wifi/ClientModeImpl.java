@@ -4086,7 +4086,10 @@ public class ClientModeImpl extends StateMachine {
                     // interest (e.g. routers); harmless if none are configured.
                     if (state == SupplicantState.COMPLETED) {
                         if (mIpClient != null) {
-                            mIpClient.confirmConfiguration();
+                            final Layer2Information info = new Layer2Information(
+                                    mLastL2KeyAndGroupHint.first, mLastL2KeyAndGroupHint.second,
+                                    MacAddress.fromString(mLastBssid));
+                            mIpClient.updateLayer2Information(info);
                         }
                         mWifiScoreReport.noteIpCheck();
                     }
