@@ -2892,6 +2892,7 @@ public class ClientModeImpl extends StateMachine {
     }
 
     private SupplicantState handleSupplicantStateChange(Message message) {
+        Log.d(TAG, "handle SupplicantState Change");
         StateChangeResult stateChangeResult = (StateChangeResult) message.obj;
         SupplicantState state = stateChangeResult.state;
         mWifiScoreCard.noteSupplicantStateChanging(mWifiInfo, state);
@@ -2955,6 +2956,9 @@ public class ClientModeImpl extends StateMachine {
                 final Layer2Information l2Information = new Layer2Information(
                         p.first, p.second,
                         mLastBssid != null ? MacAddress.fromString(mLastBssid) : null);
+                Log.d(TAG, "updateLayer2Information");
+                Log.d(TAG, "l2key: " + p.first);
+                Log.d(TAG, "grouphint: " + p.second);
                 if (mIpClient.updateLayer2Information(l2Information)) {
                     mLastL2KeyAndGroupHint = p;
                 } else {
@@ -4097,6 +4101,7 @@ public class ClientModeImpl extends StateMachine {
                                     mLastL2KeyAndGroupHint.first, mLastL2KeyAndGroupHint.second,
                                     lastBssid);
                             mIpClient.updateLayer2Information(info);
+                            Log.d(TAG, "update layer2 info on L2 roaming");
                         }
                         mWifiScoreReport.noteIpCheck();
                     }
@@ -5448,6 +5453,8 @@ public class ClientModeImpl extends StateMachine {
                             .withApfCapabilities(mWifiNative.getApfCapabilities(mInterfaceName))
                             .withNetwork(getCurrentNetwork())
                             .withScanResultInfo(scanResultInfo)
+                            .withL2KeyAndGroupHint(mLastL2KeyAndGroupHint.first,
+                                    mLastL2KeyAndGroupHint.second)
                             .withDisplayName(currentConfig.SSID)
                             .build();
             } else {
@@ -5456,10 +5463,13 @@ public class ClientModeImpl extends StateMachine {
                             .withStaticConfiguration(staticIpConfig)
                             .withApfCapabilities(mWifiNative.getApfCapabilities(mInterfaceName))
                             .withNetwork(getCurrentNetwork())
+                            .withL2KeyAndGroupHint(mLastL2KeyAndGroupHint.first,
+                                    mLastL2KeyAndGroupHint.second)
                             .withDisplayName(currentConfig.SSID)
                             .build();
             }
             if (mIpClient != null) {
+                Log.d(TAG, "start provisioning");
                 mIpClient.startProvisioning(prov);
             }
             // Get Link layer stats so as we get fresh tx packet counters
