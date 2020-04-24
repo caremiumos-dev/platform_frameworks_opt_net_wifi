@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Code-Review+1: Michael Plass <mplass@google.com>
+Code-Review+2: Etan Cohen <etancohen@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Submitted-by: Xiao Ma <xiaom@google.com>
+Submitted-at: Fri, 24 Apr 2020 01:36:13 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/opt/net/wifi/+/1288516
+Project: platform/frameworks/opt/net/wifi
+Branch: refs/heads/master
