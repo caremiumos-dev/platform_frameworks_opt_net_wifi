@@ -92,7 +92,6 @@ LOCAL_JNI_SHARED_LIBRARIES := \
 	libjsoncpp \
 	liblzma \
 	libmedia \
-	libnativehelper \
 	libnbaio \
 	libnetutils \
 	libnl \
