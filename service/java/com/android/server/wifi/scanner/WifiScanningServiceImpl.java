@@ -109,12 +109,17 @@ public class WifiScanningServiceImpl extends IWifiScanner.Stub {
 
     @Override
     public Bundle getAvailableChannels(int band) {
-        mChannelHelper.updateChannels();
-        ChannelSpec[] channelSpecs = mChannelHelper.getAvailableScanChannels(band);
-        ArrayList<Integer> list = new ArrayList<Integer>(channelSpecs.length);
-        for (ChannelSpec channelSpec : channelSpecs) {
-            list.add(channelSpec.frequency);
+        ArrayList<Integer> list = null;
+
+        if (mChannelHelper != null) {
+            mChannelHelper.updateChannels();
+            ChannelSpec[] channelSpecs = mChannelHelper.getAvailableScanChannels(band);
+            list = new ArrayList<Integer>(channelSpecs.length);
+            for (ChannelSpec channelSpec : channelSpecs) {
+                list.add(channelSpec.frequency);
+            }
         }
+
         Bundle b = new Bundle();
         b.putIntegerArrayList(WifiScanner.GET_AVAILABLE_CHANNELS_EXTRA, list);
         mLog.trace("getAvailableChannels uid=%").c(Binder.getCallingUid()).flush();
