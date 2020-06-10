@@ -57,6 +57,7 @@ import android.net.wifi.IOnWifiUsabilityStatsListener;
 import android.net.wifi.ScanResult;
 import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiEnterpriseConfig;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiSsid;
@@ -382,8 +383,6 @@ public class WifiMetricsTest {
     private static final int NUM_PARTIAL_SCAN_RESULTS = 73;
     private static final int NUM_PNO_SCAN_ATTEMPTS = 20;
     private static final int NUM_PNO_SCAN_FAILED = 5;
-    private static final int NUM_PNO_SCAN_STARTED_OVER_OFFLOAD = 17;
-    private static final int NUM_PNO_SCAN_FAILED_OVER_OFFLOAD = 8;
     private static final int NUM_PNO_FOUND_NETWORK_EVENTS = 10;
     private static final int NUM_WPS_ATTEMPTS = 17;
     private static final int NUM_WPS_SUCCESS = 21;
@@ -800,12 +799,6 @@ public class WifiMetricsTest {
         for (int i = 0; i < NUM_PNO_SCAN_FAILED; i++) {
             mWifiMetrics.incrementPnoScanFailedCount();
         }
-        for (int i = 0; i < NUM_PNO_SCAN_STARTED_OVER_OFFLOAD; i++) {
-            mWifiMetrics.incrementPnoScanStartedOverOffloadCount();
-        }
-        for (int i = 0; i < NUM_PNO_SCAN_FAILED_OVER_OFFLOAD; i++) {
-            mWifiMetrics.incrementPnoScanFailedOverOffloadCount();
-        }
         for (int i = 0; i < NUM_PNO_FOUND_NETWORK_EVENTS; i++) {
             mWifiMetrics.incrementPnoFoundNetworkEventCount();
         }
@@ -1157,8 +1150,6 @@ public class WifiMetricsTest {
         assertNotNull(pno_metrics);
         assertEquals(NUM_PNO_SCAN_ATTEMPTS, pno_metrics.numPnoScanAttempts);
         assertEquals(NUM_PNO_SCAN_FAILED, pno_metrics.numPnoScanFailed);
-        assertEquals(NUM_PNO_SCAN_STARTED_OVER_OFFLOAD, pno_metrics.numPnoScanStartedOverOffload);
-        assertEquals(NUM_PNO_SCAN_FAILED_OVER_OFFLOAD, pno_metrics.numPnoScanFailedOverOffload);
         assertEquals(NUM_PNO_FOUND_NETWORK_EVENTS, pno_metrics.numPnoFoundNetworkEvents);
 
         for (ConnectToNetworkNotificationAndActionCount notificationCount
@@ -1372,10 +1363,17 @@ public class WifiMetricsTest {
         when(networkDetail.getDtimInterval()).thenReturn(NETWORK_DETAIL_DTIM);
         ScanResult scanResult = mock(ScanResult.class);
         scanResult.level = SCAN_RESULT_LEVEL;
+        scanResult.capabilities = "EAP";
         WifiConfiguration config = mock(WifiConfiguration.class);
         config.SSID = "\"" + SSID + "\"";
         config.dtimInterval = CONFIG_DTIM;
         config.macRandomizationSetting = WifiConfiguration.RANDOMIZATION_PERSISTENT;
+        config.allowedKeyManagement = new BitSet();
+        config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_EAP);
+        config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.IEEE8021X);
+        config.enterpriseConfig = new WifiEnterpriseConfig();
+        config.enterpriseConfig.setEapMethod(WifiEnterpriseConfig.Eap.TTLS);
+        config.enterpriseConfig.setPhase2Method(WifiEnterpriseConfig.Phase2.MSCHAPV2);
         WifiConfiguration.NetworkSelectionStatus networkSelectionStat =
                 mock(WifiConfiguration.NetworkSelectionStatus.class);
         when(networkSelectionStat.getCandidate()).thenReturn(scanResult);
@@ -1396,7 +1394,9 @@ public class WifiMetricsTest {
                 WifiMetricsProto.ConnectionEvent.HLF_NONE,
                 WifiMetricsProto.ConnectionEvent.FAILURE_REASON_UNKNOWN);
 
+        //Change configuration to open without randomization
         config.macRandomizationSetting = WifiConfiguration.RANDOMIZATION_NONE;
+        scanResult.capabilities = "";
         //Create a connection event using the config and a scan detail
         mWifiMetrics.startConnectionEvent(config, "Green",
                 WifiMetricsProto.ConnectionEvent.ROAM_NONE);
@@ -1412,8 +1412,20 @@ public class WifiMetricsTest {
         //Check that the correct values are being flowed through
         assertEquals(2, mDecodedProto.connectionEvent.length);
         assertEquals(CONFIG_DTIM, mDecodedProto.connectionEvent[0].routerFingerprint.dtim);
+        assertEquals(WifiMetricsProto.RouterFingerPrint.AUTH_ENTERPRISE,
+                mDecodedProto.connectionEvent[0].routerFingerprint.authentication);
+        assertEquals(WifiMetricsProto.RouterFingerPrint.TYPE_EAP_TTLS,
+                mDecodedProto.connectionEvent[0].routerFingerprint.eapMethod);
+        assertEquals(WifiMetricsProto.RouterFingerPrint.TYPE_PHASE2_MSCHAPV2,
+                mDecodedProto.connectionEvent[0].routerFingerprint.authPhase2Method);
         assertEquals(SCAN_RESULT_LEVEL, mDecodedProto.connectionEvent[0].signalStrength);
         assertEquals(NETWORK_DETAIL_DTIM, mDecodedProto.connectionEvent[1].routerFingerprint.dtim);
+        assertEquals(WifiMetricsProto.RouterFingerPrint.AUTH_OPEN,
+                mDecodedProto.connectionEvent[1].routerFingerprint.authentication);
+        assertEquals(WifiMetricsProto.RouterFingerPrint.TYPE_EAP_UNKNOWN,
+                mDecodedProto.connectionEvent[1].routerFingerprint.eapMethod);
+        assertEquals(WifiMetricsProto.RouterFingerPrint.TYPE_PHASE2_NONE,
+                mDecodedProto.connectionEvent[1].routerFingerprint.authPhase2Method);
         assertEquals(SCAN_RESULT_LEVEL, mDecodedProto.connectionEvent[1].signalStrength);
         assertEquals(NETWORK_DETAIL_WIFIMODE,
                 mDecodedProto.connectionEvent[1].routerFingerprint.routerTechnology);
