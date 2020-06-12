@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000003413047",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1330892?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "6f42357b_233a6562",
+        "filename": "service/java/com/android/server/wifi/WifiConfigStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-06-12T23:07:34Z",
+      "side": 1,
+      "message": "This file contains a set of conflict markers.If this is a false alarm, add IGNORE_MERGE_CONFLICT_CHECK\u003d\u003d\u003creason\u003e to your commit message.",
+      "range": {
+        "startLine": 914,
+        "startChar": 1,
+        "endLine": 914,
+        "endChar": 7
+      },
+      "revId": "2cf390adf376ffd1eadee0301b3a36ba6586ce7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000003413047",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1330892?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "132aaafb_2be72b3d",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-06-12T23:07:34Z",
+      "side": 1,
+      "message": "This file contains a set of conflict markers.If this is a false alarm, add IGNORE_MERGE_CONFLICT_CHECK\u003d\u003d\u003creason\u003e to your commit message.",
+      "range": {
+        "startLine": 878,
+        "startChar": 1,
+        "endLine": 878,
+        "endChar": 7
+      },
+      "revId": "2cf390adf376ffd1eadee0301b3a36ba6586ce7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000003413047",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1330892?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "bcf24061_08970c21",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConfigStoreTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1127,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-06-12T23:07:34Z",
+      "side": 1,
+      "message": "This file contains a set of conflict markers.If this is a false alarm, add IGNORE_MERGE_CONFLICT_CHECK\u003d\u003d\u003creason\u003e to your commit message.",
+      "range": {
+        "startLine": 1127,
+        "startChar": 1,
+        "endLine": 1127,
+        "endChar": 7
+      },
+      "revId": "2cf390adf376ffd1eadee0301b3a36ba6586ce7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000003413047",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1330892?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "d533bf41_e3a8d878",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-06-12T23:07:34Z",
+      "side": 1,
+      "message": "This file contains a set of conflict markers.If this is a false alarm, add IGNORE_MERGE_CONFLICT_CHECK\u003d\u003d\u003creason\u003e to your commit message.",
+      "range": {
+        "startLine": 905,
+        "startChar": 1,
+        "endLine": 905,
+        "endChar": 7
+      },
+      "revId": "2cf390adf376ffd1eadee0301b3a36ba6586ce7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
