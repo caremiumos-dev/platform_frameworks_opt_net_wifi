@@ -1133,6 +1133,10 @@ public class WifiConfigManager {
         MacAddress randomizedMac = getPersistentMacAddress(newInternalConfig);
         if (randomizedMac != null) {
             newInternalConfig.setRandomizedMacAddress(randomizedMac);
+            final String key = newInternalConfig.getSsidAndSecurityTypeString();
+            if (!mRandomizedMacAddressMapping.containsKey(key)) {
+                mRandomizedMacAddressMapping.put(key, randomizedMac.toString());
+            }
         }
         return newInternalConfig;
     }
@@ -1382,6 +1386,7 @@ public class WifiConfigManager {
         removeConnectChoiceFromAllNetworks(config.configKey());
         mConfiguredNetworks.remove(config.networkId);
         mScanDetailCaches.remove(config.networkId);
+        mRandomizedMacAddressMapping.remove(config.getSsidAndSecurityTypeString());
         // Stage the backup of the SettingsProvider package which backs this up.
         mBackupManagerProxy.notifyDataChanged();
 
@@ -3044,6 +3049,7 @@ public class WifiConfigManager {
                         + " netId=" + config.networkId
                         + " configKey=" + config.configKey());
                 mConfiguredNetworks.remove(config.networkId);
+                mRandomizedMacAddressMapping.remove(config.getSsidAndSecurityTypeString());
             }
         }
         mDeletedEphemeralSsidsToTimeMap.clear();
