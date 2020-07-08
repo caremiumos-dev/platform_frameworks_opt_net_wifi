@@ -4196,6 +4196,15 @@ public class ClientModeImpl extends StateMachine {
                         logi("CMD_SAVE_NETWORK credential changed for nid="
                                 + netId + " while disconnected. Connecting.");
                         startConnectToNetwork(netId, message.sendingUid, SUPPLICANT_BSSID_ANY);
+                    }  else {
+                        config = mWifiConfigManager.getConfiguredNetwork(netId);
+                        if (config != null && config.hiddenSSID) {
+                            SupplicantState supplicantState = mWifiInfo.getSupplicantState();
+                            if (!SupplicantState.isHandshakeState(supplicantState)) {
+                                connectToUserSelectNetwork(netId, message.sendingUid, true);
+                                loge("SAVE_NETWORK connectToUserSelectNetwork");
+                            }
+                        }
                     }
                     sendActionListenerSuccess(callbackIdentifier);
                     break;
