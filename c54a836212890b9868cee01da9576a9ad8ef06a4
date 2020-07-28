@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "396a5eb9_31f91e53",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-07-28T01:25:24Z",
+      "side": 1,
+      "message": "@Roshan: I noticed that you put your name down for WifiConnectivityHelper. I\u0027ve only cleaned up the usages of variables in WifiConnectivityHelper since those variables were declared in WifiNative and thus has to be renamed simultaneously. I didn\u0027t clean up anything in WifiConnectivityHelper that was declared in that file.",
+      "revId": "c54a836212890b9868cee01da9576a9ad8ef06a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
