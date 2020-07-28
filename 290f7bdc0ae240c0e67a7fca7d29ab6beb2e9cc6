@@ -1,0 +1,490 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004055563",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1373403?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "f760d5f1_c93470ae",
+        "filename": "service/java/com/android/server/wifi/AvailableNetworkNotifier.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-28T01:30:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/inclusive-documentation for more details.",
+      "range": {
+        "startLine": 463,
+        "startChar": 63,
+        "endLine": 463,
+        "endChar": 72
+      },
+      "revId": "290f7bdc0ae240c0e67a7fca7d29ab6beb2e9cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004055563",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1373403?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "75ee9ff7_8d2dcf96",
+        "filename": "service/java/com/android/server/wifi/AvailableNetworkNotifier.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-28T01:30:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/inclusive-documentation for more details.",
+      "range": {
+        "startLine": 476,
+        "startChar": 63,
+        "endLine": 476,
+        "endChar": 72
+      },
+      "revId": "290f7bdc0ae240c0e67a7fca7d29ab6beb2e9cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004055563",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1373403?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ed25405c_bbe956a7",
+        "filename": "service/java/com/android/server/wifi/AvailableNetworkNotifier.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-28T01:30:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/inclusive-documentation for more details.",
+      "range": {
+        "startLine": 549,
+        "startChar": 67,
+        "endLine": 549,
+        "endChar": 76
+      },
+      "revId": "290f7bdc0ae240c0e67a7fca7d29ab6beb2e9cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004055563",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1373403?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "e590bf9f_7a78b548",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-28T01:30:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/inclusive-documentation for more details.",
+      "range": {
+        "startLine": 75,
+        "startChar": 66,
+        "endLine": 75,
+        "endChar": 75
+      },
+      "revId": "290f7bdc0ae240c0e67a7fca7d29ab6beb2e9cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004055563",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1373403?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "fbc321df_cf77d6d0",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-28T01:30:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/inclusive-documentation for more details.",
+      "range": {
+        "startLine": 79,
+        "startChar": 23,
+        "endLine": 79,
+        "endChar": 32
+      },
+      "revId": "290f7bdc0ae240c0e67a7fca7d29ab6beb2e9cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004055563",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1373403?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "67867985_c13c519f",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-28T01:30:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/inclusive-documentation for more details.",
+      "range": {
+        "startLine": 80,
+        "startChar": 23,
+        "endLine": 80,
+        "endChar": 32
+      },
+      "revId": "290f7bdc0ae240c0e67a7fca7d29ab6beb2e9cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004055563",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1373403?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "adddde9a_c69b7f80",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-28T01:30:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/inclusive-documentation for more details.",
+      "range": {
+        "startLine": 160,
+        "startChar": 37,
+        "endLine": 160,
+        "endChar": 46
+      },
+      "revId": "290f7bdc0ae240c0e67a7fca7d29ab6beb2e9cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004055563",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1373403?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "746dd34d_3846dabd",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-28T01:30:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/inclusive-documentation for more details.",
+      "range": {
+        "startLine": 161,
+        "startChar": 36,
+        "endLine": 161,
+        "endChar": 45
+      },
+      "revId": "290f7bdc0ae240c0e67a7fca7d29ab6beb2e9cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004055563",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1373403?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "45386cd0_232ea5a5",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2157,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-28T01:30:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/inclusive-documentation for more details.",
+      "range": {
+        "startLine": 2157,
+        "startChar": 50,
+        "endLine": 2157,
+        "endChar": 59
+      },
+      "revId": "290f7bdc0ae240c0e67a7fca7d29ab6beb2e9cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004055563",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1373403?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "aba1c8c3_c4a21e17",
+        "filename": "service/java/com/android/server/wifi/WifiVendorHal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2158,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-28T01:30:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/inclusive-documentation for more details.",
+      "range": {
+        "startLine": 2158,
+        "startChar": 50,
+        "endLine": 2158,
+        "endChar": 59
+      },
+      "revId": "290f7bdc0ae240c0e67a7fca7d29ab6beb2e9cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004055563",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1373403?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "9226351b_24895c17",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-28T01:30:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/inclusive-documentation for more details.",
+      "range": {
+        "startLine": 74,
+        "startChar": 53,
+        "endLine": 74,
+        "endChar": 62
+      },
+      "revId": "290f7bdc0ae240c0e67a7fca7d29ab6beb2e9cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004055563",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1373403?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "2420b539_2e9c6f4c",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-28T01:30:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/inclusive-documentation for more details.",
+      "range": {
+        "startLine": 75,
+        "startChar": 52,
+        "endLine": 75,
+        "endChar": 61
+      },
+      "revId": "290f7bdc0ae240c0e67a7fca7d29ab6beb2e9cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004055563",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1373403?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "cf623dad_c7ca97e7",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-28T01:30:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/inclusive-documentation for more details.",
+      "range": {
+        "startLine": 172,
+        "startChar": 52,
+        "endLine": 172,
+        "endChar": 61
+      },
+      "revId": "290f7bdc0ae240c0e67a7fca7d29ab6beb2e9cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004055563",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1373403?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "655a1ddf_3b7152df",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiConnectivityHelperTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-28T01:30:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/inclusive-documentation for more details.",
+      "range": {
+        "startLine": 193,
+        "startChar": 53,
+        "endLine": 193,
+        "endChar": 62
+      },
+      "revId": "290f7bdc0ae240c0e67a7fca7d29ab6beb2e9cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004055563",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1373403?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "a7ae2826_1cb8a58b",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1752,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-28T01:30:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/inclusive-documentation for more details.",
+      "range": {
+        "startLine": 1752,
+        "startChar": 20,
+        "endLine": 1752,
+        "endChar": 29
+      },
+      "revId": "290f7bdc0ae240c0e67a7fca7d29ab6beb2e9cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004055563",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1373403?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "30685590_0fcb858e",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1753,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-28T01:30:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/inclusive-documentation for more details.",
+      "range": {
+        "startLine": 1753,
+        "startChar": 20,
+        "endLine": 1753,
+        "endChar": 29
+      },
+      "revId": "290f7bdc0ae240c0e67a7fca7d29ab6beb2e9cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004055563",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1373403?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "72e36362_5d6fb643",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1775,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-28T01:30:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/inclusive-documentation for more details.",
+      "range": {
+        "startLine": 1775,
+        "startChar": 16,
+        "endLine": 1775,
+        "endChar": 25
+      },
+      "revId": "290f7bdc0ae240c0e67a7fca7d29ab6beb2e9cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004055563",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1373403?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b099f69e_55444674",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiVendorHalTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1776,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-28T01:30:54Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/inclusive-documentation for more details.",
+      "range": {
+        "startLine": 1776,
+        "startChar": 16,
+        "endLine": 1776,
+        "endChar": 25
+      },
+      "revId": "290f7bdc0ae240c0e67a7fca7d29ab6beb2e9cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
