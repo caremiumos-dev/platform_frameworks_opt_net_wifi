@@ -3249,6 +3249,10 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
             // no network has been found.
             if (mWifiNative.p2pListNetworks(mGroups) || reload) {
                 for (WifiP2pGroup group : mGroups.getGroupList()) {
+                    if (mThisDevice == null || group.getOwner() == null) {
+                        Log.d(TAG, "mThisDevice or group.getOwner() null");
+                        continue;
+                    }
                     if (mThisDevice.deviceAddress.equals(group.getOwner().deviceAddress)) {
                         group.setOwner(mThisDevice);
                     }
