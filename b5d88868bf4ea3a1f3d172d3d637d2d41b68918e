@@ -1,0 +1,58 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004114593",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1380277?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "28d182fd_daccdb3e",
+        "filename": "service/java/com/android/server/wifi/FakeWifiLog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-30T14:04:50Z",
+      "side": 1,
+      "message": "Wrong casing for \"sNoLogMessage\". static final variables should be ALL_UPPERCASE.",
+      "range": {
+        "startLine": 21,
+        "startChar": 12,
+        "endLine": 21,
+        "endChar": 51
+      },
+      "revId": "b5d88868bf4ea3a1f3d172d3d637d2d41b68918e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004114593",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1380277?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "a427e28a_38399ae0",
+        "filename": "service/java/com/android/server/wifi/LogcatLog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-30T14:04:50Z",
+      "side": 1,
+      "message": "Wrong casing for \"sNoLogMessage\". static final variables should be ALL_UPPERCASE.",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 51
+      },
+      "revId": "b5d88868bf4ea3a1f3d172d3d637d2d41b68918e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
