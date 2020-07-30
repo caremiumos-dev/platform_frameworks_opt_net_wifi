@@ -1170,7 +1170,7 @@ public class WifiMetricsTest {
         }
 
         assertEquals(SIZE_OPEN_NETWORK_RECOMMENDER_BLOCKLIST,
-                mDecodedProto.openNetworkRecommenderBlacklistSize);
+                mDecodedProto.openNetworkRecommenderBlocklistSize);
         assertEquals(IS_WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON,
                 mDecodedProto.isWifiNetworksAvailableNotificationOn);
         assertEquals(NUM_OPEN_NETWORK_RECOMMENDATION_UPDATES,
@@ -2216,7 +2216,7 @@ public class WifiMetricsTest {
         // This should clear most metrics in mWifiMetrics
         dumpProtoAndDeserialize();
         assertEquals(SIZE_OPEN_NETWORK_RECOMMENDER_BLOCKLIST,
-                mDecodedProto.openNetworkRecommenderBlacklistSize);
+                mDecodedProto.openNetworkRecommenderBlocklistSize);
         assertEquals(IS_WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON,
                 mDecodedProto.isWifiNetworksAvailableNotificationOn);
         assertEquals(NUM_OPEN_NETWORK_RECOMMENDATION_UPDATES,
@@ -2226,7 +2226,7 @@ public class WifiMetricsTest {
         // others do not.
         dumpProtoAndDeserialize();
         assertEquals(SIZE_OPEN_NETWORK_RECOMMENDER_BLOCKLIST,
-                mDecodedProto.openNetworkRecommenderBlacklistSize);
+                mDecodedProto.openNetworkRecommenderBlocklistSize);
         assertEquals(IS_WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON,
                 mDecodedProto.isWifiNetworksAvailableNotificationOn);
         assertEquals(0, mDecodedProto.numOpenNetworkRecommendationUpdates);
