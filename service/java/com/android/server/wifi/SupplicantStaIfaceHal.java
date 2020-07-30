@@ -2332,6 +2332,10 @@ public class SupplicantStaIfaceHal {
             } catch (RemoteException e) {
                 handleRemoteException(e, methodStr);
                 return false;
+            } catch (NullPointerException e) {
+                Log.e(TAG, "ISupplicant.removeInterface exception: " + e);
+                clearState();
+                return false;
             }
         }
     }
