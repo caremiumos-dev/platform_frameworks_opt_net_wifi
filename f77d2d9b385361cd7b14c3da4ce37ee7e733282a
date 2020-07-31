@@ -1,0 +1,48 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004140785",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1382125?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "d0054939_fe42d960",
+          "description": "Change to \"service/java/com/android/server/wifi/WifiLockManager.java\"",
+          "replacements": [
+            {
+              "path": "service/java/com/android/server/wifi/WifiLockManager.java",
+              "range": {
+                "startLine": 834,
+                "startChar": 28,
+                "endLine": 834,
+                "endChar": 37
+              },
+              "replacement": " Couldn\u0027t "
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "5b9d0bbc_7341a85b",
+        "filename": "service/java/com/android/server/wifi/WifiLockManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-31T16:57:15Z",
+      "side": 1,
+      "message": "Common typo found: \" Couldnt \" -- should it be \" Couldn\u0027t \"?\nCheck whether the apostrophe needs to be escaped.\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 834,
+        "startChar": 28,
+        "endLine": 834,
+        "endChar": 37
+      },
+      "revId": "f77d2d9b385361cd7b14c3da4ce37ee7e733282a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
