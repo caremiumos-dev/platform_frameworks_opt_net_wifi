@@ -828,7 +828,11 @@ public class WifiLockManager {
         }
 
         public void unlinkDeathRecipient() {
-            mBinder.unlinkToDeath(this, 0);
+            try {
+                mBinder.unlinkToDeath(this, 0);
+            } catch(java.util.NoSuchElementException e) {
+                Log.d(TAG, " Couldnt unlink to death:" + e);
+            }
         }
 
         public String toString() {
