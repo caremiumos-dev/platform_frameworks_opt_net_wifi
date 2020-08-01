@@ -1,0 +1,11 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Autosubmit+1: Quang Luong <qal@google.com>
+Code-Review+1: Jeff Sharkey <jsharkey@google.com>
+Code-Review+1: David Su <dysu@google.com>
+Code-Review+2: Etan Cohen <etancohen@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Sat, 01 Aug 2020 01:31:43 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/opt/net/wifi/+/1384172
+Project: platform/frameworks/opt/net/wifi
+Branch: refs/heads/master
