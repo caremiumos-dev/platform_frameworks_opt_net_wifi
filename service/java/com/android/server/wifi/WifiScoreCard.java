@@ -46,6 +46,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
@@ -581,11 +582,18 @@ public class WifiScoreCard {
     }
 
     private long computeHashLong(String ssid, MacAddress mac) {
+        ArrayList<Byte> decodedSsid = new ArrayList<>();
+        try {
+            decodedSsid = NativeUtil.decodeSsid(ssid);
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "validateSsid failed: malformed string: " + ssid);
+            return 0;
+        }
         byte[][] parts = {
                 // Our seed keeps the L2Keys specific to this device
                 mL2KeySeed.getBytes(),
                 // ssid is either quoted utf8 or hex-encoded bytes; turn it into plain bytes.
-                NativeUtil.byteArrayFromArrayList(NativeUtil.decodeSsid(ssid)),
+                NativeUtil.byteArrayFromArrayList(decodedSsid),
                 // And the BSSID
                 mac.toByteArray()
         };
