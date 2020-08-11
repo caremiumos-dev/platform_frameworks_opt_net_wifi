@@ -494,7 +494,8 @@ public class AvailableNetworkNotifier {
         mContext.sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
         mContext.startActivity(
                 new Intent(Settings.ACTION_WIFI_SETTINGS)
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         clearPendingNotification(false /* resetRepeatTime */);
     }
 
