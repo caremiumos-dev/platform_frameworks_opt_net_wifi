@@ -1039,6 +1039,13 @@ public class ClientModeImplTest extends WifiBaseTest {
         assertEquals(sFreq, wifiInfo.getFrequency());
         assertTrue(sWifiSsid.equals(wifiInfo.getWifiSsid()));
         assertNull(wifiInfo.getPasspointProviderFriendlyName());
+        expectRegisterNetworkAgent((na) -> { }, (nc) -> {
+            WifiInfo wifiInfoFromTi = (WifiInfo) nc.getTransportInfo();
+            assertEquals(sBSSID, wifiInfoFromTi.getBSSID());
+            assertEquals(sFreq, wifiInfoFromTi.getFrequency());
+            assertTrue(sWifiSsid.equals(wifiInfoFromTi.getWifiSsid()));
+            assertNull(wifiInfoFromTi.getPasspointProviderFriendlyName());
+        });
         // Ensure the connection stats for the network is updated.
         verify(mWifiConfigManager).updateNetworkAfterConnect(FRAMEWORK_NETWORK_ID);
         verify(mWifiConfigManager).updateRandomizedMacExpireTime(any(), anyLong());
