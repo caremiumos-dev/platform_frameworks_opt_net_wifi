@@ -112,6 +112,7 @@ import com.android.internal.util.MessageUtils;
 import com.android.internal.util.Protocol;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
+import com.android.modules.utils.build.SdkLevel;
 import com.android.net.module.util.Inet4AddressUtils;
 import com.android.server.wifi.MboOceController.BtmFrameData;
 import com.android.server.wifi.WifiCarrierInfoManager.SimAuthRequestData;
@@ -2457,6 +2458,7 @@ public class ClientModeImpl extends StateMachine {
              */
             int newSignalLevel = RssiUtil.calculateSignalLevel(mContext, newRssi);
             if (newSignalLevel != mLastSignalLevel) {
+                // TODO (b/162602799): Do we need to change the update frequency?
                 updateCapabilities();
                 sendRssiChangeBroadcast(newRssi);
             }
@@ -4489,6 +4491,12 @@ public class ClientModeImpl extends StateMachine {
         if (!mWifiInfo.getSSID().equals(WifiManager.UNKNOWN_SSID)) {
             builder.setSsid(mWifiInfo.getSSID());
         }
+
+        // Only send out WifiInfo in >= Android S devices.
+        if (SdkLevel.isAtLeastS()) {
+            builder.setTransportInfo(mWifiInfo);
+        }
+
         Pair<Integer, String> specificRequestUidAndPackageName =
                 mNetworkFactory.getSpecificNetworkRequestUidAndPackageName(
                         currentWifiConfiguration);
