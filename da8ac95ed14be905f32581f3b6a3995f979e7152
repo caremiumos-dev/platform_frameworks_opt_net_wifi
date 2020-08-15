@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93f207dc_b2aa4d1c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1746668
+      },
+      "writtenOn": "2020-08-15T01:37:50Z",
+      "side": 1,
+      "message": "I added logs in method dump, but I couldn\u0027t see the logs printout during crashing, need more investigation. By the way, I can easily reproduce the this crashing issue on my device.",
+      "revId": "da8ac95ed14be905f32581f3b6a3995f979e7152",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
