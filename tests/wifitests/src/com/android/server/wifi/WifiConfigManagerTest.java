@@ -31,7 +31,6 @@ import android.content.pm.UserInfo;
 import android.database.ContentObserver;
 import android.net.IpConfiguration;
 import android.net.MacAddress;
-import android.net.util.MacAddressUtils;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiConfiguration.NetworkSelectionStatus;
@@ -53,6 +52,7 @@ import androidx.test.filters.SmallTest;
 
 import com.android.dx.mockito.inline.extended.ExtendedMockito;
 import com.android.internal.R;
+import com.android.net.module.util.MacAddressUtils;
 import com.android.server.wifi.util.TelephonyUtil;
 import com.android.server.wifi.util.WifiPermissionsUtil;
 import com.android.server.wifi.util.WifiPermissionsWrapper;
