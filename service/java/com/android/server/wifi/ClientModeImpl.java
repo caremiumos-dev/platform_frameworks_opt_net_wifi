@@ -735,6 +735,7 @@ public class ClientModeImpl extends StateMachine {
     private final SimRequiredNotifier mSimRequiredNotifier;
     private final ConnectionFailureNotifier mConnectionFailureNotifier;
     private WifiNetworkSuggestionsManager mWifiNetworkSuggestionsManager;
+    private final WifiNetworkSelector mWifiNetworkSelector;
     // Maximum duration to continue to log Wifi usability stats after a data stall is triggered.
     @VisibleForTesting
     public static final long DURATION_TO_WAIT_ADD_STATS_AFTER_DATA_STALL_MS = 30 * 1000;
@@ -752,7 +753,8 @@ public class ClientModeImpl extends StateMachine {
                             MboOceController mboOceController,
                             WifiCarrierInfoManager wifiCarrierInfoManager,
                             EapFailureNotifier eapFailureNotifier,
-                            SimRequiredNotifier simRequiredNotifier) {
+                            SimRequiredNotifier simRequiredNotifier,
+                            WifiNetworkSelector wifiNetworkSelector) {
         super(TAG, looper);
         mWifiInjector = wifiInjector;
         mWifiMetrics = mWifiInjector.getWifiMetrics();
@@ -767,6 +769,7 @@ public class ClientModeImpl extends StateMachine {
         mWrongPasswordNotifier = wrongPasswordNotifier;
         mEapFailureNotifier = eapFailureNotifier;
         mSimRequiredNotifier = simRequiredNotifier;
+        mWifiNetworkSelector = wifiNetworkSelector;
         mSarManager = sarManager;
         mWifiTrafficPoller = wifiTrafficPoller;
         mLinkProbeManager = linkProbeManager;
@@ -3507,6 +3510,11 @@ public class ClientModeImpl extends StateMachine {
                 case WifiP2pServiceImpl.P2P_CONNECTION_CHANGED:
                     NetworkInfo info = (NetworkInfo) message.obj;
                     mP2pConnected.set(info.isConnected());
+                    if (info.isConnected()) {
+                        mWifiNetworkSelector.saveP2pMode(1);
+                    } else {
+                        mWifiNetworkSelector.saveP2pMode(0);
+                    }
                     break;
                 case WifiP2pServiceImpl.DISCONNECT_WIFI_REQUEST:
                     mTemporarilyDisconnectWifi = (message.arg1 == 1);

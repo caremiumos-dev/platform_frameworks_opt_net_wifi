@@ -349,7 +349,7 @@ public class WifiInjector {
                 mSarManager, mWifiTrafficPoller, mLinkProbeManager, mBatteryStats,
                 supplicantStateTracker, mMboOceController, mWifiCarrierInfoManager,
                 new EapFailureNotifier(mContext, mFrameworkFacade, mWifiCarrierInfoManager),
-                new SimRequiredNotifier(mContext, mFrameworkFacade));
+                new SimRequiredNotifier(mContext, mFrameworkFacade), mWifiNetworkSelector);
         mActiveModeWarden = new ActiveModeWarden(this, wifiLooper,
                 mWifiNative, new DefaultModeManager(mContext), mBatteryStats, mWifiDiagnostics,
                 mContext, mClientModeImpl, mSettingsStore, mFrameworkFacade, mWifiPermissionsUtil);

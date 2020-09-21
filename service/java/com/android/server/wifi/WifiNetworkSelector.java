@@ -108,6 +108,7 @@ public class WifiNetworkSelector {
     private ThroughputPredictor mThroughputPredictor;
     private boolean mIsBluetoothConnected = false;
     private WifiChannelUtilization mWifiChannelUtilization;
+    private int mP2pMode = 0;
 
     /**
      * Interface for WiFi Network Nominator
@@ -424,6 +425,12 @@ public class WifiNetworkSelector {
                             .append(")").append(" / ");
                     continue;
                 }
+            }
+            if (mP2pMode == 1 &&
+                    (scanResult.capabilities.contains("WAPI-PSK") ||
+                    scanResult.capabilities.contains("WAPI-CERT"))) {
+                Log.d(TAG, "skip wapi ap when p2p connected");
+                continue;
             }
 
             validScanDetails.add(scanDetail);
@@ -1103,6 +1110,9 @@ public class WifiNetworkSelector {
      */
     public void setBluetoothConnected(boolean isBlueToothConnected) {
         mIsBluetoothConnected = isBlueToothConnected;
+    }
+    public void saveP2pMode(int mode) {
+        mP2pMode = mode;
     }
 
     WifiNetworkSelector(Context context, WifiScoreCard wifiScoreCard, ScoringParams scoringParams,
