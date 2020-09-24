@@ -33,6 +33,42 @@
       "revId": "413f59eea61e4982ff79bfb74a1bcaf1fff7c5d3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "997a4e9e_05f09f7e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-09-24T14:19:48Z",
+      "side": 1,
+      "message": "This change conflicts with the internal branch. I have cherry-picked it there to resolve the conflict, after it is merged we can merge this change.",
+      "parentUuid": "bccb148f_0769d967",
+      "revId": "413f59eea61e4982ff79bfb74a1bcaf1fff7c5d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fef01992_4b40e13b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-09-24T14:19:48Z",
+      "side": 1,
+      "message": "This change conflicts with the internal branch. I have cherry-picked it there to resolve the conflict, after it is merged we can merge this change.",
+      "parentUuid": "bccb148f_0769d967",
+      "revId": "413f59eea61e4982ff79bfb74a1bcaf1fff7c5d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
