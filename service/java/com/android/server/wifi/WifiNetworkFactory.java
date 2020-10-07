@@ -33,6 +33,7 @@ import android.net.MacAddress;
 import android.net.NetworkCapabilities;
 import android.net.NetworkFactory;
 import android.net.NetworkRequest;
+import android.net.NetworkScore;
 import android.net.NetworkSpecifier;
 import android.net.wifi.IActionListener;
 import android.net.wifi.INetworkRequestMatchCallback;
@@ -382,7 +383,7 @@ public class WifiNetworkFactory extends NetworkFactory {
         configStore.registerStoreData(
                 wifiInjector.makeNetworkRequestStoreData(new NetworkRequestDataSource()));
 
-        setScoreFilter(SCORE_FILTER);
+        setScoreFilter(new NetworkScore(SCORE_FILTER));
     }
 
     private void saveToStore() {
@@ -508,7 +509,7 @@ public class WifiNetworkFactory extends NetworkFactory {
      * All the validation of the incoming request is done in this method.
      */
     @Override
-    public boolean acceptRequest(NetworkRequest networkRequest, int score) {
+    public boolean acceptRequest(NetworkRequest networkRequest) {
         NetworkSpecifier ns = networkRequest.getNetworkSpecifier();
         if (ns == null) {
             // Generic wifi request. Always accept.
@@ -571,7 +572,7 @@ public class WifiNetworkFactory extends NetworkFactory {
      * the incoming request.
      */
     @Override
-    protected void needNetworkFor(NetworkRequest networkRequest, int score) {
+    protected void needNetworkFor(NetworkRequest networkRequest) {
         NetworkSpecifier ns = networkRequest.getNetworkSpecifier();
         if (ns == null) {
             // Generic wifi request. Turn on auto-join if necessary.
@@ -942,7 +943,18 @@ public class WifiNetworkFactory extends NetworkFactory {
     public void setWifiState(boolean enabled) {
         if (mVerboseLoggingEnabled) Log.v(TAG, "setWifiState " + enabled);
         if (enabled) {
-            reevaluateAllRequests(); // Re-evaluate any pending requests.
+            // It seems this is not necessary, because there are two categories of requests
+            // accepted by this factory : generic requests, which are always accepted even
+            // if WiFi is off (in fact, calling this will call needNetworkFor again on these
+            // causing the count of requests to be overevaluated) and whose only effect is
+            // to set trusted connections allowed, and specific requests with a specifier,
+            // which are in fact rejected and marked unfulfillable by any factory when wifi is
+            // turned off. In principle this should mean they have to be reevaluated otherwise
+            // this code relies on CS specifics to release the requests soon enough, but in
+            // practice the code relies on this – in particular, acceptRequest will return
+            // false when turning wifi state on again because this is called before setting
+            // mWifiEnabled to true below.
+            // reevaluateAllRequests(); // Re-evaluate any pending requests.
         } else {
             if (mActiveSpecificNetworkRequest != null) {
                 Log.w(TAG, "Wifi off, cancelling " + mActiveSpecificNetworkRequest);

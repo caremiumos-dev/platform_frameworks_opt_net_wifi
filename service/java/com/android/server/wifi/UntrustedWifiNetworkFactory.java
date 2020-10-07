@@ -41,12 +41,10 @@ public class UntrustedWifiNetworkFactory extends NetworkFactory {
                                        WifiConnectivityManager connectivityManager) {
         super(l, c, TAG, f);
         mWifiConnectivityManager = connectivityManager;
-
-        setScoreFilter(SCORE_FILTER);
     }
 
     @Override
-    protected void needNetworkFor(NetworkRequest networkRequest, int score) {
+    protected void needNetworkFor(NetworkRequest networkRequest) {
         if (!networkRequest.hasCapability(NetworkCapabilities.NET_CAPABILITY_TRUSTED)) {
             if (++mConnectionReqCount == 1) {
                 mWifiConnectivityManager.setUntrustedConnectionAllowed(true);
