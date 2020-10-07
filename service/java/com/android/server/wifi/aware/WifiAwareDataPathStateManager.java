@@ -34,6 +34,7 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkFactory;
 import android.net.NetworkProvider;
 import android.net.NetworkRequest;
+import android.net.NetworkScore;
 import android.net.NetworkSpecifier;
 import android.net.RouteInfo;
 import android.net.wifi.aware.TlvBufferUtils;
@@ -92,7 +93,8 @@ public class WifiAwareDataPathStateManager {
     private static final String AWARE_INTERFACE_PREFIX = "aware_data";
     private static final String NETWORK_TAG = "WIFI_AWARE_FACTORY";
     private static final String AGENT_TAG_PREFIX = "WIFI_AWARE_AGENT_";
-    private static final int NETWORK_FACTORY_SCORE_AVAIL = 1;
+    private static final NetworkScore NETWORK_FACTORY_SCORE_AVAIL =
+            new NetworkScore.Builder().setLegacyInt(1).build();
     private static final int NETWORK_FACTORY_BANDWIDTH_AVAIL = 1;
     private static final int NETWORK_FACTORY_SIGNAL_STRENGTH_AVAIL = 1;
 
@@ -818,10 +820,9 @@ public class WifiAwareDataPathStateManager {
         }
 
         @Override
-        public boolean acceptRequest(NetworkRequest request, int score) {
+        public boolean acceptRequest(NetworkRequest request) {
             if (VDBG) {
-                Log.v(TAG, "WifiAwareNetworkFactory.acceptRequest: request=" + request + ", score="
-                        + score);
+                Log.v(TAG, "WifiAwareNetworkFactory.acceptRequest: request=" + request);
             }
 
             if (!mMgr.isUsageEnabled()) {
@@ -901,10 +902,10 @@ public class WifiAwareDataPathStateManager {
         }
 
         @Override
-        protected void needNetworkFor(NetworkRequest networkRequest, int score) {
+        protected void needNetworkFor(NetworkRequest networkRequest) {
             if (mDbg) {
                 Log.v(TAG, "WifiAwareNetworkFactory.needNetworkFor: networkRequest="
-                        + networkRequest + ", score=" + score);
+                        + networkRequest);
             }
 
             NetworkSpecifier networkSpecifierObj = networkRequest.getNetworkSpecifier();
@@ -1026,7 +1027,7 @@ public class WifiAwareDataPathStateManager {
         private AwareNetworkRequestInformation mAwareNetworkRequestInfo;
 
         WifiAwareNetworkAgent(Looper looper, Context context, String logTag,
-                NetworkCapabilities nc, LinkProperties lp, int score,
+                NetworkCapabilities nc, LinkProperties lp, NetworkScore score,
                 NetworkAgentConfig config, NetworkProvider provider,
                 AwareNetworkRequestInformation anri) {
             super(context, looper, logTag, nc, lp, score, config, provider);

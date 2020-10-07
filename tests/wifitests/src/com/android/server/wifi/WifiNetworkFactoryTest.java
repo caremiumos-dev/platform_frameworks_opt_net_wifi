@@ -240,14 +240,14 @@ public class WifiNetworkFactoryTest extends WifiBaseTest {
     @Test
     public void testHandleNetworkRequestWithNoSpecifier() {
         assertFalse(mWifiNetworkFactory.hasConnectionRequests());
-        mWifiNetworkFactory.needNetworkFor(mNetworkRequest, 0);
+        mWifiNetworkFactory.needNetworkFor(mNetworkRequest);
 
         // First network request should turn on auto-join.
         verify(mWifiConnectivityManager).setTrustedConnectionAllowed(true);
         assertTrue(mWifiNetworkFactory.hasConnectionRequests());
 
         // Subsequent ones should do nothing.
-        mWifiNetworkFactory.needNetworkFor(mNetworkRequest, 0);
+        mWifiNetworkFactory.needNetworkFor(mNetworkRequest);
         verifyNoMoreInteractions(mWifiConnectivityManager);
     }
 
@@ -260,7 +260,7 @@ public class WifiNetworkFactoryTest extends WifiBaseTest {
         mWifiNetworkFactory.releaseNetworkFor(mNetworkRequest);
         assertFalse(mWifiNetworkFactory.hasConnectionRequests());
 
-        mWifiNetworkFactory.needNetworkFor(mNetworkRequest, 0);
+        mWifiNetworkFactory.needNetworkFor(mNetworkRequest);
         assertTrue(mWifiNetworkFactory.hasConnectionRequests());
         verify(mWifiConnectivityManager).setTrustedConnectionAllowed(true);
 
@@ -274,7 +274,7 @@ public class WifiNetworkFactoryTest extends WifiBaseTest {
      */
     @Test
     public void testHandleAcceptNetworkRequestWithNoSpecifier() {
-        assertTrue(mWifiNetworkFactory.acceptRequest(mNetworkRequest, 0));
+        assertTrue(mWifiNetworkFactory.acceptRequest(mNetworkRequest));
     }
 
     /**
@@ -290,7 +290,7 @@ public class WifiNetworkFactoryTest extends WifiBaseTest {
 
         attachDefaultWifiNetworkSpecifierAndAppInfo(TEST_UID_1, false);
 
-        assertFalse(mWifiNetworkFactory.acceptRequest(mNetworkRequest, 0));
+        assertFalse(mWifiNetworkFactory.acceptRequest(mNetworkRequest));
         mLooper.dispatchAll();
         verify(mConnectivityManager).declareNetworkRequestUnfulfillable(eq(mNetworkRequest));
     }
@@ -307,7 +307,7 @@ public class WifiNetworkFactoryTest extends WifiBaseTest {
         mNetworkRequest.networkCapabilities.addCapability(
                 NetworkCapabilities.NET_CAPABILITY_INTERNET);
 
-        assertFalse(mWifiNetworkFactory.acceptRequest(mNetworkRequest, 0));
+        assertFalse(mWifiNetworkFactory.acceptRequest(mNetworkRequest));
         mLooper.dispatchAll();
         verify(mConnectivityManager).declareNetworkRequestUnfulfillable(eq(mNetworkRequest));
     }
@@ -323,7 +323,7 @@ public class WifiNetworkFactoryTest extends WifiBaseTest {
 
         attachDefaultWifiNetworkSpecifierAndAppInfo(TEST_UID_1, false);
 
-        assertFalse(mWifiNetworkFactory.acceptRequest(mNetworkRequest, 0));
+        assertFalse(mWifiNetworkFactory.acceptRequest(mNetworkRequest));
         mLooper.dispatchAll();
         verify(mConnectivityManager).declareNetworkRequestUnfulfillable(eq(mNetworkRequest));
     }

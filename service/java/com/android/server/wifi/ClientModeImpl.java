@@ -55,6 +55,7 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkProvider;
+import android.net.NetworkScore;
 import android.net.SocketKeepalive;
 import android.net.StaticIpConfiguration;
 import android.net.TcpKeepalivePacketData;
@@ -3261,7 +3262,7 @@ public class ClientModeImpl extends StateMachine {
     void registerNetworkFactory() {
         if (!checkAndSetConnectivityInstance()) return;
         mNetworkFactory.register();
-        mUntrustedNetworkFactory.register();
+        mUntrustedNetworkFactory.registerForAllRequests();
     }
 
     /**
@@ -4581,7 +4582,7 @@ public class ClientModeImpl extends StateMachine {
 
     private class WifiNetworkAgent extends NetworkAgent {
         WifiNetworkAgent(Context c, Looper l, String tag, NetworkCapabilities nc, LinkProperties lp,
-                int score, NetworkAgentConfig config, NetworkProvider provider) {
+                NetworkScore score, NetworkAgentConfig config, NetworkProvider provider) {
             super(c, l, tag, nc, lp, score, config, provider);
             register();
         }
@@ -4770,8 +4771,9 @@ public class ClientModeImpl extends StateMachine {
                 mNetworkAgent.unregister();
             }
             mNetworkAgent = new WifiNetworkAgent(mContext, getHandler().getLooper(),
-                    "WifiNetworkAgent", nc, mLinkProperties, 60, naConfig,
-                    mNetworkFactory.getProvider());
+                    "WifiNetworkAgent", nc, mLinkProperties,
+                    new NetworkScore.Builder().setLegacyInt(60).build(),
+                    naConfig, mNetworkFactory.getProvider());
             mWifiScoreReport.setNetworkAgent(mNetworkAgent);
 
             // We must clear the config BSSID, as the wifi chipset may decide to roam
