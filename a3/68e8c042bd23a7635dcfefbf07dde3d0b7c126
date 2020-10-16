@@ -1,0 +1,15 @@
+Open-Source-Licensing+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Open-Source-Licensing+1: Lint 🤖 <android-build-prod-ayeaye@system.gserviceaccount.com>
+Lint+1: Lint 🤖 <android-build-ayeaye@system.gserviceaccount.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Verified+1: Jan Altensen <info@stricted.net>
+Code-Review+1: Jan Altensen <info@stricted.net>
+Code-Review+1: Nick Østergaard <nick.oe@samsung.com>
+Code-Review+1: Luca Stefani <luca.stefani.ge1@gmail.com>
+Code-Review+1: Roshan Pius <rpius@google.com>
+Code-Review+2: Etan Cohen <etancohen@google.com>
+Submitted-by: David Su <dysu@google.com>
+Submitted-at: Fri, 16 Oct 2020 18:04:31 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/opt/net/wifi/+/1415129
+Project: platform/frameworks/opt/net/wifi
+Branch: refs/heads/master
