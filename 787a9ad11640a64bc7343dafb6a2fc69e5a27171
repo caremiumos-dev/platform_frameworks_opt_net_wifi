@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8678c349_a4127f99",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-19T02:54:27Z",
+      "side": 1,
+      "message": "LGTM with two nits that can be ignored, and assuming TH is happy.",
+      "revId": "787a9ad11640a64bc7343dafb6a2fc69e5a27171",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89fe368d_cb27598d",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-19T02:54:27Z",
+      "side": 1,
+      "message": "super nit: maybe nullability annotations.",
+      "range": {
+        "startLine": 130,
+        "startChar": 32,
+        "endLine": 130,
+        "endChar": 64
+      },
+      "revId": "787a9ad11640a64bc7343dafb6a2fc69e5a27171",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1e76adb_56d40259",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiScoreReportTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-19T02:54:27Z",
+      "side": 1,
+      "message": "super nit: maybe /* score */",
+      "range": {
+        "startLine": 132,
+        "startChar": 42,
+        "endLine": 132,
+        "endChar": 43
+      },
+      "revId": "787a9ad11640a64bc7343dafb6a2fc69e5a27171",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
