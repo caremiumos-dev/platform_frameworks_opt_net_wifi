@@ -429,6 +429,9 @@ public class SoftApManager implements ActiveModeManager {
             return ERROR_UNSUPPORTED_CONFIGURATION;
         }
 
+        //check user's 11ax setting and use it while starting softap
+        setEnableIeee80211AX(Settings.Global.getInt(mContext.getContentResolver(), "softap_enable_11ax", 0) == 1);
+
         if (!mWifiNative.startSoftAp(mApInterfaceName,
                   localConfigBuilder.build(), mSoftApListener)) {
             Log.e(TAG, "Soft AP start failed");
@@ -440,6 +443,10 @@ public class SoftApManager implements ActiveModeManager {
         Log.d(TAG, "Soft AP is started ");
 
         return SUCCESS;
+    }
+
+     private boolean setEnableIeee80211AX(boolean enable) {
+        return mWifiNative.setEnableIeee80211AX(enable);
     }
 
     /**

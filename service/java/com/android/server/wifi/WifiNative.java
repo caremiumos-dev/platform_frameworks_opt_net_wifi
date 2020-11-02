@@ -2960,6 +2960,10 @@ public class WifiNative {
         return mWifiVendorHal.setCountryCodeHal(ifaceName, countryCode);
     }
 
+    public boolean setEnableIeee80211AX(boolean enable) {
+        return mHostapdHal.setEnableIeee80211AX(enable);
+    }
+
     //---------------------------------------------------------------------------------
     /* Wifi Logger commands/events */
     public static interface WifiLoggerEventHandler {

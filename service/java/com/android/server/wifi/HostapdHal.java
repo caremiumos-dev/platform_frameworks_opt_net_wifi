@@ -83,6 +83,7 @@ public class HostapdHal {
     private HostapdDeathRecipient mHostapdDeathRecipient;
     // Death recipient cookie registered for current supplicant instance.
     private long mDeathRecipientCookie = 0;
+    private boolean mEnableDot11ax = false;
 
     private final IServiceNotification mServiceNotificationCallback =
             new IServiceNotification.Stub() {
@@ -477,9 +478,7 @@ public class HostapdHal {
                                 new android.hardware.wifi.hostapd.V1_2.IHostapd.IfaceParams();
                         ifaceParams1_2.V1_1 = ifaceParams1_1;
 
-                        ifaceParams1_2.hwModeParams.enable80211AX =
-                                mContext.getResources().getBoolean(
-                                    R.bool.config_wifiSoftapIeee80211axSupported);
+                        ifaceParams1_2.hwModeParams.enable80211AX = mEnableDot11ax;
                         ifaceParams1_2.hwModeParams.enable6GhzBand =
                                 mContext.getResources().getBoolean(
                                     R.bool.config_wifiSoftap6ghzSupported);
@@ -534,6 +533,15 @@ public class HostapdHal {
                 return false;
             }
         }
+    }
+
+     /**
+     * @param enable true , disable false.
+     * @return true on success, false otherwise.
+     */
+    public boolean setEnableIeee80211AX(boolean enable) {
+        mEnableDot11ax = enable;
+        return true;
     }
 
     /**
