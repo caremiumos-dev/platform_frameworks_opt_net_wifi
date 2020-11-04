@@ -356,6 +356,7 @@ public class ActiveModeWarden {
             SoftApManager softApManager = (SoftApManager) manager;
 
             if (ipMode == WifiManager.IFACE_IP_MODE_UNSPECIFIED
+                    || ipMode == WifiManager.IFACE_IP_MODE_TETHERED 
                     || getRoleForSoftApIpMode(ipMode) == softApManager.getRole()) {
                 softApManager.stop();
             }
