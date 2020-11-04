@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005928069",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1487499?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "9b0efabc_07ac4ac4",
+        "filename": "service/java/com/android/server/wifi/ActiveModeWarden.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-04T11:51:50Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 359,
+        "startChar": 67,
+        "endLine": 359,
+        "endChar": 68
+      },
+      "revId": "7d647ed018c413988b5611df39fe90785a552bd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
