@@ -147,6 +147,9 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 
+import android.net.NetworkInfo;
+import android.net.NetworkInfo.DetailedState;
+import android.widget.Toast;
 /**
  * WifiService handles remote WiFi operation requests by implementing
  * the IWifiManager interface.
@@ -188,6 +191,7 @@ public class WifiServiceImpl extends BaseWifiService {
     private final WifiConfigManager mWifiConfigManager;
     private final PasspointManager mPasspointManager;
     private final WifiLog mLog;
+   private SoftApConfiguration mlocalSoftApConfig;
     /**
      * Verbose logging flag. Toggled by developer options.
      */
@@ -290,6 +294,29 @@ public class WifiServiceImpl extends BaseWifiService {
     private final WifiThreadRunner mWifiThreadRunner;
     private final MemoryStoreImpl mMemoryStoreImpl;
     private final WifiScoreCard mWifiScoreCard;
+
+    private boolean mRestartWifiApIfRequired = false;
+    private void restartSoftApIfNeeded() {
+        if (getWifiApEnabledState() == WifiManager.WIFI_AP_STATE_DISABLED) {
+            Log.d(TAG ,"not restarting SoftAP as Hotspot is disabled.");
+            return;
+        }
+
+        Log.d(TAG ,"Stop SoftAP.");
+        mRestartWifiApIfRequired = true;
+        stopSoftAp();
+    }
+
+    private boolean mRestartLocalApIfRequired = false;
+    private void restartLocalSoftApIfNeeded() {
+        if (mLohsSoftApTracker.getLohsSoftApState() == WifiManager.WIFI_AP_STATE_DISABLED) {
+            Log.d(TAG ,"not restarting Local only SoftAP while it is disabled.");
+            return;
+        }
+
+        mRestartLocalApIfRequired = true;
+        stopSoftApInternal(WifiManager.IFACE_IP_MODE_LOCAL_ONLY);
+    }
 
     public WifiServiceImpl(Context context, WifiInjector wifiInjector, AsyncChannel asyncChannel) {
         mContext = context;
@@ -985,11 +1012,55 @@ public class WifiServiceImpl extends BaseWifiService {
             Log.e(TAG, "Invalid SoftApConfiguration");
             return false;
         }
+        if (checkIfDFSConflict()) {
+            SoftApConfiguration.Builder configBuilder = new SoftApConfiguration.Builder(mWifiApConfigStore.getApConfiguration());
+            configBuilder.setBand(SoftApConfiguration.BAND_2GHZ);
+            mWifiApConfigStore.setApConfiguration(configBuilder.build());
+            Log.d(TAG, " set hotspot from 5G to 2.4G ");
+        }
 
         mActiveModeWarden.startSoftAp(apConfig);
         return true;
     }
 
+    private boolean checkIfDFSConflict() {
+        SoftApConfiguration softApConfig = mWifiApConfigStore.getApConfiguration();
+        if (softApConfig == null) {
+            return false;
+        } else {
+            boolean staApCoex = isDBSSupported()
+                    && !isTmobileSku()/* these dont support STA +SAP*/
+                    && !isSprintSku()
+                    && !isVerizonSku();
+            int apBand = softApConfig.getBand();
+            if (staApCoex && (apBand != SoftApConfiguration.BAND_2GHZ) {
+                WifiInfo wifiInfo = mClientModeImpl.getWifiInfo();
+                DetailedState state = WifiInfo.getDetailedStateOf(wifiInfo.getSupplicantState());
+                boolean isL2Connected =
+                        state == DetailedState.CONNECTING
+                        || state == DetailedState.OBTAINING_IPADDR
+                        || state == DetailedState.CONNECTED;
+                if (isL2Connected) {
+                    WifiInfo result = mClientModeImpl.syncRequestConnectionInfo();
+                    int freq = result != null ? result.getFrequency() : -1;
+                    if (freq != -1 && freq >= 5250 && freq <= 5720) {
+                        Log.d(TAG, "SoftAp not allowed to enable by Sta associated on DFS channel");
+                        new Thread() {
+                            public void run() {
+                                Looper.prepare();
+                                Toast.makeText(mContext,
+                                        mContext.getResources().getString(com.oneplus.internal.R.string.toast_switch_hotspot_to_24g_by_dfs),
+                                        Toast.LENGTH_SHORT).show();
+                                Looper.loop();
+                            };
+                        }.start();
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
     /**
      * see {@link android.net.wifi.WifiManager#stopSoftAp()}
      * @return {@code true} if softap stop was triggered
@@ -1143,6 +1214,14 @@ public class WifiServiceImpl extends BaseWifiService {
                 mTetheredSoftApState = state;
             }
 
+             if (state == WIFI_AP_STATE_DISABLED && mRestartWifiApIfRequired) {
+                mRestartWifiApIfRequired = false;
+                if (mWifiApConfigStore != null) {
+                    Log.d(TAG ,"TetheredSoftAp Restart.");
+                    startTetheredHotspot(mWifiApConfigStore.getApConfiguration());
+                }
+                return;
+            }
             Iterator<ISoftApCallback> iterator =
                     mRegisteredSoftApCallbacks.getCallbacks().iterator();
             while (iterator.hasNext()) {
@@ -1295,6 +1374,13 @@ public class WifiServiceImpl extends BaseWifiService {
             return mLohsSoftApCapability;
         }
 
+         public int getLohsSoftApState() {
+            return mLohsState;
+        }
+
+        public SoftApModeConfiguration getLohsSoftApModeConfig() {
+            return mActiveConfig;
+        }
         public void updateInterfaceIpState(String ifaceName, int mode) {
             // update interface IP state related to local-only hotspot
             synchronized (mLocalOnlyHotspotRequests) {
@@ -1582,6 +1668,16 @@ public class WifiServiceImpl extends BaseWifiService {
                     // also clear interface ip state
                     updateInterfaceIpState(mLohsInterfaceName,
                             WifiManager.IFACE_IP_MODE_UNSPECIFIED);
+                }
+                if (state == WIFI_AP_STATE_DISABLED && mRestartLocalApIfRequired) {
+                    mRestartLocalApIfRequired = false;
+                    if (mlocalSoftApConfig != null) {
+                        Log.d(TAG ,"LocalOnlyHotspot Restart SoftAP.");
+                        SoftApModeConfiguration activeConfig = new SoftApModeConfiguration(
+                                WifiManager.IFACE_IP_MODE_LOCAL_ONLY,
+                                mlocalSoftApConfig, mLohsSoftApTracker.getSoftApCapability());
+                        startSoftApInternal(activeConfig);
+                    }
                 }
                 // For enabling and enabled, just record the new state
                 mLohsState = state;
@@ -3129,9 +3225,55 @@ public class WifiServiceImpl extends BaseWifiService {
                 handleIdleModeChanged();
             } else if (action.equals(Intent.ACTION_SHUTDOWN)) {
                 handleShutDown();
+            } else if (action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) {
+                if (checkIfWifiWorkingAtDfs5g()) {
+                    boolean staApCoex = isDBSSupported()
+                            && isTmobileSku()/* these dont support STA + MHS*/
+                            && isSprintSku()
+                            && isVerizonSku();
+                    boolean teheredSoftapEnabledOn5g = getWifiApEnabledState() == WifiManager.WIFI_AP_STATE_ENABLED
+                            && mWifiApConfigStore.getApConfiguration().getBand() == SoftApConfiguration.BAND_5GHZ;
+                    boolean localOnlySoftapEnabledOn5g = mLohsSoftApTracker.getLohsSoftApState() == WifiManager.WIFI_AP_STATE_ENABLED
+                            && mLohsSoftApTracker.getLohsSoftApModeConfig().getSoftApConfiguration().getBand() == SoftApConfiguration.BAND_5GHZ;
+
+                    if (staApCoex && teheredSoftapEnabledOn5g) {
+                        Log.d(TAG, "Restarting SoftAp from 5G to 2.4G by Sta associated on DFS channel");
+                        Toast toast = Toast.makeText(mContext, "Hotspot can not be turned on as per current router settings, restarting in 2.4G", Toast.LENGTH_SHORT);
+                        toast.show();
+                        SoftApConfiguration softApConfig = new SoftApConfiguration.Builder(mWifiApConfigStore.getApConfiguration())
+                                .setBand(SoftApConfiguration.BAND_2GHZ).build();
+                        mWifiApConfigStore.setApConfiguration(softApConfig);
+                        restartSoftApIfNeeded();
+                    }
+
+                    if (staApCoex && localOnlySoftapEnabledOn5g) {
+                        Log.d(TAG, "Restarting SoftAp from 5G to 2.4G by Sta associated on DFS channel");
+                        Toast toast = Toast.makeText(mContext, "Hotspot can not be turned on as per current router settings", Toast.LENGTH_SHORT);
+                        toast.show();
+                        mlocalSoftApConfig = new SoftApConfiguration.Builder(mLohsSoftApTracker.getLohsSoftApModeConfig().getSoftApConfiguration())
+                                .setBand(SoftApConfiguration.BAND_2GHZ).build();
+                        restartLocalSoftApIfNeeded();
+                    }
+                }
             }
         }
     };
+
+    private boolean checkIfWifiWorkingAtDfs5g() {
+        WifiInfo wifiInfo = mClientModeImpl.getWifiInfo();
+        DetailedState state = WifiInfo.getDetailedStateOf(wifiInfo.getSupplicantState());
+        boolean isL2Connected =
+                state == DetailedState.OBTAINING_IPADDR
+                || state == DetailedState.CONNECTED;
+        if (isL2Connected) {
+            WifiInfo result = mClientModeImpl.syncRequestConnectionInfo();
+            int freq = result != null ? result.getFrequency() : -1;
+            if (freq != -1 && freq >= 5250 && freq <= 5720) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private void registerForBroadcasts() {
         IntentFilter intentFilter = new IntentFilter();
