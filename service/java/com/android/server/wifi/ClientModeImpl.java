@@ -4253,6 +4253,11 @@ public class ClientModeImpl extends StateMachine {
                             if (scanResult != null) {
                                 mWifiInfo.setFrequency(scanResult.frequency);
                             }
+                        } else if (mLastBssid != null) {
+                            ScanResult scanResult = getScanResultForBssid(mLastBssid);
+                            if (scanResult != null) {
+                                mWifiInfo.setFrequency(scanResult.frequency);
+                            }
                         }
 
                         // We need to get the updated pseudonym from supplicant for EAP-SIM/AKA/AKA'
@@ -4423,6 +4428,17 @@ public class ClientModeImpl extends StateMachine {
 
             return handleStatus;
         }
+    }
+
+    public ScanResult getScanResultForBssid(String bssid) {
+      ArrayList<ScanDetail> scanResults = mWifiNative.getScanResults(mInterfaceName);
+      ScanResult scanRes;
+          for (ScanDetail result : scanResults) {
+              scanRes = result.getScanResult();
+              if (scanRes.BSSID.equals(bssid))
+                  return scanRes;
+          }
+          return null;
     }
 
     private boolean handleL3MessagesWhenNotConnected(Message message) {
