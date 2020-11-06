@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005978106",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1490376?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "96347529_d4521fc8",
+          "description": "Change to \"service/java/com/android/server/wifi/WifiServiceImpl.java\"",
+          "replacements": [
+            {
+              "path": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+              "range": {
+                "startLine": 1032,
+                "startChar": 46,
+                "endLine": 1032,
+                "endChar": 52
+              },
+              "replacement": " don\u0027t "
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "7e2cdf1b_589d85b4",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-06T07:26:12Z",
+      "side": 1,
+      "message": "Common typo found: \" dont \" -- should it be \" don\u0027t \"?\nCheck whether the apostrophe needs to be escaped.\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027NO_TYPO_CHECK\u003d\u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 1032,
+        "startChar": 46,
+        "endLine": 1032,
+        "endChar": 52
+      },
+      "revId": "38b03b5a1611fe1298be3e59399c48374ca99d89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005978106",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1490376?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "cd3c1d77_da82618b",
+          "description": "Change to \"service/java/com/android/server/wifi/WifiServiceImpl.java\"",
+          "replacements": [
+            {
+              "path": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+              "range": {
+                "startLine": 3231,
+                "startChar": 53,
+                "endLine": 3231,
+                "endChar": 59
+              },
+              "replacement": " don\u0027t "
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "ee455da3_4e43c649",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3231,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-06T07:26:12Z",
+      "side": 1,
+      "message": "Common typo found: \" dont \" -- should it be \" don\u0027t \"?\nCheck whether the apostrophe needs to be escaped.\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027NO_TYPO_CHECK\u003d\u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 3231,
+        "startChar": 53,
+        "endLine": 3231,
+        "endChar": 59
+      },
+      "revId": "38b03b5a1611fe1298be3e59399c48374ca99d89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
