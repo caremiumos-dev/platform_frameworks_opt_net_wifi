@@ -22,6 +22,8 @@ import static com.android.server.wifi.ClientModeImpl.WIFI_WORK_SOURCE;
 import android.annotation.NonNull;
 import android.app.AlarmManager;
 import android.content.Context;
+import android.provider.Settings;
+import android.database.ContentObserver;
 import android.net.MacAddress;
 import android.net.wifi.ScanResult;
 import android.net.wifi.SupplicantState;
@@ -199,6 +201,7 @@ public class WifiConnectivityManager {
 
     private int mCurrentSingleScanScheduleIndex;
     private WifiChannelUtilization mWifiChannelUtilization;
+    private boolean mOpenNetworkNotificationOn = false;
     // Cached WifiCandidates used in high mobility state to avoid connecting to APs that are
     // moving relative to the user.
     private CachedWifiCandidates mCachedWifiCandidates = null;
@@ -791,6 +794,23 @@ public class WifiConnectivityManager {
         mWifiChannelUtilization = mWifiInjector.getWifiChannelUtilizationScan();
         mNetworkSelector.setWifiChannelUtilization(mWifiChannelUtilization);
         mWifiScoreCard = scoreCard;
+
+        context.getContentResolver().registerContentObserver(Settings.Global.getUriFor(
+                        Settings.Global.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON), false,
+                new ContentObserver(new Handler()) {
+                    @Override
+                    public void onChange(boolean selfChange) {
+                        mOpenNetworkNotificationOn = (Settings.Global.getInt(context.getContentResolver(),
+                                Settings.Global.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON, 0) == 1);
+                        Log.d(TAG, "WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON change " + mOpenNetworkNotificationOn);
+                        if (mOpenNetworkNotificationOn) {
+                            //start a scan if open network notification setting is turned on
+                            startPeriodicSingleScan();
+                        }
+                    }
+                });
+        mOpenNetworkNotificationOn = (Settings.Global.getInt(context.getContentResolver(),
+                Settings.Global.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON, 0) == 1);
     }
 
     /** Initialize single scanning schedules, and validate them */
@@ -1144,6 +1164,11 @@ public class WifiConnectivityManager {
                 isFullBandScan = false;
             }
         }
+        if (!mOpenNetworkNotificationOn && useNoSavedNetworkSchedule()) {
+             schedulePeriodicScanTimer(
+                        getScheduledSingleScanIntervalMs(mCurrentSingleScanScheduleSec.length)); // use max index value
+             return;
+        }
 
         if (isScanNeeded) {
             mLastPeriodicSingleScanTimeStamp = currentTimeStamp;
@@ -1163,6 +1188,7 @@ public class WifiConnectivityManager {
             }
 
             startSingleScan(isFullBandScan, WIFI_WORK_SOURCE);
+
             schedulePeriodicScanTimer(
                     getScheduledSingleScanIntervalMs(mCurrentSingleScanScheduleIndex));
 
@@ -1173,6 +1199,30 @@ public class WifiConnectivityManager {
             schedulePeriodicScanTimer(
                     getScheduledSingleScanIntervalMs(mCurrentSingleScanScheduleIndex));
         }
+    }
+
+    private boolean useNoSavedNetworkSchedule() {
+        List<WifiConfiguration> savedNetworks =
+                mConfigManager.getSavedNetworks(Process.WIFI_UID);
+        // If we have saved networks, then no need to proceed
+        if (savedNetworks.size() > 0) {
+            return false;
+        }
+
+        List<PasspointConfiguration> passpointNetworks =
+                mWifiInjector.getPasspointManager().getProviderConfigs(Process.WIFI_UID, true);
+        // If we have networks (saved + passpoint), then no need to proceed
+        if (passpointNetworks.size() + savedNetworks.size() > 0) {
+            return false;
+        }
+
+        Set<WifiNetworkSuggestion> suggestionsNetworks =
+                mWifiNetworkSuggestionsManager.getAllApprovedNetworkSuggestions();
+        // If total size not equal to 0, then no need to proceed
+        if (passpointNetworks.size() + savedNetworks.size() + suggestionsNetworks.size() != 0) {
+            return false;
+        }
+        return true;
     }
 
     // Retrieve a value from single scanning schedule in ms
