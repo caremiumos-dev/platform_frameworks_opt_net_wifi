@@ -16,6 +16,7 @@
 
 package com.android.server.wifi;
 
+import static android.net.util.KeepalivePacketDataUtil.parseTcpKeepalivePacketData;
 import static android.net.wifi.WifiConfiguration.NetworkSelectionStatus.DISABLED_NO_INTERNET_PERMANENT;
 import static android.net.wifi.WifiConfiguration.NetworkSelectionStatus.DISABLED_NO_INTERNET_TEMPORARY;
 import static android.net.wifi.WifiManager.WIFI_FEATURE_FILS_SHA256;
@@ -58,6 +59,7 @@ import android.net.NetworkProvider;
 import android.net.SocketKeepalive;
 import android.net.StaticIpConfiguration;
 import android.net.TcpKeepalivePacketData;
+import android.net.TcpKeepalivePacketDataParcelable;
 import android.net.Uri;
 import android.net.ip.IIpClient;
 import android.net.ip.IpClientCallbacks;
@@ -112,6 +114,7 @@ import com.android.internal.util.MessageUtils;
 import com.android.internal.util.Protocol;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
+import com.android.modules.utils.build.SdkLevel;
 import com.android.net.module.util.Inet4AddressUtils;
 import com.android.server.wifi.MboOceController.BtmFrameData;
 import com.android.server.wifi.WifiCarrierInfoManager.SimAuthRequestData;
@@ -5050,10 +5053,19 @@ public class ClientModeImpl extends StateMachine {
                             final NattKeepalivePacketData pkt =
                                     (NattKeepalivePacketData) message.obj;
                             mIpClient.addKeepalivePacketFilter(slot, pkt);
-                        } else if (message.obj instanceof TcpKeepalivePacketData) {
+                        } else if (SdkLevel.isAtLeastR()
+                                && message.obj instanceof TcpKeepalivePacketData) {
                             final TcpKeepalivePacketData pkt =
                                     (TcpKeepalivePacketData) message.obj;
                             mIpClient.addKeepalivePacketFilter(slot, pkt);
+                        } else if (!SdkLevel.isAtLeastR()) {
+                            // Attempt to parse TcpKeepalivePacketData from the old non-SDK class,
+                            // which is a subclass of KeepalivePacketData.
+                            final TcpKeepalivePacketDataParcelable p =
+                                    parseTcpKeepalivePacketData((KeepalivePacketData) message.obj);
+                            if (p != null) {
+                                mIpClient.addKeepalivePacketFilter(slot, p);
+                            }
                         }
                     }
                     break;
