@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "24e6dd7e_714846f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-11-10T16:01:06Z",
+      "side": 1,
+      "message": "Ah that\u0027s a good catch, thanks! I also took a quick look thru other instanceof usages in Wifi service, and didn\u0027t find anything else like this: https://source.corp.google.com/search?q\u003df:opt%2Fnet%2Fwifi%2Fservice%20instanceof%20\u0026sq\u003dpackage:%5Eandroid$\n\nI think we should fix this in Mainline. Filed b/172915679 to myself.",
+      "revId": "9370a00feb8d8667aca86559cd20667e2bfd723a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bab31568_3c9f4b41",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-11-10T16:01:06Z",
+      "side": 1,
+      "message": "Thanks for catching this Remi! Just a couple of comments.",
+      "revId": "9370a00feb8d8667aca86559cd20667e2bfd723a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cb569e5_d47da082",
+        "filename": "service/java/com/android/server/wifi/ClientModeImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5056,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-11-10T16:01:06Z",
+      "side": 1,
+      "message": "Should this be isAtLeastS()?",
+      "range": {
+        "startLine": 5056,
+        "startChar": 44,
+        "endLine": 5056,
+        "endChar": 54
+      },
+      "revId": "9370a00feb8d8667aca86559cd20667e2bfd723a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dab8ce39_bf515cd9",
+        "filename": "service/java/com/android/server/wifi/ClientModeImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5061,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-11-10T16:01:06Z",
+      "side": 1,
+      "message": "nit: consider structuring the if statements such that each condition is only checked once (e.g. SdkLevel.isAtLeastR())\n\nAlso what should happen if SdkLevelUtil.isAtLeastS() \u003d\u003d true and message.obj *not* instanceof TcpKeepAlivePacketData? In the current logic nothing happens, is that expected?",
+      "range": {
+        "startLine": 5061,
+        "startChar": 26,
+        "endLine": 5061,
+        "endChar": 30
+      },
+      "revId": "9370a00feb8d8667aca86559cd20667e2bfd723a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
