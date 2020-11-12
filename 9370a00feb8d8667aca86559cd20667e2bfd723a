@@ -58,6 +58,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f029694_9c1f1fe6",
+        "filename": "service/java/com/android/server/wifi/ClientModeImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5056,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-11-12T05:00:05Z",
+      "side": 1,
+      "message": "Err oops: fixed",
+      "parentUuid": "1cb569e5_d47da082",
+      "range": {
+        "startLine": 5056,
+        "startChar": 44,
+        "endLine": 5056,
+        "endChar": 54
+      },
+      "revId": "9370a00feb8d8667aca86559cd20667e2bfd723a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dab8ce39_bf515cd9",
@@ -71,6 +95,30 @@
       "writtenOn": "2020-11-10T16:01:06Z",
       "side": 1,
       "message": "nit: consider structuring the if statements such that each condition is only checked once (e.g. SdkLevel.isAtLeastR())\n\nAlso what should happen if SdkLevelUtil.isAtLeastS() \u003d\u003d true and message.obj *not* instanceof TcpKeepAlivePacketData? In the current logic nothing happens, is that expected?",
+      "range": {
+        "startLine": 5061,
+        "startChar": 26,
+        "endLine": 5061,
+        "endChar": 30
+      },
+      "revId": "9370a00feb8d8667aca86559cd20667e2bfd723a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31c47f9c_1dfaea07",
+        "filename": "service/java/com/android/server/wifi/ClientModeImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5061,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-11-12T05:00:05Z",
+      "side": 1,
+      "message": "Done\n\nI think if we can\u0027t find a matching instance the code should just ignore the filter request: it\u0027s an unsupported filter type. Added a comment.",
+      "parentUuid": "dab8ce39_bf515cd9",
       "range": {
         "startLine": 5061,
         "startChar": 26,
