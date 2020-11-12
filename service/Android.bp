@@ -27,17 +27,6 @@ java_defaults {
 }
 
 filegroup {
-    name: "wifi-service-srcs",
-    srcs: [
-        "java/**/*.java",
-        "java/**/*.logtags",
-        ":framework-wifi-service-shared-srcs",
-        ":net-utils-wifi-service-common-srcs",
-        ":statslog-wifi-java-gen",
-    ],
-}
-
-filegroup {
     name: "wifi-service-BaseWifiService",
     srcs: ["java/com/android/server/wifi/BaseWifiService.java"],
     path: "java",
@@ -48,7 +37,12 @@ java_library {
     name: "wifi-service-pre-jarjar",
     installable: false,
     defaults: ["wifi-service-common"],
-    srcs: [ ":wifi-service-srcs" ],
+    srcs: [
+        "java/**/*.java",
+        "java/**/*.logtags",
+        ":framework-wifi-service-shared-srcs",
+        ":statslog-wifi-java-gen",
+    ],
     // java_api_finder must accompany `srcs`
     plugins: ["java_api_finder"],
 
