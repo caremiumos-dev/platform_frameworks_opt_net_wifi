@@ -48,7 +48,12 @@ java_library {
     name: "wifi-service-pre-jarjar",
     installable: false,
     defaults: ["wifi-service-common"],
-    srcs: [ ":wifi-service-srcs" ],
+    srcs: [ 
+        "java/**/*.java",
+        "java/**/*.logtags",
+        ":framework-wifi-service-shared-srcs",
+        ":statslog-wifi-java-gen",
+    ],
     // java_api_finder must accompany `srcs`
     plugins: ["java_api_finder"],
 
