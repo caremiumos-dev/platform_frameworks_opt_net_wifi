@@ -18,6 +18,7 @@ package com.android.server.wifi;
 
 import android.net.Network;
 import android.net.NetworkAgent;
+import android.net.NetworkScore;
 import android.net.wifi.IScoreUpdateObserver;
 import android.net.wifi.IWifiConnectedNetworkScorer;
 import android.net.wifi.WifiInfo;
@@ -54,6 +55,7 @@ public class WifiScoreReport {
     private static final long DURATION_TO_BLOCKLIST_BSSID_AFTER_FIRST_EXITING_MILLIS = 30000;
     private static final long INVALID_WALL_CLOCK_MILLIS = -1;
 
+    private final NetworkScore.Builder mScoreBuilder = new NetworkScore.Builder();
     // Cache of the last score
     private int mScore = ConnectedScore.WIFI_MAX_SCORE;
 
@@ -90,7 +92,8 @@ public class WifiScoreReport {
                     return;
                 }
                 if (mNetworkAgent != null) {
-                    mNetworkAgent.sendNetworkScore(score);
+                    mScoreBuilder.setLegacyInt(score).setExiting(score < 50);
+                    mNetworkAgent.sendNetworkScore(mScoreBuilder.build());
                 }
 
                 long millis = mClock.getWallClockMillis();
@@ -359,7 +362,8 @@ public class WifiScoreReport {
         //report score
         if (score != mWifiInfo.getScore()) {
             if (mNetworkAgent != null) {
-                mNetworkAgent.sendNetworkScore(score);
+                mScoreBuilder.setLegacyInt(score).setExiting(score < 50);
+                mNetworkAgent.sendNetworkScore(mScoreBuilder.build());
             }
         }
 
