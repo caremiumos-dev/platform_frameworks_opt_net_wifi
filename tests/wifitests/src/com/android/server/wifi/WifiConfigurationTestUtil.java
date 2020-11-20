@@ -242,7 +242,7 @@ public class WifiConfigurationTestUtil {
         }
 
         if (proxySettingType == STATIC_PROXY_SETTING) {
-            proxyInfo = new ProxyInfo(proxyHost, proxyPort, proxyExclusionList);
+            proxyInfo = ProxyInfo.buildDirectProxy(proxyHost, proxyPort, proxyExclusionList);
             proxySettings = IpConfiguration.ProxySettings.STATIC;
         } else if (proxySettingType == PAC_PROXY_SETTING) {
             proxyInfo = ProxyInfo.buildPacProxy(Uri.parse(pacProxyPath));
