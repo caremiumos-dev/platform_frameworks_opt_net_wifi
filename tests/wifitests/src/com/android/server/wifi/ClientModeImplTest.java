@@ -2435,7 +2435,9 @@ public class ClientModeImplTest extends WifiBaseTest {
 
         WifiInfo connectionInfo = mCmi.syncRequestConnectionInfo();
 
-        assertNotEquals(wifiInfo, connectionInfo);
+        if (!SdkLevel.isAtLeastS()) {
+            assertNotEquals(wifiInfo, connectionInfo);
+        }
         assertEquals(wifiInfo.getSSID(), connectionInfo.getSSID());
         assertEquals(wifiInfo.getBSSID(), connectionInfo.getBSSID());
         assertEquals(wifiInfo.getMacAddress(), connectionInfo.getMacAddress());
