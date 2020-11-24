@@ -16,6 +16,24 @@
       "message": "So the fields only get censored if they are parceled? That means that if they remain within the same process (i.e. Wifi service to Connectivity Service) the fields aren\u0027t censored?\n\nWhy did we choose this, instead of simply censoring the fields while copying the WifiInfo?\n\ni.e. have 2 methods: WifiInfo#copy(), and WifiInfo#censoredCopy()\n\nIs it because of TransportInfo not having a generic copy method? We could define these copy methods on TransportInfo.",
       "revId": "7337c9bc8c1a3e04457e58812d9822e0f2e3faff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b49a74bf_ade4af54",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1620,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-11-24T02:50:08Z",
+      "side": 1,
+      "message": "Oh oops, saw that you added the copy method on TransportInfo. The other questions still remain though.",
+      "parentUuid": "83e9ba3f_b5fc4730",
+      "revId": "7337c9bc8c1a3e04457e58812d9822e0f2e3faff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
