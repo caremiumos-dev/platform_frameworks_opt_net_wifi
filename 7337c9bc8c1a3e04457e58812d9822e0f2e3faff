@@ -52,6 +52,24 @@
       "parentUuid": "b49a74bf_ade4af54",
       "revId": "7337c9bc8c1a3e04457e58812d9822e0f2e3faff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af5ca744_bbd043c4",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1620,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-12-02T21:16:05Z",
+      "side": 1,
+      "message": "Ack. I don\u0027t really like this design, but I can see the rationale.",
+      "parentUuid": "a586874b_4b53afbe",
+      "revId": "7337c9bc8c1a3e04457e58812d9822e0f2e3faff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
