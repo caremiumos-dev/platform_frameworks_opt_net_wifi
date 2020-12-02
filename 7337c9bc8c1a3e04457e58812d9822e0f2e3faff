@@ -34,6 +34,24 @@
       "parentUuid": "83e9ba3f_b5fc4730",
       "revId": "7337c9bc8c1a3e04457e58812d9822e0f2e3faff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a586874b_4b53afbe",
+        "filename": "tests/wifitests/src/com/android/server/wifi/WifiServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1620,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-02T19:09:01Z",
+      "side": 1,
+      "message": "I added a comment in the corresponding frameworks/base CL (reset() method). The networking team prefers this approach because they don\u0027t want to accidentally leak out the location sensitive data. \n\nThe fields should not be censored when wifi stack sends it to connectivity. Otherwise, they will not be able to send out the uncensored copy for apps that have location permission. Regardless, anything run in the same process (i.e system_server in our case) can reach out to our memory space and read things, so there is no security guarantees within a process.",
+      "parentUuid": "b49a74bf_ade4af54",
+      "revId": "7337c9bc8c1a3e04457e58812d9822e0f2e3faff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
