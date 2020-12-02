@@ -22,6 +22,30 @@
       },
       "revId": "1ec645dfebc5b28bd5314078dea733196fa742bc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bf7e54f_72457de6",
+        "filename": "tests/wifitests/src/com/android/server/wifi/ClientModeImplTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-02T19:08:54Z",
+      "side": 1,
+      "message": "Yeah, It should be. Is there a way we can make our linter to work on unit tests as well (I\u0027m assuming not since the test APK uses @hide methods, etc)? These things are very hard to keep track of and catch.\n\nDone.",
+      "parentUuid": "a133e126_42f6416e",
+      "range": {
+        "startLine": 1042,
+        "startChar": 8,
+        "endLine": 1042,
+        "endChar": 34
+      },
+      "revId": "1ec645dfebc5b28bd5314078dea733196fa742bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
