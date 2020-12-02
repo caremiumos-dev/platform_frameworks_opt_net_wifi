@@ -56,6 +56,30 @@
       },
       "revId": "a3dc6ad0bdd09a0b63ba03900eb51c6c51b68204",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d6856cd_c046f054",
+        "filename": "tests/wifitests/src/com/android/server/wifi/ClientModeImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-02T20:51:32Z",
+      "side": 1,
+      "message": "Yep. we do expect NetworkAgent to be registered for all connections.",
+      "parentUuid": "5905cadf_1f1b61e5",
+      "range": {
+        "startLine": 1043,
+        "startChar": 8,
+        "endLine": 1043,
+        "endChar": 34
+      },
+      "revId": "a3dc6ad0bdd09a0b63ba03900eb51c6c51b68204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
