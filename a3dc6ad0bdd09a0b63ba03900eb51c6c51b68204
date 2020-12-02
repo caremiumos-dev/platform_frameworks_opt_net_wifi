@@ -16,6 +16,46 @@
       "message": "Addressed the comment. PTAL, Thanks!",
       "revId": "a3dc6ad0bdd09a0b63ba03900eb51c6c51b68204",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc160436_9ead63a8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-12-02T20:40:09Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "a3dc6ad0bdd09a0b63ba03900eb51c6c51b68204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5905cadf_1f1b61e5",
+        "filename": "tests/wifitests/src/com/android/server/wifi/ClientModeImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-12-02T20:40:09Z",
+      "side": 1,
+      "message": "Just to confirm, should the isAtLeastS() check be outside expectRegisterNetworkAgent()?",
+      "range": {
+        "startLine": 1043,
+        "startChar": 8,
+        "endLine": 1043,
+        "endChar": 34
+      },
+      "revId": "a3dc6ad0bdd09a0b63ba03900eb51c6c51b68204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

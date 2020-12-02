@@ -46,6 +46,30 @@
       },
       "revId": "1ec645dfebc5b28bd5314078dea733196fa742bc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f56180c7_3d779817",
+        "filename": "tests/wifitests/src/com/android/server/wifi/ClientModeImplTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-12-02T20:40:09Z",
+      "side": 1,
+      "message": "Linter only works on public APIs right now, they\u0027re adding support for SystemApis.\n\nI wouldn\u0027t worry too much about catching all of them, I\u0027ll just point them out if I see them. We\u0027ll fix all of them once linter support is added.",
+      "parentUuid": "9bf7e54f_72457de6",
+      "range": {
+        "startLine": 1042,
+        "startChar": 8,
+        "endLine": 1042,
+        "endChar": 34
+      },
+      "revId": "1ec645dfebc5b28bd5314078dea733196fa742bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
