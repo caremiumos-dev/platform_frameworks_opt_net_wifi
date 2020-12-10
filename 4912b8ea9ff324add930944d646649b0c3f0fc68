@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f322994_575a71c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-10T22:31:24Z",
+      "side": 1,
+      "message": "Softap is a shared resource on the phone. So, we bring it up with the lowest support band. If we bring it up on 5Ghz, then a bunch of clients (clients supporting 2.4Ghz only is probably more prevalent than clients supporting 5Ghz only) will not be able to access it.",
+      "revId": "4912b8ea9ff324add930944d646649b0c3f0fc68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
