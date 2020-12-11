@@ -34,6 +34,24 @@
       "parentUuid": "6f322994_575a71c5",
       "revId": "4912b8ea9ff324add930944d646649b0c3f0fc68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb9655dd_e5765894",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2020-12-11T10:32:11Z",
+      "side": 1,
+      "message": "IIUC, the requirement is support the 5G only device. Am I correct?\nIt seems to me that we need to design the new overlay to allow configure supported band.\nAnd add check here to select the lowest band which supported. i.e.If configure is 2.4G and 5G support, it will select 2.4G.\n\nI don\u0027t think we should change the current overlay behavior since it is another purpose.\n\nRoshan, what do you think?",
+      "parentUuid": "1a86015f_4b7f1508",
+      "revId": "4912b8ea9ff324add930944d646649b0c3f0fc68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
