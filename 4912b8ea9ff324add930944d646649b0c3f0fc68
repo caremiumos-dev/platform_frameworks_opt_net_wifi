@@ -52,6 +52,24 @@
       "parentUuid": "1a86015f_4b7f1508",
       "revId": "4912b8ea9ff324add930944d646649b0c3f0fc68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2f481fb_79a47ff0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1193375
+      },
+      "writtenOn": "2020-12-11T20:05:43Z",
+      "side": 1,
+      "message": "Correct, we are trying to support a 5G only, non-auto device. In the default configuration, we will still select 2.4G, only when the config_wifi_local_only_hotspot_[56]ghz values are set would the change make any difference.",
+      "parentUuid": "bb9655dd_e5765894",
+      "revId": "4912b8ea9ff324add930944d646649b0c3f0fc68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
