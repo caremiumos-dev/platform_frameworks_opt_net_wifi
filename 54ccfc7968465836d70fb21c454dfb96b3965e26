@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "878c7a68_cbc33479",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-21T05:31:15Z",
+      "side": 1,
+      "message": "Already +2\u0027d both in internal master and mainline-prod",
+      "revId": "54ccfc7968465836d70fb21c454dfb96b3965e26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
