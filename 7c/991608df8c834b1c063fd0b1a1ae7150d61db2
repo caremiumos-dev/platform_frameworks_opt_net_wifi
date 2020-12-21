@@ -1,0 +1,9 @@
+Code-Review+2: Chalard Jean <jchalard@google.com>
+Code-Review+1: Remi NGUYEN VAN <reminv@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Chalard Jean <jchalard@google.com>
+Submitted-at: Mon, 21 Dec 2020 05:35:07 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/opt/net/wifi/+/1406033
+Project: platform/frameworks/opt/net/wifi
+Branch: refs/heads/master
