@@ -32,7 +32,6 @@ filegroup {
         "java/**/*.java",
         "java/**/*.logtags",
         ":framework-wifi-service-shared-srcs",
-        ":net-utils-wifi-service-common-srcs",
         ":statslog-wifi-java-gen",
     ],
 }
