@@ -2459,7 +2459,6 @@ public class ClientModeImpl extends StateMachine {
              */
             int newSignalLevel = RssiUtil.calculateSignalLevel(mContext, newRssi);
             if (newSignalLevel != mLastSignalLevel) {
-                // TODO (b/162602799): Do we need to change the update frequency?
                 updateCapabilities();
                 sendRssiChangeBroadcast(newRssi);
             }
@@ -4486,12 +4485,6 @@ public class ClientModeImpl extends StateMachine {
         if (!mWifiInfo.getSSID().equals(WifiManager.UNKNOWN_SSID)) {
             builder.setSsid(mWifiInfo.getSSID());
         }
-
-        // Only send out WifiInfo in >= Android S devices.
-        if (SdkLevel.isAtLeastS()) {
-            builder.setTransportInfo(new WifiInfo(mWifiInfo));
-        }
-
         Pair<Integer, String> specificRequestUidAndPackageName =
                 mNetworkFactory.getSpecificNetworkRequestUidAndPackageName(
                         currentWifiConfiguration);
