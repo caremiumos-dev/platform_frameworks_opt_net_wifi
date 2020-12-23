@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b01ff06_93d36630",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-23T19:36:13Z",
+      "side": 1,
+      "message": "Inheriting +2 after rebase.",
+      "revId": "e954fe26af7a599207ddce0f43d3487dad80bdd9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
