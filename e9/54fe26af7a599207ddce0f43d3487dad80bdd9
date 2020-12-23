@@ -1,0 +1,9 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Presubmit-Verified+2: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Roshan Pius <rpius@google.com>
+Submitted-by: Roshan Pius <rpius@google.com>
+Submitted-at: Wed, 23 Dec 2020 19:37:07 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/opt/net/wifi/+/1508922
+Project: platform/frameworks/opt/net/wifi
+Branch: refs/heads/master
