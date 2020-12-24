@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecb6a781_71cc45e5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-24T00:37:50Z",
+      "side": 1,
+      "message": "+1",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 7
+      },
+      "revId": "7d97d457e6d7dafdc1c5ec481d86f87ac4ff3185",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa877087_1be9b415",
+        "filename": "tests/wifitests/src/com/android/server/wifi/ClientModeImplTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-24T00:37:50Z",
+      "side": 1,
+      "message": "ultimate nit : I think the 2 spaces were meant to keep alignment",
+      "range": {
+        "startLine": 362,
+        "startChar": 18,
+        "endLine": 362,
+        "endChar": 19
+      },
+      "revId": "7d97d457e6d7dafdc1c5ec481d86f87ac4ff3185",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
