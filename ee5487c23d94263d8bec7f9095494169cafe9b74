@@ -80,6 +80,23 @@
       "message": "LGTM, but can\u0027t merge here.",
       "revId": "ee5487c23d94263d8bec7f9095494169cafe9b74",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6691c4b7_e6ee9a0e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-01-05T21:33:29Z",
+      "side": 1,
+      "message": "Thanks for reporting this issue. This has however been already fixed internally in Android S as a part of re-architecture of the wifi stack. ",
+      "revId": "ee5487c23d94263d8bec7f9095494169cafe9b74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
