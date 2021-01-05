@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87c21014_371302d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2021-01-05T16:45:44Z",
+      "side": 1,
+      "message": "@Roshan: This shouldn\u0027t matter in S since when we exit ConnectModeState, we tear down all of  ClientModeImpl, but I think it\u0027s good to clean up (and useful in R).",
+      "revId": "ee5487c23d94263d8bec7f9095494169cafe9b74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
