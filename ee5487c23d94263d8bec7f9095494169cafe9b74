@@ -97,6 +97,24 @@
       "message": "Thanks for reporting this issue. This has however been already fixed internally in Android S as a part of re-architecture of the wifi stack. ",
       "revId": "ee5487c23d94263d8bec7f9095494169cafe9b74",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f26682c_9ed98c7f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1733189
+      },
+      "writtenOn": "2021-01-06T01:55:58Z",
+      "side": 1,
+      "message": "OK,that\u0027s all right and thanks for your review and replay.",
+      "parentUuid": "6691c4b7_e6ee9a0e",
+      "revId": "ee5487c23d94263d8bec7f9095494169cafe9b74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
