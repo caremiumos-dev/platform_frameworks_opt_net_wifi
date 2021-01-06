@@ -16,6 +16,24 @@
       "message": "Blair - can you rebase the changes? ",
       "revId": "a4fd76d869d8fe46b8d7cc35f9d48593541a9bbc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3515ad60_4d313f39",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1193375
+      },
+      "writtenOn": "2021-01-06T19:21:39Z",
+      "side": 1,
+      "message": "Code has been moved to a new repo, new review at https://android-review.googlesource.com/c/platform/packages/modules/Wifi/+/1540886",
+      "parentUuid": "cda21acb_de211784",
+      "revId": "a4fd76d869d8fe46b8d7cc35f9d48593541a9bbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
