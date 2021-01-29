@@ -494,6 +494,11 @@ class Utils {
             sj.add(wifiInfoDescription);
         }
 
+        final String networkCapabilityDescription = wifiEntry.getNetworkCapabilityDescription();
+        if (!TextUtils.isEmpty(networkCapabilityDescription)) {
+            sj.add(networkCapabilityDescription);
+        }
+
         final String scanResultsDescription = wifiEntry.getScanResultDescription();
         if (!TextUtils.isEmpty(scanResultsDescription)) {
             sj.add(scanResultsDescription);
@@ -696,6 +701,11 @@ class Utils {
     /** Find the annotation of specified id in rawText and linkify it with helpUriString. */
     static CharSequence linkifyAnnotation(Context context, CharSequence rawText, String id,
             String helpUriString) {
+        // Return original string when helpUriString is empty.
+        if (TextUtils.isEmpty(helpUriString)) {
+            return rawText;
+        }
+
         SpannableString spannableText = new SpannableString(rawText);
         Annotation[] annotations = spannableText.getSpans(0, spannableText.length(),
                 Annotation.class);
