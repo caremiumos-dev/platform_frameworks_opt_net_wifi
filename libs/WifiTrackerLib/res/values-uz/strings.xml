@@ -27,7 +27,7 @@
     <string name="wifi_disabled_generic" msgid="8307050327779256414">"Yoqilmagan"</string>
     <string name="wifi_ap_unable_to_handle_new_sta" msgid="6552198761671428871">"Internet kirish nuqtasi vaqtinchalik to‘lgan"</string>
     <string name="wifi_disconnected" msgid="3720926757662831062">"Ulanmagan"</string>
-    <string name="wifi_remembered" msgid="5126903736498678708">"Saqlandi"</string>
+    <string name="wifi_remembered" msgid="5126903736498678708">"Saqlangan"</string>
     <string name="wifi_metered_label" msgid="1362621600006544014">"Trafik hisoblanadigan tarmoq"</string>
     <string name="wifi_unmetered_label" msgid="499466875639448350">"Trafik hisobi yuritilmaydigan tarmoq"</string>
     <string name="connected_via_app" msgid="1818040967936972127">"<xliff:g id="NAME">%1$s</xliff:g> orqali ulandi"</string>
@@ -37,6 +37,7 @@
     <string name="wifi_limited_connection" msgid="3646701342701276239">"Cheklangan aloqa"</string>
     <string name="private_dns_broken" msgid="2212227512243587416">"Xususiy DNS server ishlamayapti"</string>
     <string name="wifi_connected_no_internet" msgid="7273909077465731259">"Internetga ulanmagansiz"</string>
+    <string name="wifi_connected_low_quality" msgid="4478331645458058445">"Sifati past"</string>
     <string name="wifi_security_none" msgid="6680263031386719053">"Hech qanday"</string>
     <string name="wifi_passpoint_expired" msgid="3257021415099577815">"Muddati tugagan"</string>
     <string name="tap_to_sign_up" msgid="2409214576606918295">"Registratsiya qilish uchun bosing"</string>
