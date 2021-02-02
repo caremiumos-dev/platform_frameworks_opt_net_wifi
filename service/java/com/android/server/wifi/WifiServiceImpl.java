@@ -4322,6 +4322,16 @@ public class WifiServiceImpl extends BaseWifiService {
         mWifiThreadRunner.post(()-> mScanRequestProxy.setScanThrottleEnabled(enable));
     }
 
+    public boolean blackListWifiDevice(String packageName, String address, boolean enabled) {
+        if (enforceChangePermission(packageName) != MODE_ALLOWED) {
+            return false;
+        }
+        Log.d(TAG, "blackListWifiDevice: address=" + address + ", enabled=" + enabled
+                 + ", pid=" + Binder.getCallingPid()
+                 + ", uid=" + Binder.getCallingUid());
+        return mActiveModeWarden.blackListWifiDevice(address, enabled);
+    }
+
     /**
      * See {@link android.net.wifi.WifiManager#isScanThrottleEnabled()}
      */

@@ -345,6 +345,11 @@ public class BaseWifiService extends IWifiManager.Stub {
     }
 
     @Override
+    public boolean blackListWifiDevice (String packageName, String address, boolean enabled) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public boolean stopSoftAp() {
         throw new UnsupportedOperationException();
     }
