@@ -140,6 +140,8 @@ public class SoftApManager implements ActiveModeManager {
     @NonNull
     private Set<MacAddress> mAllowedClientList = new HashSet<>();
 
+    private List<MacAddress> mBlockedClientMacListExtern = new ArrayList<>();
+
     /**
      * Listener for soft AP events.
      */
@@ -445,6 +447,29 @@ public class SoftApManager implements ActiveModeManager {
         Log.d(TAG, "Soft AP is started ");
 
         return SUCCESS;
+    }
+
+    public boolean blackListWifiDevice(String address, boolean enabled) {
+        if (mApInterfaceName == null) {
+            Log.e(TAG, "ApInterfaceName is null ");
+            return false;
+        }
+        Log.d(TAG, "add blackListWifiDevice: " + address);
+        if (enabled) {
+            mBlockedClientMacListExtern.add(MacAddress.fromString(address));
+            mBlockedClientList = new HashSet<>(mBlockedClientMacListExtern);
+            Iterator<WifiClient> iterator = mConnectedClients.iterator();
+            while (iterator.hasNext()) {
+                WifiClient client = iterator.next();
+                if (mBlockedClientList.contains(client.getMacAddress())) {
+                    Log.d(TAG, "Force disconnect for not allowed client: " + client);
+                    mWifiNative.forceClientDisconnect(
+                            mApInterfaceName, client.getMacAddress(),
+                            WifiManager.SAP_CLIENT_BLOCK_REASON_CODE_BLOCKED_BY_USER);
+                }
+            }
+        }
+        return true;
     }
 
     /**

@@ -449,6 +449,13 @@ public class ActiveModeWarden {
         }
     }
 
+    public boolean blackListWifiDevice(String address, boolean enabled) {
+        if (mSoftApManager == null) {
+            return false;
+        }
+        return mSoftApManager.blackListWifiDevice(address, enabled);
+    }
+
     /**
      * Dump current state for active mode managers.
      *
