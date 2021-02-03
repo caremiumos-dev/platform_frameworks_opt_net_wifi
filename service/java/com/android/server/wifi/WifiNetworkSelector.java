@@ -399,7 +399,7 @@ public class WifiNetworkSelector {
             }
 
             // Skip network with too weak signals.
-            if (isSignalTooWeak(scanResult)) {
+            if (isSignalTooWeak(scanResult) && isConnected) {
                 lowRssi.append(scanId);
                 if (scanResult.is24GHz()) {
                     lowRssi.append("(2.4GHz)");
