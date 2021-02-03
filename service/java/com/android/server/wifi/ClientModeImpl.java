@@ -154,6 +154,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import android.widget.Toast;
 
 /**
  * Implementation of ClientMode.  Event handling for Client mode logic is done here,
@@ -3901,6 +3902,7 @@ public class ClientModeImpl extends StateMachine {
                             mWifiConfigManager.getConfiguredNetwork(mTargetNetworkId);
                     // Check if this is a permanent wrong password failure.
                     if (isPermanentWrongPasswordFailure(mTargetNetworkId, reasonCode)) {
+                        Toast.makeText(mContext, mContext.getString(com.oneplus.internal.R.string.wifi_auth_password_wrong), Toast.LENGTH_SHORT).show();
                         disableReason = WifiConfiguration.NetworkSelectionStatus
                                 .DISABLED_BY_WRONG_PASSWORD;
                         if (targetedNetwork != null) {
@@ -3919,10 +3921,14 @@ public class ClientModeImpl extends StateMachine {
                                 .DISABLED_AUTHENTICATION_NO_SUBSCRIPTION;
                         }
                     }
-                    mWifiConfigManager.updateNetworkSelectionStatus(
-                            mTargetNetworkId, disableReason);
+                    if (reasonCode == WifiManager.ERROR_AUTH_FAILURE_WRONG_PSWD) {
+                        mWifiConfigManager.updateNetworkSelectionStatusWhenAuthFailureWrongPSWD(
+                                mTargetNetworkId, disableReason);
+                    } else {
+                        mWifiConfigManager.updateNetworkSelectionStatus(
+                                mTargetNetworkId, disableReason);
+                    }
                     mWifiConfigManager.clearRecentFailureReason(mTargetNetworkId);
-
                     //If failure occurred while Metrics is tracking a ConnnectionEvent, end it.
                     switch (reasonCode) {
                         case WifiManager.ERROR_AUTH_FAILURE_NONE:

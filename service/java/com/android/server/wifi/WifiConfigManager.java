@@ -1789,6 +1789,36 @@ public class WifiConfigManager {
         return setNetworkSelectionStatus(config, reason);
     }
 
+    private boolean updateNetworkSelectionStatusWhenAuthFailureWrongPSWD(WifiConfiguration config, int reason) {
+        NetworkSelectionStatus networkStatus = config.getNetworkSelectionStatus();
+        if (reason != NetworkSelectionStatus.DISABLED_NONE) {
+            networkStatus.incrementDisableReasonCounter(reason);
+            // For network disable reasons, we should only update the status if we cross the
+            // threshold.
+            int disableReasonCounter = networkStatus.getDisableReasonCounter(reason);
+            int disableReasonThreshold = getNetworkSelectionDisableThreshold(reason);
+            if (disableReasonCounter < disableReasonThreshold) {
+                if (mVerboseLoggingEnabled) {
+                    Log.v(TAG, "Disable counter for network " + config.getPrintableSsid()
+                            + " for reason "
+                            + NetworkSelectionStatus.getNetworkSelectionDisableReasonString(reason)
+                            + " is " + networkStatus.getDisableReasonCounter(reason)
+                            + " and threshold is " + disableReasonThreshold);
+                }
+                return true;
+            }
+        }
+        return setNetworkSelectionStatus(config, reason);
+    }
+
+    public boolean updateNetworkSelectionStatusWhenAuthFailureWrongPSWD(int networkId, int reason) {
+        WifiConfiguration config = getInternalConfiguredNetwork(networkId);
+        if (config == null) {
+            return false;
+        }
+        return updateNetworkSelectionStatusWhenAuthFailureWrongPSWD(config, reason);
+    }
+
     /**
      * Update a network's status (both internal and public) according to the update reason and
      * its current state.
