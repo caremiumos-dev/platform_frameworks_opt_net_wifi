@@ -904,6 +904,7 @@ public class InformationElementUtil {
         private static final int OWE_VENDOR_OUI_TYPE = 0x1c9a6f50;
         private static final short RSNE_VERSION = 0x0001;
 
+        private static final short WAPI_VERSION = 0x0001;
         private static final int WPA_AKM_EAP = 0x01f25000;
         private static final int WPA_AKM_PSK = 0x02f25000;
 

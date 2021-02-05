@@ -215,7 +215,8 @@ public class SavedNetworkTracker extends BaseWifiTracker {
                 null /* wifiConfigsByKey */,
                 mWifiManager.isWpa3SaeSupported(),
                 mWifiManager.isWpa3SuiteBSupported(),
-                mWifiManager.isEnhancedOpenSupported());
+                mWifiManager.isEnhancedOpenSupported(),
+                mWifiManager.isWapiSupported());
 
         // Iterate through current entries and update each entry's scan results
         mStandardWifiEntryCache.entrySet().forEach(entry -> {
