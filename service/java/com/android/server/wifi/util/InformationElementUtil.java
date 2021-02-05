@@ -904,6 +904,7 @@ public class InformationElementUtil {
         private static final int OWE_VENDOR_OUI_TYPE = 0x1c9a6f50;
         private static final short RSNE_VERSION = 0x0001;
 
+        private static final short WAPI_VERSION = 0x0001;
         private static final int WPA_AKM_EAP = 0x01f25000;
         private static final int WPA_AKM_PSK = 0x02f25000;
 
@@ -920,6 +921,8 @@ public class InformationElementUtil {
         private static final int RSN_OSEN = 0x019a6f50;
         private static final int RSN_AKM_EAP_FILS_SHA256 = 0x0eac0f00;
         private static final int RSN_AKM_EAP_FILS_SHA384 = 0x0fac0f00;
+        private static final int WAPI_AKM_PSK = 0x02721400;
+        private static final int WAPI_AKM_CERT = 0x01721400;
 
         private static final int WPA_CIPHER_NONE = 0x00f25000;
         private static final int WPA_CIPHER_TKIP = 0x02f25000;
@@ -930,6 +933,7 @@ public class InformationElementUtil {
         private static final int RSN_CIPHER_CCMP = 0x04ac0f00;
         private static final int RSN_CIPHER_NO_GROUP_ADDRESSED = 0x07ac0f00;
         private static final int RSN_CIPHER_GCMP_256 = 0x09ac0f00;
+        private static final int WAPI_CIPHER_SMS4 = 0x01721400;
 
         public List<Integer> protocol;
         public List<List<Integer>> keyManagement;
@@ -1040,6 +1044,85 @@ public class InformationElementUtil {
                 keyManagement.add(rsnKeyManagement);
             } catch (BufferUnderflowException e) {
                 Log.e("IE_Capabilities", "Couldn't parse RSNE, buffer underflow");
+            }
+        }
+
+        // WAPI IE format (size unit: byte)
+        //
+        // | Element ID | Length | Version | AKM suite count | AKM suite List |
+        //      1           1         2             2             4 * m
+        // | Unicast Cipher Suite count | Unicast Cipher Suite List |
+        //              2                         4 * n
+        // | Multicast Cipher Suite | WAPI Capabilities |
+        //              4                     2
+        // | BKID Count | BKID List |
+        //        2          16 * s
+        //
+        // Note: InformationElement.bytes has 'Element ID' and 'Length'
+        //       stripped off already
+        private void parseWapiElement(InformationElement ie) {
+            ByteBuffer buf = ByteBuffer.wrap(ie.bytes).order(ByteOrder.LITTLE_ENDIAN);
+            try {
+                // version
+                if (buf.getShort() != WAPI_VERSION) {
+                    // TODO: shall we care about the WAPI Version?
+                }
+
+                // found the WAPI IE, hence start building the capability string
+                protocol.add(ScanResult.PROTOCOL_WAPI);
+
+                // AKM
+                // AKM suite count
+                short akmCount = buf.getShort();
+                ArrayList<Integer> wapiKeyManagement = new ArrayList<>();
+
+                for (int i = 0; i < akmCount; i++) {
+                    int akm = buf.getInt();
+                    switch (akm) {
+                        case WAPI_AKM_PSK:
+                            wapiKeyManagement.add(ScanResult.KEY_MGMT_WAPI_PSK);
+                            break;
+                        case WAPI_AKM_CERT:
+                            wapiKeyManagement.add(ScanResult.KEY_MGMT_WAPI_CERT);
+                            break;
+                        default:
+                            // do nothing
+                            Log.w("IE_Capabilities", "Unknown WAPI AKM: "
+                                    + Integer.toHexString(akm));
+                            break;
+                    }
+                }
+                // Default AKM
+                if (wapiKeyManagement.isEmpty()) {
+                    // TODO: shall we assign a default keyManagement?
+                }
+                keyManagement.add(wapiKeyManagement);
+
+                // pairwise cipher
+                // pairwise cipher suite count
+                short cipherCount = buf.getShort();
+                ArrayList<Integer> wapiPairwiseCipher = new ArrayList<>();
+                for (int i = 0; i < cipherCount; i++) {
+                    wapiPairwiseCipher.add(parseWapiCipher(buf.getInt()));
+                }
+                pairwiseCipher.add(wapiPairwiseCipher);
+
+                // group data cipher suite
+                groupCipher.add(parseWapiCipher(buf.getInt()));
+
+            } catch (BufferUnderflowException e) {
+                Log.e("IE_Capabilities", "Couldn't parse WAPI IE, buffer underflow");
+            }
+        }
+
+        private static int parseWapiCipher(int cipher) {
+            switch (cipher) {
+                case WAPI_CIPHER_SMS4:
+                    return ScanResult.CIPHER_SMS4;
+                default:
+                    Log.w("IE_Capabilities", "Unknown WAPI cipher suite: "
+                            + Integer.toHexString(cipher));
+                    return ScanResult.CIPHER_NONE;
             }
         }
 
@@ -1204,6 +1287,10 @@ public class InformationElementUtil {
                     keyManagement.add(oemSecurityType.keyManagement);
                     pairwiseCipher.add(oemSecurityType.pairwiseCipher);
                     groupCipher.add(oemSecurityType.groupCipher);
+                }
+
+                if (ie.id == InformationElement.EID_WAPI) {
+                    parseWapiElement(ie);
                 }
 
                 if (ie.id == InformationElement.EID_RSN) {

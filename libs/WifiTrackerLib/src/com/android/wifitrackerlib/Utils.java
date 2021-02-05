@@ -33,6 +33,8 @@ import static com.android.wifitrackerlib.WifiEntry.SPEED_NONE;
 import static com.android.wifitrackerlib.WifiEntry.SPEED_SLOW;
 import static com.android.wifitrackerlib.WifiEntry.SPEED_VERY_FAST;
 import static com.android.wifitrackerlib.WifiEntry.Speed;
+import static com.android.wifitrackerlib.WifiEntry.SECURITY_WAPI_PSK;
+import static com.android.wifitrackerlib.WifiEntry.SECURITY_WAPI_CERT;
 
 import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.groupingBy;
@@ -104,6 +106,10 @@ class Utils {
         final List<Integer> securityTypes = new ArrayList<>();
         if (scan.capabilities == null) {
             securityTypes.add(SECURITY_NONE);
+        } else if (scan.capabilities.contains("WAPI-PSK")) {
+            securityTypes.add(SECURITY_WAPI_PSK);
+        } else if (scan.capabilities.contains("WAPI-CERT")) {
+            securityTypes.add(SECURITY_WAPI_CERT);
         } else if (scan.capabilities.contains("PSK") && scan.capabilities.contains("SAE")) {
             securityTypes.add(SECURITY_PSK);
             securityTypes.add(SECURITY_SAE);
@@ -147,6 +153,12 @@ class Utils {
         if (config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.OWE)) {
             return SECURITY_OWE;
         }
+        if (config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.WAPI_PSK)) {
+            return SECURITY_WAPI_PSK;
+        }
+        if (config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.WAPI_CERT)) {
+            return SECURITY_WAPI_CERT;
+        }
         return (config.wepKeys[0] != null) ? SECURITY_WEP : SECURITY_NONE;
     }
 
@@ -172,7 +184,8 @@ class Utils {
             @Nullable Map<String, WifiConfiguration> wifiConfigsByKey,
             boolean isWpa3SaeSupported,
             boolean isWpa3SuiteBSupported,
-            boolean isEnhancedOpenSupported) {
+            boolean isEnhancedOpenSupported,
+            boolean isWapiSupported) {
         if (wifiConfigsByKey == null) {
             wifiConfigsByKey = new HashMap<>();
         }
@@ -191,10 +204,16 @@ class Utils {
             final boolean oweConfigExists = wifiConfigsByKey.containsKey(
                     ssidAndSecurityToStandardWifiEntryKey(ssid, SECURITY_OWE));
 
+            final boolean wapiPskConfigExist = wifiConfigsByKey.containsKey(
+                    ssidAndSecurityToStandardWifiEntryKey(ssid, SECURITY_WAPI_PSK));
+            final boolean wapiCertConfigExist = wifiConfigsByKey.containsKey(
+                    ssidAndSecurityToStandardWifiEntryKey(ssid, SECURITY_WAPI_CERT));
             boolean pskInRange = false;
             boolean saeInRange = false;
             boolean oweInRange = false;
             boolean openInRange = false;
+            boolean wapiPskInRange = false;
+            boolean wapiCertInRange = false;
             for (ScanResult scan : scanResultsBySsid.get(ssid)) {
                 final List<Integer> securityTypes = getSecurityTypesFromScanResult(scan);
                 if (securityTypes.contains(SECURITY_PSK)) {
@@ -208,6 +227,12 @@ class Utils {
                 }
                 if (securityTypes.contains(SECURITY_NONE)) {
                     openInRange = true;
+                }
+                if (securityTypes.contains(SECURITY_WAPI_PSK)) {
+                    wapiPskInRange = true;
+                }
+                if (securityTypes.contains(SECURITY_WAPI_CERT)) {
+                    wapiCertInRange = true;
                 }
             }
 
@@ -224,6 +249,10 @@ class Utils {
                 if (!isEnhancedOpenSupported) {
                     securityTypes.remove((Integer) SECURITY_OWE);
                 }
+                if (!isWapiSupported) {
+                    securityTypes.remove((Integer) SECURITY_WAPI_PSK);
+                    securityTypes.remove((Integer) SECURITY_WAPI_CERT);
+                }
 
                 final boolean isSae = securityTypes.contains(SECURITY_SAE)
                         && !securityTypes.contains(SECURITY_PSK);
@@ -237,6 +266,8 @@ class Utils {
                         && securityTypes.contains(SECURITY_OWE);
                 final boolean isOpen = securityTypes.contains(SECURITY_NONE)
                         && !securityTypes.contains(SECURITY_OWE);
+                final boolean isWapiPsk = securityTypes.contains(SECURITY_WAPI_PSK);
+                final boolean isWapiCert = securityTypes.contains(SECURITY_WAPI_CERT);
 
                 if (chooseSingleSecurity) {
                     if (isPsk) {
@@ -294,6 +325,10 @@ class Utils {
                         } else {
                             chosenSecurityTypes.add(SECURITY_NONE);
                         }
+                    } else if (isWapiPsk) {
+                        chosenSecurityTypes.add(SECURITY_WAPI_PSK);
+                    } else if (isWapiCert) {
+                        chosenSecurityTypes.add(SECURITY_WAPI_CERT);
                     } else {
                         chosenSecurityTypes.addAll(securityTypes);
                     }
