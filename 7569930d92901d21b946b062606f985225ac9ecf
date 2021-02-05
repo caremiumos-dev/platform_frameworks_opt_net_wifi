@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007936294",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1576986?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c3c70b98_3488533f",
+        "filename": "service/java/com/android/server/wifi/util/InformationElementUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-05T10:01:55Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 1049,
+        "startChar": 0,
+        "endLine": 1049,
+        "endChar": 2
+      },
+      "revId": "7569930d92901d21b946b062606f985225ac9ecf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007936298",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1576986?revision\u003d3",
+      "fixSuggestions": [
+        {
+          "fixId": "b0ca3b2f_883164d3",
+          "description": "Change to \"service/java/com/android/server/wifi/util/InformationElementUtil.java\"",
+          "replacements": [
+            {
+              "path": "service/java/com/android/server/wifi/util/InformationElementUtil.java",
+              "range": {
+                "startLine": 1097,
+                "startChar": 58,
+                "endLine": 1097,
+                "endChar": 67
+              },
+              "replacement": "Management"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "f3894891_c2b65eeb",
+        "filename": "service/java/com/android/server/wifi/util/InformationElementUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-05T10:01:55Z",
+      "side": 1,
+      "message": "Common typo found: \"Managment\" -- should it be \"Management\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 1097,
+        "startChar": 58,
+        "endLine": 1097,
+        "endChar": 67
+      },
+      "revId": "7569930d92901d21b946b062606f985225ac9ecf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
