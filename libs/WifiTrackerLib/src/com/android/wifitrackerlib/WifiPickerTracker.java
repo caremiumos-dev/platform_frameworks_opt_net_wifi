@@ -376,7 +376,8 @@ public class WifiPickerTracker extends BaseWifiTracker {
                 mWifiConfigCache,
                 mWifiManager.isWpa3SaeSupported(),
                 mWifiManager.isWpa3SuiteBSupported(),
-                mWifiManager.isEnhancedOpenSupported());
+                mWifiManager.isEnhancedOpenSupported(),
+                mWifiManager.isWapiSupported());
 
         // Iterate through current entries and update each entry's scan results
         mStandardWifiEntryCache.entrySet().removeIf(e -> {
@@ -417,7 +418,8 @@ public class WifiPickerTracker extends BaseWifiTracker {
                 mWifiConfigCache,
                 mWifiManager.isWpa3SaeSupported(),
                 mWifiManager.isWpa3SuiteBSupported(),
-                mWifiManager.isEnhancedOpenSupported());
+                mWifiManager.isEnhancedOpenSupported(),
+                mWifiManager.isWapiSupported());
 
         Map<String, WifiConfiguration> userSharedConfigsByKey =
                 mWifiManager.getWifiConfigForMatchedNetworkSuggestionsSharedWithUser(scanResults)

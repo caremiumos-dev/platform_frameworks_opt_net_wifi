@@ -1108,6 +1108,7 @@ public class WifiConfigManager {
     private void setDefaultsInWifiConfiguration(WifiConfiguration configuration) {
         configuration.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
         configuration.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+        configuration.allowedProtocols.set(WifiConfiguration.Protocol.WAPI);
 
         configuration.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
         configuration.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_EAP);

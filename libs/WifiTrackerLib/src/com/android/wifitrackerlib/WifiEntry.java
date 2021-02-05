@@ -73,6 +73,9 @@ public abstract class WifiEntry implements Comparable<WifiEntry> {
             SECURITY_SAE,
             SECURITY_EAP,
             SECURITY_EAP_SUITE_B,
+            SECURITY_DPP,
+            SECURITY_WAPI_PSK,
+            SECURITY_WAPI_CERT,
     })
 
     public @interface Security {}
@@ -85,7 +88,10 @@ public abstract class WifiEntry implements Comparable<WifiEntry> {
     public static final int SECURITY_SAE = 5;
     public static final int SECURITY_EAP_SUITE_B = 6;
 
-    public static final int NUM_SECURITY_TYPES = 7;
+    public static final int SECURITY_DPP = 7;
+    public static final int SECURITY_WAPI_PSK = 8;
+    public static final int SECURITY_WAPI_CERT = 9;
+    public static final int NUM_SECURITY_TYPES = 10;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef(value = {

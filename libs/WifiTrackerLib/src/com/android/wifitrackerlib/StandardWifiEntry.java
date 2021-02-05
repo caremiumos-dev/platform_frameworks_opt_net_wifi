@@ -616,6 +616,10 @@ public class StandardWifiEntry extends WifiEntry {
                             ? mContext.getString(R.string.wifi_security_short_wpa_wpa2_wpa3) :
                             mContext.getString(R.string.wifi_security_wpa_wpa2_wpa3);
                 }
+            case SECURITY_WAPI_PSK:
+                return mContext.getString(R.string.wifi_security_wapi_psk);
+            case SECURITY_WAPI_CERT:
+                return mContext.getString(R.string.wifi_security_wapi_cert);
             case SECURITY_WEP:
                 return mContext.getString(R.string.wifi_security_wep);
             case SECURITY_SAE:
