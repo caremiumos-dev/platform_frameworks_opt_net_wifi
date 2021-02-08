@@ -420,6 +420,10 @@ public class WifiScoreReport {
      * Called periodically (POLL_RSSI_INTERVAL_MSECS) about every 3 seconds.
      */
     public void calculateAndReportScore() {
+        calculateAndReportScore(true);
+    }
+
+    public void calculateAndReportScore(boolean autoSwitchToMobileData) {
         // Bypass AOSP scorer if Wifi connected network scorer is set
         if (mWifiConnectedNetworkScorerHolder != null) {
             return;
@@ -473,6 +477,7 @@ public class WifiScoreReport {
                 score = mWifiInfo.getScore();
             }
         }
+        /*
         //sanitize boundaries
         if (score > ConnectedScore.WIFI_MAX_SCORE) {
             score = ConnectedScore.WIFI_MAX_SCORE;
@@ -480,7 +485,18 @@ public class WifiScoreReport {
         if (score < 0) {
             score = 0;
         }
-
+        */
+        if (autoSwitchToMobileData) {
+            //sanitize boundaries
+            if (score > ConnectedScore.WIFI_MAX_SCORE) {
+                score = ConnectedScore.WIFI_MAX_SCORE;
+            }
+            if (score < 0) {
+                score = 0;
+            }
+        } else {
+            score = ConnectedScore.WIFI_MAX_SCORE;
+        }
         //report score
         reportNetworkScoreToConnectivityServiceIfNecessary(score);
         updateWifiMetrics(millis, s2, score);

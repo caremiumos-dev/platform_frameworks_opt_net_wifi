@@ -59,6 +59,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import android.provider.Settings;
+import android.database.ContentObserver;
+import java.lang.reflect.Field;
 
 /**
  * This class manages all the connectivity related scanning activities.
@@ -201,6 +204,8 @@ public class WifiConnectivityManager {
     private WifiChannelUtilization mWifiChannelUtilization;
     // Cached WifiCandidates used in high mobility state to avoid connecting to APs that are
     // moving relative to the user.
+    public static boolean mWifiSwitchNetwork = false;
+    public static boolean mAutoSwitchToMobileData = false;
     private CachedWifiCandidates mCachedWifiCandidates = null;
     private @DeviceMobilityState int mDeviceMobilityState =
             WifiManager.DEVICE_MOBILITY_STATE_UNKNOWN;
@@ -793,6 +798,35 @@ public class WifiConnectivityManager {
         mWifiChannelUtilization = mWifiInjector.getWifiChannelUtilizationScan();
         mNetworkSelector.setWifiChannelUtilization(mWifiChannelUtilization);
         mWifiScoreCard = scoreCard;
+
+        context.getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                        "wifi_should_switch_network"), false,
+                new ContentObserver(new Handler()) {
+                    @Override
+                    public void onChange(boolean selfChange) {
+                        mWifiSwitchNetwork = (Settings.System.getInt(context.getContentResolver(),
+                               "wifi_should_switch_network", 0) == 1);
+                        Log.d(TAG, "WIFI_SHOULD_SWITCH_NETWORK change " + mWifiSwitchNetwork);
+                        if (mWifiSwitchNetwork) {
+                            startPeriodicSingleScan();
+                        }
+                    }
+                });
+        mWifiSwitchNetwork = (Settings.System.getInt(context.getContentResolver(),
+                "wifi_should_switch_network", 0) == 1);
+
+        context.getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                        "wifi_auto_change_to_mobile_data"), false,
+                new ContentObserver(new Handler()) {
+                    @Override
+                    public void onChange(boolean selfChange) {
+                        mAutoSwitchToMobileData = (Settings.System.getInt(context.getContentResolver(),
+                                "wifi_auto_change_to_mobile_data", 0) == 1);
+                        Log.d(TAG, "WIFI_AUTO_CHANGE_TO_MOBILE_DATA change " + mAutoSwitchToMobileData);
+                    }
+                });
+        mAutoSwitchToMobileData = (Settings.System.getInt(context.getContentResolver(),
+                "wifi_auto_change_to_mobile_data", 0) == 1);
     }
 
     /** Initialize single scanning schedules, and validate them */

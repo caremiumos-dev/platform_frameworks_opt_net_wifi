@@ -641,6 +641,10 @@ public class WifiNetworkFactory extends NetworkFactory {
                 return;
             }
             if (--mGenericConnectionReqCount == 0) {
+                if (!mWifiConnectivityManager.mAutoSwitchToMobileData) {
+                    Log.d(TAG, "WIFI_AUTO_CHANGE_TO_MOBILE_DATA disabled, don't release trust network");
+                    return;
+                }
                 mWifiConnectivityManager.setTrustedConnectionAllowed(false);
             }
         } else {
@@ -685,8 +689,12 @@ public class WifiNetworkFactory extends NetworkFactory {
      * Check if there is at least one connection request.
      */
     public boolean hasConnectionRequests() {
+        /*
         return mGenericConnectionReqCount > 0 || mActiveSpecificNetworkRequest != null
                 || mConnectedSpecificNetworkRequest != null;
+        */
+        return mGenericConnectionReqCount > 0 || mActiveSpecificNetworkRequest != null
+                || mConnectedSpecificNetworkRequest != null || !mWifiConnectivityManager.mAutoSwitchToMobileData;
     }
 
     /**

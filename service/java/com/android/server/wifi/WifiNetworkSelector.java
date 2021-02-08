@@ -52,6 +52,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import android.provider.Settings;
+import java.lang.reflect.Field;
 
 /**
  * WifiNetworkSelector looks at all the connectivity scan results and
@@ -306,6 +308,14 @@ public class WifiNetworkSelector {
                 localLog("Switching networks in connected state is not allowed."
                         + " Skip network selection.");
                 return false;
+            }
+            // when connected, do not switch when WIFI_SHOULD_SWITCH_NETWORK is 0
+            if (Settings.System.getInt(mContext.getContentResolver(),
+                    "wifi_should_switch_network", 1) == 0) {
+                localLog("WIFI_SHOULD_SWITCH_NETWORK is 0, skip network selection.");
+                return false;
+            } else {
+                localLog("WIFI_SHOULD_SWITCH_NETWORK is 1");
             }
 
             // Has it been at least the minimum interval since last network selection?
