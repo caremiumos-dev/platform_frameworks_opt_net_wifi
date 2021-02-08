@@ -3327,6 +3327,24 @@ public class WifiServiceImpl extends BaseWifiService {
     }
 
     @Override
+    public void setHighPerfRestrict(int uid, boolean restrict) {
+        mLog.info("setHighPerfRestrict uid=% restrict=% callingUid=%")
+                .c(uid)
+                .c(restrict)
+                .c(Binder.getCallingUid()).flush();
+
+        if (Binder.getCallingUid() != 1000) {
+            Log.e(TAG, "Only SystemUid can call the method setHighPerfRestrict uid:" + uid + " restrict:" + restrict + " callerUid:" + Binder.getCallingUid());
+            return;
+        }
+
+        boolean toUpdate = mWifiLockManager.ifNeedtoUpdateOpMode(uid, restrict);
+        if (toUpdate) {
+            mWifiThreadRunner.run(() -> mWifiLockManager.toUpdateOpMode());
+        }
+    }
+
+    @Override
     public boolean acquireWifiLock(IBinder binder, int lockMode, String tag, WorkSource ws) {
         mLog.info("acquireWifiLock uid=% lockMode=%")
                 .c(Binder.getCallingUid())

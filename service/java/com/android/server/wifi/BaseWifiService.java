@@ -295,6 +295,11 @@ public class BaseWifiService extends IWifiManager.Stub {
     }
 
     @Override
+    public void setHighPerfRestrict(int uid, boolean restrict) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public boolean acquireWifiLock(IBinder lock, int lockType, String tag, WorkSource ws) {
         throw new UnsupportedOperationException();
     }

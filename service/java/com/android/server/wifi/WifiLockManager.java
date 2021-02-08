@@ -21,9 +21,11 @@ import android.content.Context;
 import android.net.wifi.WifiManager;
 import android.os.BatteryStatsManager;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.os.UserHandle;
 import android.os.WorkSource;
 import android.os.WorkSource.WorkChain;
 import android.util.Log;
@@ -36,6 +38,7 @@ import com.android.server.wifi.util.WorkSourceUtil;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashSet;
 import java.util.NoSuchElementException;
 
 /**
@@ -174,7 +177,173 @@ public class WifiLockManager {
         }, ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND_SERVICE);
     }
 
-    /**
+    private HashSet<Integer> mRestrictSet = new HashSet<Integer>();
+    private final SparseArray<UidRecHP> mHighPerfUidWatchList = new SparseArray<>();
+    public boolean ifNeedtoUpdateOpMode(int uid, boolean restrict) {
+        if (mVerboseLoggingEnabled) {
+            Log.d(TAG, "WifiLockManager setHighPerfRestrict uid:" + uid + " restrict:" + restrict + " callerUid:" + Binder.getCallingUid());
+        }
+
+        if (isCore(uid)) {
+            if (mVerboseLoggingEnabled) {
+                Log.e(TAG, "setHighPerfRestrict can't operate core uid, return");
+            }
+           return false;
+        }
+
+        if (restrict) {
+            addUidtoRestrictSet(uid);
+        } else {
+            removeUidfromRestrictSet(uid);
+        }
+
+        synchronized (mHighPerfUidWatchList) {
+            UidRecHP uidRec = mHighPerfUidWatchList.get(uid);
+            if (uidRec == null) {
+                return false;
+            }
+
+            if (uidRec.mIsRestricted == restrict) {
+                if (mVerboseLoggingEnabled) {
+                    Log.e(TAG, "setHighPerfRestrict already at correct state, return");
+                }
+                return false;
+            }
+
+            uidRec.mIsRestricted = restrict;
+            return true;
+        }
+    }
+
+    private boolean isCore(int uid) {
+        if (uid >= 0) {
+            final int appId = uid % 100000;
+            return appId < 10000;
+        } else {
+            return false;
+        }
+    }
+
+    public void toUpdateOpMode() {
+        updateOpMode();
+    }
+
+    private void addUidtoRestrictSet(int uid) {
+        synchronized (mRestrictSet) {
+            mRestrictSet.add(uid);
+        }
+    }
+
+    private void removeUidfromRestrictSet(int uid) {
+        synchronized (mRestrictSet) {
+            mRestrictSet.remove(uid);
+        }
+    }
+
+    private boolean isUidRestricted(int uid) {
+        synchronized (mRestrictSet) {
+            return mRestrictSet.contains(uid);
+        }
+    }
+
+    private int countUnRestrictedHighPerfUids() {
+        int uidCount = 0;
+        synchronized (mHighPerfUidWatchList) {
+            int listSize = mHighPerfUidWatchList.size();
+            for (int idx = 0; idx < listSize; idx++) {
+                UidRecHP uidRec = mHighPerfUidWatchList.valueAt(idx);
+                if (!uidRec.mIsRestricted) {
+                    uidCount++;
+                }
+            }
+        }
+        return uidCount;
+    }
+
+    private void addWsToLlWatchListHP(WorkSource ws) {
+        synchronized (mHighPerfUidWatchList) {
+            int wsSize = ws.size();
+            for (int i = 0; i < wsSize; i++) {
+                final int uid = ws.getUid(i);
+                addUidToLlWatchListHPLocked(uid);
+            }
+
+            final List<WorkChain> workChains = ws.getWorkChains();
+            if (workChains != null) {
+                for (int i = 0; i < workChains.size(); ++i) {
+                    final WorkChain workChain = workChains.get(i);
+                    final int uid = workChain.getAttributionUid();
+                    addUidToLlWatchListHPLocked(uid);
+                }
+            }
+        }
+    }
+
+    private void removeWsFromLlWatchListHP(WorkSource ws) {
+        synchronized (mHighPerfUidWatchList) {
+            int wsSize = ws.size();
+            for (int i = 0; i < wsSize; i++) {
+                final int uid = ws.getUid(i);
+                removeUidFromLlWatchListHPLocked(uid);
+            }
+
+            final List<WorkChain> workChains = ws.getWorkChains();
+            if (workChains != null) {
+                for (int i = 0; i < workChains.size(); ++i) {
+                    final WorkChain workChain = workChains.get(i);
+                    final int uid = workChain.getAttributionUid();
+                    removeUidFromLlWatchListHPLocked(uid);
+                }
+            }
+        }
+    }
+
+    private void addUidToLlWatchListHPLocked(int uid) {
+        UidRecHP uidRec = mHighPerfUidWatchList.get(uid);
+        if (uidRec != null) {
+            uidRec.mLockCount++;
+        } else {
+            uidRec = new UidRecHP(uid);
+            uidRec.mLockCount = 1;
+            mHighPerfUidWatchList.put(uid, uidRec);
+
+            if (isUidRestricted(uid)) {
+                uidRec.mIsRestricted = true;
+            }
+        }
+    }
+
+    private void removeUidFromLlWatchListHPLocked(int uid) {
+        UidRecHP uidRec = mHighPerfUidWatchList.get(uid);
+        if (uidRec == null) {
+            Log.e(TAG, "Failed to find uid in high-perf watch list");
+            return;
+        }
+
+        if (uidRec.mLockCount > 0) {
+            uidRec.mLockCount--;
+        } else {
+            Log.e(TAG, "Error, uid record conatains no locks");
+        }
+
+        if (uidRec.mLockCount == 0) {
+            mHighPerfUidWatchList.remove(uid);
+            //removeUidfromRestrictSet(uid);
+        }
+    }
+
+    private class UidRecHP {
+        final int mUid;
+        int mLockCount;
+        // Is this UID restricted
+        boolean mIsRestricted = false;
+
+        UidRecHP(int uid) {
+            mUid = uid;
+        }
+    }
+
+   /**
      * Method allowing a calling app to acquire a Wifi WakeLock in the supplied mode.
      *
      * This method checks that the lock mode is a valid WifiLock mode.
@@ -230,7 +399,7 @@ public class WifiLockManager {
             return WifiManager.WIFI_MODE_FULL_LOW_LATENCY;
         }
 
-        if (mFullHighPerfLocksAcquired > mFullHighPerfLocksReleased) {
+        if (countUnRestrictedHighPerfUids() > 0) {
             return WifiManager.WIFI_MODE_FULL_HIGH_PERF;
         }
 
@@ -278,6 +447,10 @@ public class WifiLockManager {
         // can correctly match "nested" acquire / release pairs.
         switch(wl.mMode) {
             case WifiManager.WIFI_MODE_FULL_HIGH_PERF:
+                addWsToLlWatchListHP(newWorkSource);
+                removeWsFromLlWatchListHP(wl.mWorkSource);
+                updateOpMode();
+
                 // Shift blame to new worksource if needed
                 if (canActivateHighPerfLock()) {
                     setBlameHiPerfWs(newWorkSource, true);
@@ -493,6 +666,7 @@ public class WifiLockManager {
 
         switch(lock.mMode) {
             case WifiManager.WIFI_MODE_FULL_HIGH_PERF:
+                addWsToLlWatchListHP(lock.getWorkSource());
                 ++mFullHighPerfLocksAcquired;
                 // Start blaming this worksource if conditions are met
                 if (canActivateHighPerfLock()) {
@@ -536,6 +710,7 @@ public class WifiLockManager {
 
         switch(wifiLock.mMode) {
             case WifiManager.WIFI_MODE_FULL_HIGH_PERF:
+                removeWsFromLlWatchListHP(wifiLock.getWorkSource());
                 ++mFullHighPerfLocksReleased;
                 mWifiMetrics.addWifiLockAcqSession(WifiManager.WIFI_MODE_FULL_HIGH_PERF,
                         mClock.getElapsedSinceBootMillis() - wifiLock.getAcqTimestamp());
@@ -571,9 +746,7 @@ public class WifiLockManager {
             return true;
         }
 
-        if (mVerboseLoggingEnabled) {
-            Log.d(TAG, "Current opMode: " + mCurrentOpMode + " New LockMode: " + newLockMode);
-        }
+        Log.d(TAG, "Current opMode: " + mCurrentOpMode + " New LockMode: " + newLockMode);
 
         // Otherwise, we need to change current mode, first reset it to normal
         switch (mCurrentOpMode) {
