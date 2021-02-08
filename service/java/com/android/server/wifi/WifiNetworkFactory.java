@@ -641,6 +641,13 @@ public class WifiNetworkFactory extends NetworkFactory {
                 return;
             }
             if (--mGenericConnectionReqCount == 0) {
+                // #ifdef VENDOR_EDIT
+                // alan.kao@Connectivity, 2019/04/30, Porting Oneplus Network Selection
+                if (!mWifiConnectivityManager.mAutoSwitchToMobileData) {
+                    Log.d(TAG, "WIFI_AUTO_CHANGE_TO_MOBILE_DATA disabled, don't release trust network");
+                    return;
+                }
+                // #endif /* VENDOR_EDIT */
                 mWifiConnectivityManager.setTrustedConnectionAllowed(false);
             }
         } else {
@@ -685,8 +692,16 @@ public class WifiNetworkFactory extends NetworkFactory {
      * Check if there is at least one connection request.
      */
     public boolean hasConnectionRequests() {
+        // #ifndef VENDOR_EDIT
+        // alan.kao@Connectivity, 2019/04/30, Porting Oneplus Network Selection
+        /*
         return mGenericConnectionReqCount > 0 || mActiveSpecificNetworkRequest != null
                 || mConnectedSpecificNetworkRequest != null;
+        */
+        // #else /* VENDOR_EDIT */
+        return mGenericConnectionReqCount > 0 || mActiveSpecificNetworkRequest != null
+                || mConnectedSpecificNetworkRequest != null || !mWifiConnectivityManager.mAutoSwitchToMobileData;
+        // #endif /* VENDOR_EDIT */
     }
 
     /**

@@ -52,6 +52,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import android.provider.Settings;
+import java.lang.reflect.Field;
 
 /**
  * WifiNetworkSelector looks at all the connectivity scan results and
@@ -307,6 +309,18 @@ public class WifiNetworkSelector {
                         + " Skip network selection.");
                 return false;
             }
+
+            // #ifdef VENDOR_EDIT
+            // alan.kao@Connectivity, 2019/04/30, Porting Oneplus Network Selection
+            // when connected, do not switch when WIFI_SHOULD_SWITCH_NETWORK is 0
+            if (Settings.System.getInt(mContext.getContentResolver(),
+                    "wifi_should_switch_network", 1) == 0) {
+                localLog("WIFI_SHOULD_SWITCH_NETWORK is 0, skip network selection.");
+                return false;
+            } else {
+                localLog("WIFI_SHOULD_SWITCH_NETWORK is 1");
+            }
+            // #endif /* VENDOR_EDIT */
 
             // Has it been at least the minimum interval since last network selection?
             if (mLastNetworkSelectionTimeStamp != INVALID_TIME_STAMP) {

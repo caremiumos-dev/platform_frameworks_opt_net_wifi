@@ -5084,7 +5084,10 @@ public class ClientModeImpl extends StateMachine {
             // Get Info and continue polling
             fetchRssiLinkSpeedAndFrequencyNative();
             // Send the update score to network agent.
-            mWifiScoreReport.calculateAndReportScore();
+            /*
+             mWifiScoreReport.calculateAndReportScore();
+            */
+            mWifiScoreReport.calculateAndReportScore(mWifiConnectivityManager.mAutoSwitchToMobileData);
             return stats;
         }
     }

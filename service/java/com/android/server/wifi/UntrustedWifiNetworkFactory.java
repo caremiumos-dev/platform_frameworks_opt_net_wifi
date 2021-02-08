@@ -62,6 +62,10 @@ public class UntrustedWifiNetworkFactory extends NetworkFactory {
                 return;
             }
             if (--mConnectionReqCount == 0) {
+                if (!mWifiConnectivityManager.mAutoSwitchToMobileData) {
+                    Log.d(TAG, "WIFI_AUTO_CHANGE_TO_MOBILE_DATA disabled, don't release untrust network");
+                    return;
+                }
                 mWifiConnectivityManager.setUntrustedConnectionAllowed(false);
             }
         }
@@ -77,7 +81,14 @@ public class UntrustedWifiNetworkFactory extends NetworkFactory {
      * Check if there is at-least one connection request.
      */
     public boolean hasConnectionRequests() {
+        // #ifndef VENDOR_EDIT
+        // alan.kao@Connectivity, 2019/04/30, Porting Oneplus Network Selection
+        /*
         return mConnectionReqCount > 0;
+        */
+        // #else /* VENDOR_EDIT */
+        return mConnectionReqCount > 0 || !mWifiConnectivityManager.mAutoSwitchToMobileData;
+        // #endif /* VENDOR_EDIT */
     }
 }
 

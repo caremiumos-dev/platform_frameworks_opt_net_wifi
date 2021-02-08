@@ -419,7 +419,21 @@ public class WifiScoreReport {
      *
      * Called periodically (POLL_RSSI_INTERVAL_MSECS) about every 3 seconds.
      */
+    // #ifndef VENDOR_EDIT
+    // alan.kao@Connectivity, 2019/04/30, Porting Oneplus Network Selection
+    /*
     public void calculateAndReportScore() {
+    */
+    // #else /* VENDOR_EDIT */
+    /* CTS would call calculateAndReportScore API,
+     * so we should add a new API for oem operation.
+    */
+    public void calculateAndReportScore() {
+        calculateAndReportScore(true);
+    }
+
+    public void calculateAndReportScore(boolean autoSwitchToMobileData) {
+        // #endif /* VENDOR_EDIT */
         // Bypass AOSP scorer if Wifi connected network scorer is set
         if (mWifiConnectedNetworkScorerHolder != null) {
             return;
@@ -473,6 +487,9 @@ public class WifiScoreReport {
                 score = mWifiInfo.getScore();
             }
         }
+        // #ifndef VENDOR_EDIT
+        // alan.kao@Connectivity, 2019/04/30, Porting Oneplus Network Selection
+        /*
         //sanitize boundaries
         if (score > ConnectedScore.WIFI_MAX_SCORE) {
             score = ConnectedScore.WIFI_MAX_SCORE;
@@ -480,7 +497,20 @@ public class WifiScoreReport {
         if (score < 0) {
             score = 0;
         }
-
+        */
+        // #else /* VENDOR_EDIT */
+        if (autoSwitchToMobileData) {
+            //sanitize boundaries
+            if (score > ConnectedScore.WIFI_MAX_SCORE) {
+                score = ConnectedScore.WIFI_MAX_SCORE;
+            }
+            if (score < 0) {
+                score = 0;
+            }
+        } else {
+            score = ConnectedScore.WIFI_MAX_SCORE;
+        }
+        // #endif /* VENDOR_EDIT */
         //report score
         reportNetworkScoreToConnectivityServiceIfNecessary(score);
         updateWifiMetrics(millis, s2, score);
