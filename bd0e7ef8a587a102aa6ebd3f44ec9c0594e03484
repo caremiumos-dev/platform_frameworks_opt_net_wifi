@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007999077",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1580084?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "7a956d5a_f83006e5",
+        "filename": "service/java/com/android/server/wifi/WifiLockManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-08T05:55:54Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 184,
+        "startChar": 0,
+        "endLine": 184,
+        "endChar": 140
+      },
+      "revId": "bd0e7ef8a587a102aa6ebd3f44ec9c0594e03484",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007999077",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1580084?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "54101900_1bb9b5c5",
+        "filename": "service/java/com/android/server/wifi/WifiServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3337,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-08T05:55:54Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 3337,
+        "startChar": 0,
+        "endLine": 3337,
+        "endChar": 159
+      },
+      "revId": "bd0e7ef8a587a102aa6ebd3f44ec9c0594e03484",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
