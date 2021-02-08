@@ -86,6 +86,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
+// neil.sun@Connectivity, 2020/05/26, [Porting]Fix invitation pop up not adapt the accent color in the WLAN direct
+import android.graphics.Color;
+import android.widget.Button;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.AsyncChannel;
@@ -3326,7 +3329,35 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
             dialog.getWindow().addSystemFlags(
                     WindowManager.LayoutParams.SYSTEM_FLAG_SHOW_FOR_ALL_USERS);
             dialog.show();
+            // neil.sun@Connectivity, 2020/05/26, [Porting]Fix invitation pop up not adapt the accent color in the WLAN direct
+            Button negativeButton = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+            Button positiveButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+            final int accentColor = getThemeAccentColor(mContext);
+            if (negativeButton != null) {
+                negativeButton.setTextColor(accentColor);
+            }
+
+            if (positiveButton != null) {
+                positiveButton.setTextColor(accentColor);
+            }
         }
+
+        // #ifdef VENDOR_EDIT
+        // neil.sun@Connectivity, 2020/05/26, [Porting]Fix invitation pop up not adapt the accent color in the WLAN direct
+        private int getThemeAccentColor(Context context) {
+            String color = Settings.System.getString(context.getContentResolver(), "oneplus_accent_color");
+            if (mVerboseLoggingEnabled) Log.d(TAG, "getThemeAccentColor color: " + color);
+
+            if (color == null) {
+                return Color.parseColor("#2196F3"); // Android default blue color
+            } else {
+                if (color.charAt(0) != '#') {
+                    color = '#' + color;
+                }
+                return Color.parseColor(color);
+            }
+        }
+        // #endif VENDOR_EDIT
 
         /**
          * This method unifies the persisent group list, cleans up unused
