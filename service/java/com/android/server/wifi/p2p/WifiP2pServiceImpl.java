@@ -1825,6 +1825,29 @@ public class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                         WifiP2pConfig config = (WifiP2pConfig) message.obj;
 
                         boolean isConnectFailed = false;
+                        int p2pNetId = WifiP2pGroup.NETWORK_ID_PERSISTENT;
+                        if (config.groupOwnerIntent == 14) {
+                            WifiP2pDevice dev = fetchCurrentDeviceDetails(config);
+                            if (dev != null) {
+                                if (config.netId >= 0) {
+                                    if (config.deviceAddress.equals(mGroups.getOwnerAddr(config.netId))) {
+                                        p2pNetId = config.netId;
+                                    }
+                                } else {
+                                    p2pNetId = mGroups.getNetworkId(dev.deviceAddress);
+                                }
+                                if (p2pNetId < 0) {
+                                    p2pNetId = getNetworkIdFromClientList(dev.deviceAddress);
+                                }
+                                if (p2pNetId >= 0) {
+                                    if (mVerboseLoggingEnabled) logd(getName() + " delete persistent group for miracast");
+                                    mGroups.remove(p2pNetId);
+                                    mWifiP2pMetrics.updatePersistentGroup(mGroups);
+                                } else {
+                                    if (mVerboseLoggingEnabled) logd(getName() + " we might meet problem when delete persistent group for miracast");
+                                }
+                            }
+                        }
                         if (isConfigValidAsGroup(config)) {
                             mAutonomousGroup = false;
                             mWifiNative.p2pStopFind();
