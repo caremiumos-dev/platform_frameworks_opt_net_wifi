@@ -37,6 +37,8 @@ public class WifiTrafficPoller {
 
     private long mTxPkts = 0;
     private long mRxPkts = 0;
+    private static final int OPPS_TX_PACKETS_THRESHOLD = 15;
+    private static final int OPPS_RX_PACKETS_THRESHOLD = 15;
 
     private int mLastActivity = -1;
 
@@ -86,10 +88,16 @@ public class WifiTrafficPoller {
         long sent = newTxPkts - mTxPkts;
         long received = newRxPkts - mRxPkts;
         int dataActivity = WifiManager.TrafficStateCallback.DATA_ACTIVITY_NONE;
+        /*
         if (sent > 0) {
+        */
+        if (sent > OPPS_TX_PACKETS_THRESHOLD) {
             dataActivity |= WifiManager.TrafficStateCallback.DATA_ACTIVITY_OUT;
         }
+        /*
         if (received > 0) {
+        */
+        if (received > OPPS_RX_PACKETS_THRESHOLD) {
             dataActivity |= WifiManager.TrafficStateCallback.DATA_ACTIVITY_IN;
         }
 
