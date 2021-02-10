@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35673537_19a123f5",
+        "filename": "service/java/com/android/server/wifi/WifiConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1164,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2021-02-10T14:51:00Z",
+      "side": 1,
+      "message": "What is this variable - I don\u0027t see it in the current codebase or in this CL?",
+      "range": {
+        "startLine": 1164,
+        "startChar": 20,
+        "endLine": 1164,
+        "endChar": 38
+      },
+      "revId": "e98586f201a5354774445fa7a9c8f0001483583c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
