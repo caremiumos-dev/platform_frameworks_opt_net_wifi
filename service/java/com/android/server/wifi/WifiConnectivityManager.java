@@ -86,6 +86,7 @@ public class WifiConnectivityManager {
     private static final boolean SCAN_IMMEDIATELY = true;
     private static final boolean SCAN_ON_SCHEDULE = false;
 
+    private boolean mOpenNetworkNotificationOn = false;
     // PNO scan interval in milli-seconds. This is the scan
     // performed when screen is off and connected.
     private static final int CONNECTED_PNO_SCAN_INTERVAL_MS = 160 * 1000; // 160 seconds
@@ -793,6 +794,22 @@ public class WifiConnectivityManager {
         mWifiChannelUtilization = mWifiInjector.getWifiChannelUtilizationScan();
         mNetworkSelector.setWifiChannelUtilization(mWifiChannelUtilization);
         mWifiScoreCard = scoreCard;
+
+        context.getContentResolver().registerContentObserver(Settings.Global.getUriFor(
+                        Settings.Global.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON), false,
+                new ContentObserver(new Handler()) {
+                    @Override
+                    public void onChange(boolean selfChange) {
+                        mOpenNetworkNotificationOn = (Settings.Global.getInt(context.getContentResolver(),
+                                Settings.Global.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON, 0) == 1);
+                        Log.d(TAG, "WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON change " + mOpenNetworkNotificationOn);
+                        if (mOpenNetworkNotificationOn) {
+                            startPeriodicSingleScan();
+                        }
+                    }
+                });
+        mOpenNetworkNotificationOn = (Settings.Global.getInt(context.getContentResolver(),
+                Settings.Global.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON, 0) == 1);
     }
 
     /** Initialize single scanning schedules, and validate them */
@@ -1131,10 +1148,26 @@ public class WifiConnectivityManager {
         // 2) link is good, internet status is acceptable
         //    and it is a short time since last network selection
         // 3) There is active stream such that scan will be likely disruptive
+        /*
         if (mWifiState == WIFI_STATE_CONNECTED
                 && (mNetworkSelector.isNetworkSufficient(mWifiInfo)
                 || isGoodLinkAndAcceptableInternetAndShortTimeSinceLastNetworkSelection
                 || mNetworkSelector.hasActiveStream(mWifiInfo))) {
+        */
+        boolean isNetworkSufficient = mNetworkSelector.isNetworkSufficient(mWifiInfo);
+        boolean hasActiveStream = mNetworkSelector.hasActiveStream(mWifiInfo);
+        boolean isSingleSavedNetwork = useSingleSavedNetworkSchedule();
+        if (mWifiState == WIFI_STATE_CONNECTED
+                && (isNetworkSufficient
+                || isGoodLinkAndAcceptableInternetAndShortTimeSinceLastNetworkSelection
+                || hasActiveStream
+              //|| !mWifiSwitchNetwork
+                || isSingleSavedNetwork)) {
+            localLog("No periodic single scan because wifi is connected. isNetworkSufficient = " + isNetworkSufficient
+                    + " ,isGoodLinkAndAcceptableInternetAndShortTimeSinceLastNetworkSelection = " + isGoodLinkAndAcceptableInternetAndShortTimeSinceLastNetworkSelection
+                    + " ,hasActiveStream = " + hasActiveStream
+                  //+ " ,mWifiSwitchNetwork = " + mWifiSwitchNetwork
+                    + " ,isSingleSavedNetwork = " + isSingleSavedNetwork);
             // If only partial scan is proposed and firmware roaming control is supported,
             // we will not issue any scan because firmware roaming will take care of
             // intra-SSID roam.
@@ -1165,9 +1198,17 @@ public class WifiConnectivityManager {
             }
 
             startSingleScan(isFullBandScan, WIFI_WORK_SOURCE);
+            /*
             schedulePeriodicScanTimer(
                     getScheduledSingleScanIntervalMs(mCurrentSingleScanScheduleIndex));
-
+            */
+            if (!mOpenNetworkNotificationOn && useNoSavedNetworkSchedule()) {
+                schedulePeriodicScanTimer(
+                        getScheduledSingleScanIntervalMs(10000)); // 10000 only means max index value
+            } else {
+                schedulePeriodicScanTimer(
+                        getScheduledSingleScanIntervalMs(mCurrentSingleScanScheduleIndex));
+            }
             // Set up the next scan interval in an exponential backoff fashion.
             mCurrentSingleScanScheduleIndex++;
         } else {
@@ -1654,6 +1695,28 @@ public class WifiConnectivityManager {
         String suggestionKey = network.getWifiConfiguration().getKey();
         WifiConfiguration config = mConfigManager.getConfiguredNetwork(suggestionKey);
         return (config != null && config.networkId == currentNetworkId);
+    }
+
+    private boolean useNoSavedNetworkSchedule() {
+        List<WifiConfiguration> savedNetworks =
+                mConfigManager.getSavedNetworks(Process.WIFI_UID);
+        // If we have saved networks, then no need to proceed
+        if (savedNetworks.size() > 0) {
+            return false;
+        }
+        List<PasspointConfiguration> passpointNetworks =
+                mWifiInjector.getPasspointManager().getProviderConfigs(Process.WIFI_UID, true);
+        // If we have networks (saved + passpoint), then no need to proceed
+        if (passpointNetworks.size() + savedNetworks.size() > 0) {
+            return false;
+        }
+        Set<WifiNetworkSuggestion> suggestionsNetworks =
+                mWifiNetworkSuggestionsManager.getAllApprovedNetworkSuggestions();
+        // If total size not equal to 0, then no need to proceed
+        if (passpointNetworks.size() + savedNetworks.size() + suggestionsNetworks.size() != 0) {
+            return false;
+        }
+        return true;
     }
 
     private int[] initSingleSavedNetworkSchedule() {
