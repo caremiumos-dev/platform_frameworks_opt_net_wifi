@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+1: David Su <dysu@google.com>
+Code-Review+1: Quang Luong <qal@google.com>
+Code-Review+2: Etan Cohen <etancohen@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Submitted-by: Chiachang Wang <chiachangwang@google.com>
+Submitted-at: Sat, 20 Feb 2021 00:24:11 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/opt/net/wifi/+/1572101
+Project: platform/frameworks/opt/net/wifi
+Branch: refs/heads/master
