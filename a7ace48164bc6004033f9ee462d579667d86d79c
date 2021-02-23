@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008378839",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1601614?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "94ee177f_b279f5ad",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkNominator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-23T10:31:42Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 120
+      },
+      "revId": "a7ace48164bc6004033f9ee462d579667d86d79c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008378839",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1601614?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "6b759ac8_462ca054",
+        "filename": "service/java/com/android/server/wifi/SavedNetworkNominator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-23T10:31:42Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 101
+      },
+      "revId": "a7ace48164bc6004033f9ee462d579667d86d79c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
