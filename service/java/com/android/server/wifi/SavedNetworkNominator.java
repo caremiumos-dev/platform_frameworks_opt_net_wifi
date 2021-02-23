@@ -22,7 +22,9 @@ import android.net.wifi.WifiConfiguration;
 import android.telephony.TelephonyManager;
 import android.util.LocalLog;
 import android.util.Pair;
-
+import android.provider.Settings;
+import android.content.Context;
+import android.util.Log;
 import com.android.server.wifi.hotspot2.PasspointNetworkNominateHelper;
 import com.android.server.wifi.util.WifiPermissionsUtil;
 
@@ -34,6 +36,8 @@ import java.util.List;
  */
 public class SavedNetworkNominator implements WifiNetworkSelector.NetworkNominator {
     private static final String NAME = "SavedNetworkNominator";
+    private final String TAG = "SavedNetworkNominator";
+    private Context mContext;
     private final WifiConfigManager mWifiConfigManager;
     private final LocalLog mLocalLog;
     private final WifiCarrierInfoManager mWifiCarrierInfoManager;
@@ -90,7 +94,14 @@ public class SavedNetworkNominator implements WifiNetworkSelector.NetworkNominat
                     boolean untrustedNetworkAllowed,
                     @NonNull OnConnectableListener onConnectableListener) {
         findMatchedSavedNetworks(scanDetails, onConnectableListener);
-        findMatchedPasspointNetworks(scanDetails, onConnectableListener);
+        boolean wifiPasspointStateEnabled = false;
+        wifiPasspointStateEnabled =
+                    (Settings.System.getInt(mContext.getContentResolver(), "oneplus_passpoint", 1) == 1 ? true : false);
+        if (wifiPasspointStateEnabled){
+           findMatchedPasspointNetworks(scanDetails, onConnectableListener);
+        } else {
+            Log.d(TAG, "Ignore passpoint network due to passpoint not enabled in Wi-Fi Preferences");
+        }
     }
 
     private void findMatchedSavedNetworks(List<ScanDetail> scanDetails,
@@ -235,5 +246,8 @@ public class SavedNetworkNominator implements WifiNetworkSelector.NetworkNominat
         }
         mWifiCarrierInfoManager.sendImsiProtectionExemptionNotificationIfRequired(carrierId);
         return true;
+    }
+   public void setContext(Context context) {
+        mContext = context;
     }
 }
