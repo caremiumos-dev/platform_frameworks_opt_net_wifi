@@ -102,7 +102,10 @@ public class WifiConnectivityManager {
     // When in disconnected mode, a watchdog timer will be fired
     // every WATCHDOG_INTERVAL_MS to start a single scan. This is
     // to prevent caveat from things like PNO scan.
+	/*
     private static final int WATCHDOG_INTERVAL_MS = 20 * 60 * 1000; // 20 minutes
+	*/
+	private static final int WATCHDOG_INTERVAL_MS = 2 *  60 * 60 * 1000; // 2 hrs
     // Restricted channel list age out value.
     private static final long CHANNEL_LIST_AGE_MS = 60 * 60 * 1000; // 1 hour
     // This is the time interval for the connection attempt rate calculation. Connection attempt
