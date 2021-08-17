@@ -861,8 +861,12 @@ public class StandardWifiEntry extends WifiEntry {
     static String wifiConfigToStandardWifiEntryKey(@NonNull WifiConfiguration config) {
         checkNotNull(config, "Cannot create key with null config!");
         checkNotNull(config.SSID, "Cannot create key with null SSID in config!");
-        return KEY_PREFIX + sanitizeSsid(config.SSID) + ","
-                + getSecurityTypeFromWifiConfiguration(config);
+        if ( config != null && config.isPasspoint() && config.getKey() != null ) {
+            return KEY_PREFIX + config.getKey() + "," + getSecurityTypeFromWifiConfiguration(config);
+        } else {
+            return KEY_PREFIX + sanitizeSsid(config.SSID) + ","
+                    + getSecurityTypeFromWifiConfiguration(config);
+        }
     }
 
     @Override
