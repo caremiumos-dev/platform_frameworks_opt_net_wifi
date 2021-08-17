@@ -242,6 +242,11 @@ public class WifiPickerTracker extends BaseWifiTracker {
         updateNetworkRequestEntryScans(scanResults);
         updatePasspointWifiEntryScans(scanResults);
         updateOsuWifiEntryScans(scanResults);
+        if (mConnectedWifiEntry != null）{
+           final WifiInfo wifiInfo = mWifiManager.getConnectionInfo();
+           //Log.v(TAG, "handleConfiguredNetworksChangedAction updateConnectionInfo.");
+           updateConnectionInfo(wifiInfo, mCurrentNetworkInfo);
+        }
         notifyOnNumSavedNetworksChanged();
         notifyOnNumSavedSubscriptionsChanged();
         updateWifiEntries();
