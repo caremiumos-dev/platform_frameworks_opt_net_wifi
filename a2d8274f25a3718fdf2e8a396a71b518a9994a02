@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000014527476",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1798108?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "89c90bda_b58c147b",
+        "filename": "libs/WifiTrackerLib/src/com/android/wifitrackerlib/StandardWifiEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-08-17T14:18:51Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 865,
+        "startChar": 0,
+        "endLine": 865,
+        "endChar": 101
+      },
+      "revId": "a2d8274f25a3718fdf2e8a396a71b518a9994a02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
