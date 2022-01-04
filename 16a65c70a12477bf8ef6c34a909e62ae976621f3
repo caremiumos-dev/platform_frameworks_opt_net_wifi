@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2274c3c2_d2a49c74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1143404
+      },
+      "writtenOn": "2022-01-04T18:30:49Z",
+      "side": 1,
+      "message": "This CL fails build on multiple targets, please fix ",
+      "revId": "16a65c70a12477bf8ef6c34a909e62ae976621f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
