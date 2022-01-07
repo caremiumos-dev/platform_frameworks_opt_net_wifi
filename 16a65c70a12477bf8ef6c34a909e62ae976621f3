@@ -16,6 +16,24 @@
       "message": "This CL fails build on multiple targets, please fix ",
       "revId": "16a65c70a12477bf8ef6c34a909e62ae976621f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3357f1b_63a3e270",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1187124
+      },
+      "writtenOn": "2022-01-07T02:08:14Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "2274c3c2_d2a49c74",
+      "revId": "16a65c70a12477bf8ef6c34a909e62ae976621f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
