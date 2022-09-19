@@ -46,6 +46,30 @@
       },
       "revId": "d9cebc951974a34f740caa140d84c6b5fdca7a39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fac1285e_0bb272ef",
+        "filename": "libwifi_hal/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2022-09-19T08:26:26Z",
+      "side": 1,
+      "message": "I thought the variable set in Make can be referenced in more than two Android.bp files. Each instance can reference it with a different set of values or even with a different type. (e.g. as `variables` in one place, and `value_variables` in another place)",
+      "parentUuid": "6d30b485_4b7eb5ec",
+      "range": {
+        "startLine": 52,
+        "startChar": 82,
+        "endLine": 52,
+        "endChar": 92
+      },
+      "revId": "d9cebc951974a34f740caa140d84c6b5fdca7a39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
