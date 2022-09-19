@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78fc7f6d_713906c1",
+        "filename": "libwifi_hal/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2022-09-19T02:09:02Z",
+      "side": 1,
+      "message": "IMO, the list of values should work as \"subset of possible values\", not a complete set of it.",
+      "range": {
+        "startLine": 52,
+        "startChar": 82,
+        "endLine": 52,
+        "endChar": 92
+      },
+      "revId": "d9cebc951974a34f740caa140d84c6b5fdca7a39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
