@@ -22,6 +22,30 @@
       },
       "revId": "d9cebc951974a34f740caa140d84c6b5fdca7a39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d30b485_4b7eb5ec",
+        "filename": "libwifi_hal/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1514900
+      },
+      "writtenOn": "2022-09-19T08:04:31Z",
+      "side": 1,
+      "message": "See b/220375749 for a Soong cleanup/stricter usage for undefined string value, which would have caught this issue without bp2build.\n\nConcretely, what\u0027s the purpose of setting a soong_config_var value in Make that isn\u0027t defined (and therefore can\u0027t be used) as a valid soong_config_string_variable in Soong?",
+      "parentUuid": "78fc7f6d_713906c1",
+      "range": {
+        "startLine": 52,
+        "startChar": 82,
+        "endLine": 52,
+        "endChar": 92
+      },
+      "revId": "d9cebc951974a34f740caa140d84c6b5fdca7a39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
