@@ -70,6 +70,30 @@
       },
       "revId": "d9cebc951974a34f740caa140d84c6b5fdca7a39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea9f6f7e_cdf3a1e6",
+        "filename": "libwifi_hal/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1514900
+      },
+      "writtenOn": "2022-09-20T12:15:51Z",
+      "side": 1,
+      "message": "I see and yeah, it can be referenced from multiple places and used in different types. That will be tricky to manage, but is orthogonal from the purpose of this CL.\n\nFor the migration, we rely on this wifi.board_wlan_device definition as the source of truth for generating the product variables in Starlark, so adding the `wlan0`, which is used for cuttlefish product, is necessary.\n\ne.g. \n\n```\n//build/bazel/product_variables:wifi__board_wlan_device__bcmdhd\n//build/bazel/product_variables:wifi__board_wlan_device__bcmdhd_constraint\n//build/bazel/product_variables:wifi__board_wlan_device__emulator\n//build/bazel/product_variables:wifi__board_wlan_device__emulator_constraint\n//build/bazel/product_variables:wifi__board_wlan_device__mediatek\n//build/bazel/product_variables:wifi__board_wlan_device__mediatek_constraint\n//build/bazel/product_variables:wifi__board_wlan_device__mrvl\n//build/bazel/product_variables:wifi__board_wlan_device__mrvl_constraint\n//build/bazel/product_variables:wifi__board_wlan_device__qcwcn\n//build/bazel/product_variables:wifi__board_wlan_device__qcwcn_constraint\n//build/bazel/product_variables:wifi__board_wlan_device__realtek\n//build/bazel/product_variables:wifi__board_wlan_device__realtek_constraint\n//build/bazel/product_variables:wifi__board_wlan_device__slsi\n//build/bazel/product_variables:wifi__board_wlan_device__slsi_constraint\n```",
+      "parentUuid": "fac1285e_0bb272ef",
+      "range": {
+        "startLine": 52,
+        "startChar": 82,
+        "endLine": 52,
+        "endChar": 92
+      },
+      "revId": "d9cebc951974a34f740caa140d84c6b5fdca7a39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
