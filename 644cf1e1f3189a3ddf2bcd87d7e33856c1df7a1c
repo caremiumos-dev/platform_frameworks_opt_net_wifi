@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "db6df831_150097b5",
+        "filename": "libwifi_system_iface/interface_tool.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1019050
+      },
+      "writtenOn": "2022-10-06T20:45:26Z",
+      "side": 1,
+      "message": "I could make this an array, but there doesn\u0027t seem to be any big reason to do it one way or another. If you would prefer an array, let me know.",
+      "parentUuid": "7e05e079_1694a874",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 8
+      },
+      "revId": "644cf1e1f3189a3ddf2bcd87d7e33856c1df7a1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7c561966_7bb66390",
         "filename": "libwifi_system_iface/interface_tool.cpp",
         "patchSetId": 3
@@ -37,6 +61,30 @@
       "writtenOn": "2022-10-05T23:51:14Z",
       "side": 1,
       "message": "isn\u0027t this buggy",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 49
+      },
+      "revId": "644cf1e1f3189a3ddf2bcd87d7e33856c1df7a1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f0407ef_da2c1b07",
+        "filename": "libwifi_system_iface/interface_tool.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1019050
+      },
+      "writtenOn": "2022-10-06T20:45:26Z",
+      "side": 1,
+      "message": "This isn\u0027t the data from above. I changed the data name to raw to make that clearer.",
+      "parentUuid": "7c561966_7bb66390",
       "range": {
         "startLine": 175,
         "startChar": 0,
