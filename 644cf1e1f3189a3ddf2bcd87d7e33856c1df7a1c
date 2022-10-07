@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "636c4a22_595e31aa",
+        "filename": "libwifi_system_iface/interface_tool.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2022-10-07T21:24:30Z",
+      "side": 1,
+      "message": "the point is this should be the union, not the struct, no?",
+      "parentUuid": "db6df831_150097b5",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 8
+      },
+      "revId": "644cf1e1f3189a3ddf2bcd87d7e33856c1df7a1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7c561966_7bb66390",
         "filename": "libwifi_system_iface/interface_tool.cpp",
         "patchSetId": 3
