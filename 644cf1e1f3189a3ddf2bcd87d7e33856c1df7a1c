@@ -96,6 +96,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "788a2d20_b90c9862",
+        "filename": "libwifi_system_iface/interface_tool.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1019050
+      },
+      "writtenOn": "2022-10-10T22:22:00Z",
+      "side": 1,
+      "message": "Good point, made it into just a union.",
+      "parentUuid": "3081d2b9_20e3d96c",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 8
+      },
+      "revId": "644cf1e1f3189a3ddf2bcd87d7e33856c1df7a1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c561966_7bb66390",
