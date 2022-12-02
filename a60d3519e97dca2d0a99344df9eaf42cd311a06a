@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "600533ba_cf134395",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1367652
+      },
+      "writtenOn": "2022-12-02T13:51:14Z",
+      "side": 1,
+      "message": "Hi Etan, could you help to review this CL for Code-Owners approval? Thanks!",
+      "revId": "a60d3519e97dca2d0a99344df9eaf42cd311a06a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
