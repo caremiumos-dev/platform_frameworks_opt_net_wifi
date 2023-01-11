@@ -2397,6 +2397,8 @@ public class WifiServiceImpl extends BaseWifiService {
             return 0;
         }
 
+        mWifiInjector.getWifiConfigManager().UpdateProxyPortForPac(config);
+
         Log.i("addOrUpdateNetwork", " uid = " + Binder.getCallingUid()
                 + " SSID " + config.SSID
                 + " nid=" + config.networkId);

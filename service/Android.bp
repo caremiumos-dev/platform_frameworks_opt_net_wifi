@@ -43,6 +43,12 @@ filegroup {
     path: "java",
 }
 
+java_library {
+    name: "proxy-port-aidl",
+    srcs: [":ProxyHandler-aidl-sources"],
+    sdk_version: "system_server_current",
+}
+
 // pre-jarjar version of wifi-service that builds against pre-jarjar version of framework-wifi
 java_library {
     name: "wifi-service-pre-jarjar",
@@ -65,6 +71,7 @@ java_library {
         "framework-statsd.stubs.module_lib",
         "framework-tethering.stubs.module_lib",
         "unsupportedappusage",
+        "proxy-port-aidl",
     ],
 
     static_libs: [

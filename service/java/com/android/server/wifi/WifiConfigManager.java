@@ -76,6 +76,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+// added to get the ProxyServer binder callbacks
+import android.content.ComponentName;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.net.Proxy;
+import android.net.Uri;
+import com.android.net.IProxyCallback;
+import com.android.net.IProxyPortListener;
+
 /**
  * This class provides the APIs to manage configured Wi-Fi networks.
  * It deals with the following:
@@ -380,6 +391,110 @@ public class WifiConfigManager {
                 context.getSystemService(ActivityManager.class).isLowRamDevice() ? 128 : 256);
         mMacAddressUtil = mWifiInjector.getMacAddressUtil();
         mLruConnectionTracker = lruConnectionTracker;
+
+        // Get the local Proxy server port for PAC HTTP Proxies, otherwise
+        // retrieval of the proxy information will yield a -1 for the port,
+        // which will cause any INET object creation to throw an exception.
+        bindToProxyServer();
+
+    }
+
+    private static final String PROXY_PACKAGE = "com.android.proxyhandler";
+    private static final String PROXY_SERVICE = "com.android.proxyhandler.ProxyService";
+    private int mLastPort = -1;
+    private ServiceConnection mProxyConnection = null;
+
+    void bindToProxyServer()
+    {
+        Log.d(TAG, "bindToProxyServer");
+
+        Intent intent = new Intent();
+        intent.setClassName(PROXY_PACKAGE, PROXY_SERVICE);
+        mProxyConnection = new ServiceConnection()
+        {
+            @Override
+            public void onServiceDisconnected(ComponentName component)
+            {
+                Log.w(TAG, "onServiceDisconnected: " + Integer.toString(mLastPort));
+            }
+
+            @Override
+            public void onServiceConnected(ComponentName component, IBinder binder)
+            {
+                Log.w(TAG, "onServiceConnected: " + Integer.toString(mLastPort));
+
+                IProxyCallback callbackService = IProxyCallback.Stub.asInterface(binder);
+                if (callbackService != null)
+                {
+                    try
+                    {
+                        callbackService.getProxyPort(new IProxyPortListener.Stub()
+                        {
+                            @Override
+                            public void setProxyPort(int port) throws RemoteException
+                            {
+                                mLastPort = port;
+                                Log.w(TAG, "setProxyPort: " + Integer.toString(mLastPort));
+                            }
+                        });
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        mContext.bindService(intent, mProxyConnection,
+                Context.BIND_AUTO_CREATE | Context.BIND_NOT_FOREGROUND);
+    }
+
+    public WifiConfiguration UpdateProxyPortForPac(WifiConfiguration config) {
+        if (config == null) {
+            Log.w(TAG, "UpdateProxyPortForPac: NULL_CONFIG");
+            return null;
+        }
+
+        WifiConfiguration newConfig = config;
+        ProxyInfo proxyInfo = newConfig.getHttpProxy();
+
+        if (proxyInfo == null) {
+            Log.i(TAG, "UpdateProxyPortForPac: NULL_PROXY");
+            return newConfig;
+        }
+
+        Log.i(TAG, "UpdateProxyPortForPac[old_proxy]: " + proxyInfo.toString());
+
+        if ((proxyInfo.getPacFileUrl() == null) ||
+                (Uri.EMPTY.equals(proxyInfo.getPacFileUrl()))) {
+            Log.i(TAG, "UpdateProxyPortForPac: NULL_PAC_FILE");
+            return newConfig;
+        }
+
+        if (proxyInfo.getPort() > 0) {
+            Log.i(TAG, "UpdateProxyPortForPac: PROPER_PORT");
+            return newConfig;
+        }
+
+        // form a ProxyInfo object if the local port is valid
+        // We noticed there is a delay in getting the port so we introduced this delay
+        // during boot up, If port is available we will not wait for 1000ms.
+        Log.d(TAG, "bindToProxyServer check mLastPort" + Integer.toString(mLastPort));
+        long endTime = System.currentTimeMillis() + 1000;
+        while (System.currentTimeMillis() < endTime && mLastPort == -1) {
+        }
+        if (mLastPort > 0) {
+            ProxyInfo newProxyInfo = proxyInfo.buildPacProxy(proxyInfo.getPacFileUrl(),mLastPort);
+            Log.i(TAG, "UpdateProxyPortForPac[newProxyInfo]: " + newProxyInfo.toString());
+
+            try {
+                newConfig.setHttpProxy(newProxyInfo);
+            }catch (Exception e) {
+                Log.e(TAG, "UpdateProxyPortForPac[EXCEPTION]: " + e.getMessage());
+            }
+        } else {
+            Log.i(TAG, "UpdateProxyPortForPac: mLastPort NOT_READY");
+        }
+
+        return newConfig;
     }
 
     /**
@@ -2955,8 +3070,11 @@ public class WifiConfigManager {
             if (mVerboseLoggingEnabled) {
                 Log.v(TAG, "Adding network from shared store " + configuration.getKey());
             }
+
+            // Need to update the Proxy AUTO-PAC port here, as its -1
+            WifiConfiguration new_configuration = UpdateProxyPortForPac(configuration);
             try {
-                mConfiguredNetworks.put(configuration);
+                mConfiguredNetworks.put(new_configuration);
             } catch (IllegalArgumentException e) {
                 Log.e(TAG, "Failed to add network to config map", e);
             }
