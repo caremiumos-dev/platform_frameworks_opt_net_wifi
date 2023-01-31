@@ -17,7 +17,6 @@
 package com.android.wifitrackerlib;
 
 import android.net.wifi.ScanResult;
-import android.util.Pair;
 
 import androidx.annotation.NonNull;
 
@@ -25,15 +24,14 @@ import java.time.Clock;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
- * Utility class to keep a running list of scan results merged by SSID+BSSID pair.
+ * Utility class to keep a running list of scan results merged by BSSID.
  *
  * Thread-safe.
  */
 public class ScanResultUpdater {
-    private Map<Pair<String, String>, ScanResult> mScanResultsBySsidAndBssid = new HashMap<>();
+    private HashMap<String, ScanResult> mScanResultsByBssid = new HashMap<>();
     private final long mMaxScanAgeMillis;
     private final Object mLock = new Object();
     private final Clock mClock;
@@ -57,24 +55,23 @@ public class ScanResultUpdater {
     }
 
     /**
-     * Updates scan result list and replaces older scans of the same SSID+BSSID pair.
+     * Updates scan result list and replaces older scans of the same BSSID.
      */
     public void update(@NonNull List<ScanResult> newResults) {
         synchronized (mLock) {
             evictOldScans();
 
             for (ScanResult result : newResults) {
-                final Pair<String, String> key = new Pair(result.SSID, result.BSSID);
-                ScanResult prevResult = mScanResultsBySsidAndBssid.get(key);
+                ScanResult prevResult = mScanResultsByBssid.get(result.BSSID);
                 if (prevResult == null || (prevResult.timestamp < result.timestamp)) {
-                    mScanResultsBySsidAndBssid.put(key, result);
+                    mScanResultsByBssid.put(result.BSSID, result);
                 }
             }
         }
     }
 
     /**
-     * Returns all seen scan results merged by SSID+BSSID pair.
+     * Returns all seen scan results merged by BSSID.
      */
     @NonNull
     public List<ScanResult> getScanResults() {
@@ -82,7 +79,7 @@ public class ScanResultUpdater {
     }
 
     /**
-     * Returns all seen scan results merged by SSID+BSSID pair and newer than maxScanAgeMillis.
+     * Returns all seen scan results merged by BSSID and newer than maxScanAgeMillis.
      * maxScanAgeMillis must be less than or equal to the mMaxScanAgeMillis field if it was set.
      */
     @NonNull
@@ -93,7 +90,7 @@ public class ScanResultUpdater {
         }
         synchronized (mLock) {
             List<ScanResult> ageFilteredResults = new ArrayList<>();
-            for (ScanResult result : mScanResultsBySsidAndBssid.values()) {
+            for (ScanResult result : mScanResultsByBssid.values()) {
                 if (mClock.millis() - result.timestamp / 1000 <= maxScanAgeMillis) {
                     ageFilteredResults.add(result);
                 }
@@ -104,7 +101,7 @@ public class ScanResultUpdater {
 
     private void evictOldScans() {
         synchronized (mLock) {
-            mScanResultsBySsidAndBssid.entrySet().removeIf((entry) ->
+            mScanResultsByBssid.entrySet().removeIf((entry) ->
                     mClock.millis() - entry.getValue().timestamp / 1000 > mMaxScanAgeMillis);
         }
     }

@@ -16,6 +16,12 @@
 
 package com.android.wifitrackerlib;
 
+import static android.net.wifi.WifiInfo.sanitizeSsid;
+
+import static androidx.core.util.Preconditions.checkNotNull;
+
+import static com.android.wifitrackerlib.Utils.getSecurityTypeFromWifiConfiguration;
+
 import android.content.Context;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
@@ -29,16 +35,14 @@ import com.android.internal.annotations.VisibleForTesting;
 
 /**
  * WifiEntry representation of network requested through the NetworkRequest API,
- * uniquely identified by SSID, security, and profile key.
+ * uniquely identified by SSID and security.
  */
 @VisibleForTesting
 public class NetworkRequestEntry extends StandardWifiEntry {
-    // TODO(b/187073621): This isn't used but is still referenced by clients of WifiTrackerLib.
-    //                    Remove once String keys are removed entirely.
-    public static final String KEY_PREFIX = "NetworkRequestEntry:";
+    static final String KEY_PREFIX = "NetworkRequestEntry:";
 
     NetworkRequestEntry(@NonNull Context context, @NonNull Handler callbackHandler,
-            @NonNull StandardWifiEntryKey key, @NonNull WifiManager wifiManager,
+            @NonNull String key, @NonNull WifiManager wifiManager,
             @NonNull WifiNetworkScoreCache scoreCache,
             boolean forSavedNetworksPage) throws IllegalArgumentException {
         super(context, callbackHandler, key, wifiManager, scoreCache, forSavedNetworksPage);
@@ -144,5 +148,13 @@ public class NetworkRequestEntry extends StandardWifiEntry {
     @Override
     public void setAutoJoinEnabled(boolean enabled) {
         return;
+    }
+
+    @NonNull
+    static String wifiConfigToNetworkRequestEntryKey(@NonNull WifiConfiguration config) {
+        checkNotNull(config, "Cannot create key with null config!");
+        checkNotNull(config.SSID, "Cannot create key with null SSID in config!");
+        return KEY_PREFIX + sanitizeSsid(config.SSID) + ","
+                + getSecurityTypeFromWifiConfiguration(config);
     }
 }
