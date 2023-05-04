@@ -59,6 +59,7 @@ soong_config_string_variable {
         "emulator",
         "rtl",
         "slsi",
+        "nxp",
         "wlan0",
     ],
 }
@@ -159,6 +160,9 @@ wifi_cc_defaults {
             },
             qcwcn: {
                 defaults: ["libwifi-hal-qcom"],
+            },
+            nxp: {
+                whole_static_libs: ["libwifi-hal-nxp"],
             },
             mrvl: {
                 // this is commented because none of the nexus devices
