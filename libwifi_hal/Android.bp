@@ -54,6 +54,7 @@ soong_config_string_variable {
         "synadhd",
         "qcwcn",
         "mrvl",
+        "nxp",
         "MediaTek",
         "realtek",
         "emulator",
@@ -168,6 +169,9 @@ wifi_cc_defaults {
             mediaTek: {
                 whole_static_libs: ["//vendor/mediatek/mokey:libwifi-hal-mt66xx"],
             },
+            nxp: {
+                whole_static_libs: ["libwifi-hal-nxp"],
+            },
             realtek: {
                 whole_static_libs: ["libwifi-hal-rtk"],
             },
@@ -229,5 +233,84 @@ cc_library_shared {
     sanitize: {
         cfi: true,
         integer_overflow: true,
+    },
+}
+
+// Expose make-built libwifi-hal-<vendor> via wifi_cc_prebuilt_library_static.
+
+// Licenses for imported libwifi-hal-<vendor> libraries
+
+license {
+    name: "libwifi_hal_apache20_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-Apache-2.0",
+    ],
+}
+
+license {
+    name: "libwifi_hal_bsd_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-BSD",
+    ],
+}
+
+// Additional soong_config_module_types to enable/disable according to BOARD_WLAN_DEVICE
+// If libwifi-hal-<vendor> libs are migrated to soong modules, these are not necessary.
+
+soong_config_module_type {
+    name: "wifi_cc_prebuilt_library_static",
+    module_type: "cc_prebuilt_library_static",
+    config_namespace: "wifi",
+    variables: [
+        "board_wlan_device", // BOARD_WLAN_DEVICE
+    ],
+    properties: [
+        "enabled",
+    ],
+}
+
+soong_config_module_type {
+    name: "wifi_makefile_goal",
+    module_type: "makefile_goal",
+    config_namespace: "wifi",
+    variables: [
+        "board_wlan_device", // BOARD_WLAN_DEVICE
+    ],
+    properties: [
+        "enabled",
+    ],
+}
+
+// libwifi-hal-nxp
+
+wifi_cc_prebuilt_library_static {
+    name: "libwifi-hal-nxp",
+    proprietary: true,
+    srcs: [":make-libwifi-hal-nxp"],
+    compile_multilib: "first",
+    installable: false,
+    licenses: ["libwifi_hal_apache20_license"],
+    enabled: false,
+    soong_config_variables: {
+        board_wlan_device: {
+            nxp: {
+                enabled: true,
+            },
+        },
+    },
+}
+
+wifi_makefile_goal {
+    name: "make-libwifi-hal-nxp",
+    product_out_path: "obj/STATIC_LIBRARIES/libwifi-hal-nxp_intermediates/libwifi-hal-nxp.a",
+    enabled: false,
+    soong_config_variables: {
+        board_wlan_device: {
+            nxp: {
+                enabled: true,
+            },
+        },
     },
 }
