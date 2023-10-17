@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e07a6468_74e50546",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1813914
+      },
+      "writtenOn": "2023-10-17T07:57:01Z",
+      "side": 1,
+      "message": "build pass in mediatek codebase",
+      "revId": "678506cfb74f9f0dcc5abb6b2e6218097c128e35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
