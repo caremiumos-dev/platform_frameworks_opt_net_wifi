@@ -25,7 +25,7 @@ java_defaults {
         "frameworks-base-testutils",
         "mockito-target-extended-minus-junit4",
         "truth",
-        "Robolectric_all-target",
+        "Robolectric_all-target_upstream",
     ],
 
     libs: [
