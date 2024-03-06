@@ -21,6 +21,9 @@ java_defaults {
 android_library {
     name: "WifiTrackerLib",
     defaults: ["WifiTrackerLibDefaults"],
+    static_libs: [
+        "wifi_aconfig_flags_lib",
+    ],
     srcs: ["src/**/*.java"],
 }
 
