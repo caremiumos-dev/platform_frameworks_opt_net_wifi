@@ -244,6 +244,7 @@ public class WifiEntry {
     protected NetworkInfo mNetworkInfo;
     protected Network mNetwork;
     protected NetworkCapabilities mNetworkCapabilities;
+    protected Network mDefaultNetwork;
     protected NetworkCapabilities mDefaultNetworkCapabilities;
     protected ConnectivityDiagnosticsManager.ConnectivityReport mConnectivityReport;
     protected ConnectedInfo mConnectedInfo;
@@ -255,7 +256,6 @@ public class WifiEntry {
     protected boolean mCalledConnect = false;
     protected boolean mCalledDisconnect = false;
 
-    protected boolean mIsDefaultNetwork;
 
     private Optional<ManageSubscriptionAction> mManageSubscriptionAction = Optional.empty();
 
@@ -358,7 +358,7 @@ public class WifiEntry {
      * Returns whether this network has validated internet access or not.
      * Note: This does not necessarily mean the network is the default route.
      */
-    public boolean hasInternetAccess() {
+    public synchronized boolean hasInternetAccess() {
         return mNetworkCapabilities != null
                 && mNetworkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
     }
@@ -368,13 +368,13 @@ public class WifiEntry {
      * currently being used to provide internet connection).
      */
     public boolean isDefaultNetwork() {
-        return mIsDefaultNetwork;
+        return mNetwork != null && mNetwork.equals(mDefaultNetwork);
     }
 
     /**
      * Returns whether this network is the primary Wi-Fi network or not.
      */
-    public boolean isPrimaryNetwork() {
+    public synchronized boolean isPrimaryNetwork() {
         if (getConnectedState() == CONNECTED_STATE_DISCONNECTED) {
             // In case we have mNetworkInfo but the state is disconnected.
             return false;
@@ -386,7 +386,7 @@ public class WifiEntry {
     /**
      * Returns whether this network is considered low quality.
      */
-    public boolean isLowQuality() {
+    public synchronized boolean isLowQuality() {
         if (!isPrimaryNetwork()) {
             return false;
         }
@@ -399,6 +399,14 @@ public class WifiEntry {
         return mNetworkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
                 && mDefaultNetworkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
                 && !mDefaultNetworkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN);
+    }
+
+    /**
+     * Returns whether this network should display its SSID separately from the title
+     * (e.g. the Network Details page), for networks whose display titles differ from the SSID.
+     */
+    public boolean shouldShowSsid() {
+        return false;
     }
 
     /**
@@ -482,6 +490,14 @@ public class WifiEntry {
      * Indicates whether or not an entry is for a subscription.
      */
     public boolean isSubscription() {
+        return false;
+    }
+
+    /**
+     * Returns whether this entry needs to be configured with a new WifiConfiguration before
+     * connection.
+     */
+    public boolean needsWifiConfiguration() {
         return false;
     }
 
@@ -740,7 +756,7 @@ public class WifiEntry {
             sb.append("hasInternet:")
                     .append(hasInternetAccess())
                     .append(", isDefaultNetwork:")
-                    .append(mIsDefaultNetwork)
+                    .append(isDefaultNetwork())
                     .append(", isLowQuality:")
                     .append(isLowQuality());
         }
@@ -912,10 +928,10 @@ public class WifiEntry {
             }
             return;
         }
-        mWifiInfo = primaryWifiInfo;
         if (networkInfo != null) {
             mNetworkInfo = networkInfo;
         }
+        updateWifiInfo(primaryWifiInfo);
         notifyOnUpdated();
     }
 
@@ -949,9 +965,20 @@ public class WifiEntry {
 
         // Connection info matches, so the Network/NetworkCapabilities represent this network
         // and the network is currently connecting or connected.
-        mWifiInfo = wifiInfo;
         mNetwork = network;
         mNetworkCapabilities = capabilities;
+        updateWifiInfo(wifiInfo);
+        notifyOnUpdated();
+    }
+
+    private synchronized void updateWifiInfo(WifiInfo wifiInfo) {
+        if (wifiInfo == null) {
+            mWifiInfo = null;
+            mConnectedInfo = null;
+            updateSecurityTypes();
+            return;
+        }
+        mWifiInfo = wifiInfo;
         final int wifiInfoRssi = mWifiInfo.getRssi();
         if (wifiInfoRssi != INVALID_RSSI) {
             mLevel = mWifiManager.calculateSignalLevel(wifiInfoRssi);
@@ -976,7 +1003,6 @@ public class WifiEntry {
             mConnectedInfo.wifiStandard = mWifiInfo.getWifiStandard();
         }
         updateSecurityTypes();
-        notifyOnUpdated();
     }
 
     /**
@@ -987,14 +1013,18 @@ public class WifiEntry {
         if (!network.equals(mNetwork)) {
             return;
         }
-
         // Network matches, so this network is disconnected.
-        mWifiInfo = null;
+        clearConnectionInfo();
+    }
+
+    /**
+     * Clears any connection info from this entry.
+     */
+    synchronized void clearConnectionInfo() {
+        updateWifiInfo(null);
         mNetworkInfo = null;
         mNetworkCapabilities = null;
-        mConnectedInfo = null;
         mConnectivityReport = null;
-        mIsDefaultNetwork = false;
         if (mCalledDisconnect) {
             mCalledDisconnect = false;
             mCallbackHandler.post(() -> {
@@ -1005,7 +1035,6 @@ public class WifiEntry {
                 }
             });
         }
-        updateSecurityTypes();
         notifyOnUpdated();
     }
 
@@ -1016,9 +1045,8 @@ public class WifiEntry {
     synchronized void onDefaultNetworkCapabilitiesChanged(
             @NonNull Network network,
             @NonNull NetworkCapabilities capabilities) {
-        onNetworkCapabilitiesChanged(network, capabilities);
+        mDefaultNetwork = network;
         mDefaultNetworkCapabilities = capabilities;
-        mIsDefaultNetwork = network.equals(mNetwork);
         notifyOnUpdated();
     }
 
@@ -1026,8 +1054,8 @@ public class WifiEntry {
      * Notifies this WifiEntry that the default network was lost.
      */
     synchronized void onDefaultNetworkLost() {
+        mDefaultNetwork = null;
         mDefaultNetworkCapabilities = null;
-        mIsDefaultNetwork = false;
         notifyOnUpdated();
     }
 
@@ -1238,5 +1266,12 @@ public class WifiEntry {
          * Execute the action of managing subscription.
          */
         void onExecute();
+    }
+
+    /**
+     * Whether this WifiEntry is using a verbose summary.
+     */
+    public boolean isVerboseSummaryEnabled() {
+        return mInjector.isVerboseSummaryEnabled();
     }
 }
