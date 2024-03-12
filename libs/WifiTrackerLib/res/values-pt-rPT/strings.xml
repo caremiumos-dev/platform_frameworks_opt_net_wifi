@@ -23,7 +23,7 @@
     <string name="wifitrackerlib_wifi_no_internet_no_reconnect" msgid="6618216332537706908">"Não é efetuada uma ligação automaticamente."</string>
     <string name="wifitrackerlib_wifi_no_internet" msgid="4998563744669636949">"Sem acesso à Internet."</string>
     <string name="wifitrackerlib_wifi_disabled_password_failure" msgid="2850244218754633550">"Problema de autenticação"</string>
-    <string name="wifitrackerlib_wifi_check_password_try_again" msgid="2327777719175574699">"Verifique a palavra-passe e tente novamente."</string>
+    <string name="wifitrackerlib_wifi_check_password_try_again" msgid="2327777719175574699">"Verifique palavra-passe e tente de novo"</string>
     <string name="wifitrackerlib_wifi_disabled_network_failure" msgid="3046956554224277166">"Falha de configuração de IP"</string>
     <string name="wifitrackerlib_wifi_disabled_transition_disable_indication" msgid="6416221593061166867">"Indisponível com as definições de segurança atuais"</string>
     <string name="wifitrackerlib_wifi_disabled_generic" msgid="4278806060337007814">"Desativada"</string>
@@ -45,6 +45,15 @@
     <string name="wifi_connected_low_quality" msgid="4478331645458058445">"Baixa qualidade"</string>
     <string name="wifitrackerlib_admin_restricted_network" msgid="5439914801076897515">"Não é permitido pela sua organização"</string>
     <string name="wifitrackerlib_hotspot_network_summary" msgid="7661086683527884190">"<xliff:g id="NETWORK_NAME">%1$s</xliff:g> de <xliff:g id="MODEL_NAME">%2$s</xliff:g>"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_new" msgid="1165705867298669621">"{DEVICE_TYPE,select, PHONE{{NETWORK_NAME} a partir do telemóvel}TABLET{{NETWORK_NAME} a partir do tablet}COMPUTER{{NETWORK_NAME} a partir do computador}WATCH{{NETWORK_NAME} a partir do relógio}VEHICLE{{NETWORK_NAME} a partir do veículo}other{{NETWORK_NAME} a partir do dispositivo}}"</string>
+    <!-- no translation found for wifitrackerlib_hotspot_network_summary_error_generic (2339836723160908882) -->
+    <skip />
+    <!-- no translation found for wifitrackerlib_hotspot_network_summary_error_settings (6928234716406336668) -->
+    <skip />
+    <!-- no translation found for wifitrackerlib_hotspot_network_summary_error_carrier_block (359780026027619177) -->
+    <skip />
+    <!-- no translation found for wifitrackerlib_hotspot_network_summary_error_carrier_incomplete (3407132390461094984) -->
+    <skip />
     <string name="wifitrackerlib_hotspot_network_alternate" msgid="4966814473758893807">"<xliff:g id="NETWORK_NAME">%1$s</xliff:g> de <xliff:g id="DEVICE_NAME">%2$s</xliff:g>"</string>
     <string name="wifitrackerlib_hotspot_network_connecting" msgid="2072252282318270780">"A ligar…"</string>
     <string name="wifitrackerlib_known_network_summary" msgid="6035425130009353268">"Disponível a partir de <xliff:g id="DEVICE_NAME">%1$s</xliff:g>"</string>
@@ -88,5 +97,7 @@
     <string name="wifitrackerlib_wifi_band_24_ghz" msgid="5374362780653321244">"2,4 GHz"</string>
     <string name="wifitrackerlib_wifi_band_5_ghz" msgid="2179047349922091556">"5 GHz"</string>
     <string name="wifitrackerlib_wifi_band_6_ghz" msgid="6532408050869498777">"6 GHz"</string>
-    <string name="wifitrackerlib_multiband_separator" msgid="2696920984391378575">","</string>
+    <string name="wifitrackerlib_multiband_separator" msgid="6838172120482590336">", "</string>
+    <string name="wifitrackerlib_link_speed_mbps" msgid="5880214340478706112">"<xliff:g id="LINK_SPEED_MBPS">%1$d</xliff:g> Mbps"</string>
+    <string name="wifitrackerlib_link_speed_on_band" msgid="2433114336144744962">"<xliff:g id="LINK_SPEED">%1$s</xliff:g> em <xliff:g id="BAND">%2$s</xliff:g>"</string>
 </resources>

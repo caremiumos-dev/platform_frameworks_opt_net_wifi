@@ -19,8 +19,10 @@ package com.android.wifitrackerlib;
 import static android.net.wifi.WifiInfo.DEFAULT_MAC_ADDRESS;
 import static android.os.Build.VERSION_CODES;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.icu.text.MessageFormat;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.sharedconnectivity.app.HotspotNetwork;
@@ -37,6 +39,7 @@ import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
+import androidx.core.os.BuildCompat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,6 +48,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -54,6 +59,10 @@ import java.util.Objects;
 public class HotspotNetworkEntry extends WifiEntry {
     static final String TAG = "HotspotNetworkEntry";
     public static final String KEY_PREFIX = "HotspotNetworkEntry:";
+    public static final String EXTRA_KEY_IS_BATTERY_CHARGING = "is_battery_charging";
+
+    private static final String DEVICE_TYPE_KEY = "DEVICE_TYPE";
+    private static final String NETWORK_NAME_KEY = "NETWORK_NAME";
 
     @NonNull private final WifiTrackerInjector mInjector;
     @NonNull private final Context mContext;
@@ -61,6 +70,9 @@ public class HotspotNetworkEntry extends WifiEntry {
 
     @Nullable private HotspotNetwork mHotspotNetworkData;
     @NonNull private HotspotNetworkEntryKey mKey;
+    @ConnectionStatus
+    private int mLastStatus = HotspotNetworkConnectionStatus.CONNECTION_STATUS_UNKNOWN;
+    private boolean mConnectionError = false;
 
     /**
      * If editing this IntDef also edit the definition in:
@@ -94,6 +106,8 @@ public class HotspotNetworkEntry extends WifiEntry {
     })
     public @interface DeviceType {} // TODO(b/271868642): Add IfThisThanThat lint
 
+    public static final int CONNECTION_STATUS_CONNECTED = 10;
+
     /**
      * If editing this IntDef also edit the definition in:
      * {@link android.net.wifi.sharedconnectivity.app.HotspotNetworkConnectionStatus}
@@ -112,6 +126,7 @@ public class HotspotNetworkEntry extends WifiEntry {
             HotspotNetworkConnectionStatus.CONNECTION_STATUS_ENABLING_HOTSPOT_FAILED,
             HotspotNetworkConnectionStatus.CONNECTION_STATUS_ENABLING_HOTSPOT_TIMEOUT,
             HotspotNetworkConnectionStatus.CONNECTION_STATUS_CONNECT_TO_HOTSPOT_FAILED,
+            CONNECTION_STATUS_CONNECTED,
     })
     public @interface ConnectionStatus {} // TODO(b/271868642): Add IfThisThanThat lint
 
@@ -205,10 +220,42 @@ public class HotspotNetworkEntry extends WifiEntry {
         if (mCalledConnect) {
             return mContext.getString(R.string.wifitrackerlib_hotspot_network_connecting);
         }
-        return mContext.getString(R.string.wifitrackerlib_hotspot_network_summary,
-                BidiFormatter.getInstance().unicodeWrap(mHotspotNetworkData.getNetworkName()),
-                BidiFormatter.getInstance().unicodeWrap(
-                        mHotspotNetworkData.getNetworkProviderInfo().getModelName()));
+        if (mConnectionError) {
+            switch (mLastStatus) {
+                case HotspotNetworkConnectionStatus.CONNECTION_STATUS_PROVISIONING_FAILED:
+                case HotspotNetworkConnectionStatus.CONNECTION_STATUS_TETHERING_TIMEOUT:
+                    return mContext.getString(
+                        R.string.wifitrackerlib_hotspot_network_summary_error_carrier_incomplete,
+                        BidiFormatter.getInstance().unicodeWrap(
+                               mHotspotNetworkData.getNetworkName()));
+                case HotspotNetworkConnectionStatus.CONNECTION_STATUS_TETHERING_UNSUPPORTED:
+                    return mContext.getString(
+                            R.string.wifitrackerlib_hotspot_network_summary_error_carrier_block,
+                            BidiFormatter.getInstance().unicodeWrap(
+                                    mHotspotNetworkData.getNetworkName()));
+                case HotspotNetworkConnectionStatus.CONNECTION_STATUS_NO_CELL_DATA:
+                case HotspotNetworkConnectionStatus.CONNECTION_STATUS_ENABLING_HOTSPOT_FAILED:
+                case HotspotNetworkConnectionStatus.CONNECTION_STATUS_ENABLING_HOTSPOT_TIMEOUT:
+                case HotspotNetworkConnectionStatus.CONNECTION_STATUS_CONNECT_TO_HOTSPOT_FAILED:
+                    MessageFormat msg = new MessageFormat(mContext.getString(
+                            R.string.wifitrackerlib_hotspot_network_summary_error_settings));
+                    Map<String, Object> args = new HashMap<>();
+                    args.put(DEVICE_TYPE_KEY, getDeviceTypeId(
+                            mHotspotNetworkData.getNetworkProviderInfo().getDeviceType()));
+                    return msg.format(args);
+                case HotspotNetworkConnectionStatus.CONNECTION_STATUS_UNKNOWN_ERROR:
+                default:
+                    return mContext.getString(
+                            R.string.wifitrackerlib_hotspot_network_summary_error_generic);
+            }
+        }
+        MessageFormat msg = new MessageFormat(
+                mContext.getString(R.string.wifitrackerlib_hotspot_network_summary_new));
+        Map<String, Object> args = new HashMap<>();
+        args.put(DEVICE_TYPE_KEY,
+                getDeviceTypeId(mHotspotNetworkData.getNetworkProviderInfo().getDeviceType()));
+        args.put(NETWORK_NAME_KEY, mHotspotNetworkData.getNetworkName());
+        return msg.format(args);
     }
 
     /**
@@ -237,6 +284,7 @@ public class HotspotNetworkEntry extends WifiEntry {
 
     @Override
     @Nullable
+    @SuppressLint("HardwareIds")
     public synchronized String getMacAddress() {
         if (mWifiInfo == null) {
             return null;
@@ -343,7 +391,14 @@ public class HotspotNetworkEntry extends WifiEntry {
         if (mHotspotNetworkData == null) {
             return false;
         }
-        return mHotspotNetworkData.getExtras().getBoolean("is_battery_charging", false);
+        if (BuildCompat.isAtLeastV()
+                && NonSdkApiWrapper.isNetworkProviderBatteryChargingStatusEnabled()
+                && mHotspotNetworkData.getNetworkProviderInfo().isBatteryCharging()) {
+            return true;
+        }
+        // With API flag on we still support either the API or the bundle for compatibility.
+        return mHotspotNetworkData.getNetworkProviderInfo().getExtras().getBoolean(
+                EXTRA_KEY_IS_BATTERY_CHARGING, false);
     }
 
     @Override
@@ -371,6 +426,7 @@ public class HotspotNetworkEntry extends WifiEntry {
 
     @Override
     public synchronized void disconnect(@Nullable DisconnectCallback callback) {
+        mCalledDisconnect = true;
         mDisconnectCallback = callback;
         if (mSharedConnectivityManager == null) {
             if (callback != null) {
@@ -392,10 +448,11 @@ public class HotspotNetworkEntry extends WifiEntry {
      * @param status HotspotNetworkConnectionStatus#ConnectionStatus enum.
      */
     public void onConnectionStatusChanged(@ConnectionStatus int status) {
-        if (mConnectCallback == null) return;
+        mLastStatus = status;
         switch (status) {
             case HotspotNetworkConnectionStatus.CONNECTION_STATUS_ENABLING_HOTSPOT:
                 mCalledConnect = true;
+                mConnectionError = false;
                 notifyOnUpdated();
                 break;
             case HotspotNetworkConnectionStatus.CONNECTION_STATUS_UNKNOWN_ERROR:
@@ -406,9 +463,27 @@ public class HotspotNetworkEntry extends WifiEntry {
             case HotspotNetworkConnectionStatus.CONNECTION_STATUS_ENABLING_HOTSPOT_FAILED:
             case HotspotNetworkConnectionStatus.CONNECTION_STATUS_ENABLING_HOTSPOT_TIMEOUT:
             case HotspotNetworkConnectionStatus.CONNECTION_STATUS_CONNECT_TO_HOTSPOT_FAILED:
-                mCallbackHandler.post(() -> mConnectCallback.onConnectResult(
-                        ConnectCallback.CONNECT_STATUS_FAILURE_UNKNOWN));
+                mCallbackHandler.post(() -> {
+                    final ConnectCallback connectCallback = mConnectCallback;
+                    if (connectCallback != null) {
+                        connectCallback.onConnectResult(
+                                ConnectCallback.CONNECT_STATUS_FAILURE_UNKNOWN);
+                    }
+                });
                 mCalledConnect = false;
+                mConnectionError = true;
+                notifyOnUpdated();
+                break;
+            case CONNECTION_STATUS_CONNECTED:
+                mCallbackHandler.post(() -> {
+                    final ConnectCallback connectCallback = mConnectCallback;
+                    if (connectCallback != null) {
+                        connectCallback.onConnectResult(
+                                ConnectCallback.CONNECT_STATUS_SUCCESS);
+                    }
+                });
+                mCalledConnect = false;
+                mConnectionError = false;
                 notifyOnUpdated();
                 break;
             default:
@@ -505,6 +580,23 @@ public class HotspotNetworkEntry extends WifiEntry {
         @Nullable
         StandardWifiEntry.ScanResultKey getScanResultKey() {
             return mScanResultKey;
+        }
+    }
+
+    private static String getDeviceTypeId(@DeviceType int deviceType) {
+        switch (deviceType) {
+            case NetworkProviderInfo.DEVICE_TYPE_PHONE:
+                return "PHONE";
+            case NetworkProviderInfo.DEVICE_TYPE_TABLET:
+                return "TABLET";
+            case NetworkProviderInfo.DEVICE_TYPE_LAPTOP:
+                return "COMPUTER";
+            case NetworkProviderInfo.DEVICE_TYPE_WATCH:
+                return "WATCH";
+            case NetworkProviderInfo.DEVICE_TYPE_AUTO:
+                return "VEHICLE";
+            default:
+                return "UNKNOWN";
         }
     }
 }
