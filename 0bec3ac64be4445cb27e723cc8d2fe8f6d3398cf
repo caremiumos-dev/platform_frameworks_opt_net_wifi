@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d918aec1_a1f2b694",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1143404
+      },
+      "writtenOn": "2024-04-19T19:52:38Z",
+      "side": 1,
+      "message": "Change LGTM, but please add bug number to the commit message",
+      "revId": "0bec3ac64be4445cb27e723cc8d2fe8f6d3398cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
