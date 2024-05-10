@@ -23,8 +23,11 @@ import static androidx.core.util.Preconditions.checkNotNull;
 import static com.android.wifitrackerlib.Utils.getNetworkPart;
 import static com.android.wifitrackerlib.Utils.getSingleSecurityTypeFromMultipleSecurityTypes;
 
+import android.content.Context;
+import android.net.ConnectivityDiagnosticsManager;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
+import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.RouteInfo;
@@ -33,14 +36,15 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
+import android.text.TextUtils;
 
 import androidx.annotation.AnyThread;
 import androidx.annotation.IntDef;
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 import androidx.annotation.WorkerThread;
+import androidx.core.os.BuildCompat;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -49,6 +53,7 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -204,8 +209,13 @@ public class WifiEntry {
      * Default comparator for sorting WifiEntries on a Wi-Fi picker list.
      */
     public static Comparator<WifiEntry> WIFI_PICKER_COMPARATOR =
-            Comparator.comparing((WifiEntry entry) -> entry.getConnectedState()
-                            != CONNECTED_STATE_CONNECTED)
+            Comparator.comparing((WifiEntry entry) -> !entry.isPrimaryNetwork())
+                    .thenComparing((WifiEntry entry) ->
+                            entry.getConnectedState() != CONNECTED_STATE_CONNECTED)
+                    .thenComparing((WifiEntry entry) -> !(entry instanceof KnownNetworkEntry))
+                    .thenComparing((WifiEntry entry) -> !(entry instanceof HotspotNetworkEntry))
+                    .thenComparing((WifiEntry entry) -> (entry instanceof HotspotNetworkEntry)
+                            ? -((HotspotNetworkEntry) entry).getUpstreamConnectionStrength() : 0)
                     .thenComparing((WifiEntry entry) -> !entry.canConnect())
                     .thenComparing((WifiEntry entry) -> !entry.isSubscription())
                     .thenComparing((WifiEntry entry) -> !entry.isSaved())
@@ -219,9 +229,10 @@ public class WifiEntry {
     public static Comparator<WifiEntry> TITLE_COMPARATOR =
             Comparator.comparing((WifiEntry entry) -> entry.getTitle());
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    final boolean mForSavedNetworksPage;
+    protected final boolean mForSavedNetworksPage;
 
+    @NonNull protected final WifiTrackerInjector mInjector;
+    @NonNull protected final Context mContext;
     protected final WifiManager mWifiManager;
 
     // Callback associated with this WifiEntry. Subclasses should call its methods appropriately.
@@ -231,7 +242,11 @@ public class WifiEntry {
     protected int mLevel = WIFI_LEVEL_UNREACHABLE;
     protected WifiInfo mWifiInfo;
     protected NetworkInfo mNetworkInfo;
+    protected Network mNetwork;
     protected NetworkCapabilities mNetworkCapabilities;
+    protected Network mDefaultNetwork;
+    protected NetworkCapabilities mDefaultNetworkCapabilities;
+    protected ConnectivityDiagnosticsManager.ConnectivityReport mConnectivityReport;
     protected ConnectedInfo mConnectedInfo;
 
     protected ConnectCallback mConnectCallback;
@@ -241,16 +256,17 @@ public class WifiEntry {
     protected boolean mCalledConnect = false;
     protected boolean mCalledDisconnect = false;
 
-    private boolean mIsValidated;
-    protected boolean mIsDefaultNetwork;
-    protected boolean mIsLowQuality;
 
     private Optional<ManageSubscriptionAction> mManageSubscriptionAction = Optional.empty();
 
-    public WifiEntry(@NonNull Handler callbackHandler, @NonNull WifiManager wifiManager,
-            boolean forSavedNetworksPage) throws IllegalArgumentException {
+    public WifiEntry(@NonNull WifiTrackerInjector injector, @NonNull Handler callbackHandler,
+            @NonNull WifiManager wifiManager, boolean forSavedNetworksPage)
+            throws IllegalArgumentException {
+        checkNotNull(injector, "Cannot construct with null injector!");
         checkNotNull(callbackHandler, "Cannot construct with null handler!");
         checkNotNull(wifiManager, "Cannot construct with null WifiManager!");
+        mInjector = injector;
+        mContext = mInjector.getContext();
         mCallbackHandler = callbackHandler;
         mForSavedNetworksPage = forSavedNetworksPage;
         mWifiManager = wifiManager;
@@ -267,25 +283,29 @@ public class WifiEntry {
     /** Returns connection state of the network defined by the CONNECTED_STATE constants */
     @ConnectedState
     public synchronized int getConnectedState() {
-        if (mNetworkInfo == null) {
-            return CONNECTED_STATE_DISCONNECTED;
+        // If we have NetworkCapabilities, then we're L3 connected.
+        if (mNetworkCapabilities != null) {
+            return CONNECTED_STATE_CONNECTED;
         }
 
-        switch (mNetworkInfo.getDetailedState()) {
-            case SCANNING:
-            case CONNECTING:
-            case AUTHENTICATING:
-            case OBTAINING_IPADDR:
-            case VERIFYING_POOR_LINK:
-            case CAPTIVE_PORTAL_CHECK:
-                return CONNECTED_STATE_CONNECTING;
-            case CONNECTED:
-                return CONNECTED_STATE_CONNECTED;
-            default:
-                return CONNECTED_STATE_DISCONNECTED;
+        // Use NetworkInfo to provide the connecting state before we're L3 connected.
+        if (mNetworkInfo != null) {
+            switch (mNetworkInfo.getDetailedState()) {
+                case SCANNING:
+                case CONNECTING:
+                case AUTHENTICATING:
+                case OBTAINING_IPADDR:
+                case VERIFYING_POOR_LINK:
+                case CAPTIVE_PORTAL_CHECK:
+                case CONNECTED:
+                    return CONNECTED_STATE_CONNECTING;
+                default:
+                    return CONNECTED_STATE_DISCONNECTED;
+            }
         }
+
+        return CONNECTED_STATE_DISCONNECTED;
     }
-
 
     /** Returns the display title. This is most commonly the SSID of a network. */
     @NonNull
@@ -324,18 +344,23 @@ public class WifiEntry {
 
     /**
      * Returns whether the level icon for this network should show an X or not.
+     * By default, this means any connected network that has no/low-quality internet access.
      */
     public boolean shouldShowXLevelIcon() {
         return getConnectedState() != CONNECTED_STATE_DISCONNECTED
-                && (!mIsValidated || !mIsDefaultNetwork) && !canSignIn();
+                && mConnectivityReport != null
+                && (!hasInternetAccess() || isLowQuality())
+                && !canSignIn()
+                && isPrimaryNetwork();
     }
 
     /**
      * Returns whether this network has validated internet access or not.
      * Note: This does not necessarily mean the network is the default route.
      */
-    public boolean hasInternetAccess() {
-        return mIsValidated;
+    public synchronized boolean hasInternetAccess() {
+        return mNetworkCapabilities != null
+                && mNetworkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
     }
 
     /**
@@ -343,7 +368,45 @@ public class WifiEntry {
      * currently being used to provide internet connection).
      */
     public boolean isDefaultNetwork() {
-        return mIsDefaultNetwork;
+        return mNetwork != null && mNetwork.equals(mDefaultNetwork);
+    }
+
+    /**
+     * Returns whether this network is the primary Wi-Fi network or not.
+     */
+    public synchronized boolean isPrimaryNetwork() {
+        if (getConnectedState() == CONNECTED_STATE_DISCONNECTED) {
+            // In case we have mNetworkInfo but the state is disconnected.
+            return false;
+        }
+        return mNetworkInfo != null
+                || (mWifiInfo != null && NonSdkApiWrapper.isPrimary(mWifiInfo));
+    }
+
+    /**
+     * Returns whether this network is considered low quality.
+     */
+    public synchronized boolean isLowQuality() {
+        if (!isPrimaryNetwork()) {
+            return false;
+        }
+        if (mNetworkCapabilities == null) {
+            return false;
+        }
+        if (mDefaultNetworkCapabilities == null) {
+            return false;
+        }
+        return mNetworkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+                && mDefaultNetworkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                && !mDefaultNetworkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN);
+    }
+
+    /**
+     * Returns whether this network should display its SSID separately from the title
+     * (e.g. the Network Details page), for networks whose display titles differ from the SSID.
+     */
+    public boolean shouldShowSsid() {
+        return false;
     }
 
     /**
@@ -356,9 +419,10 @@ public class WifiEntry {
 
     /**
      * Returns the security type defined by the SECURITY constants
-     * DEPRECATED: Use getSecurityTypes() which can return multiple security types.
+     * @deprecated Use getSecurityTypes() which can return multiple security types.
      */
     // TODO(b/187554920): Remove this and move all clients to getSecurityTypes()
+    @Deprecated
     @Security
     public int getSecurity() {
         switch (getSingleSecurityTypeFromMultipleSecurityTypes(getSecurityTypes())) {
@@ -426,6 +490,14 @@ public class WifiEntry {
      * Indicates whether or not an entry is for a subscription.
      */
     public boolean isSubscription() {
+        return false;
+    }
+
+    /**
+     * Returns whether this entry needs to be configured with a new WifiConfiguration before
+     * connection.
+     */
+    public boolean needsWifiConfiguration() {
         return false;
     }
 
@@ -607,6 +679,25 @@ public class WifiEntry {
         return "";
     }
 
+    /** Returns the string displayed for the Wi-Fi band */
+    public String getBandString() {
+        return "";
+    }
+
+    /**
+     * Returns the string displayed for Tx link speed.
+     */
+    public String getTxSpeedString() {
+        return Utils.getSpeedString(mContext, mWifiInfo, /* isTx */ true);
+    }
+
+    /**
+     * Returns the string displayed for Rx link speed.
+     */
+    public String getRxSpeedString() {
+        return Utils.getSpeedString(mContext, mWifiInfo, /* isTx */ false);
+    }
+
     /** Returns whether subscription of the entry is expired */
     public boolean isExpired() {
         return false;
@@ -662,12 +753,12 @@ public class WifiEntry {
     String getNetworkCapabilityDescription() {
         final StringBuilder sb = new StringBuilder();
         if (getConnectedState() == CONNECTED_STATE_CONNECTED) {
-            sb.append("isValidated:")
-                    .append(mIsValidated)
+            sb.append("hasInternet:")
+                    .append(hasInternetAccess())
                     .append(", isDefaultNetwork:")
-                    .append(mIsDefaultNetwork)
+                    .append(isDefaultNetwork())
                     .append(", isLowQuality:")
-                    .append(mIsLowQuality);
+                    .append(isLowQuality());
         }
         return sb.toString();
     }
@@ -678,6 +769,13 @@ public class WifiEntry {
      * security or password before connecting. Or users will always get connection fail results.
      */
     public boolean shouldEditBeforeConnect() {
+        return false;
+    }
+
+    /**
+     * Whether there are admin restrictions preventing connection to this network.
+     */
+    public boolean hasAdminRestrictions() {
         return false;
     }
 
@@ -810,70 +908,154 @@ public class WifiEntry {
     }
 
     /**
-     * Returns whether or not the supplied WifiInfo and NetworkInfo represent this WifiEntry
+     * Returns whether the supplied WifiInfo represents this WifiEntry
      */
-    protected boolean connectionInfoMatches(@NonNull WifiInfo wifiInfo,
-            @NonNull NetworkInfo networkInfo) {
+    protected boolean connectionInfoMatches(@NonNull WifiInfo wifiInfo) {
         return false;
     }
 
     /**
-     * Updates information regarding the current network connection. If the supplied WifiInfo and
-     * NetworkInfo do not match this WifiEntry, then the WifiEntry will update to be
-     * unconnected.
+     * Updates this WifiEntry with the given primary WifiInfo/NetworkInfo if they match.
+     * @param primaryWifiInfo Primary WifiInfo that has changed
+     * @param networkInfo NetworkInfo of the primary network if available
+     */
+    synchronized void onPrimaryWifiInfoChanged(
+            @Nullable WifiInfo primaryWifiInfo, @Nullable NetworkInfo networkInfo) {
+        if (primaryWifiInfo == null || !connectionInfoMatches(primaryWifiInfo)) {
+            if (mNetworkInfo != null) {
+                mNetworkInfo = null;
+                notifyOnUpdated();
+            }
+            return;
+        }
+        if (networkInfo != null) {
+            mNetworkInfo = networkInfo;
+        }
+        updateWifiInfo(primaryWifiInfo);
+        notifyOnUpdated();
+    }
+
+    /**
+     * Updates this WifiEntry with the given NetworkCapabilities if it matches.
      */
     @WorkerThread
-    synchronized void updateConnectionInfo(
-            @Nullable WifiInfo wifiInfo, @Nullable NetworkInfo networkInfo) {
-        if (wifiInfo != null && networkInfo != null
-                && connectionInfoMatches(wifiInfo, networkInfo)) {
-            // Connection info matches, so the WifiInfo/NetworkInfo represent this network and
-            // the network is currently connecting or connected.
-            mWifiInfo = wifiInfo;
-            mNetworkInfo = networkInfo;
-            final int wifiInfoRssi = wifiInfo.getRssi();
-            if (wifiInfoRssi != INVALID_RSSI) {
-                mLevel = mWifiManager.calculateSignalLevel(wifiInfoRssi);
-            }
-            if (getConnectedState() == CONNECTED_STATE_CONNECTED) {
-                if (mCalledConnect) {
-                    mCalledConnect = false;
-                    mCallbackHandler.post(() -> {
-                        final ConnectCallback connectCallback = mConnectCallback;
-                        if (connectCallback != null) {
-                            connectCallback.onConnectResult(
-                                    ConnectCallback.CONNECT_STATUS_SUCCESS);
-                        }
-                    });
-                }
+    synchronized void onNetworkCapabilitiesChanged(
+            @NonNull Network network,
+            @NonNull NetworkCapabilities capabilities) {
+        WifiInfo wifiInfo = Utils.getWifiInfo(capabilities);
+        if (wifiInfo == null) {
+            return;
+        }
 
-                if (mConnectedInfo == null) {
-                    mConnectedInfo = new ConnectedInfo();
-                }
-                mConnectedInfo.frequencyMhz = wifiInfo.getFrequency();
-                mConnectedInfo.linkSpeedMbps = wifiInfo.getLinkSpeed();
-                mConnectedInfo.wifiStandard = wifiInfo.getWifiStandard();
+        if (!connectionInfoMatches(wifiInfo)) {
+            if (network.equals(mNetwork)) {
+                // WifiInfo doesn't match but the Network matches. This may be due to linked
+                // roaming, so treat as a disconnect.
+                onNetworkLost(network);
             }
-        } else { // Connection info doesn't matched, so this network is disconnected
+            return;
+        }
+
+        // Treat non-primary, non-OEM connections as disconnected.
+        if (!NonSdkApiWrapper.isPrimary(wifiInfo)
+                && !NonSdkApiWrapper.isOemCapabilities(capabilities)) {
+            onNetworkLost(network);
+            return;
+        }
+
+        // Connection info matches, so the Network/NetworkCapabilities represent this network
+        // and the network is currently connecting or connected.
+        mNetwork = network;
+        mNetworkCapabilities = capabilities;
+        updateWifiInfo(wifiInfo);
+        notifyOnUpdated();
+    }
+
+    private synchronized void updateWifiInfo(WifiInfo wifiInfo) {
+        if (wifiInfo == null) {
             mWifiInfo = null;
-            mNetworkInfo = null;
-            mNetworkCapabilities = null;
             mConnectedInfo = null;
-            mIsValidated = false;
-            mIsDefaultNetwork = false;
-            mIsLowQuality = false;
-            if (mCalledDisconnect) {
-                mCalledDisconnect = false;
+            updateSecurityTypes();
+            return;
+        }
+        mWifiInfo = wifiInfo;
+        final int wifiInfoRssi = mWifiInfo.getRssi();
+        if (wifiInfoRssi != INVALID_RSSI) {
+            mLevel = mWifiManager.calculateSignalLevel(wifiInfoRssi);
+        }
+        if (getConnectedState() == CONNECTED_STATE_CONNECTED) {
+            if (mCalledConnect) {
+                mCalledConnect = false;
                 mCallbackHandler.post(() -> {
-                    final DisconnectCallback disconnectCallback = mDisconnectCallback;
-                    if (disconnectCallback != null) {
-                        disconnectCallback.onDisconnectResult(
-                                DisconnectCallback.DISCONNECT_STATUS_SUCCESS);
+                    final ConnectCallback connectCallback = mConnectCallback;
+                    if (connectCallback != null) {
+                        connectCallback.onConnectResult(
+                                ConnectCallback.CONNECT_STATUS_SUCCESS);
                     }
                 });
             }
+
+            if (mConnectedInfo == null) {
+                mConnectedInfo = new ConnectedInfo();
+            }
+            mConnectedInfo.frequencyMhz = mWifiInfo.getFrequency();
+            mConnectedInfo.linkSpeedMbps = mWifiInfo.getLinkSpeed();
+            mConnectedInfo.wifiStandard = mWifiInfo.getWifiStandard();
         }
         updateSecurityTypes();
+    }
+
+    /**
+     * Updates this WifiEntry as disconnected if the network matches.
+     * @param network Network that was lost
+     */
+    synchronized void onNetworkLost(@NonNull Network network) {
+        if (!network.equals(mNetwork)) {
+            return;
+        }
+        // Network matches, so this network is disconnected.
+        clearConnectionInfo();
+    }
+
+    /**
+     * Clears any connection info from this entry.
+     */
+    synchronized void clearConnectionInfo() {
+        updateWifiInfo(null);
+        mNetworkInfo = null;
+        mNetworkCapabilities = null;
+        mConnectivityReport = null;
+        if (mCalledDisconnect) {
+            mCalledDisconnect = false;
+            mCallbackHandler.post(() -> {
+                final DisconnectCallback disconnectCallback = mDisconnectCallback;
+                if (disconnectCallback != null) {
+                    disconnectCallback.onDisconnectResult(
+                            DisconnectCallback.DISCONNECT_STATUS_SUCCESS);
+                }
+            });
+        }
+        notifyOnUpdated();
+    }
+
+    /**
+     * Updates this WifiEntry as the default network if it matches.
+     */
+    @WorkerThread
+    synchronized void onDefaultNetworkCapabilitiesChanged(
+            @NonNull Network network,
+            @NonNull NetworkCapabilities capabilities) {
+        mDefaultNetwork = network;
+        mDefaultNetworkCapabilities = capabilities;
+        notifyOnUpdated();
+    }
+
+    /**
+     * Notifies this WifiEntry that the default network was lost.
+     */
+    synchronized void onDefaultNetworkLost() {
+        mDefaultNetwork = null;
+        mDefaultNetworkCapabilities = null;
         notifyOnUpdated();
     }
 
@@ -883,12 +1065,11 @@ public class WifiEntry {
         // Do nothing;
     }
 
-    // Method for WifiTracker to update the link properties, which is valid for all WifiEntry types.
+    // Updates this WifiEntry's link properties if the network matches.
     @WorkerThread
-    synchronized void updateLinkProperties(@Nullable LinkProperties linkProperties) {
-        if (linkProperties == null || getConnectedState() != CONNECTED_STATE_CONNECTED) {
-            mConnectedInfo = null;
-            notifyOnUpdated();
+    synchronized void updateLinkProperties(
+            @NonNull Network network, @NonNull LinkProperties linkProperties) {
+        if (!network.equals(mNetwork)) {
             return;
         }
 
@@ -905,7 +1086,7 @@ public class WifiEntry {
                             new byte[]{(byte) 255, (byte) 255, (byte) 255, (byte) 255});
                     mConnectedInfo.subnetMask = getNetworkPart(
                             all, addr.getPrefixLength()).getHostAddress();
-                } catch (UnknownHostException e) {
+                } catch (UnknownHostException | IllegalArgumentException e) {
                     // Leave subnet null;
                 }
             } else if (addr.getAddress() instanceof Inet6Address) {
@@ -930,28 +1111,14 @@ public class WifiEntry {
         notifyOnUpdated();
     }
 
+    // Method for WifiTracker to update a connected WifiEntry's validation status.
     @WorkerThread
-    synchronized void setIsDefaultNetwork(boolean isDefaultNetwork) {
-        mIsDefaultNetwork = isDefaultNetwork;
-        notifyOnUpdated();
-    }
-
-    @WorkerThread
-    synchronized void setIsLowQuality(boolean isLowQuality) {
-        mIsLowQuality = isLowQuality;
-    }
-
-    // Method for WifiTracker to update a connected WifiEntry's network capabilities.
-    @WorkerThread
-    synchronized void updateNetworkCapabilities(@Nullable NetworkCapabilities capabilities) {
-        mNetworkCapabilities = capabilities;
-        if (mConnectedInfo == null) {
-            return;
+    synchronized void updateConnectivityReport(
+            @NonNull ConnectivityDiagnosticsManager.ConnectivityReport connectivityReport) {
+        if (connectivityReport.getNetwork().equals(mNetwork)) {
+            mConnectivityReport = connectivityReport;
+            notifyOnUpdated();
         }
-        mConnectedInfo.networkCapabilities = mNetworkCapabilities;
-        mIsValidated = mNetworkCapabilities != null
-                && mNetworkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
-        notifyOnUpdated();
     }
 
     synchronized String getWifiInfoDescription() {
@@ -969,6 +1136,12 @@ public class WifiEntry {
             sj.add(String.format("%.1f,", mWifiInfo.getRetriedTxPacketsPerSecond()));
             sj.add(String.format("%.1f ", mWifiInfo.getLostTxPacketsPerSecond()));
             sj.add(String.format("rx=%.1f", mWifiInfo.getSuccessfulRxPacketsPerSecond()));
+            if (BuildCompat.isAtLeastT() && mWifiInfo.getApMldMacAddress() != null) {
+                sj.add("mldMac = " + mWifiInfo.getApMldMacAddress());
+                sj.add("linkId = " + mWifiInfo.getApMloLinkId());
+                sj.add("affLinks = " + Arrays.toString(
+                        mWifiInfo.getAffiliatedMloLinks().toArray()));
+            }
         }
         return sj.toString();
     }
@@ -977,18 +1150,9 @@ public class WifiEntry {
         @Override
         public void onSuccess() {
             synchronized (WifiEntry.this) {
+                // Wait for L3 connection before returning the success result.
                 mCalledConnect = true;
             }
-            // If we aren't connected to the network after 10 seconds, trigger the failure callback
-            mCallbackHandler.postDelayed(() -> {
-                final ConnectCallback connectCallback = mConnectCallback;
-                if (connectCallback != null && mCalledConnect
-                        && getConnectedState() == CONNECTED_STATE_DISCONNECTED) {
-                    connectCallback.onConnectResult(
-                            ConnectCallback.CONNECT_STATUS_FAILURE_UNKNOWN);
-                    mCalledConnect = false;
-                }
-            }, 10_000 /* delayMillis */);
         }
 
         @Override
@@ -996,8 +1160,7 @@ public class WifiEntry {
             mCallbackHandler.post(() -> {
                 final ConnectCallback connectCallback = mConnectCallback;
                 if (connectCallback != null) {
-                    connectCallback.onConnectResult(
-                            ConnectCallback.CONNECT_STATUS_FAILURE_UNKNOWN);
+                    connectCallback.onConnectResult(ConnectCallback.CONNECT_STATUS_FAILURE_UNKNOWN);
                 }
             });
         }
@@ -1038,32 +1201,61 @@ public class WifiEntry {
 
     @Override
     public String toString() {
-        return new StringBuilder()
-                .append(getKey())
-                .append(",title:")
-                .append(getTitle())
-                .append(",summary:")
-                .append(getSummary())
-                .append(",isSaved:")
-                .append(isSaved())
-                .append(",isSubscription:")
-                .append(isSubscription())
-                .append(",isSuggestion:")
-                .append(isSuggestion())
-                .append(",level:")
-                .append(getLevel())
-                .append(shouldShowXLevelIcon() ? "X" : "")
-                .append(",security:")
-                .append(getSecurityTypes())
-                .append(",connected:")
-                .append(getConnectedState() == CONNECTED_STATE_CONNECTED ? "true" : "false")
-                .append(",connectedInfo:")
-                .append(getConnectedInfo())
-                .append(",isValidated:")
-                .append(mIsValidated)
-                .append(",isDefaultNetwork:")
-                .append(mIsDefaultNetwork)
-                .toString();
+        StringJoiner sj = new StringJoiner("][", "[", "]");
+        sj.add(this.getClass().getSimpleName());
+        sj.add(getTitle());
+        sj.add(getSummary());
+        sj.add("Level:" + getLevel() + (shouldShowXLevelIcon() ? "!" : ""));
+        String security = getSecurityString(true);
+        if (!TextUtils.isEmpty(security)) {
+            sj.add(security);
+        }
+        int connectedState = getConnectedState();
+        if (connectedState == CONNECTED_STATE_CONNECTED) {
+            sj.add("Connected");
+        } else if (connectedState == CONNECTED_STATE_CONNECTING) {
+            sj.add("Connecting...");
+        }
+        if (hasInternetAccess()) {
+            sj.add("Internet");
+        }
+        if (isDefaultNetwork()) {
+            sj.add("Default");
+        }
+        if (isPrimaryNetwork()) {
+            sj.add("Primary");
+        }
+        if (isLowQuality()) {
+            sj.add("LowQuality");
+        }
+        if (isSaved()) {
+            sj.add("Saved");
+        }
+        if (isSubscription()) {
+            sj.add("Subscription");
+        }
+        if (isSuggestion()) {
+            sj.add("Suggestion");
+        }
+        if (isMetered()) {
+            sj.add("Metered");
+        }
+        if ((isSaved() || isSuggestion() || isSubscription()) && !isAutoJoinEnabled()) {
+            sj.add("AutoJoinDisabled");
+        }
+        if (isExpired()) {
+            sj.add("Expired");
+        }
+        if (canSignIn()) {
+            sj.add("SignIn");
+        }
+        if (shouldEditBeforeConnect()) {
+            sj.add("EditBeforeConnect");
+        }
+        if (hasAdminRestrictions()) {
+            sj.add("AdminRestricted");
+        }
+        return sj.toString();
     }
 
     /**
@@ -1074,5 +1266,12 @@ public class WifiEntry {
          * Execute the action of managing subscription.
          */
         void onExecute();
+    }
+
+    /**
+     * Whether this WifiEntry is using a verbose summary.
+     */
+    public boolean isVerboseSummaryEnabled() {
+        return mInjector.isVerboseSummaryEnabled();
     }
 }

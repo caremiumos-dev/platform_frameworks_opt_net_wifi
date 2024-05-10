@@ -18,7 +18,10 @@ package com.android.wifitrackerlib;
 
 import android.app.admin.DevicePolicyManager;
 import android.content.Context;
+import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.UserManager;
+import android.provider.DeviceConfig;
 import android.util.ArraySet;
 
 import androidx.annotation.NonNull;
@@ -28,14 +31,22 @@ import java.util.Set;
 /**
  * Wrapper class for commonly referenced objects and static data.
  */
-class WifiTrackerInjector {
+public class WifiTrackerInjector {
+    private static final String DEVICE_CONFIG_NAMESPACE = "wifi";
+
+    @NonNull private final Context mContext;
     private final boolean mIsDemoMode;
+    private final WifiManager mWifiManager;
     private final UserManager mUserManager;
     private final DevicePolicyManager mDevicePolicyManager;
     @NonNull private final Set<String> mNoAttributionAnnotationPackages;
+    private boolean mIsUserDebugVerboseLoggingEnabled;
+    private boolean mVerboseLoggingDisabledOverride = false;
 
     // TODO(b/201571677): Migrate the rest of the common objects to WifiTrackerInjector.
     WifiTrackerInjector(@NonNull Context context) {
+        mContext = context;
+        mWifiManager = context.getSystemService(WifiManager.class);
         mIsDemoMode = NonSdkApiWrapper.isDemoMode(context);
         mUserManager = context.getSystemService(UserManager.class);
         mDevicePolicyManager = context.getSystemService(DevicePolicyManager.class);
@@ -45,6 +56,13 @@ class WifiTrackerInjector {
         for (int i = 0; i < noAttributionAnnotationPackages.length; i++) {
             mNoAttributionAnnotationPackages.add(noAttributionAnnotationPackages[i]);
         }
+        mIsUserDebugVerboseLoggingEnabled = context.getResources().getBoolean(
+                R.bool.wifitrackerlib_enable_verbose_logging_for_userdebug)
+                && Build.TYPE.equals("userdebug");
+    }
+
+    @NonNull Context getContext() {
+        return mContext;
     }
 
     boolean isDemoMode() {
@@ -64,5 +82,32 @@ class WifiTrackerInjector {
      */
     @NonNull Set<String> getNoAttributionAnnotationPackages() {
         return mNoAttributionAnnotationPackages;
+    }
+
+    public boolean isSharedConnectivityFeatureEnabled() {
+        return DeviceConfig.getBoolean(DEVICE_CONFIG_NAMESPACE,
+                "shared_connectivity_enabled", false);
+    }
+
+    /**
+     * Whether verbose logging is enabled.
+     */
+    public boolean isVerboseLoggingEnabled() {
+        return !mVerboseLoggingDisabledOverride
+                && (mWifiManager.isVerboseLoggingEnabled() || mIsUserDebugVerboseLoggingEnabled);
+    }
+
+    /**
+     * Whether verbose summaries should be shown in WifiEntry.
+     */
+    public boolean isVerboseSummaryEnabled() {
+        return !mVerboseLoggingDisabledOverride && mWifiManager.isVerboseLoggingEnabled();
+    }
+
+    /**
+     * Permanently disables verbose logging.
+     */
+    public void disableVerboseLogging() {
+        mVerboseLoggingDisabledOverride = true;
     }
 }

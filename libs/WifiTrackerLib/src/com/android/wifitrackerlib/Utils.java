@@ -16,23 +16,37 @@
 
 package com.android.wifitrackerlib;
 
+import static android.net.wifi.WifiConfiguration.NetworkSelectionStatus.DISABLED_AUTHENTICATION_FAILURE;
 import static android.net.wifi.WifiConfiguration.NetworkSelectionStatus.NETWORK_SELECTION_ENABLED;
 import static android.net.wifi.WifiConfiguration.NetworkSelectionStatus.NETWORK_SELECTION_PERMANENTLY_DISABLED;
+import static android.net.wifi.WifiInfo.SECURITY_TYPE_EAP;
+import static android.net.wifi.WifiInfo.SECURITY_TYPE_EAP_WPA3_ENTERPRISE;
+import static android.net.wifi.WifiInfo.SECURITY_TYPE_EAP_WPA3_ENTERPRISE_192_BIT;
+import static android.net.wifi.WifiInfo.SECURITY_TYPE_OPEN;
+import static android.net.wifi.WifiInfo.SECURITY_TYPE_OWE;
+import static android.net.wifi.WifiInfo.SECURITY_TYPE_PSK;
+import static android.net.wifi.WifiInfo.SECURITY_TYPE_SAE;
+import static android.net.wifi.WifiInfo.SECURITY_TYPE_WEP;
 
 import static java.util.Comparator.comparingInt;
+import static java.util.stream.Collectors.toList;
 
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityDiagnosticsManager;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
+import android.net.TransportInfo;
+import android.net.wifi.MloLink;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiConfiguration.NetworkSelectionStatus;
 import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiScanner;
 import android.os.Build;
 import android.os.PersistableBundle;
 import android.os.UserHandle;
@@ -47,6 +61,7 @@ import android.util.Pair;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.os.BuildCompat;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -74,7 +89,7 @@ public class Utils {
 
     // Returns a list of WifiInfo SECURITY_TYPE_* supported by a ScanResult.
     @NonNull
-    static List<Integer> getSecurityTypesFromScanResult(@NonNull ScanResult scanResult) {
+    public static List<Integer> getSecurityTypesFromScanResult(@NonNull ScanResult scanResult) {
         List<Integer> securityTypes = new ArrayList<>();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             for (int securityType : scanResult.getSecurityTypes()) {
@@ -195,9 +210,13 @@ public class Utils {
      */
     static int getSingleSecurityTypeFromMultipleSecurityTypes(
             @NonNull List<Integer> securityTypes) {
+        if (securityTypes.size() == 0) {
+            return WifiInfo.SECURITY_TYPE_UNKNOWN;
+        }
         if (securityTypes.size() == 1) {
             return securityTypes.get(0);
-        } else if (securityTypes.size() == 2) {
+        }
+        if (securityTypes.size() == 2) {
             if (securityTypes.contains(WifiInfo.SECURITY_TYPE_OPEN)) {
                 return WifiInfo.SECURITY_TYPE_OPEN;
             }
@@ -208,7 +227,8 @@ public class Utils {
                 return WifiInfo.SECURITY_TYPE_EAP;
             }
         }
-        return WifiInfo.SECURITY_TYPE_UNKNOWN;
+        // Default to the first security type if we don't need any special mapping.
+        return securityTypes.get(0);
     }
 
     /**
@@ -225,46 +245,87 @@ public class Utils {
         }
     }
 
-    static String getConnectedDescription(Context context,
-            WifiConfiguration wifiConfiguration,
-            NetworkCapabilities networkCapabilities,
+    static String getConnectedDescription(@NonNull Context context,
+            @Nullable WifiConfiguration wifiConfiguration,
+            @NonNull NetworkCapabilities networkCapabilities,
             boolean isDefaultNetwork,
-            boolean isLowQuality) {
+            boolean isLowQuality,
+            @Nullable ConnectivityDiagnosticsManager.ConnectivityReport connectivityReport) {
         final StringJoiner sj = new StringJoiner(context.getString(
                 R.string.wifitrackerlib_summary_separator));
 
+        boolean isValidated = networkCapabilities.hasCapability(
+                NetworkCapabilities.NET_CAPABILITY_VALIDATED);
+        boolean isCaptivePortal = networkCapabilities.hasCapability(
+                NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL);
+        boolean isPartialConnectivity = networkCapabilities.hasCapability(
+                NetworkCapabilities.NET_CAPABILITY_PARTIAL_CONNECTIVITY);
+        boolean isNoInternetExpected = wifiConfiguration != null
+                && wifiConfiguration.isNoInternetAccessExpected();
+        boolean isPrivateDnsBroken = !isValidated && networkCapabilities.isPrivateDnsBroken();
+        boolean isCheckingForInternetAccess = !isValidated && !isPartialConnectivity
+                && connectivityReport == null && !isNoInternetExpected;
+        boolean isOemNetwork = NonSdkApiWrapper.isOemCapabilities(networkCapabilities);
+        String suggestionOrSpecifierLabel = null;
         if (wifiConfiguration != null
                 && (wifiConfiguration.fromWifiNetworkSuggestion
                 || wifiConfiguration.fromWifiNetworkSpecifier)) {
-            // For suggestion or specifier networks to show "Connected via ..."
-            final String suggestionOrSpecifierLabel =
-                    getSuggestionOrSpecifierLabel(context, wifiConfiguration);
-            if (!TextUtils.isEmpty(suggestionOrSpecifierLabel)) {
-                if (!isDefaultNetwork) {
-                    sj.add(context.getString(R.string.wifitrackerlib_available_via_app,
-                            suggestionOrSpecifierLabel));
-                } else {
-                    sj.add(context.getString(R.string.wifitrackerlib_connected_via_app,
-                            suggestionOrSpecifierLabel));
-                }
+            suggestionOrSpecifierLabel = getSuggestionOrSpecifierLabel(context, wifiConfiguration);
+        }
+        final boolean shouldShowConnected;
+        if (isValidated) {
+            shouldShowConnected = isDefaultNetwork;
+        } else {
+            // Show "Connected" even if we aren't validated specifically for the
+            // "Connected / No internet access" case, and for OEM-specified networks which aren't
+            // expected to be fully validated.
+            shouldShowConnected = !isCheckingForInternetAccess && !isCaptivePortal
+                    && !isPrivateDnsBroken && !isNoInternetExpected || isOemNetwork;
+        }
+
+        if (!TextUtils.isEmpty(suggestionOrSpecifierLabel)) {
+            if (shouldShowConnected || (isDefaultNetwork && isPartialConnectivity)) {
+                // "Connected via app"
+                sj.add(context.getString(R.string.wifitrackerlib_connected_via_app,
+                        suggestionOrSpecifierLabel));
+            } else {
+                // "Available via app"
+                sj.add(context.getString(R.string.wifitrackerlib_available_via_app,
+                        suggestionOrSpecifierLabel));
             }
+        } else if (shouldShowConnected) {
+            // "Connected"
+            sj.add(context.getResources().getStringArray(
+                    R.array.wifitrackerlib_wifi_status)[DetailedState.CONNECTED.ordinal()]);
         }
 
         if (isLowQuality) {
+            // "Low quality"
             sj.add(context.getString(R.string.wifi_connected_low_quality));
         }
 
-        // For displaying network capability info, such as captive portal or no internet
-        String networkCapabilitiesInformation =
-                getCurrentNetworkCapabilitiesInformation(context,  networkCapabilities);
-        if (!TextUtils.isEmpty(networkCapabilitiesInformation)) {
-            sj.add(networkCapabilitiesInformation);
-        }
-
-        // Default to "Connected" if nothing else to display
-        if (sj.length() == 0 && isDefaultNetwork) {
-            return context.getResources().getStringArray(R.array.wifitrackerlib_wifi_status)
-                    [DetailedState.CONNECTED.ordinal()];
+        if (isCaptivePortal) {
+            // "Sign in to network"
+            sj.add(context.getString(context.getResources().getIdentifier(
+                    "network_available_sign_in", "string", "android")));
+        } else if (isPartialConnectivity) {
+            // "Limited connection..."
+            sj.add(context.getString(R.string.wifitrackerlib_wifi_limited_connection));
+        } else if (isCheckingForInternetAccess) {
+            // "Checking for internet access..."
+            sj.add(context.getString(R.string.wifitrackerlib_checking_for_internet_access));
+        } else if (isPrivateDnsBroken) {
+            // "Private DNS server cannot be accessed"
+            sj.add(context.getString(R.string.wifitrackerlib_private_dns_broken));
+        } else if (!isValidated) {
+            if (isNoInternetExpected) {
+                // "Connected to device. Can't provide internet."
+                sj.add(context.getString(
+                        R.string.wifitrackerlib_wifi_connected_cannot_provide_internet));
+            } else {
+                // "No internet access"
+                sj.add(context.getString(R.string.wifitrackerlib_wifi_no_internet));
+            }
         }
 
         return sj.toString();
@@ -360,37 +421,51 @@ public class Utils {
         }
 
         // Check for any failure messages to display
+        NetworkSelectionStatus networkSelectionStatus =
+                wifiConfiguration.getNetworkSelectionStatus();
         if (wifiConfiguration.hasNoInternetAccess()) {
-            int messageID =
-                    wifiConfiguration.getNetworkSelectionStatus().getNetworkSelectionStatus()
-                            == NETWORK_SELECTION_PERMANENTLY_DISABLED
-                            ? R.string.wifitrackerlib_wifi_no_internet_no_reconnect
-                            : R.string.wifitrackerlib_wifi_no_internet;
-            return context.getString(messageID);
-        } else if (wifiConfiguration.getNetworkSelectionStatus().getNetworkSelectionStatus()
-                != NETWORK_SELECTION_ENABLED) {
-            WifiConfiguration.NetworkSelectionStatus networkStatus =
-                    wifiConfiguration.getNetworkSelectionStatus();
-            switch (networkStatus.getNetworkSelectionDisableReason()) {
-                case WifiConfiguration.NetworkSelectionStatus.DISABLED_AUTHENTICATION_FAILURE:
-                case WifiConfiguration.NetworkSelectionStatus
-                        .DISABLED_AUTHENTICATION_NO_SUBSCRIPTION:
+            if (networkSelectionStatus.getNetworkSelectionStatus()
+                    == NETWORK_SELECTION_PERMANENTLY_DISABLED) {
+                return context.getString(R.string.wifitrackerlib_wifi_no_internet_no_reconnect);
+            }
+            return context.getString(R.string.wifitrackerlib_wifi_no_internet);
+        }
+        if (networkSelectionStatus.getNetworkSelectionStatus() != NETWORK_SELECTION_ENABLED) {
+            switch (networkSelectionStatus.getNetworkSelectionDisableReason()) {
+                case NetworkSelectionStatus.DISABLED_CONSECUTIVE_FAILURES:
+                    if (!networkSelectionStatus.hasEverConnected()
+                            && networkSelectionStatus.getDisableReasonCounter(
+                                    NetworkSelectionStatus.DISABLED_AUTHENTICATION_FAILURE) > 0) {
+                        return context.getString(
+                                R.string.wifitrackerlib_wifi_disabled_password_failure);
+                    }
+                    break;
+                case NetworkSelectionStatus.DISABLED_AUTHENTICATION_FAILURE:
+                case NetworkSelectionStatus.DISABLED_AUTHENTICATION_NO_CREDENTIALS:
+                case NetworkSelectionStatus.DISABLED_AUTHENTICATION_NO_SUBSCRIPTION:
                     return context.getString(
                             R.string.wifitrackerlib_wifi_disabled_password_failure);
-                case WifiConfiguration.NetworkSelectionStatus.DISABLED_BY_WRONG_PASSWORD:
+                case NetworkSelectionStatus.DISABLED_BY_WRONG_PASSWORD:
                     return context.getString(R.string.wifitrackerlib_wifi_check_password_try_again);
-                case WifiConfiguration.NetworkSelectionStatus.DISABLED_DHCP_FAILURE:
+                case NetworkSelectionStatus.DISABLED_DHCP_FAILURE:
                     return context.getString(R.string.wifitrackerlib_wifi_disabled_network_failure);
-                case WifiConfiguration.NetworkSelectionStatus.DISABLED_ASSOCIATION_REJECTION:
+                case NetworkSelectionStatus.DISABLED_ASSOCIATION_REJECTION:
                     return context.getString(R.string.wifitrackerlib_wifi_disabled_generic);
-                case WifiConfiguration.NetworkSelectionStatus.DISABLED_NO_INTERNET_PERMANENT:
-                case WifiConfiguration.NetworkSelectionStatus.DISABLED_NO_INTERNET_TEMPORARY:
+                case NetworkSelectionStatus.DISABLED_NO_INTERNET_PERMANENT:
+                case NetworkSelectionStatus.DISABLED_NO_INTERNET_TEMPORARY:
                     return context.getString(R.string.wifitrackerlib_wifi_no_internet_no_reconnect);
                 case DISABLED_TRANSITION_DISABLE_INDICATION:
                     return context.getString(
                             R.string.wifitrackerlib_wifi_disabled_transition_disable_indication);
                 default:
                     break;
+            }
+        } else { // NETWORK_SELECTION_ENABLED
+            // Show failure message if we've gotten AUTHENTICATION_FAILURE and have never connected
+            // before, which usually indicates the credentials are wrong.
+            if (networkSelectionStatus.getDisableReasonCounter(DISABLED_AUTHENTICATION_FAILURE) > 0
+                    && !networkSelectionStatus.hasEverConnected()) {
+                return context.getString(R.string.wifitrackerlib_wifi_disabled_password_failure);
             }
         }
         switch (wifiConfiguration.getRecentFailureReason()) {
@@ -451,8 +526,8 @@ public class Utils {
         }
     }
 
-    static String getVerboseLoggingDescription(@NonNull WifiEntry wifiEntry) {
-        if (!BaseWifiTracker.isVerboseLoggingEnabled() || wifiEntry == null) {
+    static String getVerboseSummary(@NonNull WifiEntry wifiEntry) {
+        if (wifiEntry == null) {
             return "";
         }
 
@@ -512,32 +587,6 @@ public class Utils {
                     .append(disableReasonCounter);
         }
         return description.toString();
-    }
-
-    static String getCurrentNetworkCapabilitiesInformation(Context context,
-            NetworkCapabilities networkCapabilities) {
-        if (context == null || networkCapabilities == null) {
-            return "";
-        }
-
-        if (networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL)) {
-            return context.getString(context.getResources()
-                    .getIdentifier("network_available_sign_in", "string", "android"));
-        }
-
-        if (networkCapabilities.hasCapability(
-                NetworkCapabilities.NET_CAPABILITY_PARTIAL_CONNECTIVITY)) {
-            return context.getString(R.string.wifitrackerlib_wifi_limited_connection);
-        }
-
-        if (!networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)) {
-            if (networkCapabilities.isPrivateDnsBroken()) {
-                return context.getString(R.string.wifitrackerlib_private_dns_broken);
-            }
-            return context.getString(
-                R.string.wifitrackerlib_wifi_connected_cannot_provide_internet);
-        }
-        return "";
     }
 
     /**
@@ -872,7 +921,7 @@ public class Utils {
         try {
             netPart = InetAddress.getByAddress(array);
         } catch (UnknownHostException e) {
-            throw new RuntimeException("getNetworkPart error - " + e.toString());
+            throw new IllegalArgumentException("getNetworkPart error - " + e.toString());
         }
         return netPart;
     }
@@ -882,7 +931,7 @@ public class Utils {
      */
     public static void maskRawAddress(byte[] array, int prefixLength) {
         if (prefixLength < 0 || prefixLength > array.length * 8) {
-            throw new RuntimeException("IP address with " + array.length
+            throw new IllegalArgumentException("IP address with " + array.length
                     + " bytes has invalid prefix length " + prefixLength);
         }
 
@@ -890,7 +939,9 @@ public class Utils {
         int remainder = prefixLength % 8;
         byte mask = (byte) (0xFF << (8 - remainder));
 
-        if (offset < array.length) array[offset] = (byte) (array[offset] & mask);
+        if (offset < array.length) {
+            array[offset] = (byte) (array[offset] & mask);
+        }
 
         offset++;
 
@@ -1019,8 +1070,7 @@ public class Utils {
     }
 
     /**
-     * Converts a ScanResult.WIFI_STANDARD_ value to a display string if available, or an
-     * empty string if there is no corresponding display string.
+     * Converts a ScanResult.WIFI_STANDARD_ value to a display string.
      */
     public static String getStandardString(@NonNull Context context, int standard) {
         switch (standard) {
@@ -1039,5 +1089,200 @@ public class Utils {
             default:
                 return context.getString(R.string.wifitrackerlib_wifi_standard_unknown);
         }
+    }
+
+    /**
+     * Converts a frequency to one of
+     *      {@link WifiScanner#WIFI_BAND_UNSPECIFIED},
+     *      {@link WifiScanner#WIFI_BAND_24_GHZ},
+     *      {@link WifiScanner#WIFI_BAND_5_GHZ},
+     *      {@link WifiScanner#WIFI_BAND_6_GHZ}
+     */
+    public static int getBand(int freqMhz) {
+        if (freqMhz >= WifiEntry.MIN_FREQ_24GHZ && freqMhz < WifiEntry.MAX_FREQ_24GHZ) {
+            return WifiScanner.WIFI_BAND_24_GHZ;
+        } else if (freqMhz >= WifiEntry.MIN_FREQ_5GHZ && freqMhz < WifiEntry.MAX_FREQ_5GHZ) {
+            return WifiScanner.WIFI_BAND_5_GHZ;
+        } else if (freqMhz >= WifiEntry.MIN_FREQ_6GHZ && freqMhz < WifiEntry.MAX_FREQ_6GHZ) {
+            return WifiScanner.WIFI_BAND_6_GHZ;
+        } else {
+            return WifiScanner.WIFI_BAND_UNSPECIFIED;
+        }
+    }
+
+    /**
+     * Converts one of
+     *      {@link WifiScanner#WIFI_BAND_UNSPECIFIED},
+     *      {@link WifiScanner#WIFI_BAND_24_GHZ},
+     *      {@link WifiScanner#WIFI_BAND_5_GHZ},
+     *      {@link WifiScanner#WIFI_BAND_6_GHZ}
+     * to the display string of the corresponding Wi-Fi band.
+     */
+    public static String bandToBandString(@NonNull Context context, int scannerBand) {
+        switch (scannerBand) {
+            case WifiScanner.WIFI_BAND_24_GHZ:
+                return context.getResources().getString(R.string.wifitrackerlib_wifi_band_24_ghz);
+            case WifiScanner.WIFI_BAND_5_GHZ:
+                return context.getResources().getString(R.string.wifitrackerlib_wifi_band_5_ghz);
+            case WifiScanner.WIFI_BAND_6_GHZ:
+                return context.getResources().getString(R.string.wifitrackerlib_wifi_band_6_ghz);
+            default:
+                return context.getResources().getString(R.string.wifitrackerlib_wifi_band_unknown);
+        }
+    }
+
+    /**
+     * Converts a frequency in MHz to the display string of the corresponding Wi-Fi band.
+     */
+    public static String frequencyToBandString(@NonNull Context context, int freqMhz) {
+        return bandToBandString(context, getBand(freqMhz));
+    }
+
+    /**
+     * Converts the band info in WifiInfo to the display string of the corresponding Wi-Fi band(s).
+     */
+    public static String wifiInfoToBandString(
+            @NonNull Context context, @NonNull WifiInfo wifiInfo) {
+        if (!BuildCompat.isAtLeastU()) {
+            return frequencyToBandString(context, wifiInfo.getFrequency());
+        }
+
+        StringJoiner sj = new StringJoiner(
+                context.getResources().getString(R.string.wifitrackerlib_multiband_separator));
+        wifiInfo.getAssociatedMloLinks().stream()
+                .filter((link) -> link.getState() == MloLink.MLO_LINK_STATE_ACTIVE)
+                .map(MloLink::getBand)
+                .distinct()
+                .sorted()
+                .forEach((band) -> sj.add(bandToBandString(context, band)));
+        if (sj.length() == 0) {
+            return frequencyToBandString(context, wifiInfo.getFrequency());
+        }
+        return sj.toString();
+    }
+
+    /**
+     * Returns the link speed string of the WifiInfo for Tx if isTx is {@code true}, else
+     * return the Rx link speed.
+     */
+    public static String getSpeedString(
+            @NonNull Context context, @Nullable WifiInfo wifiInfo, boolean isTx) {
+        if (wifiInfo == null) {
+            return "";
+        }
+        int wifiInfoSpeedMbps =
+                isTx ? wifiInfo.getTxLinkSpeedMbps() : wifiInfo.getRxLinkSpeedMbps();
+        if (wifiInfoSpeedMbps <= 0) {
+            return "";
+        }
+        if (!BuildCompat.isAtLeastU()) {
+            return context.getString(R.string.wifitrackerlib_link_speed_mbps,
+                    wifiInfoSpeedMbps);
+        }
+        List<MloLink> activeMloLinks = wifiInfo.getAssociatedMloLinks().stream()
+                .filter((link) -> link.getState() == MloLink.MLO_LINK_STATE_ACTIVE)
+                .collect(toList());
+        if (activeMloLinks.size() <= 1) {
+            return context.getString(R.string.wifitrackerlib_link_speed_mbps,
+                    wifiInfoSpeedMbps);
+        }
+        StringJoiner sj = new StringJoiner(
+                context.getString(R.string.wifitrackerlib_multiband_separator));
+        for (MloLink link : activeMloLinks) {
+            int linkSpeedMbps = isTx ? link.getTxLinkSpeedMbps() : link.getRxLinkSpeedMbps();
+            if (linkSpeedMbps <= 0) {
+                continue;
+            }
+            sj.add(context.getString(
+                    R.string.wifitrackerlib_link_speed_on_band,
+                    context.getString(R.string.wifitrackerlib_link_speed_mbps, linkSpeedMbps),
+                    bandToBandString(context, link.getBand())));
+        }
+        return sj.toString();
+    }
+
+    /**
+     * Gets the WifiInfo from a NetworkCapabilities if there is one.
+     */
+    public static WifiInfo getWifiInfo(@NonNull NetworkCapabilities capabilities) {
+        TransportInfo transportInfo = capabilities.getTransportInfo();
+        if (transportInfo instanceof WifiInfo) {
+            return (WifiInfo) transportInfo;
+        }
+        return NonSdkApiWrapper.getVcnWifiInfo(capabilities);
+    }
+
+    /**
+     * Converts security types to a display string.
+     */
+    public static String getSecurityString(@NonNull Context context,
+            @NonNull List<Integer> securityTypes, boolean concise) {
+        if (securityTypes.size() == 0) {
+            return concise ? "" : context.getString(R.string.wifitrackerlib_wifi_security_none);
+        }
+        if (securityTypes.size() == 1) {
+            final int security = securityTypes.get(0);
+            switch(security) {
+                case SECURITY_TYPE_EAP:
+                    return concise ? context.getString(
+                            R.string.wifitrackerlib_wifi_security_short_eap_wpa_wpa2) :
+                            context.getString(
+                                    R.string.wifitrackerlib_wifi_security_eap_wpa_wpa2);
+                case SECURITY_TYPE_EAP_WPA3_ENTERPRISE:
+                    return concise ? context.getString(
+                            R.string.wifitrackerlib_wifi_security_short_eap_wpa3) :
+                            context.getString(
+                                    R.string.wifitrackerlib_wifi_security_eap_wpa3);
+                case SECURITY_TYPE_EAP_WPA3_ENTERPRISE_192_BIT:
+                    return concise ? context.getString(
+                            R.string.wifitrackerlib_wifi_security_short_eap_suiteb) :
+                            context.getString(R.string.wifitrackerlib_wifi_security_eap_suiteb);
+                case SECURITY_TYPE_PSK:
+                    return concise ? context.getString(
+                            R.string.wifitrackerlib_wifi_security_short_wpa_wpa2) :
+                            context.getString(
+                                    R.string.wifitrackerlib_wifi_security_wpa_wpa2);
+                case SECURITY_TYPE_WEP:
+                    return context.getString(R.string.wifitrackerlib_wifi_security_wep);
+                case SECURITY_TYPE_SAE:
+                    return concise ? context.getString(
+                            R.string.wifitrackerlib_wifi_security_short_sae) :
+                            context.getString(R.string.wifitrackerlib_wifi_security_sae);
+                case SECURITY_TYPE_OWE:
+                    return concise ? context.getString(
+                            R.string.wifitrackerlib_wifi_security_short_owe) :
+                            context.getString(R.string.wifitrackerlib_wifi_security_owe);
+                case SECURITY_TYPE_OPEN:
+                    return concise ? "" : context.getString(
+                            R.string.wifitrackerlib_wifi_security_none);
+            }
+        }
+        if (securityTypes.size() == 2) {
+            if (securityTypes.contains(SECURITY_TYPE_OPEN)
+                    && securityTypes.contains(SECURITY_TYPE_OWE)) {
+                StringJoiner sj = new StringJoiner("/");
+                sj.add(context.getString(R.string.wifitrackerlib_wifi_security_none));
+                sj.add(concise ? context.getString(
+                        R.string.wifitrackerlib_wifi_security_short_owe) :
+                        context.getString(R.string.wifitrackerlib_wifi_security_owe));
+                return sj.toString();
+            }
+            if (securityTypes.contains(SECURITY_TYPE_PSK)
+                    && securityTypes.contains(SECURITY_TYPE_SAE)) {
+                return concise ? context.getString(
+                        R.string.wifitrackerlib_wifi_security_short_wpa_wpa2_wpa3) :
+                        context.getString(
+                                R.string.wifitrackerlib_wifi_security_wpa_wpa2_wpa3);
+            }
+            if (securityTypes.contains(SECURITY_TYPE_EAP)
+                    && securityTypes.contains(SECURITY_TYPE_EAP_WPA3_ENTERPRISE)) {
+                return concise ? context.getString(
+                        R.string.wifitrackerlib_wifi_security_short_eap_wpa_wpa2_wpa3) :
+                        context.getString(
+                                R.string.wifitrackerlib_wifi_security_eap_wpa_wpa2_wpa3);
+            }
+        }
+        // Unknown security types
+        return concise ? "" : context.getString(R.string.wifitrackerlib_wifi_security_none);
     }
 }

@@ -29,14 +29,14 @@ import static com.android.wifitrackerlib.Utils.getBestScanResultByLevel;
 import static com.android.wifitrackerlib.Utils.getConnectedDescription;
 import static com.android.wifitrackerlib.Utils.getConnectingDescription;
 import static com.android.wifitrackerlib.Utils.getDisconnectedDescription;
-import static com.android.wifitrackerlib.Utils.getImsiProtectionDescription;
 import static com.android.wifitrackerlib.Utils.getMeteredDescription;
-import static com.android.wifitrackerlib.Utils.getVerboseLoggingDescription;
+import static com.android.wifitrackerlib.Utils.getVerboseSummary;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.Network;
 import android.net.NetworkCapabilities;
-import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
@@ -49,10 +49,10 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 import androidx.annotation.WorkerThread;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -61,7 +61,6 @@ import java.util.StringJoiner;
 /**
  * WifiEntry representation of a subscribed Passpoint network, uniquely identified by FQDN.
  */
-@VisibleForTesting
 public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntryCallback {
     static final String TAG = "PasspointWifiEntry";
     public static final String KEY_PREFIX = "PasspointWifiEntry:";
@@ -72,15 +71,12 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
     @NonNull private final String mKey;
     @NonNull private final String mFqdn;
     @NonNull private final String mFriendlyName;
-    @NonNull private final WifiTrackerInjector mInjector;
-    @NonNull private final Context mContext;
     @Nullable
     private PasspointConfiguration mPasspointConfig;
     @Nullable private WifiConfiguration mWifiConfig;
     private List<Integer> mTargetSecurityTypes =
-            List.of(SECURITY_TYPE_PASSPOINT_R1_R2, SECURITY_TYPE_PASSPOINT_R3);
+            Arrays.asList(SECURITY_TYPE_PASSPOINT_R1_R2, SECURITY_TYPE_PASSPOINT_R3);
 
-    private boolean mIsRoaming = false;
     private OsuWifiEntry mOsuWifiEntry;
     private boolean mShouldAutoOpenCaptivePortal = false;
 
@@ -98,15 +94,13 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
      */
     PasspointWifiEntry(
             @NonNull WifiTrackerInjector injector,
-            @NonNull Context context, @NonNull Handler callbackHandler,
+            @NonNull Handler callbackHandler,
             @NonNull PasspointConfiguration passpointConfig,
             @NonNull WifiManager wifiManager,
             boolean forSavedNetworksPage) throws IllegalArgumentException {
-        super(callbackHandler, wifiManager, forSavedNetworksPage);
+        super(injector, callbackHandler, wifiManager, forSavedNetworksPage);
 
         checkNotNull(passpointConfig, "Cannot construct with null PasspointConfiguration!");
-        mInjector = injector;
-        mContext = context;
         mPasspointConfig = passpointConfig;
         mKey = uniqueIdToPasspointWifiEntryKey(passpointConfig.getUniqueId());
         mFqdn = passpointConfig.getHomeSp().getFqdn();
@@ -128,14 +122,12 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
             @NonNull WifiConfiguration wifiConfig,
             @NonNull WifiManager wifiManager,
             boolean forSavedNetworksPage) throws IllegalArgumentException {
-        super(callbackHandler, wifiManager, forSavedNetworksPage);
+        super(injector, callbackHandler, wifiManager, forSavedNetworksPage);
 
         checkNotNull(wifiConfig, "Cannot construct with null WifiConfiguration!");
         if (!wifiConfig.isPasspoint()) {
             throw new IllegalArgumentException("Given WifiConfiguration is not for Passpoint!");
         }
-        mInjector = injector;
-        mContext = context;
         mWifiConfig = wifiConfig;
         mKey = uniqueIdToPasspointWifiEntryKey(wifiConfig.getKey());
         mFqdn = wifiConfig.FQDN;
@@ -190,11 +182,18 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
                     connectedStateDescription = getConnectingDescription(mContext, mNetworkInfo);
                     break;
                 case CONNECTED_STATE_CONNECTED:
+                    if (mNetworkCapabilities == null) {
+                        Log.e(TAG, "Tried to get CONNECTED description, but mNetworkCapabilities"
+                                + " was unexpectedly null!");
+                        connectedStateDescription = null;
+                        break;
+                    }
                     connectedStateDescription = getConnectedDescription(mContext,
                             mWifiConfig,
                             mNetworkCapabilities,
-                            mIsDefaultNetwork,
-                            mIsLowQuality);
+                            isDefaultNetwork(),
+                            isLowQuality(),
+                            mConnectivityReport);
                     break;
                 default:
                     Log.e(TAG, "getConnectedState() returned unknown state: " + connectedState);
@@ -215,10 +214,10 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
             sj.add(meteredDescription);
         }
 
-        if (!concise) {
-            String verboseLoggingDescription = getVerboseLoggingDescription(this);
-            if (!TextUtils.isEmpty(verboseLoggingDescription)) {
-                sj.add(verboseLoggingDescription);
+        if (!concise && isVerboseSummaryEnabled()) {
+            String verboseSummary = getVerboseSummary(this);
+            if (!TextUtils.isEmpty(verboseSummary)) {
+                sj.add(verboseSummary);
             }
         }
 
@@ -226,9 +225,8 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
     }
 
     @Override
-    public synchronized CharSequence getSecondSummary() {
-        return getConnectedState() == CONNECTED_STATE_CONNECTED
-                ? getImsiProtectionDescription(mContext, mWifiConfig) : "";
+    public boolean shouldShowSsid() {
+        return true;
     }
 
     @Override
@@ -257,6 +255,7 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
     }
 
     @Override
+    @SuppressLint("HardwareIds")
     public synchronized String getMacAddress() {
         if (mWifiInfo != null) {
             final String wifiInfoMac = mWifiInfo.getMacAddress();
@@ -474,6 +473,21 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
     }
 
     @Override
+    public synchronized String getBandString() {
+        if (mWifiInfo != null) {
+            return Utils.wifiInfoToBandString(mContext, mWifiInfo);
+        }
+        if (!mCurrentHomeScanResults.isEmpty()) {
+            return Utils.frequencyToBandString(mContext, mCurrentHomeScanResults.get(0).frequency);
+        }
+        if (!mCurrentRoamingScanResults.isEmpty()) {
+            return Utils.frequencyToBandString(
+                    mContext, mCurrentRoamingScanResults.get(0).frequency);
+        }
+        return "";
+    }
+
+    @Override
     public synchronized boolean isExpired() {
         if (mSubscriptionExpirationTimeInMillis <= 0) {
             // Expiration time not specified.
@@ -499,7 +513,6 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
             @Nullable List<ScanResult> homeScanResults,
             @Nullable List<ScanResult> roamingScanResults)
             throws IllegalArgumentException {
-        mIsRoaming = false;
         mWifiConfig = wifiConfig;
         mCurrentHomeScanResults.clear();
         mCurrentRoamingScanResults.clear();
@@ -511,14 +524,12 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
         }
         if (mWifiConfig != null) {
             List<ScanResult> currentScanResults = new ArrayList<>();
-            ScanResult bestScanResult = null;
             if (homeScanResults != null && !homeScanResults.isEmpty()) {
                 currentScanResults.addAll(homeScanResults);
             } else if (roamingScanResults != null && !roamingScanResults.isEmpty()) {
                 currentScanResults.addAll(roamingScanResults);
-                mIsRoaming = true;
             }
-            bestScanResult = getBestScanResultByLevel(currentScanResults);
+            ScanResult bestScanResult = getBestScanResultByLevel(currentScanResults);
             if (bestScanResult != null) {
                 mWifiConfig.SSID = "\"" + bestScanResult.SSID + "\"";
             }
@@ -546,8 +557,7 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
 
     @WorkerThread
     @Override
-    protected boolean connectionInfoMatches(@NonNull WifiInfo wifiInfo,
-            @NonNull NetworkInfo networkInfo) {
+    protected boolean connectionInfoMatches(@NonNull WifiInfo wifiInfo) {
         if (!wifiInfo.isPasspointAp()) {
             return false;
         }
@@ -558,8 +568,9 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
 
     @WorkerThread
     @Override
-    synchronized void updateNetworkCapabilities(@Nullable NetworkCapabilities capabilities) {
-        super.updateNetworkCapabilities(capabilities);
+    synchronized void onNetworkCapabilitiesChanged(
+            @NonNull Network network, @NonNull NetworkCapabilities capabilities) {
+        super.onNetworkCapabilitiesChanged(network, capabilities);
 
         // Auto-open an available captive portal if the user manually connected to this network.
         if (canSignIn() && mShouldAutoOpenCaptivePortal) {
@@ -601,7 +612,8 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
 
     @Override
     public synchronized boolean canSignIn() {
-        return mNetworkCapabilities != null
+        return mNetwork != null
+                && mNetworkCapabilities != null
                 && mNetworkCapabilities.hasCapability(
                 NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL);
     }
@@ -609,16 +621,26 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
     @Override
     public void signIn(@Nullable SignInCallback callback) {
         if (canSignIn()) {
-            // canSignIn() implies that this WifiEntry is the currently connected network, so use
-            // getCurrentNetwork() to start the captive portal app.
             NonSdkApiWrapper.startCaptivePortalApp(
-                    mContext.getSystemService(ConnectivityManager.class),
-                    mWifiManager.getCurrentNetwork());
+                    mContext.getSystemService(ConnectivityManager.class), mNetwork);
         }
     }
 
     /** Get the PasspointConfiguration instance of the entry. */
     public PasspointConfiguration getPasspointConfig() {
         return mPasspointConfig;
+    }
+
+    @Override
+    public String toString() {
+        StringJoiner sj = new StringJoiner("][", "[", "]");
+        sj.add("FQDN:" + mFqdn);
+        sj.add("FriendlyName:" + mFriendlyName);
+        if (mPasspointConfig != null) {
+            sj.add("UniqueId:" + mPasspointConfig.getUniqueId());
+        } else if (mWifiConfig != null) {
+            sj.add("UniqueId:" + mWifiConfig.getKey());
+        }
+        return super.toString() + sj;
     }
 }

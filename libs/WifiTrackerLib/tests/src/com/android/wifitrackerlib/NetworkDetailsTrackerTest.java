@@ -26,8 +26,12 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.net.wifi.sharedconnectivity.app.HotspotNetwork;
+import android.net.wifi.sharedconnectivity.app.NetworkProviderInfo;
 import android.os.Handler;
 import android.os.test.TestLooper;
 
@@ -52,6 +56,7 @@ public class NetworkDetailsTrackerTest {
     @Mock private WifiTrackerInjector mInjector;
     @Mock private Lifecycle mMockLifecycle;
     @Mock private Context mMockContext;
+    @Mock private Resources mResources;
     @Mock private WifiManager mMockWifiManager;
     @Mock private ConnectivityManager mMockConnectivityManager;
     @Mock private Clock mMockClock;
@@ -84,6 +89,7 @@ public class NetworkDetailsTrackerTest {
         when(mMockWifiManager.getScanResults()).thenReturn(new ArrayList<>());
         when(mMockWifiManager.getWifiState()).thenReturn(WifiManager.WIFI_STATE_ENABLED);
         when(mMockClock.millis()).thenReturn(START_MILLIS);
+        when(mMockContext.getResources()).thenReturn(mResources);
     }
 
     /**
@@ -110,5 +116,29 @@ public class NetworkDetailsTrackerTest {
                 new StandardWifiEntryKey(new ScanResultKey("ssid",
                         Collections.singletonList(WifiEntry.SECURITY_NONE))).toString());
         assertThat(tracker).isInstanceOf(StandardNetworkDetailsTracker.class);
+    }
+
+    /**
+     * Tests that createNetworkDetailsTracker() returns a HotspotNetworkDetailsTracker if a
+     * HotspotNetworkEntry key is passed in.
+     */
+    @Test
+    public void testCreateNetworkDetailsTracker_returnsHotspotNetworkDetailsTracker()
+            throws Exception {
+        final NetworkDetailsTracker tracker = createTestNetworkDetailsTracker(
+                new HotspotNetworkEntry.HotspotNetworkEntryKey(new HotspotNetwork.Builder()
+                        .setDeviceId(1)
+                        .setNetworkProviderInfo(new NetworkProviderInfo
+                                .Builder("Phone", "Pixel")
+                                .setDeviceType(NetworkProviderInfo.DEVICE_TYPE_PHONE)
+                                .setBatteryPercentage(100)
+                                .setConnectionStrength(3).build())
+                        .setHostNetworkType(HotspotNetwork.NETWORK_TYPE_CELLULAR)
+                        .setNetworkName("Google Fi")
+                        .setHotspotSsid("SSID")
+                        .setHotspotBssid("BSSID")
+                        .addHotspotSecurityType(WifiInfo.SECURITY_TYPE_WEP)
+                        .build()).toString());
+        assertThat(tracker).isInstanceOf(HotspotNetworkDetailsTracker.class);
     }
 }

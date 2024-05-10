@@ -21,8 +21,6 @@ import static androidx.core.util.Preconditions.checkNotNull;
 import static com.android.wifitrackerlib.Utils.getBestScanResultByLevel;
 import static com.android.wifitrackerlib.WifiEntry.ConnectCallback.CONNECT_STATUS_FAILURE_UNKNOWN;
 
-import android.content.Context;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
@@ -46,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 
 /**
  * WifiEntry representation of an Online Sign-up entry, uniquely identified by FQDN.
@@ -57,7 +56,6 @@ class OsuWifiEntry extends WifiEntry {
     @NonNull private final List<ScanResult> mCurrentScanResults = new ArrayList<>();
 
     @NonNull private final String mKey;
-    @NonNull private final Context mContext;
     @NonNull private final OsuProvider mOsuProvider;
     private String mSsid;
     private String mOsuStatusString;
@@ -70,15 +68,14 @@ class OsuWifiEntry extends WifiEntry {
      */
     OsuWifiEntry(
             @NonNull WifiTrackerInjector injector,
-            @NonNull Context context, @NonNull Handler callbackHandler,
+            @NonNull Handler callbackHandler,
             @NonNull OsuProvider osuProvider,
             @NonNull WifiManager wifiManager,
             boolean forSavedNetworksPage) throws IllegalArgumentException {
-        super(callbackHandler, wifiManager, forSavedNetworksPage);
+        super(injector, callbackHandler, wifiManager, forSavedNetworksPage);
 
         checkNotNull(osuProvider, "Cannot construct with null osuProvider!");
 
-        mContext = context;
         mOsuProvider = osuProvider;
         mKey = osuProviderToOsuWifiEntryKey(osuProvider);
         mUserManager = injector.getUserManager();
@@ -185,8 +182,7 @@ class OsuWifiEntry extends WifiEntry {
 
     @WorkerThread
     @Override
-    protected boolean connectionInfoMatches(@NonNull WifiInfo wifiInfo,
-            @NonNull NetworkInfo networkInfo) {
+    protected boolean connectionInfoMatches(@NonNull WifiInfo wifiInfo) {
         return wifiInfo.isOsuAp() && TextUtils.equals(
                 wifiInfo.getPasspointProviderFriendlyName(), mOsuProvider.getFriendlyName());
     }
@@ -209,7 +205,8 @@ class OsuWifiEntry extends WifiEntry {
         mIsAlreadyProvisioned = isAlreadyProvisioned;
     }
 
-    private boolean hasAdminRestrictions() {
+    @Override
+    public synchronized boolean hasAdminRestrictions() {
         if (mHasAddConfigUserRestriction && !mIsAlreadyProvisioned) {
             return true;
         }
@@ -315,5 +312,14 @@ class OsuWifiEntry extends WifiEntry {
                 connectCallback.onConnectResult(CONNECT_STATUS_FAILURE_UNKNOWN);
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        StringJoiner sj = new StringJoiner("][", "[", "]");
+        sj.add("FriendlyName:" + mOsuProvider.getFriendlyName());
+        sj.add("ServerUri:" + mOsuProvider.getServerUri());
+        sj.add("SSID:" + mSsid);
+        return super.toString() + sj;
     }
 }
