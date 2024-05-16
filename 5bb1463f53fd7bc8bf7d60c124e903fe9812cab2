@@ -16,6 +16,24 @@
       "message": "soft ping. This is only adding a property without affecting the behaviour.\n\nCould you approve this commit? This can make creating Android.bp files easily.\n\nThanks!",
       "revId": "5bb1463f53fd7bc8bf7d60c124e903fe9812cab2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b5daabf_489349dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1311067
+      },
+      "writtenOn": "2024-05-16T01:00:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f682d4d8_8f698acb",
+      "revId": "5bb1463f53fd7bc8bf7d60c124e903fe9812cab2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
