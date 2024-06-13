@@ -849,13 +849,13 @@ public class BaseWifiTracker {
         @WorkerThread
         private void scanLoop() {
             if (!shouldScan()) {
-                Log.wtf(mTag, "Scan loop called even though we shouldn't be scanning!"
+                Log.e(mTag, "Scan loop called even though we shouldn't be scanning!"
                         + " mIsWifiEnabled=" + mIsWifiEnabled
                         + " mIsStartedState=" + mIsStartedState);
                 return;
             }
             if (!isAppVisible()) {
-                Log.wtf(mTag, "Scan loop called even though app isn't visible anymore!"
+                Log.e(mTag, "Scan loop called even though app isn't visible anymore!"
                         + " mIsWifiEnabled=" + mIsWifiEnabled
                         + " mIsStartedState=" + mIsStartedState);
                 return;
