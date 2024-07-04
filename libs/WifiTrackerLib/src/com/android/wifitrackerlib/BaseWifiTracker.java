@@ -344,7 +344,9 @@ public class BaseWifiTracker {
         mScanResultUpdater = new ScanResultUpdater(clock,
                 maxScanAgeMillis + scanIntervalMillis);
         mScanner = new BaseWifiTracker.Scanner(workerHandler.getLooper());
-        sVerboseLogging = mWifiManager.isVerboseLoggingEnabled();
+        if (mWifiManager != null) {
+            sVerboseLogging = mWifiManager.isVerboseLoggingEnabled();
+        }
     }
 
     /**
@@ -743,6 +745,8 @@ public class BaseWifiTracker {
                 Log.wtf(mTag, "Tried to run scan loop when we've already stopped!");
                 return;
             }
+            if (mWifiManager == null)
+                return;
             if (mWifiManager.startScan()) {
                 mRetry = 0;
             } else if (++mRetry >= SCAN_RETRY_TIMES) {
