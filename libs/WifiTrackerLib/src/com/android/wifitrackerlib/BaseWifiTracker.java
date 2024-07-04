@@ -344,7 +344,9 @@ public class BaseWifiTracker {
         mScanResultUpdater = new ScanResultUpdater(clock,
                 maxScanAgeMillis + scanIntervalMillis);
         mScanner = new BaseWifiTracker.Scanner(workerHandler.getLooper());
-        sVerboseLogging = mWifiManager.isVerboseLoggingEnabled();
+        if (mWifiManager != null) {
+            sVerboseLogging = mWifiManager.isVerboseLoggingEnabled();
+        }
     }
 
     /**

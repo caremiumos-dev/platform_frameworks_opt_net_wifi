@@ -294,6 +294,11 @@ public class WifiPickerTracker extends BaseWifiTracker {
     @WorkerThread
     @Override
     protected void handleOnStart() {
+        // Return when wifi feature is disabled
+        if(mWifiManager != null) {
+            return;
+        }
+
         // Remove stale WifiEntries remaining from the last onStop().
         clearAllWifiEntries();
 
