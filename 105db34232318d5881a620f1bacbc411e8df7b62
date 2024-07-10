@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2215ac95_50bf6b50",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1198173
+      },
+      "writtenOn": "2024-07-10T00:26:47Z",
+      "side": 1,
+      "message": "WifiManager is already marked as a @NonNull member. If this is null, then the whole module is non-functional and we shouldn\u0027t just wrap everything in a try/catch block for NPEs.",
+      "revId": "105db34232318d5881a620f1bacbc411e8df7b62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
