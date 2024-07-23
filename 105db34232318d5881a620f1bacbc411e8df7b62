@@ -52,6 +52,24 @@
       "parentUuid": "06039dda_ccccf5fa",
       "revId": "105db34232318d5881a620f1bacbc411e8df7b62",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f28e673e_a8c6cf9a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3507068
+      },
+      "writtenOn": "2024-07-23T13:10:43Z",
+      "side": 1,
+      "message": "@qal@google.com Along with this patch https://android-review.git.corp.google.com/c/platform/packages/apps/Settings/+/3145936 the current patch is also required, if not the settings app is getting crashed",
+      "parentUuid": "335c3248_d95108e4",
+      "revId": "105db34232318d5881a620f1bacbc411e8df7b62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
