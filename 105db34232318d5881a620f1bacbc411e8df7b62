@@ -34,6 +34,24 @@
       "parentUuid": "2215ac95_50bf6b50",
       "revId": "105db34232318d5881a620f1bacbc411e8df7b62",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "335c3248_d95108e4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1198173
+      },
+      "writtenOn": "2024-07-23T01:51:37Z",
+      "side": 1,
+      "message": "\u003e Hi @qal@google.com\n\u003e Now I have added the check to only functions which were causing crash. \n\u003e And  mWifiManager is extended from BaseWifiTracker.java file. I dont see it marked as nonnull member\n\nmWifiManager is only set in the constructor, which takes @NonNull WifiManager arguments. You are correct that mWifiManager itself is not marked as @NonNull, I think this change can simply do that instead.\n\nOtherwise, https://android-review.git.corp.google.com/c/platform/packages/apps/Settings/+/3145936 should be sufficient.",
+      "parentUuid": "06039dda_ccccf5fa",
+      "revId": "105db34232318d5881a620f1bacbc411e8df7b62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
