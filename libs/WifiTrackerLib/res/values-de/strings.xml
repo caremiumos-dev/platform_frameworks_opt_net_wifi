@@ -40,11 +40,16 @@
     <string name="wifitrackerlib_connected_via_app" msgid="7823921840931347560">"Verbunden über <xliff:g id="NAME">%1$s</xliff:g>"</string>
     <string name="wifitrackerlib_available_via_app" msgid="8556844256194837469">"Über <xliff:g id="NAME">%1$s</xliff:g> verfügbar"</string>
     <string name="wifitrackerlib_wifi_limited_connection" msgid="4234326409980991740">"Eingeschränkte Verbindung"</string>
-    <string name="wifitrackerlib_private_dns_broken" msgid="6049401148262718707">"Auf den privaten DNS-Server kann nicht zugegriffen werden"</string>
+    <string name="wifitrackerlib_private_dns_broken" msgid="6049401148262718707">"Auf den Server des privaten DNS kann nicht zugegriffen werden"</string>
     <string name="wifitrackerlib_wifi_connected_cannot_provide_internet" msgid="3803471522215612745">"Mit Gerät verbunden. Internetverbindung nicht möglich."</string>
     <string name="wifi_connected_low_quality" msgid="4478331645458058445">"Niedrige Qualität"</string>
     <string name="wifitrackerlib_admin_restricted_network" msgid="5439914801076897515">"Von deiner Organisation nicht zugelassen"</string>
     <string name="wifitrackerlib_hotspot_network_summary" msgid="7661086683527884190">"<xliff:g id="NETWORK_NAME">%1$s</xliff:g> von <xliff:g id="MODEL_NAME">%2$s</xliff:g>"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_new" msgid="1165705867298669621">"{DEVICE_TYPE,select, PHONE{{NETWORK_NAME} von deinem Smartphone}TABLET{{NETWORK_NAME} von deinem Tablet}COMPUTER{{NETWORK_NAME} von deinem Computer}WATCH{{NETWORK_NAME} von deiner Smartwatch}VEHICLE{{NETWORK_NAME} von deinem Fahrzeug}other{{NETWORK_NAME} von deinem Gerät}}"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_generic" msgid="2339836723160908882">"Verbindung nicht möglich. Versuche es noch einmal."</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_settings" msgid="6928234716406336668">"{DEVICE_TYPE,select, PHONE{Verbindung nicht möglich. Prüfe die Einstellungen deines Smartphones und versuche es noch einmal.}TABLET{Verbindung nicht möglich. Prüfe die Einstellungen deines Tablets und versuche es noch einmal.}COMPUTER{Verbindung nicht möglich. Prüfe die Einstellungen deines Computers und versuche es noch einmal.}WATCH{Verbindung nicht möglich. Prüfe die Einstellungen deiner Smartwatch und versuche es noch einmal.}VEHICLE{Verbindung nicht möglich. Prüfe die Einstellungen deines Fahrzeugs und versuche es noch einmal.}other{Verbindung nicht möglich. Prüfe die Einstellungen deines Geräts und versuche es noch einmal.}}"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_carrier_block" msgid="359780026027619177">"<xliff:g id="NETWORK_NAME">%1$s</xliff:g> gestattet diese Verbindung nicht"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_carrier_incomplete" msgid="3407132390461094984">"Verbindung nicht möglich. Wenn du Hilfe benötigst, wende dich an <xliff:g id="NETWORK_NAME">%1$s</xliff:g>."</string>
     <string name="wifitrackerlib_hotspot_network_alternate" msgid="4966814473758893807">"<xliff:g id="NETWORK_NAME">%1$s</xliff:g> von <xliff:g id="DEVICE_NAME">%2$s</xliff:g>"</string>
     <string name="wifitrackerlib_hotspot_network_connecting" msgid="2072252282318270780">"Wird verbunden…"</string>
     <string name="wifitrackerlib_known_network_summary" msgid="6035425130009353268">"Verfügbar auf <xliff:g id="DEVICE_NAME">%1$s</xliff:g>"</string>
@@ -88,5 +93,7 @@
     <string name="wifitrackerlib_wifi_band_24_ghz" msgid="5374362780653321244">"2,4 GHz"</string>
     <string name="wifitrackerlib_wifi_band_5_ghz" msgid="2179047349922091556">"5 GHz"</string>
     <string name="wifitrackerlib_wifi_band_6_ghz" msgid="6532408050869498777">"6 GHz"</string>
-    <string name="wifitrackerlib_multiband_separator" msgid="2696920984391378575">","</string>
+    <string name="wifitrackerlib_multiband_separator" msgid="6838172120482590336">", "</string>
+    <string name="wifitrackerlib_link_speed_mbps" msgid="5880214340478706112">"<xliff:g id="LINK_SPEED_MBPS">%1$d</xliff:g> Mbit/s"</string>
+    <string name="wifitrackerlib_link_speed_on_band" msgid="2433114336144744962">"<xliff:g id="LINK_SPEED">%1$s</xliff:g> bei <xliff:g id="BAND">%2$s</xliff:g>"</string>
 </resources>

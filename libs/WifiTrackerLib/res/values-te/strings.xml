@@ -45,6 +45,11 @@
     <string name="wifi_connected_low_quality" msgid="4478331645458058445">"తక్కువ క్వాలిటీ"</string>
     <string name="wifitrackerlib_admin_restricted_network" msgid="5439914801076897515">"మీ సంస్థచే అనుమతించబడదు"</string>
     <string name="wifitrackerlib_hotspot_network_summary" msgid="7661086683527884190">"<xliff:g id="MODEL_NAME">%2$s</xliff:g> నుండి <xliff:g id="NETWORK_NAME">%1$s</xliff:g>"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_new" msgid="1165705867298669621">"{DEVICE_TYPE,select, PHONE{మీ ఫోన్ నుండి {NETWORK_NAME}}TABLET{మీ టాబ్లెట్ నుండి {NETWORK_NAME}}COMPUTER{మీ కంప్యూటర్ నుండి {NETWORK_NAME}}WATCH{మీ వాచ్ నుండి {NETWORK_NAME}}VEHICLE{మీ వాహనం నుండి {NETWORK_NAME}}other{మీ పరికరం నుండి {NETWORK_NAME}}}"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_generic" msgid="2339836723160908882">"కనెక్ట్ చేయడం సాధ్యం కాదు. మళ్లీ కనెక్ట్ చేయడానికి ట్రై చేయండి."</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_settings" msgid="6928234716406336668">"{DEVICE_TYPE,select, PHONE{కనెక్ట్ చేయడం సాధ్యం కాదు. ఫోన్ సెట్టింగ్‌లను చెక్ చేసి, మళ్లీ ట్రై చేయండి.}TABLET{కనెక్ట్ చేయడం సాధ్యం కాదు. టాబ్లెట్ సెట్టింగ్‌లను చెక్ చేసి, మళ్లీ ట్రై చేయండి.}COMPUTER{కనెక్ట్ చేయడం సాధ్యం కాదు. కంప్యూటర్ సెట్టింగ్‌లను చెక్ చేసి, మళ్లీ ట్రై చేయండి.}WATCH{కనెక్ట్ చేయడం సాధ్యం కాదు. వాచ్ సెట్టింగ్‌లను చెక్ చేసి, మళ్లీ ట్రై చేయండి.}VEHICLE{కనెక్ట్ చేయడం సాధ్యం కాదు. వాహనం సెట్టింగ్‌లను చెక్ చేసి, మళ్లీ ట్రై చేయండి.}other{కనెక్ట్ చేయడం సాధ్యం కాదు. పరికర సెట్టింగ్‌లను చెక్ చేసి, మళ్లీ ట్రై చేయండి.}}"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_carrier_block" msgid="359780026027619177">"<xliff:g id="NETWORK_NAME">%1$s</xliff:g> ఈ కనెక్షన్‌ను అనుమతించదు"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_carrier_incomplete" msgid="3407132390461094984">"కనెక్ట్ చేయడం సాధ్యం కాదు. సహాయం కోసం <xliff:g id="NETWORK_NAME">%1$s</xliff:g>ను కాంటాక్ట్ చేయండి."</string>
     <string name="wifitrackerlib_hotspot_network_alternate" msgid="4966814473758893807">"<xliff:g id="DEVICE_NAME">%2$s</xliff:g> నుండి <xliff:g id="NETWORK_NAME">%1$s</xliff:g>"</string>
     <string name="wifitrackerlib_hotspot_network_connecting" msgid="2072252282318270780">"కనెక్ట్ అవుతోంది…"</string>
     <string name="wifitrackerlib_known_network_summary" msgid="6035425130009353268">"<xliff:g id="DEVICE_NAME">%1$s</xliff:g> నుండి అందుబాటులో ఉంది"</string>
@@ -88,5 +93,7 @@
     <string name="wifitrackerlib_wifi_band_24_ghz" msgid="5374362780653321244">"2.4 GHz"</string>
     <string name="wifitrackerlib_wifi_band_5_ghz" msgid="2179047349922091556">"5 GHz"</string>
     <string name="wifitrackerlib_wifi_band_6_ghz" msgid="6532408050869498777">"6 GHz"</string>
-    <string name="wifitrackerlib_multiband_separator" msgid="2696920984391378575">","</string>
+    <string name="wifitrackerlib_multiband_separator" msgid="6838172120482590336">", "</string>
+    <string name="wifitrackerlib_link_speed_mbps" msgid="5880214340478706112">"<xliff:g id="LINK_SPEED_MBPS">%1$d</xliff:g> Mbps"</string>
+    <string name="wifitrackerlib_link_speed_on_band" msgid="2433114336144744962">"<xliff:g id="BAND">%2$s</xliff:g>లో <xliff:g id="LINK_SPEED">%1$s</xliff:g>"</string>
 </resources>

@@ -45,6 +45,11 @@
     <string name="wifi_connected_low_quality" msgid="4478331645458058445">"Calitate slabă"</string>
     <string name="wifitrackerlib_admin_restricted_network" msgid="5439914801076897515">"Nu este acceptată de organizația ta"</string>
     <string name="wifitrackerlib_hotspot_network_summary" msgid="7661086683527884190">"<xliff:g id="NETWORK_NAME">%1$s</xliff:g> de la <xliff:g id="MODEL_NAME">%2$s</xliff:g>"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_new" msgid="1165705867298669621">"{DEVICE_TYPE,select, PHONE{{NETWORK_NAME} de pe telefon}TABLET{{NETWORK_NAME} de pe tabletă}COMPUTER{{NETWORK_NAME} de pe computer}WATCH{{NETWORK_NAME} de pe ceas}VEHICLE{{NETWORK_NAME} din mașină}other{{NETWORK_NAME} de pe dispozitiv}}"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_generic" msgid="2339836723160908882">"Nu se poate conecta. Încearcă să te conectezi din nou."</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_settings" msgid="6928234716406336668">"{DEVICE_TYPE,select, PHONE{Nu se poate conecta. Verifică setările telefonului și încearcă din nou.}TABLET{Nu se poate conecta. Verifică setările tabletei și încearcă din nou.}COMPUTER{Nu se poate conecta. Verifică setările computerului și încearcă din nou.}WATCH{Nu se poate conecta. Verifică setările ceasului și încearcă din nou.}VEHICLE{Nu se poate conecta. Verifică setările vehiculului și încearcă din nou.}other{Nu se poate conecta. Verifică setările dispozitivului și încearcă din nou.}}"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_carrier_block" msgid="359780026027619177">"<xliff:g id="NETWORK_NAME">%1$s</xliff:g> nu permite această conexiune"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_carrier_incomplete" msgid="3407132390461094984">"Nu se poate conecta. Contactează <xliff:g id="NETWORK_NAME">%1$s</xliff:g> pentru ajutor."</string>
     <string name="wifitrackerlib_hotspot_network_alternate" msgid="4966814473758893807">"<xliff:g id="NETWORK_NAME">%1$s</xliff:g> de la <xliff:g id="DEVICE_NAME">%2$s</xliff:g>"</string>
     <string name="wifitrackerlib_hotspot_network_connecting" msgid="2072252282318270780">"Se conectează…"</string>
     <string name="wifitrackerlib_known_network_summary" msgid="6035425130009353268">"Disponibilă de pe <xliff:g id="DEVICE_NAME">%1$s</xliff:g>"</string>
@@ -88,5 +93,7 @@
     <string name="wifitrackerlib_wifi_band_24_ghz" msgid="5374362780653321244">"2,4 GHz"</string>
     <string name="wifitrackerlib_wifi_band_5_ghz" msgid="2179047349922091556">"5 GHz"</string>
     <string name="wifitrackerlib_wifi_band_6_ghz" msgid="6532408050869498777">"6 GHz"</string>
-    <string name="wifitrackerlib_multiband_separator" msgid="2696920984391378575">","</string>
+    <string name="wifitrackerlib_multiband_separator" msgid="6838172120482590336">", "</string>
+    <string name="wifitrackerlib_link_speed_mbps" msgid="5880214340478706112">"<xliff:g id="LINK_SPEED_MBPS">%1$d</xliff:g> Mbps"</string>
+    <string name="wifitrackerlib_link_speed_on_band" msgid="2433114336144744962">"<xliff:g id="LINK_SPEED">%1$s</xliff:g> pe <xliff:g id="BAND">%2$s</xliff:g>"</string>
 </resources>

@@ -30,8 +30,9 @@ import static com.android.wifitrackerlib.Utils.getConnectedDescription;
 import static com.android.wifitrackerlib.Utils.getConnectingDescription;
 import static com.android.wifitrackerlib.Utils.getDisconnectedDescription;
 import static com.android.wifitrackerlib.Utils.getMeteredDescription;
-import static com.android.wifitrackerlib.Utils.getVerboseLoggingDescription;
+import static com.android.wifitrackerlib.Utils.getVerboseSummary;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Network;
@@ -181,10 +182,16 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
                     connectedStateDescription = getConnectingDescription(mContext, mNetworkInfo);
                     break;
                 case CONNECTED_STATE_CONNECTED:
+                    if (mNetworkCapabilities == null) {
+                        Log.e(TAG, "Tried to get CONNECTED description, but mNetworkCapabilities"
+                                + " was unexpectedly null!");
+                        connectedStateDescription = null;
+                        break;
+                    }
                     connectedStateDescription = getConnectedDescription(mContext,
                             mWifiConfig,
                             mNetworkCapabilities,
-                            mIsDefaultNetwork,
+                            isDefaultNetwork(),
                             isLowQuality(),
                             mConnectivityReport);
                     break;
@@ -207,14 +214,19 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
             sj.add(meteredDescription);
         }
 
-        if (!concise) {
-            String verboseLoggingDescription = getVerboseLoggingDescription(this);
-            if (!TextUtils.isEmpty(verboseLoggingDescription)) {
-                sj.add(verboseLoggingDescription);
+        if (!concise && isVerboseSummaryEnabled()) {
+            String verboseSummary = getVerboseSummary(this);
+            if (!TextUtils.isEmpty(verboseSummary)) {
+                sj.add(verboseSummary);
             }
         }
 
         return sj.toString();
+    }
+
+    @Override
+    public boolean shouldShowSsid() {
+        return true;
     }
 
     @Override
@@ -243,6 +255,7 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
     }
 
     @Override
+    @SuppressLint("HardwareIds")
     public synchronized String getMacAddress() {
         if (mWifiInfo != null) {
             final String wifiInfoMac = mWifiInfo.getMacAddress();

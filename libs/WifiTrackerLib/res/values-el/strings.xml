@@ -45,6 +45,11 @@
     <string name="wifi_connected_low_quality" msgid="4478331645458058445">"Χαμηλή ποιότητα"</string>
     <string name="wifitrackerlib_admin_restricted_network" msgid="5439914801076897515">"Δεν επιτρέπεται από τον οργανισμό σας"</string>
     <string name="wifitrackerlib_hotspot_network_summary" msgid="7661086683527884190">"<xliff:g id="NETWORK_NAME">%1$s</xliff:g> από <xliff:g id="MODEL_NAME">%2$s</xliff:g>"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_new" msgid="1165705867298669621">"{DEVICE_TYPE,select, PHONE{{NETWORK_NAME} από το τηλέφωνό σας}TABLET{{NETWORK_NAME} από το tablet σας}COMPUTER{{NETWORK_NAME} από τον υπολογιστή σας}WATCH{{NETWORK_NAME} από το ρολόι σας}VEHICLE{{NETWORK_NAME} από το όχημά σας}other{{NETWORK_NAME} από τη συσκευή σας}}"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_generic" msgid="2339836723160908882">"Δεν είναι δυνατή η σύνδεση. Δοκιμάστε να επαναλάβετε τη σύνδεση."</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_settings" msgid="6928234716406336668">"{DEVICE_TYPE,select, PHONE{Δεν είναι δυνατή η σύνδεση. Ελέγξτε τις ρυθμίσεις του τηλεφώνου και δοκιμάστε ξανά.}TABLET{Δεν είναι δυνατή η σύνδεση. Ελέγξτε τις ρυθμίσεις του tablet και δοκιμάστε ξανά.}COMPUTER{Δεν είναι δυνατή η σύνδεση. Ελέγξτε τις ρυθμίσεις του υπολογιστή και δοκιμάστε ξανά.}WATCH{Δεν είναι δυνατή η σύνδεση. Ελέγξτε τις ρυθμίσεις του ρολογιού και δοκιμάστε ξανά.}VEHICLE{Δεν είναι δυνατή η σύνδεση. Ελέγξτε τις ρυθμίσεις του οχήματος και δοκιμάστε ξανά.}other{Δεν είναι δυνατή η σύνδεση. Ελέγξτε τις ρυθμίσεις της συσκευής και δοκιμάστε ξανά.}}"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_carrier_block" msgid="359780026027619177">"Το <xliff:g id="NETWORK_NAME">%1$s</xliff:g> δεν επιτρέπει αυτή τη σύνδεση"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_carrier_incomplete" msgid="3407132390461094984">"Δεν είναι δυνατή η σύνδεση. Επικοινωνήστε με το <xliff:g id="NETWORK_NAME">%1$s</xliff:g> για βοήθεια."</string>
     <string name="wifitrackerlib_hotspot_network_alternate" msgid="4966814473758893807">"<xliff:g id="NETWORK_NAME">%1$s</xliff:g> από <xliff:g id="DEVICE_NAME">%2$s</xliff:g>"</string>
     <string name="wifitrackerlib_hotspot_network_connecting" msgid="2072252282318270780">"Σύνδεση…"</string>
     <string name="wifitrackerlib_known_network_summary" msgid="6035425130009353268">"Διαθέσιμο από <xliff:g id="DEVICE_NAME">%1$s</xliff:g>"</string>
@@ -88,5 +93,7 @@
     <string name="wifitrackerlib_wifi_band_24_ghz" msgid="5374362780653321244">"2,4 GHz"</string>
     <string name="wifitrackerlib_wifi_band_5_ghz" msgid="2179047349922091556">"5 GHz"</string>
     <string name="wifitrackerlib_wifi_band_6_ghz" msgid="6532408050869498777">"6 GHz"</string>
-    <string name="wifitrackerlib_multiband_separator" msgid="2696920984391378575">","</string>
+    <string name="wifitrackerlib_multiband_separator" msgid="6838172120482590336">", "</string>
+    <string name="wifitrackerlib_link_speed_mbps" msgid="5880214340478706112">"<xliff:g id="LINK_SPEED_MBPS">%1$d</xliff:g> Mbps"</string>
+    <string name="wifitrackerlib_link_speed_on_band" msgid="2433114336144744962">"<xliff:g id="LINK_SPEED">%1$s</xliff:g> στο <xliff:g id="BAND">%2$s</xliff:g>"</string>
 </resources>

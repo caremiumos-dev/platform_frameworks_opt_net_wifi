@@ -45,6 +45,11 @@
     <string name="wifi_connected_low_quality" msgid="4478331645458058445">"Nizka kakovost"</string>
     <string name="wifitrackerlib_admin_restricted_network" msgid="5439914801076897515">"Organizacija tega ne dovoljuje."</string>
     <string name="wifitrackerlib_hotspot_network_summary" msgid="7661086683527884190">"Omrežje <xliff:g id="NETWORK_NAME">%1$s</xliff:g> (<xliff:g id="MODEL_NAME">%2$s</xliff:g>)"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_new" msgid="1165705867298669621">"{DEVICE_TYPE,select, PHONE{{NETWORK_NAME} iz vašega telefona}TABLET{{NETWORK_NAME} iz vašega tabličnega računalnika}COMPUTER{{NETWORK_NAME} iz vašega računalnika}WATCH{{NETWORK_NAME} iz vaše ure}VEHICLE{{NETWORK_NAME} iz vašega vozila}other{{NETWORK_NAME} iz vaše naprave}}"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_generic" msgid="2339836723160908882">"Povezave ni mogoče vzpostaviti. Poskusite znova vzpostaviti povezavo."</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_settings" msgid="6928234716406336668">"{DEVICE_TYPE,select, PHONE{Povezave ni mogoče vzpostaviti. Preverite nastavitve telefona in poskusite znova.}TABLET{Povezave ni mogoče vzpostaviti. Preverite nastavitve tabličnega računalnika in poskusite znova.}COMPUTER{Povezave ni mogoče vzpostaviti. Preverite nastavitve računalnika in poskusite znova.}WATCH{Povezave ni mogoče vzpostaviti. Preverite nastavitve ure in poskusite znova.}VEHICLE{Povezave ni mogoče vzpostaviti. Preverite nastavitve vozila in poskusite znova.}other{Povezave ni mogoče vzpostaviti. Preverite nastavitve naprave in poskusite znova.}}"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_carrier_block" msgid="359780026027619177">"<xliff:g id="NETWORK_NAME">%1$s</xliff:g> ne dovoljuje te povezave"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_carrier_incomplete" msgid="3407132390461094984">"Povezave ni mogoče vzpostaviti. Za pomoč se obrnite na operaterja <xliff:g id="NETWORK_NAME">%1$s</xliff:g>."</string>
     <string name="wifitrackerlib_hotspot_network_alternate" msgid="4966814473758893807">"Omrežje <xliff:g id="NETWORK_NAME">%1$s</xliff:g> (<xliff:g id="DEVICE_NAME">%2$s</xliff:g>)"</string>
     <string name="wifitrackerlib_hotspot_network_connecting" msgid="2072252282318270780">"Vzpostavljanje povezave …"</string>
     <string name="wifitrackerlib_known_network_summary" msgid="6035425130009353268">"Na voljo iz naprave <xliff:g id="DEVICE_NAME">%1$s</xliff:g>"</string>
@@ -88,5 +93,7 @@
     <string name="wifitrackerlib_wifi_band_24_ghz" msgid="5374362780653321244">"2,4 GHz"</string>
     <string name="wifitrackerlib_wifi_band_5_ghz" msgid="2179047349922091556">"5 GHz"</string>
     <string name="wifitrackerlib_wifi_band_6_ghz" msgid="6532408050869498777">"6 GHz"</string>
-    <string name="wifitrackerlib_multiband_separator" msgid="2696920984391378575">","</string>
+    <string name="wifitrackerlib_multiband_separator" msgid="6838172120482590336">", "</string>
+    <string name="wifitrackerlib_link_speed_mbps" msgid="5880214340478706112">"<xliff:g id="LINK_SPEED_MBPS">%1$d</xliff:g> Mb/s"</string>
+    <string name="wifitrackerlib_link_speed_on_band" msgid="2433114336144744962">"<xliff:g id="LINK_SPEED">%1$s</xliff:g> v pasu <xliff:g id="BAND">%2$s</xliff:g>"</string>
 </resources>

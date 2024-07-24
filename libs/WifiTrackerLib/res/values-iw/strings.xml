@@ -19,7 +19,7 @@
     <string name="wifitrackerlib_summary_separator" msgid="6613897475167609815">" / "</string>
     <string name="wifitrackerlib_checking_for_internet_access" msgid="4787495471423429472">"מתבצעת בדיקה לצורך גישה לאינטרנט..."</string>
     <string name="wifitrackerlib_auto_connect_disable" msgid="4714835547164460651">"החיבור האוטומטי כבוי"</string>
-    <string name="wifitrackerlib_saved_network" msgid="5353460010746484376">"נשמרה על-ידי <xliff:g id="NAME">%1$s</xliff:g>"</string>
+    <string name="wifitrackerlib_saved_network" msgid="5353460010746484376">"נשמרה על-ידי: <xliff:g id="NAME">%1$s</xliff:g>"</string>
     <string name="wifitrackerlib_wifi_no_internet_no_reconnect" msgid="6618216332537706908">"לא יתבצע חיבור באופן אוטומטי"</string>
     <string name="wifitrackerlib_wifi_no_internet" msgid="4998563744669636949">"אין גישה לאינטרנט"</string>
     <string name="wifitrackerlib_wifi_disabled_password_failure" msgid="2850244218754633550">"בעיית אימות"</string>
@@ -45,6 +45,11 @@
     <string name="wifi_connected_low_quality" msgid="4478331645458058445">"איכות נמוכה"</string>
     <string name="wifitrackerlib_admin_restricted_network" msgid="5439914801076897515">"הארגון שלך לא מתיר את האפשרות הזו"</string>
     <string name="wifitrackerlib_hotspot_network_summary" msgid="7661086683527884190">"<xliff:g id="NETWORK_NAME">%1$s</xliff:g> מ-<xliff:g id="MODEL_NAME">%2$s</xliff:g>"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_new" msgid="1165705867298669621">"{DEVICE_TYPE,select, PHONE{{NETWORK_NAME} מהטלפון שלך}TABLET{{NETWORK_NAME} מהטאבלט שלך}COMPUTER{{NETWORK_NAME} מהמחשב שלך}WATCH{{NETWORK_NAME} מהשעון שלך}VEHICLE{{NETWORK_NAME} מהרכב שלך}other{{NETWORK_NAME} מהמכשיר שלך}}"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_generic" msgid="2339836723160908882">"לא ניתן להתחבר. אפשר לנסות להתחבר שוב."</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_settings" msgid="6928234716406336668">"{DEVICE_TYPE,select, PHONE{לא ניתן להתחבר. צריך לבדוק את הגדרות הטלפון ולנסות שוב.}TABLET{לא ניתן להתחבר. צריך לבדוק את הגדרות הטאבלט ולנסות שוב.}COMPUTER{לא ניתן להתחבר. צריך לבדוק את הגדרות המחשב ולנסות שוב.}WATCH{לא ניתן להתחבר. צריך לבדוק את הגדרות השעון ולנסות שוב.}VEHICLE{לא ניתן להתחבר. צריך לבדוק את הגדרות הרכב ולנסות שוב.}other{לא ניתן להתחבר. צריך לבדוק את הגדרות המכשיר ולנסות שוב.}}"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_carrier_block" msgid="359780026027619177">"ההגדרות של <xliff:g id="NETWORK_NAME">%1$s</xliff:g> לא מאפשרות את החיבור הזה"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_carrier_incomplete" msgid="3407132390461094984">"לא ניתן להתחבר. עליך לפנות אל <xliff:g id="NETWORK_NAME">%1$s</xliff:g> לקבלת עזרה."</string>
     <string name="wifitrackerlib_hotspot_network_alternate" msgid="4966814473758893807">"<xliff:g id="NETWORK_NAME">%1$s</xliff:g> מהמכשיר <xliff:g id="DEVICE_NAME">%2$s</xliff:g>"</string>
     <string name="wifitrackerlib_hotspot_network_connecting" msgid="2072252282318270780">"מתבצעת התחברות…"</string>
     <string name="wifitrackerlib_known_network_summary" msgid="6035425130009353268">"מקור הרשת: <xliff:g id="DEVICE_NAME">%1$s</xliff:g>"</string>
@@ -88,5 +93,7 @@
     <string name="wifitrackerlib_wifi_band_24_ghz" msgid="5374362780653321244">"‎2.4GHz"</string>
     <string name="wifitrackerlib_wifi_band_5_ghz" msgid="2179047349922091556">"‎5GHz"</string>
     <string name="wifitrackerlib_wifi_band_6_ghz" msgid="6532408050869498777">"6GHz‎"</string>
-    <string name="wifitrackerlib_multiband_separator" msgid="2696920984391378575">","</string>
+    <string name="wifitrackerlib_multiband_separator" msgid="6838172120482590336">", "</string>
+    <string name="wifitrackerlib_link_speed_mbps" msgid="5880214340478706112">"‏‎Mbps‏ <xliff:g id="LINK_SPEED_MBPS">%1$d</xliff:g>"</string>
+    <string name="wifitrackerlib_link_speed_on_band" msgid="2433114336144744962">"<xliff:g id="LINK_SPEED">%1$s</xliff:g> ב-<xliff:g id="BAND">%2$s</xliff:g>"</string>
 </resources>

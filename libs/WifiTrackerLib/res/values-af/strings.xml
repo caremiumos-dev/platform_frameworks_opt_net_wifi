@@ -45,6 +45,11 @@
     <string name="wifi_connected_low_quality" msgid="4478331645458058445">"Lae gehalte"</string>
     <string name="wifitrackerlib_admin_restricted_network" msgid="5439914801076897515">"Word nie deur jou organisasie toegelaat nie"</string>
     <string name="wifitrackerlib_hotspot_network_summary" msgid="7661086683527884190">"<xliff:g id="NETWORK_NAME">%1$s</xliff:g> van <xliff:g id="MODEL_NAME">%2$s</xliff:g> af"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_new" msgid="1165705867298669621">"{DEVICE_TYPE,select, PHONE{{NETWORK_NAME} van jou foon af}TABLET{{NETWORK_NAME} van jou tablet af}COMPUTER{{NETWORK_NAME} van jou rekenaar af}WATCH{{NETWORK_NAME} van jou horlosie af}VEHICLE{{NETWORK_NAME} van jou voertuig af}other{{NETWORK_NAME} van jou toestel af}}"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_generic" msgid="2339836723160908882">"Kan nie verbind nie. Probeer weer verbind."</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_settings" msgid="6928234716406336668">"{DEVICE_TYPE,select, PHONE{Kan nie verbind nie. Kontroleer fooninstellings en probeer weer.}TABLET{Kan nie verbind nie. Kontroleer tabletinstellings en probeer weer.}COMPUTER{Kan nie verbind nie. Kontroleer rekenaarinstellings en probeer weer.}WATCH{Kan nie verbind nie. Kontroleer horlosie-instellings en probeer weer.}VEHICLE{Kan nie verbind nie. Kontroleer voertuiginstellings en probeer weer.}other{Kan nie verbind nie. Kontroleer toestelinstellings en probeer weer.}}"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_carrier_block" msgid="359780026027619177">"<xliff:g id="NETWORK_NAME">%1$s</xliff:g> laat nie hierdie verbinding toe nie"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_carrier_incomplete" msgid="3407132390461094984">"Kan nie verbind nie. Kontak <xliff:g id="NETWORK_NAME">%1$s</xliff:g> vir hulp."</string>
     <string name="wifitrackerlib_hotspot_network_alternate" msgid="4966814473758893807">"<xliff:g id="NETWORK_NAME">%1$s</xliff:g> van <xliff:g id="DEVICE_NAME">%2$s</xliff:g> af"</string>
     <string name="wifitrackerlib_hotspot_network_connecting" msgid="2072252282318270780">"Koppel tans …"</string>
     <string name="wifitrackerlib_known_network_summary" msgid="6035425130009353268">"Beskikbaar vanaf <xliff:g id="DEVICE_NAME">%1$s</xliff:g>"</string>
@@ -88,5 +93,7 @@
     <string name="wifitrackerlib_wifi_band_24_ghz" msgid="5374362780653321244">"2,4 GHz"</string>
     <string name="wifitrackerlib_wifi_band_5_ghz" msgid="2179047349922091556">"5 GHz"</string>
     <string name="wifitrackerlib_wifi_band_6_ghz" msgid="6532408050869498777">"6 GHz"</string>
-    <string name="wifitrackerlib_multiband_separator" msgid="2696920984391378575">","</string>
+    <string name="wifitrackerlib_multiband_separator" msgid="6838172120482590336">", "</string>
+    <string name="wifitrackerlib_link_speed_mbps" msgid="5880214340478706112">"<xliff:g id="LINK_SPEED_MBPS">%1$d</xliff:g> Mbps"</string>
+    <string name="wifitrackerlib_link_speed_on_band" msgid="2433114336144744962">"<xliff:g id="LINK_SPEED">%1$s</xliff:g> op <xliff:g id="BAND">%2$s</xliff:g>"</string>
 </resources>

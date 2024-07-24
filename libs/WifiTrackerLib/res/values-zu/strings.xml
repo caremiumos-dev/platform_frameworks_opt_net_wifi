@@ -45,6 +45,11 @@
     <string name="wifi_connected_low_quality" msgid="4478331645458058445">"Ikhwalithi ephansi"</string>
     <string name="wifitrackerlib_admin_restricted_network" msgid="5439914801076897515">"Ayivunyelwe yinhlangano yakho"</string>
     <string name="wifitrackerlib_hotspot_network_summary" msgid="7661086683527884190">"I-<xliff:g id="NETWORK_NAME">%1$s</xliff:g> evela ku-<xliff:g id="MODEL_NAME">%2$s</xliff:g>"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_new" msgid="1165705867298669621">"{DEVICE_TYPE,select, PHONE{I-{NETWORK_NAME} ukusuka kufoni yakho}TABLET{I-{NETWORK_NAME} ukusuka kuthebhulethi yakho}COMPUTER{I-{NETWORK_NAME} ukusuka kukhompyutha yakho}WATCH{I-{NETWORK_NAME} ukusuka kuwashi lakho}VEHICLE{I-{NETWORK_NAME} ukusuka emotweni yakho}other{I-{NETWORK_NAME} ukusuka kudivayisi yakho}}"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_generic" msgid="2339836723160908882">"Ayikwazi ukuxhuma. Zama ukuxhuma futhi."</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_settings" msgid="6928234716406336668">"{DEVICE_TYPE,select, PHONE{Ayikwazi ukuxhuma. Hlola amasethingi efoni bese uphinde uyazama futhi.}TABLET{Ayikwazi ukuxhuma. Hlola amasethingi ethebulethi bese uphinde uyazama futhi}COMPUTER{Ayikwazi ukuxhuma. Hlola amasethingi ekhompyutha bese uphinde uyazama futhi.}WATCH{Ayikwazi ukuxhuma. Hlola amasethingi ewashi bese uphinde uyazama futhi.}VEHICLE{Ayikwazi ukuxhuma. Hlola amasethingi emoto bese uphinde uyazama futhi.}other{Ayikwazi ukuxhuma. Hlola amasethingi-edivayisi bese uphinde uyazama futhi.}}"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_carrier_block" msgid="359780026027619177">"<xliff:g id="NETWORK_NAME">%1$s</xliff:g> ayiluvumeli lolu xhumano"</string>
+    <string name="wifitrackerlib_hotspot_network_summary_error_carrier_incomplete" msgid="3407132390461094984">"Ayikwazi ukuxhuma. Xhumana ne-<xliff:g id="NETWORK_NAME">%1$s</xliff:g> ukuze uthole usizo."</string>
     <string name="wifitrackerlib_hotspot_network_alternate" msgid="4966814473758893807">"I-<xliff:g id="NETWORK_NAME">%1$s</xliff:g> evela ku-<xliff:g id="DEVICE_NAME">%2$s</xliff:g>"</string>
     <string name="wifitrackerlib_hotspot_network_connecting" msgid="2072252282318270780">"Iyaxhuma…"</string>
     <string name="wifitrackerlib_known_network_summary" msgid="6035425130009353268">"Kutholakala ukusukela ku-<xliff:g id="DEVICE_NAME">%1$s</xliff:g>"</string>
@@ -88,5 +93,7 @@
     <string name="wifitrackerlib_wifi_band_24_ghz" msgid="5374362780653321244">"2.4 GHz"</string>
     <string name="wifitrackerlib_wifi_band_5_ghz" msgid="2179047349922091556">"5 GHz"</string>
     <string name="wifitrackerlib_wifi_band_6_ghz" msgid="6532408050869498777">"6 GHz"</string>
-    <string name="wifitrackerlib_multiband_separator" msgid="2696920984391378575">","</string>
+    <string name="wifitrackerlib_multiband_separator" msgid="6838172120482590336">", "</string>
+    <string name="wifitrackerlib_link_speed_mbps" msgid="5880214340478706112">"<xliff:g id="LINK_SPEED_MBPS">%1$d</xliff:g> Mbps"</string>
+    <string name="wifitrackerlib_link_speed_on_band" msgid="2433114336144744962">"I-<xliff:g id="LINK_SPEED">%1$s</xliff:g> ku-<xliff:g id="BAND">%2$s</xliff:g>"</string>
 </resources>
