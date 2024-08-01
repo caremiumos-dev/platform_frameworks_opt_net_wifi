@@ -70,6 +70,24 @@
       "parentUuid": "335c3248_d95108e4",
       "revId": "105db34232318d5881a620f1bacbc411e8df7b62",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67006fde_0f51f109",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1198173
+      },
+      "writtenOn": "2024-08-01T12:21:44Z",
+      "side": 1,
+      "message": "Sorry, I misread the change at https://android-review.git.corp.google.com/c/platform/packages/apps/Settings/+/3145936, which shouldn\u0027t fix this.\n\nI recommend to fix this by not constructing the WifiPickerTracker at all in src/com/android/car/settings/wifi/CarWifiManager.java when WifiManager is null.\n\nIt doesn\u0027t make sense to add the null check here since we already declare WifiManager as a @NonNull argument in the WifiPickerTracker constructor and is an integral part of the module\u0027s functionality.",
+      "parentUuid": "f28e673e_a8c6cf9a",
+      "revId": "105db34232318d5881a620f1bacbc411e8df7b62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
