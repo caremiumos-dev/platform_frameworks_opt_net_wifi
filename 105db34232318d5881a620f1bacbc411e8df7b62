@@ -88,6 +88,24 @@
       "parentUuid": "f28e673e_a8c6cf9a",
       "revId": "105db34232318d5881a620f1bacbc411e8df7b62",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "136080ca_e408d86a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3507068
+      },
+      "writtenOn": "2024-08-01T12:48:09Z",
+      "side": 1,
+      "message": "Hi @qal@google.com, as suggested I have made the changes and create a new patch.\nhttps://android-review.googlesource.com/c/platform/packages/apps/Car/Settings/+/3204350\n\nPlease help to review.",
+      "parentUuid": "67006fde_0f51f109",
+      "revId": "105db34232318d5881a620f1bacbc411e8df7b62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
