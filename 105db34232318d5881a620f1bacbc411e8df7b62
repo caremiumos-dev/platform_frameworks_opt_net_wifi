@@ -106,6 +106,24 @@
       "parentUuid": "67006fde_0f51f109",
       "revId": "105db34232318d5881a620f1bacbc411e8df7b62",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "784e37f1_fded637a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1198173
+      },
+      "writtenOn": "2024-08-01T12:48:46Z",
+      "side": 1,
+      "message": "Thanks Praveen! LGTM",
+      "parentUuid": "136080ca_e408d86a",
+      "revId": "105db34232318d5881a620f1bacbc411e8df7b62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
