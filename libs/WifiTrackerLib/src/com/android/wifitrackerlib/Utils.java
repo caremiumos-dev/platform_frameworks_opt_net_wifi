@@ -1207,7 +1207,7 @@ public class Utils {
         if (transportInfo instanceof WifiInfo) {
             return (WifiInfo) transportInfo;
         }
-        return NonSdkApiWrapper.getWifiInfoIfVcn(capabilities);
+        return null;
     }
 
     /**
