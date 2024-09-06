@@ -662,6 +662,53 @@ public class UtilsTest {
     }
 
     @Test
+    public void testDisconnectedDescription_noInternet_returnsNoInternetString() {
+        when(mMockContext.getString(R.string.wifitrackerlib_wifi_disconnected))
+                .thenReturn("wifitrackerlib_wifi_disconnected");
+        when(mMockContext.getString(R.string.wifitrackerlib_wifi_no_internet))
+                .thenReturn("wifitrackerlib_wifi_no_internet");
+        when(mMockContext.getString(R.string.wifitrackerlib_wifi_no_internet_no_reconnect))
+                .thenReturn("wifitrackerlib_wifi_no_internet_no_reconnect");
+        String noAttributionPackage = "noAttributionPackage";
+        when(mMockInjector.getNoAttributionAnnotationPackages())
+                .thenReturn(Set.of(noAttributionPackage));
+
+        WifiConfiguration temporaryNoInternet = spy(new WifiConfiguration());
+        temporaryNoInternet.creatorName = noAttributionPackage;
+        NetworkSelectionStatus networkSelectionStatus =
+                spy(new NetworkSelectionStatus.Builder()
+                        .setNetworkSelectionStatus(
+                                NetworkSelectionStatus.NETWORK_SELECTION_TEMPORARY_DISABLED)
+                        .setNetworkSelectionDisableReason(
+                                NetworkSelectionStatus.DISABLED_NO_INTERNET_TEMPORARY)
+                        .build());
+        temporaryNoInternet.setNetworkSelectionStatus(networkSelectionStatus);
+        assertThat(Utils.getDisconnectedDescription(
+                mMockInjector, mMockContext, temporaryNoInternet, true, true))
+                .isEqualTo(new StringJoiner(STRING_SUMMARY_SEPARATOR)
+                        .add("wifitrackerlib_wifi_disconnected")
+                        .add("wifitrackerlib_wifi_no_internet")
+                        .toString());
+
+        WifiConfiguration permanentNoInternet = spy(new WifiConfiguration());
+        permanentNoInternet.creatorName = noAttributionPackage;
+        networkSelectionStatus =
+                spy(new NetworkSelectionStatus.Builder()
+                        .setNetworkSelectionStatus(
+                                NetworkSelectionStatus.NETWORK_SELECTION_PERMANENTLY_DISABLED)
+                        .setNetworkSelectionDisableReason(
+                                NetworkSelectionStatus.DISABLED_NO_INTERNET_PERMANENT)
+                        .build());
+        permanentNoInternet.setNetworkSelectionStatus(networkSelectionStatus);
+        assertThat(Utils.getDisconnectedDescription(
+                mMockInjector, mMockContext, permanentNoInternet, true, true))
+                .isEqualTo(new StringJoiner(STRING_SUMMARY_SEPARATOR)
+                        .add("wifitrackerlib_wifi_disconnected")
+                        .add("wifitrackerlib_wifi_no_internet_no_reconnect")
+                        .toString());
+    }
+
+    @Test
     public void testWifiInfoBandString_multipleMloLinks_returnsMultipleBands() {
         assumeTrue(BuildCompat.isAtLeastU());
 
@@ -1043,5 +1090,52 @@ public class UtilsTest {
                         + STRING_LINK_SPEED_ON_BAND + BAND_6_GHZ).toString();
         assertThat(Utils.getSpeedString(mMockContext, wifiInfo, false))
                 .isEqualTo(expectedRxSpeed);
+    }
+
+    @Test
+    public void testGetCertificateInfo() {
+        WifiEnterpriseConfig config = mock(WifiEnterpriseConfig.class);
+        String domain = "domain";
+        when(config.getDomainSuffixMatch()).thenReturn(domain);
+        WifiEntry.CertificateInfo info;
+
+        // Return null if not using a certificate
+        when(config.isEapMethodServerCertUsed()).thenReturn(true);
+        when(config.hasCaCertificate()).thenReturn(false);
+        assertThat(Utils.getCertificateInfo(config)).isNull();
+
+        when(config.isEapMethodServerCertUsed()).thenReturn(false);
+        when(config.hasCaCertificate()).thenReturn(true);
+        assertThat(Utils.getCertificateInfo(config)).isNull();
+
+        // Return null if no cert aliases and not using the system certificate
+        when(config.isEapMethodServerCertUsed()).thenReturn(true);
+        when(config.hasCaCertificate()).thenReturn(true);
+        assertThat(Utils.getCertificateInfo(config)).isNull();
+
+        // Using cert pinning
+        when(config.getCaCertificateAliases()).thenReturn(new String[]{"hash://server/sha256/"});
+        info = Utils.getCertificateInfo(config);
+        assertThat(info.validationMethod).isEqualTo(
+                WifiEntry.CertificateInfo.CERTIFICATE_VALIDATION_METHOD_USING_CERTIFICATE_PINNING);
+        assertThat(info.caCertificateAliases).isNull();
+        assertThat(info.domain).isEqualTo(domain);
+
+        // Using installed root CA
+        when(config.getCaCertificateAliases()).thenReturn(new String[]{"foo", "bar"});
+        info = Utils.getCertificateInfo(config);
+        assertThat(info.validationMethod).isEqualTo(
+                WifiEntry.CertificateInfo.CERTIFICATE_VALIDATION_METHOD_USING_INSTALLED_ROOTCA);
+        assertThat(info.caCertificateAliases).isEqualTo(new String[]{"foo", "bar"});
+        assertThat(info.domain).isEqualTo(domain);
+
+        // Using system cert
+        when(config.getCaCertificateAliases()).thenReturn(null);
+        when(config.getCaPath()).thenReturn("foo");
+        info = Utils.getCertificateInfo(config);
+        assertThat(info.validationMethod).isEqualTo(
+                WifiEntry.CertificateInfo.CERTIFICATE_VALIDATION_METHOD_USING_SYSTEM_CERTIFICATE);
+        assertThat(info.caCertificateAliases).isNull();
+        assertThat(info.domain).isEqualTo(domain);
     }
 }
