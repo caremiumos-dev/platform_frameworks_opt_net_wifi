@@ -16,7 +16,6 @@
 
 package com.android.wifitrackerlib;
 
-import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 import static android.os.Build.VERSION_CODES;
 
@@ -100,6 +99,26 @@ public class BaseWifiTracker {
     private boolean mIsInitialized = false;
     private boolean mIsScanningDisabled = false;
 
+    class WifiTrackerLifecycleObserver implements LifecycleObserver {
+        @OnLifecycleEvent(Lifecycle.Event.ON_START)
+        @MainThread
+        public void onStart() {
+            BaseWifiTracker.this.onStart();
+        }
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+        @MainThread
+        public void onStop() {
+            BaseWifiTracker.this.onStop();
+        }
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+        @MainThread
+        public void onDestroy() {
+            BaseWifiTracker.this.onDestroy();
+        }
+    };
+
     // Registered on the worker thread
     private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -133,7 +152,8 @@ public class BaseWifiTracker {
     };
     private final BaseWifiTracker.Scanner mScanner;
     private final BaseWifiTrackerCallback mListener;
-    private final @NonNull LifecycleObserver mLifecycleObserver;
+    private final @NonNull LifecycleObserver mLifecycleObserver =
+            new WifiTrackerLifecycleObserver();
 
     protected final WifiTrackerInjector mInjector;
     protected final Context mContext;
@@ -155,7 +175,6 @@ public class BaseWifiTracker {
             .clearCapabilities()
             .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN)
             .addTransportType(TRANSPORT_WIFI)
-            .addTransportType(TRANSPORT_CELLULAR) // For VCN-over-Wifi
             .build();
 
     private final ConnectivityManager.NetworkCallback mNetworkCallback =
@@ -189,22 +208,6 @@ public class BaseWifiTracker {
                 @WorkerThread
                 public void onCapabilitiesChanged(@NonNull Network network,
                         @NonNull NetworkCapabilities networkCapabilities) {
-                    // If the default network has an underlying Wi-Fi network (e.g. it's
-                    // a VPN), treat the Wi-Fi network as the default network.
-                    List<Network> underlyingNetworks = BuildCompat.isAtLeastT()
-                            ? networkCapabilities.getUnderlyingNetworks() : null;
-                    if (underlyingNetworks != null) {
-                        for (Network underlyingNetwork : underlyingNetworks) {
-                            NetworkCapabilities underlyingNetworkCapabilities =
-                                    mConnectivityManager.getNetworkCapabilities(underlyingNetwork);
-                            if (underlyingNetworkCapabilities != null
-                                    && underlyingNetworkCapabilities.hasTransport(TRANSPORT_WIFI)) {
-                                handleDefaultNetworkCapabilitiesChanged(
-                                        underlyingNetwork, underlyingNetworkCapabilities);
-                                return;
-                            }
-                        }
-                    }
                     handleDefaultNetworkCapabilitiesChanged(network, networkCapabilities);
                 }
 
@@ -325,25 +328,6 @@ public class BaseWifiTracker {
             String tag) {
         mInjector = injector;
         mActivityManager = context.getSystemService(ActivityManager.class);
-        mLifecycleObserver = new LifecycleObserver() {
-            @OnLifecycleEvent(Lifecycle.Event.ON_START)
-            @MainThread
-            public void onStart() {
-                BaseWifiTracker.this.onStart();
-            }
-
-            @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-            @MainThread
-            public void onStop() {
-                BaseWifiTracker.this.onStop();
-            }
-
-            @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-            @MainThread
-            public void onDestroy() {
-                BaseWifiTracker.this.onDestroy();
-            }
-        };
         mContext = context;
         mWifiManager = wifiManager;
         mConnectivityManager = connectivityManager;
@@ -364,8 +348,8 @@ public class BaseWifiTracker {
                 maxScanAgeMillis + scanIntervalMillis);
         mScanner = new BaseWifiTracker.Scanner(workerHandler.getLooper());
 
-        if (lifecycle != null) { // Need to add after mScanner is initialized.
-            lifecycle.addObserver(mLifecycleObserver);
+        if (lifecycle != null) { // Need to add after constructor completes.
+            mMainHandler.post(() -> lifecycle.addObserver(mLifecycleObserver));
         }
     }
 
@@ -399,7 +383,9 @@ public class BaseWifiTracker {
         mWorkerHandler.post(() -> {
             IntentFilter filter = new IntentFilter();
             filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-            filter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
+            if (!mIsScanningDisabled) {
+                filter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
+            }
             filter.addAction(WifiManager.CONFIGURED_NETWORKS_CHANGED_ACTION);
             filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
             if (isVerboseLoggingEnabled()) {

@@ -368,7 +368,24 @@ public class WifiEntry {
      * currently being used to provide internet connection).
      */
     public boolean isDefaultNetwork() {
-        return mNetwork != null && mNetwork.equals(mDefaultNetwork);
+        if (mNetwork != null && mNetwork.equals(mDefaultNetwork)) {
+            return true;
+        }
+
+        // Try to get a WifiInfo from the default network capabilities in case it's a
+        // VcnTransportInfo with an underlying WifiInfo.
+        if (mDefaultNetworkCapabilities == null) {
+            return false;
+        }
+        WifiInfo defaultWifiInfo = Utils.getWifiInfo(mDefaultNetworkCapabilities);
+        if (defaultWifiInfo != null) {
+            return connectionInfoMatches(defaultWifiInfo);
+        }
+
+        // Match based on the underlying networks if there are any (e.g. VPN).
+        List<Network> underlyingNetworks = BuildCompat.isAtLeastT()
+                ? mDefaultNetworkCapabilities.getUnderlyingNetworks() : null;
+        return underlyingNetworks != null && underlyingNetworks.contains(mNetwork);
     }
 
     /**
@@ -387,18 +404,12 @@ public class WifiEntry {
      * Returns whether this network is considered low quality.
      */
     public synchronized boolean isLowQuality() {
-        if (!isPrimaryNetwork()) {
-            return false;
-        }
-        if (mNetworkCapabilities == null) {
-            return false;
-        }
-        if (mDefaultNetworkCapabilities == null) {
-            return false;
-        }
-        return mNetworkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+        return isPrimaryNetwork() && hasInternetAccess() && !isDefaultNetwork()
+                && mDefaultNetworkCapabilities != null
                 && mDefaultNetworkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
-                && !mDefaultNetworkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN);
+                && !mDefaultNetworkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN)
+                && mDefaultNetworkCapabilities.hasCapability(
+                        NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
     }
 
     /**
@@ -677,6 +688,45 @@ public class WifiEntry {
     /** Returns the string displayed for the Wi-Fi standard */
     public String getStandardString() {
         return "";
+    }
+
+    /**
+     * Info associated with the certificate based enterprise connection
+     */
+    public static class CertificateInfo {
+        /**
+         * Server certificate validation method. Used to show the security certificate strings in
+         * the Network Details page.
+         */
+        @Retention(RetentionPolicy.SOURCE)
+        @IntDef(value = {
+                CERTIFICATE_VALIDATION_METHOD_USING_NONE,
+                CERTIFICATE_VALIDATION_METHOD_USING_INSTALLED_ROOTCA,
+                CERTIFICATE_VALIDATION_METHOD_USING_SYSTEM_CERTIFICATE,
+                CERTIFICATE_VALIDATION_METHOD_USING_CERTIFICATE_PINNING,
+        })
+
+        public @interface CertificateValidationMethod {}
+        public static final int CERTIFICATE_VALIDATION_METHOD_USING_NONE = 0;
+        public static final int CERTIFICATE_VALIDATION_METHOD_USING_INSTALLED_ROOTCA = 1;
+        public static final int CERTIFICATE_VALIDATION_METHOD_USING_SYSTEM_CERTIFICATE = 2;
+        public static final int CERTIFICATE_VALIDATION_METHOD_USING_CERTIFICATE_PINNING = 3;
+
+        public @CertificateValidationMethod int validationMethod;
+
+        /** Non null only for  CERTIFICATE_VALIDATION_METHOD_USING_INSTALLED_ROOTCA */
+        @Nullable public String[] caCertificateAliases;
+
+        /** Domain name / server name */
+        @Nullable public String domain;
+    }
+
+    /**
+     * Returns the CertificateInfo to display, or null if it is not a certificate based connection.
+     */
+    @Nullable
+    public CertificateInfo getCertificateInfo() {
+        return null;
     }
 
     /** Returns the string displayed for the Wi-Fi band */
