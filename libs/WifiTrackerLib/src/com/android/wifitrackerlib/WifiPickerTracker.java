@@ -1211,7 +1211,8 @@ public class WifiPickerTracker extends BaseWifiTracker {
             updateWifiConfigurations(mWifiManager.getPrivilegedConfiguredNetworks());
         }
         // Create a WifiEntry for the current connection if there are no scan results yet.
-        conditionallyCreateConnectedWifiEntry(Utils.getWifiInfo(capabilities));
+        conditionallyCreateConnectedWifiEntry(
+                Utils.getWifiInfo(mConnectivityManager, capabilities));
         for (WifiEntry entry : getAllWifiEntries()) {
             entry.onNetworkCapabilitiesChanged(network, capabilities);
         }

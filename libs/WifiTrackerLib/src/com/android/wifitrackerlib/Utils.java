@@ -40,6 +40,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityDiagnosticsManager;
+import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
@@ -1199,15 +1200,15 @@ public class Utils {
         return sj.toString();
     }
 
-    /**
-     * Gets the WifiInfo from a NetworkCapabilities if there is one.
-     */
-    public static WifiInfo getWifiInfo(@NonNull NetworkCapabilities capabilities) {
+    /** Gets the WifiInfo from a NetworkCapabilities if there is one. */
+    public static WifiInfo getWifiInfo(
+            @NonNull ConnectivityManager connectivityMgr,
+            @NonNull NetworkCapabilities capabilities) {
         TransportInfo transportInfo = capabilities.getTransportInfo();
         if (transportInfo instanceof WifiInfo) {
             return (WifiInfo) transportInfo;
         }
-        return NonSdkApiWrapper.getWifiInfoIfVcn(capabilities);
+        return NonSdkApiWrapper.getWifiInfoIfVcn(connectivityMgr, capabilities);
     }
 
     /**

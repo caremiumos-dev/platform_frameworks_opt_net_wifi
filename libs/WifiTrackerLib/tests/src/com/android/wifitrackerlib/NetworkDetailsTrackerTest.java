@@ -86,10 +86,13 @@ public class NetworkDetailsTrackerTest {
 
         mTestLooper = new TestLooper();
 
+        when(mInjector.getContext()).thenReturn(mMockContext);
         when(mMockWifiManager.getScanResults()).thenReturn(new ArrayList<>());
         when(mMockWifiManager.getWifiState()).thenReturn(WifiManager.WIFI_STATE_ENABLED);
         when(mMockClock.millis()).thenReturn(START_MILLIS);
         when(mMockContext.getResources()).thenReturn(mResources);
+        when(mMockContext.getSystemService(ConnectivityManager.class))
+                .thenReturn(mMockConnectivityManager);
     }
 
     /**

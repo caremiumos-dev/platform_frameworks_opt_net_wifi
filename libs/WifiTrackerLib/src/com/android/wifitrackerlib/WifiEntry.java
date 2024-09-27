@@ -25,6 +25,7 @@ import static com.android.wifitrackerlib.Utils.getSingleSecurityTypeFromMultiple
 
 import android.content.Context;
 import android.net.ConnectivityDiagnosticsManager;
+import android.net.ConnectivityManager;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.Network;
@@ -239,6 +240,8 @@ public class WifiEntry {
     private WifiEntryCallback mListener;
     protected final Handler mCallbackHandler;
 
+    protected final ConnectivityManager mConnectivityManager;
+
     protected int mLevel = WIFI_LEVEL_UNREACHABLE;
     protected WifiInfo mWifiInfo;
     protected NetworkInfo mNetworkInfo;
@@ -270,6 +273,7 @@ public class WifiEntry {
         mCallbackHandler = callbackHandler;
         mForSavedNetworksPage = forSavedNetworksPage;
         mWifiManager = wifiManager;
+        mConnectivityManager = mContext.getSystemService(ConnectivityManager.class);
     }
 
     // Info available for all WifiEntries //
@@ -377,7 +381,8 @@ public class WifiEntry {
         if (mDefaultNetworkCapabilities == null) {
             return false;
         }
-        WifiInfo defaultWifiInfo = Utils.getWifiInfo(mDefaultNetworkCapabilities);
+        WifiInfo defaultWifiInfo =
+                Utils.getWifiInfo(mConnectivityManager, mDefaultNetworkCapabilities);
         if (defaultWifiInfo != null) {
             return connectionInfoMatches(defaultWifiInfo);
         }
@@ -992,7 +997,7 @@ public class WifiEntry {
     synchronized void onNetworkCapabilitiesChanged(
             @NonNull Network network,
             @NonNull NetworkCapabilities capabilities) {
-        WifiInfo wifiInfo = Utils.getWifiInfo(capabilities);
+        WifiInfo wifiInfo = Utils.getWifiInfo(mConnectivityManager, capabilities);
         if (wifiInfo == null) {
             return;
         }

@@ -114,6 +114,7 @@ public class StandardNetworkDetailsTrackerTest {
         mMainHandler = spy(new Handler(mTestLooper.getLooper()));
         mWorkerHandler = spy(new Handler(mTestLooper.getLooper()));
 
+        when(mInjector.getContext()).thenReturn(mMockContext);
         when(mMockWifiManager.isWpa3SaeSupported()).thenReturn(true);
         when(mMockWifiManager.isWpa3SuiteBSupported()).thenReturn(true);
         when(mMockWifiManager.isEnhancedOpenSupported()).thenReturn(true);
@@ -129,6 +130,8 @@ public class StandardNetworkDetailsTrackerTest {
         when(mMockContext.getSystemService(ConnectivityDiagnosticsManager.class))
                 .thenReturn(mMockConnectivityDiagnosticsManager);
         when(mMockContext.getSystemService(WifiScanner.class)).thenReturn(mWifiScanner);
+        when(mMockContext.getSystemService(ConnectivityManager.class))
+                .thenReturn(mMockConnectivityManager);
         when(mMockClock.millis()).thenReturn(START_MILLIS);
     }
 

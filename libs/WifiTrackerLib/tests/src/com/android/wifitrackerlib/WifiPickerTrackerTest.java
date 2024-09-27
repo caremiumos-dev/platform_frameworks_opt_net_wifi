@@ -2256,8 +2256,11 @@ public class WifiPickerTrackerTest {
             // Connect to VCN-over-Wifi network
             when(mMockWifiInfo.isCarrierMerged()).thenReturn(true);
             when(mMockWifiInfo.getSubscriptionId()).thenReturn(subId);
-            doReturn(mMockWifiInfo).when(() ->
-                    NonSdkApiWrapper.getWifiInfoIfVcn(mMockVcnNetworkCapabilities));
+            doReturn(mMockWifiInfo)
+                    .when(
+                            () ->
+                                    NonSdkApiWrapper.getWifiInfoIfVcn(
+                                            mMockConnectivityManager, mMockVcnNetworkCapabilities));
             doReturn(true).when(() -> NonSdkApiWrapper.isPrimary(mMockWifiInfo));
             mNetworkCallbackCaptor.getValue().onCapabilitiesChanged(
                     mMockNetwork, mMockVcnNetworkCapabilities);

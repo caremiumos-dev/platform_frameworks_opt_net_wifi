@@ -40,6 +40,7 @@ import static org.mockito.Mockito.when;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.wifi.WifiInfo;
@@ -72,6 +73,7 @@ public class HotspotNetworkEntryTest {
     @Mock private WifiTrackerInjector mMockInjector;
     @Mock private Context mMockContext;
     @Mock private Resources mMockResources;
+    @Mock private ConnectivityManager mMockConnectivityManager;
     @Mock private WifiManager mMockWifiManager;
     @Mock private SharedConnectivityManager mMockSharedConnectivityManager;
     @Mock private WifiInfo mMockWifiInfo;
@@ -102,6 +104,7 @@ public class HotspotNetworkEntryTest {
         mTestLooper = new TestLooper();
         mTestHandler = new Handler(mTestLooper.getLooper());
 
+        when(mMockInjector.getContext()).thenReturn(mMockContext);
         when(mMockNetworkCapabilities.getTransportInfo()).thenReturn(mMockWifiInfo);
         when(mMockWifiInfo.isPrimary()).thenReturn(true);
         when(mMockWifiInfo.getSSID()).thenReturn("Instant Hotspot abcde");
@@ -111,6 +114,8 @@ public class HotspotNetworkEntryTest {
         when(mMockWifiInfo.getWifiStandard()).thenReturn(WIFI_STANDARD_11N);
         when(mMockWifiInfo.getFrequency()).thenReturn(MIN_FREQ_24GHZ);
 
+        when(mMockContext.getSystemService(ConnectivityManager.class))
+                .thenReturn(mMockConnectivityManager);
         when(mMockContext.getString(R.string.wifitrackerlib_hotspot_network_connecting))
                 .thenReturn("Connecting…");
         when(mMockContext.getString(eq(R.string.wifitrackerlib_hotspot_network_summary),

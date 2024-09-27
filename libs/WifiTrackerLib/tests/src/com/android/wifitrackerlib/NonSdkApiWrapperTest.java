@@ -16,13 +16,18 @@
 
 package com.android.wifitrackerlib;
 
+import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
+
 import static com.google.common.truth.Truth.assertThat;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.vcn.VcnTransportInfo;
 import android.net.wifi.WifiInfo;
@@ -33,6 +38,8 @@ import android.text.Spanned;
 import android.text.style.ClickableSpan;
 
 import org.junit.Test;
+
+import java.util.Collections;
 
 public class NonSdkApiWrapperTest {
     @Test
@@ -73,23 +80,41 @@ public class NonSdkApiWrapperTest {
                 ClickableSpan.class).length, 0);
     }
 
+    private Network newWifiNetwork(ConnectivityManager connectivityManager, WifiInfo wifiInfo) {
+        final Network network = mock(Network.class);
+        final NetworkCapabilities wifiCaps =
+                new NetworkCapabilities.Builder()
+                        .addTransportType(TRANSPORT_WIFI)
+                        .setTransportInfo(wifiInfo)
+                        .build();
+        when(connectivityManager.getNetworkCapabilities(network)).thenReturn(wifiCaps);
+        return network;
+    }
+
     /**
      * Verifies the functionality of {@link NonSdkApiWrapper#getWifiInfoIfVcn(NetworkCapabilities)}
      */
     @Test
     public void testGetVcnWifiInfo() {
         NetworkCapabilities networkCapabilities  = mock(NetworkCapabilities.class);
+        ConnectivityManager connectivityManager = mock(ConnectivityManager.class);
 
-        assertThat(NonSdkApiWrapper.getWifiInfoIfVcn(networkCapabilities)).isNull();
+        assertThat(NonSdkApiWrapper.getWifiInfoIfVcn(connectivityManager, networkCapabilities))
+                .isNull();
 
-        VcnTransportInfo vcnTransportInfo = mock(VcnTransportInfo.class);
-        when(networkCapabilities.getTransportInfo()).thenReturn(vcnTransportInfo);
+        when(networkCapabilities.getTransportInfo())
+                .thenReturn(new VcnTransportInfo.Builder().build());
 
-        assertThat(NonSdkApiWrapper.getWifiInfoIfVcn(networkCapabilities)).isNull();
+        assertThat(NonSdkApiWrapper.getWifiInfoIfVcn(connectivityManager, networkCapabilities))
+                .isNull();
 
         WifiInfo wifiInfo = mock(WifiInfo.class);
-        when(vcnTransportInfo.getWifiInfo()).thenReturn(wifiInfo);
+        when(wifiInfo.makeCopy(anyLong())).thenReturn(wifiInfo);
+        Network wifiNetwork = newWifiNetwork(connectivityManager, wifiInfo);
+        when(networkCapabilities.getUnderlyingNetworks())
+                .thenReturn(Collections.singletonList(wifiNetwork));
 
-        assertThat(NonSdkApiWrapper.getWifiInfoIfVcn(networkCapabilities)).isEqualTo(wifiInfo);
+        assertThat(NonSdkApiWrapper.getWifiInfoIfVcn(connectivityManager, networkCapabilities))
+                .isEqualTo(wifiInfo);
     }
 }

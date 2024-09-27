@@ -53,6 +53,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.ConnectivityDiagnosticsManager;
+import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.net.wifi.MloLink;
 import android.net.wifi.ScanResult;
@@ -142,6 +143,7 @@ public class UtilsTest {
     @Mock private PackageManager mPackageManager;
     @Mock private ApplicationInfo mApplicationInfo;
     @Mock private ContentResolver mContentResolver;
+    @Mock private ConnectivityManager mMockConnectivityManager;
     @Mock private WifiManager mMockWifiManager;
     @Mock private SubscriptionManager mSubscriptionManager;
     @Mock private TelephonyManager mTelephonyManager;
@@ -165,6 +167,8 @@ public class UtilsTest {
         when(mMockContext.getResources()).thenReturn(mMockResources);
         when(mMockContext.getText(R.string.wifitrackerlib_imsi_protection_warning))
                 .thenReturn("IMSI");
+        when(mMockContext.getSystemService(ConnectivityManager.class))
+                .thenReturn(mMockConnectivityManager);
         when(mMockContext.getSystemService(Context.CARRIER_CONFIG_SERVICE))
                 .thenReturn(mCarrierConfigManager);
         when(mMockContext.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE))
@@ -178,6 +182,7 @@ public class UtilsTest {
         when(mMockContext.getContentResolver()).thenReturn(mContentResolver);
         when(mContentResolver.getUserId()).thenReturn(0);
         when(mMockInjector.getNoAttributionAnnotationPackages()).thenReturn(Collections.emptySet());
+        when(mMockInjector.getContext()).thenReturn(mMockContext);
         when(mMockResources.getString(R.string.wifitrackerlib_multiband_separator))
                 .thenReturn(BAND_SEPARATOR);
         when(mMockResources.getString(R.string.wifitrackerlib_wifi_band_unknown))
