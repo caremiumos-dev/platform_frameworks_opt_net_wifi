@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af099a8e_90c071dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-10-02T22:25:07Z",
+      "side": 1,
+      "message": "Clean cherry pick from ag/28681403, except the import line difference in libs/WifiTrackerLib/src/com/android/wifitrackerlib/NonSdkApiWrapper.java",
+      "revId": "afdabefc654ea0f4fc69b8a29d2e19f7dfc8720e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
