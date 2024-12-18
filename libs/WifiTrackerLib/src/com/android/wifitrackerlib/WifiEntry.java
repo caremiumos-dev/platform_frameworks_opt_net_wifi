@@ -25,6 +25,7 @@ import static com.android.wifitrackerlib.Utils.getSingleSecurityTypeFromMultiple
 
 import android.content.Context;
 import android.net.ConnectivityDiagnosticsManager;
+import android.net.ConnectivityManager;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.Network;
@@ -37,6 +38,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.annotation.AnyThread;
 import androidx.annotation.IntDef;
@@ -70,6 +72,10 @@ import java.util.stream.Collectors;
  * actions on the represented network.
  */
 public class WifiEntry {
+    public static final String TAG = "WifiEntry";
+
+    private static final int MAX_UNDERLYING_NETWORK_DEPTH = 5;
+
     /**
      * Security type based on WifiConfiguration.KeyMgmt
      */
@@ -238,8 +244,8 @@ public class WifiEntry {
     // Callback associated with this WifiEntry. Subclasses should call its methods appropriately.
     private WifiEntryCallback mListener;
     protected final Handler mCallbackHandler;
-
-    protected int mLevel = WIFI_LEVEL_UNREACHABLE;
+    protected int mWifiInfoLevel = WIFI_LEVEL_UNREACHABLE;
+    protected int mScanResultLevel = WIFI_LEVEL_UNREACHABLE;
     protected WifiInfo mWifiInfo;
     protected NetworkInfo mNetworkInfo;
     protected Network mNetwork;
@@ -339,7 +345,10 @@ public class WifiEntry {
      * A value of WIFI_LEVEL_UNREACHABLE indicates an out of range network.
      */
     public int getLevel() {
-        return mLevel;
+        if (mWifiInfoLevel != WIFI_LEVEL_UNREACHABLE) {
+            return mWifiInfoLevel;
+        }
+        return mScanResultLevel;
     };
 
     /**
@@ -367,8 +376,48 @@ public class WifiEntry {
      * Returns whether this network is the default network or not (i.e. this network is the one
      * currently being used to provide internet connection).
      */
-    public boolean isDefaultNetwork() {
-        return mNetwork != null && mNetwork.equals(mDefaultNetwork);
+    public synchronized boolean isDefaultNetwork() {
+        if (mNetwork != null && mNetwork.equals(mDefaultNetwork)) {
+            return true;
+        }
+
+        // Match based on the underlying networks if there are any (e.g. VPN).
+        return doesUnderlyingNetworkMatch(mDefaultNetworkCapabilities, 0);
+    }
+
+    private boolean doesUnderlyingNetworkMatch(@Nullable NetworkCapabilities caps, int depth) {
+        if (depth > MAX_UNDERLYING_NETWORK_DEPTH) {
+            Log.e(TAG, "Underlying network depth greater than max depth of "
+                    + MAX_UNDERLYING_NETWORK_DEPTH);
+            return false;
+        }
+
+        if (caps == null) {
+            return false;
+        }
+
+        List<Network> underlyingNetworks = BuildCompat.isAtLeastT()
+                ? caps.getUnderlyingNetworks() : null;
+        if (underlyingNetworks == null) {
+            return false;
+        }
+        if (underlyingNetworks.contains(mNetwork)) {
+            return true;
+        }
+
+        // Check the underlying networks of the underlying networks.
+        ConnectivityManager connectivityManager = mInjector.getConnectivityManager();
+        if (connectivityManager == null) {
+            Log.wtf(TAG, "ConnectivityManager is null!");
+            return false;
+        }
+        for (Network underlying : underlyingNetworks) {
+            if (doesUnderlyingNetworkMatch(
+                    connectivityManager.getNetworkCapabilities(underlying), depth + 1)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -387,18 +436,12 @@ public class WifiEntry {
      * Returns whether this network is considered low quality.
      */
     public synchronized boolean isLowQuality() {
-        if (!isPrimaryNetwork()) {
-            return false;
-        }
-        if (mNetworkCapabilities == null) {
-            return false;
-        }
-        if (mDefaultNetworkCapabilities == null) {
-            return false;
-        }
-        return mNetworkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+        return isPrimaryNetwork() && hasInternetAccess() && !isDefaultNetwork()
+                && mDefaultNetworkCapabilities != null
                 && mDefaultNetworkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
-                && !mDefaultNetworkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN);
+                && !mDefaultNetworkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN)
+                && mDefaultNetworkCapabilities.hasCapability(
+                        NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
     }
 
     /**
@@ -677,6 +720,45 @@ public class WifiEntry {
     /** Returns the string displayed for the Wi-Fi standard */
     public String getStandardString() {
         return "";
+    }
+
+    /**
+     * Info associated with the certificate based enterprise connection
+     */
+    public static class CertificateInfo {
+        /**
+         * Server certificate validation method. Used to show the security certificate strings in
+         * the Network Details page.
+         */
+        @Retention(RetentionPolicy.SOURCE)
+        @IntDef(value = {
+                CERTIFICATE_VALIDATION_METHOD_USING_NONE,
+                CERTIFICATE_VALIDATION_METHOD_USING_INSTALLED_ROOTCA,
+                CERTIFICATE_VALIDATION_METHOD_USING_SYSTEM_CERTIFICATE,
+                CERTIFICATE_VALIDATION_METHOD_USING_CERTIFICATE_PINNING,
+        })
+
+        public @interface CertificateValidationMethod {}
+        public static final int CERTIFICATE_VALIDATION_METHOD_USING_NONE = 0;
+        public static final int CERTIFICATE_VALIDATION_METHOD_USING_INSTALLED_ROOTCA = 1;
+        public static final int CERTIFICATE_VALIDATION_METHOD_USING_SYSTEM_CERTIFICATE = 2;
+        public static final int CERTIFICATE_VALIDATION_METHOD_USING_CERTIFICATE_PINNING = 3;
+
+        public @CertificateValidationMethod int validationMethod;
+
+        /** Non null only for  CERTIFICATE_VALIDATION_METHOD_USING_INSTALLED_ROOTCA */
+        @Nullable public String[] caCertificateAliases;
+
+        /** Domain name / server name */
+        @Nullable public String domain;
+    }
+
+    /**
+     * Returns the CertificateInfo to display, or null if it is not a certificate based connection.
+     */
+    @Nullable
+    public CertificateInfo getCertificateInfo() {
+        return null;
     }
 
     /** Returns the string displayed for the Wi-Fi band */
@@ -971,17 +1053,18 @@ public class WifiEntry {
         notifyOnUpdated();
     }
 
-    private synchronized void updateWifiInfo(WifiInfo wifiInfo) {
+    protected synchronized void updateWifiInfo(WifiInfo wifiInfo) {
         if (wifiInfo == null) {
             mWifiInfo = null;
             mConnectedInfo = null;
+            mWifiInfoLevel = WIFI_LEVEL_UNREACHABLE;
             updateSecurityTypes();
             return;
         }
         mWifiInfo = wifiInfo;
         final int wifiInfoRssi = mWifiInfo.getRssi();
         if (wifiInfoRssi != INVALID_RSSI) {
-            mLevel = mWifiManager.calculateSignalLevel(wifiInfoRssi);
+            mWifiInfoLevel = mWifiManager.calculateSignalLevel(wifiInfoRssi);
         }
         if (getConnectedState() == CONNECTED_STATE_CONNECTED) {
             if (mCalledConnect) {

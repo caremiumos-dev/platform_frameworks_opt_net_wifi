@@ -18,7 +18,6 @@ package com.android.wifitrackerlib;
 
 import static android.net.wifi.WifiConfiguration.NetworkSelectionStatus.DISABLED_AUTHENTICATION_FAILURE;
 import static android.net.wifi.WifiConfiguration.NetworkSelectionStatus.NETWORK_SELECTION_ENABLED;
-import static android.net.wifi.WifiConfiguration.NetworkSelectionStatus.NETWORK_SELECTION_PERMANENTLY_DISABLED;
 import static android.net.wifi.WifiInfo.SECURITY_TYPE_EAP;
 import static android.net.wifi.WifiInfo.SECURITY_TYPE_EAP_WPA3_ENTERPRISE;
 import static android.net.wifi.WifiInfo.SECURITY_TYPE_EAP_WPA3_ENTERPRISE_192_BIT;
@@ -27,6 +26,10 @@ import static android.net.wifi.WifiInfo.SECURITY_TYPE_OWE;
 import static android.net.wifi.WifiInfo.SECURITY_TYPE_PSK;
 import static android.net.wifi.WifiInfo.SECURITY_TYPE_SAE;
 import static android.net.wifi.WifiInfo.SECURITY_TYPE_WEP;
+
+import static com.android.wifitrackerlib.WifiEntry.CertificateInfo.CERTIFICATE_VALIDATION_METHOD_USING_CERTIFICATE_PINNING;
+import static com.android.wifitrackerlib.WifiEntry.CertificateInfo.CERTIFICATE_VALIDATION_METHOD_USING_INSTALLED_ROOTCA;
+import static com.android.wifitrackerlib.WifiEntry.CertificateInfo.CERTIFICATE_VALIDATION_METHOD_USING_SYSTEM_CERTIFICATE;
 
 import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.toList;
@@ -45,6 +48,7 @@ import android.net.wifi.MloLink;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiConfiguration.NetworkSelectionStatus;
+import android.net.wifi.WifiEnterpriseConfig;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiScanner;
 import android.os.Build;
@@ -248,6 +252,7 @@ public class Utils {
     static String getConnectedDescription(@NonNull Context context,
             @Nullable WifiConfiguration wifiConfiguration,
             @NonNull NetworkCapabilities networkCapabilities,
+            @Nullable WifiInfo wifiInfo,
             boolean isDefaultNetwork,
             boolean isLowQuality,
             @Nullable ConnectivityDiagnosticsManager.ConnectivityReport connectivityReport) {
@@ -297,6 +302,14 @@ public class Utils {
             // "Connected"
             sj.add(context.getResources().getStringArray(
                     R.array.wifitrackerlib_wifi_status)[DetailedState.CONNECTED.ordinal()]);
+        }
+
+        if (shouldShowConnected) {
+            if (wifiInfo != null && wifiInfo.getCurrentSecurityType() == SECURITY_TYPE_WEP) {
+                // "WEP (less secure)"
+                sj.add(context.getString(R.string.wifi_connected_less_secure,
+                        getSecurityString(context, Arrays.asList(SECURITY_TYPE_WEP), false)));
+            }
         }
 
         if (isLowQuality) {
@@ -423,13 +436,6 @@ public class Utils {
         // Check for any failure messages to display
         NetworkSelectionStatus networkSelectionStatus =
                 wifiConfiguration.getNetworkSelectionStatus();
-        if (wifiConfiguration.hasNoInternetAccess()) {
-            if (networkSelectionStatus.getNetworkSelectionStatus()
-                    == NETWORK_SELECTION_PERMANENTLY_DISABLED) {
-                return context.getString(R.string.wifitrackerlib_wifi_no_internet_no_reconnect);
-            }
-            return context.getString(R.string.wifitrackerlib_wifi_no_internet);
-        }
         if (networkSelectionStatus.getNetworkSelectionStatus() != NETWORK_SELECTION_ENABLED) {
             switch (networkSelectionStatus.getNetworkSelectionDisableReason()) {
                 case NetworkSelectionStatus.DISABLED_CONSECUTIVE_FAILURES:
@@ -452,8 +458,9 @@ public class Utils {
                 case NetworkSelectionStatus.DISABLED_ASSOCIATION_REJECTION:
                     return context.getString(R.string.wifitrackerlib_wifi_disabled_generic);
                 case NetworkSelectionStatus.DISABLED_NO_INTERNET_PERMANENT:
-                case NetworkSelectionStatus.DISABLED_NO_INTERNET_TEMPORARY:
                     return context.getString(R.string.wifitrackerlib_wifi_no_internet_no_reconnect);
+                case NetworkSelectionStatus.DISABLED_NO_INTERNET_TEMPORARY:
+                    return context.getString(R.string.wifitrackerlib_wifi_no_internet);
                 case DISABLED_TRANSITION_DISABLE_INDICATION:
                     return context.getString(
                             R.string.wifitrackerlib_wifi_disabled_transition_disable_indication);
@@ -1209,7 +1216,7 @@ public class Utils {
         if (transportInfo instanceof WifiInfo) {
             return (WifiInfo) transportInfo;
         }
-        return NonSdkApiWrapper.getVcnWifiInfo(capabilities);
+        return null;
     }
 
     /**
@@ -1284,5 +1291,42 @@ public class Utils {
         }
         // Unknown security types
         return concise ? "" : context.getString(R.string.wifitrackerlib_wifi_security_none);
+    }
+
+    /**
+     * Returns the CertificateInfo for a WifiEnterpriseConfig.
+     */
+    @Nullable
+    public static WifiEntry.CertificateInfo getCertificateInfo(
+            @NonNull WifiEnterpriseConfig config) {
+        if (Build.VERSION.SDK_INT < 33) {
+            return null;
+        }
+
+        // If the EAP method is not using certificate based connection, return null.
+        if (!config.isEapMethodServerCertUsed() || !config.hasCaCertificate()) {
+            return null;
+        }
+
+        WifiEntry.CertificateInfo info = new WifiEntry.CertificateInfo();
+        info.domain = config.getDomainSuffixMatch();
+        info.caCertificateAliases = config.getCaCertificateAliases();
+        if (info.caCertificateAliases != null) {
+            if (info.caCertificateAliases.length == 1
+                    && info.caCertificateAliases[0].startsWith("hash://server/sha256/")) {
+                info.validationMethod = CERTIFICATE_VALIDATION_METHOD_USING_CERTIFICATE_PINNING;
+                info.caCertificateAliases = null;
+            } else {
+                info.validationMethod = CERTIFICATE_VALIDATION_METHOD_USING_INSTALLED_ROOTCA;
+            }
+            return info;
+        }
+
+        if (config.getCaPath() != null) {
+            info.validationMethod = CERTIFICATE_VALIDATION_METHOD_USING_SYSTEM_CERTIFICATE;
+            return info;
+        }
+
+        return null;
     }
 }

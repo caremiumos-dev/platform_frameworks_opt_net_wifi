@@ -50,6 +50,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
+import androidx.core.os.BuildCompat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,6 +70,7 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
     private final List<ScanResult> mCurrentRoamingScanResults = new ArrayList<>();
 
     @NonNull private final String mKey;
+    @NonNull private final String mUniqueId;
     @NonNull private final String mFqdn;
     @NonNull private final String mFriendlyName;
     @Nullable
@@ -102,7 +104,8 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
 
         checkNotNull(passpointConfig, "Cannot construct with null PasspointConfiguration!");
         mPasspointConfig = passpointConfig;
-        mKey = uniqueIdToPasspointWifiEntryKey(passpointConfig.getUniqueId());
+        mUniqueId = passpointConfig.getUniqueId();
+        mKey = uniqueIdToPasspointWifiEntryKey(mUniqueId);
         mFqdn = passpointConfig.getHomeSp().getFqdn();
         checkNotNull(mFqdn, "Cannot construct with null PasspointConfiguration FQDN!");
         mFriendlyName = passpointConfig.getHomeSp().getFriendlyName();
@@ -129,7 +132,8 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
             throw new IllegalArgumentException("Given WifiConfiguration is not for Passpoint!");
         }
         mWifiConfig = wifiConfig;
-        mKey = uniqueIdToPasspointWifiEntryKey(wifiConfig.getKey());
+        mUniqueId = wifiConfig.getKey();
+        mKey = uniqueIdToPasspointWifiEntryKey(mUniqueId);
         mFqdn = wifiConfig.FQDN;
         checkNotNull(mFqdn, "Cannot construct with null WifiConfiguration FQDN!");
         mFriendlyName = mWifiConfig.providerFriendlyName;
@@ -191,6 +195,7 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
                     connectedStateDescription = getConnectedDescription(mContext,
                             mWifiConfig,
                             mNetworkCapabilities,
+                            mWifiInfo,
                             isDefaultNetwork(),
                             isLowQuality(),
                             mConnectivityReport);
@@ -296,7 +301,7 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
             return mOsuWifiEntry != null && mOsuWifiEntry.canConnect();
         }
 
-        return mLevel != WIFI_LEVEL_UNREACHABLE
+        return mScanResultLevel != WIFI_LEVEL_UNREACHABLE
                 && getConnectedState() == CONNECTED_STATE_DISCONNECTED && mWifiConfig != null;
     }
 
@@ -534,12 +539,12 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
                 mWifiConfig.SSID = "\"" + bestScanResult.SSID + "\"";
             }
             if (getConnectedState() == CONNECTED_STATE_DISCONNECTED) {
-                mLevel = bestScanResult != null
+                mScanResultLevel = bestScanResult != null
                         ? mWifiManager.calculateSignalLevel(bestScanResult.level)
                         : WIFI_LEVEL_UNREACHABLE;
             }
         } else {
-            mLevel = WIFI_LEVEL_UNREACHABLE;
+            mScanResultLevel = WIFI_LEVEL_UNREACHABLE;
         }
         notifyOnUpdated();
     }
@@ -562,7 +567,11 @@ public class PasspointWifiEntry extends WifiEntry implements WifiEntry.WifiEntry
             return false;
         }
 
-        // Match with FQDN until WifiInfo supports returning the passpoint uniqueID
+        if (BuildCompat.isAtLeastV() && NonSdkApiWrapper.isAndroidVWifiApiEnabled()) {
+            return TextUtils.equals(mUniqueId, wifiInfo.getPasspointUniqueId());
+        }
+
+        // Match with FQDN if WifiInfo doesn't support returning the uniqueID.
         return TextUtils.equals(wifiInfo.getPasspointFqdn(), mFqdn);
     }
 
