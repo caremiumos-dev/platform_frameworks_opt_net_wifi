@@ -34,6 +34,23 @@
       "parentUuid": "d2ae35a2_c1ee655a",
       "revId": "de45c0fc776cabd5dd2d58e045c9c4986e6a3de7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31be533e_8fa07778",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4288621
+      },
+      "writtenOn": "2025-08-16T10:21:56Z",
+      "side": 1,
+      "message": "Mani kanda na",
+      "revId": "de45c0fc776cabd5dd2d58e045c9c4986e6a3de7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
