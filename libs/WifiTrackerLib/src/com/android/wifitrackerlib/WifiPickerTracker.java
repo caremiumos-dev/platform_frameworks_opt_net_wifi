@@ -362,8 +362,20 @@ public class WifiPickerTracker extends BaseWifiTracker {
     @WorkerThread
     @Override
     protected void handleNetworkStateChangedAction(@NonNull Intent intent) {
-        WifiInfo primaryWifiInfo = mWifiManager.getConnectionInfo();
+        WifiInfo primaryWifiInfo = null;
         NetworkInfo networkInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
+        // Defesived check for null networkInfo.
+        if (networkInfo == null) {
+            Log.w(TAG, "networkInfo is null when network state changed");
+            primaryWifiInfo = mWifiManager.getConnectionInfo();
+        } else if (networkInfo.getState() != NetworkInfo.State.DISCONNECTED) {
+            primaryWifiInfo = mWifiManager.getConnectionInfo();
+        } else {
+            primaryWifiInfo = null;
+            if (isVerboseLoggingEnabled()) {
+                Log.i(TAG, "primary Wifi is already disconnected, keeps primaryWifiInfo as null");
+            }
+        }
         if (primaryWifiInfo != null) {
             conditionallyCreateConnectedWifiEntry(primaryWifiInfo);
         }
