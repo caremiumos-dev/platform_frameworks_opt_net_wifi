@@ -17,8 +17,6 @@
 package com.android.wifitrackerlib;
 
 import static com.android.wifitrackerlib.NetworkDetailsTracker.createNetworkDetailsTracker;
-import static com.android.wifitrackerlib.StandardWifiEntry.ScanResultKey;
-import static com.android.wifitrackerlib.StandardWifiEntry.StandardWifiEntryKey;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -41,7 +39,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.time.Clock;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class NetworkDetailsTrackerTest {
 
@@ -111,11 +108,9 @@ public class NetworkDetailsTrackerTest {
      * StandardWifiEntry key is passed in.
      */
     @Test
-    public void testCreateNetworkDetailsTracker_returnsStandardNetworkDetailsTracker()
-            throws Exception {
-        final NetworkDetailsTracker tracker = createTestNetworkDetailsTracker(
-                new StandardWifiEntryKey(new ScanResultKey("ssid",
-                        Collections.singletonList(WifiEntry.SECURITY_NONE))).toString());
+    public void testCreateNetworkDetailsTracker_returnsStandardNetworkDetailsTracker() {
+        final NetworkDetailsTracker tracker =
+                createTestNetworkDetailsTracker(StandardWifiEntry.KEY_PREFIX + "ssid,0");
         assertThat(tracker).isInstanceOf(StandardNetworkDetailsTracker.class);
     }
 }
