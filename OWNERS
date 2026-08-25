@@ -1,2 +1,5 @@
 # Bug component: 33618
 include platform/packages/modules/Wifi:/WIFI_OWNERS
+
+# Scoped Android Build Approvers
+per-file Android.bp,Android.mk,CleanSpec.mk,BUILD,BUILD.bazel,*.bp,*.bzl,cargo_embargo.json = mdb/android-build-approvers
