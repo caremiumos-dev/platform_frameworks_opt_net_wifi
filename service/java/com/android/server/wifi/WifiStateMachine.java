@@ -218,6 +218,10 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     private ConnectivityManager mCm;
     private BaseWifiDiagnostics mWifiDiagnostics;
     private WifiApConfigStore mWifiApConfigStore;
+    private SoftApStateMachine mSoftApStateMachine;
+    private boolean mStaAndAPConcurrency = false;
+    private String mSapInterfaceName;
+    private boolean mDualSapMode = false;
     private final boolean mP2pSupported;
     private final AtomicBoolean mP2pConnected = new AtomicBoolean(false);
     private boolean mTemporarilyDisconnectWifi = false;
@@ -1657,6 +1661,55 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         }
     }
 
+    /**
+     * CAF/QTI vendor extension: the soft AP state machine owned by this state machine.
+     */
+    public SoftApStateMachine getSoftApStateMachine() {
+        return mSoftApStateMachine;
+    }
+
+    /**
+     * CAF/QTI vendor extension: set the SAP interface name to use.
+     */
+    public void setNewSapInterface(String interfaceName) {
+        mSapInterfaceName = interfaceName;
+    }
+
+    /**
+     * CAF/QTI vendor extension: enable/disable STA + SAP concurrency and lazily create the
+     * soft AP state machine.
+     */
+    public void setStaSoftApConcurrency(boolean enable) {
+        if (enable && mSoftApStateMachine == null) {
+            mSoftApStateMachine = new SoftApStateMachine(
+                    mContext, mWifiInjector, mWifiNative, mNwService, mBatteryStats);
+            logd("mSoftApStateMachine is created");
+        }
+        mStaAndAPConcurrency = enable;
+        mWifiNative.setStaSoftApConcurrency(enable);
+        logd("set StaAndAPConcurrency = " + enable);
+    }
+
+    /**
+     * CAF/QTI vendor extension: switch the SAP interface between single and dual SAP.
+     */
+    public void setDualSapMode(boolean dualSapMode) {
+        mDualSapMode = dualSapMode;
+        setNewSapInterface(dualSapMode
+                ? mWifiApConfigStore.getBridgeInterface()
+                : mWifiApConfigStore.getSapInterface());
+    }
+
+    /**
+     * CAF/QTI vendor extension: whether the soft AP is extending an existing network's coverage.
+     */
+    public boolean isExtendingNetworkCoverage() {
+        if (mSoftApStateMachine != null) {
+            return mSoftApStateMachine.isExtendingNetworkCoverage();
+        }
+        return false;
+    }
+
     public void setWifiApConfiguration(WifiConfiguration config) {
         mWifiApConfigStore.setApConfiguration(config);
     }
@@ -1696,7 +1749,8 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
      * TODO: doc
      */
     public int syncGetWifiApState() {
-        return mWifiApState.get();
+        return mStaAndAPConcurrency
+                ? mSoftApStateMachine.syncGetWifiApState() : mWifiApState.get();
     }
 
     /**
@@ -4278,6 +4332,9 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     mLastSignalLevel = -1;
 
                     mWifiInfo.setMacAddress(mWifiNative.getMacAddress());
+                    if (!mWifiConfigManager.migrateFromLegacyStore()) {
+                        Log.e(TAG, "Failed to migrate from legacy config store");
+                    }
                     initializeWpsDetails();
                     sendSupplicantConnectionChangedBroadcast(true);
                     transitionTo(mSupplicantStartedState);
@@ -4847,6 +4904,23 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             return null;
         }
         return mWifiConfigManager.getConfiguredNetwork(mLastNetworkId);
+    }
+
+    /**
+     * CAF/QTI vendor extension: current operational mode (CONNECT_MODE / SCAN_ONLY_MODE / ...).
+     */
+    public int getOperationalMode() {
+        return mOperationalMode;
+    }
+
+    /**
+     * CAF/QTI vendor extension: clean up the wifi state; invoked by the soft AP state machine
+     * before reusing the driver in AP mode.
+     */
+    public void cleanup() {
+        mWifiMonitor.stopAllMonitoring();
+        mDeathRecipient.unlinkToDeath();
+        mWifiNative.tearDown();
     }
 
     ScanResult getCurrentScanResult() {

@@ -43,6 +43,20 @@ public class ApConfigUtil {
     private static final Random sRandom = new Random();
 
     /**
+     * CAF/QTI vendor extension: remove surrounding double quotes from a quoted string.
+     * @param str string to unquote.
+     * @return the unquoted string (empty when null/empty).
+     */
+    public static String removeDoubleQuotes(String str) {
+        if (android.text.TextUtils.isEmpty(str)) {
+            return "";
+        }
+        int length = str.length();
+        return (length > 1 && str.charAt(0) == '"' && str.charAt(length - 1) == '"')
+                ? str.substring(1, length - 1) : str;
+    }
+
+    /**
      * Convert frequency to channel.
      * @param frequency frequency to convert
      * @return channel number associated with given frequency, -1 if no match

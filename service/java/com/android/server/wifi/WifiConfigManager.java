@@ -247,6 +247,7 @@ public class WifiConfigManager {
     private final TelephonyManager mTelephonyManager;
     private final WifiKeyStore mWifiKeyStore;
     private final WifiConfigStore mWifiConfigStore;
+    private final WifiConfigStoreLegacy mWifiConfigStoreLegacy;
     private final WifiPermissionsUtil mWifiPermissionsUtil;
     private final WifiPermissionsWrapper mWifiPermissionsWrapper;
     /**
@@ -341,6 +342,7 @@ public class WifiConfigManager {
             Context context, Clock clock, UserManager userManager,
             TelephonyManager telephonyManager, WifiKeyStore wifiKeyStore,
             WifiConfigStore wifiConfigStore,
+            WifiConfigStoreLegacy wifiConfigStoreLegacy,
             WifiPermissionsUtil wifiPermissionsUtil,
             WifiPermissionsWrapper wifiPermissionsWrapper,
             NetworkListStoreData networkListStoreData,
@@ -352,6 +354,7 @@ public class WifiConfigManager {
         mTelephonyManager = telephonyManager;
         mWifiKeyStore = wifiKeyStore;
         mWifiConfigStore = wifiConfigStore;
+        mWifiConfigStoreLegacy = wifiConfigStoreLegacy;
         mWifiPermissionsUtil = wifiPermissionsUtil;
         mWifiPermissionsWrapper = wifiPermissionsWrapper;
 
@@ -2715,7 +2718,9 @@ public class WifiConfigManager {
     public boolean loadFromStore() {
         if (!mWifiConfigStore.areStoresPresent()) {
             Log.d(TAG, "New store files not found. No saved networks loaded!");
-            mPendingStoreRead = false;
+            if (!mWifiConfigStoreLegacy.areStoresPresent()) {
+                mPendingStoreRead = false;
+            }
             return true;
         }
         // If the user unlock comes in before we load from store, which means the user store have
@@ -2766,6 +2771,41 @@ public class WifiConfigManager {
         }
         loadInternalDataFromUserStore(mNetworkListStoreData.getUserConfigurations(),
                 mDeletedEphemeralSsidsStoreData.getSsidList());
+        return true;
+    }
+
+    /**
+     * Migrate the configurations from the legacy (Pre O) config store files and write them to the
+     * new config store. This should be invoked once (when the supplicant connection is
+     * established) before we start any of the other operations.
+     *
+     * @return true on success, false otherwise.
+     */
+    public boolean migrateFromLegacyStore() {
+        if (!mWifiConfigStoreLegacy.areStoresPresent()) {
+            Log.d(TAG, "Legacy store files not found. No migration needed!");
+            return true;
+        }
+        // New store files found. No migration needed! Remove legacy store files.
+        if (mWifiConfigStore.areStoresPresent()) {
+            Log.d(TAG, "New store files found. No migration needed! Remove legacy store files");
+            mWifiConfigStoreLegacy.removeStores();
+            return true;
+        }
+        WifiConfigStoreLegacy.WifiConfigStoreDataLegacy storeData = mWifiConfigStoreLegacy.read();
+        Log.d(TAG, "Reading from legacy store completed");
+        loadInternalData(storeData.getConfigurations(), new ArrayList<WifiConfiguration>(),
+                storeData.getDeletedEphemeralSSIDs());
+        if (mDeferredUserUnlockRead) {
+            Log.i(TAG, "Handling user unlock before loading from store.");
+            mWifiConfigStore.setUserStore(WifiConfigStore.createUserFile(mCurrentUserId));
+            mDeferredUserUnlockRead = false;
+        }
+        if (!saveToStore(true)) {
+            return false;
+        }
+        mWifiConfigStoreLegacy.removeStores();
+        Log.d(TAG, "Migration from legacy store completed");
         return true;
     }
 

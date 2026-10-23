@@ -65,14 +65,18 @@ public class WifiNative {
     private final SupplicantStaIfaceHal mSupplicantStaIfaceHal;
     private final WifiVendorHal mWifiVendorHal;
     private final WificondControl mWificondControl;
+    private final WifiInjector mWifiInjector;
+    private boolean mStaAndAPConcurrency = false;
 
     public WifiNative(String interfaceName, WifiVendorHal vendorHal,
-                      SupplicantStaIfaceHal staIfaceHal, WificondControl condControl) {
+                      SupplicantStaIfaceHal staIfaceHal, WificondControl condControl,
+                      WifiInjector wifiInjector) {
         mTAG = "WifiNative-" + interfaceName;
         mInterfaceName = interfaceName;
         mWifiVendorHal = vendorHal;
         mSupplicantStaIfaceHal = staIfaceHal;
         mWificondControl = condControl;
+        mWifiInjector = wifiInjector;
     }
 
     public String getInterfaceName() {
@@ -136,6 +140,121 @@ public class WifiNative {
             return Pair.create(SETUP_FAILURE_WIFICOND, null);
         }
         return Pair.create(SETUP_SUCCESS, iApInterface);
+    }
+
+    /**
+     * CAF/QTI vendor extension: setup wifi native for soft AP mode with an explicit SAP interface.
+     *
+     * @param ifaceName name of the SAP interface to create, or null for the default.
+     * @param dualSap whether dual SAP mode is requested.
+     * @return Pair of <Integer, IApInterface> to indicate the status and the associated wificond
+     *         AP interface binder handler (will be null on failure).
+     */
+    public Pair<Integer, IApInterface> setupForSoftApMode(String ifaceName, boolean dualSap) {
+        if (!startHalIfNecessary(false)) {
+            Log.e(mTAG, "Failed to start HAL for AP mode");
+            return Pair.create(SETUP_FAILURE_HAL, null);
+        }
+        if (ifaceName != null) {
+            addOrRemoveInterface(ifaceName, true, dualSap);
+        }
+        IApInterface iApInterface = mWificondControl.QcSetupDriverForSoftApMode(dualSap);
+        return iApInterface == null
+                ? Pair.create(SETUP_FAILURE_WIFICOND, null)
+                : Pair.create(SETUP_SUCCESS, iApInterface);
+    }
+
+    /**
+     * CAF/QTI vendor extension: create or remove a SAP (or bridge) interface through QSAP.
+     *
+     * @param ifaceName name of the interface.
+     * @param add true to create, false to remove.
+     * @param bridge true when operating on the dual SAP bridge interface.
+     * @return true on success.
+     */
+    public boolean addOrRemoveInterface(String ifaceName, boolean add, boolean bridge) {
+        if (ifaceName != null && !bridge) {
+            if (add && runQsapCmd("softap create ", ifaceName)) {
+                Log.d(mTAG, "created SAP interface " + ifaceName);
+                return true;
+            }
+            if (!add && !runQsapCmd("softap remove ", ifaceName)) {
+                Log.e(mTAG, "Failed to add/remove SAP interface " + ifaceName);
+                return false;
+            }
+            Log.d(mTAG, "removed SAP interface " + ifaceName);
+            return true;
+        }
+        if (ifaceName != null && bridge) {
+            if (add && runQsapCmd("softap bridge create ", ifaceName)) {
+                Log.d(mTAG, "created bridge SAP interface " + ifaceName);
+            } else {
+                if (!add && !runQsapCmd("softap bridge remove ", ifaceName)) {
+                    Log.e(mTAG, "Failed to add/remove Bridge SAP interface " + ifaceName);
+                    return false;
+                }
+                Log.d(mTAG, "removed bridge SAP interface " + ifaceName);
+            }
+            String[] dualSapInterfaces = mWifiInjector.getWifiApConfigStore().getDualSapInterfaces();
+            if (dualSapInterfaces == null || dualSapInterfaces.length != 2) {
+                Log.e(mTAG, "dualApInterfaces is not set or length is not 2");
+                return false;
+            }
+            if (add && runQsapCmd("softap create ", dualSapInterfaces[0])
+                    && runQsapCmd("softap create ", dualSapInterfaces[1])) {
+                Log.d(mTAG, "created SAP interfaces " + dualSapInterfaces[0]
+                        + " and " + dualSapInterfaces[1]);
+                return true;
+            }
+            if (!add && runQsapCmd("softap remove ", dualSapInterfaces[0])
+                    && runQsapCmd("softap remove ", dualSapInterfaces[1])) {
+                Log.d(mTAG, "removed SAP interfaces " + dualSapInterfaces[0]
+                        + " and " + dualSapInterfaces[1]);
+                return true;
+            }
+            Log.e(mTAG, "Failed to add/remove SAP interfaces " + dualSapInterfaces[0]
+                    + " and " + dualSapInterfaces[1]);
+            return false;
+        }
+        return false;
+    }
+
+    /**
+     * CAF/QTI vendor extension: run a QSAP command, optionally appending an argument.
+     *
+     * @param cmd the QSAP command.
+     * @param arg optional argument appended to the command, or null.
+     * @return true on success.
+     */
+    public boolean runQsapCmd(String cmd, String arg) {
+        if (arg != null) {
+            cmd = cmd + arg;
+        }
+        if (mWificondControl.runQsapCmd(cmd)) {
+            return true;
+        }
+        Log.e(mTAG, "Failed to run QSAP command = " + cmd);
+        return false;
+    }
+
+    /**
+     * CAF/QTI vendor extension: teardown the AP interfaces configured in wificond.
+     *
+     * @return true on success.
+     */
+    public boolean tearDownAp() {
+        if (mWificondControl.tearDownApInterfaces()) {
+            return true;
+        }
+        Log.e(mTAG, "Failed to teardown Ap interfaces from Wificond");
+        return false;
+    }
+
+    /**
+     * CAF/QTI vendor extension: enable/disable STA + SAP concurrency.
+     */
+    public void setStaSoftApConcurrency(boolean concurrency) {
+        mStaAndAPConcurrency = concurrency;
     }
 
     /**

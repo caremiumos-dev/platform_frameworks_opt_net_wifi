@@ -40,6 +40,7 @@ import com.android.server.wifi.wificond.PnoNetwork;
 import com.android.server.wifi.wificond.PnoSettings;
 import com.android.server.wifi.wificond.SingleScanSettings;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -242,6 +243,119 @@ public class WificondControl {
             Log.e(TAG, "Failed to tear down interfaces due to remote exception");
         }
 
+        return false;
+    }
+
+    /**
+     * CAF/QTI vendor extension: setup the driver for soft AP mode using the QSAP bridge.
+     * @param dualSap whether dual SAP mode is requested.
+     * @return Returns the IApInterface on success, null otherwise.
+     */
+    public IApInterface QcSetupDriverForSoftApMode(boolean dualSap) {
+        String bridgeInterface = dualSap
+                ? mWifiInjector.getWifiApConfigStore().getBridgeInterface()
+                : mWifiInjector.getWifiApConfigStore().getSapInterface();
+        if (bridgeInterface == null) {
+            Log.d(TAG, "Can't setup SAP mode without interface names");
+            return null;
+        }
+        Log.d(TAG, "Setting up driver for soft ap mode");
+        mWificond = mWifiInjector.makeWificond();
+        if (mWificond == null) {
+            Log.e(TAG, "Failed to get reference to wificond");
+            return null;
+        }
+
+        String[] dualSapInterfaces =
+                dualSap ? mWifiInjector.getWifiApConfigStore().getDualSapInterfaces() : null;
+        IApInterface dualSapInterface1 = null;
+        IApInterface dualSapInterface2 = null;
+        try {
+            if (dualSap && dualSapInterfaces != null && dualSapInterfaces.length == 2) {
+                dualSapInterface1 = mWificond.QcCreateApInterface(
+                        dualSapInterfaces[0].getBytes(StandardCharsets.UTF_8));
+                dualSapInterface2 = mWificond.QcCreateApInterface(
+                        dualSapInterfaces[1].getBytes(StandardCharsets.UTF_8));
+            }
+            IApInterface apInterface = mWificond.QcCreateApInterface(
+                    bridgeInterface.getBytes(StandardCharsets.UTF_8));
+            if (apInterface == null
+                    || (dualSapInterfaces != null
+                    && (dualSapInterface1 == null || dualSapInterface2 == null))) {
+                Log.e(TAG, "Could not get IApInterface instance from wificond");
+                return null;
+            }
+            Binder.allowBlocking(apInterface.asBinder());
+            mApInterface = apInterface;
+            return apInterface;
+        } catch (RemoteException e) {
+            Log.e(TAG, "Failed to get IApInterface due to remote exception");
+            return null;
+        }
+    }
+
+    /**
+     * CAF/QTI vendor extension: run a QSAP command through wificond.
+     * @param cmd command to run.
+     * @return Returns true on success.
+     */
+    public boolean runQsapCmd(String cmd) {
+        Log.d(TAG, "sending qsap cmd = " + cmd);
+        mWificond = mWifiInjector.makeWificond();
+        if (mWificond == null) {
+            Log.e(TAG, "Failed to get reference to wificond");
+            return false;
+        }
+        try {
+            if (mWificond.setHostapdParam(cmd.getBytes(StandardCharsets.UTF_8))) {
+                return true;
+            }
+            Log.e(TAG, "Failed to run qsap command");
+        } catch (RemoteException e) {
+            Log.e(TAG, "Failed to run qsap command due to remote exception");
+        }
+        return false;
+    }
+
+    /**
+     * CAF/QTI vendor extension: teardown AP interfaces configured in wificond.
+     * @return Returns true on success.
+     */
+    public boolean tearDownApInterfaces() {
+        Log.d(TAG, "tearing down AP interfaces in wificond");
+        mWificond = mWifiInjector.makeWificond();
+        if (mWificond == null) {
+            Log.e(TAG, "Failed to get reference to wificond");
+            return false;
+        }
+        try {
+            mWificond.tearDownApInterfaces();
+            mApInterface = null;
+            return true;
+        } catch (RemoteException e) {
+            Log.e(TAG, "Failed to tear down AP interfaces due to remote exception");
+        }
+        return false;
+    }
+
+    /**
+     * CAF/QTI vendor extension: teardown STA interfaces configured in wificond.
+     * @return Returns true on success.
+     */
+    public boolean tearDownStaInterfaces() {
+        Log.d(TAG, "tearing down STA interfaces in wificond");
+        mWificond = mWifiInjector.makeWificond();
+        if (mWificond == null) {
+            Log.e(TAG, "Failed to get reference to wificond");
+            return false;
+        }
+        try {
+            mWificond.tearDownStaInterfaces();
+            mClientInterface = null;
+            return true;
+        } catch (RemoteException e) {
+            Log.e(TAG, "Failed to tear down STA interfaces due to remote exception");
+        }
         return false;
     }
 

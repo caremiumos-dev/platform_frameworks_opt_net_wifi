@@ -45,6 +45,7 @@ import com.android.server.am.BatteryStatsService;
 import com.android.server.net.DelayedDiskWrite;
 import com.android.server.net.IpConfigStore;
 import com.android.server.wifi.aware.WifiAwareMetrics;
+import com.android.server.wifi.hotspot2.LegacyPasspointConfigParser;
 import com.android.server.wifi.hotspot2.PasspointManager;
 import com.android.server.wifi.hotspot2.PasspointNetworkEvaluator;
 import com.android.server.wifi.hotspot2.PasspointObjectFactory;
@@ -101,6 +102,8 @@ public class WifiInjector {
     private final WifiConfigStore mWifiConfigStore;
     private final WifiKeyStore mWifiKeyStore;
     private final IpConfigStore mIpConfigStore;
+    private final WifiNetworkHistory mWifiNetworkHistory;
+    private final WifiConfigStoreLegacy mWifiConfigStoreLegacy;
     private final WifiConfigManager mWifiConfigManager;
     private final WifiConnectivityHelper mWifiConnectivityHelper;
     private final LocalLog mConnectivityLocalLog;
@@ -169,7 +172,7 @@ public class WifiInjector {
         mWificondControl = new WificondControl(this, mWifiMonitor,
                 new CarrierNetworkConfig(mContext));
         mWifiNative = new WifiNative(SystemProperties.get("wifi.interface", "wlan0"),
-                mWifiVendorHal, mSupplicantStaIfaceHal, mWificondControl);
+                mWifiVendorHal, mSupplicantStaIfaceHal, mWificondControl, this);
         mWifiP2pMonitor = new WifiP2pMonitor(this);
         mSupplicantP2pIfaceHal = new SupplicantP2pIfaceHal(mWifiP2pMonitor);
         mWifiP2pNative = new WifiP2pNative(SystemProperties.get("wifi.direct.interface", "p2p0"),
@@ -192,11 +195,14 @@ public class WifiInjector {
                 WifiConfigStore.createSharedFile());
         // Legacy config store
         DelayedDiskWrite writer = new DelayedDiskWrite();
+        mWifiNetworkHistory = new WifiNetworkHistory(mContext, writer);
         mIpConfigStore = new IpConfigStore(writer);
+        mWifiConfigStoreLegacy = new WifiConfigStoreLegacy(mWifiNetworkHistory, mWifiNative,
+                mIpConfigStore, new LegacyPasspointConfigParser());
         // Config Manager
         mWifiConfigManager = new WifiConfigManager(mContext, mClock,
                 UserManager.get(mContext), TelephonyManager.from(mContext),
-                mWifiKeyStore, mWifiConfigStore, mWifiPermissionsUtil,
+                mWifiKeyStore, mWifiConfigStore, mWifiConfigStoreLegacy, mWifiPermissionsUtil,
                 mWifiPermissionsWrapper, new NetworkListStoreData(mContext),
                 new DeletedEphemeralSsidsStoreData());
         mWifiMetrics.setWifiConfigManager(mWifiConfigManager);
@@ -231,7 +237,8 @@ public class WifiInjector {
                 new ConnectToNetworkNotificationBuilder(mContext, mFrameworkFacade));
         mLockManager = new WifiLockManager(mContext, BatteryStatsService.getService());
         mWifiController = new WifiController(mContext, mWifiStateMachine, mSettingsStore,
-                mLockManager, mWifiServiceHandlerThread.getLooper(), mFrameworkFacade);
+                mLockManager, mWifiServiceHandlerThread.getLooper(), mFrameworkFacade,
+                mWifiApConfigStore);
         mSelfRecovery = new SelfRecovery(mWifiController, mClock);
         mWifiLastResortWatchdog = new WifiLastResortWatchdog(mSelfRecovery, mWifiMetrics);
         mWifiMulticastLockManager = new WifiMulticastLockManager(mWifiStateMachine,
@@ -379,7 +386,7 @@ public class WifiInjector {
         return new SoftApManager(mWifiServiceHandlerThread.getLooper(),
                                  mWifiNative, mCountryCode.getCountryCode(),
                                  listener, apInterface, nmService,
-                                 mWifiApConfigStore, config, mWifiMetrics);
+                                 mWifiApConfigStore, config, mWifiMetrics, this, mContext);
     }
 
     /**

@@ -143,10 +143,16 @@ public class WifiConnectivityManager {
     private final LocalLog mLocalLog;
     private final LinkedList<Long> mConnectionAttemptTimeStamps;
 
+    // XTC 差异：保存 context 供厂商遥测使用。
+    private Context mContext;
     private boolean mDbg = false;
     private boolean mWifiEnabled = false;
     private boolean mWifiConnectivityManagerEnabled = true;
     private boolean mScreenOn = false;
+    // XTC 差异：屏幕扫描控制（息屏时是否继续扫描）+ 遥测计数。
+    private int screenScanNum = 0;
+    private boolean screenScan = true;
+    private boolean mDisableConnectScan = false;
     private int mWifiState = WIFI_STATE_UNKNOWN;
     private boolean mUntrustedConnectionAllowed = false;
     private int mScanRestartCount = 0;
@@ -550,6 +556,7 @@ public class WifiConnectivityManager {
             SavedNetworkEvaluator savedNetworkEvaluator,
             ScoredNetworkEvaluator scoredNetworkEvaluator,
             PasspointNetworkEvaluator passpointNetworkEvaluator) {
+        mContext = context;
         mStateMachine = stateMachine;
         mScanner = scanner;
         mConfigManager = configManager;
@@ -825,7 +832,18 @@ public class WifiConnectivityManager {
         }
 
         mLastPeriodicSingleScanTimeStamp = currentTimeStamp;
-        startSingleScan(isFullBandScan, WIFI_WORK_SOURCE);
+        // XTC 差异：重流量/用户禁用自动连接时跳过扫描，并上报屏幕扫描遥测。
+        if (mWifiState == WIFI_STATE_CONNECTED
+                && (mWifiInfo.txSuccessRate > 40.0d || mWifiInfo.rxSuccessRate > 80.0d)) {
+            Log.e(TAG, "Ignore scan due to heavy traffic");
+        } else if (mDisableConnectScan) {
+            Log.e(TAG, "Ignore scan due to user disable auto disconnection");
+        } else {
+            screenScanNum++;
+            screenScanXtcBehavior();
+            startSingleScan(isFullBandScan, WIFI_WORK_SOURCE);
+            Log.d(TAG, "wzs startSingleScan");
+        }
         schedulePeriodicScanTimer(mPeriodicSingleScanInterval);
 
         // Set up the next scan interval in an exponential backoff fashion.
@@ -1018,7 +1036,13 @@ public class WifiConnectivityManager {
             return;
         }
 
-        if (mScreenOn) {
+        // XTC 差异：屏幕扫描开关（默认开）。
+        if (screenScan) {
+            Log.d(TAG, "wzs set screenScan on");
+        } else {
+            Log.d(TAG, "wzs set screenScan off");
+        }
+        if (mScreenOn && screenScan) {
             startPeriodicScan(scanImmediately);
         } else {
             if (mWifiState == WIFI_STATE_DISCONNECTED && !mPnoScanStarted) {
@@ -1352,6 +1376,29 @@ public class WifiConnectivityManager {
         mWifiEnabled = enable;
         updateRunningState();
 
+    }
+
+    // XTC 差异：屏幕扫描开关状态查询/设置 + 遥测。
+    public boolean getScreenScanState() {
+        return screenScan;
+    }
+
+    public void screenScanEnabled(boolean enabled) {
+        if (enabled) {
+            screenScan = true;
+        } else {
+            screenScan = false;
+        }
+    }
+
+    public void setDisableConnect(boolean disable) {
+        mDisableConnectScan = disable;
+    }
+
+    // XTC 差异：屏幕扫描遥测（厂商行为，仅记录）。
+    public void screenScanXtcBehavior() {
+        new com.xtc.behavior.XtcBehavior.Builder(mContext, "wifi_SCREEN_SCAN",
+                (java.util.HashMap) null).build().sendData();
     }
 
     /**

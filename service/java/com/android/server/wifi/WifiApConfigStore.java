@@ -21,6 +21,7 @@ import android.content.Context;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiConfiguration.KeyMgmt;
 import android.os.Environment;
+import android.os.SystemProperties;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -29,10 +30,12 @@ import com.android.internal.annotations.VisibleForTesting;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -54,6 +57,13 @@ public class WifiApConfigStore {
     private static final int RAND_SSID_INT_MIN = 1000;
     private static final int RAND_SSID_INT_MAX = 9999;
 
+    // CAF/QTI vendor extension: STA+SAP concurrency configuration file.
+    private static final String mConcurrencyCfgTemplateFile =
+            "/vendor/etc/wifi/wifi_concurrency_cfg.txt";
+    private static final String ENABLE_STA_SAP = "ENABLE_STA_SAP_CONCURRENCY:";
+    private static final String SAP_CHANNEL = "SAP_CHANNEL:";
+    private static final String SEPARATOR_KEY = "\n";
+
     @VisibleForTesting
     static final int SSID_MIN_LEN = 1;
     @VisibleForTesting
@@ -71,6 +81,16 @@ public class WifiApConfigStore {
     private final String mApConfigFile;
     private final BackupManagerProxy mBackupManagerProxy;
 
+    // CAF/QTI SAP extension state.
+    private String mSoftApInterfaceName = null;
+    private boolean mSoftApCreateIntf = false;
+    private String mBridgeInterfaceName = null;
+    private String[] mdualApInterfaces = null;
+    private boolean mDualSapBuildEnabled = false;
+    private boolean mDualSapStatus = false;
+    private int mSoftApChannel = 0;
+    private boolean mStaSapConcurrentMode = false;
+
     WifiApConfigStore(Context context, BackupManagerProxy backupManagerProxy) {
         this(context, backupManagerProxy, DEFAULT_AP_CONFIG_FILE);
     }
@@ -81,6 +101,26 @@ public class WifiApConfigStore {
         mContext = context;
         mBackupManagerProxy = backupManagerProxy;
         mApConfigFile = apConfigFile;
+
+        // CAF/QTI SAP extension. The SAP/bridge interface names and the dual SAP switch are read
+        // from framework-res arrays/bools on the device (their JADX de-duplicated resource names
+        // are not yet restored), so those keep a property fallback for now. The STA+SAP
+        // concurrency flag and the SAP channel are read from the vendor config file.
+        mSoftApInterfaceName = SystemProperties.get("wifi.interface", "wlan0");
+        mSoftApCreateIntf = false;
+        mBridgeInterfaceName = SystemProperties.get("persist.vendor.fst.wifi.bridge", null);
+        mStaSapConcurrentMode = false;
+        mDualSapBuildEnabled = false;
+        mDualSapStatus = false;
+        mdualApInterfaces = null;
+        mSoftApChannel = 0;
+        if (ensureConcurrencyFileExist()) {
+            readConcurrencyConfig();
+        }
+        mDualSapBuildEnabled = mContext.getResources().getBoolean(
+                R.bool.config_wifi_dual_sap_mode_enabled);
+        mdualApInterfaces = mContext.getResources().getStringArray(
+                R.array.config_wifi_dual_sap_interfaces);
 
         String ap2GChannelListStr = mContext.getResources().getString(
                 R.string.config_wifi_framework_sap_2G_channel_list);
@@ -133,6 +173,117 @@ public class WifiApConfigStore {
 
     public ArrayList<Integer> getAllowed2GChannel() {
         return mAllowed2GChannel;
+    }
+
+    /**
+     * CAF/QTI vendor extension: check whether the STA+SAP concurrency config file exists.
+     */
+    private boolean ensureConcurrencyFileExist() {
+        try {
+            DataInputStream in = new DataInputStream(new BufferedInputStream(
+                    new FileInputStream(mConcurrencyCfgTemplateFile)));
+            if (in == null) {
+                return true;
+            }
+            try {
+                in.close();
+                return true;
+            } catch (IOException e) {
+                return true;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "ensureConcurrencyFile template file doesnt exist" + e);
+            return false;
+        }
+    }
+
+    /**
+     * CAF/QTI vendor extension: parse the STA+SAP concurrency config file for the concurrency
+     * flag and the SAP channel.
+     */
+    private void readConcurrencyConfig() {
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(mConcurrencyCfgTemplateFile));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                Log.d(TAG, "mConcurrencyCfgTemplateFile line: " + line);
+                if (line.startsWith(ENABLE_STA_SAP)) {
+                    try {
+                        mStaSapConcurrentMode = Integer.parseInt(
+                                line.replace(ENABLE_STA_SAP, "").replace(SEPARATOR_KEY, "")) == 1;
+                        Log.d(TAG, "mConcurrencyCfgTemplateFile EnableConcurrency = "
+                                + mStaSapConcurrentMode);
+                    } catch (NumberFormatException e) {
+                        Log.e(TAG, "mConcurrencyCfgTemplateFile: incorrect format :" + line);
+                    }
+                }
+                if (line.startsWith(SAP_CHANNEL)) {
+                    try {
+                        mSoftApChannel = Integer.parseInt(
+                                line.replace(SAP_CHANNEL, "").replace(SEPARATOR_KEY, ""));
+                        Log.d(TAG, "mConcurrencyCfgTemplateFile SAPChannel = " + mSoftApChannel);
+                    } catch (NumberFormatException e) {
+                        Log.e(TAG, "mConcurrencyCfgTemplateFile: incorrect format :" + line);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            Log.e(TAG, "mConcurrencyCfgTemplateFile: Error parsing configuration" + e);
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    Log.e(TAG, "mConcurrencyCfgTemplateFile: Error closing file" + e);
+                }
+            }
+        }
+    }
+
+    /** CAF/QTI vendor extension: name of the bridge interface used for dual SAP. */
+    public synchronized String getBridgeInterface() {
+        return mBridgeInterfaceName;
+    }
+
+    /** CAF/QTI vendor extension: interface names used for dual SAP. */
+    public synchronized String[] getDualSapInterfaces() {
+        return mdualApInterfaces;
+    }
+
+    /** CAF/QTI vendor extension: whether dual SAP is currently active. */
+    public synchronized boolean getDualSapStatus() {
+        return mDualSapStatus;
+    }
+
+    /** CAF/QTI vendor extension: name of the SAP interface. */
+    public synchronized String getSapInterface() {
+        return mSoftApInterfaceName;
+    }
+
+    /** CAF/QTI vendor extension: channel persisted in the softap config file. */
+    public synchronized int getConfigFileChannel() {
+        return mSoftApChannel;
+    }
+
+    /** CAF/QTI vendor extension: whether the SAP interface must be newly created. */
+    public synchronized boolean isSapNewIntfRequired() {
+        return mSoftApCreateIntf;
+    }
+
+    /** CAF/QTI vendor extension: whether STA+SAP concurrency is enabled. */
+    public synchronized boolean getStaSapConcurrency() {
+        return mStaSapConcurrentMode;
+    }
+
+    /** CAF/QTI vendor extension: whether dual SAP is supported by this build. */
+    public synchronized boolean isDualSapSupported() {
+        return mDualSapBuildEnabled;
+    }
+
+    /** CAF/QTI vendor extension: update the dual SAP active state. */
+    public synchronized void setDualSapStatus(boolean dualSapStatus) {
+        mDualSapStatus = dualSapStatus;
     }
 
     /**

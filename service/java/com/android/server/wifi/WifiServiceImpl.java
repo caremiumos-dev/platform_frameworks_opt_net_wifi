@@ -78,6 +78,7 @@ import android.net.wifi.hotspot2.PasspointConfiguration;
 import android.os.AsyncTask;
 import android.os.BatteryStats;
 import android.os.Binder;
+import android.os.SystemProperties;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.HandlerThread;
@@ -108,6 +109,8 @@ import com.android.internal.util.AsyncChannel;
 import com.android.server.wifi.hotspot2.PasspointProvider;
 import com.android.server.wifi.util.WifiHandler;
 import com.android.server.wifi.util.WifiPermissionsUtil;
+import com.xtc.auth.IRequestedPermissionCallback;
+import com.xtc.auth.MobileManagerUtils;
 
 import java.io.BufferedReader;
 import java.io.FileDescriptor;
@@ -155,6 +158,11 @@ public class WifiServiceImpl extends IWifiManager.Stub {
 
     final WifiStateMachine mWifiStateMachine;
 
+    // CAF/QTI vendor extension: soft AP config store and the (optional) STA+SAP soft AP
+    // state machine owned by mWifiStateMachine.
+    private WifiApConfigStore mWifiApConfigStore;
+    private SoftApStateMachine mSoftApStateMachine;
+
     private final Context mContext;
     private final FrameworkFacade mFacade;
     private final Clock mClock;
@@ -184,6 +192,12 @@ public class WifiServiceImpl extends IWifiManager.Stub {
 
     // Map of package name of background scan apps and last scan timestamp.
     private final ArrayMap<String, Long> mLastScanTimestamps;
+
+    // XTC/厂商扩展：定位 SDK 包名与 scan 节流时间戳。
+    static final String locationSdkPackage = "com.xtc.datacenter";
+    private long preReqScanMs = 0;
+    private long preScanResultUpdateMs = 0;
+    private int channels = 13;
 
     private WifiScanner mWifiScanner;
     private WifiLog mLog;
@@ -380,6 +394,47 @@ public class WifiServiceImpl extends IWifiManager.Stub {
     /**
      * Handles interaction with WifiStateMachine
      */
+    /**
+     * XTC/厂商扩展：异步 sub-permission 授权通过后再真正开启 WiFi。
+     *
+     * 谴责：厂商用私有 per-uid sub-permission（`sub-permission.CHANGE_WIFI_STATE_ON`）
+     * 覆盖了 Android 公开的 CHANGE_WIFI_STATE 授权模型，系统/SystemUI 被显式豁免，
+     * 其余第三方应用必须通过厂商许可服务才能开启 WiFi。此处忠实复现设备行为。
+     */
+    private class WifiOnPermissionCheckCallback extends IRequestedPermissionCallback.Stub {
+        @Override
+        public void onPermissionCheckResult(String permissionName, int uid, int result) {
+            Slog.d(TAG, "setWifiEnabled(PermissionCheckCallback): permissionName=" + permissionName
+                    + " uid=" + uid + " result=" + result);
+            if (result != 0) {
+                return;
+            }
+            SystemProperties.set("persist.sys.wifi_user_operate", "true");
+            SystemProperties.set("persist.sys.wifi_visible_status", "true");
+            if (isStrictOpEnable()) {
+                String nameForUid = mContext.getPackageManager()
+                        .getNameForUid(Binder.getCallingUid());
+                if (Binder.getCallingUid() > 10000
+                        && nameForUid.indexOf("android.uid.systemui") != 0
+                        && nameForUid.indexOf("android.uid.system") != 0
+                        && mAppOps.noteOp(AppOpsManager.OP_CHANGE_WIFI_STATE,
+                                Binder.getCallingUid(), nameForUid)
+                                == AppOpsManager.MODE_IGNORED) {
+                    return;
+                }
+            }
+            long ident = Binder.clearCallingIdentity();
+            try {
+                if (!mSettingsStore.handleWifiToggled(true)) {
+                    return;
+                }
+            } finally {
+                Binder.restoreCallingIdentity(ident);
+            }
+            mWifiController.sendMessage(CMD_WIFI_TOGGLED);
+        }
+    }
+
     private class WifiStateMachineHandler extends WifiHandler {
         private AsyncChannel mWsmChannel;
 
@@ -447,6 +502,22 @@ public class WifiServiceImpl extends IWifiManager.Stub {
                 wifiServiceHandlerThread.getLooper(), asyncChannel);
         mWifiController = mWifiInjector.getWifiController();
         mWifiBackupRestore = mWifiInjector.getWifiBackupRestore();
+        mWifiApConfigStore = mWifiInjector.getWifiApConfigStore();
+
+        // CAF/QTI vendor extension: when STA + SAP concurrency is enabled, share the soft AP
+        // state machine between WifiStateMachine and WifiController.
+        if (mWifiApConfigStore.getStaSapConcurrency()) {
+            mWifiStateMachine.setStaSoftApConcurrency(true);
+            mSoftApStateMachine = mWifiStateMachine.getSoftApStateMachine();
+            if (mWifiApConfigStore.getSapInterface() != null) {
+                mSoftApStateMachine.setSoftApInterfaceName(mWifiApConfigStore.getSapInterface());
+            }
+            mSoftApStateMachine.setSoftApChannel(mWifiApConfigStore.getConfigFileChannel());
+            mWifiController.setSoftApStateMachine(mSoftApStateMachine, true);
+        } else if (mWifiApConfigStore.isSapNewIntfRequired()
+                && mWifiApConfigStore.getSapInterface() != null) {
+            mWifiStateMachine.setNewSapInterface(mWifiApConfigStore.getSapInterface());
+        }
         mPermissionReviewRequired = Build.PERMISSIONS_REVIEW_REQUIRED
                 || context.getResources().getBoolean(
                 com.android.internal.R.bool.config_permissionReviewRequired);
@@ -458,6 +529,20 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         updateBackgroundThrottlingWhitelist();
         mIfaceIpModes = new ConcurrentHashMap<>();
         mLocalOnlyHotspotRequests = new HashMap<>();
+
+        // XTC/厂商扩展：记录 scan 结果广播时间，供定位 SDK 轮询节流使用。
+        mContext.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (!WifiManager.SCAN_RESULTS_AVAILABLE_ACTION.equals(intent.getAction())
+                        || channels == 12) {
+                    return;
+                }
+                preScanResultUpdateMs = mClock.getElapsedSinceBootMillis();
+                Log.d(TAG, "wzs scanResultUpdate broadcast");
+            }
+        }, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+
         enableVerboseLoggingInternal(getVerboseLoggingLevel());
     }
 
@@ -604,6 +689,26 @@ public class WifiServiceImpl extends IWifiManager.Stub {
             // Proceed with the scan request and record the time.
             mLastScanTimestamps.put(packageName, elapsedRealtime);
         }
+
+        // XTC/厂商扩展：定位 SDK 的轮询 scan 节流（无 ScanSettings 时）。
+        Log.d(TAG, "wzs packageName = " + packageName);
+        if (settings != null) {
+            channels = 12;
+        }
+        if (packageName.equals(locationSdkPackage) && settings == null) {
+            long elapsedSinceBoot = mClock.getElapsedSinceBootMillis();
+            channels = 13;
+            if (elapsedSinceBoot - preScanResultUpdateMs <= 5000) {
+                sendScanResultBroadcast(true, locationSdkPackage);
+                return;
+            } else if (elapsedSinceBoot - preReqScanMs <= 5000) {
+                Log.d(TAG, "wzs locationSdkPackageReq return");
+                return;
+            } else {
+                preReqScanMs = elapsedSinceBoot;
+            }
+        }
+        Log.d(TAG, "wzs req pass");
         synchronized (this) {
             if (mWifiScanner == null) {
                 mWifiScanner = mWifiInjector.getWifiScanner();
@@ -655,6 +760,22 @@ public class WifiServiceImpl extends IWifiManager.Stub {
             Binder.restoreCallingIdentity(callingIdentity);
         }
 
+    }
+
+    /**
+     * XTC/厂商扩展：向指定包名单播 SCAN_RESULTS 广播（供定位 SDK 的轮询节流使用）。
+     */
+    private void sendScanResultBroadcast(boolean resultsUpdated, String packageName) {
+        Intent intent = new Intent(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
+        intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT);
+        intent.putExtra(WifiManager.EXTRA_RESULTS_UPDATED, resultsUpdated);
+        intent.setPackage(packageName);
+        mContext.sendBroadcastAsUser(intent, UserHandle.ALL);
+        Log.d(TAG, "wzs xtcSendScanResultBroadcast and return");
+    }
+
+    private boolean isStrictOpEnable() {
+        return SystemProperties.getBoolean("persist.vendor.strict_op_enable", false);
     }
 
     // Check if the request comes from background.
@@ -803,6 +924,25 @@ public class WifiServiceImpl extends IWifiManager.Stub {
             return false;
         }
 
+        // XTC/厂商门禁：第三方应用开启 WiFi 前须先经厂商 sub-permission 服务异步授权。
+        // 谴责：这是对公开 Android 权限模型的私有覆盖（系统/SystemUI 被豁免），
+        // 忠实复现但保留此说明。
+        if (Binder.getCallingUid() > 1000 && MobileManagerUtils.isCtaVersion() && enable) {
+            MobileManagerUtils.checkPermissionAsync("sub-permission.CHANGE_WIFI_STATE_ON",
+                    Binder.getCallingUid(), new WifiOnPermissionCheckCallback());
+            return true;
+        }
+        if (isStrictOpEnable()) {
+            String nameForUid = mContext.getPackageManager().getNameForUid(Binder.getCallingUid());
+            if (enable && Binder.getCallingUid() >= 10000
+                    && !nameForUid.startsWith("android.uid.systemui:")
+                    && !nameForUid.startsWith("android.uid.system:")
+                    && mAppOps.noteOp(AppOpsManager.OP_CHANGE_WIFI_STATE,
+                            Binder.getCallingUid(), nameForUid) == AppOpsManager.MODE_IGNORED) {
+                return false;
+            }
+        }
+
         /*
         * Caller might not have WRITE_SECURE_SETTINGS,
         * only CHANGE_WIFI_STATE is enforced
@@ -835,6 +975,15 @@ public class WifiServiceImpl extends IWifiManager.Stub {
                     return true;
                 }
             }
+        }
+
+        // CAF/QTI vendor extension: tear down a dual SAP before enabling wifi, and stop the AP
+        // when it is only extending the current network's coverage.
+        if (enable && mWifiApConfigStore.getDualSapStatus()) {
+            stopSoftAp();
+        }
+        if (apEnabled && isExtendingNetworkCoverage()) {
+            mWifiController.sendMessage(CMD_SET_AP, 0, 0);
         }
 
         mWifiController.sendMessage(CMD_WIFI_TOGGLED);
@@ -1001,9 +1150,69 @@ public class WifiServiceImpl extends IWifiManager.Stub {
      * Internal method to start softap mode. Callers of this method should have already checked
      * proper permissions beyond the NetworkStack permission.
      */
+    /**
+     * CAF/QTI vendor extension: switch the soft AP between single and dual SAP mode.
+     *
+     * @param enable true to start dual SAP, false to stop it.
+     * @return whether dual SAP handling succeeded.
+     */
+    private boolean startDualSapMode(boolean enable) {
+        WifiConfiguration apConfiguration = mWifiApConfigStore.getApConfiguration();
+        if (enable && apConfiguration.apBand != WifiConfiguration.AP_BAND_DUAL) {
+            Slog.e(TAG, "Continue with Single SAP Mode.");
+            return false;
+        }
+        if (!mWifiApConfigStore.isDualSapSupported()
+                || mWifiApConfigStore.getBridgeInterface() == null) {
+            Slog.e(TAG, "Dual SAP Mode is not supported.");
+            return false;
+        }
+        mLog.trace("startDualSapMode uid=% enable=%")
+                .c(Binder.getCallingUid()).c(enable).flush();
+        if (enable && mWifiApConfigStore.getDualSapStatus()) {
+            Slog.d(TAG, "DUAL Sap Mode already enabled. Do nothing!!");
+            return true;
+        }
+        boolean apEnabled = mWifiStateMachine.syncGetWifiApState() == WifiManager.WIFI_AP_STATE_ENABLING
+                || mWifiStateMachine.syncGetWifiApState() == WifiManager.WIFI_AP_STATE_ENABLED;
+        boolean staEnabled = mWifiStateMachine.syncGetWifiState() == WifiManager.WIFI_STATE_ENABLING
+                || mWifiStateMachine.syncGetWifiState() == WifiManager.WIFI_STATE_ENABLED;
+        if (!enable || apEnabled) {
+            mWifiController.sendMessage(CMD_SET_AP, 0, 0);
+        }
+        if (enable && staEnabled) {
+            mSettingsStore.setWifiSavedState(WifiSettingsStore.WIFI_ENABLED);
+            mWifiController.sendMessage(CMD_WIFI_TOGGLED);
+        }
+        if (enable) {
+            mWifiStateMachine.setDualSapMode(true);
+            if (mWifiApConfigStore.getStaSapConcurrency()) {
+                mWifiController.setSoftApStateMachine(null, false);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * CAF/QTI vendor extension: whether STA + SAP concurrency is enabled.
+     */
+    public boolean getStaSapConcurrency() {
+        return mWifiApConfigStore.getStaSapConcurrency();
+    }
+
+    /**
+     * CAF/QTI vendor extension: whether the soft AP is extending an existing network's coverage.
+     */
+    public boolean isExtendingNetworkCoverage() {
+        return mWifiStateMachine.isExtendingNetworkCoverage();
+    }
+
     private boolean startSoftApInternal(WifiConfiguration wifiConfig, int mode) {
         mLog.trace("startSoftApInternal uid=% mode=%")
                 .c(Binder.getCallingUid()).c(mode).flush();
+
+        // CAF/QTI vendor extension: try to enable dual SAP mode first.
+        startDualSapMode(true);
 
         // null wifiConfig is a meaningful input for CMD_SET_AP
         if (wifiConfig == null || isValid(wifiConfig)) {
@@ -1049,6 +1258,10 @@ public class WifiServiceImpl extends IWifiManager.Stub {
     private boolean stopSoftApInternal() {
         mLog.trace("stopSoftApInternal uid=%").c(Binder.getCallingUid()).flush();
 
+        // CAF/QTI vendor extension: a dual SAP teardown goes through startDualSapMode(false).
+        if (mWifiApConfigStore.getDualSapStatus()) {
+            return startDualSapMode(false);
+        }
         mWifiController.sendMessage(CMD_SET_AP, 0, 0);
         return true;
     }
