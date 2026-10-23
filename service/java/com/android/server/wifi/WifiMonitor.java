@@ -96,6 +96,9 @@ public class WifiMonitor {
     /* hotspot 2.0 events */
     public static final int HS20_REMEDIATION_EVENT               = BASE + 61;
 
+    /* XTC/CAF: FILS (802.11ai) connection completed via vendor supplicant callback. */
+    public static final int FILS_NETWORK_CONNECTION_EVENT        = BASE + 63;
+
     /* WPS config errrors */
     private static final int CONFIG_MULTIPLE_PBC_DETECTED = 12;
     private static final int CONFIG_AUTH_FAILURE = 18;
@@ -514,6 +517,13 @@ public class WifiMonitor {
      */
     public void broadcastNetworkConnectionEvent(String iface, int networkId, String bssid) {
         sendMessage(iface, NETWORK_CONNECTION_EVENT, networkId, 0, bssid);
+    }
+
+    /**
+     * XTC/CAF: broadcast a FILS network connection event.
+     */
+    public void broadcastFilsNetworkConnectionEvent(String iface, int networkId, String bssid) {
+        sendMessage(iface, FILS_NETWORK_CONNECTION_EVENT, networkId, 0, bssid);
     }
 
     /**

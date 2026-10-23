@@ -98,6 +98,9 @@ public class SupplicantStaIfaceHal {
     private ISupplicant mISupplicant;
     private ISupplicantStaIface mISupplicantStaIface;
     private ISupplicantStaIfaceCallback mISupplicantStaIfaceCallback;
+    // XTC/CAF：QTI 私有 supplicant sta 扩展（FILS HLP / 供应商状态回调）。
+    private vendor.qti.hardware.wifi.supplicant.V1_0.ISupplicantVendorStaIface
+            mISupplicantVendorStaIface;
     private final IServiceNotification mServiceNotificationCallback =
             new IServiceNotification.Stub() {
         public void onRegistration(String fqName, String name, boolean preexisting) {
@@ -325,6 +328,7 @@ public class SupplicantStaIfaceHal {
                 return false;
             }
             mISupplicantStaIface = getStaIfaceMockable(supplicantIface.value);
+            mISupplicantVendorStaIface = getVendorStaIfaceMockable(supplicantIface.value);
             mIfaceName = ifaceName.value;
             if (!linkToSupplicantStaIfaceDeath()) {
                 return false;
@@ -381,6 +385,15 @@ public class SupplicantStaIfaceHal {
         synchronized (mLock) {
             return ISupplicantStaIface.asInterface(iface.asBinder());
         }
+    }
+
+    /**
+     * XTC/CAF：获取 QTI 私有 supplicant sta 扩展接口。
+     */
+    protected vendor.qti.hardware.wifi.supplicant.V1_0.ISupplicantVendorStaIface
+            getVendorStaIfaceMockable(ISupplicantIface iface) {
+        return vendor.qti.hardware.wifi.supplicant.V1_0.ISupplicantVendorStaIface
+                .asInterface(iface.asBinder());
     }
 
     /**
@@ -721,7 +734,9 @@ public class SupplicantStaIfaceHal {
             }
             if (newNetwork.value != null) {
                 return getStaNetworkMockable(
-                        ISupplicantStaNetwork.asInterface(newNetwork.value.asBinder()));
+                        ISupplicantStaNetwork.asInterface(newNetwork.value.asBinder()),
+                        vendor.qti.hardware.wifi.supplicant.V1_0.ISupplicantVendorStaNetwork
+                                .asInterface(newNetwork.value.asBinder()));
             } else {
                 return null;
             }
@@ -755,11 +770,13 @@ public class SupplicantStaIfaceHal {
      * the call fails
      */
     protected SupplicantStaNetworkHal getStaNetworkMockable(
-            ISupplicantStaNetwork iSupplicantStaNetwork) {
+            ISupplicantStaNetwork iSupplicantStaNetwork,
+            vendor.qti.hardware.wifi.supplicant.V1_0.ISupplicantVendorStaNetwork
+                    iSupplicantVendorStaNetwork) {
         synchronized (mLock) {
             SupplicantStaNetworkHal network =
-                    new SupplicantStaNetworkHal(iSupplicantStaNetwork, mIfaceName, mContext,
-                            mWifiMonitor);
+                    new SupplicantStaNetworkHal(iSupplicantStaNetwork,
+                            iSupplicantVendorStaNetwork, mIfaceName, mContext, mWifiMonitor);
             if (network != null) {
                 network.enableVerboseLogging(mVerboseLoggingEnabled);
             }
@@ -788,7 +805,9 @@ public class SupplicantStaIfaceHal {
             }
             if (gotNetwork.value != null) {
                 return getStaNetworkMockable(
-                        ISupplicantStaNetwork.asInterface(gotNetwork.value.asBinder()));
+                        ISupplicantStaNetwork.asInterface(gotNetwork.value.asBinder()),
+                        vendor.qti.hardware.wifi.supplicant.V1_0.ISupplicantVendorStaNetwork
+                                .asInterface(gotNetwork.value.asBinder()));
             } else {
                 return null;
             }
@@ -1320,6 +1339,45 @@ public class SupplicantStaIfaceHal {
      *        {@link WifiNative#RX_FILTER_TYPE_V6_MULTICAST} values.
      * @return true if request is sent successfully, false otherwise.
      */
+    /**
+     * XTC/CAF：FILS HLP 请求（Hotspot 2.0 FILS 帮助）。
+     */
+    public boolean addHlpReq(String dstMac, String hexRequest) {
+        synchronized (mLock) {
+            final String methodStr = "filsHlpAddRequest";
+            if (!checkSupplicantVendorStaIfaceAndLogFailure(methodStr)) {
+                return false;
+            }
+            try {
+                return checkStatusAndLogFailure(mISupplicantVendorStaIface.filsHlpAddRequest(
+                        NativeUtil.macAddressToByteArray(dstMac),
+                        NativeUtil.hexOrQuotedStringToBytes(hexRequest)), methodStr);
+            } catch (RemoteException e) {
+                handleRemoteException(e, methodStr);
+                return false;
+            }
+        }
+    }
+
+    /**
+     * XTC/CAF：清空 FILS HLP 请求队列。
+     */
+    public boolean flushAllHlp() {
+        synchronized (mLock) {
+            final String methodStr = "filsHlpFlushRequest";
+            if (!checkSupplicantVendorStaIfaceAndLogFailure(methodStr)) {
+                return false;
+            }
+            try {
+                return checkStatusAndLogFailure(
+                        mISupplicantVendorStaIface.filsHlpFlushRequest(), methodStr);
+            } catch (RemoteException e) {
+                handleRemoteException(e, methodStr);
+                return false;
+            }
+        }
+    }
+
     public boolean addRxFilter(int type) {
         synchronized (mLock) {
             byte halType;
@@ -1759,6 +1817,14 @@ public class SupplicantStaIfaceHal {
     /**
      * Returns false if SupplicantStaIface is null, and logs failure to call methodStr
      */
+    private boolean checkSupplicantVendorStaIfaceAndLogFailure(final String methodStr) {
+        if (mISupplicantVendorStaIface == null) {
+            Log.e(TAG, "Can't call " + methodStr + ", ISupplicantVendorStaIface is null");
+            return false;
+        }
+        return true;
+    }
+
     private boolean checkSupplicantStaIfaceAndLogFailure(final String methodStr) {
         synchronized (mLock) {
             if (mISupplicantStaIface == null) {
@@ -1921,7 +1987,12 @@ public class SupplicantStaIfaceHal {
         }
     }
 
-    private class SupplicantStaIfaceHalCallback extends ISupplicantStaIfaceCallback.Stub {
+    /**
+     * XTC/CAF：设备上把整个回调实现复制到 vendor 回调类并只注册 vendor 回调，
+     * 这里改为直接继承 vendor Stub（等价，且避免重复代码）。
+     */
+    private class SupplicantStaIfaceHalCallback extends
+            vendor.qti.hardware.wifi.supplicant.V1_0.ISupplicantVendorStaIfaceCallback.Stub {
         private static final int WLAN_REASON_IE_IN_4WAY_DIFFERS = 17; // IEEE 802.11i
         private boolean mStateIsFourway = false; // Used to help check for PSK password mismatch
 
@@ -1994,6 +2065,31 @@ public class SupplicantStaIfaceHal {
                 if (newSupplicantState == SupplicantState.COMPLETED) {
                     mWifiMonitor.broadcastNetworkConnectionEvent(
                             mIfaceName, getCurrentNetworkId(), bssidStr);
+                }
+                mWifiMonitor.broadcastSupplicantStateChangeEvent(
+                        mIfaceName, getCurrentNetworkId(), wifiSsid, bssidStr, newSupplicantState);
+            }
+        }
+
+        @Override
+        public void onVendorStateChanged(int newState, byte[/* 6 */] bssid, int id,
+                                         ArrayList<Byte> ssid, boolean isFilsConnection) {
+            synchronized (mLock) {
+                logCallback("onVendorStateChanged");
+                SupplicantState newSupplicantState = supplicantHidlStateToFrameworkState(newState);
+                WifiSsid wifiSsid =
+                        WifiSsid.createFromByteArray(NativeUtil.byteArrayFromArrayList(ssid));
+                String bssidStr = NativeUtil.macAddressFromByteArray(bssid);
+                mStateIsFourway = (newState == ISupplicantStaIfaceCallback.State.FOURWAY_HANDSHAKE);
+                if (newSupplicantState == SupplicantState.COMPLETED) {
+                    // XTC/CAF：FILS 连接单独上报，供状态机区分。
+                    if (isFilsConnection) {
+                        mWifiMonitor.broadcastFilsNetworkConnectionEvent(
+                                mIfaceName, getCurrentNetworkId(), bssidStr);
+                    } else {
+                        mWifiMonitor.broadcastNetworkConnectionEvent(
+                                mIfaceName, getCurrentNetworkId(), bssidStr);
+                    }
                 }
                 mWifiMonitor.broadcastSupplicantStateChangeEvent(
                         mIfaceName, getCurrentNetworkId(), wifiSsid, bssidStr, newSupplicantState);

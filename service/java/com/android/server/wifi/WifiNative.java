@@ -513,6 +513,20 @@ public class WifiNative {
                 && mSupplicantStaIfaceHal.startRxFilter();
     }
 
+    /**
+     * XTC/CAF: queue a FILS HLP request with the vendor supplicant HAL.
+     */
+    public boolean addHlpReq(String dstMac, String hexRequest) {
+        return mSupplicantStaIfaceHal.addHlpReq(dstMac, hexRequest);
+    }
+
+    /**
+     * XTC/CAF: flush all queued FILS HLP requests.
+     */
+    public boolean flushAllHlp() {
+        return mSupplicantStaIfaceHal.flushAllHlp();
+    }
+
     public static final int BLUETOOTH_COEXISTENCE_MODE_ENABLED  = 0;
     public static final int BLUETOOTH_COEXISTENCE_MODE_DISABLED = 1;
     public static final int BLUETOOTH_COEXISTENCE_MODE_SENSE    = 2;
