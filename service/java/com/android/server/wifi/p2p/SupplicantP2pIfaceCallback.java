@@ -37,7 +37,11 @@ import java.util.List;
 /**
  * Class used for processing all P2P callbacks.
  */
-public class SupplicantP2pIfaceCallback extends ISupplicantP2pIfaceCallback.Stub {
+/**
+ * XTC/CAF：设备上回调类直接继承 QTI 私有 P2P 回调 Stub（额外实现 onR2DeviceFound）。
+ */
+public class SupplicantP2pIfaceCallback extends
+        vendor.qti.hardware.wifi.supplicant.V1_1.ISupplicantVendorP2PIfaceCallback.Stub {
     private static final String TAG = "SupplicantP2pIfaceCallback";
     private static final boolean DBG = true;
 
@@ -127,6 +131,57 @@ public class SupplicantP2pIfaceCallback extends ISupplicantP2pIfaceCallback.Stub
         }
 
         logd("Device discovered on " + mInterface + ": " + device);
+        mMonitor.broadcastP2pDeviceFound(mInterface, device);
+    }
+
+    /**
+     * XTC/CAF：R2 设备发现（带 WFD R2 device info）。
+     */
+    @Override
+    public void onR2DeviceFound(byte[] srcAddress, byte[] p2pDeviceAddress,
+            byte[] primaryDeviceType, String deviceName, short configMethods,
+            byte deviceCapabilities, int groupCapabilities, byte[] wfdPrimarySinkMacAddress,
+            byte[] wfdSecondarySinkMacAddress) {
+        WifiP2pDevice device = new WifiP2pDevice();
+        device.deviceName = deviceName;
+        if (deviceName == null) {
+            Log.e(TAG, "Missing device name.");
+            return;
+        }
+
+        try {
+            device.deviceAddress = NativeUtil.macAddressFromByteArray(p2pDeviceAddress);
+        } catch (Exception e) {
+            Log.e(TAG, "Could not decode device address.", e);
+            return;
+        }
+
+        try {
+            // 设备这里输出原始十六进制串（非 WPS 三段式）。
+            device.primaryDeviceType = NativeUtil.hexStringFromByteArray(primaryDeviceType);
+        } catch (Exception e) {
+            Log.e(TAG, "Could not encode device primary type.", e);
+            return;
+        }
+
+        device.deviceCapability = deviceCapabilities;
+        device.groupCapability = groupCapabilities;
+        device.wpsConfigMethodsSupported = configMethods;
+        device.status = WifiP2pDevice.AVAILABLE;
+
+        if (wfdPrimarySinkMacAddress != null && wfdPrimarySinkMacAddress.length >= 6) {
+            device.wfdInfo = new WifiP2pWfdInfo(
+                    (wfdPrimarySinkMacAddress[0] << 8) + wfdPrimarySinkMacAddress[1],
+                    (wfdPrimarySinkMacAddress[2] << 8) + wfdPrimarySinkMacAddress[3],
+                    (wfdPrimarySinkMacAddress[4] << 8) + wfdPrimarySinkMacAddress[5]);
+        }
+        if (wfdSecondarySinkMacAddress != null && wfdSecondarySinkMacAddress.length >= 2) {
+            device.wfdInfo.setWfdR2Device(
+                    (wfdSecondarySinkMacAddress[0] << 8) + wfdSecondarySinkMacAddress[1]);
+        }
+
+        logd("R2 Device discovered on " + mInterface + ": " + device
+                + " R2 Info:" + Arrays.toString(wfdSecondarySinkMacAddress));
         mMonitor.broadcastP2pDeviceFound(mInterface, device);
     }
 

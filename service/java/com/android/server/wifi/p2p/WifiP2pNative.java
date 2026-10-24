@@ -229,6 +229,16 @@ public class WifiP2pNative {
     }
 
     /**
+     * XTC/CAF: Set Wi-Fi Display R2 device info.
+     *
+     * @param hex R2 device info hex string ("0002xxxx").
+     * @return true, if operation was successful.
+     */
+    public boolean setWfdR2DeviceInfo(String hex) {
+        return mSupplicantP2pIfaceHal.setWfdR2DeviceInfo(hex);
+    }
+
+    /**
      * Initiate a P2P service discovery indefinitely.
      * Will trigger {@link WifiP2pMonitor#P2P_DEVICE_FOUND_EVENT} on finding devices.
      *

@@ -249,6 +249,14 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     private boolean mScreenOn = false;
 
     private final String mInterfaceName;
+    // XTC/CAF: FST（fast session transfer）使用的数据接口，默认与 mInterfaceName 相同。
+    private String mDataInterfaceName;
+    // XTC/CAF: FST 切换数据接口时需要同步给流量统计。
+    private WifiTrafficPoller mTrafficPoller;
+    // XTC/CAF: 本次连接是否通过 FILS（802.11ai）建立。
+    private boolean mIsFilsConnection;
+    // XTC/CAF: IpManager 是否已启动（FILS 场景复用同一次 DHCP 会话）。
+    private boolean mIsIpManagerStarted;
 
     private int mLastSignalLevel = -1;
     private String mLastBssid;
@@ -451,7 +459,8 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         return true;
     }
 
-    private final IpManager mIpManager;
+    // XTC/CAF: FST 切换数据接口时需要重建 IpManager，故去掉 final。
+    private IpManager mIpManager;
 
     // Channel for sending replies.
     private AsyncChannel mReplyChannel = new AsyncChannel();
@@ -929,6 +938,8 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
 
         // TODO refactor WifiNative use of context out into it's own class
         mInterfaceName = mWifiNative.getInterfaceName();
+        // XTC/CAF: 按 persist.vendor.fst.* 决定数据面接口。
+        updateDataInterface();
         mNetworkInfo = new NetworkInfo(ConnectivityManager.TYPE_WIFI, 0, NETWORKTYPE, "");
         mBatteryStats = IBatteryStats.Stub.asInterface(mFacade.getService(
                 BatteryStats.SERVICE_NAME));
@@ -960,7 +971,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         mLastNetworkId = WifiConfiguration.INVALID_NETWORK_ID;
         mLastSignalLevel = -1;
 
-        mIpManager = mFacade.makeIpManager(mContext, mInterfaceName, new IpManagerCallback());
+        mIpManager = mFacade.makeIpManager(mContext, mDataInterfaceName, new IpManagerCallback());
         mIpManager.setMulticastFilter(true);
 
         mNoNetworksPeriodicScan = mContext.getResources().getInteger(
@@ -1101,6 +1112,8 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                 getHandler());
         mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.NETWORK_CONNECTION_EVENT,
                 getHandler());
+        mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.FILS_NETWORK_CONNECTION_EVENT,
+                getHandler());
         mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.NETWORK_DISCONNECTION_EVENT,
                 getHandler());
         mWifiMonitor.registerHandler(mInterfaceName, WifiMonitor.RX_HS20_ANQP_ICON_EVENT,
@@ -1207,6 +1220,17 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         /* Restore power save and suspend optimizations */
         handlePostDhcpSetup();
         mIpManager.stop();
+        mIsIpManagerStarted = false;
+    }
+
+    /**
+     * XTC/CAF: FILS 快速连接时的省电/共存设置（DHCP 期间保持低功耗）。
+     */
+    void setPowerSaveForFilsDhcp() {
+        mWifiNative.setBluetoothCoexistenceMode(
+                WifiNative.BLUETOOTH_COEXISTENCE_MODE_DISABLED);
+        setSuspendOptimizationsNative(SUSPEND_DUE_TO_DHCP, false);
+        mWifiNative.setPowerSave(false);
     }
 
     PendingIntent getPrivateBroadcast(String action, int requestCode) {
@@ -1479,8 +1503,8 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             }
         }
         if (stats == null || mWifiLinkLayerStatsSupported <= 0) {
-            long mTxPkts = mFacade.getTxPackets(mInterfaceName);
-            long mRxPkts = mFacade.getRxPackets(mInterfaceName);
+            long mTxPkts = mFacade.getTxPackets(mDataInterfaceName);
+            long mRxPkts = mFacade.getRxPackets(mDataInterfaceName);
             mWifiInfo.updatePacketRates(mTxPkts, mRxPkts);
         } else {
             mWifiInfo.updatePacketRates(stats, lastLinkLayerStatsUpdate);
@@ -2527,6 +2551,9 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                 break;
             case WifiMonitor.SCAN_FAILED_EVENT:
                 break;
+            case WifiMonitor.FILS_NETWORK_CONNECTION_EVENT:
+                sb.append(" (FILS)");
+                // fall through
             case WifiMonitor.NETWORK_CONNECTION_EVENT:
                 sb.append(" ");
                 sb.append(Integer.toString(msg.arg1));
@@ -3987,6 +4014,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                 case CMD_RELOAD_TLS_AND_RECONNECT:
                 case WifiMonitor.SUP_CONNECTION_EVENT:
                 case WifiMonitor.SUP_DISCONNECTION_EVENT:
+                case WifiMonitor.FILS_NETWORK_CONNECTION_EVENT:
                 case WifiMonitor.NETWORK_CONNECTION_EVENT:
                 case WifiMonitor.NETWORK_DISCONNECTION_EVENT:
                 case WifiMonitor.SCAN_RESULTS_EVENT:
@@ -4239,21 +4267,23 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                         // IP addresses configured, and this affects
                         // connectivity when supplicant starts up.
                         // Ensure we have no IP addresses before a supplicant start.
-                        mNwService.clearInterfaceAddresses(mInterfaceName);
+                        mNwService.clearInterfaceAddresses(mDataInterfaceName);
 
                         // Set privacy extensions
-                        mNwService.setInterfaceIpv6PrivacyExtensions(mInterfaceName, true);
+                        mNwService.setInterfaceIpv6PrivacyExtensions(mDataInterfaceName, true);
 
                         // IPv6 is enabled only as long as access point is connected since:
                         // - IPv6 addresses and routes stick around after disconnection
                         // - kernel is unaware when connected and fails to start IPv6 negotiation
                         // - kernel can start autoconfiguration when 802.1x is not complete
-                        mNwService.disableIpv6(mInterfaceName);
+                        mNwService.disableIpv6(mDataInterfaceName);
                     } catch (RemoteException re) {
                         loge("Unable to change interface settings: " + re);
                     } catch (IllegalStateException ie) {
                         loge("Unable to change interface settings: " + ie);
                     }
+                    // XTC/CAF: supplicant 起来后按 FST 配置决定数据接口。
+                    updateDataInterface();
 
                     if (!mWifiNative.enableSupplicant()) {
                         loge("Failed to start supplicant!");
@@ -4803,6 +4833,9 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             case WifiMonitor.SUP_REQUEST_IDENTITY:
                 s = "SUP_REQUEST_IDENTITY";
                 break;
+            case WifiMonitor.FILS_NETWORK_CONNECTION_EVENT:
+                s = "FILS_NETWORK_CONNECTION_EVENT";
+                break;
             case WifiMonitor.NETWORK_CONNECTION_EVENT:
                 s = "NETWORK_CONNECTION_EVENT";
                 break;
@@ -4921,6 +4954,55 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
         mWifiMonitor.stopAllMonitoring();
         mDeathRecipient.unlinkToDeath();
         mWifiNative.tearDown();
+        // XTC/CAF: 若使用独立 FST 数据接口，收尾时把该接口关掉。
+        if (mDataInterfaceName.equals(mInterfaceName)) {
+            return;
+        }
+        try {
+            mNwService.setInterfaceDown(mDataInterfaceName);
+            mNwService.clearInterfaceAddresses(mDataInterfaceName);
+        } catch (RemoteException e) {
+            loge("Unable to change interface settings: " + e);
+        } catch (IllegalStateException e) {
+            loge("Unable to change interface settings: " + e);
+        }
+    }
+
+    /**
+     * XTC/CAF: FST（fast session transfer）数据接口切换。
+     * persist.vendor.fst.rate.upgrade.en=1 时数据面走 persist.vendor.fst.data.interface
+     * （默认 bond0），否则用 wlan 接口本身。
+     */
+    public void updateDataInterface() {
+        int enabled = android.os.SystemProperties.getInt(
+                "persist.vendor.fst.rate.upgrade.en", 0);
+        String oldName = mDataInterfaceName;
+        String newName = android.os.SystemProperties.get(
+                "persist.vendor.fst.data.interface", "bond0");
+        if (enabled != 1) {
+            newName = mInterfaceName;
+        }
+        mDataInterfaceName = newName;
+        if (mDataInterfaceName.equals(oldName)) {
+            return;
+        }
+        logd("fst " + (enabled == 1 ? "enabled" : "disabled"));
+        if (mIpManager != null) {
+            mIpManager.shutdown();
+            mIpManager = mFacade.makeIpManager(mContext, mDataInterfaceName,
+                    new IpManagerCallback());
+            mIpManager.setMulticastFilter(true);
+        }
+        if (mTrafficPoller != null) {
+            mTrafficPoller.setInterface(mDataInterfaceName);
+        }
+    }
+
+    public void setTrafficPoller(WifiTrafficPoller wifiTrafficPoller) {
+        mTrafficPoller = wifiTrafficPoller;
+        if (mTrafficPoller != null) {
+            mTrafficPoller.setInterface(mDataInterfaceName);
+        }
     }
 
     ScanResult getCurrentScanResult() {
@@ -5254,6 +5336,8 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     return HANDLED;
                 case CMD_START_CONNECT:
                     /* connect command coming from auto-join */
+                    // XTC/CAF: 新一次连接，重置 FILS 标记。
+                    mIsFilsConnection = false;
                     netId = message.arg1;
                     int uid = message.arg2;
                     bssid = (String) message.obj;
@@ -5468,6 +5552,13 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                         }
                     }
                     return NOT_HANDLED;
+                case WifiMonitor.FILS_NETWORK_CONNECTION_EVENT:
+                    // XTC/CAF: FILS 连接，标记后与普通连接走同一路径。
+                    mIsFilsConnection = true;
+                    if (mVerboseLoggingEnabled) {
+                        log("Network connection established with FILS " + mIsFilsConnection);
+                    }
+                    // fall through
                 case WifiMonitor.NETWORK_CONNECTION_EVENT:
                     if (mVerboseLoggingEnabled) log("Network connection established");
                     mLastNetworkId = lookupFrameworkNetworkId(message.arg1);
@@ -5953,6 +6044,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                         break;
                     }
                     return NOT_HANDLED;
+                case WifiMonitor.FILS_NETWORK_CONNECTION_EVENT:
                 case WifiMonitor.NETWORK_CONNECTION_EVENT:
                     mWifiInfo.setBSSID((String) message.obj);
                     mLastNetworkId = lookupFrameworkNetworkId(message.arg1);
@@ -6135,7 +6227,10 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             // disconnected, because DHCP might take a long time during which
             // connectivity APIs such as getActiveNetworkInfo should not return
             // CONNECTED.
-            stopIpManager();
+            // XTC/CAF: FILS 连接复用已有的 IpManager 会话，不重启 DHCP。
+            if (!mIsFilsConnection) {
+                stopIpManager();
+            }
 
             mIpManager.setHttpProxy(currentConfig.getHttpProxy());
             if (!TextUtils.isEmpty(mTcpBufferSizes)) {
@@ -6154,9 +6249,16 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                             .withApfCapabilities(mWifiNative.getApfCapabilities())
                             .build();
             }
-            mIpManager.startProvisioning(prov);
+            if (mIsFilsConnection && mIsIpManagerStarted) {
+                setPowerSaveForFilsDhcp();
+            } else {
+                mIpManager.startProvisioning(prov);
+                mIsIpManagerStarted = true;
+            }
             // Get Link layer stats so as we get fresh tx packet counters
             getWifiLinkLayerStats();
+            // XTC/CAF: FILS 标记只在本次 obtaining-IP 期间有效。
+            mIsFilsConnection = false;
         }
 
         @Override
@@ -6321,6 +6423,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                         transitionTo(mDisconnectedState);
                     }
                     break;
+                case WifiMonitor.FILS_NETWORK_CONNECTION_EVENT:
                 case WifiMonitor.NETWORK_CONNECTION_EVENT:
                     if (mAssociated) {
                         if (mVerboseLoggingEnabled) {
@@ -6864,6 +6967,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                 case WifiMonitor.WPS_SUCCESS_EVENT:
                     // Ignore intermediate success, wait for full connection
                     break;
+                case WifiMonitor.FILS_NETWORK_CONNECTION_EVENT:
                 case WifiMonitor.NETWORK_CONNECTION_EVENT:
                     Pair<Boolean, Integer> loadResult = loadNetworksFromSupplicantAfterWps();
                     boolean success = loadResult.first;
@@ -7048,7 +7152,17 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             }
 
             try {
-                mIfaceName = apInterface.getInterfaceName();
+                // XTC/CAF: FST 场景下 SoftAP 使用独立的 bond 接口。
+                int fstSoftApEnabled = android.os.SystemProperties.getInt(
+                        "persist.vendor.fst.softap.en", 0);
+                String fstInterface = android.os.SystemProperties.get(
+                        "persist.vendor.fst.data.interface", "bond0");
+                if (fstSoftApEnabled == 1) {
+                    mIfaceName = fstInterface;
+                } else {
+                    mIfaceName = apInterface.getInterfaceName();
+                }
+                logd("softap fst " + (fstSoftApEnabled == 1 ? "enabled" : "disabled"));
             } catch (RemoteException e) {
                 // Failed to get the interface name. The name will not be available for
                 // the enabled broadcast, but since we had an error getting the name, we most likely

@@ -488,6 +488,8 @@ public class WifiServiceImpl extends IWifiManager.Stub {
         mUserManager = mWifiInjector.getUserManager();
         mCountryCode = mWifiInjector.getWifiCountryCode();
         mWifiStateMachine = mWifiInjector.getWifiStateMachine();
+        // XTC/CAF: 让状态机持有流量统计器（FST 切接口时同步）。
+        mWifiStateMachine.setTrafficPoller(mTrafficPoller);
         mWifiStateMachine.enableRssiPolling(true);
         mSettingsStore = mWifiInjector.getWifiSettingsStore();
         mPowerManager = mContext.getSystemService(PowerManager.class);

@@ -69,7 +69,8 @@ public class WifiTrafficPoller {
     private AtomicBoolean mScreenOn = new AtomicBoolean(true);
     private final TrafficHandler mTrafficHandler;
     private NetworkInfo mNetworkInfo;
-    private final String mInterface;
+    // XTC/CAF: FST 场景下数据接口可变。
+    private String mInterface;
 
     private boolean mVerboseLoggingEnabled = false;
 
@@ -109,6 +110,17 @@ public class WifiTrafficPoller {
 
     void removeClient(Messenger client) {
         Message.obtain(mTrafficHandler, REMOVE_CLIENT, client).sendToTarget();
+    }
+
+    /**
+     * XTC/CAF: switch the monitored data interface (FST).
+     */
+    void setInterface(String iface) {
+        mRxPkts = 0;
+        mTxPkts = 0;
+        mDataActivity = 0;
+        mNetworkInfo = null;
+        mInterface = iface;
     }
 
     void enableVerboseLogging(int verbose) {
