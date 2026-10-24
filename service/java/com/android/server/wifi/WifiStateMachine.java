@@ -134,6 +134,7 @@ import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.io.PrintWriter;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -838,6 +839,9 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     private State mScanModeState = new ScanModeState();
     /* Connecting to an access point */
     private State mConnectModeState = new ConnectModeState();
+    /* XTC/CAF: FILS（802.11ai）快速接入状态 */
+    private State mFilsState = new FilsState();
+    private WifiConfiguration mFilsConfig;
     /* Connected at 802.11 (L2) level */
     private State mL2ConnectedState = new L2ConnectedState();
     /* fetching IP after connection to access point (assoc+auth complete) */
@@ -1074,6 +1078,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             addState(mSupplicantStartedState, mDefaultState);
                     addState(mScanModeState, mSupplicantStartedState);
                     addState(mConnectModeState, mSupplicantStartedState);
+                        addState(mFilsState, mConnectModeState);
                         addState(mL2ConnectedState, mConnectModeState);
                             addState(mObtainingIpState, mL2ConnectedState);
                             addState(mConnectedState, mL2ConnectedState);
@@ -1802,7 +1807,7 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
     }
 
     public boolean isDisconnected() {
-        return getCurrentState() == mDisconnectedState;
+        return getCurrentState() == mDisconnectedState || getCurrentState() == mFilsState;
     }
 
     public boolean isSupplicantTransientState() {
@@ -3393,7 +3398,10 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
 
         clearTargetBssid("handleNetworkDisconnect");
 
-        stopIpManager();
+        // XTC/CAF: FILS 状态下的断线先不销毁 IpManager（可能仍在 rapid-commit 阶段）。
+        if (getCurrentState() != mFilsState) {
+            stopIpManager();
+        }
 
         /* Reset data structures */
         mWifiScoreReport.reset();
@@ -3479,6 +3487,45 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
             // If the p2p service is not running, we can proceed directly.
             sendMessage(DhcpClient.CMD_PRE_DHCP_ACTION_COMPLETE);
         }
+    }
+
+    /**
+     * XTC/CAF: FILS 场景的 pre-DHCP 动作——只阻塞 P2P 发现，不改 Wi-Fi 省电/共存，
+     * 因为 FILS 的 DHCP 与关联是并行进行的。
+     */
+    void handlePreFilsDhcpSetup() {
+        if (mWifiP2pChannel != null) {
+            Message msg = new Message();
+            msg.what = WifiP2pServiceImpl.BLOCK_DISCOVERY;
+            msg.arg1 = WifiP2pServiceImpl.ENABLED;
+            msg.arg2 = DhcpClient.CMD_PRE_DHCP_ACTION_COMPLETE;
+            msg.obj = WifiStateMachine.this;
+            mWifiP2pChannel.sendMessage(msg);
+        } else {
+            sendMessage(DhcpClient.CMD_PRE_DHCP_ACTION_COMPLETE);
+        }
+    }
+
+    /**
+     * XTC/CAF: 用 rapid-commit DISCOVER 生成 FILS HLP 请求（源 MAC + 报文）。
+     */
+    void buildDiscoverWithRapidCommitPacket() {
+        ByteBuffer discoverPacket = mIpManager.buildDiscoverWithRapidCommitPacket();
+        if (discoverPacket == null) {
+            return;
+        }
+        byte[] raw = discoverPacket.array();
+        StringBuilder mac = new StringBuilder();
+        for (int i = 0; i < 5; i++) {
+            mac.append(String.format("%02x:", raw[i]));
+        }
+        mac.append(String.format("%02x", raw[5]));
+        StringBuilder payload = new StringBuilder();
+        for (int i = 12; i < discoverPacket.limit(); i++) {
+            payload.append(String.format("%02x", raw[i]));
+        }
+        mWifiNative.flushAllHlp();
+        mWifiNative.addHlpReq(mac.toString(), payload.toString());
     }
 
     void handlePostDhcpSetup() {
@@ -4224,6 +4271,120 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     break;
             }
             return HANDLED;
+        }
+    }
+
+    /**
+     * XTC/CAF: FILS（802.11ai）快速接入状态。
+     *
+     * 进入时以 rapid-commit + "DISCOVER 已发送" 方式启动 IpManager；DHCP 的
+     * PRE_DHCP_ACTION 阶段会先阻塞 P2P 发现（BLOCK_DISCOVERY），完成后再发
+     * 带 rapid-commit 的 DISCOVER，并通过 FILS HLP 交给 supplicant。
+     */
+    class FilsState extends State {
+        @Override
+        public void enter() {
+            if (mVerboseLoggingEnabled) {
+                Log.d(TAG, "Filsstate enter");
+            }
+            IpManager.ProvisioningConfiguration prov = IpManager.buildProvisioningConfiguration()
+                    .withPreDhcpAction()
+                    .withApfCapabilities(mWifiNative.getApfCapabilities())
+                    .build();
+            prov.mRapidCommit = true;
+            prov.mDiscoverSent = true;
+            mIpManager.startProvisioning(prov);
+            mIsIpManagerStarted = true;
+        }
+
+        @Override
+        public void exit() {
+        }
+
+        @Override
+        public boolean processMessage(Message message) {
+            logStateAndMessage(message, this);
+            switch (message.what) {
+                case CMD_IP_CONFIGURATION_SUCCESSFUL:
+                case CMD_IPV4_PROVISIONING_SUCCESS:
+                    deferMessage(message);
+                    return HANDLED;
+                case CMD_IPV4_PROVISIONING_FAILURE:
+                    stopIpManager();
+                    deferMessage(message);
+                    return HANDLED;
+                case WifiMonitor.NETWORK_CONNECTION_EVENT:
+                    if (mVerboseLoggingEnabled) {
+                        log("Network connection established with FILS " + mIsFilsConnection);
+                    }
+                    mLastNetworkId = lookupFrameworkNetworkId(message.arg1);
+                    mLastBssid = (String) message.obj;
+                    handleFilsNetworkConnected(message.arg2);
+                    return HANDLED;
+                case WifiMonitor.FILS_NETWORK_CONNECTION_EVENT:
+                    mIsFilsConnection = true;
+                    if (mVerboseLoggingEnabled) {
+                        log("Network connection established with FILS " + mIsFilsConnection);
+                    }
+                    mLastNetworkId = lookupFrameworkNetworkId(message.arg1);
+                    mLastBssid = (String) message.obj;
+                    handleFilsNetworkConnected(message.arg2);
+                    return HANDLED;
+                case WifiMonitor.AUTHENTICATION_FAILURE_EVENT:
+                case WifiMonitor.ASSOCIATION_REJECTION_EVENT:
+                    stopIpManager();
+                    return NOT_HANDLED;
+                case DhcpClient.CMD_PRE_DHCP_ACTION:
+                    handlePreFilsDhcpSetup();
+                    return HANDLED;
+                case DhcpClient.CMD_POST_DHCP_ACTION:
+                    deferMessage(message);
+                    return HANDLED;
+                case DhcpClient.CMD_PRE_DHCP_ACTION_COMPLETE:
+                    mIpManager.completedPreDhcpAction();
+                    buildDiscoverWithRapidCommitPacket();
+                    reportConnectionAttemptStart(mFilsConfig, mTargetRoamBSSID,
+                            WifiMetricsProto.ConnectionEvent.ROAM_UNRELATED);
+                    if (mWifiNative.connectToNetwork(mFilsConfig)) {
+                        mWifiMetrics.logStaEvent(StaEvent.TYPE_CMD_START_CONNECT, mFilsConfig);
+                        lastConnectAttemptTimestamp = mClock.getWallClockMillis();
+                        targetWificonfiguration = mFilsConfig;
+                        mIsAutoRoaming = false;
+                    } else {
+                        loge("Failed to connect to FILS network " + mFilsConfig);
+                        reportConnectionAttemptEnd(
+                                WifiMetrics.ConnectionEvent.FAILURE_CONNECT_NETWORK_FAILED,
+                                WifiMetricsProto.ConnectionEvent.HLF_NONE);
+                        replyToMessage(message, WifiManager.CONNECT_NETWORK_FAILED,
+                                WifiManager.ERROR);
+                    }
+                    return HANDLED;
+                default:
+                    return NOT_HANDLED;
+            }
+        }
+
+        private void handleFilsNetworkConnected(int reasonCode) {
+            WifiConfiguration currentConfig = getCurrentWifiConfiguration();
+            if (currentConfig == null) {
+                return;
+            }
+            mWifiInfo.setBSSID(mLastBssid);
+            mWifiInfo.setNetworkId(mLastNetworkId);
+            mWifiConnectivityManager.trackBssid(mLastBssid, true, reasonCode);
+            if (currentConfig.enterpriseConfig != null) {
+                String anonymousIdentity = mWifiNative.getEapAnonymousIdentity();
+                if (anonymousIdentity != null) {
+                    currentConfig.enterpriseConfig.setAnonymousIdentity(anonymousIdentity);
+                } else {
+                    Log.d(TAG, "Failed to get updated anonymous identity from supplicant,"
+                            + " reset it in WifiConfiguration.");
+                    currentConfig.enterpriseConfig.setAnonymousIdentity(null);
+                }
+                mWifiConfigManager.addOrUpdateNetwork(currentConfig, Process.SYSTEM_UID);
+            }
+            sendNetworkStateChangeBroadcast(mLastBssid);
+            transitionTo(mObtainingIpState);
         }
     }
 
@@ -5369,6 +5530,16 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     mTargetNetworkId = netId;
                     setTargetBssid(config, bssid);
 
+                    // XTC/CAF: FILS_SHA256（且非 SHA384）网络走 FILS 快速接入状态，
+                    // 先起 IpManager 的 rapid-commit DHCP，再等 HLP/DISCOVER 完成。
+                    if (config.allowedKeyManagement.get(WifiConfiguration.KeyMgmt.FILS_SHA256)
+                            && !config.allowedKeyManagement.get(
+                                    WifiConfiguration.KeyMgmt.FILS_SHA384)) {
+                        mFilsConfig = config;
+                        transitionTo(mFilsState);
+                        break;
+                    }
+
                     reportConnectionAttemptStart(config, mTargetRoamBSSID,
                             WifiMetricsProto.ConnectionEvent.ROAM_UNRELATED);
                     if (mWifiNative.connectToNetwork(config)) {
@@ -5619,7 +5790,10 @@ public class WifiStateMachine extends StateMachine implements WifiNative.WifiRss
                     // at the chip etc...
                     if (mVerboseLoggingEnabled) log("ConnectModeState: Network connection lost ");
                     handleNetworkDisconnect();
-                    transitionTo(mDisconnectedState);
+                    // XTC/CAF: FILS 快速接入阶段保持在该状态，等待 rapid-commit 结果。
+                    if (getCurrentState() != mFilsState) {
+                        transitionTo(mDisconnectedState);
+                    }
                     break;
                 case CMD_QUERY_OSU_ICON:
                     mPasspointManager.queryPasspointIcon(
